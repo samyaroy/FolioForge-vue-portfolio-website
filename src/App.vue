@@ -1,30 +1,35 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { useRoute } from 'vue-router' // ✅ REQUIRED import
+import { computed } from 'vue'
+// Import global components
+import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
+
+// get current route
+const route = useRoute()
+
+// computed flag: hide layout on home
+const showLayout = computed(() => route.name !== 'HomePage')
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="d-flex flex-column min-vh-100">
+    <!-- Header is conditionally rendered based on the route -->
+    <!-- It will not show on the HomePage -->
+    <Header v-if="showLayout" />
+
+    <main class="flex-fill px-0">
+      <router-view />
+    </main>
+
+    <!-- Footer is conditionally rendered based on the route -->
+    <!-- It will not show on the HomePage -->
+    <Footer v-if="showLayout" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.footer {
+  margin-top: auto /* Ensure footer is at the bottom */;
 }
 </style>
