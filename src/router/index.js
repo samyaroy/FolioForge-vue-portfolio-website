@@ -4,13 +4,23 @@ import Home from '@/views/Home.vue'
 const routes = [
   {
     path: '/',
-    name: 'HomePage',
+    name: 'Home',
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('@/views/About.vue')
+    path: '/projects-publications',
+    name: 'ProjectsPublications',
+    component: () => import('@/views/ProjectsPublications.vue')
+  },
+  {
+    path: '/cocurricular',
+    name: 'Cocurricular',
+    component: () => import('@/views/Cocurricular.vue')
+  },
+  {
+    path: '/workshops',
+    name: 'Workshops',
+    component: () => import('@/views/Workshops.vue')
   },
   {
     path: '/contact',

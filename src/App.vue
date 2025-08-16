@@ -1,5 +1,5 @@
 <script setup>
-import { useRoute } from 'vue-router' // ✅ REQUIRED import
+import { useRoute } from 'vue-router' 
 import { computed } from 'vue'
 // Import global components
 import Header from '@/components/Header.vue'
@@ -9,27 +9,26 @@ import Footer from '@/components/Footer.vue'
 const route = useRoute()
 
 // computed flag: hide layout on home
-const showLayout = computed(() => route.name !== 'HomePage')
+const showLayout = true //set to true
 </script>
 
 <template>
-  <div class="d-flex flex-column min-vh-100">
-    <!-- Header is conditionally rendered based on the route -->
-    <!-- It will not show on the HomePage -->
-    <Header v-if="showLayout" />
+  <v-app>
+    <div class="flex flex-col min-h-screen">
+      <!-- Header is conditionally rendered based on the route -->
+      <!-- It will not show on the HomePage -->
+      <Header v-if="showLayout" />
 
-    <main class="flex-fill px-0">
-      <router-view />
-    </main>
+      <main class="flex-1">
+        <router-view />
+      </main>
 
-    <!-- Footer is conditionally rendered based on the route -->
-    <!-- It will not show on the HomePage -->
-    <Footer v-if="showLayout" />
-  </div>
+      <!-- Footer is conditionally rendered based on the route -->
+      <!-- It will not show on the HomePage -->
+      <Footer v-if="showLayout" />
+    </div>
+  </v-app>
 </template>
 
 <style scoped>
-.footer {
-  margin-top: auto /* Ensure footer is at the bottom */;
-}
 </style>

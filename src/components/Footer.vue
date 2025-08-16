@@ -1,7 +1,6 @@
 <template>
   <v-footer 
     class="bg-gray-800 text-white py-8"
-    app
   >
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -64,10 +63,26 @@
             </li>
             <li>
               <router-link 
-                to="/about" 
+                to="/projects-publications" 
                 class="text-gray-300 hover:text-white transition-colors duration-200"
               >
-                About
+                Projects & Publications
+              </router-link>
+            </li>
+            <li>
+              <router-link 
+                to="/cocurricular" 
+                class="text-gray-300 hover:text-white transition-colors duration-200"
+              >
+                Co-curricular
+              </router-link>
+            </li>
+            <li>
+              <router-link 
+                to="/workshops" 
+                class="text-gray-300 hover:text-white transition-colors duration-200"
+              >
+                Workshops
               </router-link>
             </li>
             <li>
