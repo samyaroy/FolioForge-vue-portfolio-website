@@ -1,6 +1,6 @@
 <template>
   <hr class="footer-divider bg-slate-50" />
-  <br />
+  
   <v-footer class="bg-blue-800 text-black py-8">
     <!-- Colored horizontal bar -->
 
@@ -96,18 +96,21 @@
               <span>{{ location }}</span>
             </div>
           </div>
+        <div class="pt-4 pb-0">
+            <a href="https://info.flagcounter.com/Wh9G"><img src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+        </div>
         </div>
       </div>
 
       <!-- Bottom Section -->
-      <v-divider class="my-6 bg-gray-600"></v-divider>
+      <v-divider class="my-2 bg-gray-600"></v-divider>
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-300 text-sm">
           © {{ new Date().getFullYear() }} Samyabrata Roy. All Rights Reserved.
         </p>
 
-        <div class="flex space-x-4 mt-4 md:mt-0">
+        <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-300 hover:text-white text-sm transition-colors duration-200">
             Privacy Policy
           </a>

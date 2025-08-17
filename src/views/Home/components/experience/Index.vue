@@ -10,13 +10,12 @@
         title="Student Intern"
         time="Feb'25 to present"
         organization="Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-        location="Kolkata"
+        location="Kolkata, WB"
         description="Dedicated 640+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers’ Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend)."
         icon="mdi-school"
         iconColor="text-[#1980e6]"
       />
-      <!--
-      // Research Assistant
+   <!--  
       <TimelineComponent
         title="Research Assistant"
         time="Jun'24 - Jan'25"
