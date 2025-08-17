@@ -23,3 +23,4 @@ defineProps({
 <style scoped>
 /* Custom styles if needed */
 </style>
+

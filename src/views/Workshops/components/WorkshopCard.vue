@@ -1,11 +1,11 @@
 <template>
   <div class="border-l-4 border-[#1980e6] pl-6 py-4 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white">
-    <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center justify-between mb-2 pr-4">
       <h3 class="text-lg font-semibold text-[#0e141b]">{{ workshop.title }}</h3>
       <span class="text-sm text-gray-500">{{ workshop.date }}</span>
     </div>
-    <p class="text-gray-600 mb-2">{{ workshop.instructor }}</p>
-    <p class="text-gray-600 mb-2">{{ workshop.institution }}</p>
+    <p v-if="workshop.instructor" class="text-gray-600 mb-2"><v-icon>mdi-account</v-icon> Instuctor: {{ workshop.instructor }}</p>
+    <p v-if="workshop.institution" class="text-gray-600 mb-2"><v-icon>mdi-office-building</v-icon>{{ workshop.institution }}</p>
     <p class="text-gray-700 mb-3">{{ workshop.description }}</p>
     <div class="flex flex-wrap gap-2 mb-3">
       <span

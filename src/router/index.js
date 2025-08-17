@@ -22,7 +22,7 @@ const routes = [
     component: Cocurricular
   },
   {
-    path: '/workshops',
+    path: '/workshops-bootcamps-attended',
     name: 'Workshops',
     component: WorkshopsAttended
   },

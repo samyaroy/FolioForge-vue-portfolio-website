@@ -6,7 +6,7 @@
         <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
           Projects & Publications
         </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p class="text-lg text-gray-600 max-w-4xl mx-auto">
           Explore my research publications, technical projects, and written articles showcasing my expertise.
         </p>
       </div>
@@ -93,7 +93,7 @@ const projects = [
     id: 1001,
     category: "Research",
     title: "Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset",
-    guide:"Prof. Aniruddha Choudhuri , Sister Nivedita University",
+    guide:"Prof. Aniruddha Choudhuri, Assistant Professor, Department of Statistics, Sister Nivedita University, kolkata",
     type:"BSc. (Hons.) Statistics Degree Project, Sister Nivedita University",
     description: "Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.",
     time_period: "Jan 2025 - May 2025",
@@ -105,7 +105,7 @@ const projects = [
     id: 1002,
     category: "Research",
     title: "Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students",
-    guide:"Mr. Debashis Ghosh, Institute of Data Engineering, Analytics and Science Foundation, ISI ",
+    guide:"Mr. Debashis Ghosh, Head, Technology Business Development & Incubation, Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata ",
     type:"Internship Project, Data Science Intern at IDEAS TIH, ISI",
     description: "Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.",
     time_period: "Jul 2024 - Dec 2024",
@@ -138,21 +138,21 @@ const projects = [
 ]
 
 const articles = [
-  {
-    id: 1,
-    title: "Robust Regression in Practice: Handling Outliers in Real Datasets",
-    excerpt: "An applied overview of robust regression techniques, comparing them with OLS under outlier-heavy conditions.",
-    date: "Feb 2025",
-    categories: ["Statistics", "Regression"],
-    link: "https://medium.com/@samyabrata"
-  },
-  {
-    id: 2,
-    title: "Building Scalable Quiz Applications with Flask & Vue",
-    excerpt: "A walkthrough of architecture, database design, and async background tasks in Quiz Pilot V2.",
-    date: "Jan 2025",
-    categories: ["Web Development", "Flask", "Vue.js"],
-    link: "https://dev.to/samyabrata"
-  }
+  // {
+  //   id: 1,
+  //   title: "Robust Regression in Practice: Handling Outliers in Real Datasets",
+  //   excerpt: "An applied overview of robust regression techniques, comparing them with OLS under outlier-heavy conditions.",
+  //   date: "Feb 2025",
+  //   categories: ["Statistics", "Regression"],
+  //   link: "https://medium.com/@samyabrata"
+  // },
+  // {
+  //   id: 2,
+  //   title: "Building Scalable Quiz Applications with Flask & Vue",
+  //   excerpt: "A walkthrough of architecture, database design, and async background tasks in Quiz Pilot V2.",
+  //   date: "Jan 2025",
+  //   categories: ["Web Development", "Flask", "Vue.js"],
+  //   link: "https://dev.to/samyabrata"
+  // }
 ]
 </script>

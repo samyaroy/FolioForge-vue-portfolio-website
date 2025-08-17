@@ -47,3 +47,4 @@ const researchInterests = [
 <style scoped>
 /* Custom styles if needed */
 </style>
+

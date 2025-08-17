@@ -6,8 +6,8 @@
         <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
           Co-curricular Activities
         </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Beyond academics, I actively participate in various co-curricular activities that enhance my leadership, teamwork, and professional development.
+        <p class="text-lg text-gray-600 max-w-6xl mx-auto">
+          Beyond academics, I actively participate in various co-curricular activities to enhance my leadership, teamwork, and professional development.
         </p>
       </div>
 
