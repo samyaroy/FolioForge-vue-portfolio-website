@@ -1,0 +1,36 @@
+<template>
+  <div class="bg-white rounded-lg shadow-sm p-8">
+    <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Articles & Blog Posts</h2>
+    <div class="space-y-6">
+      <div v-for="article in articles" :key="article.id" class="border-b border-gray-200 pb-6 last:border-b-0">
+        <div class="flex items-start justify-between mb-3">
+          <h3 class="text-lg font-semibold text-[#0e141b] hover:text-[#1980e6] cursor-pointer">
+            {{ article.title }}
+          </h3>
+          <span class="text-sm text-gray-500">{{ article.date }}</span>
+        </div>
+        <p class="text-gray-600 mb-3">{{ article.excerpt }}</p>
+        <div class="flex items-center justify-between">
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="category in article.categories"
+              :key="category"
+              class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded"
+            >
+              {{ category }}
+            </span>
+          </div>
+          <a :href="article.link" target="_blank" class="text-[#1980e6] hover:underline text-sm">
+            Read More →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  articles: Array
+})
+</script>
