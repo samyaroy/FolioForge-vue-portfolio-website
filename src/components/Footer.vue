@@ -64,8 +64,8 @@
               </router-link>
             </li> -->
             <li>
-              <router-link to="/workshops" class="text-black-300 hover:text-white transition-colors duration-200">
-                Workshops attended
+              <router-link to="/workshops-bootcamps-attended" class="text-black-300 hover:text-black transition-colors duration-200">
+                Workshops & Bootcamps attended
               </router-link>
             </li>
             <!-- <li>
@@ -77,6 +77,17 @@
               </router-link>
             </li>-->
           </ul>
+          <br/>
+          <h4 class="text-lg font-semibold mb-2">Social Links</h4>
+
+          <ul class="space-y-2">
+            <li>
+              <a href="https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en">Google Scholar</a>
+            </li>
+            <li>
+              <a href="https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf">ResearchGate</a>
+            </li>
+          </ul> 
         </div>
 
         <!-- Contact Info -->

@@ -1,7 +1,8 @@
 <template>
   <div class="bg-white rounded-lg shadow-sm p-8">
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Articles & Blog Posts</h2>
-    <div class="space-y-6">
+
+    <div v-if="articles && articles.length > 0" class="space-y-6">
       <div v-for="article in articles" :key="article.id" class="border-b border-gray-200 pb-6 last:border-b-0">
         <div class="flex items-start justify-between mb-3">
           <h3 class="text-lg font-semibold text-[#0e141b] hover:text-[#1980e6] cursor-pointer">
@@ -26,11 +27,18 @@
         </div>
       </div>
     </div>
+
+    <div v-else class="text-center text-gray-500 italic">
+      No articles yet
+    </div>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  articles: Array
+  articles: {
+    type: Array,
+    default: () => []
+  }
 })
 </script>

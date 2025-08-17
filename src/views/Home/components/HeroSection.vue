@@ -13,13 +13,15 @@
             <!-- Text Content -->
             <div class="flex flex-col gap-2 text-left">
               <h1
-                class="text-[#0e141b] text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]">
+                class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]">
                 Web Developer <br />Data Science, Statistics Enthusiast
               </h1>
               <h2
                 class="text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
-                Recent graduate with a strong foundation in data analysis, statistical modeling, and web development.
-                Passionate about leveraging data to drive insights and build innovative solutions.
+                Curious student with a strong foundation in statistical theory and inference, data science and full-stack web
+development. Comfortable moving between data analysis and modern web technologies to turn data into insights
+and ideas into applications. Experienced with statistical modeling, data cleaning, and API development, eager to
+apply an evidence-based approach to solving complex challenges in research and development fields.
               </h2>
             </div>
 
@@ -82,3 +84,4 @@ const downloadCV = () => {
 <style scoped>
 /* Custom styles if needed */
 </style>
+
