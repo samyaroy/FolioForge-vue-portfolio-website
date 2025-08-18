@@ -41,12 +41,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import PublicationsTab from './components/PublicationsTab.vue'
 import ProjectsTab from './components/ProjectTab/Index.vue'
 import ArticlesTab from './components/ArticlesTab.vue'
 
+const route = useRoute()
 const activeTab = ref('projects')
+
+// Set active tab based on query parameter
+onMounted(() => {
+  if (route.query.tab && ['projects', 'articles', 'publications'].includes(route.query.tab)) {
+    activeTab.value = route.query.tab
+  }
+})
 
 const tabs = [
   { id: 'projects', name: 'Projects' },

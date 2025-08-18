@@ -18,10 +18,13 @@
               </h1>
               <h2
                 class="text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
-                Curious student with a strong foundation in statistical theory and inference, data science and full-stack web
-development. Comfortable moving between data analysis and modern web technologies to turn data into insights
-and ideas into applications. Experienced with statistical modeling, data cleaning, and API development, eager to
-apply an evidence-based approach to solving complex challenges in research and development fields.
+                Curious student with a strong foundation in statistical theory and inference, data science and
+                full-stack web
+                development. Comfortable moving between data analysis and modern web technologies to turn data into
+                insights
+                and ideas into applications. Experienced with statistical modeling, data cleaning, and API development,
+                eager to
+                apply an evidence-based approach to solving complex challenges in research and development fields.
               </h2>
             </div>
 
@@ -29,7 +32,7 @@ apply an evidence-based approach to solving complex challenges in research and d
             <div class="flex flex-col gap-4 md:flex-row md:gap-4 w-full">
               <button
                 class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 md:h-12 md:px-5 bg-[#1980e6] text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] md:text-base md:font-bold md:leading-normal md:tracking-[0.015em] hover:bg-[#1565c0] transition-colors duration-200"
-                @click="$router.push('/projects-publications')">
+                @click="$router.push({ path: '/projects-publications', query: { tab: 'publications' } })">
                 <span class="truncate">See my work</span>
               </button>
               <button

@@ -11,7 +11,7 @@
         time="Feb'25 to present"
         organization="Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
         location="Kolkata, WB"
-        description="Dedicated 640+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers’ Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend)."
+        description="Dedicated 640+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend)."
         icon="mdi-school"
         iconColor="text-[#1980e6]"
       />
@@ -38,6 +38,17 @@
       />
       -->
       
+      <!-- See other Internships link -->
+      <div class="flex justify-end mt-6 mb-4">
+        <router-link 
+          to="/internships-certifications?tab=internships" 
+          class="text-[#1980e6] hover:text-[#0e141b] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+        >
+          See other Internships
+          <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
+        </router-link>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -45,3 +56,4 @@
 <script setup>
 import TimelineComponent from './components/TimelineComponent.vue'
 </script>
+

@@ -6,41 +6,29 @@
           Workshops & Bootcamps
         </h1>
         <p class="text-lg text-gray-600 max-w-4xl mx-auto">
-          Explore the workshops I've attended and bootcamps I've completed, covering various aspects of Statistics, Data Science, AI and emerging technologies.
-        </p>
+          Workshops and bootcamps completed in Statistics, Data Science, AI, and emerging technologies </p>
+      </div>
+      <!-- Bootcamps Section -->
+      <div class="mb-16 max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#0e141b] mb-6">Bootcamps Completed</h2>
+        <!-- <p class="text-gray-600">Intensive training programs and certifications I've earned</p> -->
+
+        <div class="space-y-6">
+          <BootcampCard v-for="bootcamp in attendedBootcamps" :key="bootcamp.id" :bootcamp="bootcamp" />
+        </div>
       </div>
 
       <!-- Workshops Section -->
-      <div class="mb-16">
-        <div class="text-center mb-8">
-          <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Workshops Attended</h2>
-          <!-- <p class="text-gray-600">Academic and professional workshops I've participated in</p> -->
-        </div>
-        
-        <div class="space-y-6 max-w-4xl mx-auto">
-          <WorkshopCard
-            v-for="workshop in attendedWorkshops"
-            :key="workshop.id"
-            :workshop="workshop"
-          />
+      <div class="mb-16 max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-[#0e141b] mb-6">Workshops Attended</h2>
+        <!-- <p class="text-gray-600">Academic and professional workshops I've participated in</p> -->
+
+        <div class="space-y-6">
+          <WorkshopCard v-for="workshop in attendedWorkshops" :key="workshop.id" :workshop="workshop" />
         </div>
       </div>
 
-      <!-- Bootcamps Section -->
-      <div class="mb-16">
-        <div class="text-center mb-8">
-          <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Bootcamps Completed</h2>
-          <!-- <p class="text-gray-600">Intensive training programs and certifications I've earned</p> -->
-        </div>
-        
-        <div class="space-y-6 max-w-4xl mx-auto">
-          <BootcampCard
-            v-for="bootcamp in attendedBootcamps"
-            :key="bootcamp.id"
-            :bootcamp="bootcamp"
-          />
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -53,52 +41,52 @@ const attendedWorkshops = [
   {
     id: 1,
     title: "Uncertainty in Machine Learning: Challenges and Opportunities",
-    institution: "Isaac Newton Institute for Mathematical Sciences",
+    institution: "Isaac Newton Institute for Mathematical Sciences, University of Cambridge, Cambridge",
     date: "August 2025",
   },
   {
     id: 2,
     title: "Mini-Symposium on Contemporary Advancements in Computational Intelligence",
-    institution: "Indian Statistical Institute, kolkata",
+    institution: "Indian Statistical Institute, kolkata, WB",
     date: "July 2025",
   },
   {
     id: 3,
     title: "National Workshop and Bootcamp on Cyber Security and Blockchain (NWBCSB 2025)",
-    institution: "International Institute of Technology (IIIT) Hyderabad",
+    institution: "International Institute of Technology (IIIT) Hyderabad, TS",
     date: "March 2025",
     duration: "7 Days",
   },
   {
     id: 4,
     title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques",
-    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata ",
+    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB ",
     date: "September 2024",
     duration: "7 Days",
   },
   {
     id: 5,
     title: "Numerical Algorithms & Computations in Science & Technology with Matlab",
-    institution: "Dept. of Mathematics, Indian Institute of Technology Ropar, Punjab ",
+    institution: "Dept. of Mathematics, Indian Institute of Technology Ropar, Rupnagar, PB",
     date: "July 2024",
   },
   {
     id: 6,
     title: "Democratizing Data science: Exploring Open Source Statistical Software",
-    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata ",
+    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB ",
     date: "March 2024",
   },
   {
     id: 7,
     title: "Research Opportunities in Computer Science (ROCS) - ACM",
-    institution: "Indian Institute of Technology Madras, Chennai",
+    institution: "Indian Institute of Technology Madras, Chennai, TN",
     date: "January 2024",
   },
   {
     id: 8,
     title: "Social Computing - NPTEL",
     instructor: "Prof. Ponnurangam Kumaraguru",
-    institution: "International Institute of Technology (IIIT) Hyderabad",
+    institution: "International Institute of Technology (IIIT) Hyderabad, TS",
     date: "February 2023",
   }
 ]

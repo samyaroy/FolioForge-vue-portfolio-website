@@ -63,6 +63,12 @@
                 Co-curricular
               </router-link>
             </li> -->
+            
+            <li>
+              <router-link to="/internships-certifications" class="text-black-300 hover:text-black transition-colors duration-200">
+                Internships & Certifications
+              </router-link>
+            </li>
             <li>
               <router-link to="/workshops-bootcamps-attended" class="text-black-300 hover:text-black transition-colors duration-200">
                 Workshops & Bootcamps attended

@@ -54,6 +54,17 @@
         extra="Marks: 85.71%"
         :isLast="true"
       />
+
+      <!-- See certification link -->
+      <div class="flex justify-end mt-6 mb-4">
+        <router-link 
+          to="/internships-certifications?tab=certifications" 
+          class="text-[#1980e6] hover:text-[#0e141b] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+        >
+          See other certifications
+          <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -61,3 +72,4 @@
 <script setup>
 import EducationMilestone from "./components/EducationMilestone.vue";
 </script>
+

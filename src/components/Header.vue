@@ -101,13 +101,12 @@ const drawer = ref(false)
 const SEND_MAIL = () => {
   const subject = encodeURIComponent('Freelance Project:')
   const body = encodeURIComponent('I would like to discuss a potential collaboration.')
-  const mailtoLink = `mailto:samyaroy00@gmail.com?subject=${subject}&body=${body}`
   
-  // Open mailto in new tab/window
-  const newWindow = window.open(mailtoLink)
-  if (!newWindow) {
-    alert('Please allow popups to send an email, or configure a default mail client.')
-  }
+  // Use Gmail compose URL to open in new tab
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=samyaroy00@gmail.com&su=${subject}&body=${body}`
+  
+  // Open in new tab
+  window.open(gmailUrl, '_blank')
 }
 </script>
 
