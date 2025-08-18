@@ -1,153 +1,128 @@
 <template>
-  <div class="min-h-screen bg-gray-50 py-8">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <!-- Page Header -->
-        <div class="text-center mb-12">
-          <h1 class="text-4xl font-bold text-gray-800 mb-4">Get In Touch</h1>
-          <p class="text-xl text-gray-600">Let's discuss your next project or just say hello!</p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Contact Form -->
-          <div class="bg-white rounded-lg shadow-md p-8">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-6">Send a Message</h2>
-            
-            <v-form @submit.prevent="submitForm" ref="form">
-              <div class="space-y-6">
-                <v-text-field
-                  v-model="form.name"
-                  label="Your Name"
-                  variant="outlined"
-                  :rules="[rules.required]"
-                  prepend-inner-icon="mdi-account"
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="form.email"
-                  label="Email Address"
-                  variant="outlined"
-                  type="email"
-                  :rules="[rules.required, rules.email]"
-                  prepend-inner-icon="mdi-email"
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="form.subject"
-                  label="Subject"
-                  variant="outlined"
-                  :rules="[rules.required]"
-                  prepend-inner-icon="mdi-format-title"
-                ></v-text-field>
-
-                <v-textarea
-                  v-model="form.message"
-                  label="Message"
-                  variant="outlined"
-                  rows="6"
-                  :rules="[rules.required]"
-                  prepend-inner-icon="mdi-message"
-                ></v-textarea>
-
-                <v-btn
-                  type="submit"
-                  color="primary"
-                  size="large"
-                  class="w-full"
-                  :loading="loading"
-                  prepend-icon="mdi-send"
-                >
-                  Send Message
-                </v-btn>
-              </div>
-            </v-form>
+  <div class="relative flex size-full min-h-screen flex-col bg-slate-50 group/design-root overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+      <div class="px-8 md:px-16 lg:px-20 flex flex-1 justify-center py-5">
+        <div class="layout-content-container flex flex-col w-full max-w-[1400px] flex-1">
+          <!-- Page Header -->
+          <div class="text-center mb-12">
+            <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+              Get in Touch
+            </h1>
+            <p class="text-lg text-gray-600 max-w-6xl mx-auto">
+              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!
+            </p>
           </div>
 
-          <!-- Contact Information -->
-          <div class="space-y-6">
-            <!-- Contact Info Card -->
-            <div class="bg-white rounded-lg shadow-md p-8">
-              <h2 class="text-2xl font-semibold text-gray-800 mb-6">Contact Information</h2>
-              
-              <div class="space-y-4">
-                <div class="flex items-center">
-                  <v-icon color="primary" class="mr-4">mdi-email</v-icon>
-                  <div>
-                    <p class="font-semibold text-gray-800">Email</p>
-                    <p class="text-gray-600">contact@example.com</p>
-                  </div>
-                </div>
-
-                <div class="flex items-center">
-                  <v-icon color="primary" class="mr-4">mdi-phone</v-icon>
-                  <div>
-                    <p class="font-semibold text-gray-800">Phone</p>
-                    <p class="text-gray-600">+1 (555) 123-4567</p>
-                  </div>
-                </div>
-
-                <div class="flex items-center">
-                  <v-icon color="primary" class="mr-4">mdi-map-marker</v-icon>
-                  <div>
-                    <p class="font-semibold text-gray-800">Location</p>
-                    <p class="text-gray-600">San Francisco, CA</p>
-                  </div>
-                </div>
-
-                <div class="flex items-center">
-                  <v-icon color="primary" class="mr-4">mdi-clock</v-icon>
-                  <div>
-                    <p class="font-semibold text-gray-800">Business Hours</p>
-                    <p class="text-gray-600">Mon - Fri: 9:00 AM - 6:00 PM</p>
-                  </div>
-                </div>
+          <!-- Contact Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- First Row: Phone, Email, Student Email -->
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M222.37,158.46l-47.11-21.11-.13-.06a16,16,0,0,0-15.17,1.4,8.12,8.12,0,0,0-.75.56L134.87,160c-15.42-7.49-31.34-23.29-38.83-38.51l20.78-24.71c.2-.25.39-.5.57-.77a16,16,0,0,0,1.32-15.06l0-.12L97.54,33.64a16,16,0,0,0-16.62-9.52A56.26,56.26,0,0,0,32,80c0,79.4,64.6,144,144,144a56.26,56.26,0,0,0,55.88-48.92A16,16,0,0,0,222.37,158.46ZM176,208A128.14,128.14,0,0,1,48,80,40.2,40.2,0,0,1,82.87,40a.61.61,0,0,0,0,.12l21,47L83.2,111.86a6.13,6.13,0,0,0-.57.77,16,16,0,0,0-1,15.7c9.06,18.53,27.73,37.06,46.46,46.11a16,16,0,0,0,15.75-1.14,8.44,8.44,0,0,0,.74-.56L168.89,152l47,21.05h0s.08,0,.11,0A40.21,40.21,0,0,1,176,208Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Phone</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">+91 98765 43210</p>
               </div>
             </div>
 
-            <!-- Social Links Card -->
-            <div class="bg-white rounded-lg shadow-md p-8">
-              <h2 class="text-2xl font-semibold text-gray-800 mb-6">Follow Me</h2>
-              
-              <div class="grid grid-cols-2 gap-4">
-                <v-btn
-                  variant="outlined"
-                  class="w-full"
-                  href="https://github.com"
-                  target="_blank"
-                  prepend-icon="mdi-github"
-                >
-                  GitHub
-                </v-btn>
-                
-                <v-btn
-                  variant="outlined"
-                  class="w-full"
-                  href="https://linkedin.com"
-                  target="_blank"
-                  prepend-icon="mdi-linkedin"
-                >
-                  LinkedIn
-                </v-btn>
-                
-                <v-btn
-                  variant="outlined"
-                  class="w-full"
-                  href="https://twitter.com"
-                  target="_blank"
-                  prepend-icon="mdi-twitter"
-                >
-                  Twitter
-                </v-btn>
-                
-                <v-btn
-                  variant="outlined"
-                  class="w-full"
-                  href="https://dribbble.com"
-                  target="_blank"
-                  prepend-icon="mdi-dribbble"
-                >
-                  Dribbble
-                </v-btn>
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Email</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">samyaroy00@gmail.com</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student Email</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">samyabrata.roy@ds.study.iitm.ac.in</p>
+              </div>
+            </div>
+
+            <!-- Second Row: LinkedIn, GitHub, Student GitHub -->
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M216,24H40A16,16,0,0,0,24,40V216a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V40A16,16,0,0,0,216,24Zm0,192H40V40H216V216ZM96,112v64a8,8,0,0,1-16,0V112a8,8,0,0,1,16,0Zm88,28v36a8,8,0,0,1-16,0V140a20,20,0,0,0-40,0v36a8,8,0,0,1-16,0V112a8,8,0,0,1,15.79-1.78A36,36,0,0,1,184,140ZM100,84A12,12,0,1,1,88,72,12,12,0,0,1,100,84Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">LinkedIn</p>
+                <a href="https://www.linkedin.com/in/samyabrata-roy-/" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">LinkedIn Profile</a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">GitHub</p>
+                <a href="https://github.com/samyabrata-roy" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">GitHub Profile</a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M208.31,75.68A59.78,59.78,0,0,0,202.93,28,8,8,0,0,0,196,24a59.75,59.75,0,0,0-48,24H124A59.75,59.75,0,0,0,76,24a8,8,0,0,0-6.93,4,59.78,59.78,0,0,0-5.38,47.68A58.14,58.14,0,0,0,56,104v8a56.06,56.06,0,0,0,48.44,55.47A39.8,39.8,0,0,0,96,192v8H72a24,24,0,0,1-24-24A40,40,0,0,0,8,136a8,8,0,0,0,0,16,24,24,0,0,1,24,24,40,40,0,0,0,40,40H96v16a8,8,0,0,0,16,0V192a24,24,0,0,1,48,0v40a8,8,0,0,0,16,0V192a39.8,39.8,0,0,0-8.44-24.53A56.06,56.06,0,0,0,216,112v-8A58.14,58.14,0,0,0,208.31,75.68ZM200,112a40,40,0,0,1-40,40H112a40,40,0,0,1-40-40v-8a41.74,41.74,0,0,1,6.9-22.48A8,8,0,0,0,80,73.83a43.81,43.81,0,0,1,.79-33.58,43.88,43.88,0,0,1,32.32,20.06A8,8,0,0,0,119.82,64h32.35a8,8,0,0,0,6.74-3.69,43.87,43.87,0,0,1,32.32-20.06A43.81,43.81,0,0,1,192,73.83a8.09,8.09,0,0,0,1,7.65A41.72,41.72,0,0,1,200,104Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student GitHub</p>
+                <a href="https://github.com/samyabrata-roy-iitm" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Student GitHub Profile</a>
+              </div>
+            </div>
+
+            <!-- Third Row: Google Scholar, ResearchGate, ORCID iD -->
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M224,128a96,96,0,1,1-21.95-61.09,8,8,0,1,1-12.33,10.18A80,80,0,1,0,207.6,136H128a8,8,0,0,1,0-16h88A8,8,0,0,1,224,128Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Google Scholar</p>
+                <a href="https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Google Scholar Profile</a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M98.91,157.09A71.53,71.53,0,0,1,120,208a8,8,0,0,1-16,0,56,56,0,0,0-56-56,8,8,0,0,1,0-16A71.53,71.53,0,0,1,98.91,157.09ZM48,88a8,8,0,0,0,0,16A104,104,0,0,1,152,208a8,8,0,0,0,16,0A120,120,0,0,0,48,88Zm118.79,1.21A166.9,166.9,0,0,0,48,40a8,8,0,0,0,0,16,151,151,0,0,1,107.48,44.52A151,151,0,0,1,200,208a8,8,0,0,0,16,0A166.9,166.9,0,0,0,166.79,89.21ZM52,192a12,12,0,1,0,12,12A12,12,0,0,0,52,192Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ResearchGate</p>
+                <a href="https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ResearchGate Profile</a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M200,112a8,8,0,0,1-8,8H152a8,8,0,0,1,0-16h40A8,8,0,0,1,200,112Zm-8,24H152a8,8,0,0,0,0,16h40a8,8,0,0,0,0-16Zm40-80V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56ZM216,200V56H40V200H216Zm-80.26-34a8,8,0,1,1-15.5,4c-2.63-10.26-13.06-18-24.25-18s-21.61,7.74-24.25,18a8,8,0,1,1-15.5-4,39.84,39.84,0,0,1,17.19-23.34,32,32,0,1,1,45.12,0A39.76,39.76,0,0,1,135.75,166ZM96,136a16,16,0,1,0-16-16A16,16,0,0,0,96,136Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ORCID iD</p>
+                <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ORCID iD Profile</a>
               </div>
             </div>
           </div>
@@ -158,42 +133,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-const form = ref({
-  name: '',
-  email: '',
-  subject: '',
-  message: ''
-})
-
-const loading = ref(false)
-const formRef = ref(null)
-
-const rules = {
-  required: v => !!v || 'This field is required',
-  email: v => /.+@.+\..+/.test(v) || 'Please enter a valid email'
-}
-
-const submitForm = async () => {
-  loading.value = true
-  
-  // Simulate form submission
-  await new Promise(resolve => setTimeout(resolve, 2000))
-  
-  // Reset form
-  form.value = {
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  }
-  
-  loading.value = false
-  
-  // Show success message (you can implement a toast notification here)
-  alert('Message sent successfully!')
-}
+// No additional logic needed for this contact page
 </script>
 
 <style scoped>
