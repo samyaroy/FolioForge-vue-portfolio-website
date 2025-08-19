@@ -101,7 +101,8 @@ const internships = [
     duration: "Jun'24 - Oct'24",
     description: "Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.",
     //skills: ["Data Preprocessing", "Statistical Modeling", "Python", "Machine Learning"],
-    type: "Training Internship"
+    type: "Training Internship",
+    cred_link:"https://drive.google.com/file/d/1w4os8_vJNmVU4RnYM7iHU7EBYRLbD3yN/view?usp=drive_link"
   }
 ]
 

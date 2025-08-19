@@ -16,8 +16,12 @@
 
         <!-- Education Info -->
         <div class="flex flex-1 flex-col py-3">
-            <p class="text-[#0e141b] text-base font-medium leading-normal">{{ title }}</p>
-
+            <div class="flex items-center gap-2">
+                <p class="text-[#0e141b] text-base font-medium leading-normal">{{ title }}</p>
+                <a v-if="cred_link" :href="cred_link" target="_blank" rel="noopener noreferrer">
+                    <v-icon size="20">mdi-file-document-outline</v-icon>
+                </a>
+            </div>
             <!-- Time -->
             <div class="flex items-center gap-2 mt-1">
                 <v-icon class="text-[#4e7397]" size="16">mdi-calendar</v-icon>
@@ -58,6 +62,7 @@ defineProps({
     icon: { type: String, default: 'mdi-school' }, // ✅ customizable icon
     iconColor: { type: String, default: 'text-[#1980e6]' }, // ✅ customizable color
     isFirst: { type: Boolean, default: false }, // for controlling top connector
-    isLast: { type: Boolean, default: false }   // for controlling bottom connector
+    isLast: { type: Boolean, default: false },   // for controlling bottom connector
+    cred_link: { type: String, default: '' } // Link to certificate or document
 })
 </script>

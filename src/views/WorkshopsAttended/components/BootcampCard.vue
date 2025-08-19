@@ -1,9 +1,19 @@
 <template>
   <div class="border-l-4 border-[#10b981] pl-6 py-4 hover:shadow-lg transition-all duration-300 rounded-lg bg-white hover:bg-green-50">
     <div class="flex items-center justify-between mb-3 pr-4">
-      <h3 class="text-lg font-semibold text-[#0e141b]">{{ bootcamp.title }}</h3>
-      <span class="text-sm text-gray-500 bg-green-100 px-2 py-1 rounded-full">{{ bootcamp.date }}</span>
-    </div>
+  <!-- title + icon group -->
+  <div class="flex items-center gap-4">
+    <h3 class="text-lg font-semibold text-[#0e141b]">{{ bootcamp.title }}</h3>
+    <a v-if="bootcamp.cred_link" :href="bootcamp.cred_link">
+      <v-icon size="20">mdi-file-document-outline</v-icon>
+    </a>
+  </div>
+
+  <!-- date -->
+  <span class="text-sm text-gray-500 bg-green-100 px-2 py-1 rounded-full">
+    {{ bootcamp.date }}
+  </span>
+</div>
     
     <div class="space-y-2 mb-3">
       <p v-if="bootcamp.instructor" class="text-gray-600 flex items-center">

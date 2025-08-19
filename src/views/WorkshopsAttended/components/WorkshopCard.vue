@@ -1,18 +1,26 @@
 <template>
   <div class="border-l-4 border-[#1980e6] pl-6 py-4 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white">
+
     <div class="flex items-center justify-between mb-2 pr-4">
-      <h3 class="text-lg font-semibold text-[#0e141b]">{{ workshop.title }}</h3>
+
+      <div class="flex items-center gap-4">
+        <h3 class="text-lg font-semibold text-[#0e141b]">{{ workshop.title }}</h3>
+        <a v-if="workshop.cred_link" :href="workshop.cred_link">
+          <v-icon size="20">mdi-file-document-outline</v-icon>
+        </a>
+      </div>
+
+
       <span class="text-sm text-gray-500">{{ workshop.date }}</span>
     </div>
-    <p v-if="workshop.instructor" class="text-gray-600 mb-2"><v-icon>mdi-account</v-icon> Instuctor: {{ workshop.instructor }}</p>
-    <p v-if="workshop.institution" class="text-gray-600 mb-2"><v-icon>mdi-office-building</v-icon>{{ workshop.institution }}</p>
+    <p v-if="workshop.instructor" class="text-gray-600 mb-2"><v-icon>mdi-account</v-icon> Instuctor: {{
+      workshop.instructor }}</p>
+    <p v-if="workshop.institution" class="text-gray-600 mb-2"><v-icon>mdi-office-building</v-icon>{{
+      workshop.institution }}</p>
     <p class="text-gray-700 mb-3">{{ workshop.description }}</p>
     <div class="flex flex-wrap gap-2 mb-3">
-      <span
-        v-for="skill in workshop.skillsLearned"
-        :key="skill"
-        class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded"
-      >
+      <span v-for="skill in workshop.skillsLearned" :key="skill"
+        class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
         {{ skill }}
       </span>
     </div>

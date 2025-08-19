@@ -14,6 +14,7 @@
         description="Dedicated 640+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend)."
         icon="mdi-school"
         iconColor="text-[#1980e6]"
+        cred-linl="#"
       />
    <!--  
       <TimelineComponent
