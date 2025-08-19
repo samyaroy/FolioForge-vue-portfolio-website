@@ -3,8 +3,8 @@
     <div class="flex items-start justify-between mb-4">
       <div class="flex-1">
         <div class="flex items-center gap-4">
-        <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ internship.title }}</h3>
-        
+          <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ internship.title }}</h3>
+
         </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-domain</v-icon>
@@ -18,15 +18,20 @@
           <v-icon size="16">mdi-calendar</v-icon>
           <span>{{ internship.duration }}</span>
         </div>
+
+        <div v-if="internship.project" class="flex items-center gap-2 text-[#4e7397] text-sm mb-3">
+          <v-icon size="16">mdi-folder-outline</v-icon>
+          <span><a :href="internship.project">Project: {{ internship.project_title }}</a></span>
+        </div>
       </div>
       <div class="ml-4">
         <a v-if="internship.cred_link" :href="internship.cred_link" target="_blank" rel="noopener noreferrer">
-        <span class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
-          {{ internship.type }}
-          <v-icon size="20">mdi-file-document-outline</v-icon>
-        </span>
-        
-        
+          <span class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
+            {{ internship.type }}
+            <v-icon size="20">mdi-file-document-outline</v-icon>
+          </span>
+
+
         </a>
       </div>
     </div>
@@ -36,11 +41,8 @@
     </p>
 
     <div class="flex flex-wrap gap-2">
-      <span 
-        v-for="skill in internship.skills" 
-        :key="skill"
-        class="px-3 py-1 text-xs font-medium bg-gray-100 text-[#4e7397] rounded-full"
-      >
+      <span v-for="skill in internship.skills" :key="skill"
+        class="px-3 py-1 text-xs font-medium bg-gray-100 text-[#4e7397] rounded-full">
         {{ skill }}
       </span>
     </div>
