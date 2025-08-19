@@ -105,6 +105,20 @@ const internships = [
     cred_link:"https://drive.google.com/file/d/1w4os8_vJNmVU4RnYM7iHU7EBYRLbD3yN/view?usp=drive_link",
     project:"/projects-publications?tab=projects#research-1002",
     project_title:"Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"
+  },
+  {
+    id: 2,
+    title: "Growth Consultant Intern",
+    organization: "Sorting Hat Technologies Private Limited (Unacademy)",
+    location: "Remote",
+    duration: "Nov'23 - Jan'24",
+    department: "UnacademyX",
+    //description: "Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.",
+    //skills: ["Data Preprocessing", "Statistical Modeling", "Python", "Machine Learning"],
+    //type: "Training Internship",
+    cred_link:"https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/view?usp=drive_link",
+    //project:"/projects-publications?tab=projects#research-1002",
+    //project_title:"Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"
   }
 ]
 

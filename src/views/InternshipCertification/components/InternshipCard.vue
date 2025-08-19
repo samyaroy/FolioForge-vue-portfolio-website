@@ -10,6 +10,10 @@
           <v-icon size="16">mdi-domain</v-icon>
           <span>{{ internship.organization }}</span>
         </div>
+        <div v-if="internship.department" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
+          <v-icon size="16">mdi-office-building</v-icon>
+          <span>{{ internship.department }}</span>
+        </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-map-marker</v-icon>
           <span>{{ internship.location }}</span>
