@@ -2,7 +2,10 @@
   <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
     <div class="flex items-start justify-between mb-4">
       <div class="flex-1">
+        <div class="flex items-center gap-4">
         <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ internship.title }}</h3>
+        
+        </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-domain</v-icon>
           <span>{{ internship.organization }}</span>
@@ -17,9 +20,14 @@
         </div>
       </div>
       <div class="ml-4">
+        <a v-if="internship.cred_link" :href="internship.cred_link" target="_blank" rel="noopener noreferrer">
         <span class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
           {{ internship.type }}
+          <v-icon size="20">mdi-file-document-outline</v-icon>
         </span>
+        
+        
+        </a>
       </div>
     </div>
 

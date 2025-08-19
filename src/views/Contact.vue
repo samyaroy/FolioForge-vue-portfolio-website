@@ -24,7 +24,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Phone</p>
-                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">+91 98765 43210</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">{{phone}}</p>
               </div>
             </div>
 
@@ -36,7 +36,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Email</p>
-                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">samyaroy00@gmail.com</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">{{email}}</p>
               </div>
             </div>
 
@@ -48,7 +48,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student Email</p>
-                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">samyabrata.roy@ds.study.iitm.ac.in</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">{{email2}}</p>
               </div>
             </div>
 
@@ -61,7 +61,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">LinkedIn</p>
-                <a href="https://www.linkedin.com/in/samyabrata-roy-/" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">LinkedIn Profile</a>
+                <a :href="linkedIn" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">LinkedIn Profile</a>
               </div>
             </div>
 
@@ -73,7 +73,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">GitHub</p>
-                <a href="https://github.com/samyabrata-roy" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">GitHub Profile</a>
+                <a :href="github" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">GitHub Profile</a>
               </div>
             </div>
 
@@ -85,7 +85,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student GitHub</p>
-                <a href="https://github.com/samyabrata-roy-iitm" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Student GitHub Profile</a>
+                <a :href="github2" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Student GitHub Profile</a>
               </div>
             </div>
 
@@ -122,7 +122,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ORCID iD</p>
-                <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ORCID iD Profile</a>
+                <a href="https://orcid.org/0009-0000-5356-4684" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ORCID iD Profile</a>
               </div>
             </div>
           </div>
@@ -133,7 +133,16 @@
 </template>
 
 <script setup>
-// No additional logic needed for this contact page
+const email = import.meta.env.VITE_EMAIL
+const email_link = import.meta.env.VITE_EMAIL_LINK
+const email2 = import.meta.env.VITE_EMAIL2
+const phone = import.meta.env.VITE_PHONE
+const location = import.meta.env.VITE_LOCATION
+
+const github = import.meta.env.VITE_GITHUB1
+const github2 = import.meta.env.VITE_GITHUB2
+const linkedIn = import.meta.env.VITE_LINKEDIN
+const twitter = import.meta.env.VITE_TWITTER
 </script>
 
 <style scoped>

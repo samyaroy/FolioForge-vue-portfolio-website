@@ -9,7 +9,9 @@
 
     <!-- Experience Info -->
     <div class="flex flex-1 flex-col py-3">
-      <p class="text-[#0e141b] text-base font-medium leading-normal">{{ title }}</p>
+      <p class="text-[#0e141b] text-base font-medium leading-normal">{{ title }}</p> <a v-if="cred_link" :href="cred_link">
+          <v-icon size="20">mdi-file-document-outline</v-icon>
+        </a>
 
       <!-- Time -->
       <div class="flex items-center gap-2 mt-1">

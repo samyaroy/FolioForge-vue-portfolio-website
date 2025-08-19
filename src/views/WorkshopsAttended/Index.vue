@@ -63,24 +63,28 @@ const attendedWorkshops = [
     institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB ",
     date: "September 2024",
     duration: "7 Days",
+    cred_link:"https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/view?usp=sharing"
   },
   {
     id: 5,
     title: "Numerical Algorithms & Computations in Science & Technology with Matlab",
     institution: "Dept. of Mathematics, Indian Institute of Technology Ropar, Rupnagar, PB",
     date: "July 2024",
+    cred_link:"https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/view?usp=drive_link"
   },
   {
     id: 6,
     title: "Democratizing Data science: Exploring Open Source Statistical Software",
     institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB ",
     date: "March 2024",
+    cred_link:"https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/view?usp=drive_link"
   },
   {
     id: 7,
     title: "Research Opportunities in Computer Science (ROCS) - ACM",
     institution: "Indian Institute of Technology Madras, Chennai, TN",
     date: "January 2024",
+    cred_link:"https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/view?usp=drive_link"
   },
   {
     id: 8,
@@ -88,6 +92,7 @@ const attendedWorkshops = [
     instructor: "Prof. Ponnurangam Kumaraguru",
     institution: "International Institute of Technology (IIIT) Hyderabad, TS",
     date: "February 2023",
+    cred_link:"https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/view?usp=drive_link"
   }
 ]
 
@@ -99,6 +104,7 @@ const attendedBootcamps = [
     institution: " Department of Computer Science and Engineering, Indian Institute of Technology Ropar",
     date: "June 2024",
     duration: " 1 Months",
+    cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/view?usp=drive_link",
     //description: "Comprehensive bootcamp covering Python, statistics, machine learning, and data visualization. Completed capstone project on predictive analytics.",
     //skillsLearned: ["Python", "Statistics", "Machine Learning", "Data Visualization", "SQL"],
     //certificate: true,
