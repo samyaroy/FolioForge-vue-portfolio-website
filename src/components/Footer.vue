@@ -123,19 +123,24 @@
       <v-divider class="my-2 bg-gray-600"></v-divider>
 
       <div class="flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-300 text-sm">
+        <p class="text-gray-500 text-sm">
           © {{ new Date().getFullYear() }} Samyabrata Roy. All Rights Reserved.
         </p>
-
         <div class="flex space-x-4 mt-2 md:mt-0">
-          <a href="#" class="text-gray-300 hover:text-white text-sm transition-colors duration-200">
+          <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
             Privacy Policy
           </a>
-          <a href="#" class="text-gray-300 hover:text-white text-sm transition-colors duration-200">
+          <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
             Terms of Service
           </a>
         </div>
       </div>
+      <p class="text-gray-500 text-sm">
+          &ensp; Source code available at <a href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template">GitHub Repo</a>.
+          <br />
+          &ensp; Please fork/clone from there — not directly from the site’s source.
+        </p>
+
     </div>
   </v-footer>
 </template>
