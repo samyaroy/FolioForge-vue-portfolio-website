@@ -16,7 +16,7 @@
                 class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]">
                 Web Developer <br />Data Science, Statistics Enthusiast
               </h1>
-              <h2
+              <h2>V2
                 class="text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
                 Curious student with a strong foundation in statistical theory and inference, data science and
                 full-stack web
