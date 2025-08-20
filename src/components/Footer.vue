@@ -71,7 +71,7 @@
             </li>
             <li>
               <router-link to="/workshops-bootcamps-attended" class="text-black-300 hover:text-black transition-colors duration-200">
-                Workshops & Bootcamps attended
+                Bootcamps & Workshops attended
               </router-link>
             </li>
             <!-- <li>
