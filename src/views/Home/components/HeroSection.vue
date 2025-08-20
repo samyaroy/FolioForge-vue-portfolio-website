@@ -78,7 +78,7 @@ const twitter = import.meta.env.VITE_TWITTER
 const downloadCV = () => {
   // You can replace this with your actual CV download logic
   const link = document.createElement('a')
-  link.href = '/path-to-your-cv.pdf' // Replace with your actual CV file path
+  link.href = 'https://drive.google.com/uc?export=download&id=1DA-QF8-1MFjay43ByKFvmJxp1b7f43A0' // Replace with your actual CV file path
   link.download = 'Samyabrata_Roy_CV.pdf'
   link.click()
 }
