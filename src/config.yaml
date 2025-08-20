@@ -1,0 +1,75 @@
+# config.yml
+
+profile:
+  name: Name
+  about: A brief description of User.
+  heading: User's Heading #will be used in home page hero section
+
+  #environment: development   # or staging / production
+
+contacts:
+  email: contact@example.com
+  phone: +1-234-567-8901
+  location: San Francisco, CA
+
+socials:
+  github: https://github.com/username
+  #github2: https://github.com/username2
+  linkedin: https://www.linkedin.com/in/username
+  twitter: https://twitter.com/username
+
+  google_scholar: https://scholar.google.com/citations?user=anyone=en
+  researchgate: https://www.researchgate.net/profile/anyone
+
+experience:
+  - job_title: Your First Job Title
+    company: Your Company
+    location: City, Country
+    time_period: 2000
+    description: Description 1
+
+  - job_title: Your Second Job Title
+    company: Your Company
+    location: City, Country
+    time_period: 2000
+    description: Description 2
+
+  - job_title: Your Third Job Title
+    company: Your Company
+    location: City, Country
+    time_period: 2000
+    description: Description 3
+
+  # Add more fields as needed
+
+education:
+  - degree: Bachelor of Subject
+    field: Subject Name
+    institution: Your University
+    location: City, Country
+    time_period: 2000
+    gpa: 0.0
+
+  - degree: Master of Subject
+    field: Subject Name
+    institution: Your University
+    location: City, Country
+    time_period: 2000
+    gpa: 0.0
+
+  - degree: PhD
+    field: Subject Name
+    institution: Your University
+    location: City, Country
+    time_period: 2000
+    gpa: 0.0
+
+  # Add more fields as needed
+awards:
+  - title: Best Developer Award
+    year: 2021
+    issuer: Tech Company
+    
+  - title: Excellence in Research
+    year: 2020
+    issuer: University

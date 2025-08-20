@@ -8,16 +8,16 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Brand Section -->
         <div class="col-span-1 md:col-span-2">
-          <h3 class="text-xl font-bold mb-6">Samyabrata Roy</h3>
+          <h3 class="text-xl font-bold mb-6">{{name}}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
-            Full-Stack Web Developer | Data Science Student | Rookie Statistician
-          </p>
+          {{ about }}
+        </p>
           <div class="flex space-x-4">
             <v-btn icon variant="text" color="black" :href=github target="_blank">
               <v-icon>mdi-github</v-icon>
             </v-btn>
             <!-- Student IITM GitHub -->
-            <div class="flex flex-col items-center">
+            <div v-if="github2" class="flex flex-col items-center">
               <v-btn icon variant="text" color="black" :href=github2 target="_blank">
                 <v-icon>mdi-github</v-icon>
               </v-btn>
@@ -113,9 +113,10 @@
               <span>{{ location }}</span>
             </div>
           </div>
-        <div class="pt-4 pb-0">
-            <a href="https://info.flagcounter.com/Wh9G"><img src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+        <!-- <div class="pt-4 pb-0">
+            <a href="https://info.flagcounter.com/code"><img src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
         </div>
+        use this for tracking visitors -->
         </div>
       </div>
 
@@ -146,16 +147,23 @@
 </template>
 
 <script setup>
-// Footer component
-const email = import.meta.env.VITE_EMAIL
-const email_link = import.meta.env.VITE_EMAIL_LINK
-const phone = import.meta.env.VITE_PHONE
-const location = import.meta.env.VITE_LOCATION
+//import yaml from "yaml"
+import config from "@/config.yaml"
 
-const github = import.meta.env.VITE_GITHUB1
-const github2 = import.meta.env.VITE_GITHUB2
-const linkedin = import.meta.env.VITE_LINKEDIN
-const twitter = import.meta.env.VITE_TWITTER
+//const config = yaml.load(raw_config)
+
+// Footer component
+const name = config.profile.name
+const about = config.profile.about
+
+const email = config.contacts.email
+const phone = config.contacts.phone
+const location = config.contacts.location
+
+const github = config.socials.github
+const github2 = config.socials.github2
+const linkedin = config.socials.linkedin
+const twitter = config.socials.twitter
 </script>
 
 <style scoped>
