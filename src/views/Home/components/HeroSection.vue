@@ -16,7 +16,7 @@
                 class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]">
                 Web Developer <br />Data Science, Statistics Enthusiast
               </h1>
-              <h2
+              <h2>V2
                 class="text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
                 Curious student with a strong foundation in statistical theory and inference, data science and
                 full-stack web
@@ -78,7 +78,7 @@ const twitter = import.meta.env.VITE_TWITTER
 const downloadCV = () => {
   // You can replace this with your actual CV download logic
   const link = document.createElement('a')
-  link.href = '/path-to-your-cv.pdf' // Replace with your actual CV file path
+  link.href = 'https://drive.google.com/uc?export=download&id=1DA-QF8-1MFjay43ByKFvmJxp1b7f43A0' // Replace with your actual CV file path
   link.download = 'Samyabrata_Roy_CV.pdf'
   link.click()
 }
