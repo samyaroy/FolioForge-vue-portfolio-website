@@ -7,27 +7,23 @@
         <img src="/profile-icon.png" alt="Profile Icon" class="w-full h-full object-cover rounded-full" />
       </div>
       <router-link to="/" class="text-[#0e141b] text-lg font-bold leading-tight tracking-[-0.015em] no-underline">
-        Samyabrata Roy
+        {{ profile.name }}
       </router-link>
     </div>
 
     <!-- Navigation Links -->
     <div class="flex flex-1 justify-end gap-8">
       <div class="hidden md:flex items-center gap-9">
-        <router-link v-if="$route.name !== 'Home'" to="/"
-          class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200">
+        <router-link to="/" class="nav-link" active-class="active-link">
           Home
         </router-link>
-        <router-link v-if="$route.name !== 'ProjectsPublications'" to="/projects-publications"
-          class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200">
+        <router-link to="/projects-publications" class="nav-link" active-class="active-link">
           Projects & Publications
         </router-link>
-        <router-link v-if="$route.name !== 'Cocurricular'" to="/cocurricular"
-          class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200">
+        <router-link to="/cocurricular" class="nav-link" active-class="active-link">
           Co-curricular
         </router-link>
-        <router-link v-if="$route.name !== 'Contact'" to="/contact"
-          class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200">
+        <router-link to="/contact" class="nav-link" active-class="active-link">
           Contact
         </router-link>
       </div>
@@ -68,20 +64,16 @@
         </div>
 
         <nav class="flex flex-col space-y-4">
-          <router-link v-if="$route.name !== 'Home'" to="/" @click="drawer = false"
-            class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200 py-2">
+          <router-link to="/" @click="drawer = false" class="nav-link" active-class="active-link">
             Home
           </router-link>
-          <router-link v-if="$route.name !== 'ProjectsPublications'" to="/projects-publications" @click="drawer = false"
-            class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200 py-2">
+          <router-link to="/projects-publications" @click="drawer = false" class="nav-link" active-class="active-link">
             Projects & Publications
           </router-link>
-          <router-link v-if="$route.name !== 'Cocurricular'" to="/cocurricular" @click="drawer = false"
-            class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200 py-2">
+          <router-link to="/cocurricular" @click="drawer = false" class="nav-link" active-class="active-link">
             Co-curricular
           </router-link>
-          <router-link v-if="$route.name !== 'Contact'" to="/contact" @click="drawer = false"
-            class="text-[#0e141b] text-sm font-medium leading-normal hover:text-[#1980e6] transition-colors duration-200 py-2">
+          <router-link to="/contact" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
         </nav>
@@ -93,19 +85,16 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import config from "@/profile_info.yml"
 
 const router = useRouter()
 const drawer = ref(false)
-
+const { profile, contacts } = config
 
 const SEND_MAIL = () => {
   const subject = encodeURIComponent('Freelance Project:')
   const body = encodeURIComponent('I would like to discuss a potential collaboration.')
-  
-  // Use Gmail compose URL to open in new tab
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=samyaroy00@gmail.com&su=${subject}&body=${body}`
-  
-  // Open in new tab
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${contacts.email}&su=${subject}&body=${body}`
   window.open(gmailUrl, '_blank')
 }
 </script>
@@ -113,5 +102,21 @@ const SEND_MAIL = () => {
 <style scoped>
 .no-underline {
   text-decoration: none;
+}
+
+.nav-link {
+  color: #0e141b;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500;    /* medium */
+  line-height: normal;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+.nav-link:hover {
+  color: #1980e6;
+}
+.active-link {
+  font-weight: 700; /* bold */
+  color: #1980e6;   /* highlight */
 }
 </style>

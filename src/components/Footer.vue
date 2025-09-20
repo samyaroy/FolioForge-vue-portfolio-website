@@ -26,9 +26,9 @@
             <v-btn icon variant="text" color="black" :href=linkedin target="_blank">
               <v-icon>mdi-linkedin</v-icon>
             </v-btn>
-            <v-btn icon variant="text" color="black" :href=twitter target="_blank">
+            <!-- <v-btn icon variant="text" color="black" :href=twitter target="_blank">
               <v-icon>mdi-twitter</v-icon>
-            </v-btn>
+            </v-btn> -->
             <v-btn icon variant="text" color="white" href="mailto:contact@example.com">
               <v-icon>mdi-email</v-icon>
             </v-btn>
@@ -88,10 +88,10 @@
 
           <ul class="space-y-2">
             <li>
-              <a href="https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en">Google Scholar</a>
+              <a :href="google_scholar" target="_blank">Google Scholar</a>
             </li>
             <li>
-              <a href="https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf">ResearchGate</a>
+              <a :href="researchgate" target="_blank">ResearchGate</a>
             </li>
           </ul> 
         </div>
@@ -124,7 +124,7 @@
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-500 text-sm">
-          © {{ new Date().getFullYear() }} Samyabrata Roy. All Rights Reserved.
+          © {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved.
         </p>
         <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
@@ -146,16 +146,21 @@
 </template>
 
 <script setup>
-// Footer component
-const email = import.meta.env.VITE_EMAIL
-const email_link = import.meta.env.VITE_EMAIL_LINK
-const phone = import.meta.env.VITE_PHONE
-const location = import.meta.env.VITE_LOCATION
+import config from "@/profile_info.yml"
 
-const github = import.meta.env.VITE_GITHUB1
-const github2 = import.meta.env.VITE_GITHUB2
-const linkedin = import.meta.env.VITE_LINKEDIN
-const twitter = import.meta.env.VITE_TWITTER
+const { profile, contacts, socials } = config
+// Footer component
+const email = contacts.email
+const phone = contacts.phone
+const location = contacts.location
+
+const github = socials.github
+const github2 = socials.github2
+const linkedin = socials.linkedin
+//const twitter = socials.twitter
+
+const google_scholar = socials.google_scholar
+const researchgate = socials.researchgate
 </script>
 
 <style scoped>

@@ -1,0 +1,103 @@
+# config.yml
+
+profile:
+  name: Samyabrata Roy
+  about: Curious student with a strong foundation in statistical theory and inference, data science and
+                full-stack web
+                development. Comfortable moving between data analysis and modern web technologies to turn data into
+                insights
+                and ideas into applications. Experienced with statistical modeling, data cleaning, and API development,
+                eager to
+                apply an evidence-based approach to solving complex challenges in research and development fields.
+  heading: Web Developer<br>Data Science, Statistics Enthusiast #will be used in home page hero section
+  cv: https://drive.google.com/uc?export=download&id=1DA-QF8-1MFjay43ByKFvmJxp1b7f43A0 # google drive link for direct download
+  #environment: development   # or staging / production
+
+contacts:
+  email: samyaroy00@gmail.com
+  email2: 22f2001443@ds.study.iitm.ac.in
+  phone: +91 6291764594
+  location: Kolkata, India
+socials:
+  github: https://github.com/samyaroy
+  github2: https://github.com/22f2001443
+  linkedin: https://www.linkedin.com/in/samyabrata23/
+  #twitter: https://twitter.com/username
+
+  google_scholar: https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en
+  researchgate: https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf
+
+experience:
+  - job_role: Student Intern
+    type: Internship
+    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+    location: Kolkata, WB
+    time_period: Feb'25 to present
+    description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
+
+  # Add more fields as needed
+
+education: # put your latest education first
+  
+  - type: University
+    degree: Bachelor of Science (BS)
+    field: Data Science and Application
+    institution: Indian Institute of Technology Madras
+    location: Chennai, TN
+    time_period: 2022 - Ongoing
+    gpa: Current CGPA - 5.97/10
+    cred_link: https://www.iitm.ac.in/22f2001443
+
+  - type: University
+    degree: Bachelor of Science (BSc)
+    field: Statistics
+    institution: Sister Nivedita University
+    location: Kolkata, WB
+    time_period: 2000 - 2025
+    gpa: CGPA - 6.95/10
+
+  - type: Diploma
+    degree: Diploma
+    field: Web Designing (DWD)
+    institution: CITC - The Hub of IT
+    location: Mohali, PB
+    time_period: 2000
+    marks: 84.5%
+    cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/view?usp=drive_link
+
+  - type: School
+    degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
+    field:
+    institution: Nava Nalanda High School
+    location: Kolkata, WB
+    time_period: 2020 - 2022
+    marks: 83.8%
+    cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/view?usp=drive_link
+
+  - type: School
+    degree: X - West Bengal Board of Secondary Education (WBBSE)
+    field:
+    institution: Mahesh sri Ramkrishna Ashram Vidyalaya (HS)
+    location: Rishra, WB
+    time_period: 2010 - 2020
+    marks: 85.71%
+    cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/view?usp=drive_link
+
+  # Add more fields as needed
+
+certifications:
+  
+  # Add more fields as needed
+
+internships:
+  
+  # Add more fields as needed
+
+awards:
+  - title: Best Developer Award
+    year: 2021
+    issuer: Tech Company
+    
+  - title: Excellence in Research
+    year: 2020
+    issuer: University
