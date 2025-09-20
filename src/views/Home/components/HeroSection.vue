@@ -13,18 +13,10 @@
             <!-- Text Content -->
             <div class="flex flex-col gap-2 text-left">
               <h1
-                class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]">
-                Web Developer <br />Data Science, Statistics Enthusiast
-              </h1>
+                class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]" v-html="heading"></h1>
               <h2
                 class="text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
-                Curious student with a strong foundation in statistical theory and inference, data science and
-                full-stack web
-                development. Comfortable moving between data analysis and modern web technologies to turn data into
-                insights
-                and ideas into applications. Experienced with statistical modeling, data cleaning, and API development,
-                eager to
-                apply an evidence-based approach to solving complex challenges in research and development fields.
+                {{ about }}
               </h2>
             </div>
 
@@ -65,21 +57,31 @@
 </template>
 
 <script setup>
-const email = import.meta.env.VITE_EMAIL
-const email_link = import.meta.env.VITE_EMAIL_LINK
-const phone = import.meta.env.VITE_PHONE
-const location = import.meta.env.VITE_LOCATION
+import config from "@/profile_info.yml"
 
-const github_personal = import.meta.env.VITE_GITHUB1
-const github_student = import.meta.env.VITE_GITHUB2
-const linkedin = import.meta.env.VITE_LINKEDIN
-const twitter = import.meta.env.VITE_TWITTER
+const { profile, contacts, socials } = config
+
+const name = profile.name
+const about = profile.about
+const heading = profile.heading
+const cv_link = profile.cv
+
+const email = contacts.email
+const email_link = `mailto:${email}`
+
+const email2 = contacts.email2
+const email2_link = `mailto:${email2}`
+
+
+const github_personal = socials.github
+const linkedin = socials.linkedin
+//const twitter = socials.twitter
 
 const downloadCV = () => {
   // You can replace this with your actual CV download logic
   const link = document.createElement('a')
-  link.href = 'https://drive.google.com/uc?export=download&id=1DA-QF8-1MFjay43ByKFvmJxp1b7f43A0' // Replace with your actual CV file path
-  link.download = 'Samyabrata_Roy_CV.pdf'
+  link.href = cv_link
+  link.download = `${name.replace(" ", "_")}_CV.pdf`
   link.click()
 }
 </script>
