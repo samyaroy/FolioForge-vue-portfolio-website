@@ -18,7 +18,7 @@
         <div class="flex flex-1 flex-col py-3">
             <div class="flex items-center gap-2">
                 <p class="text-[#0e141b] text-base font-medium leading-normal">{{ title }} <span v-if="subject">in {{ subject }}</span></p>
-                <a v-if="cred_link" :href="cred_link" target="_blank" rel="noopener noreferrer">
+                <a v-if="cred_link && cred_link !== '#'" :href="cred_link" target="_blank" rel="noopener noreferrer">
                     <v-icon size="20">mdi-file-document-outline</v-icon>
                 </a>
             </div>

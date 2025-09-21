@@ -12,7 +12,7 @@
         :organization= "exp.company"
         :location= "exp.location"
         :description= "exp.description"
-        :icon="mdi-school"
+        :icon="exp.type === 'Internship' ? 'mdi-school' : 'mdi-certificate'"
         :cred-link="exp.cred_link"
       />
    <!--  

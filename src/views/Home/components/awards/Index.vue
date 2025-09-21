@@ -26,25 +26,27 @@
 
 <script setup>
 import AwardCard from "./components/AwardCard.vue";
+import config from "@/profile_info.yml";
+const { awards } = config;
 
-const awards = [
-  {
-    id: 1,
-    title: "National Coding Challenge",
-    year: "2023",
-    organization: "CodeForces India",
-    description: "Secured 1st place among 5,000+ participants.",
-    category: "Competitive Programming",
-    prize: "Gold Medal",
-  },
-  {
-    id: 2,
-    title: "AI Hackathon",
-    year: "2022",
-    organization: "Google Developer Group",
-    description: "Built an AI model for healthcare prediction.",
-    category: "Machine Learning",
-    prize: "Runner-Up",
-  },
-];
+// const awards = [
+//   {
+//     id: 1,
+//     title: "National Coding Challenge",
+//     year: "2023",
+//     organization: "CodeForces India",
+//     description: "Secured 1st place among 5,000+ participants.",
+//     category: "Competitive Programming",
+//     prize: "Gold Medal",
+//   },
+//   {
+//     id: 2,
+//     title: "AI Hackathon",
+//     year: "2022",
+//     organization: "Google Developer Group",
+//     description: "Built an AI model for healthcare prediction.",
+//     category: "Machine Learning",
+//     prize: "Runner-Up",
+//   },
+// ];
 </script>
