@@ -13,13 +13,13 @@
         :icon="iconMap[edu.type]"
         :title="edu.degree"
         :subject="edu.field"
-        :time="edu.time_period"
+        :time="String(edu.time_period)"
         :institution="edu.institution"
         :location="edu.location"
         :extra="edu.extra"
         :isFirst="index === 0"
         :isLast="index === education.length - 1"
-        :cred_link="edu.cred_link"
+        :cred_link="edu.cred_link || '#'"
       />
 
       <!-- See certification link -->

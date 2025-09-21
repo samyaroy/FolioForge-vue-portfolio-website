@@ -3,12 +3,12 @@
     <div class="flex items-start justify-between mb-4">
       <div class="flex-1">
         <div class="flex items-center gap-4">
-          <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ internship.title }}</h3>
+          <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ internship.role }}</h3>
 
         </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-domain</v-icon>
-          <span>{{ internship.organization }}</span>
+          <span>{{ internship.company }}</span>
         </div>
         <div v-if="internship.department" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-office-building</v-icon>
@@ -20,12 +20,13 @@
         </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-3">
           <v-icon size="16">mdi-calendar</v-icon>
-          <span>{{ internship.duration }}</span>
+          <span>{{ internship.time_period }}</span>
         </div>
 
         <div v-if="internship.project" class="flex items-center gap-2 text-[#4e7397] text-sm mb-3">
           <v-icon size="16">mdi-folder-outline</v-icon>
-          <span><a :href="internship.project">Project: {{ internship.project_title }}</a></span>
+          <span v-if="internship.project.rel_link"><a :href="internship.project.rel_link">Project: {{ internship.project.title }}</a></span>
+          <span v-else>Project: {{ internship.project.title }}</span>
         </div>
       </div>
       <div class="ml-4">
@@ -40,7 +41,7 @@
       </div>
     </div>
 
-    <p class="text-[#0e141b] text-base leading-relaxed mb-4">
+    <p v-if="internship.description" class="text-[#0e141b] text-base leading-relaxed mb-4">
       {{ internship.description }}
     </p>
 
