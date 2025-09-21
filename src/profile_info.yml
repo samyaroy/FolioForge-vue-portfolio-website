@@ -1,32 +1,27 @@
 # config.yml
 
 profile:
-  name: Samyabrata Roy
-  about: Curious student with a strong foundation in statistical theory and inference, data science and
-                full-stack web
-                development. Comfortable moving between data analysis and modern web technologies to turn data into
-                insights
-                and ideas into applications. Experienced with statistical modeling, data cleaning, and API development,
-                eager to
-                apply an evidence-based approach to solving complex challenges in research and development fields.
-  heading: Web Developer<br>Data Science, Statistics Enthusiast #will be used in home page hero section
-  cv: https://drive.google.com/uc?export=download&id=1DA-QF8-1MFjay43ByKFvmJxp1b7f43A0 # google drive link for direct download
+  name: Your Name
+  about: About Me section content goes here. A brief introduction about yourself, your background, and your interests. # will be used in about me section
+  heading: Few Words About You #will be used in home page hero section
+  footer: Your Footer Text Here. # will be used in footer section
+  cv: https://drive.google.com/uc?export=download&id=<your file id> # google drive link for direct download
   #environment: development   # or staging / production
 
 contacts:
-  email: samyaroy00@gmail.com
-  email2: 22f2001443@ds.study.iitm.ac.in
-  phone: +91 6291764594
-  location: Kolkata, India
+  email: primary_email@mail.com
+  email2: secondary_email@mail.com
+  phone: +91 0000000000
+  location: City, Country
 socials:
-  github: https://github.com/samyaroy
-  github2: https://github.com/22f2001443
-  linkedin: https://www.linkedin.com/in/samyabrata23/
+  github: https://github.com/username1
+  github2: https://github.com/username2
+  linkedin: https://www.linkedin.com/in/username/
   #twitter: https://twitter.com/username
 
-  google_scholar: https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en
-  researchgate: https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf
-  orchis_id: https://orcid.org/0009-0000-5356-4684
+  google_scholar: https://scholar.google.com/citations?user=username&hl=en
+  researchgate: https://www.researchgate.net/profile/username
+  orchis_id: https://orcid.org/0000-0000-0000-0000
 
 research_interests:
   - key: Machine_Learning 
@@ -39,80 +34,83 @@ research_interests:
 education: # put your latest education first
   
   - type: University
-    degree: Bachelor of Science (BS)
-    field: Data Science and Application
-    institution: Indian Institute of Technology Madras
-    location: Chennai, TN
-    time_period: 2022 - Ongoing
-    gpa: Current CGPA - 5.97/10
-    cred_link: https://www.iitm.ac.in/22f2001443
+    degree: Bachelor of Science (BSc) - Hons.
+    field: Subject
+    institution: Your University
+    location: City, State, Country
+    time_period: Start - End
+    gpa: Current CGPA - 0.00/10
+    cred_link: https://www.univ.ac.in/roll_no
 
   - type: University
-    degree: Bachelor of Science (BSc)
-    field: Statistics
-    institution: Sister Nivedita University
-    location: Kolkata, WB
-    time_period: 2000 - 2025
-    gpa: CGPA - 6.95/10
+    degree: Master of Science (MSc)
+    field: Subject
+    institution: Your University
+    location: City, State, Country
+    time_period: Start - End
+    gpa: Current CGPA - 0.00/10
+    cred_link: https://www.univ.ac.in/roll_no
+    
 
   - type: Diploma
     degree: Diploma
-    field: Web Designing (DWD)
-    institution: CITC - The Hub of IT
-    location: Mohali, PB
-    time_period: 2000
-    marks: 84.5%
-    cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/view?usp=drive_link
+    field: Subject
+    institution: Your Institution
+    location: City, State, Country
+    time_period: Start - End
+    marks: 0.00%
+    cred_link: https://www.institution.ac.in/roll_no
+    
+  - type: School
+    degree: XII (Stream) - Your Board
+    field:
+    institution: Your School (HS)
+    location: City, State, Country
+    time_period: Start - End
+    marks: 0.00%
+    cred_link: https://www.institution.ac.in/roll_no # r drive link of your marksheet or certificate
 
   - type: School
-    degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
+    degree: XII (Stream) - Your Board
     field:
-    institution: Nava Nalanda High School
-    location: Kolkata, WB
-    time_period: 2020 - 2022
-    marks: 83.8%
-    cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/view?usp=drive_link
-
-  - type: School
-    degree: X - West Bengal Board of Secondary Education (WBBSE)
-    field:
-    institution: Mahesh sri Ramkrishna Ashram Vidyalaya (HS)
-    location: Rishra, WB
-    time_period: 2010 - 2020
-    marks: 85.71%
-    cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/view?usp=drive_link
+    institution: Your School (HS)
+    location: City, State, Country
+    time_period: Start - End
+    marks: 0.00%
+    cred_link: https://www.institution.ac.in/roll_no # r drive link of your marksheet or certificate
 
   # Add more fields as needed
 
 internships:
   
-  - role: Data Science Intern
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-    location: Remote
-    time_period: Jun'24 - Oct'24
-    description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.
-    type: Training Internship
-    cred_link: https://drive.google.com/file/d/1w4os8_vJNmVU4RnYM7iHU7EBYRLbD3yN/view?usp=drive_link
+  - role: Y0ur First Internship Role
+    company: Your First Internship Company
+    location: Location
+    time_period: Start - End
+    description: Description of your role and responsibilities.
+    type: Type of Internship
+    cred_link: https://drive.google.com/file/d/your_file_id/view?usp=
     project: 
-      title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
-      rel_link: /projects-publications?tab=projects#research-1002
+      title: 'Project Title'
+      rel_link: /projects-publications?tab=projects#research-index
 
-  - role: Growth Consultant Intern
-    company: Sorting Hat Technologies Private Limited (Unacademy)
-    location: Remote
-    time_period: Nov'23 - Jan'24
-    department: UnacademyX
-    description: 
-    cred_link: https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/view?usp=drive_link
+  - role: Your Second Internship Role
+    company: Your Second Internship Company
+    location: Location
+    type: Type of Internship
+    time_period: Start - End
+    description: Description of your role and responsibilities.
+    department: Department Name
+    cred_link: https://drive.google.com/file/d/file_id
 
   # Add more fields as needed
 experience:
-  - job_role: Student Intern
-    type: Internship
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-    location: Kolkata, WB
-    time_period: Feb'25 to present
-    description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
+  - job_role: Your First Job Role
+    type: Full-time/Part-time/Internship
+    company: Your First Company
+    location: Location
+    time_period: Start - End
+    description: Description of your role and responsibilities.
     cred_link: '#'
 
   # Add more fields as needed
@@ -122,73 +120,50 @@ certifications:
   # Add more fields as needed
 
 projects:
-  - title: 'Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset'
-    description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
+  - title: 'Project Title'
+    description: Description of your role and responsibilities.
     type: Research Project
-    doi: 10.13140/RG.2.2.16657.13926
-    affiliation:  BSc. (Hons.) Statistics Degree Project, Sister Nivedita University
-    tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
-    guide: Prof. Aniruddha Choudhuri, Assistant Professor, Department of Statistics, Sister Nivedita University, kolkata
-    colaborators:
-    time_period: Jan 2025 - May 2025
+    doi: 00.00000/RG.0.0.00000.00000
+    affiliation: Your University/Institution
+    tech_stack: Tech Stack Used separated by commas
+    guide: Guide Name, Position, Department, Institution, Location
+    colaborators: Collaborator Names separated by commas if any
+    time_period: Start - End
     cred_link:
-      github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
+      github: https://github.com/username/responsibilities
+      web: https://projectwebsite.com # Drive link of your project or project website
 
-  - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
-    description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
-    type: Research Project
-    doi:
-    affiliation: Internship Project, Data Science Intern at IDEAS TIH, ISI
-    tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
-    guide: Mr. Debashis Ghosh, Head, Technology Business Development & Incubation, Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
-    colaborators: Rishav Kumar banerjee, Saunak Datta
-    time_period: Jul 2024 - Dec 2024
+  - title: Tech Project Title
+    description: Description of your role and responsibilities.
+    type: "Technical Project"
+    affiliation: Your University/Institution
+    tech_stack: Tech Stack Used separated by commas
+    guide:
+    time_period: Start - End
     cred_link:
-      github: https://github.com/samyaroy/Multivariate_Analysis_of_Career_Preference_in_Kolkata
+      github: "https://github.com/username/master_repo"
     
-
-  - title: Quiz Pilot (V1 & V2)
-    description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
-    type: "Technical Project"
-    affiliation: Diploma Level. Project, BS in Data Science and Applications, IIT Madras
-    tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
-    guide:
-    time_period: "Jan 2025 - Aug 2025"
-    cred_link:
-      github: "https://github.com/samyaroy/quiz_pilot_master_repo"
-    
-  - title: Doctor Vaahaan
-    description: Responsive website for vehicle decabonation services, deployed with Laravel, MySQL, and Bootstrap.
-    type: "Technical Project"
-    affiliation: Freelance Project
-    tech_stack: Laravel, MySQL, Bootstrap
-    guide:
-    time_period: "Nov 2024 - Dec 2024"
-    cred_link:
-      website: "https://doctorvaahaan.com/"
-
-  - title: Hand Raise Detector
-    description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams. Developed during AI VicharanaShala Bootcamp, IIT Ropar.
-    type: "Technical Project"
-    affiliation: AI VicharanaShala Bootcamp, IIT Ropar
-    tech_stack: YOLOv8, OpenCV, Python
-    guide:
-    time_period:
-    cred_link:
       
 articles:
-  - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
-    publication: EPOCHS 2.0 - Wayanad House ML Group under ML Series initiative, IIT Madras BS Degree
-    field: Statical Modeling, Outliers Detection, Robust modeling
-    date: Nov 2025
-    link: https://www.researchgate.net/publication/374123456_Understanding_Multicollinearity_in_Regression_Analysis
-    type: E-newsletter Article
+  - title: 'Your Article Title'
+    publication: Name of the Journal/Magazine/Website/Newsletter
+    field: Topic/Field of the Article separated by commas
+    date: Month Year
+    link: link_to_article if any or DOI
+    type: Type of Article (e.g., Blog Post, Research Article, Opinion Piece)
 
 publications:
-
-
+  - title: 'Your Publication Title'
+    authors: Author Names separated by commas
+    journal: Name of the Journal/Conference
+    field: Topic/Field of the Publication separated by commas
+    date: Month Year
+    doi: 00.00000/RG.0.0.00000.00000
+    link: link_to_publication if any or DOI
+    type: Type of Publication (e.g., Journal Paper, Conference Paper, Book Chapter)
 
   # Add more fields as needed
+
 awards:
   - title: Best Developer Award
     year: 2021
@@ -201,71 +176,41 @@ awards:
 co_curriculars:
   - title: leadership_roles
     entries:
-      - role: Founder, Club Administrator
-        organization: 'Chi-Square: Statistics Club'
-        location: IIT Madras BS Degree
-        description: Created a statistics community of 450+ members. Led core team, organized workshops, academic sessions, and industry talks. Increased membership by 40% and secured partnerships with other societies.
-        time_period: 2023 - Present
-        skills: Leadership, Event Management, Team Building
+      - role: Your Role
+        organization: 'Your Organization'
+        location: Location or Host Institution
+        description: Description of your role and responsibilities.
+        time_period: Start - End
+        skills: Skills gained or demonstrated separated by commas
 
        
       #Add more entries as needed
 
   - title: volunteering_roles
     entries:
-      - role: Teaching Assistant
-        field: Statistics I course
-        organization: Nilgiri House, IITM BS Degree
+      - role: Your Role
+        organization: 'Your Organization'
+        field: field of volunteering
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
-        time_period: Jan 2025
-        skills: 25+ Students Taught
+        time_period: Month Year - Month Year
+        skills: skills gained or demonstrated separated by commas
 
       #Add more entries as needed
 attended_workshops:
-  - title: "Uncertainty in Machine Learning: Challenges and Opportunities"
-    institution: "Isaac Newton Institute for Mathematical Sciences, University of Cambridge, Cambridge"
-    date: "August 2025"
+  - title: "Your Workshop Title"
+    institution: "Hostinng Institution, City, Country"
+    date: "Month Year"
 
-  - title: "Mini-Symposium on Contemporary Advancements in Computational Intelligence"
-    institution: "Indian Statistical Institute, Kolkata, WB"
-    date: "July 2025"
-
-  - title: "National Workshop and Bootcamp on Cyber Security and Blockchain (NWBCSB 2025)"
-    institution: "International Institute of Technology (IIIT) Hyderabad, TS"
-    date: "March 2025"
-    duration: "7 Days"
-
-  - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
-    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB"
-    date: "September 2024"
-    duration: "7 Days"
-    cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/view?usp=sharing"
-
-  - title: "Numerical Algorithms & Computations in Science & Technology with Matlab"
-    institution: "Dept. of Mathematics, Indian Institute of Technology Ropar, Rupnagar, PB"
-    date: "July 2024"
-    cred_link: "https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/view?usp=drive_link"
-
-  - title: "Democratizing Data Science: Exploring Open Source Statistical Software"
-    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB"
-    date: "March 2024"
-    cred_link: "https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/view?usp=drive_link"
-
-  - title: "Research Opportunities in Computer Science (ROCS) - ACM"
-    institution: "Indian Institute of Technology Madras, Chennai, TN"
-    date: "January 2024"
-    cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/view?usp=drive_link"
-
-  - title: "Social Computing - NPTEL"
-    instructor: "Prof. Ponnurangam Kumaraguru"
-    institution: "International Institute of Technology (IIIT) Hyderabad, TS"
-    date: "February 2023"
-    cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/view?usp=drive_link"
+  - title: "Your Workshop Title 2"
+    instructor: "Prof.ABC XYZ"
+    institution: "Hostinng Institution, City, Country"
+    date: "Month Year"
+    cred_link: "https://drive.google.com/file/d/<file_id>/view?usp=drive_link"
 
 attended_bootcamps:
-  - title: "AI VicharanasShala Bootcamp"
-    instructor: "Dr. Sudarshan Iyengar"
-    institution: "Department of Computer Science and Engineering, Indian Institute of Technology Ropar"
-    date: "June 2024"
-    duration: "1 Month"
-    cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/view?usp=drive_link"
+  - title: "Summer School 101"
+    instructor: "Dr. ABC XYZ"
+    institution: "Department of Science, Your University"
+    date: "Month Year"
+    duration: "X Weeks"
+    cred_link: "https://drive.google.com/file/d/<file-id>/view?usp=drive_link"
