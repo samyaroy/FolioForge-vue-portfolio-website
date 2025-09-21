@@ -6,7 +6,7 @@
           <!-- Profile Image Section -->
           <div
             class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg md:h-auto md:min-w-[400px] lg:w-full flex items-center justify-center -mt-4"
-            style='background-image: url("/SamyabrataRoy2.jpg");'></div>
+            style='background-image: url("/user.jpeg");'></div>
 
           <!-- Content Section -->
           <div class="flex flex-col gap-6 md:min-w-[400px] md:gap-8 lg:justify-center">
