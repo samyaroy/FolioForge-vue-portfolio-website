@@ -2,7 +2,7 @@
     <div class="bg-white rounded-lg shadow-sm p-8">
         <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Academic Projects</h2>
         <div v-if="projects && projects.length > 0" class="space-y-6">
-            <div v-for="project in projects" :key="project.id" :id="`research-${project.id}`"
+            <div v-for="(project, index) in projects" :key="index" :id="`research-${index}`"
                 class="border-l-4 border-[#1980e6] pl-6 py-4">
                 <h3 class="text-lg font-semibold text-[#0e141b] mb-2">{{ project.title }}</h3>
                 <p class="text-gray-600 mb-2"><v-icon>mdi-school</v-icon> {{ project.affiliation }}</p>
