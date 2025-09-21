@@ -8,6 +8,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Brand Section -->
         <div class="col-span-1 md:col-span-2">
+
           <h3 class="text-xl font-bold mb-6">{{profile.name}}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
             {{ profile.footer }}
