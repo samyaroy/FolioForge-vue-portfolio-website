@@ -9,10 +9,10 @@
 
     <!-- Experience Info -->
     <div class="flex flex-1 flex-col py-3">
-      <p class="text-[#0e141b] text-base font-medium leading-normal">{{ title }}</p> <a v-if="cred_link" :href="cred_link">
+      <p class="text-[#0e141b] text-base font-medium leading-normal">{{ title }} <a v-if="cred_link && cred_link !== '#'" :href="cred_link">
           <v-icon size="20">mdi-file-document-outline</v-icon>
         </a>
-
+      </p>
       <!-- Time -->
       <div class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-calendar</v-icon>
@@ -48,7 +48,8 @@ defineProps({
   organization: { type: String, required: true },
   location: { type: String, required: true },
   description: { type: String, default: '' },
-  icon: { type: String, default: 'mdi-school' }, // ✅ icon passed from parent
-  iconColor: { type: String, default: 'text-[#1980e6]' } // ✅ customizable color
+  icon: { type: String, default: 'mdi-school' }, 
+  iconColor: { type: String, default: 'text-[#1980e6]' }, 
+  cred_link: { type: String, default: '#' }
 })
 </script>

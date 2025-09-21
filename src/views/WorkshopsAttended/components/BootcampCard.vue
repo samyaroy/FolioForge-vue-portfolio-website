@@ -69,7 +69,7 @@
 <script setup>
 defineProps({
   bootcamp: {
-    type: Object,
+    type: Array,
     required: true
   }
 })

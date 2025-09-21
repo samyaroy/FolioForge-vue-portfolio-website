@@ -8,16 +8,16 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- Brand Section -->
         <div class="col-span-1 md:col-span-2">
-          <h3 class="text-xl font-bold mb-6">{{name}}</h3>
+          <h3 class="text-xl font-bold mb-6">Samyabrata Roy</h3>
           <p class="text-black-300 mb-6 max-w-lg">
-          {{ about }}
-        </p>
+            Full-Stack Web Developer | Data Science Student | Rookie Statistician
+          </p>
           <div class="flex space-x-4">
             <v-btn icon variant="text" color="black" :href=github target="_blank">
               <v-icon>mdi-github</v-icon>
             </v-btn>
             <!-- Student IITM GitHub -->
-            <div v-if="github2" class="flex flex-col items-center">
+            <div class="flex flex-col items-center">
               <v-btn icon variant="text" color="black" :href=github2 target="_blank">
                 <v-icon>mdi-github</v-icon>
               </v-btn>
@@ -26,9 +26,9 @@
             <v-btn icon variant="text" color="black" :href=linkedin target="_blank">
               <v-icon>mdi-linkedin</v-icon>
             </v-btn>
-            <v-btn icon variant="text" color="black" :href=twitter target="_blank">
+            <!-- <v-btn icon variant="text" color="black" :href=twitter target="_blank">
               <v-icon>mdi-twitter</v-icon>
-            </v-btn>
+            </v-btn> -->
             <v-btn icon variant="text" color="white" href="mailto:contact@example.com">
               <v-icon>mdi-email</v-icon>
             </v-btn>
@@ -88,10 +88,10 @@
 
           <ul class="space-y-2">
             <li>
-              <a href="https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en">Google Scholar</a>
+              <a :href="google_scholar" target="_blank">Google Scholar</a>
             </li>
             <li>
-              <a href="https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf">ResearchGate</a>
+              <a :href="researchgate" target="_blank">ResearchGate</a>
             </li>
           </ul> 
         </div>
@@ -113,10 +113,9 @@
               <span>{{ location }}</span>
             </div>
           </div>
-        <!-- <div class="pt-4 pb-0">
-            <a href="https://info.flagcounter.com/code"><img src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
+        <div class="pt-4 pb-0">
+            <a href="https://info.flagcounter.com/Wh9G"><img src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a>
         </div>
-        use this for tracking visitors -->
         </div>
       </div>
 
@@ -125,7 +124,7 @@
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-500 text-sm">
-          © {{ new Date().getFullYear() }} Samyabrata Roy. All Rights Reserved.
+          © {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved.
         </p>
         <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
@@ -147,23 +146,21 @@
 </template>
 
 <script setup>
-//import yaml from "yaml"
-import config from "@/config.yaml"
+import config from "@/profile_info.yml"
 
-//const config = yaml.load(raw_config)
-
+const { profile, contacts, socials } = config
 // Footer component
-const name = config.profile.name
-const about = config.profile.about
+const email = contacts.email
+const phone = contacts.phone
+const location = contacts.location
 
-const email = config.contacts.email
-const phone = config.contacts.phone
-const location = config.contacts.location
+const github = socials.github
+const github2 = socials.github2
+const linkedin = socials.linkedin
+//const twitter = socials.twitter
 
-const github = config.socials.github
-const github2 = config.socials.github2
-const linkedin = config.socials.linkedin
-const twitter = config.socials.twitter
+const google_scholar = socials.google_scholar
+const researchgate = socials.researchgate
 </script>
 
 <style scoped>

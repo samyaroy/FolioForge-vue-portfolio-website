@@ -6,15 +6,14 @@
       </div>
 
       <!-- Student Intern -->
-      <TimelineComponent
-        title="Student Intern"
-        time="Feb'25 to present"
-        organization="Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-        location="Kolkata, WB"
-        description="Dedicated 640+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend)."
-        icon="mdi-school"
-        iconColor="text-[#1980e6]"
-        cred-linl="#"
+      <TimelineComponent v-for="(exp, index) in experience" :key="index"
+        :title= "exp.job_role"
+        :time= "exp.time_period"
+        :organization= "exp.company"
+        :location= "exp.location"
+        :description= "exp.description"
+        :icon="exp.type === 'Internship' ? 'mdi-school' : 'mdi-certificate'"
+        :cred-link="exp.cred_link"
       />
    <!--  
       <TimelineComponent
@@ -40,7 +39,7 @@
       -->
       
       <!-- See other Internships link -->
-      <div class="flex justify-end mt-6 mb-4">
+      <div v-if="internships && internships.length" class="flex justify-end mt-6 mb-4">
         <router-link 
           to="/internships-certifications?tab=internships" 
           class="text-[#1980e6] hover:text-[#0e141b] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
@@ -56,5 +55,9 @@
 
 <script setup>
 import TimelineComponent from './components/TimelineComponent.vue'
+import config from "@/profile_info.yml"
+
+const { experience, internships } = config
+
 </script>
 
