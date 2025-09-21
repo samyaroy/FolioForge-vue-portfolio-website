@@ -1,3 +1,4 @@
+
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '@/views/Home/index.vue'
 import ProjectPublications from '@/views/ProjectsPublications/index.vue'
