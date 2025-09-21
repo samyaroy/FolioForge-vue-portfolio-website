@@ -38,7 +38,7 @@
           </div>
 
           <div class="space-y-6 max-w-4xl mx-auto">
-            <InternshipCard v-for="internship in internships" :key="internship.id" :internship="internship" />
+            <InternshipCard v-for="(internship, index) in internships" :key="internship.index" :internship="internship" />
           </div>
         </div>
 
@@ -66,6 +66,9 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
+import config from "@/profile_info.yml"
+
+const { certifications, internships } = config
 
 const route = useRoute()
 const activeTab = ref('internships')
@@ -82,70 +85,6 @@ onMounted(() => {
   }
 })
 
-const internships = [
-  // {
-  //   id: 1,
-  //   title: "Student Intern",
-  //   organization: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute",
-  //   location: "Kolkata, WB",
-  //   duration: "Feb'25 to present",
-  //   description: "Dedicated 640+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).",
-  //   skills: ["Data Processing", "Web Development", "Agricultural Data", "Frontend Development"],
-  //   type: "Research Internship"
-  // },
-  {
-    id: 2,
-    title: "Data Science Intern",
-    organization: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute",
-    location: "Remote",
-    duration: "Jun'24 - Oct'24",
-    description: "Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.",
-    //skills: ["Data Preprocessing", "Statistical Modeling", "Python", "Machine Learning"],
-    type: "Training Internship",
-    cred_link:"https://drive.google.com/file/d/1w4os8_vJNmVU4RnYM7iHU7EBYRLbD3yN/view?usp=drive_link",
-    project:"/projects-publications?tab=projects#research-1002",
-    project_title:"Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"
-  },
-  {
-    id: 2,
-    title: "Growth Consultant Intern",
-    organization: "Sorting Hat Technologies Private Limited (Unacademy)",
-    location: "Remote",
-    duration: "Nov'23 - Jan'24",
-    department: "UnacademyX",
-    //description: "Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.",
-    //skills: ["Data Preprocessing", "Statistical Modeling", "Python", "Machine Learning"],
-    //type: "Training Internship",
-    cred_link:"https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/view?usp=drive_link",
-    //project:"/projects-publications?tab=projects#research-1002",
-    //project_title:"Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"
-  }
-]
-
-const certifications = [
-  // {
-  //   id: 1,
-  //   title: "AI VicharanasShala Bootcamp",
-  //   instructor: "Dr. Sudarshan Iyengar",
-  //   institution: "Department of Computer Science and Engineering, Indian Institute of Technology Ropar",
-  //   date: "June 2024",
-  //   duration: "1 Month",
-  //   skills: ["Python", "Statistics", "Machine Learning", "Data Visualization"],
-  //   certificate: true,
-  //   level: "Advanced"
-  // },
-  // {
-  //   id: 2,
-  //   title: "Social Computing - NPTEL",
-  //   instructor: "Prof. Ponnurangam Kumaraguru",
-  //   institution: "International Institute of Technology (IIIT) Hyderabad, TS",
-  //   date: "February 2023",
-  //   duration: "12 Weeks",
-  //   skills: ["Social Computing", "Data Analysis", "Research Methods"],
-  //   certificate: true,
-  //   level: "Intermediate"
-  // }
-]
 </script>
 
 <style scoped>

@@ -19,10 +19,10 @@ const props = defineProps({
 
 // Split into categories dynamically
 const technicalProjects = computed(() =>
-  props.projects.filter(p => p.category === 'Technical')
+  props.projects.filter(p => p.type === 'Technical Project')
 )
 const researchProjects = computed(() =>
-  props.projects.filter(p => p.category === 'Research')
+  props.projects.filter(p => p.type === 'Research Project')
 )
 watchEffect(() => {
   console.log(props.projects)

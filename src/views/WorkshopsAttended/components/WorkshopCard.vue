@@ -17,7 +17,7 @@
       workshop.instructor }}</p>
     <p v-if="workshop.institution" class="text-gray-600 mb-2"><v-icon>mdi-office-building</v-icon>{{
       workshop.institution }}</p>
-    <p class="text-gray-700 mb-3">{{ workshop.description }}</p>
+    <!-- <p class="text-gray-700 mb-3">{{ workshop.description }}</p> -->
     <div class="flex flex-wrap gap-2 mb-3">
       <span v-for="skill in workshop.skillsLearned" :key="skill"
         class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
@@ -34,7 +34,7 @@
 <script setup>
 defineProps({
   workshop: {
-    type: Object,
+    type: Array,
     required: true
   }
 })

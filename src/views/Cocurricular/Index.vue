@@ -13,10 +13,10 @@
 
       <div class="max-w-6xl mx-auto space-y-8">
         <!-- Leadership Component -->
-        <Leadership />
+        <Leadership v-for="(leadership, index) in leadershipRoles" :key="index" :leadership="leadership" />
 
         <!-- Volunteering Component -->
-        <Volunteering />
+        <Volunteering v-for="(volunteer, index) in volunteeringRoles" :key="index" :volunteering="volunteer" />
       </div>
     </div>
   </div>
@@ -25,4 +25,10 @@
 <script setup>
 import Leadership from './components/Leadership.vue'
 import Volunteering from './components/Volunteering.vue'
+
+import config from '@/profile_info.yml'
+const { co_curriculars } = config
+
+const leadershipRoles = co_curriculars.find(c => c.title === "leadership_roles")?.entries || []
+const volunteeringRoles = co_curriculars.find(c => c.title === "volunteering_roles")?.entries || []
 </script>

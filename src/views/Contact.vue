@@ -36,7 +36,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Email</p>
-                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">{{email}}</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2"><a :href="email_link">{{email}}</a></p>
               </div>
             </div>
 
@@ -48,7 +48,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student Email</p>
-                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2">{{email2}}</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2"><a :href="email2_link">{{email2}}</a></p>
               </div>
             </div>
 
@@ -98,7 +98,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Google Scholar</p>
-                <a href="https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Google Scholar Profile</a>
+                <a :href="google_scholar" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Google Scholar Profile</a>
               </div>
             </div>
 
@@ -110,7 +110,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ResearchGate</p>
-                <a href="https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ResearchGate Profile</a>
+                <a :href="researchgate" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ResearchGate Profile</a>
               </div>
             </div>
 
@@ -122,7 +122,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ORCID iD</p>
-                <a href="https://orcid.org/0009-0000-5356-4684" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ORCID iD Profile</a>
+                <a :href="orchis_id" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ORCID iD Profile</a>
               </div>
             </div>
           </div>
@@ -133,16 +133,23 @@
 </template>
 
 <script setup>
-const email = import.meta.env.VITE_EMAIL
-const email_link = import.meta.env.VITE_EMAIL_LINK
-const email2 = import.meta.env.VITE_EMAIL2
-const phone = import.meta.env.VITE_PHONE
-const location = import.meta.env.VITE_LOCATION
+import config from '@/profile_info.yml'
 
-const github = import.meta.env.VITE_GITHUB1
-const github2 = import.meta.env.VITE_GITHUB2
-const linkedIn = import.meta.env.VITE_LINKEDIN
-const twitter = import.meta.env.VITE_TWITTER
+const {profile, contacts, socials} = config
+
+const email = contacts.email
+const email_link = "mailto:" + contacts.email
+const email2 = contacts.email2
+const email2_link = "mailto:" + contacts.email2
+const phone = contacts.phone
+const location = contacts.location
+const github = socials.github
+const github2 = socials.github2
+const linkedIn = socials.linkedin
+const twitter = socials.twitter
+const orchis_id = socials.orchis_id
+const researchgate = socials.researchgate
+const google_scholar = socials.google_scholar
 </script>
 
 <style scoped>
