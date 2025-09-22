@@ -180,7 +180,7 @@ projects:
 articles:
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
     publication: EPOCHS 2.0 - Wayanad House ML Group under ML Series initiative, IIT Madras BS Degree
-    field: Statical Modeling, Outliers Detection, Robust modeling
+    field: Statistical Modeling, Outliers Detection, Robust modeling
     date: Nov 2025
     link: https://www.researchgate.net/publication/374123456_Understanding_Multicollinearity_in_Regression_Analysis
     type: E-newsletter Article
