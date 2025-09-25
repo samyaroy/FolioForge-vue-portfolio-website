@@ -10,6 +10,7 @@
         :title= "exp.job_role"
         :time= "exp.time_period"
         :organization= "exp.company"
+        :supervisor="exp.supervisor"
         :location= "exp.location"
         :description= "exp.description"
         :icon="exp.type === 'Internship' ? 'mdi-school' : 'mdi-certificate'"

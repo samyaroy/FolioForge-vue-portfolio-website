@@ -89,7 +89,7 @@ internships:
   - role: Data Science Intern
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     location: Remote
-    time_period: Jun'24 - Oct'24
+    time_period: Jun 2024 - Oct 2024
     description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.
     type: Training Internship
     cred_link: https://drive.google.com/file/d/1w4os8_vJNmVU4RnYM7iHU7EBYRLbD3yN/view?usp=drive_link
@@ -100,7 +100,7 @@ internships:
   - role: Growth Consultant Intern
     company: Sorting Hat Technologies Private Limited (Unacademy)
     location: Remote
-    time_period: Nov'23 - Jan'24
+    time_period: Nov 2023 - Jan 2024
     department: UnacademyX
     description: 
     cred_link: https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/view?usp=drive_link
@@ -110,8 +110,9 @@ experience:
   - job_role: Student Intern
     type: Internship
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+    supervisor: Mr. Diptendu Dutta, Technology Lead, Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Insitute
     location: Kolkata, WB
-    time_period: Feb'25 to present
+    time_period: Feb 2025 to present
     description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
     cred_link: '#'
 
@@ -138,9 +139,9 @@ projects:
     description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
     type: Research Project
     doi:
-    affiliation: Internship Project, Data Science Intern at IDEAS TIH, ISI
+    affiliation: Internship Project, Data Science Intern at Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Institute
     tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
-    guide: Mr. Debashis Ghosh, Head, Technology Business Development & Incubation, Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+    guide: Mr. Debashis Ghosh, Head, Technology Business Development & Incubation, IDEAS - TIH, Indian Statistical Institute, Kolkata
     colaborators: Rishav Kumar banerjee, Saunak Datta
     time_period: Jul 2024 - Dec 2024
     cred_link:
@@ -150,7 +151,7 @@ projects:
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
     type: "Technical Project"
-    affiliation: Diploma Level. Project, BS in Data Science and Applications, IIT Madras
+    affiliation: Diploma Level. Project, BS in Data Science and Applications, Indian Institute of Technology Madras
     tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
     guide:
     time_period: "Jan 2025 - Aug 2025"
@@ -170,7 +171,7 @@ projects:
   - title: Hand Raise Detector
     description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams. Developed during AI VicharanaShala Bootcamp, IIT Ropar.
     type: "Technical Project"
-    affiliation: AI VicharanaShala Bootcamp, IIT Ropar
+    affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
     tech_stack: YOLOv8, OpenCV, Python
     guide:
     time_period:
@@ -178,7 +179,7 @@ projects:
       
 articles:
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
-    publication: EPOCHS 2.0 - Wayanad House ML Group under ML Series initiative, IIT Madras BS Degree
+    publication: EPOCHS 2.0 - Wayanad House ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
     date: Nov 2025
     link: yet to be published
@@ -186,7 +187,27 @@ articles:
 
 publications:
 
+ongoing_projects:
+  - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
+    description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.
+    type: Research Project
+    affiliation: Own Project
+    tech_stack: Robust Regression, Machine Learning, R
+    guide: 
+    colaborators: 
+    time_period: 
+    cred_link:
+      github: 
 
+  - title: 'Cinema Audience Forecasting challenge'
+    description: Participating in a Kaggle competition to forecast weekly box office revenue for movies using historical data and various machine learning techniques.
+    tech_stack: Machine Learning, Time Series Forecasting, Python
+    type: Course Project
+    affiliation: Machine Learning Practice - Project, Data Science and Applications, Indian Institute of Technology Madras BS Degree
+    guide:
+    time_period: Sep 2025 - Dec 2025
+    cred_link:
+      github: 
 
   # Add more fields as needed
 awards:
@@ -200,7 +221,7 @@ co_curriculars:
     entries:
       - role: Founder, Club Administrator
         organization: 'Chi-Square: Statistics Club'
-        location: IIT Madras BS Degree
+        location: Indian Institute of Technology Madras BS Degree
         description: Created a statistics community of 450+ members. Led core team, organized workshops, academic sessions, and industry talks. Increased membership by 40% and secured partnerships with other societies.
         time_period: 2023 - Present
         skills: Leadership, Event Management, Team Building
@@ -210,7 +231,7 @@ co_curriculars:
 
   - title: volunteering_roles
     entries:
-      - role: Teaching Assistant (Revision Sessions)
+      - role: Teaching Assistant (RevIndian Statistical Insituteon Sessions)
         field: 'Course: Statistics I'
         organization: Nilgiri House, Indian Institute of Technology Madras BS Degree
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.

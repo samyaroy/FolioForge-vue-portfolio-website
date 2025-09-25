@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import Home from '@/views/Home/index.vue'
 import ProjectPublications from '@/views/ProjectsPublications/index.vue'
+import OngoingProjects from '@/views/OngoingProjects/index.vue'
 import Cocurricular from '@/views/Cocurricular/index.vue'
 
 import WorkshopsAttended from '@/views/WorkshopsAttended/index.vue'
@@ -16,6 +17,11 @@ const routes = [
     path: '/projects-publications',
     name: 'ProjectsPublications',
     component: ProjectPublications
+  },
+  {
+    path: '/ongoing-projects',
+    name: 'OngoingProjects',
+    component: OngoingProjects
   },
   {
     path: '/cocurricular',

@@ -65,6 +65,10 @@
             </li> -->
             
             <li>
+              <router-link to="/ongoing-projects" class="text-black-300 hover:text-black transition-colors duration-200">
+                Ongoing Projects
+              </router-link></li>
+              <li>
               <router-link to="/internships-certifications" class="text-black-300 hover:text-black transition-colors duration-200">
                 Internships & Certifications
               </router-link>
