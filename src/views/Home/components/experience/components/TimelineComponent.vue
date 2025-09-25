@@ -34,7 +34,7 @@
       <!-- Organization -->
       <div v-if="supervisor" class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-account-tie</v-icon>
-        <p class="text-[#4e7397] text-sm font-normal leading-normal">{{ supervisor }}</p>
+        <p class="text-[#4e7397] text-sm font-normal leading-normal">Supervisor: {{ supervisor }}</p>
       </div>
 
       <!-- Location -->
