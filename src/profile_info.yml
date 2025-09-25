@@ -32,10 +32,9 @@ socials:
 research_interests:
   - key: Machine_Learning 
   - key: Statistical_Modeling
-  - key: Web_Development
+  - key: Nonparametric_Inference
   - key: Data_Engineering
-  - key: Data_Visualization
-  - key: Cybersecurity 
+  
 
 education: # put your latest education first
   
@@ -182,7 +181,7 @@ articles:
     publication: EPOCHS 2.0 - Wayanad House ML Group under ML Series initiative, IIT Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
     date: Nov 2025
-    link: https://www.researchgate.net/publication/374123456_Understanding_Multicollinearity_in_Regression_Analysis
+    link: yet to be published
     type: E-newsletter Article
 
 publications:
@@ -211,12 +210,19 @@ co_curriculars:
 
   - title: volunteering_roles
     entries:
-      - role: Teaching Assistant
-        field: Statistics I course
-        organization: Nilgiri House, IITM BS Degree
+      - role: Teaching Assistant (Revision Sessions)
+        field: 'Course: Statistics I'
+        organization: Nilgiri House, Indian Institute of Technology Madras BS Degree
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
-        time_period: Jan 2025
+        time_period: Jan Term 2025 (T12025)
         skills: 25+ Students Taught
+
+      - role: Teaching Assistant (Project)
+        field: 'Autumn Internship: Data Science & Social Science'
+        organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+        #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
+        time_period: Sept 2025 - Oct 2025
+        skills: Mentored 7 Interns working on 3 projects
 
       #Add more entries as needed
 attended_workshops:

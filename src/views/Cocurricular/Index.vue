@@ -12,6 +12,7 @@
       </div>
 
       <div class="max-w-6xl mx-auto space-y-8">
+        <!-- We git bug here-->
         <!-- Leadership Component -->
         <Leadership v-for="(leadership, index) in leadershipRoles" :key="index" :leadership="leadership" />
 
