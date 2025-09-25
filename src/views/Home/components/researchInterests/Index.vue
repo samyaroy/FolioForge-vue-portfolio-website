@@ -36,6 +36,7 @@ const iconMap = {
   Statistical_Modeling: "mdi-chart-bar",
   Bayesian_Statistics: "mdi-chart-bar",
   Hypothesis_Testing: "mdi-check-circle",
+  Nonparametric_Inference: "mdi-function-variant",
 
   Data_Science: "mdi-database",
   Data_Visualization: "mdi-chart-pie",
