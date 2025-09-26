@@ -8,7 +8,7 @@
                 <p class="text-gray-600 mb-2"><v-icon>mdi-school</v-icon> {{ project.affiliation }}</p>
                 <div class="flex items-starts gap-2">
                     <p class="text-gray-600 mb-0 flex items-start">
-                        <v-icon class="mr-1">mdi-account-tie</v-icon> Supervisor:
+                        <v-icon class="mr-1">mdi-account-tie</v-icon>  Guide:
                     </p>
                     <p class="text-gray-600 mb-0 flex items-center">
                         {{ project.guide }}

@@ -42,7 +42,7 @@ education: # put your latest education first
     degree: Bachelor of Science (BS)
     field: Data Science and Application
     institution: Indian Institute of Technology Madras
-    location: Chennai, TN
+    location: Chennai, TN, India
     time_period: 2022 - Ongoing
     gpa: Current CGPA - 5.97/10
     cred_link: https://www.iitm.ac.in/22f2001443
@@ -51,7 +51,7 @@ education: # put your latest education first
     degree: Bachelor of Science (BSc)
     field: Statistics
     institution: Sister Nivedita University
-    location: Kolkata, WB
+    location: Kolkata, WB, India
     time_period: 2000 - 2025
     gpa: CGPA - 6.95/10
 
@@ -59,7 +59,7 @@ education: # put your latest education first
     degree: Diploma
     field: Web Designing (DWD)
     institution: CITC - The Hub of IT
-    location: Mohali, PB
+    location: Mohali, PB, India
     time_period: 2000
     marks: 84.5%
     cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/view?usp=drive_link
@@ -68,7 +68,7 @@ education: # put your latest education first
     degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
     field:
     institution: Nava Nalanda High School
-    location: Kolkata, WB
+    location: Kolkata, WB, India
     time_period: 2020 - 2022
     marks: 83.8%
     cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/view?usp=drive_link
@@ -77,7 +77,7 @@ education: # put your latest education first
     degree: X - West Bengal Board of Secondary Education (WBBSE)
     field:
     institution: Mahesh sri Ramkrishna Ashram Vidyalaya (HS)
-    location: Rishra, WB
+    location: Rishra, WB, India
     time_period: 2010 - 2020
     marks: 85.71%
     cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/view?usp=drive_link
@@ -231,7 +231,7 @@ co_curriculars:
 
   - title: volunteering_roles
     entries:
-      - role: Teaching Assistant (RevIndian Statistical Insituteon Sessions)
+      - role: Teaching Assistant (Revision Sessions)
         field: 'Course: Statistics I'
         organization: Nilgiri House, Indian Institute of Technology Madras BS Degree
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
@@ -243,7 +243,7 @@ co_curriculars:
         organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
         time_period: Sept 2025 - Oct 2025
-        skills: Mentored 7 Interns working on 3 projects
+        skills: Co-mentored 7 interns on 3 mini projects in the Data Ingestion vertical of the NPCYF Project.
 
       #Add more entries as needed
 attended_workshops:
