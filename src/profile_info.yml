@@ -113,7 +113,7 @@ experience:
     supervisor: Mr. Diptendu Dutta, Technology Lead, Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Insitute
     location: Kolkata, WB
     time_period: Feb 2025 to present
-    description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
+    description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (full-stack).
     cred_link: '#'
 
   # Add more fields as needed
@@ -239,7 +239,7 @@ co_curriculars:
         skills: 25+ Students Taught
 
       - role: Teaching Assistant (Project)
-        field: 'Autumn Internship: Data Science & Social Science'
+        field: 'Autumn Internship 2025: Data Science & Social Science'
         organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
         time_period: Sept 2025 - Oct 2025
