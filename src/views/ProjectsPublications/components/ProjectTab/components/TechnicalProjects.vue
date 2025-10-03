@@ -8,7 +8,7 @@
                     <h3 class="text-lg font-semibold text-[#0e141b]">{{ project.title }}</h3>
                     <span class="text-sm text-gray-500">{{ project.time_period }}</span>
                 </div>
-                <div class="text-sm"><v-icon size="16">mdi-attachment</v-icon> {{ project.affiliation }}</div>
+                <div v-if="project.affiliation" class="text-sm"><v-icon size="16">mdi-attachment</v-icon> {{ project.affiliation }}</div>
                 <br />
                 <div class="flex flex-wrap gap-2 mb-4">
                     <span v-for="tag in Array.isArray(project.tech_stack)
