@@ -169,6 +169,17 @@ projects:
     cred_link:
       website: "https://doctorvaahaan.com/"
 
+  - title: FolioForge Portfolio Website
+    description: Personal portfolio website built with Vue.js and Tailwind CSS, featuring dynamic content and responsive design.
+    type: "Technical Project"
+    affiliation: 
+    tech_stack: Vue.js, Tailwind CSS, JavaScript
+    guide:
+    time_period: 
+    cred_link:
+      github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
+    
+
   - title: Hand Raise Detector
     description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams. Developed during AI VicharanaShala Bootcamp, IIT Ropar.
     type: "Technical Project"
