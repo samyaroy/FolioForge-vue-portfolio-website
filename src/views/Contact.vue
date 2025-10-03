@@ -89,6 +89,18 @@
               </div>
             </div>
 
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 556 556">
+                  <path fill="#1f1f1e" d="M464.2 565.5L318.4 384.3L458.2 249C460.8 246.3 459.9 238.5 452.9 238.5L383.7 238.5C380.2 238.5 376.7 240.3 373.2 243.8L240.9 377.5L240.9 71.5C240.9 66.5 238.4 64 233.4 64L181.5 64C176.5 64 174 66.5 174 71.5L174 568.5C174 573.5 176.5 576 181.5 576L233.4 576C238.4 576 240.9 573.5 240.9 568.5L240.9 459.5L271.7 430.2L382.2 570.8C385.2 574.3 388.7 576.1 392.7 576.1L459.6 576.1C463.1 576.1 465.1 575.1 465.6 573.1L464.2 565.5z"/>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Kaggle</p>
+                <a :href="kaggle" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Kaggle Profile</a>
+              </div>
+            </div>
+            
             <!-- Third Row: Google Scholar, ResearchGate, ORCID iD -->
             <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
               <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
@@ -143,6 +155,7 @@ const email2 = contacts.email2
 const email2_link = "mailto:" + contacts.email2
 const phone = contacts.phone
 const location = contacts.location
+const kaggle = socials.kaggle
 const github = socials.github
 const github2 = socials.github2
 const linkedIn = socials.linkedin
