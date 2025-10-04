@@ -46,11 +46,11 @@ education: # put your latest education first
     location: Chennai, TN
     time_period: 2022 - Ongoing
     gpa: Current CGPA - 5.97/10
-    cred_link: https://www.iitm.ac.in/22f2001443
+    cred_link: https://ds.study.iitm.ac.in/student/22F2001443
 
   - type: University
     degree: Bachelor of Science (BSc)
-    field: Statistics
+    field: Statistics (Honours)
     institution: Sister Nivedita University
     location: Kolkata, WB
     time_period: 2000 - 2025
