@@ -34,7 +34,7 @@
         <!-- Internships Section -->
         <div v-if="activeTab === 'internships'" class="mb-16">
           <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Internships</h2>
+            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Training Internships</h2>
           </div>
 
           <div class="space-y-6 max-w-4xl mx-auto">
@@ -74,7 +74,7 @@ const route = useRoute()
 const activeTab = ref('internships')
 
 const tabs = [
-  { id: 'internships', name: 'Internships' },
+  { id: 'internships', name: 'Training Internships' },
   { id: 'certifications', name: 'Certifications' }
 ]
 

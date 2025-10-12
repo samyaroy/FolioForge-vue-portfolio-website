@@ -41,7 +41,7 @@ education: # put your latest education first
   
   - type: University
     degree: Bachelor of Science (BS)
-    field: Data Science and Application
+    field: Data Science and Applications
     institution: Indian Institute of Technology Madras
     location: Chennai, TN
     time_period: 2022 - Ongoing
@@ -108,12 +108,30 @@ internships:
 
   # Add more fields as needed
 experience:
+  - job_role: Associate Software Developer
+    type: Employment
+    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+    location: Kolkata, WB
+    project: NPCYF (National Platform for Crop Yield Forecasting)
+    time_period: Oct 2025 - Present
+    description: Developed and maintained responsive websites and web applications for clients using modern web technologies such as HTML, CSS, JavaScript, Vue.js, Flask, and Laravel. Collaborated with clients to gather requirements, design user interfaces, and implement features that enhance user experience.
+    cred_link: https://drive.google.com/file/d/1X4nY3jv1bXKX1eJtY8FqjZk8y5G7H9zK/view?usp=drive_link
+
+  - job_role: Freelance Web Developer
+    type: Freelance
+    company: Upwork
+    department: Web Development
+    location: Remote
+    time_period: Jan 2024 - Present
+    description: Successfully completed multiple freelance web development projects on Upwork, delivering high-quality websites and applications that meet client specifications. Utilized skills in front-end and back-end development to create dynamic and user-friendly solutions.
+    cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
+
   - job_role: Student Intern
     type: Internship
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     supervisor: Mr. Diptendu Dutta, Technology Lead, Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Insitute
     location: Kolkata, WB
-    time_period: Feb 2025 to present
+    time_period: Feb 2025 to Oct 2025
     description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
     cred_link: '#'
 
@@ -243,9 +261,9 @@ co_curriculars:
 
   - title: volunteering_roles
     entries:
-      - role: Teaching Assistant (RevIndian Statistical Insituteon Sessions)
+      - role: Teaching Assistant (Revision Sessions)
         field: 'Course: Statistics I'
-        organization: Nilgiri House, Indian Institute of Technology Madras BS Degree
+        organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
         time_period: Jan Term 2025 (T12025)
         skills: 25+ Students Taught
@@ -255,7 +273,7 @@ co_curriculars:
         organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
         time_period: Sept 2025 - Oct 2025
-        skills: Mentored 7 Interns working on 3 projects
+        skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
 
       #Add more entries as needed
 attended_workshops:
