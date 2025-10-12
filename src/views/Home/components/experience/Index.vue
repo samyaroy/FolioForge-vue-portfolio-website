@@ -6,50 +6,21 @@
       </div>
 
       <!-- Student Intern -->
-      <TimelineComponent v-for="(exp, index) in experience" :key="index"
-        :title= "exp.job_role"
-        :time= "exp.time_period"
-        :organization= "exp.company"
-        :supervisor="exp.supervisor"
-        :location= "exp.location"
-        :description= "exp.description"
-        :icon="exp.type === 'Internship' ? 'mdi-school' : 'mdi-certificate'"
-        :cred-link="exp.cred_link"
-      />
-   <!--  
-      <TimelineComponent
-        title="Research Assistant"
-        time="Jun'24 - Jan'25"
-        organization="Some Other Institute"
-        location="Bangalore"
-        description="Assisted in data preprocessing and building statistical models for large-scale datasets."
-        icon="mdi-briefcase"
-        iconColor="text-[#1980e6]"
-      />
+      <TimelineComponent v-for="(exp, index) in experience" :key="index" :isfirst="index === 0"
+        :islast="index === experience.length - 1" :title="exp.job_role" :time="exp.time_period"
+        :organization="exp.company" :supervisor="exp.supervisor" :location="exp.location" :description="exp.description"
+        :icon="exp.type === 'Internship' ? 'mdi-school' : exp.type === 'Employment' ? 'mdi-briefcase' : 'mdi-laptop-account'" :cred-link="exp.cred_link"
+        :department="exp.department" :project="exp.project" :cred_link="exp.cred_link" />
 
-      // Software Developer 
-      <TimelineComponent
-        title="Software Developer Intern"
-        time="Jan'24 - May'24"
-        organization="Tech Startup Pvt Ltd"
-        location="Hyderabad"
-        description="Worked on backend APIs and implemented database optimizations."
-        icon="mdi-laptop"
-        iconColor="text-[#1980e6]"
-      />
-      -->
-      
       <!-- See other Internships link -->
       <div v-if="internships && internships.length" class="flex justify-end mt-6 mb-4">
-        <router-link 
-          to="/internships-certifications?tab=internships" 
-          class="text-[#1980e6] hover:text-[#0e141b] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
-        >
+        <router-link to="/internships-certifications?tab=internships"
+          class="text-[#1980e6] hover:text-[#0e141b] text-sm font-medium transition-colors duration-200 flex items-center gap-1">
           See other Internships
           <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
         </router-link>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -61,4 +32,3 @@ import config from "@/profile_info.yml"
 const { experience, internships } = config
 
 </script>
-
