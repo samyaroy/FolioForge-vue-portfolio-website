@@ -114,17 +114,17 @@ experience:
     location: Kolkata, WB
     project: NPCYF (National Platform for Crop Yield Forecasting)
     time_period: Oct 2025 - Present
-    description: Developed and maintained responsive websites and web applications for clients using modern web technologies such as HTML, CSS, JavaScript, Vue.js, Flask, and Laravel. Collaborated with clients to gather requirements, design user interfaces, and implement features that enhance user experience.
-    cred_link: https://drive.google.com/file/d/1X4nY3jv1bXKX1eJtY8FqjZk8y5G7H9zK/view?usp=drive_link
+    description:
+    # cred_link: https://drive.google.com/file/d/1X4nY3jv1bXKX1eJtY8FqjZk8y5G7H9zK/view?usp=drive_link
 
-  - job_role: Freelance Web Developer
-    type: Freelance
-    company: Upwork
-    department: Web Development
-    location: Remote
-    time_period: Jan 2024 - Present
-    description: Successfully completed multiple freelance web development projects on Upwork, delivering high-quality websites and applications that meet client specifications. Utilized skills in front-end and back-end development to create dynamic and user-friendly solutions.
-    cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
+  # - job_role: Freelance Web Developer
+  #   type: Freelance
+  #   company: Upwork
+  #   department: Web Development
+  #   location: Remote
+  #   time_period: Jan 2024 - Present
+  #   description: Successfully completed multiple freelance web development projects on Upwork, delivering high-quality websites and applications that meet client specifications. Utilized skills in front-end and back-end development to create dynamic and user-friendly solutions.
+  #   cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
 
   - job_role: Student Intern
     type: Internship
@@ -233,7 +233,7 @@ ongoing_projects:
     description: Participating in a Kaggle competition to forecast weekly box office revenue for movies using historical data and various machine learning techniques.
     tech_stack: Machine Learning, Time Series Forecasting, Python
     type: Course Project
-    affiliation: Machine Learning Practice - Project, Data Science and Applications, Indian Institute of Technology Madras BS Degree
+    affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
     guide:
     time_period: Sep 2025 - Dec 2025
     cred_link:
