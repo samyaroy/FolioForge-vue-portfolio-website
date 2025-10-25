@@ -10,13 +10,13 @@ export default defineConfig({
   plugins: [vue(), yaml(), ViteSitemap({
       hostname: 'https://samyabrata.codeium.xyz',
       routes: [
-        '#/',
-        '#/projects-publications',
-        '#/cocurricular',
-        '#/contact',
-        '#/projects-publications?tab=publications',
-        '#/ongoing-projects',
-        '#/internships-certifications'
+        '/',
+        '/projects-publications',
+        '/cocurricular',
+        '/contact',
+        '/projects-publications?tab=publications',
+        '/ongoing-projects',
+        '/internships-certifications'
       ],
     })
   ],
