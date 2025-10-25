@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 #SEO tools
-google*.html
+# google*.html
