@@ -1,5 +1,5 @@
 <template>
-  <div class="relative grid grid-cols-[40px_1fr] gap-x-2 px-4">
+  <div class="relative grid grid-cols-[40px_1fr] gap-x-2 px-4 py-2">
     <!-- Timeline line -->
     <div class="absolute left-[35px] w-px bg-gray-300" :class="{
       'top-1/4 bottom-1': isfirst,          // cut top half if first
