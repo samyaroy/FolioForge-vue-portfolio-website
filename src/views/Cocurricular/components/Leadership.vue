@@ -18,6 +18,10 @@
           <div class="flex items-center space-x-1">
             <v-icon small class="text-[#1980e6]">mdi-office-building</v-icon>
             <span class="text-gray-600">{{ leadership.organization }}</span>
+            <a :href="leadership.web_link" target="_blank" v-if="leadership.web_link"
+              class="text-[#1980e6] hover:underline text-sm">
+              <span v-if="leadership.web_link"><v-icon size="16" class="text-gray-500">mdi-open-in-new</v-icon></span>
+            </a>
           </div>
           <div class="flex items-center space-x-1">
             <v-icon small class="text-[#1980e6]">mdi-map-marker</v-icon>
@@ -40,7 +44,7 @@
 
 
 defineProps({
-  leadership: Array
+  leadership: Object
 })
 
 </script>
