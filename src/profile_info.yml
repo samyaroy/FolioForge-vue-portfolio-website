@@ -53,15 +53,16 @@ education: # put your latest education first
     field: Statistics (Honours)
     institution: Sister Nivedita University
     location: Kolkata, WB
-    time_period: 2000 - 2025
-    gpa: CGPA - 6.95/10
+    time_period: 2022 - 2025
+    gpa: CGPA - 7.01/10
+    cred_link: https://drive.google.com/file/d/1N5jnPq4nCegRzXy_h75CtfA725RJlskM/view?usp=drive_link
 
   - type: Diploma
     degree: Diploma
     field: Web Designing (DWD)
     institution: Chandigarh Institute of Technology and Consultancy
     location: Mohali, PB
-    time_period: 2000
+    time_period: 2020
     marks: 84.5%
     cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/view?usp=drive_link
 
@@ -214,6 +215,7 @@ articles:
     date: Nov 2025
     link: yet to be published
     type: E-newsletter Article
+    cred_link: https://drive.google.com/file/d/1_iK8tIunv7q9rW7_pnpoMTAPGZHIv3O8/view?usp=drive_link
 
 publications:
 
@@ -251,6 +253,7 @@ co_curriculars:
     entries:
       - role: Founder, Club Administrator
         organization: 'Chi-Square: Statistics Club'
+        web_link: https://22f2001443.github.io/chi-square/
         location: Indian Institute of Technology Madras BS Degree
         description: Created a statistics community of 450+ members. Led core team, organized workshops, academic sessions, and industry talks. Increased membership by 40% and secured partnerships with other societies.
         time_period: 2023 - Present
@@ -265,15 +268,17 @@ co_curriculars:
         field: 'Course: Statistics I'
         organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
-        time_period: Jan Term 2025 (T12025)
+        time_period: Jan Term 2025 (T12025) ; May Term 2025 (T22025)
         skills: 25+ Students Taught
+        cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/view?usp=drive_link
 
       - role: Teaching Assistant (Project)
-        field: 'Autumn Internship: Data Science & Social Science'
+        field: 'Autumn Internship: Data Science'
         organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
         time_period: Sept 2025 - Oct 2025
         skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
+        details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
 
       #Add more entries as needed
 attended_workshops:
