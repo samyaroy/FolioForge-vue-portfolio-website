@@ -10,7 +10,7 @@ profile:
                 eager to
                 apply an evidence-based approach to solving complex challenges in research and development fields.
   heading: Web Developer<br>Data Science, Statistics Enthusiast #will be used in home page hero section
-  footer: Full-Stack Web Developer | Data Science Student | Rookie Statistician
+  footer: Rookie Statistician | Data Science Student | Full-Stack Web Developer
   cv: https://drive.google.com/uc?export=download&id=1DA-QF8-1MFjay43ByKFvmJxp1b7f43A0 # google drive link for direct download
   #environment: development   # or staging / production
 
@@ -130,7 +130,10 @@ experience:
   - job_role: Student Intern
     type: Internship
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-    supervisor: Mr. Diptendu Dutta, Technology Lead, Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Insitute
+    supervisor:
+      Name: Mr. Diptendu Dutta
+      Title: Technology Lead
+      Institution: Institute of Data Engineering, Analytics and Science Foundation (TIH)
     location: Kolkata, WB
     time_period: Feb 2025 to Oct 2025
     description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
@@ -139,7 +142,13 @@ experience:
   # Add more fields as needed
 
 certifications:
-  
+  - title: Introduction to Uncertainty Quantification
+    issuer: Whiting School of Engineering, Johns Hopkins University - Coursera
+    instructor: Dr. Michael Shields
+    date: Nov 2025
+    duration: 3 Weeks
+    cred_link: '#'
+    certificate: true  
   # Add more fields as needed
 
 projects:
@@ -149,7 +158,11 @@ projects:
     doi: 10.13140/RG.2.2.16657.13926
     affiliation:  BSc. (Hons.) Statistics Degree Project, Sister Nivedita University
     tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
-    guide: Prof. Aniruddha Choudhuri, Assistant Professor, Department of Statistics, Sister Nivedita University, kolkata
+    guide:
+      Name: Prof. Aniruddha Choudhuri
+      Title: Assistant Professor
+      Department: Department of Statistics
+      Institution: Sister Nivedita University, Kolkata
     colaborators:
     time_period: Jan 2025 - May 2025
     cred_link:
@@ -161,7 +174,10 @@ projects:
     doi:
     affiliation: Internship Project, Data Science Intern at Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Institute
     tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
-    guide: Mr. Debashis Ghosh, Head, Technology Business Development & Incubation, IDEAS - TIH, Indian Statistical Institute, Kolkata
+    guide:
+      Name: Mr. Debashis Ghosh
+      Title: Head, Technology Business Development & Incubation
+      Institute: IDEAS - TIH, Indian Statistical Institute, Kolkata
     colaborators: Rishav Kumar banerjee, Saunak Datta
     time_period: Jul 2024 - Dec 2024
     cred_link:
@@ -268,7 +284,7 @@ co_curriculars:
         field: 'Course: Statistics I'
         organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
-        time_period: Jan Term 2025 (T12025) ; May Term 2025 (T22025)
+        time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
         skills: 25+ Students Taught
         cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/view?usp=drive_link
 
@@ -282,50 +298,84 @@ co_curriculars:
 
       #Add more entries as needed
 attended_workshops:
+  - title: "Systems for LLMs"
+    institution:
+      Department: "Department of Computer Science"
+      Name: "Indian Institute of Technology Bombay & IBM Research"
+    date: "September 2025"
+
+  - title: "Statistical Methods in Cyber Security"
+    institution:
+      Name: "Royal Statistical Society"
+      Location: "London, UK"
+    date: "September 2025"
+
   - title: "Uncertainty in Machine Learning: Challenges and Opportunities"
-    institution: "Isaac Newton Institute for Mathematical Sciences, University of Cambridge, Cambridge"
+    institution:
+      Name: "Isaac Newton Institute for Mathematical Sciences"
+      Location: "Cambridge, UK"
     date: "August 2025"
 
   - title: "Mini-Symposium on Contemporary Advancements in Computational Intelligence"
-    institution: "Indian Statistical Institute, Kolkata, WB"
+    institution:
+      Name: "Indian Statistical Institute"
+      Location: "Kolkata, WB"
     date: "July 2025"
 
   - title: "National Workshop and Bootcamp on Cyber Security and Blockchain (NWBCSB 2025)"
-    institution: "International Institute of Technology (IIIT) Hyderabad, TS"
+    institution:
+      Name: "International Institute of Technology (IIIT) Hyderabad"
+      Location: "Hyderabad, TS"
     date: "March 2025"
     duration: "7 Days"
+    details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/view?usp=drive_link"
 
   - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
-    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB"
-    date: "September 2024"
+    institution: 
+      Name: "Sister Nivedita University"
+      Department: "Dept. of Statistics"
+      Location: "Kolkata, WB"
+    date: "September 2024"  
     duration: "7 Days"
     cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/view?usp=sharing"
 
   - title: "Numerical Algorithms & Computations in Science & Technology with Matlab"
-    institution: "Dept. of Mathematics, Indian Institute of Technology Ropar, Rupnagar, PB"
+    institution:
+      Name: "Indian Institute of Technology Ropar"
+      Department: "Dept. of Mathematics"
+      Location: "Rupnagar, PB"
     date: "July 2024"
     cred_link: "https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/view?usp=drive_link"
 
   - title: "Democratizing Data Science: Exploring Open Source Statistical Software"
-    institution: "Dept. of Statistics, Sister Nivedita University, Kolkata, WB"
+    institution: 
+      Name: "Sister Nivedita University"
+      Department: "Dept. of Statistics"
+      Location: "Kolkata, WB"
     date: "March 2024"
     cred_link: "https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/view?usp=drive_link"
 
   - title: "Research Opportunities in Computer Science (ROCS) - ACM"
-    institution: "Indian Institute of Technology Madras, Chennai, TN"
+    institution:
+      Name: "Indian Institute of Technology Madras"
+      Location: "Chennai, TN"
     date: "January 2024"
     cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/view?usp=drive_link"
 
   - title: "Social Computing - NPTEL"
     instructor: "Prof. Ponnurangam Kumaraguru"
-    institution: "International Institute of Technology (IIIT) Hyderabad, TS"
+    institution:
+      Name: "International Institute of Technology (IIIT) Hyderabad"
+      Location: "Hyderabad, TS"
     date: "February 2023"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/view?usp=drive_link"
 
 attended_bootcamps:
   - title: "AI VicharanasShala Bootcamp"
     instructor: "Dr. Sudarshan Iyengar"
-    institution: "Department of Computer Science and Engineering, Indian Institute of Technology Ropar"
+    institution:
+      Name: "Indian Institute of Technology Ropar"
+      Department: "Department of Computer Science and Engineering"
     date: "June 2024"
     duration: "1 Month"
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/view?usp=drive_link"

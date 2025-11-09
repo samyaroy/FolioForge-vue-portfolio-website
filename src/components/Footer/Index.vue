@@ -26,7 +26,8 @@
             <v-btn icon variant="text" color="black" :href=kaggle target="_blank">
               <v-icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                  <path fill="#1f1f1e" d="M464.2 565.5L318.4 384.3L458.2 249C460.8 246.3 459.9 238.5 452.9 238.5L383.7 238.5C380.2 238.5 376.7 240.3 373.2 243.8L240.9 377.5L240.9 71.5C240.9 66.5 238.4 64 233.4 64L181.5 64C176.5 64 174 66.5 174 71.5L174 568.5C174 573.5 176.5 576 181.5 576L233.4 576C238.4 576 240.9 573.5 240.9 568.5L240.9 459.5L271.7 430.2L382.2 570.8C385.2 574.3 388.7 576.1 392.7 576.1L459.6 576.1C463.1 576.1 465.1 575.1 465.6 573.1L464.2 565.5z"/>
+                  <path fill="#1f1f1e"
+                    d="M464.2 565.5L318.4 384.3L458.2 249C460.8 246.3 459.9 238.5 452.9 238.5L383.7 238.5C380.2 238.5 376.7 240.3 373.2 243.8L240.9 377.5L240.9 71.5C240.9 66.5 238.4 64 233.4 64L181.5 64C176.5 64 174 66.5 174 71.5L174 568.5C174 573.5 176.5 576 181.5 576L233.4 576C238.4 576 240.9 573.5 240.9 568.5L240.9 459.5L271.7 430.2L382.2 570.8C385.2 574.3 388.7 576.1 392.7 576.1L459.6 576.1C463.1 576.1 465.1 575.1 465.6 573.1L464.2 565.5z" />
                 </svg>
               </v-icon>
             </v-btn>
@@ -40,6 +41,7 @@
               <v-icon>mdi-email</v-icon>
             </v-btn>
           </div>
+          <logos :logos="logos" />
         </div>
 
         <!-- Other Links -->
@@ -163,26 +165,31 @@
   </v-footer>
 </template>
 
-<script setup>
+<script>
 import config from "@/profile_info.yml"
+import Logos from "./Logos.vue";
 
-const { profile, contacts, socials } = config;
-
-
-
-// Footer component
-const email = contacts.email
-const phone = contacts.phone
-const location = contacts.location
-
-const github = socials.github
-const github2 = socials.github2
-const linkedin = socials.linkedin
-const kaggle = socials.kaggle
-//const twitter = socials.twitter
-
-const google_scholar = socials.google_scholar
-const researchgate = socials.researchgate
+export default {
+  components: {
+    Logos,
+  },
+  data() {
+    const { profile, contacts, socials } = config;
+    return {
+      profile,
+      email: contacts.email,
+      phone: contacts.phone,
+      location: contacts.location,
+      github: socials.github,
+      github2: socials.github2,
+      linkedin: socials.linkedin,
+      kaggle: socials.kaggle,
+      google_scholar: socials.google_scholar,
+      researchgate: socials.researchgate,
+      logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS', 'IIMM'],
+    };
+  }
+}
 </script>
 
 <style scoped>

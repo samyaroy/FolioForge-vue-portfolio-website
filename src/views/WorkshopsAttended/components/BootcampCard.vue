@@ -18,15 +18,15 @@
     <div class="space-y-2 mb-3">
       <p v-if="bootcamp.instructor" class="text-gray-600 flex items-center">
         <v-icon size="small" class="mr-2">mdi-account-tie</v-icon>
-        <span class="font-medium">Instructor:</span>  {{ bootcamp.instructor }}
+        <span class="font-medium">Instructor: </span><span>  <SmartLink :text="bootcamp.instructor" :type="'Person'"></SmartLink></span>
       </p>
       <p v-if="bootcamp.institution" class="text-gray-600 flex items-center">
         <v-icon size="small" class="mr-2">mdi-school</v-icon>
-        <span class="font-medium">Institution:</span> {{ bootcamp.institution }}
+        <span class="font-medium">Institution: </span><span style="white-space: pre" v-if="bootcamp.institution.Department"> {{ bootcamp.institution.Department }}</span><span>,  <SmartLink :text="bootcamp.institution.Name"></SmartLink></span>
       </p>
       <p v-if="bootcamp.duration" class="text-gray-600 flex items-center">
         <v-icon size="small" class="mr-2">mdi-clock-outline</v-icon>
-        <span class="font-medium">Duration:</span> {{ bootcamp.duration }}
+        <span class="font-medium">Duration: </span> {{ bootcamp.duration }}
       </p>
     </div>
     
@@ -67,9 +67,11 @@
 </template>
 
 <script setup>
+import SmartLink from '@/components/SmartLink.vue'
+
 defineProps({
   bootcamp: {
-    type: Array,
+    type: Object,
     required: true
   }
 })

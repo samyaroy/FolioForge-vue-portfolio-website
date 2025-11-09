@@ -33,7 +33,7 @@
                 <!-- Institution -->
                 <div class="flex items-center gap-2">
                     <v-icon class="text-[#4e7397]" size="16">mdi-domain</v-icon>
-                    <p class="text-[#4e7397] text-sm font-normal leading-normal">{{ institution }}</p>
+                    <p class="text-[#4e7397] text-sm font-normal leading-normal"><SmartLink :text="institution" /></p>
                 </div>
 
                 <!-- Location -->
@@ -53,6 +53,8 @@
 </template>
 
 <script setup>
+import SmartLink from '@/components/SmartLink.vue'
+
 defineProps({
     title: { type: String, required: true },
     subject: { type: String, default: '' }, // Optional, e.g., "in Computer Science"

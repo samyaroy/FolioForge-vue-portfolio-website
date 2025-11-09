@@ -3,7 +3,7 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 // Import global components
 import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+import Footer from '@/components/Footer/Index.vue'
 
 // get current route
 const route = useRoute()
