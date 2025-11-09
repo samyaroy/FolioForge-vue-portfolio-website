@@ -28,12 +28,12 @@
 
       <div class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-domain</v-icon>
-        <p class="text-[#4e7397] text-sm">{{ organization }}</p>
+        <p class="text-[#4e7397] text-sm"><SmartLink :text="organization" /></p>
       </div>
 
       <div v-if="supervisor" class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-account-tie</v-icon>
-        <p class="text-[#4e7397] text-sm">Supervisor: {{ supervisor }}</p>
+        <p class="text-[#4e7397] text-sm">Supervisor: <SmartLink :type="'Person'" :text="supervisor.Name" /><span v-if="supervisor.Title">, {{ supervisor.Title }}</span><span v-if="supervisor.Department">, {{ supervisor.Department }}</span><span v-if="supervisor.Institution">, {{ supervisor.Institution }}</span></p>
       </div>
 
       <div v-if="project" class="flex items-center gap-2 mt-1">
@@ -61,6 +61,8 @@
 </template>
 
 <script setup>
+import SmartLink from '@/components/SmartLink.vue'
+
 defineProps({
   isfirst: { type: Boolean, default: false },
   islast: { type: Boolean, default: false },

@@ -8,7 +8,7 @@
         </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-domain</v-icon>
-          <span>{{ internship.company }}</span>
+          <span><SmartLink :type="'Institute'" :text="internship.company" /></span>
         </div>
         <div v-if="internship.department" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-office-building</v-icon>
@@ -55,6 +55,8 @@
 </template>
 
 <script setup>
+import SmartLink from '@/components/SmartLink.vue'
+
 defineProps({
   internship: {
     type: Object,

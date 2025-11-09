@@ -13,10 +13,13 @@
 
       <span class="text-sm text-gray-500">{{ workshop.date }}</span>
     </div>
-    <p v-if="workshop.instructor" class="text-gray-600 mb-2"><v-icon>mdi-account</v-icon> Instuctor: {{
-      workshop.instructor }}</p>
-    <p v-if="workshop.institution" class="text-gray-600 mb-2"><v-icon>mdi-office-building</v-icon>{{
-      workshop.institution }}</p>
+    <p v-if="workshop.instructor" class="text-gray-600 mb-2"><v-icon size="16">mdi-account</v-icon> Instuctor:
+      <SmartLink :text="workshop.instructor" :type="'Person'"></SmartLink>
+    </p>
+    <p v-if="workshop.institution" class="text-gray-600 mb-2"><v-icon size="16">mdi-office-building</v-icon> <span v-if="workshop.institution.Department"> {{ workshop.institution.Department }}, </span><span><SmartLink :text="workshop.institution.Name"></SmartLink></span><span v-if="workshop.institution.Location">, {{ workshop.institution.Location }}</span>
+    </p>
+    <p v-if="workshop.duration" class="text-gray-600 mb-2"><v-icon size="16">mdi-timer-outline</v-icon> Duration : {{
+      workshop.duration }}</p>
     <!-- <p class="text-gray-700 mb-3">{{ workshop.description }}</p> -->
     <div class="flex flex-wrap gap-2 mb-3">
       <span v-for="skill in workshop.skillsLearned" :key="skill"
@@ -32,9 +35,11 @@
 </template>
 
 <script setup>
+import SmartLink from '@/components/SmartLink.vue'
+
 defineProps({
   workshop: {
-    type: Array,
+    type: Object,
     required: true
   }
 })
