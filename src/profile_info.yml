@@ -78,7 +78,7 @@ education: # put your latest education first
   - type: School
     degree: X - West Bengal Board of Secondary Education (WBBSE)
     field:
-    institution: Mahesh sri Ramkrishna Ashram Vidyalaya (HS)
+    institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
     location: Rishra, WB
     time_period: 2010 - 2020
     marks: 85.71%
@@ -143,7 +143,9 @@ experience:
 
 certifications:
   - title: Introduction to Uncertainty Quantification
-    issuer: Whiting School of Engineering, Johns Hopkins University - Coursera
+    issuer:
+      Institution: Whiting School of Engineering, Johns Hopkins University
+      Platform: Coursera
     instructor: Dr. Michael Shields
     date: Nov 2025
     duration: 3 Weeks
@@ -177,7 +179,7 @@ projects:
     guide:
       Name: Mr. Debashis Ghosh
       Title: Head, Technology Business Development & Incubation
-      Institute: IDEAS - TIH, Indian Statistical Institute, Kolkata
+      Institution: IDEAS - TIH
     colaborators: Rishav Kumar banerjee, Saunak Datta
     time_period: Jul 2024 - Dec 2024
     cred_link:
@@ -272,7 +274,7 @@ co_curriculars:
         web_link: https://22f2001443.github.io/chi-square/
         location: Indian Institute of Technology Madras BS Degree
         description: Created a statistics community of 450+ members. Led core team, organized workshops, academic sessions, and industry talks. Increased membership by 40% and secured partnerships with other societies.
-        time_period: 2023 - Present
+        time_period: 2023 - 2025
         skills: Leadership, Event Management, Team Building
 
        
