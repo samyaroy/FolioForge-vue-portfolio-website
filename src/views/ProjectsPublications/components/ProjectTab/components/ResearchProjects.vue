@@ -26,12 +26,14 @@
                         {{ project.doi }}
                     </a>
                 </p>
-                <p v-if="project.colaborator && project.colaborator.length"
+                <p v-if="project.colaborators && project.colaborators.length"
                     class="text-sm text-gray-600 mb-3 flex items-center gap-1">
                     <v-icon size="16">mdi-account-supervisor</v-icon>
                     Colaborators:
-                    <SmartLink v-for="colab in project.colaborators" :key="colab.Name" :type="'Person'"
-                        :text="colab.Name" />
+                    <template v-for="(colab, index) in project.colaborators.split(',')" :key="colab">
+                        <SmartLink :type="'Person'" :text="colab.trim()"/>
+                        <span v-if="index < project.colaborators.split(',').length - 1">, </span>
+                    </template>
                 </p>
                 <p class="text-gray-700 mb-3">{{ project.description }}</p>
                 <div class="flex flex-wrap gap-2">

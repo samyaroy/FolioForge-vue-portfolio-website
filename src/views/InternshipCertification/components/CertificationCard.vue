@@ -5,7 +5,7 @@
         <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ certification.title }}</h3>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-school</v-icon>
-          <span><SmartLink :type="'Institute'" :text="certification.issuer" /></span>
+          <span><SmartLink :type="'Institute'" :text="certification.issuer.Institution" /></span><span v-if="certification.issuer.Platform">- <SmartLink :type="'Institute'" :text="certification.issuer.Platform" /></span>
         </div>
         <div v-if="certification.instructor" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-account</v-icon>
