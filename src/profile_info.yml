@@ -230,10 +230,10 @@ articles:
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
     publication: EPOCHS 2.0 - Wayanad House ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
-    date: Nov 2025
-    link: yet to be published
+    date: Dec 2025
+    link: https://epochs.netlify.app/2025
     type: E-newsletter Article
-    cred_link: https://drive.google.com/file/d/1_iK8tIunv7q9rW7_pnpoMTAPGZHIv3O8/view?usp=drive_link
+    cred_link: https://epochs.netlify.app/2025#page/5
 
 publications:
 
