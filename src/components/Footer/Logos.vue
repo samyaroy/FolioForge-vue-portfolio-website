@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     getLogoPath(logo) {
-      return `/src/metadata/logo/${logo}.png`;
+      return `/logo/${logo}.png`;
     },
   },
 };
