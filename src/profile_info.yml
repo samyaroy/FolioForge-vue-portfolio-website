@@ -169,6 +169,13 @@ projects:
     time_period: Jan 2025 - May 2025
     cred_link:
       github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
+      researchgate: researchgate.net/publication/391766786_Predicting_Wine_Quality_A_Comparison_of_Linear_Regression_Techniques_on_a_Multicollinear_and_Outlier-Affected_Dataset?_sg%5B0%5D=KMAA__Av1JZU5QW09RmRJh5HSiCHSKQOWtY16iDgz1a-BkmBHVSbh1ayNVa1l4i3mM_SCPfifAd86eWtOl8VXOuygtU2Crm3VRrYc31j.UhBIrCOgdI1HgmgNG6U-yPJyEd7STApaAvphsDR8B4MUGmog_jFi6eOzgU1CxGC8KFeV_7ktVVLz-Thb6YXr_Q&_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19
+    stats:
+      reads: 134
+      citations: 0
+      research_interest_score: 2.0
+
+
 
   - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
     description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
