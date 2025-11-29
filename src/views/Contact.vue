@@ -73,7 +73,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">GitHub</p>
-                <a :href="github" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">GitHub Profile</a>
+                <a :href="github" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">GitHub Profile <span v-if="githubUsername" class="text-[#646cff]">({{ githubUsername }})</span></a>
               </div>
             </div>
 
@@ -84,8 +84,8 @@
                 </svg>
               </div>
               <div class="flex flex-col justify-center">
-                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student GitHub</p>
-                <a :href="github2" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Student GitHub Profile</a>
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student GitHub </p>
+                <a :href="github2" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">Student GitHub Profile <span v-if="github2Username" class="text-[#646cff]">({{ github2Username }})</span></a>
               </div>
             </div>
 
@@ -128,9 +128,7 @@
 
             <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
               <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M200,112a8,8,0,0,1-8,8H152a8,8,0,0,1,0-16h40A8,8,0,0,1,200,112Zm-8,24H152a8,8,0,0,0,0,16h40a8,8,0,0,0,0-16Zm40-80V200a16,16,0,0,1-16,16H40a16,16,0,0,1-16-16V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56ZM216,200V56H40V200H216Zm-80.26-34a8,8,0,1,1-15.5,4c-2.63-10.26-13.06-18-24.25-18s-21.61,7.74-24.25,18a8,8,0,1,1-15.5-4,39.84,39.84,0,0,1,17.19-23.34,32,32,0,1,1,45.12,0A39.76,39.76,0,0,1,135.75,166ZM96,136a16,16,0,1,0-16-16A16,16,0,0,0,96,136Z"></path>
-                </svg>
+                <img src="/icons/Orchid.png" alt="ORCID iD" class="w-6 h-6 object-contain" />
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ORCID iD</p>
@@ -158,6 +156,8 @@ const location = contacts.location
 const kaggle = socials.kaggle
 const github = socials.github
 const github2 = socials.github2
+const githubUsername = github ? github.split('/').filter(Boolean).pop() : null
+const github2Username = github2 ? github2.split('/').filter(Boolean).pop() : null
 const linkedIn = socials.linkedin
 const twitter = socials.twitter
 const orchis_id = socials.orchis_id
