@@ -23,6 +23,10 @@
               <span v-if="leadership.web_link"><v-icon size="16" class="text-gray-500">mdi-open-in-new</v-icon></span>
             </a>
           </div>
+          <div v-if="leadership.host" class="flex items-center space-x-1">
+            <v-icon small class="text-[#1980e6]">mdi-home</v-icon>
+            <span class="text-gray-700">{{ leadership.host }}</span>
+          </div>
           <div class="flex items-center space-x-1">
             <v-icon small class="text-[#1980e6]">mdi-map-marker</v-icon>
             <span class="text-gray-700">{{ leadership.location }}</span>

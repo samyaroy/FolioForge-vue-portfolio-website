@@ -14,8 +14,11 @@
         <!-- <h2 class="text-3xl font-bold text-[#0e141b] mb-6">Workshops Attended</h2> -->
         <!-- <p class="text-gray-600">Academic and professional workshops I've participated in</p> -->
 
-        <div class="space-y-6">
+        <div v-if="ongoingProjects" class="space-y-6">
           <ProjectCard v-for="(project, index) in ongoingProjects" :key="index" :project="project" />
+        </div>
+        <div v-else class="text-gray-600">
+          No information regarding ongoing projects available.
         </div>
       </div>
 
@@ -29,7 +32,7 @@ import ProjectCard from './components/ProjectCard.vue'
 
 import config from '@/profile_info.yml'
 const { ongoing_projects } = config
-const ongoingProjects = ongoing_projects || []
+const ongoingProjects = ongoing_projects
 </script>
 
 <style scoped>

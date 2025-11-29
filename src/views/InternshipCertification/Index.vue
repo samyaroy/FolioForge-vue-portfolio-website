@@ -6,7 +6,7 @@
           Internships & Certifications
         </h1>
         <p class="text-lg text-gray-600 max-w-4xl mx-auto">
-          Professional internships and certifications in Data Science, AI, and emerging technologies
+          Professional internships and certifications I have obtained during my journey.
         </p>
       </div>
 

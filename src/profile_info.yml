@@ -149,7 +149,7 @@ certifications:
     instructor: Dr. Michael Shields
     date: Nov 2025
     duration: 3 Weeks
-    cred_link: '#'
+    cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/view?usp=drive_link'
     certificate: true  
   # Add more fields as needed
 
@@ -245,26 +245,26 @@ articles:
 publications:
 
 ongoing_projects:
-  - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
-    description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.
-    type: Research Project
-    affiliation: Own Project
-    tech_stack: Robust Regression, Machine Learning, R
-    guide: 
-    colaborators: 
-    time_period: 
-    cred_link:
-      github: 
+  # - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
+  #   description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.
+  #   type: Research Project
+  #   affiliation: Own Project
+  #   tech_stack: Robust Regression, Machine Learning, R
+  #   guide: 
+  #   colaborators: 
+  #   time_period: 
+  #   cred_link:
+  #     github: 
 
-  - title: 'Cinema Audience Forecasting challenge'
-    description: Participating in a Kaggle competition to forecast weekly box office revenue for movies using historical data and various machine learning techniques.
-    tech_stack: Machine Learning, Time Series Forecasting, Python
-    type: Course Project
-    affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
-    guide:
-    time_period: Sep 2025 - Dec 2025
-    cred_link:
-      github: 
+  # - title: 'Cinema Audience Forecasting challenge'
+  #   description: Participating in a Kaggle competition to forecast weekly box office revenue for movies using historical data and various machine learning techniques.
+  #   tech_stack: Machine Learning, Time Series Forecasting, Python
+  #   type: Course Project
+  #   affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
+  #   guide:
+  #   time_period: Sep 2025 - Dec 2025
+  #   cred_link:
+  #     github: 
 
   # Add more fields as needed
 awards:
@@ -276,9 +276,10 @@ awards:
 co_curriculars:
   - title: leadership_roles
     entries:
-      - role: Founder, Club Administrator
+      - role: Founder, Club Administrator (later known as Community Admin)
         organization: 'Chi-Square: Statistics Club'
         web_link: https://22f2001443.github.io/chi-square/
+        host: Nilgiri House
         location: Indian Institute of Technology Madras BS Degree
         description: Created a statistics community of 450+ members. Led core team, organized workshops, academic sessions, and industry talks. Increased membership by 40% and secured partnerships with other societies.
         time_period: 2023 - 2025
