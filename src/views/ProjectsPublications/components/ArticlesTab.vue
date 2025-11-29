@@ -10,11 +10,11 @@
             <span class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
               {{ article.type }}
             </span>
-            <span class="inline-block px-2 py-1 text-xs font-medium text-white rounded-full">
+            <!-- <span class="inline-block px-2 py-1 text-xs font-medium text-white rounded-full">
               <a v-if="article.cred_link" :href="article.cred_link" target="_blank">
                 <v-icon size="20">mdi-file-document-outline</v-icon>
-              </a>
-            </span>
+              </a> 
+            </span> -->
           </h3>
 
 
