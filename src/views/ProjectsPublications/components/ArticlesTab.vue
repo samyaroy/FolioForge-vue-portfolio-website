@@ -25,7 +25,7 @@
           article.publication }}</span></p>
         <p class="text-gray-600 mb-4"><v-icon size="20">mdi-tag-outline</v-icon><span class="px-3">{{ article.field
             }}</span></p>
-        <p class="text-gray-600 mb-4"><v-icon size="20">mdi-web</v-icon><span class="px-3">{{ article.link }}</span></p>
+        <p class="text-gray-600 mb-4"><v-icon size="20">mdi-web</v-icon><span class="px-3"><a :href="article.link" target="_blank">{{ article.link }}</a></span></p>
         <div class="flex items-center justify-between">
           <div class="flex flex-wrap gap-2">
             <span v-for="category in article.categories" :key="category"
@@ -33,8 +33,8 @@
               {{ category }}
             </span>
           </div>
-          <a :href="article.link" target="_blank" class="text-[#1980e6] hover:underline text-sm">
-            Read More →
+          <a :href="article.cred_link" target="_blank" class="text-[#1980e6] hover:underline text-sm">
+            Read More <span v-if="article.link !== article.cred_link">(Archived copy)</span> →
           </a>
         </div>
       </div>
