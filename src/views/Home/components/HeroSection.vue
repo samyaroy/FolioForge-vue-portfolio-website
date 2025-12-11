@@ -31,7 +31,7 @@
                 class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 md:h-12 md:px-5 bg-black border-2 border-[#1980e6] text-[#ffffff] text-sm font-bold leading-normal tracking-[0.015em] md:text-base md:font-bold md:leading-normal md:tracking-[0.015em] hover:bg-[#1980e6] hover:text-white transition-all duration-200"
                 @click="downloadCV">
                 <v-icon>mdi-tray-arrow-down</v-icon>
-                <span class="truncate"> My CV</span>
+                <span class="truncate gap-x-1 px-2"> My CV</span>
               </button>
             </div>
 
