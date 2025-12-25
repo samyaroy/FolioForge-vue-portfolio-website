@@ -5,7 +5,7 @@
 
       <div class="flex items-center gap-4">
         <h3 class="text-lg font-semibold text-[#0e141b]">{{ workshop.title }}</h3>
-        <a v-if="workshop.cred_link" :href="workshop.cred_link">
+        <a v-if="workshop.cred_link" :href="workshop.cred_link" target="_blank">
           <v-icon size="20">mdi-file-document-outline</v-icon>
         </a>
       </div>

@@ -4,7 +4,7 @@
   <!-- title + icon group -->
   <div class="flex items-center gap-4">
     <h3 class="text-lg font-semibold text-[#0e141b]">{{ bootcamp.title }}</h3>
-    <a v-if="bootcamp.cred_link" :href="bootcamp.cred_link">
+    <a v-if="bootcamp.cred_link" :href="bootcamp.cred_link" target="_blank">
       <v-icon size="20">mdi-file-document-outline</v-icon>
     </a>
   </div>
