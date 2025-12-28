@@ -268,9 +268,13 @@ ongoing_projects:
 
   # Add more fields as needed
 awards:
-  - title: Best Developer Award
+  - title: Award Title
     year: 2021
-    issuer: Tech Company
+    organization: Tech Company 1
+    category: Academic
+    prize: First Place
+  
+  
     
 
 co_curriculars:
