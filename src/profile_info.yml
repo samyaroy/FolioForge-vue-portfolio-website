@@ -234,6 +234,14 @@ projects:
     cred_link:
       
 articles:
+  # - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
+  #   publication: Gradient (Vol I), pp. 123–128 - Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
+  #   field: Statistical Inference, Machine Learning, Uncertainty Quantification
+  #   date: Feb 2026
+  #   link: https://sxccal.edu/upload/Eco-Echoes_Vol._XXII-compressed_.pdf
+  #   type: Magazine Article
+  #   cred_link: https://drive.google.com/file/d/1zhduEtlKr-jpYax6M9QJmAUvIMb_ztC4/view?usp=sharing
+
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
     publication: EPOCHS 2025 (2nd Edition) - Wayanad House ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
@@ -241,6 +249,9 @@ articles:
     link: https://epochs.netlify.app/
     type: E-newsletter Article
     cred_link: https://drive.google.com/file/d/1zhduEtlKr-jpYax6M9QJmAUvIMb_ztC4/view?usp=sharing
+
+  
+  # Add more fields as needed
 
 publications:
 
@@ -303,7 +314,7 @@ co_curriculars:
         cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/view?usp=drive_link
 
       - role: Teaching Assistant (Project)
-        field: 'Autumn Internship: Data Science'
+        field: 'Autumn Internship 2025: Data Science'
         organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
         #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
         time_period: Sept 2025 - Oct 2025
@@ -393,3 +404,73 @@ attended_bootcamps:
     date: "June 2024"
     duration: "1 Month"
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/view?usp=drive_link"
+
+attended_conferences:
+  - title: "Fifth ISEA International Conference on Security and Privacy 2026 (ISEA-ISAP 2026)"
+    link: "https://isea-isap2026.iitm.ac.in/"
+    organizer: "Indian Institute of Technology Madras, International Society for Engineering and Advanced Technology (ISEA)"
+    institution:
+      Name: "Indian Institute of Technology Madras"
+      Location: "Chennai, TN"
+    date: "January 16-18, 2026" 
+    # cred_link: "https://drive.google.com/file/d/1YkXJH6Yk2b0Y5o1F1Y8KX1Z1Z1Z1Z1Z1/view?usp=drive_link"
+
+  - title: "Cryptology Conclave 2026"
+    organizer: "Indian Institute of Technology Hyderabad"
+    link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
+    institution:
+      Name: "Indian Institute of Technology Hyderabad"
+      Department: "Center for Cryptography and Cybersecurity"
+      Location: "Hyderabad, TS"
+    date: "January 22-23, 2026" 
+    cred_link: "https://drive.google.com/file/d/1ZkXJH6Yk2b0Y5o1F1Y8KX1Z1Z1Z1Z1Z1/view?usp=drive_link"  
+
+
+# coursesTaught:
+#   - semester: "Spring 2025"
+#     courses:
+#       - title: "Introduction to Statistics"
+#         institution: "Sister Nivedita University"
+#         role: "Teaching Assistant"
+#         collaborators:
+#           - "Dr. XYZ"
+#         students: 120
+#       - title: "Data Analysis with Python"
+#         institution: "IIT Madras"
+#         role: "Guest Instructor"
+#         students: 60
+
+#   - semester: "Autumn 2024"
+#     courses:
+#       - title: "Probability Theory"
+#         institution: "Sister Nivedita University"
+#         role: "Instructor"
+#         students: 80
+
+# projectsMentored:
+#   - semester: "Spring 2025"
+#     projects:
+#       - title: "Predictive Maintenance using Time Series"
+#         course: "Applied Statistics"
+#         students:
+#           - "Amit Sharma"
+#           - "Riya Sen"
+#         registrationNumber: "STAT2025-PM-014"
+#         affiliation: "Sister Nivedita University"
+
+#       - title: "Customer Churn Analysis"
+#         course: "Data Analytics Lab"
+#         students:
+#           - "Rahul Verma"
+#         affiliation: "IIT Madras"
+
+
+otherTeachings:
+  - title: "Private Tutor"
+    institution: "Codeium Classes"
+    link: "https://codeium.xyz/"
+    role: "Founder & Instructor"
+    duration: "May 2023 – April 2025"
+    audience: "Secondary & Higher Secondary school students"
+    students: "15"
+    description: "Provided private tuition in mathematics, Computer Science, and Computer Applications for school (CBSE & ICSE) students."

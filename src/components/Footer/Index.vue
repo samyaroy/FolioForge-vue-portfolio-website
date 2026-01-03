@@ -5,9 +5,10 @@
     <!-- Colored horizontal bar -->
 
     <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Footer content -->
+      <div class="grid grid-cols-1 md:grid-cols-10 gap-8">
         <!-- Brand Section -->
-        <div class="col-span-1 md:col-span-2">
+        <div class="col-span-1 md:col-span-5">
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
             {{ profile.footer }}
@@ -44,8 +45,9 @@
           <logos :logos="logos" />
         </div>
 
+        
         <!-- Other Links -->
-        <div>
+        <div class="col-span-1 md:col-span-3">
           <h4 class="text-lg font-semibold mb-2">Other Links</h4>
           <ul class="space-y-2">
             <!-- <li>
@@ -88,7 +90,7 @@
             <li>
               <router-link to="/workshops-bootcamps-attended"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Bootcamps & Workshops attended
+                Conferences, Workshops & Bootcamps attended
               </router-link>
             </li>
             <!-- <li>
@@ -114,7 +116,7 @@
         </div>
 
         <!-- Contact Info -->
-        <div>
+        <div class="col-span-1 md:col-span-2">
           <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
           <div class="space-y-2 text-black-300">
             <div class="flex items-center">

@@ -1,11 +1,12 @@
 <template>
-    <span v-if="!url">{{ text }}</span>
-    <a v-else :href="url" target="_blank" rel="noopener noreferrer">
+    <span v-if="!resolvedUrl">{{ text }}</span>
+    <a v-else :href="resolvedUrl" target="_blank" rel="noopener noreferrer" class="hover:underline">
         {{ text }}
     </a>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import links from '@/metadata/hyperlinkMetadata.yml'
 
 const props = defineProps({
@@ -15,15 +16,29 @@ const props = defineProps({
     },
     type: {
         type: String,
-        required: true,
         default: 'Institute'
+    },
+    href: {
+        type: String,
+        default: null
     }
 })
 
-// Locate matching entity by Name
-const entity = links[props.type]?.find(
-    item => item.Name.trim().toLowerCase() === props.text.trim().toLowerCase()
-)
+const resolvedUrl = computed(() => {
+    const candidates = links[props.type]
 
-const url = entity?.Website || entity?.Link || null
+    if (Array.isArray(candidates)) {
+        const match = candidates.find(
+            item =>
+                item.Name?.trim().toLowerCase() ===
+                props.text.trim().toLowerCase()
+        )
+
+        if (match?.Website) return match.Website
+        if (match?.Link) return match.Link
+    }
+
+    // fallback
+    return props.href || null
+})
 </script>
