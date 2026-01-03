@@ -6,6 +6,7 @@ import Cocurricular from '@/views/Cocurricular/index.vue'
 
 import WorkshopsAttended from '@/views/WorkshopsAttended/index.vue'
 import InternshipCertification from '@/views/InternshipCertification/index.vue'
+import Teachings from '@/views/Teachings/index.vue'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/workshops-bootcamps-attended',
     name: 'Workshops',
     component: WorkshopsAttended
+  },
+  {
+    path: '/teachings',
+    name: 'Teachings',
+    component: Teachings
   },
   {
     path: '/internships-certifications',

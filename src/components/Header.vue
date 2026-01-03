@@ -20,6 +20,9 @@
         <router-link to="/projects-publications" class="nav-link" active-class="active-link">
           Projects & Publications
         </router-link>
+        <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
+            Teachings
+          </router-link>
         <router-link to="/cocurricular" class="nav-link" active-class="active-link">
           Co-curricular
         </router-link>
@@ -39,7 +42,7 @@
       <button
         class="md:hidden flex items-center justify-center w-10 h-10 text-base_black hover:text-primary transition-colors duration-200"
         @click="drawer = !drawer">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"  bg="black">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
@@ -69,6 +72,9 @@
           </router-link>
           <router-link to="/projects-publications" @click="drawer = false" class="nav-link" active-class="active-link">
             Projects & Publications
+          </router-link>
+          <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
+            Teachings
           </router-link>
           <router-link to="/cocurricular" @click="drawer = false" class="nav-link" active-class="active-link">
             Co-curricular
