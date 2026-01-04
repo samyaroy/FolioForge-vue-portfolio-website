@@ -5,49 +5,45 @@
         </h2>
 
         <div v-if="items && items.length" class="space-y-6">
-            <div v-for="item in items" :key="item.title"
-                class="border-l-4 border-slate-300 pl-6 py-4 bg-slate-50 rounded-md">
+            <div v-for="item in items" :key="item.title" class="border-l-4 border-blue-500 pl-6 py-4">
                 <!-- Header -->
                 <div class="flex items-start justify-between mb-2">
-                    <h3 class="text-lg font-semibold text-[#0e141b]">
+                    <h3 class="text-lg font-bold text-[#0e141b]">
                         {{ item.title }}
                     </h3>
 
-                    <span v-if="item.duration"
-                        class="text-xs font-medium bg-slate-200 text-slate-700 px-2 py-1 rounded">
+                    <span v-if="item.duration" class="text-xs font-medium px-2 py-1 rounded">
                         {{ item.duration }}
                     </span>
                 </div>
 
                 <!-- Meta -->
-                <div class="space-y-1 text-slate-600 text-sm">
+                <div class="space-y-1 text-slate-600">
                     <p v-if="item.institution" class="flex items-center">
-                        <v-icon size="16" class="mr-2">mdi-domain</v-icon>
-                        <span class="font-medium">Institution:</span>&nbsp;
+                        <v-icon size="18" class="mr-2">mdi-domain</v-icon>
                         <SmartLink :href="item.link" :text="item.institution"></SmartLink>
                     </p>
 
                     <p v-if="item.role" class="flex items-center">
-                        <v-icon size="16" class="mr-2">mdi-account-tie</v-icon>
+                        <v-icon size="18" class="mr-2">mdi-account-tie</v-icon>
                         <span class="font-medium">Role:</span>&nbsp;
                         {{ item.role }}
                     </p>
 
                     <p v-if="item.audience" class="flex items-center">
-                        <v-icon size="16" class="mr-2">mdi-account-group</v-icon>
+                        <v-icon size="18" class="mr-2">mdi-account-group</v-icon>
                         <span class="font-medium">Audience:</span>&nbsp;
                         {{ item.audience }}
                     </p>
 
                     <p v-if="item.students" class="flex items-center">
-                        <v-icon size="16" class="mr-2">mdi-counter</v-icon>
-                        <span class="font-medium">Students:</span>&nbsp;
+                        <v-icon size="18" class="mr-2">mdi-counter</v-icon>
                         {{ item.students }}
                     </p>
                 </div>
 
                 <!-- Description -->
-                <p v-if="item.description" class="text-slate-700 text-sm leading-relaxed mt-2">
+                <p v-if="item.description" class="text-slate-700 leading-relaxed mt-2">
                     {{ item.description }}
                 </p>
             </div>

@@ -44,7 +44,7 @@ education: # put your latest education first
     field: Data Science and Applications
     institution: Indian Institute of Technology Madras
     location: Chennai, TN
-    time_period: 2022 - Ongoing
+    time_period: 2022 - Present
     gpa: Current CGPA - 5.97/10
     cred_link: https://ds.study.iitm.ac.in/student/22F2001443
 
@@ -472,5 +472,5 @@ otherTeachings:
     role: "Founder & Instructor"
     duration: "May 2023 – April 2025"
     audience: "Secondary & Higher Secondary school students"
-    students: "15"
+    students: "15+ students tutored"
     description: "Provided private tuition in mathematics, Computer Science, and Computer Applications for school (CBSE & ICSE) students."

@@ -8,15 +8,14 @@
         <p class="text-lg text-gray-600 max-w-4xl mx-auto">
           Workshops and bootcamps completed in Statistics, Data Science, AI, and emerging technologies </p>
       </div>
-      
-      <!-- Bootcamps Section -->
-      <div class="mb-16 max-w-4xl mx-auto">
+
+      <!-- Conferences Section -->
+      <!-- <div class="mb-16 max-w-4xl mx-auto">
         <h2 class="text-3xl font-bold text-[#0e141b] mb-6">Conferences Attended</h2>
-        <!-- <p class="text-gray-600"></p> -->
         <div class="space-y-6">
           <ConferenceCard v-for="(conference, index) in attendedConferences" :key="index" :conference="conference" />
         </div>
-      </div>
+      </div> -->
 
       <!-- Workshops Section -->
       <div class="mb-16 max-w-4xl mx-auto">
