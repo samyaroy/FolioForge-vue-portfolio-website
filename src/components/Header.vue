@@ -20,9 +20,9 @@
         <router-link to="/projects-publications" class="nav-link" active-class="active-link">
           Projects & Publications
         </router-link>
-        <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
+        <!-- <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
             Teachings
-          </router-link>
+          </router-link> -->
         <router-link to="/cocurricular" class="nav-link" active-class="active-link">
           Co-curricular
         </router-link>
@@ -73,9 +73,9 @@
           <router-link to="/projects-publications" @click="drawer = false" class="nav-link" active-class="active-link">
             Projects & Publications
           </router-link>
-          <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
+          <!-- <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
             Teachings
-          </router-link>
+          </router-link> -->
           <router-link to="/cocurricular" @click="drawer = false" class="nav-link" active-class="active-link">
             Co-curricular
           </router-link>
