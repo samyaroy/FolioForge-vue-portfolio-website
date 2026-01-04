@@ -6,9 +6,9 @@
 
     <div class="container mx-auto px-4">
       <!-- Footer content -->
-      <div class="grid grid-cols-1 md:grid-cols-10 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-20 gap-8">
         <!-- Brand Section -->
-        <div class="col-span-1 md:col-span-5">
+        <div class="col-span-1 md:col-span-9">
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
             {{ profile.footer }}
@@ -47,7 +47,7 @@
 
         
         <!-- Other Links -->
-        <div class="col-span-1 md:col-span-3">
+        <div class="col-span-1 md:col-span-7">
           <h4 class="text-lg font-semibold mb-2">Other Links</h4>
           <ul class="space-y-2">
             <!-- <li>
@@ -116,7 +116,7 @@
         </div>
 
         <!-- Contact Info -->
-        <div class="col-span-1 md:col-span-2">
+        <div class="col-span-1 md:col-span-4">
           <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
           <div class="space-y-2 text-black-300">
             <div class="flex items-center">
