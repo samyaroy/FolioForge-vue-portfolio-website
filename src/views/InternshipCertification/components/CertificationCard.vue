@@ -18,12 +18,7 @@
         </div>
       </div>
       <div class="ml-4 flex flex-col gap-2">
-        <a :href="certification.cred_link" target="_blank" rel="noopener noreferrer">
-          <span v-if="certification.cred_link"
-            class="inline-block px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-            <v-icon size="14" class="mr-1">mdi-file-document-outline</v-icon>
-          </span>
-        </a>
+        <DocumentViewer :src="certification.cred_link" />
       </div>
     </div>
 
@@ -38,6 +33,7 @@
 
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
 
 defineProps({
   certification: {

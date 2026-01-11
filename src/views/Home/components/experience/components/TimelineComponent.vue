@@ -17,11 +17,11 @@
     <!-- Right column: content -->
     <div class="flex flex-1 flex-col py-0 relative z-10">
       <div class="flex items-center justify-between">
-        <p class="text-[#0e141b] text-base font-medium leading-normal flex items-center gap-1">
+        <p class="text-[#0e141b] text-base font-medium leading-normal">
           {{ title }}
-          <a v-if="cred_link && cred_link !== '#'" :href="cred_link" target="_blank">
-            <v-icon size="20">mdi-file-document-outline</v-icon>
-          </a>
+          <span v-if="cred_link" class="inline-block ml-1 align-middle">
+            <DocumentViewer :src="cred_link" />
+          </span>
         </p>
         <p class="text-[#4e7397] text-base font-normal">{{ time }}</p>
       </div>
@@ -36,11 +36,28 @@
         <p class="text-[#4e7397] text-sm">Supervisor: <SmartLink :type="'Person'" :text="supervisor.Name" /><span v-if="supervisor.Title">, {{ supervisor.Title }}</span><span v-if="supervisor.Department">, {{ supervisor.Department }}</span><span v-if="supervisor.Institution">, {{ supervisor.Institution }}</span></p>
       </div>
 
-      <div v-if="project" class="flex items-center gap-2 mt-1">
-        <v-icon class="text-[#4e7397]" size="16">mdi-puzzle-outline</v-icon>
-        <p class="text-[#4e7397] text-sm">Project: {{ project }}</p>
-      </div>
+      <div v-if="projects" class="grid grid-cols-[auto,auto,1fr] gap-x-2 mt-1 items-start">
+  <!-- Icon -->
+  <v-icon class="text-[#4e7397] mt-[2px]" size="16">
+    mdi-puzzle-outline
+  </v-icon>
 
+  <!-- Label -->
+  <span class="text-[#4e7397] text-sm font-medium whitespace-nowrap">
+    Projects:
+  </span>
+
+  <!-- Project list -->
+  <ul class="grid gap-1 text-[#4e7397] text-sm">
+    <li
+      v-for="(project, index) in projects"
+      :key="index"
+      class="leading-tight"
+    >
+      {{ project }}
+    </li>
+  </ul>
+</div>
       <div v-if="department" class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-office-building-marker
         </v-icon>
@@ -55,13 +72,14 @@
 
     <!-- Description -->
     <div class="col-span-2 px-[56px] pb-6 relative" v-if="description">
-      <p class="text-[#0e141b] text-base">{{ description }}</p>
+      <p class="text-[#0e141b] text-sm">{{ description }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
 
 defineProps({
   isfirst: { type: Boolean, default: false },
@@ -71,7 +89,7 @@ defineProps({
   organization: { type: String, required: true },
   supervisor: { type: String, default: null },
   department: { type: String, default: null },
-  project: { type: String, default: null },
+  projects: { type: String, default: null },
   location: { type: String, required: true },
   description: { type: String, default: null },
   icon: { type: String, default: 'mdi-school' },
