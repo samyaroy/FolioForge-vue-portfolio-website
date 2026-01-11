@@ -393,7 +393,12 @@ attended_bootcamps:
 attended_conferences:
   - title: "Fifth ISEA International Conference on Security and Privacy (ISEA-ISAP 2026)"
     link: "https://isea-isap2026.iitm.ac.in/"
-    organizer: "Indian Institute of Technology Madras, International Society for Engineering and Advanced Technology (ISEA)"
+    organizer:
+      - name: "Indian Institute of Technology Madras"
+        location: "Chennai, TN"
+      - name: "Information Security Education and Awareness (ISEA)"
+        department: "MeitY, GoI"
+
     institution:
       - name: "Indian Institute of Technology Madras"
         location: "Chennai, TN"
