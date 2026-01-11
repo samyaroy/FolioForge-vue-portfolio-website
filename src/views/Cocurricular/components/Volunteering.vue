@@ -3,11 +3,8 @@
     <div class="flex items-center justify-between mb-2">
       <h3 class="text-lg font-semibold text-[#0e141b]">
         {{ volunteering.role }}
-
-        <span class="px-2 py-1 text-xs font-medium text-white rounded-full">
-          <a v-if="volunteering.cred_link" :href="volunteering.cred_link" target="_blank">
-            <v-icon size="20">mdi-file-document-outline</v-icon>
-          </a>
+        <span v-if="volunteering.cred_link" class="inline-block ml-1 align-middle">
+          <DocumentViewer :src="volunteering.cred_link" />
         </span>
       </h3>
 
@@ -39,6 +36,8 @@
 </template>
 
 <script setup>
+import DocumentViewer from '@/components/DocumentViewer.vue'
+
 defineProps({
   volunteering: Array
 })

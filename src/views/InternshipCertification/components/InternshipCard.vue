@@ -29,15 +29,11 @@
           <span v-else>Project: {{ internship.project.title }}</span>
         </div>
       </div>
-      <div class="ml-4">
-        <a v-if="internship.cred_link" :href="internship.cred_link" target="_blank" rel="noopener noreferrer">
-          <span class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
-            {{ internship.type }}
-            <v-icon size="20">mdi-file-document-outline</v-icon>
-          </span>
-
-
-        </a>
+      <div class="ml-4 flex items-center gap-2">
+        <span v-if="internship.type" class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
+          {{ internship.type }}
+        </span>
+        <DocumentViewer :src="internship.cred_link" />
       </div>
     </div>
 
@@ -56,6 +52,7 @@
 
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
 
 defineProps({
   internship: {

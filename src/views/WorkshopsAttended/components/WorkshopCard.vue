@@ -4,11 +4,12 @@
     <div class="flex items-center justify-between mb-2 pr-4 ">
 
       <div class="flex items-center gap-4">
-        <h3 class="text-lg font-semibold text-[#0e141b]">{{ workshop.title }} <a v-if="workshop.cred_link"
-            :href="workshop.cred_link" target="_blank">
-            <v-icon size="20">mdi-file-document-outline</v-icon>
-          </a></h3>
-
+        <h3 class="text-lg font-semibold text-[#0e141b]">
+          {{ workshop.title }}
+          <span v-if="workshop.cred_link" class="inline-block ml-1 align-middle">
+            <DocumentViewer :src="workshop.cred_link" />
+          </span>
+        </h3>
       </div>
 
 
@@ -40,6 +41,7 @@
 
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
 
 defineProps({
   workshop: {
