@@ -33,7 +33,7 @@
 
       <div v-if="supervisor" class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-account-tie</v-icon>
-        <p class="text-[#4e7397] text-sm">Supervisor: <SmartLink :type="'Person'" :text="supervisor.Name" /><span v-if="supervisor.Title">, {{ supervisor.Title }}</span><span v-if="supervisor.Department">, {{ supervisor.Department }}</span><span v-if="supervisor.Institution">, {{ supervisor.Institution }}</span></p>
+        <p class="text-[#4e7397] text-sm">Supervisor: <SmartLink v-if="supervisor.name" :type="'Person'" :text="supervisor.name" /><span v-if="supervisor.title">, {{ supervisor.title }}</span><span v-if="supervisor.department">, {{ supervisor.department }}</span><span v-if="supervisor.institution">, {{ supervisor.institution }}</span></p>
       </div>
 
       <div v-if="projects" class="grid grid-cols-[auto,auto,1fr] gap-x-2 mt-1 items-start">
@@ -87,9 +87,9 @@ defineProps({
   title: { type: String, required: true },
   time: { type: String, required: true },
   organization: { type: String, required: true },
-  supervisor: { type: String, default: null },
+  supervisor: { type: Object, default: null },
   department: { type: String, default: null },
-  projects: { type: String, default: null },
+  projects: { type: Array, default: null },
   location: { type: String, required: true },
   description: { type: String, default: null },
   icon: { type: String, default: 'mdi-school' },
