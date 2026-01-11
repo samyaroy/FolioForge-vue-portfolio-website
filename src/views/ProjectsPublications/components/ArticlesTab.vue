@@ -10,9 +10,7 @@
             <span class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
               {{ article.type }}
             </span>
-            <span v-if="article.cred_link" class="inline-block ml-1 align-middle">
-              <DocumentViewer :src="article.cred_link" />
-            </span>
+           
           </h3>
 
 
