@@ -131,7 +131,7 @@ experience:
     supervisor:
       Name: Mr. Diptendu Dutta
       Title: Technology Lead
-      Institution: Institute of Data Engineering, Analytics and Science Foundation (TIH)
+      Institution: Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
     location: Kolkata, WB
     time_period: Feb 2025 to Oct 2025
     description: Dedicated 700+ hours to the FASAL 2.0 project, working across agricultural data acquisition, preprocessing, and frontend web application development. Gained hands-on experience building data-driven interfaces and supporting large-scale forecasting workflows under an production environment.
@@ -179,7 +179,7 @@ projects:
     description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
     type: Research Project
     doi:
-    affiliation: Internship Project, Data Science Intern at Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Institute, Kolkata
+    affiliation: Internship Project, Data Science Intern at Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH), Indian Statistical Institute, Kolkata
     tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
     guide:
       Name: Mr. Debashis Ghosh
