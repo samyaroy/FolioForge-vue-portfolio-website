@@ -10,12 +10,12 @@
                     <p class="text-gray-600 mb-0 flex items-start">
                         <v-icon class="mr-1">mdi-account-tie</v-icon> Supervisor:
                     </p>
-                    <p class="text-gray-600 mb-0 flex items-center" v-if="project.guide && project.guide.Name">
+                    <p class="text-gray-600 mb-0 flex items-center" v-if="project.guide && project.guide.name">
                         <span>
-                            <SmartLink :type="'Person'" :text="project.guide.Name" />
-                        </span><span v-if="project.guide.Title">, {{ project.guide.Title }}</span><span
-                            v-if="project.guide.Department">, {{ project.guide.Department }}</span><span
-                            v-if="project.guide.Institution">, {{ project.guide.Institution }}</span>
+                            <SmartLink :type="'Person'" :text="project.guide.name" />
+                        </span><span v-if="project.guide.title">, {{ project.guide.title }}</span><span
+                            v-if="project.guide.department">, {{ project.guide.department }}</span><span
+                            v-if="project.guide.institution">, {{ project.guide.institution }}</span>
                     </p>
                 </div>
                 <p class="text-sm text-gray-600 mb-3 mt-2"><v-icon>mdi-calendar-blank</v-icon> {{ project.time_period }}
@@ -77,7 +77,7 @@ import SmartLink from '@/components/SmartLink.vue'
 
 defineProps({
     projects: {
-        type: Array,
+        type: Object,
         default: () => []
     }
 })
