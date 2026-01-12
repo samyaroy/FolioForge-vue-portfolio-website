@@ -5,16 +5,22 @@
         <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ certification.title }}</h3>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-school</v-icon>
-          <span><SmartLink :type="'Institute'" :text="certification.issuer.Institution" /></span><span v-if="certification.issuer.Platform">- <SmartLink :type="'Institute'" :text="certification.issuer.Platform" /></span>
+          <span>
+            <SmartLink :type="'Institute'" :text="certification.issuer.institution" />
+          </span><span v-if="certification.issuer.platform"> -
+            <SmartLink :type="'Institute'" :text="certification.issuer.platform" />
+          </span>
         </div>
         <div v-if="certification.instructor" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-account</v-icon>
-          <span><SmartLink :type="'Person'" :text="certification.instructor" /></span>
+          <span>
+            <SmartLink :type="'Person'" :text="certification.instructor" />
+          </span>
         </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-3">
           <v-icon size="16">mdi-calendar</v-icon>
           <span>{{ certification.date }} <span v-if="certification.duration">({{ certification.duration
-          }})</span></span>
+              }})</span></span>
         </div>
       </div>
       <div class="ml-4 flex flex-col gap-2">
