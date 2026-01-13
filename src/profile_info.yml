@@ -50,32 +50,32 @@ education: # put your latest education first
     gpa: CGPA - 7.01/10
     cred_link: https://drive.google.com/file/d/1N5jnPq4nCegRzXy_h75CtfA725RJlskM/preview
 
-  - type: Diploma
-    degree: Diploma
-    field: Web Designing (DWD)
-    institution: Chandigarh Institute of Technology and Consultancy
-    location: Mohali, PB
-    time_period: 2020
-    marks: 84.5%
-    cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview
+  # - type: Diploma
+  #   degree: Diploma
+  #   field: Web Designing (DWD)
+  #   institution: Chandigarh Institute of Technology and Consultancy
+  #   location: Mohali, PB
+  #   time_period: 2020
+  #   marks: 84.5%
+  #   cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview
 
-  - type: School
-    degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
-    field:
-    institution: Nava Nalanda High School
-    location: Kolkata, WB
-    time_period: 2020 - 2022
-    marks: 83.8%
-    cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
+  # - type: School
+  #   degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
+  #   field:
+  #   institution: Nava Nalanda High School
+  #   location: Kolkata, WB
+  #   time_period: 2020 - 2022
+  #   marks: 83.8%
+  #   cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
 
-  - type: School
-    degree: X - West Bengal Board of Secondary Education (WBBSE)
-    field:
-    institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
-    location: Rishra, WB
-    time_period: 2010 - 2020
-    marks: 85.71%
-    cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
+  # - type: School
+  #   degree: X - West Bengal Board of Secondary Education (WBBSE)
+  #   field:
+  #   institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
+  #   location: Rishra, WB
+  #   time_period: 2010 - 2020
+  #   marks: 85.71%
+  #   cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
 
   # Add more fields as needed
 
@@ -139,7 +139,16 @@ certifications:
     duration: 3 Weeks (Approx. 29 hours)
     cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/preview'
     certificate: true  
-  # Add more fields as needed
+  
+  - title: Diploma in Web Designing (DWD)
+    issuer:
+      institution: Chandigarh Institute of Technology and Consultancy
+      location: Mohali, PB
+    date: 14 Sep 2020
+    duration: 6 Months
+    cred_link: 'https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview'
+    certificate: true
+
 projects:
   - title: 'Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset'
     description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
@@ -210,7 +219,7 @@ projects:
     
 
   - title: Hand Raise Detector
-    description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams. Developed during AI VicharanaShala Bootcamp, IIT Ropar.
+    description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams.
     type: "Technical Project"
     affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
     tech_stack: YOLOv8, OpenCV, Python
@@ -386,6 +395,7 @@ attended_bootcamps:
     institution:
       - name: "Indian Institute of Technology Ropar"
         department: "Department of Computer Science and Engineering"
+        location: "Rupnagar, PB"
     date: "June 2024 - July 2024"
     duration: "1 Month"
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"

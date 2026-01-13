@@ -3,14 +3,17 @@
     <div class="flex items-start justify-between mb-2">
       <div class="flex-1">
         <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ certification.title }}</h3>
-        <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
+        <div class="flex w-full justify-between"> <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-school</v-icon>
           <span>
             <SmartLink :type="'Institute'" :text="certification.issuer.institution" />
           </span><span v-if="certification.issuer.platform"> -
             <SmartLink :type="'Institute'" :text="certification.issuer.platform" />
           </span>
-        </div>
+        </div><div v-if="certification.issuer.location" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
+          <v-icon size="16">mdi-map-marker</v-icon>
+          <span>{{ certification.issuer.location }}</span>
+        </div></div>
         <div v-if="certification.instructor" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-account</v-icon>
           <span>
