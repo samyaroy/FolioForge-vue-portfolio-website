@@ -43,9 +43,7 @@
 
             <SmartLink :text="inst.name" />
 
-            <span v-if="inst.location">
-              , {{ inst.location }}
-            </span>
+            <span v-if="inst.location">, {{ inst.location }}</span>
 
             <span v-if="inst.role">
               ({{ inst.role }})
