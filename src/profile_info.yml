@@ -104,9 +104,9 @@ experience:
     type: Employment
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
     location: Kolkata, WB
-    projects: ["NPCYF (National Platform for Crop Yield Forecasting)"]
+    projects: ["National Platform for Crop Yield Forecasting (NPCYF) — part of the FASAL 2.0 initiative by Mahalanobis National Crop Forecast Centre (MNCFC), MoAFW, GoI"]
     time_period: Oct 2025 - Present
-    description: Contributed 400+ hours to the NPCYF platform as part of the FASAL 2.0 initiative. focusing on frontend performance optimization (caching), feature-flag driven deployments, and automated data ingestion into a MinIO-based data lake.
+    description: Contributed 400+ hours to the NPCYF platform focusing on frontend performance optimization (caching), Backend API Development, feature-flag driven deployments, and automated data ingestion into a MinIO-based data lake.
   
   # - job_role: Freelance Web Developer
   #   type: Freelance
