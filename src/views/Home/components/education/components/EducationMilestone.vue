@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-[40px_1fr] gap-x-2 px-4">
     <!-- Timeline Icon & Connector -->
-    <div class="flex flex-col items-center gap-1" :class="{ 'pb-3': isLast }">
+    <div class="flex flex-col items-center gap-1" :class="{ 'pb-3': isLast, 'pt-3': isFirst }">
       <!-- Top connector -->
       <div v-if="!isFirst" class="w-[1.5px] bg-[#d0dbe7] h-2"></div>
 
