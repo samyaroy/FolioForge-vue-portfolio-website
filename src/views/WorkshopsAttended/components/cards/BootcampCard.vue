@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-l-4 border-[#10b981] pl-5 py-3 hover:shadow-lg transition-all duration-300 rounded-lg bg-white hover:bg-green-50">
+    class="border-l-4 border-[#32e4ff] pl-5 py-3 hover:shadow-lg transition-all duration-300 rounded-lg bg-white hover:bg-green-50">
     <div class="flex items-center justify-between mb-1.5 pr-4">
       <!-- title + icon group -->
       <div class="flex items-center gap-4">

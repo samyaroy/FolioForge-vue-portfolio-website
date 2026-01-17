@@ -1,27 +1,27 @@
 <template>
-  <div class="border-l-4 border-[#1d67fd] pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white">
+  <div class="border-l-4 border-[#a82eff] pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white">
     <!-- HEADER -->
     <div class="flex pr-4">
       <!-- LEFT (80%) -->
       <div class="w-[85%]">
         <div>
           <h3 class="text-lg font-semibold text-[#0e141b]">
-            {{ workshop.title }}
-            <span v-if="workshop.cred_link" class="inline-block ml-1 align-middle">
-              <DocumentViewer :src="workshop.cred_link" />
+            {{ fdp.title }}
+            <span v-if="fdp.cred_link" class="inline-block ml-1 align-middle">
+              <DocumentViewer :src="fdp.cred_link" />
             </span>
           </h3>
         </div>
         <div>
           <!-- INSTRUCTOR -->
-          <p v-if="workshop.instructor" class="text-gray-600 mb-1 mt-2 flex items-center">
+          <p v-if="fdp.instructor" class="text-gray-600 mb-1 mt-2 flex items-center">
             <v-icon size="16" class="mr-2">mdi-account</v-icon>
             <span class="font-medium">Instructor:&nbsp;</span>
-            <SmartLink :text="workshop.instructor" type="Person" />
+            <SmartLink :text="fdp.instructor" type="Person" />
           </p>
 
           <!-- INSTITUTIONS -->
-          <div v-if="workshop.institution && workshop.institution.length" class="text-gray-600 mb-1 flex items-start">
+          <div v-if="fdp.institution && fdp.institution.length" class="text-gray-600 mb-1 flex items-start">
             <v-icon size="16" class="mr-2 mt-0.5">
               mdi-office-building
             </v-icon>
@@ -32,7 +32,7 @@
               </div>
 
               <div class="ml-2">
-                <div v-for="(inst, index) in workshop.institution" :key="index">
+                <div v-for="(inst, index) in fdp.institution" :key="index">
                   <span v-if="inst.department">
                     {{ inst.department }},
                   </span>
@@ -48,10 +48,10 @@
           </div>
 
           <!-- DURATION -->
-          <p v-if="workshop.duration" class="text-gray-600 mb-1 flex items-center">
+          <p v-if="fdp.duration" class="text-gray-600 mb-1 flex items-center">
             <v-icon size="16" class="mr-2">mdi-timer-outline</v-icon>
             <span class="font-medium">Duration:&nbsp;</span>
-            <span>{{ workshop.duration }}</span>
+            <span>{{ fdp.duration }}</span>
           </p>
         </div>
       </div>
@@ -59,23 +59,23 @@
       <!-- RIGHT (20%) -->
       <div class="w-[15%] text-sm text-gray-500 flex flex-col items-start">
         <!-- Date -->
-        <span>{{ workshop.date }}</span>
+        <span>{{ fdp.date }}</span>
 
         <!-- Mode + Location -->
         <div class="flex flex-col items-start mt-1">
           <span class="flex items-center gap-1">
-            <v-icon v-if="workshop.mode === 'Online'" size="14">mdi-web</v-icon>
+            <v-icon v-if="fdp.mode === 'Online'" size="14">mdi-web</v-icon>
 
-            <v-img v-else-if="workshop.mode === 'Offline'" :src="inPersonIcon" alt="In-Person Icon"
+            <v-img v-else-if="fdp.mode === 'Offline'" :src="inPersonIcon" alt="In-Person Icon"
               width="14" height="14" class="d-inline-block" contain />
 
-            <v-icon v-else-if="workshop.mode === 'Hybrid'" size="14">mdi-source-branch</v-icon>
+            <v-icon v-else-if="fdp.mode === 'Hybrid'" size="14">mdi-source-branch</v-icon>
 
-            {{ workshop.mode }}
+            {{ fdp.mode }}
           </span>
 
-          <span v-if="workshop.institution?.length">
-            <v-icon size="14">mdi-map-marker</v-icon> {{ workshop.institution[0].location }}
+          <span v-if="fdp.institution?.length">
+            <v-icon size="14">mdi-map-marker</v-icon> {{ fdp.institution[0].location }}
           </span>
         </div>
       </div>
@@ -92,7 +92,7 @@ import DocumentViewer from '@/components/DocumentViewer.vue'
 import inPersonIcon from '@/assets/icons/persons-in-a-class-by-flaticon.png'
 
 defineProps({
-  workshop: {
+  fdp: {
     type: Object,
     required: true
   }

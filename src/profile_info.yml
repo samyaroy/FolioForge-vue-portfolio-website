@@ -134,7 +134,7 @@ certifications:
     issuer:
       institution: Whiting School of Engineering, Johns Hopkins University
       platform: Coursera
-    instructor: Dr. Michael Shields
+    instructor: Prof. Michael Shields
     date: 29 Nov 2025
     duration: 3 Weeks (Approx. 29 hours)
     cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/preview'
@@ -311,6 +311,18 @@ co_curriculars:
         details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
 
       #Add more entries as needed
+attended_fdps:
+  - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
+    institution: 
+      - name: "Sister Nivedita University"
+        department: "Dept. of Statistics"
+        location: "Kolkata, WB"
+    date: "September 2024"  
+    duration: "7 Days"
+    mode: "Online"
+    cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
+
+
 
 attended_workshops:
   - title: "Systems for LLMs"
@@ -322,24 +334,28 @@ attended_workshops:
       - name: "IBM Research"
         role: "Industry Partner"
     date: "September 2025"
+    mode: "Online"
 
   - title: "Statistical Methods in Cyber Security"
     institution:
       - name: "Royal Statistical Society"
         location: "London, UK"
     date: "September 2025"
+    mode: "Online"
 
   - title: "Uncertainty in Machine Learning: Challenges and Opportunities"
     institution:
       - name: "Isaac Newton Institute for Mathematical Sciences"
         location: "Cambridge, UK"
     date: "August 2025"
+    mode: "Online"
 
   - title: "Mini-Symposium on Contemporary Advancements in Computational Intelligence"
     institution:
       - name: "Indian Statistical Institute"
         location: "Kolkata, WB"
     date: "July 2025"
+    mode: "Offline"
 
   - title: "National Workshop and Bootcamp on Cyber Security and Blockchain (NWBCSB 2025)"
     institution:
@@ -347,16 +363,8 @@ attended_workshops:
         location: "Hyderabad, TS"
     date: "March 2025"
     duration: "7 Days"
+    mode: "Offline"
     details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/preview"
-
-  - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
-    institution: 
-      - name: "Sister Nivedita University"
-        department: "Dept. of Statistics"
-        location: "Kolkata, WB"
-    date: "September 2024"  
-    duration: "7 Days"
-    cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
 
   - title: "Numerical Algorithms & Computations in Science & Technology with Matlab"
     institution:
@@ -364,6 +372,7 @@ attended_workshops:
         department: "Dept. of Mathematics"
         location: "Rupnagar, PB"
     date: "July 2024"
+    mode: "Offline"
     cred_link: "https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/preview"
 
   - title: "Democratizing Data Science: Exploring Open Source Statistical Software"
@@ -372,6 +381,7 @@ attended_workshops:
         department: "Dept. of Statistics"
         location: "Kolkata, WB"
     date: "March 2024"
+    mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/preview"
 
   - title: "Research Opportunities in Computer Science (ROCS) - ACM"
@@ -379,19 +389,21 @@ attended_workshops:
       - name: "Indian Institute of Technology Madras"
         location: "Chennai, TN"
     date: "January 2024"
+    mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/preview"
 
-  - title: "Social Computing - NPTEL"
+  - title: "Social Computing (One day workshop) - NPTEL"
     instructor: "Prof. Ponnurangam Kumaraguru"
     institution:
       - name: "International Institute of Technology (IIIT) Hyderabad"
         location: "Hyderabad, TS"
     date: "February 2023"
+    mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 attended_bootcamps:
   - title: "AI VicharanasShala Bootcamp"
-    instructor: "Dr. Sudarshan Iyengar"
+    instructor: "Prof. Sudarshan Iyengar"
     institution:
       - name: "Indian Institute of Technology Ropar"
         department: "Department of Computer Science and Engineering"
@@ -432,7 +444,7 @@ attended_conferences:
 #         institution: "Sister Nivedita University"
 #         role: "Teaching Assistant"
 #         collaborators:
-#           - "Dr. XYZ"
+#           - "Prof. XYZ"
 #         students: 120
 #       - title: "Data Analysis with Python"
 #         institution: "IIT Madras"

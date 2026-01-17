@@ -145,7 +145,7 @@
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-500 text-sm">
-          © {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved.
+          &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
         <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
@@ -158,9 +158,13 @@
       </div>
       <p class="text-gray-500 text-sm">
         &ensp; Source code available at <a
-          href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template">GitHub Repo</a>.
+          href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template">GitHub Repo</a>
         <br />
-        &ensp; Please fork/clone from there — not directly from the site’s source.
+        &ensp; Please fork/clone from there — not directly from the site’s source
+      </p>
+      <p class="text-gray-500 text-sm mt-1">
+        &#9432; Icons by <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
+  from <a href="https://www.flaticon.com/free-icons/class" title="class icons">Flaticon</a>
       </p>
 
     </div>
