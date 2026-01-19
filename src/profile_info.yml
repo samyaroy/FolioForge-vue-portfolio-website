@@ -484,3 +484,31 @@ otherTeachings:
     audience: "Secondary & Higher Secondary school students"
     students: "15+ students tutored"
     description: "Provided private tuition in mathematics, Computer Science, and Computer Applications for school (CBSE & ICSE) students."
+
+# affiliations:
+#   - organization: Center for Data Science
+#     department: Data Science
+#     period: Jan 2025 – Present
+#     location: Chennai, IN
+
+# collaborators:
+#   - name: Dr. Jane Doe
+#     affiliation: Institute of AI Research
+#     location: Kolkata, IN
+#     projects: [Robust Regression Study, Customer Churn Analysis]
+#     period: 2024 – Present
+  
+#   - name: Prof. John Smith
+#     affiliation: Previous Research Institute
+#     location: Mumbai, IN
+#     projects: [Early Research Project]
+#     period: 2022 – 2023
+#     notes: Collaborated on initial research phase
+
+memberships:
+  - organization: Royal Statistics Society
+    chapter:
+    role: Student Member
+    period: 2026 - Present
+    location: London, UK
+    cred_link:

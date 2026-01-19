@@ -3,6 +3,7 @@ import Home from '@/views/Home/index.vue'
 import ProjectPublications from '@/views/ProjectsPublications/index.vue'
 import OngoingProjects from '@/views/OngoingProjects/index.vue'
 import Cocurricular from '@/views/Cocurricular/index.vue'
+import Affilications from '@/views/Affilications/index.vue'
 
 import WorkshopsAttended from '@/views/WorkshopsAttended/index.vue'
 import InternshipCertification from '@/views/InternshipCertification/index.vue'
@@ -18,6 +19,11 @@ const routes = [
     path: '/projects-publications',
     name: 'ProjectsPublications',
     component: ProjectPublications
+  },
+  {
+    path: '/affiliation-memberships',
+    name: 'Affilications',
+    component: Affilications
   },
   {
     path: '/ongoing-projects',
