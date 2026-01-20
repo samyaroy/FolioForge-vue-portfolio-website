@@ -4,10 +4,10 @@
       <!-- Page Header -->
       <div class="text-center mb-12">
         <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
-          Projects & Publications
+          Professional Activities
         </h1>
         <p class="text-lg text-gray-600 max-w-4xl mx-auto">
-          Explore my research publications, technical projects, and written articles showcasing my expertise.
+          Invited talks, and events hosted or convened.
         </p>
       </div>
 
@@ -32,10 +32,8 @@
 
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
-        <PublicationsTab v-if="activeTab === 'publications'" :publications="publications" />
-        <ProjectsTab v-if="activeTab === 'projects'" :projects="projects" />
-        <ArticlesTab v-if="activeTab === 'articles'" :articles="articles" />
-        <PostersTab v-if="activeTab === 'posters'" :posters="posters" />
+        <InvitedTalksTab v-if="activeTab === 'invited-talks'" :talks="invitedTalks" />
+        <HostedEventsTab v-if="activeTab === 'hosted-events'" :events="hostedEvents" />
       </div>
     </div>
   </div>
@@ -44,28 +42,33 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import PublicationsTab from './components/PublicationsTab.vue'
-import ProjectsTab from './components/ProjectTab/Index.vue'
-import ArticlesTab from './components/ArticlesTab.vue'
-import PostersTab from './components/PostersTab.vue' // Import the new PostersTab component
+import InvitedTalksTab from './components/tabs/InvitedTalksTab.vue'
+import HostedEventsTab from './components/tabs/HostedEventsTab.vue'
+
 import config from '@/profile_info.yml'
 
-const {projects, publications, articles, posters} = config // Add posters to destructured config
+// NOTE: The user should add invited_talks and hosted_events to profile_info.yml
+const { invited_talks, hosted_events } = config
+const invitedTalks = invited_talks || []
+const hostedEvents = hosted_events || []
+
 
 const route = useRoute()
-const activeTab = ref('projects')
+const activeTab = ref('invited-talks') // Default to invited-talks
 
 // Set active tab based on query parameter
 onMounted(() => {
-  if (route.query.tab && ['projects', 'articles', 'publications', 'posters'].includes(route.query.tab)) {
+  if (route.query.tab && ['invited-talks', 'hosted-events'].includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
 })
 
 const tabs = [
-  { id: 'projects', name: 'Projects' },
-  { id: 'articles', name: 'Articles' },
-  { id: 'publications', name: 'Publications' },
-  { id: 'posters', name: 'Posters' }, // Add Posters to the tabs array
+  { id: 'invited-talks', name: 'Invited Talks' },
+  { id: 'hosted-events', name: 'Hosted (Convented) events' },
 ]
 </script>
+
+<style scoped>
+/* Optional styles */
+</style>
