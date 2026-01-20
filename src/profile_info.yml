@@ -228,13 +228,13 @@ projects:
     cred_link:
       
 articles:
-  - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
-    publication: Gradient (Vol I), pp. 123–128 - Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
-    field: Statistical Inference, Machine Learning, Uncertainty Quantification
-    date: Feb 2026
-    link: https://sxccal.edu/upload/Eco-Echoes_Vol._XXII-compressed_.pdf
-    type: Magazine Article
-    cred_link: https://drive.google.com/file/d/1zhduEtlKr-jpYax6M9QJmAUvIMb_ztC4/preview
+  # - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
+  #   publication: Gradient (Vol I), pp. 123–128 - Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
+  #   field: Statistical Inference, Machine Learning, Uncertainty Quantification
+  #   date: Feb 2026
+  #   link: https://sxccal.edu/upload/Eco-Echoes_Vol._XXII-compressed_.pdf
+  #   type: Magazine Article
+  #   cred_link: https://drive.google.com/file/d/1zhduEtlKr-jpYax6M9QJmAUvIMb_ztC4/preview
 
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
     publication: EPOCHS 2025 (2nd Edition) - Wayanad House ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
@@ -426,16 +426,16 @@ attended_conferences:
     date: "January 16-18, 2026" 
 
 
-  - title: "Cryptology Conclave 2026"
-    link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
-    organizer:
-      - name: "Indian Institute of Technology Hyderabad"
-        department: "Center for Cryptography and Cybersecurity"
-    location: "Hyderabad, TS"
-    institution:
-      - name: "Indian Institute of Technology Hyderabad"
-    date: "January 22-23, 2026" 
-    cred_link: "https://drive.google.com/file/d/1ZkXJH6Yk2b0Y5o1F1Y8KX1Z1Z1Z1Z1Z1/preview"  
+  # - title: "Cryptology Conclave 2026"
+  #   link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
+  #   organizer:
+  #     - name: "Indian Institute of Technology Hyderabad"
+  #       department: "Center for Cryptography and Cybersecurity"
+  #   location: "Hyderabad, TS"
+  #   institution:
+  #     - name: "Indian Institute of Technology Hyderabad"
+  #   date: "January 22-23, 2026" 
+  #   cred_link: "https://drive.google.com/file/d/1ZkXJH6Yk2b0Y5o1F1Y8KX1Z1Z1Z1Z1Z1/preview"  
 
 # coursesTaught:
 #   - semester: "Spring 2025"
