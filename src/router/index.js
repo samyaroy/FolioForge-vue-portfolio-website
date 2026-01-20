@@ -8,6 +8,7 @@ import Affilications from '@/views/Affilications/index.vue'
 import WorkshopsAttended from '@/views/WorkshopsAttended/index.vue'
 import InternshipCertification from '@/views/InternshipCertification/index.vue'
 import Teachings from '@/views/Teachings/index.vue'
+import ProfessionalAcitivity from '@/views/ProfessionalAcitivity/index.vue'
 
 const routes = [
   {
@@ -49,6 +50,11 @@ const routes = [
     path: '/internships-certifications',
     name: 'InternshipCertification',
     component: InternshipCertification
+  },
+  {
+    path: '/professional-activity',
+    name: 'ProfessionalAcitivity',
+    component: ProfessionalAcitivity
   },
   {
     path: '/contact',

@@ -88,6 +88,12 @@
               </router-link>
             </li>
             <li>
+              <router-link to="/affiliation-memberships"
+                class="text-black-300 hover:text-black transition-colors duration-200">
+                Affilications, Colaborators & Memberships
+              </router-link>
+            </li>
+            <li>
               <router-link to="/workshops-bootcamps-attended"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Conferences, Workshops & Bootcamps attended
