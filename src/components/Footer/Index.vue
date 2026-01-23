@@ -45,7 +45,7 @@
           <logos :logos="logos" />
         </div>
 
-        
+
         <!-- Other Links -->
         <div class="col-span-1 md:col-span-7">
           <h4 class="text-lg font-semibold mb-2">Other Links</h4>
@@ -153,6 +153,7 @@
         <p class="text-gray-500 text-sm">
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
+
         <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
             Privacy Policy
@@ -162,17 +163,31 @@
           </a>
         </div>
       </div>
-      <p class="text-gray-500 text-sm">
-        &ensp; Source code available at <a
-          href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template">GitHub Repo</a>
-        <br />
-        &ensp; Please fork/clone from there — not directly from the site’s source
-      </p>
-      <p class="text-gray-500 text-sm mt-1">
-        &#9432; Icons by <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
-  from <a href="https://www.flaticon.com/free-icons/class" title="class icons">Flaticon</a>
-      </p>
 
+      <div class="flex flex-col md:flex-row justify-between items-center mt-0">
+        <div>
+          <p class="text-gray-500 text-sm ml-4">
+            Source code available at
+            <a class="underline hover:text-white"
+              href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template" target="_blank">
+              GitHub Repo
+            </a>
+            <br />
+            Please fork/clone from there — not directly from the site’s source
+          </p>
+
+          <p class="text-gray-500 text-sm mt-1">
+            &#9432; Icons by
+            <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
+            from
+            <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
+          </p>
+        </div>
+
+        <p class="text-gray-500 text-sm mt-2 md:mt-0">
+          &#10038; Last updated: {{ lastUpdatedOn }}
+        </p>
+      </div>
     </div>
   </v-footer>
 </template>
@@ -186,7 +201,7 @@ export default {
     Logos,
   },
   data() {
-    const { profile, contacts, socials } = config;
+    const { profile, contacts, socials, lastUpdatedOn } = config;
     return {
       profile,
       email: contacts.email,
@@ -200,6 +215,7 @@ export default {
       researchgate: socials.researchgate,
       // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
       logos: ['SNU', 'IITM', 'IDEAS'],
+      lastUpdatedOn
     };
   }
 }
