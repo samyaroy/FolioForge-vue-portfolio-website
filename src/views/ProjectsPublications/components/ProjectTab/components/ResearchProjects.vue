@@ -46,6 +46,15 @@
 
                 </div>
                 <div class="flex justify-end items-center">
+                    <v-tooltip location="top">
+                        <template #activator="{ props }">
+                            <a v-bind="props" v-if="project.cred_link?.report" :href="project.cred_link.report"
+                                target="_blank" class="px-2 mx-1 icon-wrapper border border-[#1980e6] text-[#1980e6] w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                <v-icon>mdi-notebook</v-icon>
+                            </a>
+                        </template>
+                        <span>Project Report</span>
+                    </v-tooltip>
                     <a v-if="project.cred_link && project.cred_link?.researchgate"
                         :href="project.cred_link.researchgate" target="_blank"
                         class="px-2 mx-1 icon-wrapper border border-[#1980e6] text-[#1980e6] w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
@@ -84,7 +93,6 @@ defineProps({
 </script>
 
 <style scoped>
-
 .icon-wrapper:hover .circle-icon .icon-svg path {
     fill: #ffffff;
 }
