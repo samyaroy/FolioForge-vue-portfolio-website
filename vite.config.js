@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
 import yaml from '@modyfi/vite-plugin-yaml' 
 import ViteSitemap from 'vite-plugin-sitemap'
+import { fileURLToPath, URL } from 'url'
 
 
 // https://vite.dev/config/
@@ -23,7 +23,7 @@ export default defineConfig({
   base: '/',
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   }
 })

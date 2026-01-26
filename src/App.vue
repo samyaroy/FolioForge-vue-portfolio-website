@@ -1,6 +1,5 @@
 <script setup>
 import { useRoute } from 'vue-router' 
-import { computed } from 'vue'
 // Import global components
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer/Index.vue'

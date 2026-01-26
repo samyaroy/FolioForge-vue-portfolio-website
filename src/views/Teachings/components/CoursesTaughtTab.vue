@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8">
+  <div class="bg-white  shadow-sm p-8">
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">
       Courses Taught
     </h2>
@@ -73,7 +73,7 @@
 </template>
 
 <script setup>
-import SmartLink from '@/components/SmartLink.vue'
+// import SmartLink from '@/components/SmartLink.vue'
 
 defineProps({
   courses: {
