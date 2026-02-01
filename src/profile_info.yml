@@ -156,7 +156,8 @@ projects:
     description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
     type: Research Project
     doi: 10.13140/RG.2.2.16657.13926
-    affiliation:  BSc. (Hons.) Statistics Degree Project, Sister Nivedita University
+    affiliation:  BSc. (Hons.) - Statistics Degree Project, Sister Nivedita University
+    logo : ['SNU']
     tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
     guide:
       name: Prof. Aniruddha Choudhuri
@@ -175,7 +176,8 @@ projects:
     description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
     type: Research Project
     doi:
-    affiliation: Internship Project, Data Science Intern at Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH), Indian Statistical Institute, Kolkata
+    affiliation: Internship Project (Data Science Intern), Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH), Indian Statistical Institute, Kolkata
+    logo : ['IDEAS']
     tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
     guide:
       name: Mr. Debashis Ghosh
@@ -191,7 +193,8 @@ projects:
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
     type: "Technical Project"
-    affiliation: Diploma Level. Project, BS in Data Science and Applications, Indian Institute of Technology Madras
+    affiliation: Diploma Projects (MAD I, MAD II), BS in Data Science and Applications, Indian Institute of Technology Madras
+    logo: ['IITM']
     tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
     guide:
     time_period: "Jan 2025 - Aug 2025"
