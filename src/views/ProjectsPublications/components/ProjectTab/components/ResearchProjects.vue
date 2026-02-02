@@ -32,9 +32,9 @@
                             </div>
                             <div class="text-gray-600 mb-0 items-center" v-if="project.guide?.name">
                                 <SmartLink :type="'Person'" :text="project.guide.name" />
-                                <span v-if="project.guide.title">, {{ project.guide.title }}</span>
-                                <span v-if="project.guide.department">, {{ project.guide.department }}</span>
-                                <span v-if="project.guide.institution">, {{ project.guide.institution }}</span>
+                                <span v-if="project.guide.title">, {{ project.guide.title }}, </span>
+                                <span v-if="project.guide.department">{{ project.guide.department }}, </span>
+                                <SmartLink v-if="project.guide.institution" :text="project.guide.institution" />
                             </div>
                         </div>
 
