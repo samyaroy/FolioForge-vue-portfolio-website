@@ -163,7 +163,7 @@ projects:
       name: Prof. Aniruddha Choudhuri
       title: Assistant Professor
       department: Department of Statistics
-      institution: Sister Nivedita University, Kolkata
+      institution: Sister Nivedita University
     colaborators:
     time_period: Jan 2025 - May 2025
     cred_link:
@@ -173,7 +173,7 @@ projects:
     
 
   - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
-    description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
+    description: Conducted a comprehensive survey among college students (aged 18-25) in Kolkata to understand their career preferences. Utilized multivariate inference to identify key factors influencing career choices and segment students based on their preferences.
     type: Research Project
     doi:
     affiliation: Internship Project (Data Science Intern), Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH), Indian Statistical Institute, Kolkata
