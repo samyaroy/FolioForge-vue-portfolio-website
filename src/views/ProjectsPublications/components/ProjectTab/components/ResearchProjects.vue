@@ -6,7 +6,7 @@
 
         <div v-if="projects && projects.length" class="space-y-6">
             <div v-for="(project, index) in projects" :key="index" :id="`research-${index}`"
-                class="border-l-4 border-[#1980e6] pl-6 py-4">
+                class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
                 <!-- TITLE -->
                 <h3 class="text-lg font-semibold text-[#0e141b] mb-2">
                     {{ project.title }}
@@ -26,16 +26,16 @@
                         </div>
 
                         <div class="flex items-start gap-2 mb-2">
-                            <p class="text-gray-600 mb-0 flex items-start">
-                                <v-icon class="mr-1">mdi-account-tie</v-icon>
+                            <div class="text-gray-600 mb-0 flex items-start">
+                                <v-icon class="mr-1 gap-2">mdi-account-tie</v-icon>
                                 Supervisor:
-                            </p>
-                            <p class="text-gray-600 mb-0 flex items-center" v-if="project.guide?.name">
+                            </div>
+                            <div class="text-gray-600 mb-0 items-center" v-if="project.guide?.name">
                                 <SmartLink :type="'Person'" :text="project.guide.name" />
                                 <span v-if="project.guide.title">, {{ project.guide.title }}</span>
                                 <span v-if="project.guide.department">, {{ project.guide.department }}</span>
                                 <span v-if="project.guide.institution">, {{ project.guide.institution }}</span>
-                            </p>
+                            </div>
                         </div>
 
                         <p class="text-sm text-gray-600 mb-3 mt-2">

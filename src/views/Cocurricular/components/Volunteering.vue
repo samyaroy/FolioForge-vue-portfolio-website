@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l-4 border-green-500 pl-6 py-4">
+  <div class="border-l-4 border-green-500 pl-6 py-4 pr-4 rounded-md bg-slate-50">
 
     <!-- Role + Credential -->
     <div class="flex items-center justify-between mb-2">
