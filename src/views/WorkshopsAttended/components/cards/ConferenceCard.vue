@@ -20,7 +20,8 @@
               rel="noopener noreferrer"
               class="inline-block ml-1 align-middle text-slate-500 hover:text-slate-700"
             >
-              <v-icon size="16">mdi-open-in-new</v-icon>
+              <v-icon v-if="conference.link && !conference.cred_link" size="16">mdi-open-in-new</v-icon>
+              <DocumentViewer v-else :src="conference.cred_link" />
             </a>
           </h3>
         </div>
@@ -102,6 +103,8 @@
 <script setup>
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
+
 
 const props = defineProps({
   conference: {

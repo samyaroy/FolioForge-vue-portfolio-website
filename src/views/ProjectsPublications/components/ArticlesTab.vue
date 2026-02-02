@@ -3,7 +3,7 @@
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Articles & Blog Posts</h2>
 
     <div v-if="articles && articles.length > 0" class="space-y-6">
-      <div v-for="article in articles" :key="article.id" class="border-l-4 border-[#1980e6] pl-6 py-4">
+      <div v-for="article in articles" :key="article.id" class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4  rounded-md bg-slate-50">
         <div class="flex items-start justify-between mb-3">
           <h3 class="text-lg font-semibold text-[#0e141b] hover:text-[#1980e6] cursor-pointer">
             {{ article.title }}            <span class="inline-block px-3 py-1 text-xs font-medium  text-white rounded-full"></span>
