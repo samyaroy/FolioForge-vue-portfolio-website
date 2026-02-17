@@ -233,16 +233,20 @@ projects:
     cred_link:
       
 articles:
-  # - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
-  #   publication: Gradient (Vol I), pp. 123–128 - Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
-  #   field: Statistical Inference, Machine Learning, Uncertainty Quantification
-  #   date: Feb 2026
-  #   link: https://sxccal.edu/upload/Eco-Echoes_Vol._XXII-compressed_.pdf
-  #   type: Magazine Article
-  #   cred_link: https://drive.google.com/file/d/1zhduEtlKr-jpYax6M9QJmAUvIMb_ztC4/preview
+  - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
+    publication:
+      Name: Gradient (Vol I) 2026, pp. 59-64
+      Host: Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
+    field: Statistical Inference, Machine Learning, Uncertainty Quantification
+    date: Feb 2026
+    link: 
+    type: Magazine Article
+    cred_link: https://drive.google.com/file/d/1OZ3R8fMiUPXyaSi2AQX-VoEPGC5cMPci/preview
 
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
-    publication: EPOCHS 2025 (2nd Edition) - Wayanad House ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
+    publication:
+      Name: EPOCHS 2025 (2nd Edition)
+      Host: Wayanad Houses ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
     date: Dec 2025
     link: https://epochs.netlify.app/
@@ -429,7 +433,7 @@ attended_conferences:
     institution:
       - name: "Indian Institute of Technology Madras"
     date: "January 16-18, 2026" 
-
+    cred_link: "https://drive.google.com/file/d/11f1dKYe_2jSlnKWkZRHlzh90j9r6GJHb/preview"
 
   - title: "Cryptology Conclave 2026"
     link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
@@ -440,7 +444,8 @@ attended_conferences:
     institution:
       - name: "Indian Institute of Technology Hyderabad"
     date: "January 22-23, 2026" 
-    cred_link: 
+    cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
+
 # coursesTaught:
 #   - semester: "Spring 2025"
 #     courses:
