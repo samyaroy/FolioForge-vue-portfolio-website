@@ -17,11 +17,11 @@
 
           <span class="text-sm text-gray-500">{{ article.date }}</span>
         </div>
-        <p class="text-gray-700 mb-3"><v-icon size="20">mdi-book-open-page-variant</v-icon><span class="px-3">{{
-          article.publication }}</span></p>
+        <p class="text-gray-700 mb-3"><v-icon size="20">mdi-book-open-page-variant</v-icon><span class="pl-3">{{
+          article.publication.Name }}</span><span class="px-2">-</span><span class="font-medium">{{ article.publication.Host }}</span></p>
         <p class="text-gray-600 mb-4"><v-icon size="20">mdi-tag-outline</v-icon><span class="px-3">{{ article.field
             }}</span></p>
-        <p class="text-gray-600 mb-4"><v-icon size="20">mdi-web</v-icon><span class="px-3"><a :href="article.link" target="_blank">{{ article.link }}</a></span></p>
+        <p v-if="article.link" class="text-gray-600 mb-4"><v-icon size="20">mdi-web</v-icon><span class="px-3"><a :href="article.link" target="_blank">{{ article.link }}</a></span></p>
         <div class="flex items-center justify-between">
           <div class="flex flex-wrap gap-2">
             <span v-for="category in article.categories" :key="category"
