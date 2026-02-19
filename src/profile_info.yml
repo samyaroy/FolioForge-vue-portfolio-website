@@ -269,15 +269,26 @@ ongoing_projects:
   #   cred_link:
   #     github: 
 
-  # - title: 'Cinema Audience Forecasting challenge'
-  #   description: Participating in a Kaggle competition to forecast weekly box office revenue for movies using historical data and various machine learning techniques.
-  #   tech_stack: Machine Learning, Time Series Forecasting, Python
-  #   type: Course Project
-  #   affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
-  #   guide:
-  #   time_period: Sep 2025 - Dec 2025
-  #   cred_link:
-  #     github: 
+  - title: 'Comment Category Prediction'
+    description: Multi-feature classification system to predict the final category of user-generated comments using textual, behavioral, and system-level signals.
+    tech_stack: Machine Learning, Time Series Forecasting, Python
+    type: Course Project
+    affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
+    guide:
+    time_period: Jan 2026 - Present
+    cred_link:
+      kaggle: 
+
+  - title: 'Messy Mashup'
+    description: Robust music genre classification under realistic and noisy mixing conditions.
+    type: Course Project
+    affiliation: GenAI - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
+    tech_stack: ML, Dl
+    guide: 
+    colaborators: 
+    time_period: Jan 2026 - Present
+    cred_link:
+      kaggle:
 
   # Add more fields as needed
 awards:
