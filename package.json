@@ -26,8 +26,12 @@
     "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "autoprefixer": "^10.4.21",
+<<<<<<< HEAD
     "eslint": "^9.39.2",
     "eslint-plugin-vue": "^10.7.0",
+=======
+    "baseline-browser-mapping": "^2.9.19",
+>>>>>>> origin/V1
     "gh-pages": "^6.3.0",
     "globals": "^17.1.0",
     "postcss": "^8.5.6",
