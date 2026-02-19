@@ -3,7 +3,7 @@
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Articles & Blog Posts</h2>
 
     <div v-if="articles && articles.length > 0" class="space-y-6">
-      <div v-for="article in articles" :key="article.id" class="border-l-4 border-[#1980e6] pl-6 py-4">
+      <div v-for="article in articles" :key="article.id" class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4  rounded-md bg-slate-50">
         <div class="flex items-start justify-between mb-3">
           <h3 class="text-lg font-semibold text-[#0e141b] hover:text-[#1980e6] cursor-pointer">
             {{ article.title }}            <span class="inline-block px-3 py-1 text-xs font-medium  text-white rounded-full"></span>
@@ -17,11 +17,11 @@
 
           <span class="text-sm text-gray-500">{{ article.date }}</span>
         </div>
-        <p class="text-gray-700 mb-3"><v-icon size="20">mdi-book-open-page-variant</v-icon><span class="px-3">{{
-          article.publication }}</span></p>
+        <p class="text-gray-700 mb-3"><v-icon size="20">mdi-book-open-page-variant</v-icon><span class="pl-3">{{
+          article.publication.Name }}</span><span class="px-2">-</span><span class="font-medium">{{ article.publication.Host }}</span></p>
         <p class="text-gray-600 mb-4"><v-icon size="20">mdi-tag-outline</v-icon><span class="px-3">{{ article.field
             }}</span></p>
-        <p class="text-gray-600 mb-4"><v-icon size="20">mdi-web</v-icon><span class="px-3"><a :href="article.link" target="_blank">{{ article.link }}</a></span></p>
+        <p v-if="article.link" class="text-gray-600 mb-4"><v-icon size="20">mdi-web</v-icon><span class="px-3"><a :href="article.link" target="_blank">{{ article.link }}</a></span></p>
         <div class="flex items-center justify-between">
           <div class="flex flex-wrap gap-2">
             <span v-for="category in article.categories" :key="category"

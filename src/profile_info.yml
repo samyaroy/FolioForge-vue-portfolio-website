@@ -1,5 +1,5 @@
 # config.yml
-lastUpdatedOn: Jan 2026
+lastUpdatedOn: Feb 2026
 
 profile:
   name: Samyabrata Roy
@@ -155,28 +155,28 @@ projects:
     description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
     type: Research Project
     doi: 10.13140/RG.2.2.16657.13926
-    affiliation:  BSc. (Hons.) Statistics Degree Project, Sister Nivedita University
+    affiliation:  BSc. (Hons.) Degree Project, Sister Nivedita University
+    logo : ['SNU']
     tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
     guide:
       name: Prof. Aniruddha Choudhuri
       title: Assistant Professor
       department: Department of Statistics
-      institution: Sister Nivedita University, Kolkata
+      institution: Sister Nivedita University
     colaborators:
     time_period: Jan 2025 - May 2025
     cred_link:
+      report: https://drive.google.com/file/d/1xgCwYBV9E-1docFJf7YEld2RyUpEOAUZ/view?usp=drive_link
       github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
       researchgate: researchgate.net/publication/391766786_Predicting_Wine_Quality_A_Comparison_of_Linear_Regression_Techniques_on_a_Multicollinear_and_Outlier-Affected_Dataset?_sg%5B0%5D=KMAA__Av1JZU5QW09RmRJh5HSiCHSKQOWtY16iDgz1a-BkmBHVSbh1ayNVa1l4i3mM_SCPfifAd86eWtOl8VXOuygtU2Crm3VRrYc31j.UhBIrCOgdI1HgmgNG6U-yPJyEd7STApaAvphsDR8B4MUGmog_jFi6eOzgU1CxGC8KFeV_7ktVVLz-Thb6YXr_Q&_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19
-    stats:
-      reads: 134
-      citations: 0
-      research_interest_score: 2.4
+    
 
   - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
-    description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
+    description: Conducted a comprehensive survey among college students (aged 18-25) in Kolkata to understand their career preferences. Utilized multivariate inference to identify key factors influencing career choices and segment students based on their preferences.
     type: Research Project
     doi:
-    affiliation: Internship Project, Data Science Intern at Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH), Indian Statistical Institute, Kolkata
+    affiliation: Internship Project (Data Science Intern), Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH), Indian Statistical Institute, Kolkata
+    logo : ['IDEAS']
     tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
     guide:
       name: Mr. Debashis Ghosh
@@ -185,17 +185,20 @@ projects:
     colaborators: Rishav Kumar banerjee, Saunak Datta
     time_period: Jul 2024 - Dec 2024
     cred_link:
+      report: https://drive.google.com/file/d/1pRxfzda-l3rIbrJZztygDYiXcSL4L3Zc/view?usp=drive_link
       github: https://github.com/samyaroy/Multivariate_Analysis_of_Career_Preference_in_Kolkata
     
 
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
     type: "Technical Project"
-    affiliation: Diploma Level. Project, BS in Data Science and Applications, Indian Institute of Technology Madras
+    affiliation: Diploma Projects (MAD I, MAD II), BS in Data Science and Applications, Indian Institute of Technology Madras
+    logo: ['IITM']
     tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
     guide:
     time_period: "Jan 2025 - Aug 2025"
     cred_link:
+      report: "https://drive.google.com/file/d/1XyZyXyZyXyZyXyZyXyZyXyZyXyZyXyZy/preview"
       github: "https://github.com/samyaroy/quiz_pilot_master_repo"
     
   - title: Doctor Vaahaan
@@ -230,15 +233,19 @@ projects:
       
 articles:
   - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
-    publication: Gradient (Vol I), pp. 123–128 - Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
+    publication:
+      Name: Gradient (Vol I) 2026, pp. 59-64
+      Host: Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
     field: Statistical Inference, Machine Learning, Uncertainty Quantification
     date: Feb 2026
-    link: https://sxccal.edu/upload/Eco-Echoes_Vol._XXII-compressed_.pdf
+    link: 
     type: Magazine Article
-    cred_link: https://drive.google.com/file/d/1zhduEtlKr-jpYax6M9QJmAUvIMb_ztC4/preview
+    cred_link: https://drive.google.com/file/d/1OZ3R8fMiUPXyaSi2AQX-VoEPGC5cMPci/preview
 
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
-    publication: EPOCHS 2025 (2nd Edition) - Wayanad House ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
+    publication:
+      Name: EPOCHS 2025 (2nd Edition)
+      Host: Wayanad Houses ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
     date: Dec 2025
     link: https://epochs.netlify.app/
@@ -294,15 +301,26 @@ ongoing_projects:
   #   cred_link:
   #     github: 
 
-  - title: 'Cinema Audience Forecasting challenge'
-    description: Participating in a Kaggle competition to forecast weekly box office revenue for movies using historical data and various machine learning techniques.
+  - title: 'Comment Category Prediction'
+    description: Multi-feature classification system to predict the final category of user-generated comments using textual, behavioral, and system-level signals.
     tech_stack: Machine Learning, Time Series Forecasting, Python
     type: Course Project
     affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
     guide:
-    time_period: Sep 2025 - Dec 2025
+    time_period: Jan 2026 - Present
     cred_link:
-      github: 
+      kaggle: 
+
+  - title: 'Messy Mashup'
+    description: Robust music genre classification under realistic and noisy mixing conditions.
+    type: Course Project
+    affiliation: GenAI - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
+    tech_stack: ML, Dl
+    guide: 
+    colaborators: 
+    time_period: Jan 2026 - Present
+    cred_link:
+      kaggle:
 
   # Add more fields as needed
 awards:
@@ -320,7 +338,7 @@ co_curriculars:
         web_link: https://22f2001443.github.io/chi-square/
         host: Nilgiri House
         location: Indian Institute of Technology Madras BS Degree
-        description: Created a statistics community of 450+ members. Led core team, organized workshops, academic sessions, and industry talks. Increased membership by 40% and secured partnerships with other societies, including the Ramanujan Society for Research (RASoR).
+        description: Created and led the statistics community of 500+ members over 2 years. Organized more than 20 workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
         time_period: 2023 - 2025
         skills: Leadership, Event Management, Team Building
 
@@ -440,15 +458,15 @@ attended_bootcamps:
     instructor: "Prof. Sudarshan Iyengar"
     institution:
       - name: "Indian Institute of Technology Ropar"
-        department: "Department of Computer Science and Engineering"
-        location: "Rupnagar, PB"
+        department: "Department of CSE"
     date: "June 2024 - July 2024"
     duration: "1 Month"
+    location: "Rupnagar, PB"
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
 
 attended_conferences:
   - title: "Fifth ISEA International Conference on Security and Privacy (ISEA-ISAP 2026)"
-    link: "https://isea-isap2026.iitm.ac.in/"
+  #  link: "https://isea-isap2026.iitm.ac.in/"
     organizer:
       - name: "Indian Institute of Technology Madras"
         department: "CyStar"
@@ -458,7 +476,7 @@ attended_conferences:
     institution:
       - name: "Indian Institute of Technology Madras"
     date: "January 16-18, 2026" 
-
+    cred_link: "https://drive.google.com/file/d/11f1dKYe_2jSlnKWkZRHlzh90j9r6GJHb/preview"
 
   - title: "Cryptology Conclave 2026"
     link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
@@ -469,7 +487,7 @@ attended_conferences:
     institution:
       - name: "Indian Institute of Technology Hyderabad"
     date: "January 22-23, 2026" 
-    cred_link: "https://drive.google.com/file/d/1ZkXJH6Yk2b0Y5o1F1Y8KX1Z1Z1Z1Z1Z1/preview"  
+    cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
 
 coursesTaught:
   - semester: "Spring 2025"

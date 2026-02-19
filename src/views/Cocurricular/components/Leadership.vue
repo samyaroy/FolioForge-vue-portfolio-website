@@ -9,7 +9,7 @@
       Leadership & Organizations
     </h2>
     <div class="space-y-6">
-      <div class="border-l-4 border-[#1980e6] pl-6 py-4">
+      <div class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
         <div class="flex items-center justify-between mb-2">
           <h3 class="text-lg font-semibold text-[#0e141b]">{{ leadership.role }}</h3>
           <span class="text-sm text-gray-500">{{ leadership.time_period }}</span>
