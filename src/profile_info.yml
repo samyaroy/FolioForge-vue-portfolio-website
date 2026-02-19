@@ -465,7 +465,7 @@ attended_bootcamps:
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
 
 attended_conferences:
-  - title: "Fifth ISEA International Conference on Security and Privacy (ISEA-ISAP 2026)"
+  - title: "Fifth International Conference on Security and Privacy (ISEA-ISAP 2026)"
   #  link: "https://isea-isap2026.iitm.ac.in/"
     organizer:
       - name: "Indian Institute of Technology Madras"
