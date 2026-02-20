@@ -81,6 +81,16 @@ education: # put your latest education first
   # Add more fields as needed
 
 internships:
+  - role: MERN Stack Developer Intern
+    company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+    guide: Prof. Sudarshan Iyengar
+    location: Virtual
+    time_period: Feb 2026 - Present
+    description: 
+    type: Virtual Internship
+    cred_link:
+    
+
   - role: Data Science Intern
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
     location: Remote
@@ -222,20 +232,20 @@ projects:
       github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
     
 
-  - title: Hand Raise Detector
-    description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams.
-    type: "Technical Project"
-    affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
-    tech_stack: YOLOv8, OpenCV, Python
-    guide:
-    time_period:
-    cred_link:
+  # - title: Hand Raise Detector
+  #   description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams.
+  #   type: "Technical Project"
+  #   affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
+  #   tech_stack: YOLOv8, OpenCV, Python
+  #   guide:
+  #   time_period:
+  #   cred_link:
       
 articles:
   - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
     publication:
       Name: Gradient (Vol I) 2026, pp. 59-64
-      Host: Postgraduate Department of Data Science at St. Xavier’s College (Autonomous), Kolkata
+      Host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
     field: Statistical Inference, Machine Learning, Uncertainty Quantification
     date: Feb 2026
     link: 
@@ -259,14 +269,8 @@ publications:
     authors: John Doe, Jane Smith
     journal: Journal of Example
     year: 2024
-    abstract: This is an abstract for publication 1.
     tags: [tag1, tag2]
-  - title: Publication Title 2
-    authors: Jane Smith, John Doe
-    journal: Another Journal
-    year: 2023
-    abstract: This is an abstract for publication 2.
-    tags: [tag3, tag4]
+    link: https://example.com/publication1
 
 posters:
   - title: "Innovations in Statistical Modeling"
@@ -274,20 +278,9 @@ posters:
     authors: "Samyabrata Roy, Dr. A. K. Sharma"
     date: "November 2025"
     description: "Presented a novel approach to time series forecasting using deep learning techniques, demonstrating improved accuracy over traditional methods."
-    link: "https://example.com/poster1-abstract"
     cred_link: "https://example.com/poster1-full"
     image: "/path/to/poster1-image.png"
     tags: ["Statistical Modeling", "Deep Learning", "Time Series"]
-
-  - title: "Data Visualization for Public Health"
-    event: "Annual Health Informatics Symposium"
-    authors: "Samyabrata Roy"
-    date: "September 2024"
-    description: "Developed interactive dashboards to visualize public health data, making complex information accessible to policymakers and the public."
-    link: "https://example.com/poster2-abstract"
-    cred_link: "https://example.com/poster2-full"
-    image: "/path/to/poster2-image.png"
-    tags: ["Data Visualization", "Public Health", "Informatics"]
 
 ongoing_projects:
   # - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
@@ -520,12 +513,6 @@ projectsMentored:
           - "Riya Sen"
         registrationNumber: "STAT2025-PM-014"
         affiliation: "Sister Nivedita University"
-
-      - title: "Customer Churn Analysis"
-        course: "Data Analytics Lab"
-        students:
-          - "Rahul Verma"
-        affiliation: "IIT Madras"
 
 otherTeachings:
   - title: "Private Tutor"

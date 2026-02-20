@@ -14,6 +14,10 @@
           <v-icon size="16">mdi-office-building</v-icon>
           <span>{{ internship.department }}</span>
         </div>
+        <div v-if="internship.guide" class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
+          <v-icon size="16">mdi-account-tie</v-icon>
+          <span>Supervisor: <SmartLink :type="'Person'" :text="internship.guide" /></span>
+        </div>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-map-marker</v-icon>
           <span>{{ internship.location }}</span>
