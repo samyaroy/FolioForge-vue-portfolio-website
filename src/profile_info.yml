@@ -82,7 +82,7 @@ education: # put your latest education first
   # Add more fields as needed
 
 internships:
-  - role: MERN Stack Developer Intern
+  - role: "MERN Stack Developer Intern (Cohort 4 - RSAian)"
     company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
     guide: Prof. Sudarshan Iyengar
     location: Virtual
@@ -92,7 +92,7 @@ internships:
     cred_link:
     
 
-  - role: Data Science Intern
+  - role: Data Science Intern (Autumn 2024)
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
     location: Remote
     time_period: Jun 2024 - Oct 2024
@@ -222,15 +222,15 @@ projects:
     cred_link:
       website: "https://doctorvaahaan.com/"
 
-  - title: FolioForge Portfolio Website
-    description: Personal portfolio website built with Vue.js and Tailwind CSS, featuring dynamic content and responsive design.
-    type: "Technical Project"
-    affiliation: 
-    tech_stack: Vue.js, Tailwind CSS, JavaScript
-    guide:
-    time_period: 
-    cred_link:
-      github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
+  # - title: FolioForge Portfolio Website
+  #   description: Personal portfolio website built with Vue.js and Tailwind CSS, featuring dynamic content and responsive design.
+  #   type: "Technical Project"
+  #   affiliation: 
+  #   tech_stack: Vue.js, Tailwind CSS, JavaScript
+  #   guide:
+  #   time_period: 
+  #   cred_link:
+  #     github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
     
 
   # - title: Hand Raise Detector
