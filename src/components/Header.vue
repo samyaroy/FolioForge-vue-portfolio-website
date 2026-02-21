@@ -42,12 +42,13 @@
       </button>
 
       <!-- Mobile Menu Button -->
-      <button
-        class="md:hidden flex items-center justify-center w-10 h-10 text-base_black hover:text-primary transition-colors duration-200"
+      <button class="md:hidden flex items-center justify-center w-10 h-10 transition-colors duration-200"
         @click="drawer = !drawer">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"  bg="black">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+
+        <v-icon color="black" size="24">
+          mdi-menu
+        </v-icon>
+
       </button>
     </div>
   </header>
@@ -116,9 +117,11 @@ const SEND_MAIL = () => {
 .nav-link {
   @apply text-base_black text-sm font-medium transition-colors duration-200 no-underline;
 }
+
 .nav-link:hover {
   @apply text-primary;
 }
+
 .active-link {
   @apply font-bold text-primary;
 }
