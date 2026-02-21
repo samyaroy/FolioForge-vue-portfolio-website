@@ -13,8 +13,8 @@
     </div>
 
     <!-- Organization -->
-    <p class="text-gray-700 mb-3 flex items-center gap-2">
-      <v-icon size="16">mdi-domain</v-icon>
+    <p class="text-gray-700 mb-3 flex items-start gap-2">
+      <v-icon size="16" class="mt-1">mdi-domain</v-icon>
       {{ volunteering.organization }}
     </p>
 
