@@ -10,7 +10,7 @@
         </p>
       </div>
 
-      <div class="flex justify-center mb-8">
+      <div v-if="tabs.length" class="flex justify-center mb-8">
         <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
           <button
             v-for="tab in tabs"
@@ -27,43 +27,66 @@
           </button>
         </div>
       </div>
+      <div v-else class="text-center text-gray-500 mb-8">
+        No sections are enabled right now.
+      </div>
 
       <div class="max-w-6xl mx-auto">
-        <AffiliationsTab v-if="activeTab === 'affiliations'" :affiliations="affiliations" />
+        <AffiliationsTab
+          v-if="showAffiliationsTab && activeTab === 'affiliations'"
+          :affiliations="affiliations"
+        />
         <CollaboratorsTab
-          v-if="activeTab === 'collaborators'"
+          v-if="showCollaboratorsTab && activeTab === 'collaborators'"
           :collaborators="allCollaborators"
         />
-        <MembershipsTab v-if="activeTab === 'memberships'" :memberships="memberships" />
+        <MembershipsTab
+          v-if="showMembershipsTab && activeTab === 'memberships'"
+          :memberships="memberships"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import AffiliationsTab from './components/tabs/AffiliationsTab.vue'
 import CollaboratorsTab from './components/tabs/CollaboratorsTab.vue'
 import MembershipsTab from './components/tabs/MembershipsTab.vue'
 import config from '@/profile_info.yml'
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 const { affiliations = [], collaborators = [], past_collaborators = [], memberships = [] } = config
 // Combine all collaborators into one array - filtering will be done in CollaboratorsTab based on period
 const allCollaborators = [...(collaborators || []), ...(past_collaborators || [])]
 
+const showAffiliationsTab = isFeatureEnabled('showAffiliations.showAffiliations')
+const showCollaboratorsTab = isFeatureEnabled('showAffiliations.showCollaborators')
+const showMembershipsTab = isFeatureEnabled('showAffiliations.showMemberships')
+
+const tabDefinitions = [
+  { id: 'affiliations', name: 'Affiliations', enabled: showAffiliationsTab },
+  { id: 'collaborators', name: 'Collaborators', enabled: showCollaboratorsTab },
+  { id: 'memberships', name: 'Memberships', enabled: showMembershipsTab },
+]
+
+const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
+const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
+
 const route = useRoute()
-const activeTab = ref('affiliations')
+const activeTab = ref(tabs.value[0]?.id || null)
+
+watch(tabs, (nextTabs) => {
+  if (!nextTabs.some(tab => tab.id === activeTab.value)) {
+    activeTab.value = nextTabs[0]?.id || null
+  }
+}, { immediate: true })
 
 onMounted(() => {
-  if (route.query.tab && ['affiliations', 'collaborators', 'memberships'].includes(route.query.tab)) {
+  if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
 })
-
-const tabs = [
-  { id: 'affiliations', name: 'Affiliations' },
-  { id: 'collaborators', name: 'Collaborators' },
-  { id: 'memberships', name: 'Memberships' },
-]
 </script>

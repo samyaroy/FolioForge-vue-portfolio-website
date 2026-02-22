@@ -12,7 +12,7 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="flex justify-center mb-8">
+      <div v-if="tabs.length" class="flex justify-center mb-8">
         <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
           <button
             v-for="tab in tabs"
@@ -29,43 +29,73 @@
           </button>
         </div>
       </div>
+      <div v-else class="text-center text-gray-500 mb-8">
+        No sections are enabled right now.
+      </div>
 
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
-        <PublicationsTab v-if="activeTab === 'publications'" :publications="publications" />
-        <ProjectsTab v-if="activeTab === 'projects'" :projects="projects" />
-        <ArticlesTab v-if="activeTab === 'articles'" :articles="articles" />
-        <PostersTab v-if="activeTab === 'posters'" :posters="posters" />
+        <PublicationsTab
+          v-if="showPublicationsTab && activeTab === 'publications'"
+          :publications="publications"
+        />
+        <ProjectsTab
+          v-if="showProjectsTab && activeTab === 'projects'"
+          :projects="projects"
+        />
+        <ArticlesTab
+          v-if="showArticlesTab && activeTab === 'articles'"
+          :articles="articles"
+        />
+        <PostersTab
+          v-if="showPostersTab && activeTab === 'posters'"
+          :posters="posters"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PublicationsTab from './components/PublicationsTab.vue'
 import ProjectsTab from './components/ProjectTab/Index.vue'
 import ArticlesTab from './components/ArticlesTab.vue'
-import PostersTab from './components/PostersTab.vue' // Import the new PostersTab component
+import PostersTab from './components/PostersTab.vue'
 import config from '@/profile_info.yml'
+import { isFeatureEnabled } from '@/config/featureFlags'
 
-const {projects, publications, articles, posters} = config // Add posters to destructured config
+const { projects, publications, articles, posters } = config
+
+const showProjectsTab = isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' })
+const showArticlesTab = isFeatureEnabled('showProjectsPublications.showArticles')
+const showPublicationsTab = isFeatureEnabled('showProjectsPublications.showPublications')
+const showPostersTab = isFeatureEnabled('showProjectsPublications.showPosters')
+
+const tabDefinitions = [
+  { id: 'projects', name: 'Projects', enabled: showProjectsTab },
+  { id: 'articles', name: 'Articles', enabled: showArticlesTab },
+  { id: 'publications', name: 'Publications', enabled: showPublicationsTab },
+  { id: 'posters', name: 'Posters', enabled: showPostersTab },
+]
+
+const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
+const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
 
 const route = useRoute()
-const activeTab = ref('projects')
+const activeTab = ref(tabs.value[0]?.id || null)
+
+watch(tabs, (nextTabs) => {
+  if (!nextTabs.some(tab => tab.id === activeTab.value)) {
+    activeTab.value = nextTabs[0]?.id || null
+  }
+}, { immediate: true })
 
 // Set active tab based on query parameter
 onMounted(() => {
-  if (route.query.tab && ['projects', 'articles', 'publications', 'posters'].includes(route.query.tab)) {
+  if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
 })
-
-const tabs = [
-  { id: 'projects', name: 'Projects' },
-  { id: 'articles', name: 'Articles' },
-  { id: 'publications', name: 'Publications' },
-  { id: 'posters', name: 'Posters' }, // Add Posters to the tabs array
-]
 </script>

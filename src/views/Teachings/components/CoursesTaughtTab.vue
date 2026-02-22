@@ -27,7 +27,7 @@
 
               <span
                 v-if="course.role"
-                class="text-xs font-medium bg-slate-200 text-slate-700 px-2 py-1 rounded"
+                class="text-xs font-medium bg-slate-200 text-slate-700 px-2 py-1 mr-2 rounded"
               >
                 {{ course.role }}
               </span>

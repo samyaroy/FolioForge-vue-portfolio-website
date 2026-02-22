@@ -12,7 +12,7 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="flex justify-center mb-8">
+      <div v-if="tabs.length" class="flex justify-center mb-8">
         <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
           <button
             v-for="tab in tabs"
@@ -29,20 +29,35 @@
           </button>
         </div>
       </div>
+      <div v-else class="text-center text-gray-500 mb-8">
+        No sections are enabled right now.
+      </div>
 
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
-        <ConferencesTab v-if="activeTab === 'conferences'" :conferences="attendedConferences" />
-        <FDPsTab v-if="activeTab === 'fdps'" :fdps="attendedFDPs" />
-        <WorkshopsTab v-if="activeTab === 'workshops'" :workshops="attendedWorkshops" />
-        <BootcampsTab v-if="activeTab === 'bootcamps'" :bootcamps="attendedBootcamps" />
+        <ConferencesTab
+          v-if="showConferencesTab && activeTab === 'conferences'"
+          :conferences="attendedConferences"
+        />
+        <FDPsTab
+          v-if="showFDPsTab && activeTab === 'fdps'"
+          :fdps="attendedFDPs"
+        />
+        <WorkshopsTab
+          v-if="showWorkshopsTab && activeTab === 'workshops'"
+          :workshops="attendedWorkshops"
+        />
+        <BootcampsTab
+          v-if="showBootcampsTab && activeTab === 'bootcamps'"
+          :bootcamps="attendedBootcamps"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ConferencesTab from './components/tabs/ConferencesTab.vue'
 import FDPsTab from './components/tabs/FDPsTab.vue'
@@ -50,28 +65,43 @@ import WorkshopsTab from './components/tabs/WorkshopsTab.vue'
 import BootcampsTab from './components/tabs/BootcampsTab.vue'
 
 import config from '@/profile_info.yml'
+import { isFeatureEnabled } from '@/config/featureFlags'
 const { attended_workshops, attended_bootcamps, attended_conferences, attended_fdps } = config
 const attendedWorkshops = attended_workshops || []
 const attendedBootcamps = attended_bootcamps || []
 const attendedConferences = attended_conferences || []
 const attendedFDPs = attended_fdps || []
 
+const showConferencesTab = isFeatureEnabled('showWorkshopsAttended.showConferences')
+const showFDPsTab = isFeatureEnabled('showWorkshopsAttended.showFDPs')
+const showWorkshopsTab = isFeatureEnabled('showWorkshopsAttended.showWorkshops')
+const showBootcampsTab = isFeatureEnabled('showWorkshopsAttended.showBootcamps')
+
+const tabDefinitions = [
+  { id: 'conferences', name: 'Conferences', enabled: showConferencesTab },
+  { id: 'fdps', name: 'FDPs', enabled: showFDPsTab },
+  { id: 'workshops', name: 'Workshops', enabled: showWorkshopsTab },
+  { id: 'bootcamps', name: 'Bootcamps', enabled: showBootcampsTab },
+]
+
+const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
+const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
+
 const route = useRoute()
-const activeTab = ref('workshops') // Default to workshops
+const activeTab = ref(tabs.value[0]?.id || null)
+
+watch(tabs, (nextTabs) => {
+  if (!nextTabs.some(tab => tab.id === activeTab.value)) {
+    activeTab.value = nextTabs[0]?.id || null
+  }
+}, { immediate: true })
 
 // Set active tab based on query parameter
 onMounted(() => {
-  if (route.query.tab && ['conferences', 'workshops', 'bootcamps'].includes(route.query.tab)) {
+  if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
 })
-
-const tabs = [
-  { id: 'conferences', name: 'Conferences' },
-  { id: 'fdps', name: 'FDPs' },
-  { id: 'workshops', name: 'Workshops' },
-  { id: 'bootcamps', name: 'Bootcamps' },
-]
 </script>
 
 <style scoped>

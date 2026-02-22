@@ -12,7 +12,7 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="flex justify-center mb-8">
+      <div v-if="tabs.length" class="flex justify-center mb-8">
         <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
           <button
             v-for="tab in tabs"
@@ -29,21 +29,24 @@
           </button>
         </div>
       </div>
+      <div v-else class="text-center text-gray-500 mb-8">
+        No sections are enabled right now.
+      </div>
 
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
         <CoursesTaughtTab
-          v-if="activeTab === 'courses'"
+          v-if="showCoursesTaughtTab && activeTab === 'courses'"
           :courses="coursesTaught"
         />
 
         <ProjectsMentoredTab
-          v-if="activeTab === 'projects'"
+          v-if="showProjectsMentoredTab && activeTab === 'projects'"
           :projects="projectsMentored"
         />
 
         <OtherTeachingsTab
-          v-if="activeTab === 'others'"
+          v-if="showOtherTeachingsTab && activeTab === 'others'"
           :items="otherTeachings"
         />
       </div>
@@ -52,16 +55,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import config from '@/profile_info.yml'
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 import CoursesTaughtTab from './components/CoursesTaughtTab.vue'
 import ProjectsMentoredTab from './components/ProjectsMentoredTab.vue'
 import OtherTeachingsTab from './components/OtherTeachingsTab.vue'
 
+const showCoursesTaughtTab = isFeatureEnabled('showTeachings.showCoursesTaught')
+const showProjectsMentoredTab = isFeatureEnabled('showTeachings.showProjectsMentored')
+const showOtherTeachingsTab = isFeatureEnabled('showTeachings.showOtherTeachings')
+
+const tabDefinitions = [
+  { id: 'courses', name: 'Courses Taught', enabled: showCoursesTaughtTab },
+  { id: 'projects', name: 'Projects Mentored', enabled: showProjectsMentoredTab },
+  { id: 'others', name: 'Others', enabled: showOtherTeachingsTab },
+]
+
+const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
+const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
+
 const route = useRoute()
-const activeTab = ref('courses')
+const activeTab = ref(tabs.value[0]?.id || null)
 
 // Data from config
 const {
@@ -70,17 +87,16 @@ const {
   otherTeachings
 } = config
 
+watch(tabs, (nextTabs) => {
+  if (!nextTabs.some(tab => tab.id === activeTab.value)) {
+    activeTab.value = nextTabs[0]?.id || null
+  }
+}, { immediate: true })
+
 // Allow deep-linking via ?tab=
 onMounted(() => {
-  const validTabs = ['courses', 'projects', 'others']
-  if (route.query.tab && validTabs.includes(route.query.tab)) {
+  if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
 })
-
-const tabs = [
-  { id: 'courses', name: 'Courses Taught' },
-  { id: 'projects', name: 'Projects Mentored' },
-  { id: 'others', name: 'Others' }
-]
 </script>

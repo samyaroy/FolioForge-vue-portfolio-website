@@ -75,25 +75,25 @@
               </router-link>
             </li> -->
 
-            <li>
+            <li v-if="showOngoingProjectsLink">
               <router-link to="/ongoing-projects"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Ongoing Projects
               </router-link>
             </li>
-            <li>
+            <li v-if="showInternshipCertificationsLink">
               <router-link to="/internships-certifications"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Internships & Certifications
               </router-link>
             </li>
-            <li>
+            <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Affilications, Colaborators & Memberships
+                Affiliations, Collaborators & Memberships
               </router-link>
             </li>
-            <li>
+            <li v-if="showWorkshopsAttendedLink">
               <router-link to="/workshops-bootcamps-attended"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Conferences, Workshops & Bootcamps attended
@@ -195,6 +195,7 @@
 <script>
 import config from "@/profile_info.yml"
 import Logos from "./Logos.vue";
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 export default {
   components: {
@@ -202,6 +203,14 @@ export default {
   },
   data() {
     const { profile, contacts, socials, lastUpdatedOn } = config;
+    const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
+    const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
+    const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
+    const showAffiliationsLink = (
+      isFeatureEnabled('showAffiliations.showAffiliations')
+      || isFeatureEnabled('showAffiliations')
+    )
+
     return {
       profile,
       email: contacts.email,
@@ -215,7 +224,11 @@ export default {
       researchgate: socials.researchgate,
       // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
       logos: ['SNU', 'IITM', 'IDEAS'],
-      lastUpdatedOn
+      lastUpdatedOn,
+      showOngoingProjectsLink,
+      showInternshipCertificationsLink,
+      showWorkshopsAttendedLink,
+      showAffiliationsLink,
     };
   }
 }
