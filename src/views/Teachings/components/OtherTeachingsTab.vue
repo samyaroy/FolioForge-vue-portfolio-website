@@ -5,7 +5,7 @@
         </h2>
 
         <div v-if="items && items.length" class="space-y-6">
-            <div v-for="item in items" :key="item.title" class="border-l-4 border-blue-500 pl-6 py-4">
+            <div v-for="item in items" :key="item.title" class="border-l-4 border-blue-500 bg-gray-50 pl-6 py-4 rounded-lg ">
                 <!-- Header -->
                 <div class="flex items-start justify-between mb-2">
                     <h3 class="text-lg font-bold text-[#0e141b]">
