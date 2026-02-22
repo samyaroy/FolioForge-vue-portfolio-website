@@ -5,7 +5,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
       showResearchProjects: true,
       showTechnicalProjects: true,
     },
-    showPublications: false,
+    showPublications: true,
     showPosters: false,
   },
 
