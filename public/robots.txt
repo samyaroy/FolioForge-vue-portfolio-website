@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://samyabrata.codeium.xyz/sitemap.xml

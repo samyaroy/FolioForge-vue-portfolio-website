@@ -4,20 +4,25 @@ import yaml from '@modyfi/vite-plugin-yaml'
 import ViteSitemap from 'vite-plugin-sitemap'
 import { fileURLToPath, URL } from 'url'
 
+const publicRoutes = [
+  '/projects-publications',
+  '/affiliation-memberships',
+  '/ongoing-projects',
+  '/cocurricular',
+  '/workshops-bootcamps-attended',
+  '/teachings',
+  '/internships-certifications',
+  '/professional-activity',
+  '/contact',
+]
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue(), yaml(), ViteSitemap({
       hostname: 'https://samyabrata.codeium.xyz',
-      routes: [
-        '/',
-        '/projects-publications',
-        '/cocurricular',
-        '/contact',
-        '/projects-publications?tab=publications',
-        '/ongoing-projects',
-        '/internships-certifications'
-      ],
+      dynamicRoutes: publicRoutes,
+      exclude: ['/googlef62b25008a7b041d', '/googlef62b25008a7b041d.html'],
+      generateRobotsTxt: false,
     })
   ],
   base: '/',
@@ -27,4 +32,3 @@ export default defineConfig({
     }
   }
 })
-
