@@ -39,12 +39,12 @@
               >
                 <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
                 <span>
-                  <span class="font-medium">Students:</span>
+                  <span class="font-medium">Students:</span>&nbsp;
                   <span
                     v-for="(student, index) in project.students"
                     :key="student"
                   >
-                    {{ student }}<span v-if="index < project.students.length - 1">, </span>
+                    <SmartLink :text="student.name" type="person" :href="student.linkedin"/><span v-if="index < project.students.length - 1">, </span>
                   </span>
                 </span>
               </p>
@@ -58,7 +58,7 @@
               <p v-if="project.affiliation" class="flex items-center">
                 <v-icon size="16" class="mr-2">mdi-school</v-icon>
                 <span class="font-medium">Affiliation:</span>&nbsp;
-                {{ project.affiliation }}
+                <SmartLink :text="project.affiliation"/>
               </p>
             </div>
           </div>
@@ -73,6 +73,8 @@
 </template>
 
 <script setup>
+import SmartLink from '@/components/SmartLink.vue'
+
 defineProps({
   projects: {
     type: Array,

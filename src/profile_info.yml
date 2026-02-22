@@ -324,12 +324,12 @@ ongoing_projects:
       kaggle:
 
   # Add more fields as needed
-awards:
-  - title: Award Title
-    year: 2021
-    organization: Tech Company 1
-    category: Academic
-    prize: First Place
+# awards:
+#   - title: Award Title
+#     year: 2021
+#     organization: Tech Company 1
+#     category: Academic
+#     prize: First Place
 
 co_curriculars:
   - title: leadership_roles
@@ -511,16 +511,18 @@ attended_conferences:
 #         role: "Instructor"
 #         students: 80
 
-# projectsMentored:
-#   - semester: "Spring 2025"
-#     projects:
-#       - title: "Predictive Maintenance using Time Series"
-#         course: "Applied Statistics"
-#         students:
-#           - "Amit Sharma"
-#           - "Riya Sen"
-#         registrationNumber: "STAT2025-PM-014"
-#         affiliation: "Sister Nivedita University"
+projectsMentored:
+  - semester: "Spring 2026"
+    projects:
+      - title: "Predictive Maintenance using Time Series"
+        course: "Spring Internship Program on Data Science 2026"
+        students:
+          - name: "Amit Sharma"
+            linkedIn: "https://www.linkedin.com/in/amit-sharma-12345678/"
+          - name: "Riya Sen"
+            linkedIn: "https://www.linkedin.com/in/riya-sen-12345678/"
+        registrationNumber: "STAT2025-PM-014"
+        affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
 
 otherTeachings:
   - title: "Private Tutor"
