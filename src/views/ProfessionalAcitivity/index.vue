@@ -12,7 +12,7 @@
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="flex justify-center mb-8">
+      <div v-if="tabs.length" class="flex justify-center mb-8">
         <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
           <button
             v-for="tab in tabs"
@@ -29,44 +29,65 @@
           </button>
         </div>
       </div>
+      <div v-else class="text-center text-gray-500 mb-8">
+        No sections are enabled right now.
+      </div>
 
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
-        <InvitedTalksTab v-if="activeTab === 'invited-talks'" :talks="invitedTalks" />
-        <HostedEventsTab v-if="activeTab === 'hosted-events'" :events="hostedEvents" />
+        <InvitedTalksTab
+          v-if="showInvitedTalksTab && activeTab === 'invited-talks'"
+          :talks="invitedTalks"
+        />
+        <HostedEventsTab
+          v-if="showHostedEventsTab && activeTab === 'hosted-events'"
+          :events="hostedEvents"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InvitedTalksTab from './components/tabs/InvitedTalksTab.vue'
 import HostedEventsTab from './components/tabs/HostedEventsTab.vue'
 
 import config from '@/profile_info.yml'
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 // NOTE: The user should add invited_talks and hosted_events to profile_info.yml
 const { invited_talks, hosted_events } = config
 const invitedTalks = invited_talks || []
 const hostedEvents = hosted_events || []
 
+const showInvitedTalksTab = isFeatureEnabled('showProfessionalActivity.showInvitedTalks')
+const showHostedEventsTab = isFeatureEnabled('showProfessionalActivity.showHostedEvents')
+
+const tabDefinitions = [
+  { id: 'invited-talks', name: 'Invited Talks', enabled: showInvitedTalksTab },
+  { id: 'hosted-events', name: 'Hosted (Convented) events', enabled: showHostedEventsTab },
+]
+
+const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
+const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
 
 const route = useRoute()
-const activeTab = ref('invited-talks') // Default to invited-talks
+const activeTab = ref(tabs.value[0]?.id || null)
+
+watch(tabs, (nextTabs) => {
+  if (!nextTabs.some(tab => tab.id === activeTab.value)) {
+    activeTab.value = nextTabs[0]?.id || null
+  }
+}, { immediate: true })
 
 // Set active tab based on query parameter
 onMounted(() => {
-  if (route.query.tab && ['invited-talks', 'hosted-events'].includes(route.query.tab)) {
+  if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
 })
-
-const tabs = [
-  { id: 'invited-talks', name: 'Invited Talks' },
-  { id: 'hosted-events', name: 'Hosted (Convented) events' },
-]
 </script>
 
 <style scoped>

@@ -7,7 +7,7 @@ import Footer from '@/components/Footer/Index.vue'
 // get current route
 const route = useRoute()
 
-// computed flag: hide layout on home
+
 const showLayout = true //set to true
 </script>
 

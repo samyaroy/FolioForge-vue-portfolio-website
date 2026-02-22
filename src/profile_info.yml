@@ -240,6 +240,14 @@ projects:
   #   guide:
   #   time_period:
   #   cred_link:
+  # - title: Hand Raise Detector
+  #   description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams.
+  #   type: "Technical Project"
+  #   affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
+  #   tech_stack: YOLOv8, OpenCV, Python
+  #   guide:
+  #   time_period:
+  #   cred_link:
       
 articles:
   - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
@@ -482,26 +490,26 @@ attended_conferences:
     date: "January 22-23, 2026" 
     cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
 
-coursesTaught:
-  - semester: "Spring 2025"
-    courses:
-      - title: "Introduction to Statistics"
-        institution: "Sister Nivedita University"
-        role: "Teaching Assistant"
-        collaborators:
-          - "Prof. XYZ"
-        students: 120
-      - title: "Data Analysis with Python"
-        institution: "IIT Madras"
-        role: "Guest Instructor"
-        students: 60
+# coursesTaught:
+#   - semester: "Spring 2025"
+#     courses:
+#       - title: "Introduction to Statistics"
+#         institution: "Sister Nivedita University"
+#         role: "Teaching Assistant"
+#         collaborators:
+#           - "Prof. XYZ"
+#         students: 120
+#       - title: "Data Analysis with Python"
+#         institution: "IIT Madras"
+#         role: "Guest Instructor"
+#         students: 60
 
-  - semester: "Autumn 2024"
-    courses:
-      - title: "Probability Theory"
-        institution: "Sister Nivedita University"
-        role: "Instructor"
-        students: 80
+#   - semester: "Autumn 2024"
+#     courses:
+#       - title: "Probability Theory"
+#         institution: "Sister Nivedita University"
+#         role: "Instructor"
+#         students: 80
 
 # projectsMentored:
 #   - semester: "Spring 2025"

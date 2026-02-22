@@ -17,17 +17,27 @@
         <router-link to="/" class="nav-link" active-class="active-link">
           Home
         </router-link>
-        <router-link to="/projects-publications" class="nav-link" active-class="active-link">
+        <router-link
+          v-if="showProjectsPublicationsNavLink"
+          to="/projects-publications"
+          class="nav-link"
+          active-class="active-link"
+        >
           Projects & Publications
         </router-link>
-        <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
-            Teachings
-          </router-link>
-        <router-link to="/cocurricular" class="nav-link" active-class="active-link">
-          Co-curricular
+        <router-link v-if="showTeachingsNavLink" to="/teachings" class="nav-link" active-class="active-link">
+          Teachings
         </router-link>
-        <router-link to="/professional-activity" class="nav-link" active-class="active-link">
+        <router-link
+          v-if="showProfessionalActivityNavLink"
+          to="/professional-activity"
+          class="nav-link"
+          active-class="active-link"
+        >
           Professional Activity
+        </router-link>
+        <router-link v-if="showCocurricularNavLink" to="/cocurricular" class="nav-link" active-class="active-link">
+          Co-curricular
         </router-link>
         <router-link to="/contact" class="nav-link" active-class="active-link">
           Contact
@@ -74,13 +84,34 @@
           <router-link to="/" @click="drawer = false" class="nav-link" active-class="active-link">
             Home
           </router-link>
-          <router-link to="/projects-publications" @click="drawer = false" class="nav-link" active-class="active-link">
+          <router-link
+            v-if="showProjectsPublicationsNavLink"
+            to="/projects-publications"
+            @click="drawer = false"
+            class="nav-link"
+            active-class="active-link"
+          >
             Projects & Publications
           </router-link>
-          <router-link to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
+          <router-link v-if="showTeachingsNavLink" to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
             Teachings
           </router-link>
-          <router-link to="/cocurricular" @click="drawer = false" class="nav-link" active-class="active-link">
+          <router-link
+            v-if="showProfessionalActivityNavLink"
+            to="/professional-activity"
+            @click="drawer = false"
+            class="nav-link"
+            active-class="active-link"
+          >
+            Professional Activity
+          </router-link>
+          <router-link
+            v-if="showCocurricularNavLink"
+            to="/cocurricular"
+            @click="drawer = false"
+            class="nav-link"
+            active-class="active-link"
+          >
             Co-curricular
           </router-link>
           <router-link to="/contact" @click="drawer = false" class="nav-link" active-class="active-link">
@@ -93,13 +124,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import config from "@/profile_info.yml"
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 const router = useRouter()
 const drawer = ref(false)
 const { profile, contacts } = config
+
+const showTeachingsNavLink = computed(() => (
+  isFeatureEnabled('showTeachings', { mode: 'any' }) && router.hasRoute('Teachings')
+))
+
+const showProjectsPublicationsNavLink = computed(() => (
+  isFeatureEnabled('showProjectsPublications', { mode: 'any' })
+  && router.hasRoute('ProjectsPublications')
+))
+
+const showCocurricularNavLink = computed(() => (
+  isFeatureEnabled('showCocurricular', { mode: 'any' }) && router.hasRoute('Cocurricular')
+))
+
+const showProfessionalActivityNavLink = computed(() => (
+  isFeatureEnabled('showProfessionalActivity', { mode: 'any' })
+  && (router.hasRoute('ProfessionalActivity') || router.hasRoute('ProfessionalAcitivity'))
+))
 
 const SEND_MAIL = () => {
   const subject = encodeURIComponent('Freelance Project:')

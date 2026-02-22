@@ -14,8 +14,13 @@
 
       <div class="max-w-6xl mx-auto space-y-8">
         <!-- Leadership Component -->
-        <Leadership v-for="(leadership, index) in leadershipRoles" :key="index" :leadership="leadership" />
-        <div class="bg-white rounded-lg shadow-sm p-8">
+        <Leadership
+          v-if="showLeadershipSection"
+          v-for="(leadership, index) in leadershipRoles"
+          :key="index"
+          :leadership="leadership"
+        />
+        <div v-if="showVolunteeringSection" class="bg-white rounded-lg shadow-sm p-8">
           <h2 class="text-2xl font-bold text-[#0e141b] mb-6 flex items-center">
             <svg class="w-6 h-6 mr-3 text-[#1980e6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -30,6 +35,12 @@
             <Volunteering v-for="(volunteer, index) in volunteeringRoles" :key="index" :volunteering="volunteer" />
           </div>
         </div>
+        <div
+          v-if="!showLeadershipSection && !showVolunteeringSection"
+          class="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500 italic"
+        >
+          No co-curricular sections are enabled.
+        </div>
       </div>
     </div>
   </div>
@@ -40,8 +51,11 @@ import Leadership from './components/Leadership.vue'
 import Volunteering from './components/Volunteering.vue'
 
 import config from '@/profile_info.yml'
+import { isFeatureEnabled } from '@/config/featureFlags'
 const { co_curriculars } = config
 
 const leadershipRoles = co_curriculars.find(c => c.title === "leadership_roles")?.entries || []
 const volunteeringRoles = co_curriculars.find(c => c.title === "volunteering_roles")?.entries || []
+const showLeadershipSection = isFeatureEnabled('showCocurricular.showLeadershipOrganizations')
+const showVolunteeringSection = isFeatureEnabled('showCocurricular.showVolunteering')
 </script>

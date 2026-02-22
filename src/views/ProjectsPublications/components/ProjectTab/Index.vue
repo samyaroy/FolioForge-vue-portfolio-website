@@ -1,14 +1,27 @@
 <template>
   <div class="space-y-8">
-    <ResearchProjects :projects="researchProjects" />
-    <TechnicalProjects :projects="technicalProjects" />
+    <ResearchProjects
+      v-if="showResearchProjectsSection"
+      :projects="researchProjects"
+    />
+    <TechnicalProjects
+      v-if="showTechnicalProjectsSection"
+      :projects="technicalProjects"
+    />
+    <div
+      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection"
+      class="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500 italic"
+    >
+      No project sections are enabled.
+    </div>
   </div>
 </template>
 
 <script setup>
-import { computed, watchEffect } from 'vue'
+import { computed } from 'vue'
 import TechnicalProjects from './components/TechnicalProjects.vue'
 import ResearchProjects from './components/ResearchProjects.vue'
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 const props = defineProps({
   projects: {
@@ -24,10 +37,8 @@ const technicalProjects = computed(() =>
 const researchProjects = computed(() =>
   props.projects.filter(p => p.type === 'Research Project')
 )
-watchEffect(() => {
-  console.log(props.projects)
-  console.log("Technical Projects:", technicalProjects.value)
-  console.log("Research Projects:", researchProjects.value)
-})
+
+const showResearchProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showResearchProjects')
+const showTechnicalProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showTechnicalProjects')
 
 </script>
