@@ -39,7 +39,7 @@
         <router-link v-if="showCocurricularNavLink" to="/cocurricular" class="nav-link" active-class="active-link">
           Co-curricular
         </router-link>
-        <router-link to="/contact" class="nav-link" active-class="active-link">
+        <router-link :to="{ name: 'Contact' }" class="nav-link" active-class="active-link">
           Contact
         </router-link>
       </div>
@@ -64,7 +64,7 @@
   </header>
 
   <!-- Mobile Navigation Drawer -->
-  <div v-if="drawer" class="fixed inset-0 z-50 md:hidden" @click="drawer = false">
+  <div v-if="drawer" class="fixed inset-0 z-50 md:hidden" @click.self="drawer = false">
     <!-- Backdrop -->
     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
@@ -114,7 +114,7 @@
           >
             Co-curricular
           </router-link>
-          <router-link to="/contact" @click="drawer = false" class="nav-link" active-class="active-link">
+          <router-link :to="{ name: 'Contact' }" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
         </nav>

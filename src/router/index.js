@@ -9,6 +9,7 @@ import WorkshopsAttended from '@/views/WorkshopsAttended/index.vue'
 import InternshipCertification from '@/views/InternshipCertification/index.vue'
 import Teachings from '@/views/Teachings/index.vue'
 import ProfessionalAcitivity from '@/views/ProfessionalAcitivity/index.vue'
+import Contact from '@/views/Contact.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const routes = [
@@ -91,7 +92,7 @@ const routes = [
   {
     path: '/contact',
     name: 'Contact',
-    component: () => import('@/views/Contact.vue')
+    component: Contact
   }
 ]
 
