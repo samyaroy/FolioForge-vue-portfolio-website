@@ -1,6 +1,6 @@
 # My Portfolio - Vue.js Application
 
-A modern, responsive portfolio website built with Vue.js 3, Vuetify (Material Design), and Tailwind CSS. Features conditional layout rendering, comprehensive sections for education, experience, projects, publications, workshops, and beautiful UI components.
+A modern, responsive portfolio website built with Vue.js 3, Vuetify (Material Design), and Tailwind CSS. The app is data-driven via YAML content and includes dedicated pages for projects, publications, teachings, internships, affiliations, workshops, professional activities, and contact.
 
 ## 🚀 Technologies Used
 
@@ -9,82 +9,157 @@ A modern, responsive portfolio website built with Vue.js 3, Vuetify (Material De
 - **Vuetify 3** - Material Design component framework for Vue.js
 - **Tailwind CSS 3** - Utility-first CSS framework
 - **Vite** - Next-generation frontend build tool
+- **YAML Content Source** - Structured profile/content data via `profile_info.yml`
+- **Vite Sitemap Plugin** - Automated sitemap generation during build
 - **Material Design Icons** - Icon library for Material Design
 
 ## 📁 File Structure
 
 ```
-samyabrata.github.io/
-├── CNAME                           # Custom domain configuration
-├── public/                         # Static assets
-│   ├── CNAME                       # Custom domain configuration
-│   ├── icons/                      # Icon assets
-│   │   ├── GS.png                  # Google Scholar icon
-│   │   └── RG.png                  # ResearchGate icon
-│   ├── profile-icon.png            # Profile icon
-│   ├── SamyabrataRoy.jpeg          # Profile image
-│   ├── SamyabrataRoy2.jpg          # Alternative profile image
-│   └── vite.svg                    # Vite logo
-├── src/                            # Source code directory
-│   ├── assets/                     # Static assets
-│   │   └── vue.svg                 # Vue.js logo
-│   ├── components/                 # Reusable Vue components
-│   │   ├── Header.vue              # Navigation header component
-│   │   └── Footer.vue              # Footer component with links
-│   ├── router/                     # Vue Router configuration
-│   │   └── index.js                # Route definitions and router setup
-│   ├── views/                      # Page components (route views)
-│   │   ├── Cocurricular/           # Co-curricular activities section
-│   │   │   ├── components/         # Co-curricular components
-│   │   │   │   ├── Leadership.vue  # Leadership experience component
-│   │   │   │   └── Volunteering.vue # Volunteering experience component
-│   │   │   └── Index.vue           # Co-curricular main page
-│   │   ├── Contact.vue             # Contact page with form
-│   │   ├── Home/                   # Home section with multiple components
-│   │   │   ├── components/         # Home page components
-│   │   │   │   ├── awards/         # Awards and recognition section
-│   │   │   │   │   ├── components/ # Award components
-│   │   │   │   │   │   └── AwardCard.vue # Individual award card
-│   │   │   │   │   └── Index.vue   # Awards main page
-│   │   │   │   ├── education/      # Education section
-│   │   │   │   │   ├── components/ # Education components
-│   │   │   │   │   │   └── EducationMilestone.vue # Education milestone
-│   │   │   │   │   └── Index.vue   # Education main page
-│   │   │   │   ├── experience/     # Work experience section
-│   │   │   │   │   ├── components/ # Experience components
-│   │   │   │   │   │   └── TimelineComponent.vue # Experience timeline
-│   │   │   │   │   └── Index.vue   # Experience main page
-│   │   │   │   ├── HeroSection.vue # Hero section component
-│   │   │   │   └── researchInterests/ # Research interests section
-│   │   │   │       ├── components/ # Research components
-│   │   │   │       │   └── Card.vue # Research interest card
-│   │   │   │       └── Index.vue   # Research interests main page
-│   │   │   └── index.vue           # Home main page
-│   │   ├── ProjectsPublications/   # Projects and publications section
-│   │   │   ├── components/         # Projects/Publications components
-│   │   │   │   ├── ArticlesTab.vue # Articles tab component
-│   │   │   │   ├── ProjectTab/     # Project tab components
-│   │   │   │   │   ├── components/ # Project components
-│   │   │   │   │   │   ├── ResearchProjects.vue # Research projects
-│   │   │   │   │   │   └── TechnicalProjects.vue # Technical projects
-│   │   │   │   │   └── Index.vue   # Project tab main page
-│   │   │   │   └── PublicationsTab.vue # Publications tab component
-│   │   │   └── Index.vue           # Projects/Publications main page
-│   │   └── WorkshopsAttended/      # Workshops and bootcamps section
-│   │       ├── components/         # Workshop components
-│   │       │   ├── BootcampCard.vue # Bootcamp card component
-│   │       │   └── WorkshopCard.vue # Workshop card component
-│   │       └── Index.vue           # Workshops main page
-│   ├── App.vue                     # Root component with conditional layout
-│   ├── main.js                     # Application entry point
-│   └── style.css                   # Global styles with Tailwind directives
-├── index.html                      # HTML template
-├── package.json                    # Dependencies and scripts
-├── package-lock.json               # Locked dependency versions
-├── postcss.config.js               # PostCSS configuration
-├── tailwind.config.js              # Tailwind CSS configuration
-├── vite.config.js                  # Vite build configuration
-└── README.md                       # Project documentation
+.
+├── CNAME                                          # Custom domain config for GitHub Pages
+├── LICENSE                                        # MIT license text
+├── README.md                                      # Project documentation
+├── eslint.config.js                               # ESLint configuration
+├── index.html                                     # HTML template used by Vite
+├── package-lock.json                              # Locked npm dependency tree
+├── package.json                                   # Project scripts and dependencies
+├── postcss.config.js                              # PostCSS plugin configuration
+├── public/                                        # Public static assets served as-is
+│   ├── CNAME                                      # Domain config copied to production build
+│   ├── SamyabrataRoy2.jpg                         # Primary profile image
+│   ├── googlef62b25008a7b041d.html                # Google Search Console verification file
+│   ├── icons/                                     # Social and platform icons
+│   │   ├── GS.png                                 # Google Scholar icon
+│   │   ├── Orchid.png                             # Orchid icon
+│   │   └── RG.png                                 # ResearchGate icon
+│   ├── logo/                                      # Institute logo assets
+│   │   ├── IDEAS.png                              # IDEAS logo
+│   │   ├── IITM.png                               # IIT Madras logo
+│   │   ├── MSRKAV.png                             # MSR KAV logo
+│   │   ├── NN.png                                 # NN logo
+│   │   └── SNU.png                                # SNU logo
+│   ├── people/                                    # Public people assets directory
+│   ├── profile-icon.png                           # Profile icon used in cards/links
+├── src/                                           # Application source code
+│   ├── App.vue                                    # Root app layout and route-based chrome
+│   ├── assets/                                    # Bundled assets imported by source files
+│   │   └── icons/                                 # App icon assets
+│   │       └── persons-in-a-class-by-flaticon.png # Teaching/projects icon
+│   ├── components/                                # Shared reusable components
+│   │   ├── DocumentViewer.vue                     # Embedded document preview component
+│   │   ├── Footer/                                # Footer component group
+│   │   │   ├── Index.vue                          # Main footer component
+│   │   │   └── Logos.vue                          # Footer logos strip
+│   │   ├── Header.vue                             # Global navigation header
+│   │   └── SmartLink.vue                          # Smart internal/external link component
+│   ├── main.js                                    # App bootstrap and plugin setup
+│   ├── metadata/                                  # Metadata-driven assets and mappings
+│   │   ├── hyperlinkMetadata.yml                  # External link metadata map
+│   │   ├── logo/                                  # Metadata logos
+│   │   │   ├── institute/                         # Institute logos for cards/sections
+│   │   │   │   ├── IDEAS.png                      # IDEAS logo copy for metadata
+│   │   │   │   ├── IITM.png                       # IIT Madras logo copy for metadata
+│   │   │   │   ├── MSRKAV.png                     # MSR KAV logo copy for metadata
+│   │   │   │   ├── NN.png                         # NN logo copy for metadata
+│   │   │   │   └── SNU.png                        # SNU logo copy for metadata
+│   │   │   └── society/                           # Society logos for memberships
+│   │   │       └── royal-statistics-society.png  # Royal Statistical Society logo
+│   │   └── people/                                # Metadata people assets
+│   │       └── profile-icon.png                   # Profile icon copy for metadata use
+│   ├── profile_info.yml                           # Central portfolio data/content source
+│   ├── router/                                    # Vue Router setup
+│   │   └── index.js                               # Route definitions and lazy imports
+│   ├── style.css                                  # Global CSS and Tailwind directives
+│   └── views/                                     # Route-level pages and section modules
+│       ├── Affilications/                         # Affiliations/collaborators/memberships page
+│       │   ├── components/                        # Affiliation page components
+│       │   │   ├── cards/                         # Card UI components for affiliations
+│       │   │   │   ├── AffiliationCard.vue        # Affiliation card component
+│       │   │   │   ├── CollaboratorCard.vue       # Collaborator card component
+│       │   │   │   └── MembershipCard.vue         # Membership card component
+│       │   │   └── tabs/                          # Tab components for affiliation page
+│       │   │       ├── AffiliationsTab.vue        # Affiliations tab content
+│       │   │       ├── CollaboratorsTab.vue       # Collaborators tab content
+│       │   │       └── MembershipsTab.vue         # Memberships tab content
+│       │   └── index.vue                          # Affiliations page entry component
+│       ├── Cocurricular/                          # Co-curricular activities page
+│       │   ├── Index.vue                          # Co-curricular page entry
+│       │   └── components/                        # Co-curricular section components
+│       │       ├── Leadership.vue                 # Leadership experience section
+│       │       └── Volunteering.vue               # Volunteering experience section
+│       ├── Contact.vue                            # Contact page view
+│       ├── Home/                                  # Home/landing page module
+│       │   ├── components/                        # Home page section components
+│       │   │   ├── HeroSection.vue                # Landing hero section
+│       │   │   ├── awards/                        # Awards section module
+│       │   │   │   ├── Index.vue                  # Awards section container
+│       │   │   │   └── components/                # Awards subcomponents
+│       │   │   │       └── AwardCard.vue          # Single award card component
+│       │   │   ├── education/                     # Education section module
+│       │   │   │   ├── Index.vue                  # Education section container
+│       │   │   │   └── components/                # Education subcomponents
+│       │   │   │       └── EducationMilestone.vue # Education milestone/timeline item
+│       │   │   ├── experience/                    # Experience section module
+│       │   │   │   ├── Index.vue                  # Experience section container
+│       │   │   │   └── components/                # Experience subcomponents
+│       │   │   │       └── TimelineComponent.vue  # Work experience timeline component
+│       │   │   └── researchInterests/             # Research interests section module
+│       │   │       ├── Index.vue                  # Research interests container
+│       │   │       └── components/                # Research interests subcomponents
+│       │   │           └── Card.vue               # Research interest card
+│       │   └── index.vue                          # Home page entry component
+│       ├── InternshipCertification/               # Internship and certification page
+│       │   ├── Index.vue                          # Internship/certification page entry
+│       │   └── components/                        # Internship/certification components
+│       │       ├── CertificationCard.vue          # Certification card component
+│       │       └── InternshipCard.vue             # Internship card component
+│       ├── OngoingProjects/                       # Ongoing projects page
+│       │   ├── components/                        # Ongoing project components
+│       │   │   └── ProjectCard.vue                # Ongoing project card component
+│       │   └── index.vue                          # Ongoing projects page entry
+│       ├── ProfessionalAcitivity/                 # Professional activity page
+│       │   ├── components/                        # Professional activity components
+│       │   │   ├── cards/                         # Professional activity card components
+│       │   │   │   ├── HostedEventCard.vue        # Hosted event card component
+│       │   │   │   └── InvitedTalkCard.vue        # Invited talk card component
+│       │   │   └── tabs/                          # Professional activity tabs
+│       │   │       ├── HostedEventsTab.vue        # Hosted events tab content
+│       │   │       └── InvitedTalksTab.vue        # Invited talks tab content
+│       │   └── index.vue                          # Professional activity page entry
+│       ├── ProjectsPublications/                  # Projects and publications page
+│       │   ├── Index.vue                          # Projects/publications page entry
+│       │   └── components/                        # Projects/publications tab components
+│       │       ├── ArticlesTab.vue                # Articles tab content
+│       │       ├── PostersTab.vue                 # Posters tab content
+│       │       ├── ProjectTab/                    # Project tab module
+│       │       │   ├── Index.vue                  # Project tab entry component
+│       │       │   └── components/                # Project tab subcomponents
+│       │       │       ├── ResearchProjects.vue   # Research projects list component
+│       │       │       └── TechnicalProjects.vue  # Technical projects list component
+│       │       └── PublicationsTab.vue            # Publications tab content
+│       ├── Teachings/                             # Teaching and mentoring page
+│       │   ├── components/                        # Teaching page tab components
+│       │   │   ├── CoursesTaughtTab.vue           # Courses taught tab content
+│       │   │   ├── OtherTeachingsTab.vue          # Other teaching engagements tab
+│       │   │   └── ProjectsMentoredTab.vue        # Mentored projects tab content
+│       │   └── index.vue                          # Teachings page entry
+│       └── WorkshopsAttended/                     # Workshops, conferences, FDPs, bootcamps page
+│           ├── Index.vue                          # Workshops page entry
+│           └── components/                        # Workshops page components
+│               ├── cards/                         # Workshop card components
+│               │   ├── BootcampCard.vue           # Bootcamp card component
+│               │   ├── ConferenceCard.vue         # Conference card component
+│               │   ├── FDPCard.vue                # FDP card component
+│               │   └── WorkshopCard.vue           # Workshop card component
+│               └── tabs/                          # Workshops page tab components
+│                   ├── BootcampsTab.vue           # Bootcamps tab content
+│                   ├── ConferencesTab.vue         # Conferences tab content
+│                   ├── FDPsTab.vue                # FDPs tab content
+│                   └── WorkshopsTab.vue           # Workshops tab content
+├── tailwind.config.js                             # Tailwind theme and content config
+├── toggle_branch.sh                               # Helper script for branch switching workflow
+└── vite.config.js                                 # Vite build and alias configuration
 ```
 
 ## 🏗️ Architecture Overview
@@ -92,87 +167,119 @@ samyabrata.github.io/
 ### **Core Components**
 
 #### **App.vue** - Root Component
-- **Purpose**: Main application wrapper with conditional layout logic
+- **Purpose**: Main application wrapper and global page chrome container
 - **Key Features**:
-  - Conditional rendering of Header and Footer based on current route
-  - Header and Footer are hidden on HomePage (`/`) for a clean landing experience
-  - Uses Vue Router's `useRoute()` to determine current page
+  - Renders shared `Header` and `Footer` around all route views
+  - Uses `v-app` + flex layout for stable full-height page structure
+  - Central `router-view` area for route content
   - Implements flexbox layout for proper footer positioning
 
 #### **Router Configuration** (`src/router/index.js`)
 - **Routes**:
-  - `/` - HomePage (Home/index.vue)
-  - `/contact` - Contact page (Contact.vue)
+  - `/` - Home page (`Home/index.vue`)
   - `/projects-publications` - Projects and Publications page
-  - `/workshops` - Workshops and Bootcamps page
+  - `/affiliation-memberships` - Affiliations, collaborators, memberships page
+  - `/ongoing-projects` - Ongoing projects page
   - `/cocurricular` - Co-curricular activities page
-- **Features**: Lazy loading for all pages except home
+  - `/workshops-bootcamps-attended` - Conferences, workshops, FDPs, bootcamps page
+  - `/teachings` - Teachings page
+  - `/internships-certifications` - Internships and certifications page
+  - `/professional-activity` - Professional activities page
+  - `/contact` - Contact page
+- **Features**:
+  - Uses `createWebHashHistory()` for static hosting compatibility
+  - Includes scroll restoration and smooth hash scrolling
+  - Supports deep-linking into tabbed pages via query params like `?tab=...`
 
 ### **Page Components** (`src/views/`)
 
 #### **Home/index.vue** - Landing Page
-- **Layout**: Full-screen hero section without header/footer
+- **Layout**: Multi-section landing page with global header/footer
 - **Features**:
   - Hero section with call-to-action buttons
   - Education milestones with credentials
   - Work experience timeline
   - Research interests showcase
-  - Awards and recognition section
+  - Optional awards section
   - Responsive design with Tailwind CSS
 
-#### **Contact.vue** - Contact Page
-- **Layout**: Standard page with header and footer
-- **Features**:
-  - Enhanced contact form with validation
-  - Professional contact information display
-  - Social media links (LinkedIn, GitHub, etc.)
-  - Academic profiles (Google Scholar, ResearchGate)
-  - Form submission handling with user feedback
-
 #### **ProjectsPublications/Index.vue** - Projects & Publications
-- **Layout**: Tabbed interface with header and footer
+- **Layout**: Tabbed interface
 - **Features**:
-  - Research projects showcase
-  - Technical projects portfolio
-  - Publications and articles listing
-  - Interactive project cards with links
-  - Filtering and categorization
+  - Tabs for Projects, Articles, Publications, and Posters
+  - Technical and research project grouping
+  - Query-param tab deep-linking (`?tab=projects|articles|publications|posters`)
 
 #### **WorkshopsAttended/Index.vue** - Workshops & Bootcamps
-- **Layout**: Grid layout with header and footer
+- **Layout**: Tabbed section layout
 - **Features**:
-  - Workshop participation history
-  - Bootcamp completions and certifications
-  - Interactive workshop cards
-  - Bootcamp cards with credentials
-  - Filtering by type and date
+  - Separate tabs for Conferences, FDPs, Workshops, and Bootcamps
+  - Dedicated card components for each entry type
+  - Query-param tab deep-linking for quick access
 
 #### **Cocurricular/Index.vue** - Co-curricular Activities
-- **Layout**: Sectioned layout with header and footer
+- **Layout**: Sectioned layout
 - **Features**:
   - Leadership experience showcase
   - Volunteering activities
-  - Community involvement
-  - Skills development activities
+  - Community and engagement highlights
+
+#### **Teachings/index.vue** - Teachings
+- **Layout**: Tabbed academic contribution layout
+- **Features**:
+  - Tabs for Courses Taught, Projects Mentored, and Other Teachings
+  - Query-param tab deep-linking (`?tab=courses|projects|others`)
+
+#### **InternshipCertification/Index.vue** - Internships & Certifications
+- **Layout**: Tabbed profile section
+- **Features**:
+  - Training internships and certification tabs
+  - Dedicated cards for internship and certification entries
+  - Query-param tab deep-linking (`?tab=internships|certifications`)
+
+#### **ProfessionalAcitivity/index.vue** - Professional Activities
+- **Layout**: Tabbed professional profile layout
+- **Features**:
+  - Tabs for invited talks and hosted events
+  - Dedicated cards and filters by activity type
+  - Query-param tab deep-linking (`?tab=invited-talks|hosted-events`)
+
+#### **Affilications/index.vue** - Affiliations, Collaborators & Memberships
+- **Layout**: Tabbed collaboration/network layout
+- **Features**:
+  - Tabs for affiliations, collaborators, and memberships
+  - Merges current and past collaborator data sources
+  - Query-param tab deep-linking (`?tab=affiliations|collaborators|memberships`)
+
+#### **OngoingProjects/index.vue** - Ongoing Projects
+- **Layout**: Single-list page layout
+- **Features**:
+  - Active project listing using reusable project cards
+  - Data-driven rendering from YAML profile data
+
+#### **Contact.vue** - Contact Page
+- **Layout**: Responsive contact card grid
+- **Features**:
+  - Phone/email/student-email blocks
+  - Social and academic profile links
+  - Quick links to GitHub, LinkedIn, Kaggle, Google Scholar, ResearchGate, and ORCID
 
 ### **Reusable Components** (`src/components/`)
 
 #### **Header.vue** - Navigation Header
 - **Features**:
-  - Material Design app bar with Vuetify
-  - Responsive navigation with mobile hamburger menu
+  - Responsive navigation with mobile drawer menu
   - Active route highlighting
   - Brand logo with router link
-  - Mobile navigation drawer
+  - "Hire Me" quick action button
 
-#### **Footer.vue** - Footer Component
+#### **Footer/Index.vue** - Footer Component
 - **Features**:
   - Contact information
-  - Quick navigation links
+  - Quick links to extended route set (ongoing projects, internships, affiliations, workshops)
   - Social media buttons
   - Academic profile links
-  - Copyright and legal links
-  - Responsive grid layout
+  - Institution logo strip and `lastUpdatedOn` metadata display
 
 ### **Specialized Components**
 
@@ -197,14 +304,35 @@ samyabrata.github.io/
 - **TechnicalProjects.vue**: Software and technical projects
 - **ArticlesTab.vue**: Published articles and papers
 - **PublicationsTab.vue**: Academic publications
+- **PostersTab.vue**: Posters and presentation artifacts
 
 #### **Workshop Components**
+- **ConferenceCard.vue**: Conference participation cards
+- **FDPCard.vue**: Faculty development program cards
 - **WorkshopCard.vue**: Workshop participation cards
 - **BootcampCard.vue**: Bootcamp completion cards with credentials
 
 #### **Co-curricular Components**
 - **Leadership.vue**: Leadership experience showcase
 - **Volunteering.vue**: Volunteering activities and community service
+
+#### **Teachings Components**
+- **CoursesTaughtTab.vue**: Courses taught section
+- **ProjectsMentoredTab.vue**: Mentored projects section
+- **OtherTeachingsTab.vue**: Other teaching contributions section
+
+#### **Internship & Certification Components**
+- **InternshipCard.vue**: Internship entry card
+- **CertificationCard.vue**: Certification entry card
+
+#### **Professional Activity Components**
+- **InvitedTalkCard.vue**: Invited talk entry card
+- **HostedEventCard.vue**: Hosted event entry card
+
+#### **Affiliations Components**
+- **AffiliationCard.vue**: Affiliation entry card
+- **CollaboratorCard.vue**: Collaborator entry card
+- **MembershipCard.vue**: Membership entry card
 
 ## 🎨 Styling Architecture
 
@@ -227,8 +355,10 @@ samyabrata.github.io/
 
 ### **Vite Configuration** (`vite.config.js`)
 - **Vue Plugin**: Vue.js support
+- **YAML Plugin**: Imports YAML portfolio data directly in Vue modules
+- **Sitemap Plugin**: Generates sitemap entries for key routes
 - **Path Aliases**: `@` maps to `src/` directory
-- **Base URL**: Configured for deployment
+- **Base URL**: `/` for GitHub Pages custom-domain deployment
 
 ### **Tailwind Configuration** (`tailwind.config.js`)
 - **Content Paths**: Scans Vue files for utility classes
@@ -244,6 +374,7 @@ samyabrata.github.io/
 ### **Available Scripts**
 ```bash
 npm run dev          # Start development server
+npm run lint         # Run ESLint checks
 npm run build        # Build for production
 npm run preview      # Preview production build
 npm run deploy       # Deploy to GitHub Pages
@@ -266,26 +397,31 @@ npm run deploy       # Deploy to GitHub Pages
 - **Experience**: Professional work history with detailed timelines
 - **Projects**: Research and technical project showcases
 - **Publications**: Academic papers and articles
-- **Workshops**: Training and bootcamp participation
+- **Posters**: Poster and presentation showcase
+- **Workshops**: Conferences, FDPs, workshops, and bootcamp participation
+- **Teachings**: Courses taught, mentoring, and other contributions
+- **Internships & Certifications**: Training and credential highlights
+- **Professional Activity**: Invited talks and hosted events
+- **Affiliations**: Affiliations, collaborators, and memberships
+- **Ongoing Projects**: In-progress project tracker
 - **Co-curricular**: Leadership and community involvement
 - **Awards**: Recognition and honors
 
 ### **Enhanced Contact System**
 - **Professional Contact**: Multiple contact methods
 - **Academic Profiles**: Google Scholar and ResearchGate integration
-- **Social Media**: LinkedIn, GitHub, and other professional networks
-- **Form Validation**: Robust contact form with user feedback
+- **Social Media**: LinkedIn, GitHub, student GitHub, and Kaggle
+- **Research Identity**: ORCID and academic profile links
 
-### **Bootcamp Integration**
-- **Certification Display**: Showcase completed bootcamps and certifications
-- **Credential Management**: Organized display of professional credentials
-- **Interactive Cards**: Detailed bootcamp information with links
-- **Filtering System**: Categorize by type, date, and relevance
+### **Tabbed Knowledge Sections**
+- **Route Query Tabs**: Deep-link to specific tabs via `?tab=...`
+- **Sectioned UX**: Multi-topic pages split into focused tabs
+- **Reusable Cards**: Consistent card components across sections
 
-### **Conditional Layout System**
-- **HomePage**: Clean, full-screen experience without header/footer
-- **Other Pages**: Standard layout with navigation and footer
-- **Dynamic Rendering**: Based on current route
+### **Shared Layout System**
+- **Global Header/Footer**: Common chrome rendered across pages
+- **Route Content Region**: Centralized `router-view` for page modules
+- **Consistent UX**: Uniform navigation and footer access site-wide
 
 ### **Responsive Design**
 - **Mobile-First**: Optimized for all screen sizes
@@ -297,17 +433,17 @@ npm run deploy       # Deploy to GitHub Pages
 - **Smooth Transitions**: Hover effects and animations
 - **Accessibility**: Semantic HTML and ARIA attributes
 
-### **Form Handling**
-- **Validation**: Vuetify form validation rules
-- **User Feedback**: Loading states and success messages
-- **Responsive Forms**: Mobile-friendly input fields
+### **Navigation Behavior**
+- **Hash Routing**: GitHub Pages-friendly navigation strategy
+- **Scroll Restoration**: Keeps scroll position on navigation history
+- **Anchor Support**: Smooth scrolling to hash targets
 
 ## 🔄 State Management
 
 ### **Reactive Data**
 - **Composition API**: Modern Vue.js reactivity system
-- **Route-Based Logic**: Dynamic layout based on current route
-- **Form State**: Reactive form data and validation
+- **YAML-Driven Content**: Portfolio content sourced from `profile_info.yml`
+- **Query-Based Tabs**: Tab state controlled through route query parameters
 
 ### **Component Communication**
 - **Props**: Parent-to-child data flow
@@ -456,10 +592,16 @@ The following features and improvements are planned for future development:
 
 ---
 
+## 📄 Acknowledgements
+
+Few icons used by the developer is created by Freepik from Flaticon
+
+---
+
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Built with ❤️ using Vue.js, Vuetify, and Tailwind CSS**
+### Developer: Samyabrata Roy

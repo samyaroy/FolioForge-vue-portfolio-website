@@ -1,5 +1,4 @@
 # config.yml
-
 lastUpdatedOn: Feb 2026
 
 profile:
@@ -483,26 +482,26 @@ attended_conferences:
     date: "January 22-23, 2026" 
     cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
 
-# coursesTaught:
-#   - semester: "Spring 2025"
-#     courses:
-#       - title: "Introduction to Statistics"
-#         institution: "Sister Nivedita University"
-#         role: "Teaching Assistant"
-#         collaborators:
-#           - "Prof. XYZ"
-#         students: 120
-#       - title: "Data Analysis with Python"
-#         institution: "IIT Madras"
-#         role: "Guest Instructor"
-#         students: 60
+coursesTaught:
+  - semester: "Spring 2025"
+    courses:
+      - title: "Introduction to Statistics"
+        institution: "Sister Nivedita University"
+        role: "Teaching Assistant"
+        collaborators:
+          - "Prof. XYZ"
+        students: 120
+      - title: "Data Analysis with Python"
+        institution: "IIT Madras"
+        role: "Guest Instructor"
+        students: 60
 
-#   - semester: "Autumn 2024"
-#     courses:
-#       - title: "Probability Theory"
-#         institution: "Sister Nivedita University"
-#         role: "Instructor"
-#         students: 80
+  - semester: "Autumn 2024"
+    courses:
+      - title: "Probability Theory"
+        institution: "Sister Nivedita University"
+        role: "Instructor"
+        students: 80
 
 # projectsMentored:
 #   - semester: "Spring 2025"
@@ -525,25 +524,25 @@ otherTeachings:
     students: "15+ students tutored"
     description: "Provided private tuition in mathematics, Computer Science, and Computer Applications for school (CBSE & ICSE) students."
 
-# affiliations:
-#   - organization: Center for Data Science
-#     department: Data Science
-#     period: Jan 2025 – Present
-#     location: Chennai, IN
+affiliations:
+  - organization: Center for Data Science
+    department: Data Science
+    period: Jan 2025 – Present
+    location: Chennai, IN
 
-# collaborators:
-#   - name: Dr. Jane Doe
-#     affiliation: Institute of AI Research
-#     location: Kolkata, IN
-#     projects: [Robust Regression Study, Customer Churn Analysis]
-#     period: 2024 – Present
+collaborators:
+  - name: Dr. Jane Doe
+    affiliation: Institute of AI Research
+    location: Kolkata, IN
+    projects: [Robust Regression Study, Customer Churn Analysis]
+    period: 2024 – Present
   
-#   - name: Prof. John Smith
-#     affiliation: Previous Research Institute
-#     location: Mumbai, IN
-#     projects: [Early Research Project]
-#     period: 2022 – 2023
-#     notes: Collaborated on initial research phase
+  - name: Prof. John Smith
+    affiliation: Previous Research Institute
+    location: Mumbai, IN
+    projects: [Early Research Project]
+    period: 2022 – 2023
+    notes: Collaborated on initial research phase
 
 memberships:
   - organization: Royal Statistics Society
@@ -552,3 +551,42 @@ memberships:
     period: 2026 - Present
     location: London, UK
     cred_link:
+
+invited_talks:
+  - title: "The Future of Data Science in Academia"
+    event: "Annual Data Science Symposium"
+    organizer:
+      - name: "Indian Institute of Technology Madras"
+        department: "Department of Data Science"
+    location: "Chennai, TN"
+    date: "October 2025"
+    link: "https://example.com/talk1"
+
+  - title: "Leveraging Machine Learning for Social Impact"
+    event: "Tech for Good Conference"
+    organizer:
+      - name: "University of California, Berkeley"
+    location: "Berkeley, CA"
+    date: "March 2025"
+    link: "https://example.com/talk2"
+
+hosted_events:
+  - title: "International Conference on Statistical Learning"
+    role: "Co-Organizer"
+    event_type: "Conference"
+    institution:
+      - name: "Sister Nivedita University"
+        department: "Department of Statistics"
+    location: "Kolkata, WB"
+    date: "November 2024"
+    cred_link: "https://example.com/event1"
+
+  - title: "Workshop on Advanced Python for Data Analysis"
+    role: "Convener"
+    event_type: "Workshop"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "Department of Computer Science"
+    location: "Chennai, TN"
+    date: "July 2024"
+    cred_link: "https://example.com/event2"

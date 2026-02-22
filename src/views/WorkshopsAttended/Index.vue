@@ -33,7 +33,7 @@
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
         <ConferencesTab v-if="activeTab === 'conferences'" :conferences="attendedConferences" />
-        <!-- <FDPsTab v-if="activeTab === 'fdps'" :fdps="attendedFDPs" /> -->
+        <FDPsTab v-if="activeTab === 'fdps'" :fdps="attendedFDPs" />
         <WorkshopsTab v-if="activeTab === 'workshops'" :workshops="attendedWorkshops" />
         <BootcampsTab v-if="activeTab === 'bootcamps'" :bootcamps="attendedBootcamps" />
       </div>
@@ -45,16 +45,16 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ConferencesTab from './components/tabs/ConferencesTab.vue'
-// import FDPsTab from './components/tabs/FDPsTab.vue'
+import FDPsTab from './components/tabs/FDPsTab.vue'
 import WorkshopsTab from './components/tabs/WorkshopsTab.vue'
 import BootcampsTab from './components/tabs/BootcampsTab.vue'
 
 import config from '@/profile_info.yml'
-const { attended_workshops, attended_bootcamps, attended_conferences, /* attended_fdps */ } = config
+const { attended_workshops, attended_bootcamps, attended_conferences, attended_fdps } = config
 const attendedWorkshops = attended_workshops || []
 const attendedBootcamps = attended_bootcamps || []
 const attendedConferences = attended_conferences || []
-// const attendedFDPs = attended_fdps || []
+const attendedFDPs = attended_fdps || []
 
 const route = useRoute()
 const activeTab = ref('workshops') // Default to workshops
@@ -68,7 +68,7 @@ onMounted(() => {
 
 const tabs = [
   { id: 'conferences', name: 'Conferences' },
-  // { id: 'fdps', name: 'FDPs' },
+  { id: 'fdps', name: 'FDPs' },
   { id: 'workshops', name: 'Workshops' },
   { id: 'bootcamps', name: 'Bootcamps' },
 ]
