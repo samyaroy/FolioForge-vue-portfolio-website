@@ -4,10 +4,10 @@
       <!-- Page Header -->
       <div class="text-center mb-12">
         <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
-          Projects & Publications
+          Conferences & Workshops
         </h1>
         <p class="text-lg text-gray-600 max-w-4xl mx-auto">
-          Explore my research publications, technical projects, and written articles showcasing my expertise.
+          Conferences attended, workshops completed, and intensive bootcamp training in Statistics, Data Science, AI, and emerging technologies
         </p>
       </div>
 
@@ -35,21 +35,21 @@
 
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
-        <PublicationsTab
-          v-if="showPublicationsTab && activeTab === 'publications'"
-          :publications="publications"
+        <ConferencesTab
+          v-if="showConferencesTab && activeTab === 'conferences'"
+          :conferences="attendedConferences"
         />
-        <ProjectsTab
-          v-if="showProjectsTab && activeTab === 'projects'"
-          :projects="projects"
+        <FDPsTab
+          v-if="showFDPsTab && activeTab === 'fdps'"
+          :fdps="attendedFDPs"
         />
-        <ArticlesTab
-          v-if="showArticlesTab && activeTab === 'articles'"
-          :articles="articles"
+        <WorkshopsTab
+          v-if="showWorkshopsTab && activeTab === 'workshops'"
+          :workshops="attendedWorkshops"
         />
-        <PostersTab
-          v-if="showPostersTab && activeTab === 'posters'"
-          :posters="posters"
+        <BootcampsTab
+          v-if="showBootcampsTab && activeTab === 'bootcamps'"
+          :bootcamps="attendedBootcamps"
         />
       </div>
     </div>
@@ -59,25 +59,29 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import PublicationsTab from './components/PublicationsTab.vue'
-import ProjectsTab from './components/ProjectTab/index.vue'
-import ArticlesTab from './components/ArticlesTab.vue'
-import PostersTab from './components/PostersTab.vue'
+import ConferencesTab from './components/tabs/ConferencesTab.vue'
+import FDPsTab from './components/tabs/FDPsTab.vue'
+import WorkshopsTab from './components/tabs/WorkshopsTab.vue'
+import BootcampsTab from './components/tabs/BootcampsTab.vue'
+
 import config from '@/profile_info.yml'
 import { isFeatureEnabled } from '@/config/featureFlags'
+const { attended_workshops, attended_bootcamps, attended_conferences, attended_fdps } = config
+const attendedWorkshops = attended_workshops || []
+const attendedBootcamps = attended_bootcamps || []
+const attendedConferences = attended_conferences || []
+const attendedFDPs = attended_fdps || []
 
-const { projects, publications, articles, posters } = config
-
-const showProjectsTab = isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' })
-const showArticlesTab = isFeatureEnabled('showProjectsPublications.showArticles')
-const showPublicationsTab = isFeatureEnabled('showProjectsPublications.showPublications')
-const showPostersTab = isFeatureEnabled('showProjectsPublications.showPosters')
+const showConferencesTab = isFeatureEnabled('showWorkshopsAttended.showConferences')
+const showFDPsTab = isFeatureEnabled('showWorkshopsAttended.showFDPs')
+const showWorkshopsTab = isFeatureEnabled('showWorkshopsAttended.showWorkshops')
+const showBootcampsTab = isFeatureEnabled('showWorkshopsAttended.showBootcamps')
 
 const tabDefinitions = [
-  { id: 'projects', name: 'Projects', enabled: showProjectsTab },
-  { id: 'articles', name: 'Articles', enabled: showArticlesTab },
-  { id: 'publications', name: 'Publications', enabled: showPublicationsTab },
-  { id: 'posters', name: 'Posters', enabled: showPostersTab },
+  { id: 'conferences', name: 'Conferences', enabled: showConferencesTab },
+  { id: 'fdps', name: 'FDPs', enabled: showFDPsTab },
+  { id: 'workshops', name: 'Workshops', enabled: showWorkshopsTab },
+  { id: 'bootcamps', name: 'Bootcamps', enabled: showBootcampsTab },
 ]
 
 const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
@@ -99,3 +103,7 @@ onMounted(() => {
   }
 })
 </script>
+
+<style scoped>
+/* Optional styles */
+</style>

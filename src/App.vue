@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router' 
 // Import global components
 import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer/Index.vue'
+import Footer from '@/components/Footer/index.vue'
 
 // get current route
 const route = useRoute()
