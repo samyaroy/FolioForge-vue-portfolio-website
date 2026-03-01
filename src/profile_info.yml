@@ -347,21 +347,21 @@ co_curriculars:
 
   - title: volunteering_roles
     entries:
-      - role: Teaching Assistant (Revision Sessions)
-        organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
-        field:
-          - sub-field: 'Course: Statistics I'
-            time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
-        skills: 25+ Students Taught
-        cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
+      # - role: Teaching Assistant (Revision Sessions)
+      #   organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
+      #   field:
+      #     - sub-field: 'Course: Statistics I'
+      #       time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
+      #   skills: 25+ Students Taught
+      #   cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
 
-      - role: Teaching Assistant (Project)
-        organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
-        field: 
-          - sub-field: 'Autumn Internship 2025: Data Science'  
-            time_period: Sept 2025 - Oct 2025
-        skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
-        details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
+      # - role: Teaching Assistant (Project)
+      #   organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+      #   field: 
+      #     - sub-field: 'Autumn Internship 2025: Data Science'  
+      #       time_period: Sept 2025 - Oct 2025
+      #   skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
+      #   details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
 
       #Add more entries as needed
 attended_fdps:

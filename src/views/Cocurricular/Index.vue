@@ -30,9 +30,11 @@
             Volunteering
           </h2>
           <div class="space-y-6">
-
+            <div v-if="volunteeringRoles.length === 0" class="text-gray-500 italic text-center">
+              No volunteering roles to display.
+          </div>
             <!-- Volunteering Component -->
-            <Volunteering v-for="(volunteer, index) in volunteeringRoles" :key="index" :volunteering="volunteer" />
+            <Volunteering v-else v-for="(volunteer, index) in volunteeringRoles" :key="index" :volunteering="volunteer" />
           </div>
         </div>
         <div

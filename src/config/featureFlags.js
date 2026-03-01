@@ -10,8 +10,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   },
 
   showCocurricular: {
-    showLeadershipOrganizations: true,
-    showVolunteering: true,
+    showLeadershipOrganizations: false,
+    showVolunteering: false,
   },
 
   showOngoingProjects: true,
