@@ -256,7 +256,7 @@ articles:
       Host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
     field: Statistical Inference, Machine Learning, Uncertainty Quantification
     date: Feb 2026
-    link: 
+    link: https://sxccal.edu/magazines
     type: Magazine Article
     cred_link: https://drive.google.com/file/d/1OZ3R8fMiUPXyaSi2AQX-VoEPGC5cMPci/preview
 
@@ -347,13 +347,13 @@ co_curriculars:
 
   - title: volunteering_roles
     entries:
-      # - role: Teaching Assistant (Revision Sessions)
-      #   organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
-      #   field:
-      #     - sub-field: 'Course: Statistics I'
-      #       time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
-      #   skills: 25+ Students Taught
-      #   cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
+      - role: Teaching Assistant (Revision Sessions)
+        organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
+        field:
+          - sub-field: 'Course: Statistics I'
+            time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
+        skills: 25+ Students Taught
+        cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
 
       # - role: Teaching Assistant (Project)
       #   organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
