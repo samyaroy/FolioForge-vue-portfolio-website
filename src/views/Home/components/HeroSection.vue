@@ -6,7 +6,7 @@
           <!-- Profile Image Section -->
           <div
             class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg md:h-auto md:min-w-[400px] lg:w-full flex items-center justify-center -mt-4"
-            style='background-image: url("/SamyabrataRoy2.jpg");'></div>
+            style='background-image: url("/SaubhadraC.jpg");'></div>
 
           <!-- Content Section -->
           <div class="flex flex-col gap-6 md:min-w-[400px] md:gap-8 lg:justify-center">
@@ -41,7 +41,7 @@
                 class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
                 <v-icon>mdi-linkedin</v-icon>
               </a>
-              <a :href=github_personal target="_blank"
+              <a v-if="github_personal" :href=github_personal target="_blank"
                 class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
                 <v-icon>mdi-github</v-icon>
               </a>

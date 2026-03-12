@@ -130,11 +130,11 @@
               <span>{{ location }}</span>
             </div>
           </div>
-          <div class="pt-4 pb-0">
+          <!-- <div class="pt-4 pb-0">
             <a href="https://info.flagcounter.com/Wh9G"><img
                 src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
                 alt="Flag Counter" border="0"></a>
-          </div>
+          </div> --> 
         </div>
       </div>
 

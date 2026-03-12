@@ -1,88 +1,79 @@
 # config.yml
 
 profile:
-  name: Samyabrata Roy
-  about: Curious student with a strong foundation in statistical theory and inference, data science and
-                full-stack web
-                development. Comfortable moving between data analysis and modern web technologies to turn data into
-                insights
-                and ideas into applications. Experienced with statistical modeling, data cleaning, and API development,
-                eager to
-                apply an evidence-based approach to solving complex challenges in research and development fields.
-  heading: Web Developer<br>Data Science, Statistics Enthusiast #will be used in home page hero section
-  footer: Rookie Statistician | Data Science Student | Full-Stack Web Developer
-  cv: https://drive.google.com/uc?export=download&id=1DA-QF8-1MFjay43ByKFvmJxp1b7f43A0 # google drive link for direct download
+  name: Saubhadra Chatterjee
+  about: PGDM (Finance) student with hands-on experience in budgeting, taxation, financial reporting and loan operations.
+        Proficient in financial modeling, ratio analysis, and advanced Excel.
+        Applied regression on "CMIE Prowess" to study ROA/ROS. Currently seeking finance internship in FP&A/corporate finance and taxation.
+  heading: Finance Enthusiast<br>PGDM Student, ISBR Business School #will be used in home page hero section
+  #footer: Rookie Statistician | Data Science Student | Full-Stack Web Developer
+  cv: https://drive.google.com/file/d/1GTQJIcx_nJle-VUYHVMh96zqdr0vDiy0/view?usp=sharing # google drive link for direct download
   #environment: development   # or staging / production
 
 contacts:
-  email: samyaroy00@gmail.com
-  email2: 22f2001443@ds.study.iitm.ac.in
-  phone: +91 6291764594
+  email: saubhadrachatterjee@gmail.com
+  email2: saubhadra.pg25380@isbr.in
+  phone: +91 9831960769
   location: Kolkata, India
 socials:
-  github: https://github.com/samyaroy
-  github2: https://github.com/22f2001443
-  kaggle: https://www.kaggle.com/samyabrata0/
-  linkedin: https://www.linkedin.com/in/samyabrata23/
+  #github: https://github.com/samyaroy
+  #github2: https://github.com/22f2001443
+  #kaggle: https://www.kaggle.com/samyabrata0/
+  linkedin: https://www.linkedin.com/in/saubhadra-chatterjee1404/
   #twitter: https://twitter.com/username
 
-  google_scholar: https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en
-  researchgate: https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf
-  orchis_id: https://orcid.org/0009-0000-5356-4684
+  #google_scholar: https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en
+  #researchgate: https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf
+  #orchis_id: https://orcid.org/0009-0000-5356-4684
 
 research_interests:
-  - key: Machine_Learning 
-  - key: Statistical_Modeling
-  - key: Nonparametric_Inference
-  - key: Data_Engineering
+  - key: Financial_Modeling
+  - key: Corporate_Finance
+  - key: Ratio_Analysis
+  - key: Financial reporting
+  - key: Taxation
+  - key: Budgeting & Forecasting
+  - key: Valuation
+
   
 
 education: # put your latest education first
   
   - type: University
-    degree: Bachelor of Science (BS)
-    field: Data Science and Applications
-    institution: Indian Institute of Technology Madras
-    location: Chennai, TN
-    time_period: 2022 - Ongoing
-    gpa: Current CGPA - 5.97/10
-    cred_link: https://ds.study.iitm.ac.in/student/22F2001443
+    degree: Post Graduate Diploma in Managemnt
+    field: Finance & Business Analytics
+    institution: ISBR Business School
+    location: Bengaluru, KA
+    time_period: 2025 - Present
+    #gpa: Current CGPA - 5.97/10
+    cred_link: 
 
   - type: University
-    degree: Bachelor of Science (BSc)
-    field: Statistics (Honours)
-    institution: Sister Nivedita University
+    degree: Bachelor of Business Administration (BBA)
+    field: Finance
+    institution: Institute of Engineering & Managment
     location: Kolkata, WB
     time_period: 2022 - 2025
-    gpa: CGPA - 7.01/10
-    cred_link: https://drive.google.com/file/d/1N5jnPq4nCegRzXy_h75CtfA725RJlskM/view?usp=drive_link
-
-  - type: Diploma
-    degree: Diploma
-    field: Web Designing (DWD)
-    institution: Chandigarh Institute of Technology and Consultancy
-    location: Mohali, PB
-    time_period: 2020
-    marks: 84.5%
-    cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/view?usp=drive_link
+    extra: "CGPA : 8.94/10"
+    cred_link:
 
   - type: School
-    degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
+    degree: Higher Secondary - XII (Science) - (WBCHSE)
     field:
     institution: Nava Nalanda High School
     location: Kolkata, WB
     time_period: 2020 - 2022
-    marks: 83.8%
-    cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/view?usp=drive_link
+    extra: "Marks : 83.4%"
+    cred_link: 
 
   - type: School
-    degree: X - West Bengal Board of Secondary Education (WBBSE)
+    degree: Madhyamik - X - (WBBSE)
     field:
-    institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
-    location: Rishra, WB
-    time_period: 2010 - 2020
-    marks: 85.71%
-    cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/view?usp=drive_link
+    institution: Nava Nalanda High School
+    location: Kolkata, WB
+    time_period: 2008 - 2020
+    extra: "Marks : 73.71%"
+    cred_link: 
 
   # Add more fields as needed
 
@@ -109,14 +100,15 @@ internships:
 
   # Add more fields as needed
 experience:
-  - job_role: Associate Software Developer
-    type: Employment
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+  - job_role: Finance Accounting Intern
+    type: Intern 
+    company: West Bengal State Electricity Transmission Company Limited (WBSETCL)
     location: Kolkata, WB
-    project: NPCYF (National Platform for Crop Yield Forecasting)
-    time_period: Oct 2025 - Present
-    description:
-    # cred_link: https://drive.google.com/file/d/1X4nY3jv1bXKX1eJtY8FqjZk8y5G7H9zK/view?usp=drive_link
+    project: Taxation on Salaried Income
+    time_period: June 2024 - July 2024
+    description:  Completed 120+ hours on govt. finance; built a taxation report combining Section 16 and Chapter VI-A deductions.<br> Supported budgeting and accounts with reconciliation and compliance checks.
+              <br> Contributed to the loan department, learning procedures of loan operations and approvals.  
+  # cred_link: https://drive.google.com/file/d/1X4nY3jv1bXKX1eJtY8FqjZk8y5G7H9zK/view?usp=drive_link
 
   # - job_role: Freelance Web Developer
   #   type: Freelance
@@ -127,17 +119,17 @@ experience:
   #   description: Successfully completed multiple freelance web development projects on Upwork, delivering high-quality websites and applications that meet client specifications. Utilized skills in front-end and back-end development to create dynamic and user-friendly solutions.
   #   cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
 
-  - job_role: Student Intern
-    type: Internship
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-    supervisor:
-      Name: Mr. Diptendu Dutta
-      Title: Technology Lead
-      Institution: Institute of Data Engineering, Analytics and Science Foundation (TIH)
-    location: Kolkata, WB
-    time_period: Feb 2025 to Oct 2025
-    description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
-    cred_link: '#'
+  #- job_role: Student Intern
+  #  type: Internship
+  # company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+  #  supervisor:
+  #   Name: Mr. Diptendu Dutta
+  #   Title: Technology Lead
+  #   Institution: Institute of Data Engineering, Analytics and Science Foundation (TIH)
+  # location: Kolkata, WB
+  # time_period: Feb 2025 to Oct 2025
+  # description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
+  # cred_link: '#'
 
   # Add more fields as needed
 
@@ -244,7 +236,7 @@ articles:
 
 publications:
 
-ongoing_projects:
+#ongoing_projects:
   # - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
   #   description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.
   #   type: Research Project
@@ -307,7 +299,7 @@ co_curriculars:
         details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
 
       #Add more entries as needed
-attended_workshops:
+#attended_workshops:
   - title: "Systems for LLMs"
     institution:
       Department: "Department of Computer Science"
@@ -380,7 +372,7 @@ attended_workshops:
     date: "February 2023"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/view?usp=drive_link"
 
-attended_bootcamps:
+#attended_bootcamps:
   - title: "AI VicharanasShala Bootcamp"
     instructor: "Dr. Sudarshan Iyengar"
     institution:

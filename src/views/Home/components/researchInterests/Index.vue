@@ -2,7 +2,7 @@
   <div class="px-4 md:px-8 lg:px-20 py-4 bg-white">
     <div class="max-w-[1200px] mx-auto">
       <div class="flex flex-wrap justify-between gap-3 p-4">
-        <h2 class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">Research Interests</h2>
+        <h2 class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">Area of Interest</h2>
       </div>
       <v-row class="px-4">
         <v-col cols="6" md="4" lg="3" v-for="interest in research_interests" :key="interest.key">

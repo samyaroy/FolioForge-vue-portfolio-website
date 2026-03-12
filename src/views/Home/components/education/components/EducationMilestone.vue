@@ -43,11 +43,11 @@
                 </div>
             </div>
 
-            <!-- Extra info (Marks/CGPA)
+           <!-- Extra info (Marks/CGPA)-->
       <div class="flex items-center gap-2 mt-1" v-if="extra">
-        <v-icon class="text-[#4e7397]" size="16">mdi-star</v-icon>
+        <v-icon class="text-[#4e7397]" size="16">mdi-book-education</v-icon>
         <p class="text-[#4e7397] text-sm font-normal leading-normal">{{ extra }}</p>
-      </div> -->
+      </div>
         </div>
     </div>
 </template>
