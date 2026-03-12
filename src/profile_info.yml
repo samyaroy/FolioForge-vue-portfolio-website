@@ -1,4 +1,5 @@
 # config.yml
+lastUpdatedOn: Feb 2026
 
 profile:
   name: Saubhadra Chatterjee
@@ -6,24 +7,24 @@ profile:
         Proficient in financial modeling, ratio analysis, and advanced Excel.
         Applied regression on "CMIE Prowess" to study ROA/ROS. Currently seeking finance internship in FP&A/corporate finance and taxation.
   heading: Finance Enthusiast<br>PGDM Student, ISBR Business School #will be used in home page hero section
-  #footer: Rookie Statistician | Data Science Student | Full-Stack Web Developer
-  cv: https://drive.google.com/file/d/1GTQJIcx_nJle-VUYHVMh96zqdr0vDiy0/view?usp=sharing # google drive link for direct download
+  footer: Your go to finance guy
+  cv: https://drive.google.com/uc?export=download&id=1hgZ7_LM7OIPk5DTZDIn_L4UH0WNORvRM # google drive link for direct download
   #environment: development   # or staging / production
 
 contacts:
   email: saubhadrachatterjee@gmail.com
   email2: saubhadra.pg25380@isbr.in
   phone: +91 9831960769
-  location: Kolkata, India
+  location: Bengaluru, India
+
 socials:
   #github: https://github.com/samyaroy
   #github2: https://github.com/22f2001443
   #kaggle: https://www.kaggle.com/samyabrata0/
   linkedin: https://www.linkedin.com/in/saubhadra-chatterjee1404/
   #twitter: https://twitter.com/username
-
   #google_scholar: https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en
-  #researchgate: https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf
+  researchgate: https://www.researchgate.net/profile/Saubhadra-Chatterjee?ev=hdr_xprf
   #orchis_id: https://orcid.org/0009-0000-5356-4684
 
 research_interests:
@@ -31,84 +32,93 @@ research_interests:
   - key: Corporate_Finance
   - key: Ratio_Analysis
   - key: Financial reporting
-  - key: Taxation
+  - key: Corporate Taxation
   - key: Budgeting & Forecasting
   - key: Valuation
 
   
 
 education: # put your latest education first
-  
   - type: University
-    degree: Post Graduate Diploma in Managemnt
+    degree: Post Graduate Diploma in Managemnt 
     field: Finance & Business Analytics
     institution: ISBR Business School
     location: Bengaluru, KA
     time_period: 2025 - Present
-    #gpa: Current CGPA - 5.97/10
+    gpa: Current CGPA - 8.27/10
     cred_link: 
 
   - type: University
     degree: Bachelor of Business Administration (BBA)
     field: Finance
-    institution: Institute of Engineering & Managment
+    institution: Institute of Engineering & Management
     location: Kolkata, WB
     time_period: 2022 - 2025
-    extra: "CGPA : 8.94/10"
-    cred_link:
+    gpa: CGPA - 8.94/10
+    cred_link: https://drive.google.com/file/d/1N5jnPq4nCegRzXy_h75CtfA725RJlskM/preview
+
+  # - type: Diploma
 
   - type: School
-    degree: Higher Secondary - XII (Science) - (WBCHSE)
+    degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
     field:
     institution: Nava Nalanda High School
     location: Kolkata, WB
     time_period: 2020 - 2022
-    extra: "Marks : 83.4%"
-    cred_link: 
+    marks: 83.8%
+    cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
 
   - type: School
-    degree: Madhyamik - X - (WBBSE)
+    degree: X - West Bengal Board of Secondary Education (WBBSE)
     field:
     institution: Nava Nalanda High School
     location: Kolkata, WB
     time_period: 2008 - 2020
-    extra: "Marks : 73.71%"
-    cred_link: 
+    marks: 73.91%
+    cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
 
   # Add more fields as needed
 
 internships:
-  
-  - role: Data Science Intern
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-    location: Remote
-    time_period: Jun 2024 - Oct 2024
-    description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.
-    type: Training Internship
-    cred_link: https://drive.google.com/file/d/1w4os8_vJNmVU4RnYM7iHU7EBYRLbD3yN/view?usp=drive_link
-    project: 
-      title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
-      rel_link: /projects-publications?tab=projects#research-1
+  # - role: "MERN Stack Developer Intern (Cohort 4 - RSAian)"
+  #   company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+  #   guide: Prof. Sudarshan Iyengar
+  #   location: Virtual
+  #   time_period: Feb 2026 - Present
+  #   description: 
+  #   type: Virtual Internship
+  #   cred_link:
+    
 
-  - role: Growth Consultant Intern
-    company: Sorting Hat Technologies Private Limited (Unacademy)
-    location: Remote
-    time_period: Nov 2023 - Jan 2024
-    department: UnacademyX
-    description: 
-    cred_link: https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/view?usp=drive_link
+  # - role: Data Science Intern (Autumn 2024)
+  #   company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+  #   location: Remote
+  #   time_period: Jun 2024 - Oct 2024
+  #   description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.
+  #   type: Training Internship
+  #   cred_link: https://drive.google.com/file/d/1mTATc-tbkC9iIoL0vHuNeJWgaRCJtFOE/preview
+  #   project: 
+  #     title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
+  #     rel_link: /projects-publications?tab=projects#research-1
 
-  # Add more fields as needed
+  # - role: Growth Consultant Intern
+  #   company: Sorting Hat Technologies Private Limited (Unacademy)
+  #   location: Remote
+  #   time_period: Nov 2023 - Jan 2024
+  #   department: UnacademyX
+  #   description: 
+  #   cred_link: https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/preview
+
 experience:
   - job_role: Finance Accounting Intern
-    type: Intern 
-    company: West Bengal State Electricity Transmission Company Limited (WBSETCL)
+    type: Internship
+    company: West Bengal State Electricity Transmission Corporation Ltd. (WBSETCL)
     location: Kolkata, WB
-    project: Taxation on Salaried Income
+    projects: ["Taxation on Salaried Income"]
     time_period: June 2024 - July 2024
-    description: Completed 120+ hours on govt. finance; built a taxation report combining Section 16 and Chapter VI-A deductions.<br> Supported budgeting and accounts with reconciliation and compliance checks.
-              <br> Contributed to the loan department, learning procedures of loan operations and approvals.  
-  # cred_link: https://drive.google.com/file/d/1X4nY3jv1bXKX1eJtY8FqjZk8y5G7H9zK/view?usp=drive_link
+    description: Completed 120+ hours on govt. finance; built a taxation report combining Section 16 and Chapter VI-A deductions. Supported budgeting and accounts with reconciliation and compliance checks.
+                 Contributed to the loan department, learning procedures of loan operations and approvals.
+    cred_link: https://drive.google.com/file/d/17S7Sv2GFupVRjDl9qWKGiK_64XLY96_6/preview
 
   # - job_role: Freelance Web Developer
   #   type: Freelance
@@ -120,123 +130,94 @@ experience:
   #   cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
 
   #- job_role: Student Intern
-  #  type: Internship
-  # company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-  #  supervisor:
-  #   Name: Mr. Diptendu Dutta
-  #   Title: Technology Lead
-  #   Institution: Institute of Data Engineering, Analytics and Science Foundation (TIH)
+  # type: Internship
+  # company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+  # supervisor:
+  #   name: Mr. Diptendu Dutta
+  #   title: Technology Lead
+  #   institution: Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
   # location: Kolkata, WB
   # time_period: Feb 2025 to Oct 2025
-  # description: Dedicated 700+ hours to the FASAL 2.0 project (funded by the Ministry of Agriculture & Farmers' Welfare, GoI), with responsibilities spanning agricultural data acquisition, processing, and web application development (frontend).
+  # description: Dedicated 700+ hours to the FASAL 2.0 project, working across agricultural data acquisition, preprocessing, and frontend web application development. Gained hands-on experience building data-driven interfaces and supporting large-scale forecasting workflows under an production environment.
   # cred_link: '#'
 
-  # Add more fields as needed
-
 certifications:
-  - title: Introduction to Uncertainty Quantification
-    issuer:
-      Institution: Whiting School of Engineering, Johns Hopkins University
-      Platform: Coursera
-    instructor: Dr. Michael Shields
-    date: 29 Nov 2025
-    duration: 3 Weeks (Approx. 29 hours)
-    cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/view?usp=drive_link'
+  - title: Bloomberg Market Concepts
+    issuer: 
+      institution: Bloomberg
+      # platform: Coursera
+      # instructor: Prof. Michael Shields
+    date: Aug 2025
+    # duration: 3 Weeks (Approx. 29 hours)
+    cred_link: 'https://portal.bloombergforeducation.com/certificates/ZHa16R1kFkQSpoGEzZuM63Ek'
     certificate: true  
-  # Add more fields as needed
 
 projects:
-  - title: 'Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset'
-    description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
+  - title: 'Impact of Outsourcing on Corporate Financial Performance'
+    description: Conducted a study on "CMIE Prowess" dataset investigating outsourcing and financial performance of 50,000+ Indian manufacturing firms over 2010-2023. Identified key drivers to improve metrics, offering strategic insights for managers and policymakers.
     type: Research Project
-    doi: 10.13140/RG.2.2.16657.13926
-    affiliation:  BSc. (Hons.) Statistics Degree Project, Sister Nivedita University
-    tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
+    # doi: 10.13140/RG.2.2.16657.13926
+    affiliation:  BBA Degree Project, Institute of Engineering & Management
+    logo : ['IEM']
+    tech_stack: Profit After Tax, Sales Data Analysis, STRATA
     guide:
-      Name: Prof. Aniruddha Choudhuri
-      Title: Assistant Professor
-      Department: Department of Statistics
-      Institution: Sister Nivedita University, Kolkata
-    colaborators:
-    time_period: Jan 2025 - May 2025
+      name: Prof. (Dr.) Debarati Ghosh
+      title: Assistant Professor
+      department: Department of Business Administration
+      institution: Institute of Engineering & Management
+    colaborators: Anusmita Chakraborty, Chiradeep Debnath, Rishab Das, Rimita Pratihar
+    time_period: July 2024 - Nov 2024
     cred_link:
-      github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
-      researchgate: researchgate.net/publication/391766786_Predicting_Wine_Quality_A_Comparison_of_Linear_Regression_Techniques_on_a_Multicollinear_and_Outlier-Affected_Dataset?_sg%5B0%5D=KMAA__Av1JZU5QW09RmRJh5HSiCHSKQOWtY16iDgz1a-BkmBHVSbh1ayNVa1l4i3mM_SCPfifAd86eWtOl8VXOuygtU2Crm3VRrYc31j.UhBIrCOgdI1HgmgNG6U-yPJyEd7STApaAvphsDR8B4MUGmog_jFi6eOzgU1CxGC8KFeV_7ktVVLz-Thb6YXr_Q&_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19
-    stats:
-      reads: 134
-      citations: 0
-      research_interest_score: 2.0
+      report: https://drive.google.com/file/d/1E-3pLCtKXZWULCOSpELVMlwT0p8gd_nw/view?usp=drive_link
+      # github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
+      researchgate: https://www.researchgate.net/publication/393575487_IMPACT_OF_OUTSOURCING_ON_CORPORATE_FINANCIAL_PERFORMANCE
 
-
-
-  - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
-    description: Conducted a comprehensive survey among college students in Kolkata to understand their career preferences. Utilized multivariate statistical techniques such as Factor Analysis and Cluster Analysis to identify key factors influencing career choices and segment students based on their preferences. The findings provide valuable insights for educational institutions and career counselors to better support students in their career planning.
+  - title: 'Taxation on Salaried Income '
+    description: Mapped taxability of key salary components and allowances (HRA, DA, pereqs., LTA) with worked computations. Optimized deductions across Section 16 and Chapter VI-A (80C, 80D, etc.), comparing the old and new regimes. Documented TDS–Form 16–Form 26AS workflow; created a reusable tax liability case for salaried employee types
     type: Research Project
-    doi:
-    affiliation: Internship Project, Data Science Intern at Institute of Data Engineering, Analytics and Science Foundation (TIH), Indian Statistical Institute
-    tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
+    doi: 10.13140/RG.2.2.25944.00002
+    affiliation: Internship Project, West Bengal State Electricity Transmission Corporation Ltd. & Institute of Engineering & Management
+    logo : ['WBSETCL','IEM']
+    tech_stack: Direct Taxation
     guide:
-      Name: Mr. Debashis Ghosh
-      Title: Head, Technology Business Development & Incubation
-      Institution: IDEAS - TIH
-    colaborators: Rishav Kumar banerjee, Saunak Datta
-    time_period: Jul 2024 - Dec 2024
+      name: Smt. Priyanka Singh (Gupta)
+      title: Manager(F&A), Corp.(F&A) Dept
+      institution: WBSETCL
+    time_period: Jun 2024 - Jul 2024
     cred_link:
-      github: https://github.com/samyaroy/Multivariate_Analysis_of_Career_Preference_in_Kolkata
+      report: 
+      researchgate: https://www.researchgate.net/publication/393573350_Taxation_on_Salaried_Income
     
 
-  - title: Quiz Pilot (V1 & V2)
-    description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
-    type: "Technical Project"
-    affiliation: Diploma Level. Project, BS in Data Science and Applications, Indian Institute of Technology Madras
-    tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
-    guide:
-    time_period: "Jan 2025 - Aug 2025"
-    cred_link:
-      github: "https://github.com/samyaroy/quiz_pilot_master_repo"
+  # - title: Quiz Pilot (V1 & V2)
+  #   description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
+  #   type: "Technical Project"
+  #   affiliation: Diploma Projects (MAD I, MAD II), BS in Data Science and Applications, Indian Institute of Technology Madras
+  #   logo: ['IITM']
+  #   tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
+  #   guide:
+  #   time_period: "Jan 2025 - Aug 2025"
+  #   cred_link:
+  #     report: "https://drive.google.com/file/d/1XyZyXyZyXyZyXyZyXyZyXyZyXyZyXyZy/preview"
+  #     github: "https://github.com/samyaroy/quiz_pilot_master_repo"
     
-  - title: Doctor Vaahaan
-    description: Responsive website for vehicle decabonation services, deployed with Laravel, MySQL, and Bootstrap.
-    type: "Technical Project"
-    affiliation: Freelance Project
-    tech_stack: Laravel, MySQL, Bootstrap
-    guide:
-    time_period: "Nov 2024 - Dec 2024"
-    cred_link:
-      website: "https://doctorvaahaan.com/"
-
-  - title: FolioForge Portfolio Website
-    description: Personal portfolio website built with Vue.js and Tailwind CSS, featuring dynamic content and responsive design.
-    type: "Technical Project"
-    affiliation: 
-    tech_stack: Vue.js, Tailwind CSS, JavaScript
-    guide:
-    time_period: 
-    cred_link:
-      github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
-    
-
-  - title: Hand Raise Detector
-    description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams. Developed during AI VicharanaShala Bootcamp, IIT Ropar.
-    type: "Technical Project"
-    affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
-    tech_stack: YOLOv8, OpenCV, Python
-    guide:
-    time_period:
-    cred_link:
       
-articles:
-  - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
-    publication: EPOCHS 2.0 - Wayanad House ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
-    field: Statistical Modeling, Outliers Detection, Robust modeling
-    date: Dec 2025
-    link: https://epochs.netlify.app/2025
-    type: E-newsletter Article
-    cred_link: https://epochs.netlify.app/2025#page/5
+# articles:
+#   - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
+#     publication:
+#       Name: Gradient (Vol I) 2026, pp. 59-64
+#       Host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
+#     field: Statistical Inference, Machine Learning, Uncertainty Quantification
+#     date: Feb 2026
+#     link: https://sxccal.edu/magazines
+#     type: Magazine Article
+#     cred_link: https://drive.google.com/file/d/1OZ3R8fMiUPXyaSi2AQX-VoEPGC5cMPci/preview
+  
+  # Add more fields as needed
 
 publications:
 
-#ongoing_projects:
+ongoing_projects:
   # - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
   #   description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.
   #   type: Research Project
@@ -248,136 +229,287 @@ publications:
   #   cred_link:
   #     github: 
 
-  # - title: 'Cinema Audience Forecasting challenge'
-  #   description: Participating in a Kaggle competition to forecast weekly box office revenue for movies using historical data and various machine learning techniques.
-  #   tech_stack: Machine Learning, Time Series Forecasting, Python
-  #   type: Course Project
-  #   affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
-  #   guide:
-  #   time_period: Sep 2025 - Dec 2025
-  #   cred_link:
-  #     github: 
-
   # Add more fields as needed
 awards:
-  - title: Best Developer Award
-    year: 2021
-    issuer: Tech Company
-    
+  - title: Smt. Bela Chakraborty Gold Medal Award for the Best BBA Student
+    year: 2025
+    organization: Institute of Engineering & Management
+    category: Academic
+    prize: First Place
+
+  - title: Best BBA Student for Overall Performance
+    year: 2025
+    organization: Institute of Engineering & Management
+    category: Academic
+    prize: First Place
 
 co_curriculars:
   - title: leadership_roles
     entries:
-      - role: Founder, Club Administrator (later known as Community Admin)
+      - role: Founder, Club Administrator
         organization: 'Chi-Square: Statistics Club'
         web_link: https://22f2001443.github.io/chi-square/
         host: Nilgiri House
         location: Indian Institute of Technology Madras BS Degree
-        description: Created a statistics community of 450+ members. Led core team, organized workshops, academic sessions, and industry talks. Increased membership by 40% and secured partnerships with other societies.
+        description: Created and led the statistics community of 500+ members over 2 years. Organized more than 20 workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
         time_period: 2023 - 2025
         skills: Leadership, Event Management, Team Building
 
-       
       #Add more entries as needed
 
   - title: volunteering_roles
     entries:
       - role: Teaching Assistant (Revision Sessions)
-        field: 'Course: Statistics I'
         organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
-        #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
-        time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
+        field:
+          - sub-field: 'Course: Statistics I'
+            time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
         skills: 25+ Students Taught
-        cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/view?usp=drive_link
+        cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
 
-      - role: Teaching Assistant (Project)
-        field: 'Autumn Internship: Data Science'
-        organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-        #description: Participated in community service activities including health camps, educational programs, and environmental initiatives.
-        time_period: Sept 2025 - Oct 2025
-        skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
-        details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
+      # - role: Teaching Assistant (Project)
+      #   organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+      #   field: 
+      #     - sub-field: 'Autumn Internship 2025: Data Science'  
+      #       time_period: Sept 2025 - Oct 2025
+      #   skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
+      #   details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
 
       #Add more entries as needed
-#attended_workshops:
+
+attended_fdps:
+  - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
+    institution: 
+      - name: "Sister Nivedita University"
+        department: "Dept. of Statistics"
+        location: "Kolkata, WB"
+    date: "September 2024"  
+    duration: "7 Days"
+    mode: "Online"
+    cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
+
+
+
+attended_workshops:
   - title: "Systems for LLMs"
     institution:
-      Department: "Department of Computer Science"
-      Name: "Indian Institute of Technology Bombay & IBM Research"
+      - name: "Indian Institute of Technology Bombay"
+        department: "Department of Computer Science"
+        role: "Host"
+        location: "Mumbai, MH"
+      - name: "IBM Research"
+        role: "Industry Partner"
     date: "September 2025"
+    mode: "Online"
 
   - title: "Statistical Methods in Cyber Security"
     institution:
-      Name: "Royal Statistical Society"
-      Location: "London, UK"
+      - name: "Royal Statistical Society"
+        location: "London, UK"
     date: "September 2025"
+    mode: "Online"
 
   - title: "Uncertainty in Machine Learning: Challenges and Opportunities"
     institution:
-      Name: "Isaac Newton Institute for Mathematical Sciences"
-      Location: "Cambridge, UK"
+      - name: "Isaac Newton Institute for Mathematical Sciences"
+        location: "Cambridge, UK"
     date: "August 2025"
+    mode: "Online"
 
   - title: "Mini-Symposium on Contemporary Advancements in Computational Intelligence"
     institution:
-      Name: "Indian Statistical Institute"
-      Location: "Kolkata, WB"
+      - name: "Indian Statistical Institute"
+        location: "Kolkata, WB"
     date: "July 2025"
+    mode: "Offline"
 
   - title: "National Workshop and Bootcamp on Cyber Security and Blockchain (NWBCSB 2025)"
     institution:
-      Name: "International Institute of Technology (IIIT) Hyderabad"
-      Location: "Hyderabad, TS"
+      - name: "International Institute of Technology (IIIT) Hyderabad"
+        location: "Hyderabad, TS"
     date: "March 2025"
     duration: "7 Days"
-    details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/view?usp=drive_link"
-
-  - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
-    institution: 
-      Name: "Sister Nivedita University"
-      Department: "Dept. of Statistics"
-      Location: "Kolkata, WB"
-    date: "September 2024"  
-    duration: "7 Days"
-    cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/view?usp=sharing"
+    mode: "Offline"
+    details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/preview"
 
   - title: "Numerical Algorithms & Computations in Science & Technology with Matlab"
     institution:
-      Name: "Indian Institute of Technology Ropar"
-      Department: "Dept. of Mathematics"
-      Location: "Rupnagar, PB"
+      - name: "Indian Institute of Technology Ropar"
+        department: "Dept. of Mathematics"
+        location: "Rupnagar, PB"
     date: "July 2024"
-    cred_link: "https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/view?usp=drive_link"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/preview"
 
   - title: "Democratizing Data Science: Exploring Open Source Statistical Software"
     institution: 
-      Name: "Sister Nivedita University"
-      Department: "Dept. of Statistics"
-      Location: "Kolkata, WB"
+      - name: "Sister Nivedita University"
+        department: "Dept. of Statistics"
+        location: "Kolkata, WB"
     date: "March 2024"
-    cred_link: "https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/view?usp=drive_link"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/preview"
 
   - title: "Research Opportunities in Computer Science (ROCS) - ACM"
     institution:
-      Name: "Indian Institute of Technology Madras"
-      Location: "Chennai, TN"
+      - name: "Indian Institute of Technology Madras"
+        location: "Chennai, TN"
     date: "January 2024"
-    cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/view?usp=drive_link"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/preview"
 
-  - title: "Social Computing - NPTEL"
+  - title: "Social Computing (One day workshop) - NPTEL"
     instructor: "Prof. Ponnurangam Kumaraguru"
     institution:
-      Name: "International Institute of Technology (IIIT) Hyderabad"
-      Location: "Hyderabad, TS"
+      - name: "International Institute of Technology (IIIT) Hyderabad"
+        location: "Hyderabad, TS"
     date: "February 2023"
-    cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/view?usp=drive_link"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 #attended_bootcamps:
   - title: "AI VicharanasShala Bootcamp"
-    instructor: "Dr. Sudarshan Iyengar"
+    instructor: "Prof. Sudarshan Iyengar"
     institution:
-      Name: "Indian Institute of Technology Ropar"
-      Department: "Department of Computer Science and Engineering"
-    date: "June 2024"
+      - name: "Indian Institute of Technology Ropar"
+        department: "Department of CSE"
+    date: "June 2024 - July 2024"
     duration: "1 Month"
-    cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/view?usp=drive_link"
+    location: "Rupnagar, PB"
+    cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
+
+attended_conferences:
+  - title: "Fifth International Conference on Security and Privacy (ISEA-ISAP 2026)"
+  #  link: "https://isea-isap2026.iitm.ac.in/"
+    organizer:
+      - name: "Indian Institute of Technology Madras"
+        department: "CyStar"
+      - name: "MeitY, GoI" 
+        department: "Information Security Education and Awareness (ISEA)"
+    location: "Chennai, TN"  
+    institution:
+      - name: "Indian Institute of Technology Madras"
+    date: "January 16-18, 2026" 
+    cred_link: "https://drive.google.com/file/d/11f1dKYe_2jSlnKWkZRHlzh90j9r6GJHb/preview"
+
+  - title: "Cryptology Conclave 2026"
+    link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
+    organizer:
+      - name: "Indian Institute of Technology Hyderabad"
+        department: "Center for Cryptography and Cybersecurity"
+    location: "Hyderabad, TS"
+    institution:
+      - name: "Indian Institute of Technology Hyderabad"
+    date: "January 22-23, 2026" 
+    cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
+
+# coursesTaught:
+#   - semester: "Spring 2025"
+#     courses:
+#       - title: "Introduction to Statistics"
+#         institution: "Sister Nivedita University"
+#         role: "Teaching Assistant"
+#         collaborators:
+#           - "Prof. XYZ"
+#         students: 120
+#       - title: "Data Analysis with Python"
+#         institution: "IIT Madras"
+#         role: "Guest Instructor"
+#         students: 60
+
+#   - semester: "Autumn 2024"
+#     courses:
+#       - title: "Probability Theory"
+#         institution: "Sister Nivedita University"
+#         role: "Instructor"
+#         students: 80
+
+projectsMentored:
+  - semester: "Spring 2026"
+    projects:
+      - title: "Predictive Maintenance using Time Series"
+        course: "Spring Internship Program on Data Science 2026"
+        students:
+          - name: "Amit Sharma"
+            linkedIn: "https://www.linkedin.com/in/amit-sharma-12345678/"
+          - name: "Riya Sen"
+            linkedIn: "https://www.linkedin.com/in/riya-sen-12345678/"
+        registrationNumber: "STAT2025-PM-014"
+        affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
+
+otherTeachings:
+  - title: "Private Tutor"
+    institution: "Codeium Classes"
+    link: "https://codeium.xyz/"
+    role: "Founder & Instructor"
+    duration: "May 2023 – April 2025"
+    audience: "Secondary & Higher Secondary school students"
+    students: "15+ students tutored"
+    description: "Provided private tuition in mathematics, Computer Science, and Computer Applications for school (CBSE & ICSE) students."
+
+affiliations:
+  - organization: Center for Data Science
+    department: Data Science
+    period: Jan 2025 – Present
+    location: Chennai, IN
+
+collaborators:
+  - name: Dr. Jane Doe
+    affiliation: Institute of AI Research
+    location: Kolkata, IN
+    projects: [Robust Regression Study, Customer Churn Analysis]
+    period: 2024 – Present
+  
+  - name: Prof. John Smith
+    affiliation: Previous Research Institute
+    location: Mumbai, IN
+    projects: [Early Research Project]
+    period: 2022 – 2023
+    notes: Collaborated on initial research phase
+
+memberships:
+  - organization: Royal Statistics Society
+    chapter:
+    role: Student Member
+    period: 2026 - Present
+    location: London, UK
+    cred_link:
+
+invited_talks:
+  - title: "The Future of Data Science in Academia"
+    event: "Annual Data Science Symposium"
+    organizer:
+      - name: "Indian Institute of Technology Madras"
+        department: "Department of Data Science"
+    location: "Chennai, TN"
+    date: "October 2025"
+    link: "https://example.com/talk1"
+
+  - title: "Leveraging Machine Learning for Social Impact"
+    event: "Tech for Good Conference"
+    organizer:
+      - name: "University of California, Berkeley"
+    location: "Berkeley, CA"
+    date: "March 2025"
+    link: "https://example.com/talk2"
+
+hosted_events:
+  - title: "International Conference on Statistical Learning"
+    role: "Co-Organizer"
+    event_type: "Conference"
+    institution:
+      - name: "Sister Nivedita University"
+        department: "Department of Statistics"
+    location: "Kolkata, WB"
+    date: "November 2024"
+    cred_link: "https://example.com/event1"
+
+  - title: "Workshop on Advanced Python for Data Analysis"
+    role: "Convener"
+    event_type: "Workshop"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "Department of Computer Science"
+    location: "Chennai, TN"
+    date: "July 2024"
+    cred_link: "https://example.com/event2"

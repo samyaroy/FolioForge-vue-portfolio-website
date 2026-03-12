@@ -14,7 +14,7 @@
       <Education />
 
       <!--Awards Section-->
-      <!-- <Awards /> -->
+      <Awards />
     
     </div>
   </div>

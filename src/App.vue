@@ -1,14 +1,13 @@
 <script setup>
 import { useRoute } from 'vue-router' 
-import { computed } from 'vue'
 // Import global components
 import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer/Index.vue'
+import Footer from '@/components/Footer/index.vue'
 
 // get current route
 const route = useRoute()
 
-// computed flag: hide layout on home
+
 const showLayout = true //set to true
 </script>
 

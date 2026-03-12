@@ -5,9 +5,10 @@
     <!-- Colored horizontal bar -->
 
     <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <!-- Footer content -->
+      <div class="grid grid-cols-1 md:grid-cols-20 gap-8">
         <!-- Brand Section -->
-        <div class="col-span-1 md:col-span-2">
+        <div class="col-span-1 md:col-span-9">
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
             {{ profile.footer }}
@@ -44,8 +45,9 @@
           <logos :logos="logos" />
         </div>
 
+
         <!-- Other Links -->
-        <div>
+        <div class="col-span-1 md:col-span-7">
           <h4 class="text-lg font-semibold mb-2">Other Links</h4>
           <ul class="space-y-2">
             <!-- <li>
@@ -73,22 +75,28 @@
               </router-link>
             </li> -->
 
-            <li>
+            <li v-if="showOngoingProjectsLink">
               <router-link to="/ongoing-projects"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Ongoing Projects
               </router-link>
             </li>
-            <li>
+            <li v-if="showInternshipCertificationsLink">
               <router-link to="/internships-certifications"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Internships & Certifications
               </router-link>
             </li>
-            <li>
+            <li v-if="showAffiliationsLink">
+              <router-link to="/affiliation-memberships"
+                class="text-black-300 hover:text-black transition-colors duration-200">
+                Affiliations, Collaborators & Memberships
+              </router-link>
+            </li>
+            <li v-if="showWorkshopsAttendedLink">
               <router-link to="/workshops-bootcamps-attended"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Bootcamps & Workshops attended
+                Conferences, Workshops & Bootcamps attended
               </router-link>
             </li>
             <!-- <li>
@@ -114,7 +122,7 @@
         </div>
 
         <!-- Contact Info -->
-        <div>
+        <div class="col-span-1 md:col-span-4">
           <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
           <div class="space-y-2 text-black-300">
             <div class="flex items-center">
@@ -143,8 +151,9 @@
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-500 text-sm">
-          © {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved.
+          &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
+
         <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
             Privacy Policy
@@ -154,13 +163,31 @@
           </a>
         </div>
       </div>
-      <p class="text-gray-500 text-sm">
-        &ensp; Source code available at <a
-          href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template">GitHub Repo</a>.
-        <br />
-        &ensp; Please fork/clone from there — not directly from the site’s source.
-      </p>
 
+      <div class="flex flex-col md:flex-row justify-between items-center mt-0">
+        <div>
+          <p class="text-gray-500 text-sm ml-4">
+            Source code available at
+            <a class="underline hover:text-white"
+              href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template" target="_blank">
+              GitHub Repo
+            </a>
+            <br />
+            Please fork/clone from there — not directly from the site’s source
+          </p>
+
+          <p class="text-gray-500 text-sm mt-1">
+            &#9432; Icons by
+            <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
+            from
+            <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
+          </p>
+        </div>
+
+        <p class="text-gray-500 text-sm mt-2 md:mt-0">
+          &#10038; Last updated: {{ lastUpdatedOn }}
+        </p>
+      </div>
     </div>
   </v-footer>
 </template>
@@ -168,13 +195,22 @@
 <script>
 import config from "@/profile_info.yml"
 import Logos from "./Logos.vue";
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 export default {
   components: {
     Logos,
   },
   data() {
-    const { profile, contacts, socials } = config;
+    const { profile, contacts, socials, lastUpdatedOn } = config;
+    const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
+    const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
+    const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
+    const showAffiliationsLink = (
+      isFeatureEnabled('showAffiliations.showAffiliations')
+      || isFeatureEnabled('showAffiliations')
+    )
+
     return {
       profile,
       email: contacts.email,
@@ -186,7 +222,13 @@ export default {
       kaggle: socials.kaggle,
       google_scholar: socials.google_scholar,
       researchgate: socials.researchgate,
-      logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
+      // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
+      logos: ['SNU', 'IITM', 'IDEAS'],
+      lastUpdatedOn,
+      showOngoingProjectsLink,
+      showInternshipCertificationsLink,
+      showWorkshopsAttendedLink,
+      showAffiliationsLink,
     };
   }
 }
