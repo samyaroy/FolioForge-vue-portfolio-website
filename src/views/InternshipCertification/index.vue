@@ -50,7 +50,11 @@
           <div class="text-center mb-8">
             <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Certifications</h2>
           </div>
-
+          <div v-if="credly" class="max-w-4xl mx-auto mb-6">
+            <a :href="credly" target="_blank" rel="noopener noreferrer" class="block w-full rounded-xl border border-blue-200 bg-blue-50 px-6 py-4 text-center text-sm font-medium text-blue-700 shadow-sm transition hover:bg-blue-100 hover:shadow">
+              Visit here to check for my earned badges
+            </a>
+          </div>
           <div v-if="certifications && certifications.length > 0" class="space-y-6 max-w-4xl mx-auto">
             <CertificationCard v-for="certification in certifications" :key="certification.id" :certification="certification" />
           </div>
@@ -73,6 +77,7 @@ import config from "@/profile_info.yml"
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const { certifications, internships } = config
+const credly = config.socials?.credly
 
 const showInternshipsTab = isFeatureEnabled('showInternshipCertifications.showInternships')
 const showCertificationsTab = isFeatureEnabled('showInternshipCertifications.showCertifications')

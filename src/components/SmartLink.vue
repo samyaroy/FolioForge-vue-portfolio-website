@@ -5,31 +5,28 @@
     </a>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import links from '@/metadata/hyperlinkMetadata.yml'
 
-const props = defineProps({
-    text: {
-        type: String,
-        required: true
-    },
-    type: {
-        type: String,
-        default: 'Institute'
-    },
-    href: {
-        type: String,
-        default: null
-    }
-})
+interface LinkItem {
+    Name?: string
+    Website?: string
+    Link?: string
+}
 
-const resolvedUrl = computed(() => {
-    const candidates = links[props.type]
+const props = defineProps<{
+    text: string
+    type?: string
+    href?: string | null
+}>()
+
+const resolvedUrl = computed<string | null>(() => {
+    const candidates = (links as Record<string, LinkItem[]>)[props.type ?? 'Institute']
 
     if (Array.isArray(candidates)) {
         const match = candidates.find(
-            item =>
+            (item: LinkItem) =>
                 item.Name?.trim().toLowerCase() ===
                 props.text.trim().toLowerCase()
         )
@@ -38,7 +35,6 @@ const resolvedUrl = computed(() => {
         if (match?.Link) return match.Link
     }
 
-    // fallback
     return props.href || null
 })
 </script>
