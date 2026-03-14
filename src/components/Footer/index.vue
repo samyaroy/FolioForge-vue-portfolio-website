@@ -112,7 +112,7 @@
           <h4 class="text-lg font-semibold mb-2">Social Links</h4>
 
           <ul class="space-y-2">
-            <li>
+            <li v-if="google_scholar">
               <a :href="google_scholar" target="_blank">Google Scholar</a>
             </li>
             <li>
