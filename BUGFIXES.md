@@ -140,12 +140,12 @@ The following is a list of **logical bug fixes** identified in [PR #6](https://g
 
 **Bug:** The `<Awards />` component was commented out in the Home page template, meaning awards were never displayed to users even when award data was configured in the profile.
 
-**Fix:** Uncommented the Awards component so it renders when data is available.
+**Fix:** Uncommented the Awards component and controlled it via a feature flag (`showHome.showAwards`) in `src/config/featureFlags.js`.
 
 ```diff
   <!--Awards Section-->
 - <!-- <Awards /> -->
-+ <Awards />
++ <Awards v-if="homeFlags.showAwards" />
 ```
 
 ---
