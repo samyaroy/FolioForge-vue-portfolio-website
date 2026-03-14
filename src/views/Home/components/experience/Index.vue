@@ -20,7 +20,6 @@
           <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
         </router-link>
       </div>
-
     </div>
   </div>
 </template>
