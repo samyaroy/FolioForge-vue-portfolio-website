@@ -41,7 +41,7 @@
                 class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
                 <v-icon>mdi-linkedin</v-icon>
               </a>
-              <a :href=github_personal target="_blank"
+              <a v-if="github_personal" :href=github_personal target="_blank"
                 class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
                 <v-icon>mdi-github</v-icon>
               </a>
