@@ -17,13 +17,29 @@
         <router-link to="/" class="nav-link" active-class="active-link">
           Home
         </router-link>
-        <router-link to="/projects-publications" class="nav-link" active-class="active-link">
+        <router-link
+          v-if="showProjectsPublicationsNavLink"
+          to="/projects-publications"
+          class="nav-link"
+          active-class="active-link"
+        >
           Projects & Publications
         </router-link>
-        <router-link to="/cocurricular" class="nav-link" active-class="active-link">
+        <router-link v-if="showTeachingsNavLink" to="/teachings" class="nav-link" active-class="active-link">
+          Teachings
+        </router-link>
+        <router-link
+          v-if="showProfessionalActivityNavLink"
+          to="/professional-activity"
+          class="nav-link"
+          active-class="active-link"
+        >
+          Professional Activity
+        </router-link>
+        <router-link v-if="showCocurricularNavLink" to="/cocurricular" class="nav-link" active-class="active-link">
           Co-curricular
         </router-link>
-        <router-link to="/contact" class="nav-link" active-class="active-link">
+        <router-link :to="{ name: 'Contact' }" class="nav-link" active-class="active-link">
           Contact
         </router-link>
       </div>
@@ -36,18 +52,19 @@
       </button>
 
       <!-- Mobile Menu Button -->
-      <button
-        class="md:hidden flex items-center justify-center w-10 h-10 text-base_black hover:text-primary transition-colors duration-200"
+      <button class="md:hidden flex items-center justify-center w-10 h-10 transition-colors duration-200"
         @click="drawer = !drawer">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
+
+        <v-icon color="black" size="24">
+          mdi-menu
+        </v-icon>
+
       </button>
     </div>
   </header>
 
   <!-- Mobile Navigation Drawer -->
-  <div v-if="drawer" class="fixed inset-0 z-50 md:hidden" @click="drawer = false">
+  <div v-if="drawer" class="fixed inset-0 z-50 md:hidden" @click.self="drawer = false">
     <!-- Backdrop -->
     <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
@@ -67,13 +84,37 @@
           <router-link to="/" @click="drawer = false" class="nav-link" active-class="active-link">
             Home
           </router-link>
-          <router-link to="/projects-publications" @click="drawer = false" class="nav-link" active-class="active-link">
+          <router-link
+            v-if="showProjectsPublicationsNavLink"
+            to="/projects-publications"
+            @click="drawer = false"
+            class="nav-link"
+            active-class="active-link"
+          >
             Projects & Publications
           </router-link>
-          <router-link to="/cocurricular" @click="drawer = false" class="nav-link" active-class="active-link">
+          <router-link v-if="showTeachingsNavLink" to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
+            Teachings
+          </router-link>
+          <router-link
+            v-if="showProfessionalActivityNavLink"
+            to="/professional-activity"
+            @click="drawer = false"
+            class="nav-link"
+            active-class="active-link"
+          >
+            Professional Activity
+          </router-link>
+          <router-link
+            v-if="showCocurricularNavLink"
+            to="/cocurricular"
+            @click="drawer = false"
+            class="nav-link"
+            active-class="active-link"
+          >
             Co-curricular
           </router-link>
-          <router-link to="/contact" @click="drawer = false" class="nav-link" active-class="active-link">
+          <router-link :to="{ name: 'Contact' }" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
         </nav>
@@ -83,13 +124,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import config from "@/profile_info.yml"
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 const router = useRouter()
 const drawer = ref(false)
 const { profile, contacts } = config
+
+const showTeachingsNavLink = computed(() => (
+  isFeatureEnabled('showTeachings', { mode: 'any' }) && router.hasRoute('Teachings')
+))
+
+const showProjectsPublicationsNavLink = computed(() => (
+  isFeatureEnabled('showProjectsPublications', { mode: 'any' })
+  && router.hasRoute('ProjectsPublications')
+))
+
+const showCocurricularNavLink = computed(() => (
+  isFeatureEnabled('showCocurricular', { mode: 'any' }) && router.hasRoute('Cocurricular')
+))
+
+const showProfessionalActivityNavLink = computed(() => (
+  isFeatureEnabled('showProfessionalActivity', { mode: 'any' })
+  && (router.hasRoute('ProfessionalActivity') || router.hasRoute('ProfessionalAcitivity'))
+))
 
 const SEND_MAIL = () => {
   const subject = encodeURIComponent('Freelance Project:')
@@ -107,9 +167,11 @@ const SEND_MAIL = () => {
 .nav-link {
   @apply text-base_black text-sm font-medium transition-colors duration-200 no-underline;
 }
+
 .nav-link:hover {
   @apply text-primary;
 }
+
 .active-link {
   @apply font-bold text-primary;
 }

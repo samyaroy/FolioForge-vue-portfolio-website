@@ -6,17 +6,20 @@ export default {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        20: 'repeat(20, minmax(0, 1fr))',
+      },
       colors: {
         base_black: {
           DEFAULT: '#0e141b',
           700: '#1565c0',
         },
         primary: {
-          DEFAULT:'#1980e6',
+          DEFAULT: '#1980e6',
           700: '#0d47a1',
-        }, // hover / accent color
-        secondary: '#0e141b', // default text color
-        accent: '#10b981', // example additional color
+        },
+        secondary: '#0e141b',
+        accent: '#10b981',
       },
     },
   },
