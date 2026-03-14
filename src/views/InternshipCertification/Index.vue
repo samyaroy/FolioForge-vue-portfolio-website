@@ -6,12 +6,12 @@
           Internships & Certifications
         </h1>
         <p class="text-lg text-gray-600 max-w-4xl mx-auto">
-          Professional internships and certifications in Data Science, AI, and emerging technologies
+          Professional internships and certifications I have obtained during my journey.
         </p>
       </div>
 
       <!-- Navigation Tabs -->
-      <div class="flex justify-center mb-8">
+      <div v-if="tabs.length" class="flex justify-center mb-8">
         <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
           <button
             v-for="tab in tabs"
@@ -28,13 +28,16 @@
           </button>
         </div>
       </div>
+      <div v-else class="text-center text-gray-500 mb-8">
+        No sections are enabled right now.
+      </div>
 
       <!-- Tab Content -->
       <div class="max-w-6xl mx-auto">
         <!-- Internships Section -->
-        <div v-if="activeTab === 'internships'" class="mb-16">
+        <div v-if="showInternshipsTab && activeTab === 'internships'" class="mb-16">
           <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Internships</h2>
+            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Training Internships</h2>
           </div>
 
           <div class="space-y-6 max-w-4xl mx-auto">
@@ -43,7 +46,7 @@
         </div>
 
         <!-- Certifications Section -->
-        <div v-if="activeTab === 'certifications'" class="mb-16">
+        <div v-if="showCertificationsTab && activeTab === 'certifications'" class="mb-16">
           <div class="text-center mb-8">
             <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Certifications</h2>
           </div>
@@ -62,25 +65,38 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
 import config from "@/profile_info.yml"
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 const { certifications, internships } = config
 
-const route = useRoute()
-const activeTab = ref('internships')
+const showInternshipsTab = isFeatureEnabled('showInternshipCertifications.showInternships')
+const showCertificationsTab = isFeatureEnabled('showInternshipCertifications.showCertifications')
 
-const tabs = [
-  { id: 'internships', name: 'Internships' },
-  { id: 'certifications', name: 'Certifications' }
+const tabDefinitions = [
+  { id: 'internships', name: 'Training Internships', enabled: showInternshipsTab },
+  { id: 'certifications', name: 'Certifications', enabled: showCertificationsTab },
 ]
+
+const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
+const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
+
+const route = useRoute()
+const activeTab = ref(tabs.value[0]?.id || null)
+
+watch(tabs, (nextTabs) => {
+  if (!nextTabs.some(tab => tab.id === activeTab.value)) {
+    activeTab.value = nextTabs[0]?.id || null
+  }
+}, { immediate: true })
 
 // Set active tab based on query parameter
 onMounted(() => {
-  if (route.query.tab && ['internships', 'certifications'].includes(route.query.tab)) {
+  if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
 })
