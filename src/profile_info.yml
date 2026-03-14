@@ -601,13 +601,3 @@ hosted_events:
     location: "Chennai, TN"
     date: "July 2024"
     cred_link: "https://example.com/event2"
-
-# Feature flags for home page sections
-# Set to true to show, false to hide
-feature_flags:
-  home:
-    showHeroSection: true
-    showResearchInterests: true
-    showExperience: true
-    showEducation: true
-    showAwards: false

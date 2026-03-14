@@ -21,19 +21,19 @@
 </template>
 
 <script setup>
-import config from "@/profile_info.yml"
+import { isFeatureEnabled } from '@/config/featureFlags'
 import HeroSection from './components/HeroSection.vue'
 import ResearchInterests from './components/researchInterests/index.vue'
 import Experience from './components/experience/index.vue'
 import Education from './components/education/index.vue'
 import Awards from './components/awards/index.vue'
 
-const homeFlags = config.feature_flags?.home ?? {
-  showHeroSection: true,
-  showResearchInterests: true,
-  showExperience: true,
-  showEducation: true,
-  showAwards: false,
+const homeFlags = {
+  showHeroSection: isFeatureEnabled('showHome.showHeroSection'),
+  showResearchInterests: isFeatureEnabled('showHome.showResearchInterests'),
+  showExperience: isFeatureEnabled('showHome.showExperience'),
+  showEducation: isFeatureEnabled('showHome.showEducation'),
+  showAwards: isFeatureEnabled('showHome.showAwards'),
 }
 </script>
 
