@@ -30,7 +30,7 @@
             <!-- <v-btn icon variant="text" color="black" :href=twitter target="_blank">
               <v-icon>mdi-twitter</v-icon>
             </v-btn> -->
-            <v-btn icon variant="text" color="white" href="mailto:contact@example.com">
+            <v-btn icon variant="text" color="white" :href="'mailto:' + email">
               <v-icon>mdi-email</v-icon>
             </v-btn>
           </div>
@@ -126,7 +126,7 @@
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-500 text-sm">
-          © {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved.
+          © {{ new Date().getFullYear() }} {{ profile.name }}. Rights Reserved.
         </p>
         <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
