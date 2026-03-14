@@ -126,7 +126,7 @@
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-500 text-sm">
-          © {{ new Date().getFullYear() }} {{ profile.name }}. Rights Reserved.
+          © {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved.
         </p>
         <div class="flex space-x-4 mt-2 md:mt-0">
           <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
