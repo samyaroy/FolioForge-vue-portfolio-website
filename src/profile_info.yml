@@ -515,15 +515,27 @@ attended_conferences:
 projectsMentored:
   - semester: "Spring 2026"
     projects:
-      - title: "Predictive Maintenance using Time Series"
+      - title: "Uncertainty-Aware Liver Cirrhosis Prediction under Noisy and Outlier-Rich Pathological Data"
         course: "Spring Internship Program on Data Science 2026"
         students:
-          - name: "Amit Sharma"
-            linkedIn: "https://www.linkedin.com/in/amit-sharma-12345678/"
-          - name: "Riya Sen"
-            linkedIn: "https://www.linkedin.com/in/riya-sen-12345678/"
-        registrationNumber: "STAT2025-PM-014"
+          - name: "SAPTARSHI DEY"
+          - name: "AYUSHI MITRA"
+          - name: "ANSHUMAN RAY"
+          - name: "SONU SHAW"
+        registrationNumber: ""
         affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
+        cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
+
+      # - title: "Uncertainty-Aware Liver Cirrhosis Prediction under Noisy and Outlier-Rich Pathological Data"
+      #   course: "Spring Internship Program on Data Science 2026"
+      #   students:
+      #     - name: "SAPTARSHI DEY"
+      #     - name: "AYUSHI MITRA"
+      #     - name: "ANSHUMAN RAY"
+      #     - name: "SONU SHAW"
+      #   registrationNumber: ""
+      #   affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
+      #   cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
 
 otherTeachings:
   - title: "Private Tutor"

@@ -17,49 +17,67 @@
           <div
             v-for="project in semesterBlock.projects"
             :key="project.title"
-            class="border-l-4 border-slate-300 pl-6 py-4 bg-slate-50 rounded-md"
+            class="border-l-4 border-slate-300 pl-6 py-4 pr-4 bg-slate-50 rounded-md"
           >
-            <!-- Header -->
-            <div class="mb-2">
-              <h4 class="text-lg font-semibold text-[#0e141b]">
-                {{ project.title }}
-              </h4>
-            </div>
+            <div class="flex flex-col gap-4 md:flex-row md:items-start">
+              <div class="w-full md:w-[92%]">
+                <!-- Header -->
+                <div class="mb-2">
+                  <h4 class="text-lg font-semibold text-[#0e141b]">
+                    {{ project.title }}
+                  </h4>
+                </div>
 
-            <!-- Meta -->
-            <div class="space-y-1 text-slate-600 text-sm">
-              <p v-if="project.course" class="flex items-center">
-                <v-icon size="16" class="mr-2">mdi-book-open-variant</v-icon>
-                <span class="font-medium">Course:</span>&nbsp;{{ project.course }}
-              </p>
+                <!-- Meta -->
+                <div class="space-y-1 text-slate-600 text-sm">
+                  <p v-if="project.course" class="flex items-center">
+                    <v-icon size="16" class="mr-2">mdi-book-open-variant</v-icon>
+                    <span class="font-medium">Course:</span>&nbsp;{{ project.course }}
+                  </p>
 
-              <p
-                v-if="project.students && project.students.length"
-                class="flex items-start"
-              >
-                <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
-                <span>
-                  <span class="font-medium">Students:</span>&nbsp;
-                  <span
-                    v-for="(student, index) in project.students"
-                    :key="student"
+                  <p
+                    v-if="project.students && project.students.length"
+                    class="flex items-start"
                   >
-                    <SmartLink :text="student.name" type="person" :href="student.linkedin"/><span v-if="index < project.students.length - 1">, </span>
-                  </span>
-                </span>
-              </p>
+                    <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
+                    <span>
+                      <span class="font-medium">Students:</span>&nbsp;
+                      <span
+                        v-for="(student, index) in project.students"
+                        :key="student"
+                      >
+                        <SmartLink :text="student.name" type="person" :href="student.linkedin"/><span v-if="index < project.students.length - 1">, </span>
+                      </span>
+                    </span>
+                  </p>
 
-              <p v-if="project.registrationNumber" class="flex items-center">
-                <v-icon size="16" class="mr-2">mdi-identifier</v-icon>
-                <span class="font-medium">Registration No.:</span>&nbsp;
-                {{ project.registrationNumber }}
-              </p>
+                  <p v-if="project.registrationNumber" class="flex items-center">
+                    <v-icon size="16" class="mr-2">mdi-identifier</v-icon>
+                    <span class="font-medium">Registration No.:</span>&nbsp;
+                    {{ project.registrationNumber }}
+                  </p>
 
-              <p v-if="project.affiliation" class="flex items-center">
-                <v-icon size="16" class="mr-2">mdi-school</v-icon>
-                <span class="font-medium">Affiliation:</span>&nbsp;
-                <SmartLink :text="project.affiliation"/>
-              </p>
+                  <p v-if="project.affiliation" class="flex items-center">
+                    <v-icon size="16" class="mr-2">mdi-school</v-icon>
+                    <span class="font-medium">Affiliation:</span>&nbsp;
+                    <SmartLink :text="project.affiliation"/>
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex w-full justify-start md:w-[8%] md:justify-end">
+                <a
+                  v-if="getProjectReportLink(project)"
+                  :href="getProjectReportLink(project)"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex h-14 w-14 items-center justify-center rounded-full border border-[#1980e6] text-[#1980e6] transition hover:bg-[#1980e6] hover:text-white"
+                  aria-label="Open project report"
+                  title="Open project report"
+                >
+                  <v-icon size="20">mdi-file-document-outline</v-icon>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -81,4 +99,18 @@ defineProps({
     default: () => []
   }
 })
+
+const getProjectReportLink = (project) => {
+  const credLink = project?.cred_link
+
+  if (typeof credLink === 'string') {
+    return credLink && credLink !== '#' ? credLink : ''
+  }
+
+  if (credLink && typeof credLink === 'object' && typeof credLink.report === 'string') {
+    return credLink.report && credLink.report !== '#' ? credLink.report : ''
+  }
+
+  return ''
+}
 </script>
