@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-10 py-2">
+    class="sticky top-0 z-50 bg-white flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-10 py-2">
     <!-- Logo/Brand -->
     <div class="flex items-center gap-4 text-base_black">
       <div class="size-4">
