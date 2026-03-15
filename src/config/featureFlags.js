@@ -1,12 +1,4 @@
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
-  showHome: {
-    showHeroSection: true,
-    showResearchInterests: true,
-    showExperience: true,
-    showEducation: true,
-    showAwards: false,
-  },
-
   showProjectsPublications: {
     showArticles: true,
     showProjects: {
