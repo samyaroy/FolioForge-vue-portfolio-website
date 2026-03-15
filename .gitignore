@@ -25,3 +25,4 @@ dist-ssr
 
 #SEO tools
 # google*.html
+src/components/Footer/Index.vue
