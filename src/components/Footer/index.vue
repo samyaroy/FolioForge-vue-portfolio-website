@@ -14,17 +14,17 @@
             {{ profile.footer }}
           </p>
           <div class="flex space-x-4">
-            <v-btn icon variant="text" color="black" :href=github target="_blank">
+            <v-btn v-if="github" icon variant="text" color="black" :href=github target="_blank">
               <v-icon>mdi-github</v-icon>
             </v-btn>
             <!-- Student IITM GitHub -->
-            <div class="flex flex-col items-center">
+            <div v-if="github2" class="flex flex-col items-center">
               <v-btn icon variant="text" color="black" :href=github2 target="_blank">
                 <v-icon>mdi-github</v-icon>
               </v-btn>
               <span class="text-xs text-gray-500 mt-1">Student A/c (IITM)</span>
             </div>
-            <v-btn icon variant="text" color="black" :href=kaggle target="_blank">
+            <v-btn v-if="kaggle" icon variant="text" color="black" :href=kaggle target="_blank">
               <v-icon>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
                   <path fill="#1f1f1e"
@@ -32,13 +32,13 @@
                 </svg>
               </v-icon>
             </v-btn>
-            <v-btn icon variant="text" color="black" :href=linkedin target="_blank">
+            <v-btn v-if="linkedin" icon variant="text" color="black" :href=linkedin target="_blank">
               <v-icon>mdi-linkedin</v-icon>
             </v-btn>
             <!-- <v-btn icon variant="text" color="black" :href=twitter target="_blank">
               <v-icon>mdi-twitter</v-icon>
             </v-btn> -->
-            <v-btn icon variant="text" color="white" href="mailto:contact@example.com">
+            <v-btn v-if="email" icon variant="text" color="white" :href="'mailto:' + email">
               <v-icon>mdi-email</v-icon>
             </v-btn>
           </div>
@@ -112,7 +112,7 @@
           <h4 class="text-lg font-semibold mb-2">Social Links</h4>
 
           <ul class="space-y-2">
-            <li>
+            <li v-if="google_scholar">
               <a :href="google_scholar" target="_blank">Google Scholar</a>
             </li>
             <li>
@@ -179,6 +179,8 @@
           <p class="text-gray-500 text-sm mt-1">
             &#9432; Icons by
             <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
+             <!-- & 
+            <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a> -->
             from
             <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
           </p>
