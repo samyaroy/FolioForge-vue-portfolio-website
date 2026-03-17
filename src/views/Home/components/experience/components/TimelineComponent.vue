@@ -28,36 +28,38 @@
 
       <div class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-domain</v-icon>
-        <p class="text-[#4e7397] text-sm"><SmartLink :text="organization" /></p>
+        <p class="text-[#4e7397] text-sm">
+          <SmartLink :text="organization" />
+        </p>
       </div>
 
       <div v-if="supervisor" class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-account-tie</v-icon>
-        <p class="text-[#4e7397] text-sm">Supervisor: <SmartLink v-if="supervisor.name" :type="'Person'" :text="supervisor.name" /><span v-if="supervisor.title">, {{ supervisor.title }}</span><span v-if="supervisor.department">, {{ supervisor.department }}</span><span v-if="supervisor.institution">, {{ supervisor.institution }}</span></p>
+        <p class="text-[#4e7397] text-sm">Supervisor:
+          <SmartLink v-if="supervisor.name" :type="'Person'" :text="supervisor.name" /><span v-if="supervisor.title">,
+            {{ supervisor.title }}</span><span v-if="supervisor.department">, {{ supervisor.department }}</span><span
+            v-if="supervisor.institution">, {{ supervisor.institution }}</span>
+        </p>
       </div>
 
       <div v-if="projects" class="grid grid-cols-[auto,auto,1fr] gap-x-2 mt-1 items-start">
-  <!-- Icon -->
-  <v-icon class="text-[#4e7397] mt-[2px]" size="16">
-    mdi-puzzle-outline
-  </v-icon>
+        <!-- Icon -->
+        <v-icon class="text-[#4e7397] mt-[2px]" size="16">
+          mdi-puzzle-outline
+        </v-icon>
 
-  <!-- Label -->
-  <span class="text-[#4e7397] text-sm font-medium whitespace-nowrap">
-    Projects:
-  </span>
+        <!-- Label -->
+        <span class="text-[#4e7397] text-sm font-medium whitespace-nowrap">
+          Projects:
+        </span>
 
-  <!-- Project list -->
-  <ul class="grid gap-1 text-[#4e7397] text-sm">
-    <li
-      v-for="(project, index) in projects"
-      :key="index"
-      class="leading-tight"
-    >
-      {{ project }}
-    </li>
-  </ul>
-</div>
+        <!-- Project list -->
+        <ul class="grid gap-1 text-[#4e7397] text-sm">
+          <li v-for="(project, index) in projects" :key="index" class="leading-tight">
+            {{ project }}
+          </li>
+        </ul>
+      </div>
       <div v-if="department" class="flex items-center gap-2 mt-1">
         <v-icon class="text-[#4e7397]" size="16">mdi-office-building-marker
         </v-icon>
@@ -68,11 +70,12 @@
         <v-icon class="text-[#4e7397]" size="16">mdi-map-marker</v-icon>
         <p class="text-[#4e7397] text-sm">{{ location }}</p>
       </div>
-    </div>
+    
 
     <!-- Description -->
-    <div class="col-span-2 px-[56px] pb-6 relative" v-if="description">
-      <p class="text-[#0e141b] text-sm">{{ description }}</p>
+    <div class="col-span-2 px-6 pb-6 relative" v-if="description">
+      <p v-for="(line, index) in description.split('\n')" :key="index" class="text-[#0e141b] text-sm"><v-icon class="text-[#4e7397]" size="8">mdi-bullet</v-icon> {{ line }}</p>
+    </div>
     </div>
   </div>
 </template>
