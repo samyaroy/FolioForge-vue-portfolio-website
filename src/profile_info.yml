@@ -118,7 +118,7 @@ experience:
     location: Kolkata, WB
     projects: ["National Platform for Crop Yield Forecasting (NPCYF) — part of the FASAL 2.0 initiative by Mahalanobis National Crop Forecast Centre (MNCFC), MoAFW, GoI"]
     time_period: Oct 2025 - Present
-    description: Contributed 400+ hours to the NPCYF platform focusing on frontend performance optimization (caching), backend API development, feature-flag driven deployments, and automated data ingestion into a MinIO-based data lake.
+    description: ["Contributed to the NPCYF platform by implementing an ARIMAX-based forecasting workflow, optimizing frontend performance with caching, developing backend APIs, enabling feature-flag-driven releases, and automating data ingestion into a MinIO-based data lake."]
   
   # - job_role: Freelance Web Developer
   #   type: Freelance
@@ -138,7 +138,7 @@ experience:
       institution: Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
     location: Kolkata, WB
     time_period: Feb 2025 to Oct 2025
-    description: Dedicated 700+ hours to the FASAL 2.0 project, working across agricultural data acquisition, preprocessing, and frontend web application development. Gained hands-on experience building data-driven interfaces and supporting large-scale forecasting workflows under an production environment.
+    description: ["Dedicated 700+ hours to the FASAL 2.0 project, working across agricultural data acquisition, preprocessing, and frontend web application development. Gained hands-on experience building data-driven interfaces and supporting large-scale forecasting workflows under an production environment."]
     cred_link: '#'
 
 certifications:
