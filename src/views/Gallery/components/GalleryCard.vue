@@ -34,7 +34,7 @@
           <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
             {{ platformLabel }}
           </p>
-          <p class="mt-2 text-sm font-semibold leading-5 text-base_black">
+          <p class="mt-2 text-sm font-semibold leading-4 text-base_black">
             {{ item.title }}
           </p>
         </div>
@@ -51,7 +51,7 @@
         </span>
       </div>
 
-      <h2 class="overflow-hidden font-serif text-2xl font-bold leading-tight text-base_black [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
+      <h2 class="overflow-hidden font-serif text-xl font-bold leading-tight text-base_black [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
         {{ item.title }}
       </h2>
       <p class="overflow-hidden text-sm leading-6 text-slate-500 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
