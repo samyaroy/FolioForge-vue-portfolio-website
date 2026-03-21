@@ -30,17 +30,21 @@ A modern, responsive portfolio website built with Vue.js 3, Vuetify (Material De
 │   ├── SamyabrataRoy2.jpg                         # Primary profile image
 │   ├── googlef62b25008a7b041d.html                # Google Search Console verification file
 │   ├── icons/                                     # Social and platform icons
+│   │   ├── Credly.png                             # Credly icon
 │   │   ├── GS.png                                 # Google Scholar icon
 │   │   ├── Orchid.png                             # Orchid icon
 │   │   └── RG.png                                 # ResearchGate icon
 │   ├── logo/                                      # Institute logo assets
+│   │   ├── CITC.png                               # CITC logo
+│   │   ├── COURSERA.png                           # Coursera logo
 │   │   ├── IDEAS.png                              # IDEAS logo
 │   │   ├── IITM.png                               # IIT Madras logo
+│   │   ├── JHU.png                                # Johns Hopkins University logo
 │   │   ├── MSRKAV.png                             # MSR KAV logo
 │   │   ├── NN.png                                 # NN logo
 │   │   └── SNU.png                                # SNU logo
-│   ├── people/                                    # Public people assets directory
 │   ├── profile-icon.png                           # Profile icon used in cards/links
+│   └── robots.txt                                 # Robots directives for crawlers
 ├── src/                                           # Application source code
 │   ├── App.vue                                    # Root app layout and route-based chrome
 │   ├── assets/                                    # Bundled assets imported by source files
@@ -53,13 +57,18 @@ A modern, responsive portfolio website built with Vue.js 3, Vuetify (Material De
 │   │   │   └── Logos.vue                          # Footer logos strip
 │   │   ├── Header.vue                             # Global navigation header
 │   │   └── SmartLink.vue                          # Smart internal/external link component
+│   ├── config/                                    # Runtime configuration
+│   │   └── featureFlags.js                        # Feature toggles and section visibility
 │   ├── main.js                                    # App bootstrap and plugin setup
 │   ├── metadata/                                  # Metadata-driven assets and mappings
 │   │   ├── hyperlinkMetadata.yml                  # External link metadata map
 │   │   ├── logo/                                  # Metadata logos
 │   │   │   ├── institute/                         # Institute logos for cards/sections
+│   │   │   │   ├── CITC.png                       # CITC logo copy for metadata
+│   │   │   │   ├── COURSERA.png                   # Coursera logo copy for metadata
 │   │   │   │   ├── IDEAS.png                      # IDEAS logo copy for metadata
 │   │   │   │   ├── IITM.png                       # IIT Madras logo copy for metadata
+│   │   │   │   ├── JHU.png                        # Johns Hopkins University logo copy
 │   │   │   │   ├── MSRKAV.png                     # MSR KAV logo copy for metadata
 │   │   │   │   ├── NN.png                         # NN logo copy for metadata
 │   │   │   │   └── SNU.png                        # SNU logo copy for metadata
