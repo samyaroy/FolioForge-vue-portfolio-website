@@ -65,7 +65,7 @@ const tagAliases = new Map([
 ])
 const activeFilters = ref([])
 const viewMode = ref('grid')
-const initialVisibleCount = 5
+const initialVisibleCount = 6
 const visibleCount = ref(initialVisibleCount)
 
 const viewOptions = Object.freeze([
@@ -118,7 +118,7 @@ watch(filterOptions, (nextOptions) => {
 }, { immediate: true })
 
 function loadMore() {
-  visibleCount.value += 5
+  visibleCount.value += 6
 }
 
 function normalizeGalleryItems(items) {

@@ -38,7 +38,7 @@
         {{ item.title }}
       </h2>
       <p class="overflow-hidden text-sm leading-6 text-slate-500 [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
-        {{ item.caption }}
+        <CaptionContent :text="item.caption" />
       </p>
 
       <ul v-if="visibleTags.length" class="flex flex-wrap gap-2" aria-label="Gallery item tags">
@@ -62,6 +62,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
+import CaptionContent from '@/components/CaptionContent.vue'
 import galleryFallbackSample from '../assets/gallery-fallback-sample.svg'
 import CardAction from './GalleryCardAction.vue'
 

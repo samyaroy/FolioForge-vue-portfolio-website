@@ -4,7 +4,7 @@
       <h1 class="text-xl font-bold leading-tight tracking-tight text-base_black md:text-5xl">Career Unlocks</h1>
 
       <p class="text-base leading-8 text-slate-500 md:text-lg">
-        A curated timeline of professional milestones, architectural explorations, and industry dialogues, translated from the Stitch concept into a static-first portfolio gallery with local data and graceful social link handling.
+        A curated timeline of my career highlights, showcasing key milestones, achievements, and memorable moments that have shaped my professional journey.
       </p>
     </div>
 

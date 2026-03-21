@@ -1,4 +1,9 @@
 # Gallery content is rendered from this file only.
+# Caption helpers:
+# - [[Visible Text|Institute]]
+# - [[Visible Text|Exact Metadata Name|Person]]
+# - **bold**
+# - *italic*
 
 items:
   # - id: instagram-01
@@ -11,15 +16,23 @@ items:
 
   - id: new_role-01
     title: Joined IDEAS-TIH at ISI Kolkata as Associate Software Developer
-    caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.
+    caption: 
     type: gallery
     date: 2025-10-21
     tags: ["New Roles"]
     featured: true
 
+  - id: new_role-02
+    title: Joined IDEAS-TIH at ISI Kolkata as Student Intern
+    caption: I joined my first offline internship at IDEAS-TIH, ISI Kolkata. I am super excited to learn and contribute to real-world projects at IDEAS-TIH.
+    type: gallery
+    date: 2025-02-18
+    tags: ["New Roles", "Internships"]
+    featured: true
+
   - id: academic_milestone-01
     title: Got my first Degree!
-    caption: At 9th Graduation Ceremony of SNU, I received my B.Sc degree in Stattistics. Kinda proud kinda stressed about the future.
+    caption: At 9th Graduation Ceremony of SNU, I received my **B.Sc degree in Stattistics**. Kinda proud kinda stressed about the future.
     type: linkedin
     date: 2026-02-24
     tags: ["Academic Milestones"]
@@ -28,7 +41,7 @@ items:
 
   - id: academic_milestone-02
     title: Got my article published at SXC!
-    caption: My article 'Precision Without Understanding Uncertainty Is an Illusion of Control' got pushlished at the Gradient (Vol I), annual magazine of the Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata.
+    caption: My article **'Precision Without Understanding Uncertainty Is an Illusion of Control'** got pushlished at the *Gradient (Vol I)*, annual magazine of the **Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata**.
     type: linkedin
     date: 2026-02-17
     tags: [Articles, "New Publications"]
@@ -36,7 +49,7 @@ items:
 
   - id: guest_event-01
     title: Hosted guest event on Federated Learning at IITM
-    caption: "Visual hierarchy keeps teaching me the same lesson as statistics: structure matters most when it disappears into clarity."
+    caption: As the admin of **Nilgiri House's Statistics Community**, I had the priviledge to host [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was an greately insightful session for all of us.
     type: YouTube
     alt: Abstract structural lines against a blue sky with editorial framing
     date: 2026-02-05
@@ -59,15 +72,14 @@ items:
   #   tags: [Teaching, Mentoring]
   - id: workshop-05 
     title: Visited IITM to attend 5th International Conference on Security and Privacy
-    caption: A one month journey of roller coaster learning came to an end at IIT Ropar. enjoyed every minute of it and surely gonna miss those early morning lectures and late night jamming sessions.
-    type: linkedin
-    date: 2025-06-10
+    caption: An overwhelming experience for me to attend ISEA ISAP 2026. Got to talk and learn from the best of the bests.
+    type: gallery
+    date: 2026-01-18
     tags: ["Conferences", "Workshops"]
-    externalUrl:
 
   - id: workshop-04
     title: Attended MAD 1 and MAD 2 bootcamps at IITM and secured S!
-    caption: A one month journey of roller coaster learning came to an end at IIT Ropar. enjoyed every minute of it and surely gonna miss those early morning lectures and late night jamming sessions.
+    caption: Efforts paid off! I secured S grade in both MAD 1 and MAD 2 projects at IITM BS Degree. All credit goes to those late night debugging at CCD and the amazing Rohit sir.
     type: linkedin
     date: 2025-06-10
     tags: [Workshops, Bootcamps]
@@ -75,7 +87,7 @@ items:
 
   - id: workshop-03
     title: Attended Nation Workworkshop on Cybersecurity and Blockchain at IIIT Hyderabad
-    caption: A one month journey of roller coaster learning came to an end at IIT Ropar. enjoyed every minute of it and surely gonna miss those early morning lectures and late night jamming sessions.
+    caption: Attended a 3 day workshop on Cybersecurity and Blockchain at IIIT Hyderabad. It was an amazing experience to learn about the latest developments in this field and to interact with experts from academia and industry.
     type: gallery
     date: 2025-03-01
     tags: [Workshops]
@@ -90,7 +102,7 @@ items:
 
   - id: workshop-01
     title: Attended a Social Computing workshop at IIITH
-    caption: Am amazing day attending prof. Punarangan kumarguru sir's workshop on at IIIT Hyderabad. I got to learn about the latest research and developments in this field, and I am excited to apply this knowledge in my future work.
+    caption: Am amazing day attending [[P.K. Sir|Prof. Ponnurangam Kumaraguru|Person]]'s workshop on at **IIIT Hyderabad**. I got to learn about the latest research and developments in this field, and I am excited to apply this knowledge in my future work.
     type: instagram
     date: 2023-02-04
     tags: [Workshops]
@@ -98,7 +110,7 @@ items:
 
   - id: tech_fest-04
     title: "Visited a IIT Delhi Tech Fest: Tryst"
-    caption: Online degree came offline for a day to meet the students of IITM BS program at Kolkata. Subhajit Sir (Instructor, IITM BS) joined us too.
+    caption: 
     type: gallery
     date: 2023-03-10
     tags: ["TechFest"]
@@ -113,7 +125,7 @@ items:
 
   - id: tech_fest-01
     title: "Visited a IIT for the first time: IIT KGP Tech Fest"
-    caption: Online degree came offline for a day to meet the students of IITM BS program at Kolkata. Subhajit Sir (Instructor, IITM BS) joined us too.
+    caption: 
     type: gallery
     date: 2023-01-14
     tags: ["TechFest"]
