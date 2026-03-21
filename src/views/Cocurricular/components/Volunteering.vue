@@ -36,7 +36,7 @@
       class="flex items-start justify-between mb-2"
     >
       <p class="text-gray-600">
-        {{ f['sub-field'] }}
+        {{ f.sub_field }}
       </p>
 
       <div class="text-sm text-gray-500 flex flex-col items-end">

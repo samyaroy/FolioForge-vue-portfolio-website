@@ -51,13 +51,13 @@
                             </a>
                         </p>
 
-                        <p v-if="project.colaborators && project.colaborators.length"
+                        <p v-if="project.collaborators && project.collaborators.length"
                             class="text-sm text-gray-600 mb-3 flex items-center gap-1">
                             <v-icon size="16">mdi-account-supervisor</v-icon>
-                            Colaborators:
-                            <template v-for="(colab, i) in project.colaborators.split(',')" :key="colab">
+                            Collaborators:
+                            <template v-for="(colab, i) in project.collaborators.split(',')" :key="colab">
                                 <SmartLink :type="'Person'" :text="colab.trim()" />
-                                <span v-if="i < project.colaborators.split(',').length - 1">
+                                <span v-if="i < project.collaborators.split(',').length - 1">
                                     ,
                                 </span>
                             </template>

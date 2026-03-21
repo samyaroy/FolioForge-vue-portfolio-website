@@ -132,7 +132,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ORCID iD</p>
-                <a :href="orchis_id" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ORCID iD Profile</a>
+                <a :href="orcid_id" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">ORCID iD Profile</a>
               </div>
             </div>
           </div>
@@ -160,7 +160,7 @@ const githubUsername = github ? github.split('/').filter(Boolean).pop() : null
 const github2Username = github2 ? github2.split('/').filter(Boolean).pop() : null
 const linkedIn = socials.linkedin
 const twitter = socials.twitter
-const orchis_id = socials.orchis_id
+const orcid_id = socials.orcid_id
 const researchgate = socials.researchgate
 const google_scholar = socials.google_scholar
 </script>

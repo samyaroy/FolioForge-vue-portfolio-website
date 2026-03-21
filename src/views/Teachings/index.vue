@@ -37,17 +37,17 @@
       <div class="max-w-6xl mx-auto">
         <CoursesTaughtTab
           v-if="showCoursesTaughtTab && activeTab === 'courses'"
-          :courses="coursesTaught"
+          :courses="courses_taught"
         />
 
         <ProjectsMentoredTab
           v-if="showProjectsMentoredTab && activeTab === 'projects'"
-          :projects="projectsMentored"
+          :projects="projects_mentored"
         />
 
         <OtherTeachingsTab
           v-if="showOtherTeachingsTab && activeTab === 'others'"
-          :items="otherTeachings"
+          :items="other_teachings"
         />
       </div>
     </div>
@@ -82,9 +82,9 @@ const activeTab = ref(tabs.value[0]?.id || null)
 
 // Data from config
 const {
-  coursesTaught,
-  projectsMentored,
-  otherTeachings
+  courses_taught,
+  projects_mentored,
+  other_teachings
 } = config
 
 watch(tabs, (nextTabs) => {
