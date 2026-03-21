@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '@/views/Home/index.vue'
-import Gallery from '@/views/Gallery/Index.vue'
+import Gallery from '@/views/Gallery/index.vue'
 import ProjectPublications from '@/views/ProjectsPublications/index.vue'
 import OngoingProjects from '@/views/OngoingProjects/index.vue'
 import Cocurricular from '@/views/Cocurricular/index.vue'
