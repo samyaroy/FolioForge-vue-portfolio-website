@@ -16,7 +16,7 @@
         class="border-b-2 border-primary bg-transparent px-8 py-4 text-xl font-bold text-primary transition-colors duration-200 hover:bg-sky-50"
         @click="$emit('loadMore')"
       >
-        Load More Entries
+        see more
       </button>
     </div>
   </section>

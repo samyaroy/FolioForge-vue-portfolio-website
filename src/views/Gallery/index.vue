@@ -59,6 +59,9 @@ const configuredTagIdLookup = new Map(
 const tagAliases = new Map([
   ['teitter', 'twitter'],
   ['x', 'twitter'],
+  ['new role', 'newrole'],
+  ['new roles', 'newrole'],
+  ['newroles', 'newrole'],
 ])
 const activeFilters = ref([])
 const viewMode = ref('grid')
@@ -94,7 +97,7 @@ const filteredItems = computed(() => {
   if (!activeFilters.value.length) return sortedItems.value
 
   return sortedItems.value.filter(item => (
-    Array.isArray(item.tags) && activeFilters.value.every(filter => item.tags.includes(filter))
+    Array.isArray(item.filterTags) && activeFilters.value.every(filter => item.filterTags.includes(filter))
   ))
 })
 
@@ -115,7 +118,7 @@ watch(filterOptions, (nextOptions) => {
 }, { immediate: true })
 
 function loadMore() {
-  visibleCount.value += 3
+  visibleCount.value += 5
 }
 
 function normalizeGalleryItems(items) {
@@ -123,6 +126,7 @@ function normalizeGalleryItems(items) {
 
   return items.map((item, index) => {
     const tags = normalizeItemTags(item)
+    const filterTags = normalizeItemFilterTags(item)
     const category = resolveItemCategory(item, tags)
     const nextCount = (categoryCounts.get(category) || 0) + 1
     categoryCounts.set(category, nextCount)
@@ -134,6 +138,7 @@ function normalizeGalleryItems(items) {
       id,
       category,
       tags,
+      filterTags,
       image: resolveItemImage(id),
       originalIndex: index,
     }
@@ -143,10 +148,20 @@ function normalizeGalleryItems(items) {
 function normalizeItemTags(item) {
   const rawTags = Array.isArray(item?.tags)
     ? item.tags
+      .map(normalizeDisplayTag)
+      .filter(Boolean)
+    : []
+
+  return dedupeTags(rawTags)
+}
+
+function normalizeItemFilterTags(item) {
+  const rawTags = Array.isArray(item?.tags)
+    ? item.tags
       .map(resolveConfiguredTagId)
       .filter(Boolean)
     : []
-  const normalizedTags = [...new Set(rawTags)]
+  const normalizedTags = dedupeTags(rawTags)
 
   if (item?.featured && !hasTag(normalizedTags, 'featured')) {
     normalizedTags.unshift('Featured')
@@ -214,6 +229,23 @@ function resolveConfiguredTagId(tag) {
   const resolvedTagKey = tagAliases.get(normalizedTagKey) || normalizedTagKey
 
   return configuredTagIdLookup.get(resolvedTagKey) || ''
+}
+
+function normalizeDisplayTag(tag) {
+  return typeof tag === 'string' ? tag.trim() : ''
+}
+
+function dedupeTags(tags) {
+  const seenTags = new Set()
+
+  return tags.filter((tag) => {
+    const normalizedTag = normalizeTagKey(tag)
+
+    if (!normalizedTag || seenTags.has(normalizedTag)) return false
+
+    seenTags.add(normalizedTag)
+    return true
+  })
 }
 
 function normalizeTagKey(value) {

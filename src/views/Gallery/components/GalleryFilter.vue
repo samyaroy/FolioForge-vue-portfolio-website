@@ -21,7 +21,7 @@
 
       <div
         v-if="isOpen"
-        class="mt-3 w-[19rem] rounded-[24px] border border-white/70 bg-white/95 p-4 shadow-xl backdrop-blur-md"
+        class="absolute right-0 top-full z-40 mt-3 w-[min(19rem,calc(100vw-2rem))] rounded-[24px] border border-white/70 bg-white/85 p-4 shadow-xl backdrop-blur-md"
         role="dialog"
         aria-label="Gallery filters"
       >
