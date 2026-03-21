@@ -1,0 +1,57 @@
+# Gallery content is rendered from this file only.
+
+items:
+  - id: instagram-01
+    title: Studio Light
+    caption: A calmer workspace has been helping me tighten the loop between design direction, implementation, and review.
+    type: instagram
+    date: 2026-02-12
+    tags: [Design, Instagram]
+    externalUrl: https://www.instagram.com/
+
+  - id: academic_milestone-01
+    title: Got my first Degree!
+    caption: At 9th Graduation Ceremony of SNU, I received my B.Sc degree in Stattistics. Kinda proud kinda stressed about the future.
+    type: linkedin
+    date: 2026-02-24
+    tags: [LinkedIn, AcademicMileStones]
+    externalUrl: https://www.linkedin.com/posts/samyabrata23_last-monday-23rd-february-i-received-my-activity-7432903965090070528-izVx?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
+
+  - id: academic_milestone-02
+    title: Got my article published at SXC!
+    caption: My article 'Precision Without Understanding Uncertainty Is an Illusion of Control' got pushlished at the Gradient (Vol I), annual magazine of the Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata.
+    date: 2026-02-17
+    tags: [LinkedIn, Articles]
+    externalUrl: https://www.linkedin.com/posts/pgds-sxccal_gradient-vol-i-activity-7429850321499201536-hpb0?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
+
+  - id: guest_event-01
+    title: Hosted guest event on Federated Learning at IITM
+    caption: "Visual hierarchy keeps teaching me the same lesson as statistics: structure matters most when it disappears into clarity."
+    type: YouTube
+    alt: Abstract structural lines against a blue sky with editorial framing
+    date: 2025-12-09
+    tags: [YouTube, Guest Events]
+    featured: true
+
+  - id: gallery-02
+    title: Making mentoring repeatable
+    caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.
+    type: gallery
+    date: 2025-11-18
+    tags: [Teaching, Mentoring]
+
+  - id: workshop-01
+    title: Attended a Social Computing workshop at IIITH
+    caption: 
+    type: instagram
+    date: 2025-10-02
+    tags: [Instagram, Workshops]
+    externalUrl: https://www.instagram.com/p/CoP0d7gsSFK/?img_index=1&igsh=MWk0bW40NmYwaHM2MA==
+
+  - id: meetup-01
+    title: Hosted a meetup for IITM BS students @ Kolkata
+    caption: Small post-ship snapshots make it easier to see how the portfolio is evolving page by page instead of feeling like one giant rewrite.
+    type: gallery
+    alt: Stylized dashboard, cards, and launch illustration representing a release review
+    date: 2025-08-22
+    tags: [Teaching, Reflection]

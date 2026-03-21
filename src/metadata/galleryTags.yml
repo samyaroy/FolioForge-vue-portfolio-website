@@ -7,14 +7,32 @@
 #     label: display label shown in the filter UI
 
 tags:
+  - id: Featured
+    label: Featured
   - id: Instagram
     label: Instagram
   - id: LinkedIn
     label: LinkedIn
+  - id: YouTube
+    label: YouTube
+  - id: Twitter
+    label: Twitter
+  - id: AcademicMileStones
+    label: " Academic Milestones"
+  - id: NewRole
+    label: "New Role"
   - id: Collaboration
     label: Collaboration
-  - id: Teaching
-    label: Teaching
+  - id: Workshops
+    label: Workshops
+  - id: Bootcamps
+    label: Bootcamps
   - id: Mentoring
     label: Mentoring
-
+  - id: Guest Events
+    label: Guest Events
+  - id: Articles
+    label: Articles
+  - id: NewPublications
+    label: "New Publications"
+  
