@@ -18,35 +18,18 @@
         <v-icon size="12">mdi-star</v-icon>
       </span>
 
-      <img
-        v-if="previewImage"
-        :src="previewImage"
-        :alt="resolvedAlt"
-        class="h-full w-full object-cover"
-        loading="lazy"
-      >
-
-      <div
-        v-else
-        class="flex h-full w-full items-end bg-gradient-to-br from-slate-100 via-white to-sky-50 p-6"
-      >
-        <div class="max-w-[15rem] rounded-2xl border border-white/70 bg-white/85 p-4 shadow-sm backdrop-blur-sm">
-          <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-            {{ platformLabel }}
-          </p>
-          <p class="mt-2 text-sm font-semibold leading-4 text-base_black">
-            {{ item.title }}
-          </p>
-        </div>
-      </div>
+        <img
+          :src="previewImage"
+          :alt="resolvedAlt"
+          class="h-full w-full object-cover"
+          loading="lazy"
+          @error="handleImageError"
+        >
     </div>
 
     <div class="relative flex flex-1 flex-col gap-3 p-6">
       <div class="flex items-center justify-between gap-4">
-        <span class="inline-flex w-fit rounded-full bg-sky-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
-          {{ platformLabel }}
-        </span>
-        <span v-if="formattedDate" class="text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400">
+        <span v-if="formattedDate" class="text-[10px] font-medium uppercase tracking-[0.18em] text-slate-500">
           {{ formattedDate }}
         </span>
       </div>
@@ -78,7 +61,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import galleryFallbackSample from '../assets/gallery-fallback-sample.svg'
 import CardAction from './GalleryCardAction.vue'
 
 const props = defineProps({
@@ -94,27 +78,23 @@ const formatter = new Intl.DateTimeFormat('en', {
   year: 'numeric',
 })
 
-const hiddenCardTags = new Set(['featured', 'instagram', 'linkedin', 'youtube', 'twitter'])
-
 const visibleTags = computed(() => (
   Array.isArray(props.item.tags)
     ? props.item.tags
-      .filter(tag => !hiddenCardTags.has(String(tag).trim().toLowerCase()))
-      .slice(0, 3)
+      .filter(tag => typeof tag === 'string' && tag.trim())
     : []
 ))
-const previewImage = computed(() => props.item.image || '')
-const socialPlatform = computed(() => {
-  if (hasTag(props.item.tags, 'instagram')) return 'Instagram'
-  if (hasTag(props.item.tags, 'linkedin')) return 'LinkedIn'
-  if (hasTag(props.item.tags, 'youtube')) return 'YouTube'
-  if (hasTag(props.item.tags, 'twitter')) return 'Twitter'
-  return ''
-})
+const imageLoadFailed = ref(false)
+const previewImage = computed(() => {
+  const remoteImage = typeof props.item.image === 'string'
+    ? props.item.image.trim()
+    : ''
 
-const platformLabel = computed(() => (
-  socialPlatform.value || toDisplayLabel(props.item.category || props.item.type || 'gallery')
-))
+  return imageLoadFailed.value || !remoteImage
+    ? galleryFallbackSample
+    : remoteImage
+})
+const socialPlatform = computed(() => getPlatformFromType(props.item.type))
 
 const platformIcon = computed(() => {
   if (socialPlatform.value === 'Instagram') return 'mdi-instagram'
@@ -145,6 +125,10 @@ const resolvedAlt = computed(() => (
 
 const formattedDate = computed(() => formatDate(props.item.date))
 
+watch(() => props.item.image, () => {
+  imageLoadFailed.value = false
+})
+
 function formatDate(value) {
   if (!value) return ''
 
@@ -159,22 +143,21 @@ function formatDate(value) {
   return formatter.format(parsedDate)
 }
 
-function hasTag(tags, expectedTag) {
-  const normalizedExpectedTag = expectedTag.trim().toLowerCase()
+function getPlatformFromType(value) {
+  const normalizedType = typeof value === 'string'
+    ? value.trim().toLowerCase()
+    : ''
 
-  return Array.isArray(tags) && tags.some(tag => (
-    typeof tag === 'string' && tag.trim().toLowerCase() === normalizedExpectedTag
-  ))
+  if (normalizedType === 'instagram') return 'Instagram'
+  if (normalizedType === 'linkedin') return 'LinkedIn'
+  if (normalizedType === 'youtube') return 'YouTube'
+  if (normalizedType === 'twitter') return 'Twitter'
+  return ''
 }
 
-function toDisplayLabel(value) {
-  if (typeof value !== 'string' || !value.trim()) return 'Gallery'
+function handleImageError() {
+  if (imageLoadFailed.value) return
 
-  return value
-    .trim()
-    .split(/[-_\s]+/)
-    .filter(Boolean)
-    .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(' ')
+  imageLoadFailed.value = true
 }
 </script>

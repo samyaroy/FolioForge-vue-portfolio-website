@@ -9,30 +9,20 @@
 tags:
   - id: Featured
     label: Featured
-  - id: Instagram
-    label: Instagram
-  - id: LinkedIn
-    label: LinkedIn
-  - id: YouTube
-    label: YouTube
-  - id: Twitter
-    label: Twitter
-  - id: AcademicMileStones
-    label: " Academic Milestones"
-  - id: NewRole
-    label: "New Role"
+  - id: "Academic Milestones"
+    label: "Academic Milestones"
+  - id: "New Roles"
+    label: "New Roles"
   - id: Collaboration
     label: Collaboration
   - id: Workshops
-    label: Workshops
-  - id: Bootcamps
-    label: Bootcamps
+    label: Conferences, Workshops & Bootcamps
   - id: Mentoring
     label: Mentoring
-  - id: Guest Events
+  - id: "Guest Events"
     label: Guest Events
-  - id: Articles
-    label: Articles
-  - id: NewPublications
-    label: "New Publications"
+  - id: "New Publications"
+    label: "New Articles & Publicationss"
+  - id: TechFest
+    label: TechFest
   
