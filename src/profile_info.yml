@@ -143,6 +143,7 @@ experience:
 
 certifications:
   - title: Introduction to Uncertainty Quantification
+    logo: ['JHU','COURSERA']
     issuer:
       institution: Whiting School of Engineering, Johns Hopkins University
       platform: Coursera
@@ -153,6 +154,7 @@ certifications:
     certificate: true  
   
   - title: Diploma in Web Designing (DWD)
+    logo: ['CITC']
     issuer:
       institution: Chandigarh Institute of Technology and Consultancy
       location: Mohali, PB
