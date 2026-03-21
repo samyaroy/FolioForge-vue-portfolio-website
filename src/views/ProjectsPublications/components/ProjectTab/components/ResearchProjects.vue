@@ -78,9 +78,11 @@
                     </div>
 
                     <!-- RIGHT LOGO (12%) -->
-                    <div class="w-full md:w-[12%] flex items-center justify-start md:justify-center mt-4 md:mt-0"> <img
+                    <div class="w-full md:w-[12%] flex flex-col items-start justify-start gap-3 md:items-center mt-4 md:mt-0">
+                        <img
                             v-for="logo in project.logo" :key="logo" :src="getLogoPath(logo)" :alt="logo" :title="logo"
-                            class="max-h-8 md:max-h-16 object-contain opacity-90" />
+                            class="max-h-8 md:max-h-16 object-contain opacity-90"
+                        />
                     </div>
 
                 </div>
@@ -130,7 +132,7 @@ import SmartLink from '@/components/SmartLink.vue'
 
 defineProps({
     projects: {
-        type: Object,
+        type: Array,
         default: () => []
     }
 })
