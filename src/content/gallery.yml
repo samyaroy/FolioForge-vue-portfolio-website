@@ -9,6 +9,13 @@ items:
     tags: [Design, Instagram]
     externalUrl: https://www.instagram.com/
 
+  - id: new_role-01
+    title: Joined IDEAS-TIH at ISI Kolkata as Associate Software Developer
+    caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.
+    type: gallery
+    date: 2025-10-21
+    tags: [NewRoles]
+
   - id: academic_milestone-01
     title: Got my first Degree!
     caption: At 9th Graduation Ceremony of SNU, I received my B.Sc degree in Stattistics. Kinda proud kinda stressed about the future.
@@ -33,12 +40,20 @@ items:
     tags: [YouTube, Guest Events]
     featured: true
 
-  - id: gallery-02
-    title: Making mentoring repeatable
-    caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.
-    type: gallery
-    date: 2025-11-18
-    tags: [Teaching, Mentoring]
+  # - id: gallery-02
+  #   title: Making mentoring repeatable
+  #   caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.
+  #   type: gallery
+  #   date: 2025-11-18
+  #   tags: [Teaching, Mentoring]
+
+  - id: workshop-02
+    title: Completed 1 Month bootcamp at Dept. of CSE, IIT Ropar
+    caption: 
+    type: instagram
+    date: 2025-10-02
+    tags: [Instagram, Workshops]
+    externalUrl: https://www.instagram.com/p/CoP0d7gsSFK/?img_index=1&igsh=MWk0bW40NmYwaHM2MA==
 
   - id: workshop-01
     title: Attended a Social Computing workshop at IIITH
