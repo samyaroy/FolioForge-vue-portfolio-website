@@ -1,5 +1,5 @@
 # config.yml
-lastUpdatedOn: Feb 2026
+last_updated_on: Feb 2026
 
 profile:
   name: Samyabrata Roy
@@ -23,7 +23,7 @@ socials:
   #twitter: https://twitter.com/username
   google_scholar: https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en
   researchgate: https://www.researchgate.net/profile/Samyabrata-Roy?ev=hdr_xprf
-  orchis_id: https://orcid.org/0009-0000-5356-4684
+  orcid_id: https://orcid.org/0009-0000-5356-4684
   credly: https://www.credly.com/users/samyabrata-roy
 
 research_interests:
@@ -33,7 +33,7 @@ research_interests:
   - key: Data_Engineering
   
 
-education: # put your latest education first
+education:
   - type: University
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
@@ -175,7 +175,7 @@ projects:
       title: Assistant Professor
       department: Department of Statistics
       institution: Sister Nivedita University
-    colaborators:
+    collaborators:
     time_period: Jan 2025 - May 2025
     cred_link:
       report: https://drive.google.com/file/d/1xgCwYBV9E-1docFJf7YEld2RyUpEOAUZ/view?usp=drive_link
@@ -193,7 +193,7 @@ projects:
       name: Mr. Debashis Ghosh
       title: Head, Technology Business Development & Incubation
       institution: IDEAS - TIH
-    colaborators: Rishav Kumar banerjee, Saunak Datta
+    collaborators: Rishav Kumar banerjee, Saunak Datta
     time_period: Jul 2024 - Dec 2024
     cred_link:
       report: https://drive.google.com/file/d/1pRxfzda-l3rIbrJZztygDYiXcSL4L3Zc/view?usp=drive_link
@@ -251,8 +251,8 @@ projects:
 articles:
   - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
     publication:
-      Name: Gradient (Vol I) 2026, pp. 59-64
-      Host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
+      name: Gradient (Vol I) 2026, pp. 59-64
+      host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
     field: Statistical Inference, Machine Learning, Uncertainty Quantification
     date: Feb 2026
     link: https://sxccal.edu/magazines
@@ -261,8 +261,8 @@ articles:
 
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
     publication:
-      Name: EPOCHS 2025 (2nd Edition)
-      Host: Wayanad Houses ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
+      name: EPOCHS 2025 (2nd Edition)
+      host: Wayanad Houses ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
     date: Dec 2025
     link: https://epochs.netlify.app/
@@ -296,7 +296,7 @@ ongoing_projects:
   #   affiliation: Own Project
   #   tech_stack: Robust Regression, Machine Learning, R
   #   guide: 
-  #   colaborators: 
+  #   collaborators: 
   #   time_period: 
   #   cred_link:
   #     github: 
@@ -317,7 +317,7 @@ ongoing_projects:
     affiliation: GenAI - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
     tech_stack: ML, Dl
     guide: 
-    colaborators: 
+    collaborators: 
     time_period: Jan 2026 - Present
     cred_link:
       kaggle:
@@ -349,7 +349,7 @@ co_curriculars:
       - role: Teaching Assistant (Revision Sessions)
         organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
         field:
-          - sub-field: 'Course: Statistics I'
+          - sub_field: 'Course: Statistics I'
             time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
         skills: 25+ Students Taught
         cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
@@ -357,7 +357,7 @@ co_curriculars:
       # - role: Teaching Assistant (Project)
       #   organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
       #   field: 
-      #     - sub-field: 'Autumn Internship 2025: Data Science'  
+      #     - sub_field: 'Autumn Internship 2025: Data Science'  
       #       time_period: Sept 2025 - Oct 2025
       #   skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
       #   details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
@@ -487,7 +487,7 @@ attended_conferences:
     date: "January 22-23, 2026" 
     cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
 
-coursesTaught:
+courses_taught:
   - semester: "Spring 2025"
     courses:
       - title: "Introduction to Statistics"
@@ -508,7 +508,7 @@ coursesTaught:
         role: "Instructor"
         students: 80
 
-projectsMentored:
+projects_mentored:
   - semester: "Spring 2026"
     projects:
       - title: "Uncertainty-Aware Liver Cirrhosis Classification under Noisy and Outlier-Rich Clinical Data"
@@ -518,7 +518,7 @@ projectsMentored:
           - name: "AYUSHI MITRA"
           - name: "ANSHUMAN RAY"
           - name: "SONU SHAW"
-        registrationNumber: ""
+        registration_number: ""
         affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
         cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
 
@@ -529,11 +529,11 @@ projectsMentored:
       #     - name: "AYUSHI MITRA"
       #     - name: "ANSHUMAN RAY"
       #     - name: "SONU SHAW"
-      #   registrationNumber: ""
+      #   registration_number: ""
       #   affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
       #   cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
 
-otherTeachings:
+other_teachings:
   - title: "Private Tutor"
     institution: "Codeium Classes"
     link: "https://codeium.xyz/"

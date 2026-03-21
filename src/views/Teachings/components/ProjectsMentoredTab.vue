@@ -51,10 +51,10 @@
                     </span>
                   </p>
 
-                  <p v-if="project.registrationNumber" class="flex items-center">
+                  <p v-if="project.registration_number" class="flex items-center">
                     <v-icon size="16" class="mr-2">mdi-identifier</v-icon>
                     <span class="font-medium">Registration No.:</span>&nbsp;
-                    {{ project.registrationNumber }}
+                    {{ project.registration_number }}
                   </p>
 
                   <p v-if="project.affiliation" class="flex items-center">

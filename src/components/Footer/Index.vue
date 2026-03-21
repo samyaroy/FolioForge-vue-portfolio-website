@@ -177,17 +177,17 @@
           </p>
 
           <p class="text-gray-500 text-sm mt-1">
-            &#9432; Icons by
+            &#9432; Some icons used are made by
             <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
-             <!-- & 
-            <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a> -->
+            ?&
+            <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a>
             from
             <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
           </p>
         </div>
 
         <p class="text-gray-500 text-sm mt-2 md:mt-0">
-          &#10038; Last updated: {{ lastUpdatedOn }}
+          &#10038; Last updated: {{ last_updated_on }}
         </p>
       </div>
     </div>
@@ -204,7 +204,7 @@ export default {
     Logos,
   },
   data() {
-    const { profile, contacts, socials, lastUpdatedOn } = config;
+    const { profile, contacts, socials, last_updated_on } = config;
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
@@ -226,7 +226,7 @@ export default {
       researchgate: socials.researchgate,
       // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
       logos: ['SNU', 'IITM', 'IDEAS'],
-      lastUpdatedOn,
+      last_updated_on: config.last_updated_on,
       showOngoingProjectsLink,
       showInternshipCertificationsLink,
       showWorkshopsAttendedLink,
