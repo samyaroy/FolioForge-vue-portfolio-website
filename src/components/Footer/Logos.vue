@@ -5,7 +5,7 @@
       <img v-for="logo in logos" :key="logo" :src="getLogoPath(logo)" :alt="logo" :title="logo"
         class="h-8 px-2 cursor-pointer transition-transform hover:scale-110" />
     </div>
-    <div class="text-xs text-gray-500 pt-3">* Logos are property of respective institutions</div>
+    <div class="text-xs text-gray-500 pt-3">* All the logos used are property of respective institutions</div>
   </div>
 </template>
 
