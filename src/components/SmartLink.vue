@@ -19,16 +19,22 @@ const props = defineProps<{
     text: string
     type?: string
     href?: string | null
+    lookupText?: string | null
 }>()
 
 const resolvedUrl = computed<string | null>(() => {
-    const candidates = (links as Record<string, LinkItem[]>)[props.type ?? 'Institute']
+    const groups = links as Record<string, LinkItem[]>
+    const requestedType = normalizeValue(props.type ?? 'Institute')
+    const groupKey = Object.keys(groups).find(
+        (candidateKey) => normalizeValue(candidateKey) === requestedType
+    )
+    const candidates = groups[groupKey ?? 'Institute']
+    const lookupValue = normalizeValue(props.lookupText || props.text)
 
-    if (Array.isArray(candidates)) {
+    if (lookupValue && Array.isArray(candidates)) {
         const match = candidates.find(
             (item: LinkItem) =>
-                item.Name?.trim().toLowerCase() ===
-                props.text.trim().toLowerCase()
+                normalizeValue(item.Name) === lookupValue
         )
 
         if (match?.Website) return match.Website
@@ -37,4 +43,10 @@ const resolvedUrl = computed<string | null>(() => {
 
     return props.href || null
 })
+
+function normalizeValue(value?: string | null) {
+    return typeof value === 'string'
+        ? value.trim().toLowerCase()
+        : ''
+}
 </script>
