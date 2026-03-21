@@ -42,6 +42,9 @@
         <router-link :to="{ name: 'Contact' }" class="nav-link" active-class="active-link">
           Contact
         </router-link>
+        <router-link v-if="showGalleryNavLink" to="/gallery" class="nav-link" active-class="active-link">
+          Gallery
+        </router-link>
       </div>
 
       <!-- Hire Me Button -->
@@ -83,6 +86,15 @@
         <nav class="flex flex-col space-y-4">
           <router-link to="/" @click="drawer = false" class="nav-link" active-class="active-link">
             Home
+          </router-link>
+          <router-link
+            v-if="showGalleryNavLink"
+            to="/gallery"
+            @click="drawer = false"
+            class="nav-link"
+            active-class="active-link"
+          >
+            Gallery
           </router-link>
           <router-link
             v-if="showProjectsPublicationsNavLink"
@@ -132,6 +144,10 @@ import { isFeatureEnabled } from '@/config/featureFlags'
 const router = useRouter()
 const drawer = ref(false)
 const { profile, contacts } = config
+
+const showGalleryNavLink = computed(() => (
+  isFeatureEnabled('showGallery') && router.hasRoute('Gallery')
+))
 
 const showTeachingsNavLink = computed(() => (
   isFeatureEnabled('showTeachings', { mode: 'any' }) && router.hasRoute('Teachings')

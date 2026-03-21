@@ -1,0 +1,20 @@
+# Gallery filter tags are defined here so chip order and labels stay separate
+# from the gallery item content in `src/content/gallery.yml`.
+#
+# Schema:
+# tags:
+#   - id: stable tag identifier used in gallery item `tags`
+#     label: display label shown in the filter UI
+
+tags:
+  - id: Instagram
+    label: Instagram
+  - id: LinkedIn
+    label: LinkedIn
+  - id: Collaboration
+    label: Collaboration
+  - id: Teaching
+    label: Teaching
+  - id: Mentoring
+    label: Mentoring
+
