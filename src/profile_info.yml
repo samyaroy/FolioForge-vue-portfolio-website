@@ -41,7 +41,7 @@ education: # put your latest education first
     location: Chennai, TN
     time_period: 2022 - Present
     gpa: Current CGPA - 5.97/10
-    cred_link: https://ds.study.iitm.ac.in/student/22F2001443
+    cred_link: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
 
   - type: University
     degree: Bachelor of Science (BSc)
@@ -90,7 +90,6 @@ internships:
     description: 
     type: Virtual Internship
     cred_link:
-    
 
   - role: Data Science Intern (Autumn 2024)
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
@@ -182,7 +181,6 @@ projects:
       report: https://drive.google.com/file/d/1xgCwYBV9E-1docFJf7YEld2RyUpEOAUZ/view?usp=drive_link
       github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
       researchgate: researchgate.net/publication/391766786_Predicting_Wine_Quality_A_Comparison_of_Linear_Regression_Techniques_on_a_Multicollinear_and_Outlier-Affected_Dataset?_sg%5B0%5D=KMAA__Av1JZU5QW09RmRJh5HSiCHSKQOWtY16iDgz1a-BkmBHVSbh1ayNVa1l4i3mM_SCPfifAd86eWtOl8VXOuygtU2Crm3VRrYc31j.UhBIrCOgdI1HgmgNG6U-yPJyEd7STApaAvphsDR8B4MUGmog_jFi6eOzgU1CxGC8KFeV_7ktVVLz-Thb6YXr_Q&_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19
-    
 
   - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
     description: Conducted a comprehensive survey among college students (aged 18-25) in Kolkata to understand their career preferences. Utilized multivariate inference to identify key factors influencing career choices and segment students based on their preferences.
@@ -201,7 +199,6 @@ projects:
       report: https://drive.google.com/file/d/1pRxfzda-l3rIbrJZztygDYiXcSL4L3Zc/view?usp=drive_link
       github: https://github.com/samyaroy/Multivariate_Analysis_of_Career_Preference_in_Kolkata
     
-
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
     type: "Technical Project"
@@ -233,7 +230,6 @@ projects:
   #   time_period: 
   #   cred_link:
   #     github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
-    
 
   # - title: Hand Raise Detector
   #   description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams.
@@ -378,8 +374,6 @@ attended_fdps:
     mode: "Online"
     cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
 
-
-
 attended_workshops:
   - title: "Systems for LLMs"
     institution:
@@ -493,31 +487,31 @@ attended_conferences:
     date: "January 22-23, 2026" 
     cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
 
-# coursesTaught:
-#   - semester: "Spring 2025"
-#     courses:
-#       - title: "Introduction to Statistics"
-#         institution: "Sister Nivedita University"
-#         role: "Teaching Assistant"
-#         collaborators:
-#           - "Prof. XYZ"
-#         students: 120
-#       - title: "Data Analysis with Python"
-#         institution: "IIT Madras"
-#         role: "Guest Instructor"
-#         students: 60
+coursesTaught:
+  - semester: "Spring 2025"
+    courses:
+      - title: "Introduction to Statistics"
+        institution: "Sister Nivedita University"
+        role: "Teaching Assistant"
+        collaborators:
+          - "Prof. XYZ"
+        students: 120
+      - title: "Data Analysis with Python"
+        institution: "IIT Madras"
+        role: "Guest Instructor"
+        students: 60
 
-#   - semester: "Autumn 2024"
-#     courses:
-#       - title: "Probability Theory"
-#         institution: "Sister Nivedita University"
-#         role: "Instructor"
-#         students: 80
+  - semester: "Autumn 2024"
+    courses:
+      - title: "Probability Theory"
+        institution: "Sister Nivedita University"
+        role: "Instructor"
+        students: 80
 
 projectsMentored:
   - semester: "Spring 2026"
     projects:
-      - title: "Uncertainty-Aware Liver Cirrhosis Prediction under Noisy and Outlier-Rich Pathological Data"
+      - title: "Uncertainty-Aware Liver Cirrhosis Classification under Noisy and Outlier-Rich Clinical Data"
         course: "Spring Internship Program on Data Science 2026"
         students:
           - name: "SAPTARSHI DEY"
