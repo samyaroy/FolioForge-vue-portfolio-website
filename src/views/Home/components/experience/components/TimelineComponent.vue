@@ -74,7 +74,7 @@
 
     <!-- Description -->
     <div class="col-span-2 px-6 pb-6 relative" v-if="description">
-      <p v-for="(line, index) in description.split('\n')" :key="index" class="text-[#0e141b] text-sm"><v-icon class="text-[#4e7397]" size="8">mdi-bullet</v-icon> {{ line }}</p>
+      <p v-for="(line, index) in description" :key="index" class="text-[#0e141b] text-sm"><v-icon class="text-[#4e7397]" size="16">mdi-circle-small</v-icon> {{ line }}</p>
     </div>
     </div>
   </div>
