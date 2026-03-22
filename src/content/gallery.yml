@@ -106,6 +106,12 @@ items:
     date: 2024-01-15
     tags: [Workshop]
 
+  - id: event-01
+    title: Represented IITM BS Degrre at Netaji Indoor Stadium Kolata
+    caption: GOt oppertunity to represent the IITM BS Degree program at Education Interface 2023, Kolkata. Grateful to [[Shib Sankar Das|https://www.linkedin.com/in/ssdcet/|Link]] sir for giving me this opportunity.
+    date: 2023-05-28
+    tags: [Event]
+
   - id: workshop-08
     title: Attended Google Cloud Community Day Kolkata
     caption: Attended the Google Cloud Community Day event in Kolkata. It was an excellent opportunity to learn about the latest developments in cloud computing and interact with experts from the industry. The place where I got introduced to Flutter and Firebase for the first time.
