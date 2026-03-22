@@ -152,6 +152,17 @@ certifications:
     cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/preview'
     certificate: true  
   
+  - title: Introduction to Programming in C
+    logo: ['NPTEL']
+    issuer:
+      institution: Indian Institute of Technology Kanpur
+      platform: NPTEL
+    instructor: 
+    date: 
+    duration: 8 weeks
+    cred_link: 'https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview'
+    certificate: true
+
   - title: Diploma in Web Designing (DWD)
     logo: ['CITC']
     issuer:

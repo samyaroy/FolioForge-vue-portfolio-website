@@ -4,9 +4,10 @@
       v-if="segment.kind === 'link'"
       :text="segment.text"
       :type="segment.linkType"
+      :href="segment.href"
       :lookup-text="segment.lookupText"
     />
-    <strong v-else-if="segment.kind === 'bold'" class="font-semibold text-slate-700">
+    <strong v-else-if="segment.kind === 'bold'" class="font-semibold text-slate-500">
       {{ segment.text }}
     </strong>
     <em v-else-if="segment.kind === 'italic'" class="italic">
@@ -80,6 +81,16 @@ function parseLinkSegment(rawValue, fallbackText) {
   }
 
   if (parts.length >= 3) {
+    if (parts[2].toLowerCase() === 'link') {
+      return {
+        kind: 'link',
+        text: parts[0],
+        href: parts[1],
+        lookupText: '',
+        linkType: parts[2],
+      }
+    }
+
     return {
       kind: 'link',
       text: parts[0],
