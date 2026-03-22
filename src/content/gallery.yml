@@ -46,7 +46,7 @@ items:
     caption: 
     date: 2026-01-23
     tags: [Confclave, Workshop]
-    locationL IIT Hyderabad
+    location: IIT Hyderabad
 
   - id: workshop-05
     title: Visited IITM to attend the 5th International Conference on Security and Privacy
