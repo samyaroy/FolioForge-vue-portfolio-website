@@ -3,20 +3,21 @@
     <div class="container mx-auto flex flex-col gap-8 px-4 py-10">
       <GalleryHero />
 
-      <div class="relative z-30 -mt-2 flex justify-end">
-        <GalleryFilter
-          v-if="filterOptions.length > 1"
-          :options="filterOptions.slice(1)"
-          :selected-filters="activeFilters"
-          @update:selected-filters="activeFilters = $event"
-        />
+      <div class="relative z-30 -my-4 ml-auto flex w-full items-center">
+        <div class="w-[95%]">
+          <hr class="border-slate-300">
+        </div>
+        <div class="flex w-[05%] justify-end">
+          <GalleryFilter
+            v-if="filterOptions.length > 1"
+            :options="filterOptions.slice(1)"
+            :selected-filters="activeFilters"
+            @update:selected-filters="activeFilters = $event"
+          />
+        </div>
       </div>
 
-      <GalleryGrid
-        :items="visibleItems"
-        :can-load-more="canLoadMore"
-        @load-more="loadMore"
-      />
+      <GalleryGrid :items="visibleItems" :can-load-more="canLoadMore" @load-more="loadMore" />
     </div>
   </section>
 </template>
