@@ -36,11 +36,20 @@ Institute:
     - Name: Indian Institute of Technology Madras
       Website: https://study.iitm.ac.in/ds/
 
+    - Name: University of Engineering and Management
+      Website: https://uem.edu.in/
+
+    - Name: Indian Institute of Technology Kanpur
+      Website: https://www.iitk.ac.in/
+
     - Name: Sister Nivedita University
       Website: https://snuniv.ac.in/
 
     - Name: Coursera
       Website: https://www.coursera.org/
+
+    - Name: NPTEL
+      Website: https://nptel.ac.in/
 
     - Name: Chandigarh Institute of Technology and Consultancy
       Website: https://citcchandigarh.com/
@@ -56,6 +65,9 @@ Institute:
  
     - Name: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
       Website: https://sxccal.edu/postgraduate-department-of-data-science
+
+    - Name: Information Security Education and Awareness
+      Website: https://isea.gov.in/
 
 Person:
 
@@ -79,3 +91,9 @@ Person:
 
     - Name: Mr. Debashis Ghosh
       Link: https://www.linkedin.com/in/debashis-ghosh-b5a756b/
+    
+    - Name: Prof. Andrew Thangaraj
+      Link: https://www.ee.iitm.ac.in/andrew/
+
+    - Name: prof. Sheweta Agarwal
+      Link: https://www.cse.iitm.ac.in/~shwetaag/

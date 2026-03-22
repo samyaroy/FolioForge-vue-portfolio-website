@@ -9,20 +9,20 @@
 tags:
   - id: Featured
     label: Featured
-  - id: "Academic Milestones"
-    label: "Academic Milestones"
-  - id: "New Roles"
-    label: "New Roles"
+  - id: "Academic Milestone"
+    label: "Academic Milestone"
+  - id: "New Role"
+    label: "New Role"
   - id: Collaboration
     label: Collaboration
-  - id: Workshops
-    label: Conferences, Workshops & Bootcamps
+  - id: Workshop
+    label: "Conference, Workshop & Bootcamp"
   - id: Mentoring
     label: Mentoring
-  - id: "Guest Events"
-    label: Guest Events
-  - id: "New Publications"
-    label: "New Articles & Publicationss"
+  - id: "Guest Event"
+    label: "Guest Event"
+  - id: "New Publication"
+    label: "New Article & Publication"
   - id: TechFest
     label: TechFest
   

@@ -1,11 +1,7 @@
 <template>
   <section class="min-h-screen bg-slate-50">
     <div class="container mx-auto flex flex-col gap-8 px-4 py-10">
-      <GalleryHero
-        :view-mode="viewMode"
-        :view-options="viewOptions"
-        @update:view-mode="viewMode = $event"
-      />
+      <GalleryHero />
 
       <div class="relative z-30 -mt-2 flex justify-end">
         <GalleryFilter
@@ -17,14 +13,6 @@
       </div>
 
       <GalleryGrid
-        v-if="viewMode === 'grid'"
-        :items="visibleItems"
-        :can-load-more="canLoadMore"
-        @load-more="loadMore"
-      />
-
-      <GalleryScrolls
-        v-else
         :items="visibleItems"
         :can-load-more="canLoadMore"
         @load-more="loadMore"
@@ -40,7 +28,6 @@ import galleryTagMetadata from '@/metadata/galleryTags.yml'
 import GalleryFilter from './components/GalleryFilter.vue'
 import GalleryGrid from './components/GalleryGrid.vue'
 import GalleryHero from './components/GalleryHero.vue'
-import GalleryScrolls from './components/GalleryScrolls.vue'
 
 defineOptions({
   name: 'GalleryPage',
@@ -59,19 +46,22 @@ const configuredTagIdLookup = new Map(
 const tagAliases = new Map([
   ['teitter', 'twitter'],
   ['x', 'twitter'],
-  ['new role', 'newrole'],
-  ['new roles', 'newrole'],
-  ['newroles', 'newrole'],
+  ['new role', 'new role'],
+  ['new roles', 'new role'],
+  ['newroles', 'new role'],
+  ['academic milestones', 'academic milestone'],
+  ['guest events', 'guest event'],
+  ['new publications', 'new publication'],
+  ['articles', 'article'],
+  ['conferences', 'conference'],
+  ['workshops', 'workshop'],
+  ['bootcamps', 'bootcamp'],
+  ['internships', 'internship'],
+  ['meetups', 'meetup'],
 ])
 const activeFilters = ref([])
-const viewMode = ref('grid')
 const initialVisibleCount = 6
 const visibleCount = ref(initialVisibleCount)
-
-const viewOptions = Object.freeze([
-  { id: 'grid', label: 'Grid', icon: 'mdi-view-grid-outline' },
-  { id: 'scrolls', label: 'Scrolls', icon: 'mdi-book-open-page-variant-outline' },
-])
 
 const normalizedItems = computed(() => normalizeGalleryItems(rawItems))
 
@@ -97,7 +87,7 @@ const filteredItems = computed(() => {
   if (!activeFilters.value.length) return sortedItems.value
 
   return sortedItems.value.filter(item => (
-    Array.isArray(item.filterTags) && activeFilters.value.every(filter => item.filterTags.includes(filter))
+    Array.isArray(item.filterTags) && activeFilters.value.some(filter => item.filterTags.includes(filter))
   ))
 })
 

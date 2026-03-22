@@ -1,61 +1,38 @@
 <template>
   <section class="relative z-30">
     <div ref="menuRoot" class="relative flex flex-col items-end">
-      <button
-        type="button"
-        class="relative inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/60 bg-white/50 text-slate-600 shadow-lg backdrop-blur-md transition-all duration-200 hover:border-primary/60 hover:bg-white/70 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-        :aria-expanded="isOpen"
-        aria-haspopup="dialog"
-        aria-label="Open gallery filters"
-        @click="toggleMenu"
-      >
-        <v-icon size="20">{{ hasSelectedFilters ? 'mdi-filter-check-outline' : 'mdi-filter-variant' }}</v-icon>
+      <button type="button"
+        class="relative inline-flex h-10 w-8 items-center justify-center rounded-full border border-white/60 bg-white/50 text-slate-600 shadow-lg backdrop-blur-md transition-all duration-200 hover:border-primary/60 hover:bg-white/70 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+        :aria-expanded="isOpen" aria-haspopup="dialog" aria-label="Open gallery filters" @click="toggleMenu">
+        <v-icon size="16">{{ hasSelectedFilters ? 'mdi-filter-check-outline' : 'mdi-filter-variant' }}</v-icon>
 
-        <span
-          v-if="selectedFilters.length"
-          class="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white"
-        >
+        <span v-if="selectedFilters.length"
+          class="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">
           {{ selectedFilters.length }}
         </span>
       </button>
 
-      <div
-        v-if="isOpen"
-        class="absolute right-0 top-full z-40 mt-3 w-[min(19rem,calc(100vw-2rem))] rounded-[24px] border border-white/70 bg-white/85 p-4 shadow-xl backdrop-blur-md"
-        role="dialog"
-        aria-label="Gallery filters"
-      >
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">Filter gallery</p>
-            <p class="mt-2 text-sm leading-6 text-slate-500">
-              Select one or more tags. Items must match all selected tags.
-            </p>
-          </div>
+      <div v-if="isOpen"
+        class="absolute right-0 top-full z-40 mt-2 w-[min(19rem,calc(100vw-2rem))] rounded-[12px] border border-white/70 bg-white/85 p-4 shadow-xl backdrop-blur-md"
+        role="dialog" aria-label="Gallery filters">
+        <div class="flex items-start justify-between gap-2">
+          <p class="text-xs font-bold uppercase tracking-[0.22em] text-slate-400">
+            Filter gallery
+          </p>
 
-          <button
-            v-if="selectedFilters.length"
-            type="button"
-            class="text-xs font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-200 hover:text-primary-700"
-            @click="clearFilters"
-          >
+          <button type="button"
+            class="min-w-[3.5rem] text-right text-xs font-semibold uppercase tracking-[0.18em] text-primary transition-colors duration-200 hover:text-primary-700 -mt-1"
+            :class="selectedFilters.length ? 'visible' : 'invisible pointer-events-none'" @click="clearFilters">
             Clear
           </button>
         </div>
 
         <div class="mt-4 flex max-h-72 flex-col gap-2 overflow-y-auto pr-1">
-          <label
-            v-for="option in options"
-            :key="option.id"
-            class="flex cursor-pointer items-center gap-3 rounded-2xl border px-4 py-3 transition-all duration-200"
-            :class="isSelected(option.id) ? 'border-primary bg-sky-50 text-primary' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'"
-          >
-            <input
-              type="checkbox"
-              class="h-4 w-4 accent-primary"
-              :checked="isSelected(option.id)"
-              @change="toggleFilter(option.id)"
-            >
+          <label v-for="option in options" :key="option.id"
+            class="flex cursor-pointer items-center gap-3 rounded-[12px] border px-4 py-3 transition-all duration-200"
+            :class="isSelected(option.id) ? 'border-primary bg-sky-50 text-primary' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'">
+            <input type="checkbox" class="h-4 w-4 accent-primary" :checked="isSelected(option.id)"
+              @change="toggleFilter(option.id)">
             <span class="text-sm font-medium leading-5">{{ option.label }}</span>
           </label>
         </div>
