@@ -46,7 +46,7 @@ items:
     caption: 
     date: 2026-01-23
     tags: [Confclave, Workshop]
-    location: IIT Hyderabad
+    location: CSE Dept.,IIT Hyderabad
 
   - id: workshop-05
     title: Visited IITM to attend the 5th International Conference on Security and Privacy
@@ -54,7 +54,7 @@ items:
     type: gallery
     date: 2026-01-18
     tags: [Conference, Workshop]
-    location: IIT Madras
+    location: ICSR, IIT Madras
 
   - id: academic_milestone-03
     title: Got my first-ever article published!
@@ -80,7 +80,7 @@ items:
     date: 2025-06-10
     tags: [Workshop, Bootcamp]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_cogitocode-activity-7368899808171872256-17Wx?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
-    location: IIT Madras
+    location: HSB, IIT Madras
 
   - id: workshop-03
     title: Attended National Workshop on Cybersecurity and Blockchain at IIIT Hyderabad
@@ -97,7 +97,7 @@ items:
     date: 2025-02-18
     tags: ["New Role", Internship]
     featured: true
-    location: ISI Kolakta
+    location: R A Fisher bhawan, ISI Kolkata
 
   - id: workshop-02
     title: Completed a 1-Month Bootcamp at the Dept. of CSE, IIT Ropar
@@ -106,7 +106,7 @@ items:
     date: 2024-08-15
     tags: [Workshop, Bootcamp]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_aivicharanashalabootcamp-iitropar-ai-activity-7217160263765045248-Ano0?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
-    location: IIT Ropar
+    location: CSE Dept.,IIT Ropar
 
   - id: workshop-09
     title: Attended ACM ROCS at IIT Madras
@@ -155,7 +155,7 @@ items:
     date: 2023-02-28
     tags: [Poster Presentation, ScienceDay, "TechFest"]
     externalUrl:
-    location: Sister Nivedita University
+    location: Block A, Sister Nivedita University
 
   - id: workshop-01
     title: Attended a Social Computing Workshop at IIITH

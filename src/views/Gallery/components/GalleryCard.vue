@@ -2,8 +2,8 @@
   <article
     class="group relative flex h-full min-h-[30rem] flex-col overflow-hidden rounded-[12px] bg-white shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)] ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-10px_rgba(14,20,27,0.14)]"
     :class="{ 'ring-primary/20 shadow-[0_18px_42px_-12px_rgba(24,128,230,0.2)]': item.featured }">
-    <div class="flex items-center justify-between gap-4 px-4 pt-4">
-      <div class="flex min-w-0 items-center gap-2">
+    <div class="flex items-start justify-between gap-4 px-4 pt-4">
+      <div class="flex min-w-0 w-2/5 items-center gap-2">
         <div v-if="platformIcon"
           class="flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-white shadow-[0_10px_24px_-16px_rgba(14,20,27,0.75)]"
           :class="platformBadgeClass">
@@ -19,17 +19,20 @@
           </p>
         </div>
       </div>
-      <div class="flex shrink-0 flex-col items-end gap-1>
-      <span v-if="item.featured" class=" inline-flex rounded-[6px] pr-1.5 py-1.5">
-        <v-icon size="16" class="mr-1 text-yellow-500">mdi-star</v-icon>
-      </span>
-      <span v-if="item.location" class=" inline-flex max-w-[120px] rounded-[6px] font-medium text-slate-600/80 pr-1.5 py-1.5">
-        <v-icon size="14" class="mr-1 text-yellow-500">mdi-map-marker</v-icon>{{item.location}}
-      </span>
-    </div>
+      <div class="flex w-3/5 shrink-0 self-stretch flex-col items-end justify-end gap-1">
+        <span v-if="item.location" class="inline-flex w-full items-center justify-end rounded-[6px] text-[11px] text-right text-slate-600/80">
+          <v-icon size="14" class="mr-1 shrink-0 text-grey-500">mdi-map-marker</v-icon>
+          <span class="truncate">{{ item.location }}</span>
+        </span>
+      </div>
     </div>
 
     <div class="relative mt-5 h-[240px] overflow-hidden bg-slate-100 sm:h-[260px]">
+      <span
+        v-if="item.featured"
+        class="absolute right-3 top-3 z-10 inline-flex items-center justify-center rounded-[8px] bg-white/90 p-2 shadow-[0_12px_24px_-14px_rgba(14,20,27,0.65)] ring-1 ring-slate-900/10 backdrop-blur-sm">
+        <v-icon size="16" class="text-yellow-500">mdi-star</v-icon>
+      </span>
       <img :src="previewImage" :alt="resolvedAlt"
         class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy"
         @error="handleImageError">
