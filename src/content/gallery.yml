@@ -70,7 +70,7 @@ items:
     featured: true
 
   - id: workshop-04
-    title: Attended MAD 1 and MAD 2 bootcamps at IITM and secured an S!
+    title: Attended MAD 1 and MAD 2 bootcamps at IITM and secured S grade!
     caption: Efforts paid off! I secured an S grade in both MAD 1 and MAD 2 projects at the IITM BS Degree program. All credit goes to those late-night debugging sessions at CCD and the amazing [[Rohit sir|https://www.linkedin.com/in/rohit-kumar-39b974151/|Link]].
     type: linkedin
     date: 2025-06-10
@@ -109,7 +109,7 @@ items:
   - id: workshop-08
     title: Attended Google Cloud Community Day Kolkata
     caption: Attended the Google Cloud Community Day event in Kolkata. It was an excellent opportunity to learn about the latest developments in cloud computing and interact with experts from the industry. The place where I got introduced to Flutter and Firebase for the first time.
-    date: 2024-01-15
+    date: 2023-05-07
     tags: [Workshop]
 
   - id: tech_fest-03
