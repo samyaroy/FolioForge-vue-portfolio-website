@@ -22,6 +22,7 @@ items:
     tags: ["Academic Milestone"]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_last-monday-23rd-february-i-received-my-activity-7432903965090070528-izVx?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
     featured: true
+    location: Sister Nivedita University
 
   - id: academic_milestone-02
     title: Got my article published at SXC!
@@ -45,6 +46,7 @@ items:
     caption: 
     date: 2026-01-23
     tags: [Confclave, Workshop]
+    locationL IIT Hyderabad
 
   - id: workshop-05
     title: Visited IITM to attend the 5th International Conference on Security and Privacy
@@ -52,6 +54,7 @@ items:
     type: gallery
     date: 2026-01-18
     tags: [Conference, Workshop]
+    location: IIT Madras
 
   - id: academic_milestone-03
     title: Got my first-ever article published!
@@ -68,6 +71,7 @@ items:
     date: 2025-10-21
     tags: ["New Role"]
     featured: true
+    location: ISI Kolkata
 
   - id: workshop-04
     title: Attended MAD 1 and MAD 2 bootcamps at IITM and secured S grade!
@@ -76,6 +80,7 @@ items:
     date: 2025-06-10
     tags: [Workshop, Bootcamp]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_cogitocode-activity-7368899808171872256-17Wx?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
+    location: IIT Madras
 
   - id: workshop-03
     title: Attended National Workshop on Cybersecurity and Blockchain at IIIT Hyderabad
@@ -83,6 +88,7 @@ items:
     type: gallery
     date: 2025-03-01
     tags: [Workshop]
+    location: IIIT Hyderabad
 
   - id: new_role-02
     title: Joined IDEAS-TIH at ISI Kolkata as Student Intern
@@ -91,6 +97,7 @@ items:
     date: 2025-02-18
     tags: ["New Role", Internship]
     featured: true
+    location: ISI Kolakta
 
   - id: workshop-02
     title: Completed a 1-Month Bootcamp at the Dept. of CSE, IIT Ropar
@@ -99,28 +106,37 @@ items:
     date: 2024-08-15
     tags: [Workshop, Bootcamp]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_aivicharanashalabootcamp-iitropar-ai-activity-7217160263765045248-Ano0?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
+    location: IIT Ropar
 
   - id: workshop-09
     title: Attended ACM ROCS at IIT Madras
     caption: Attended the ACM Research on Computer Systems (ROCS) conference at [[IIT Madras|Indian Institute of Technology Madras|Institute]]. Honestly, I believe this was my first step into exploring CS for real. Thanks to [[ACM|https://www.acm.org/|Link]] for hosting such a mindful event. Still greateful to [[Prof. Sheweta Agarwal|Prof. Sheweta Agarwal|Person]] ma'am for introducing me to the world of **Cryptography** through her session.
+    type: gallery
     date: 2024-01-15
     tags: [Workshop]
+    location: IIT Madras
 
   - id: event-01
     title: Represented IITM BS Degrre at Netaji Indoor Stadium Kolata
     caption: GOt oppertunity to represent the IITM BS Degree program at Education Interface 2023, Kolkata. Grateful to [[Shib Sankar Das|https://www.linkedin.com/in/ssdcet/|Link]] sir for giving me this opportunity.
+    type: linkedin
     date: 2023-05-28
     tags: [Event]
+    externalUrl: https://www.linkedin.com/posts/samyabrata23_it-was-an-excellent-experience-representing-activity-7068892535384928256-TaBz?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
+    location: Netaji Indoor Stadium, Kolata
 
   - id: workshop-08
     title: Attended Google Cloud Community Day Kolkata
     caption: Attended the Google Cloud Community Day event in Kolkata. It was an excellent opportunity to learn about the latest developments in cloud computing and interact with experts from the industry. The place where I got introduced to Flutter and Firebase for the first time.
+    type: gallery
     date: 2023-05-07
     tags: [Workshop]
+    location: Biswa Bangla Convension Center, Kolkata
 
   - id: tech_fest-03
     title: "Visited IIT Delhi Tech Fest: Tryst"
     caption: Kinda stepping out of comfort zone, althrough lost every competition I participated in, it was a great experience to visit IIT Delhi and attend workshops and seminars at Tryst.
+    type: gallery
     date: 2023-03-10
     tags: ["TechFest"]
 
@@ -130,6 +146,7 @@ items:
     type: gallery
     date: 2023-03-10
     tags: [Meetup]
+    location: University of Engineering and Management
 
   - id: tech_fest-02
     title: Why So Depressed? A Survey on Nationwide Mental Health on Science Day at SNU
@@ -138,6 +155,7 @@ items:
     date: 2023-02-28
     tags: [Poster Presentation, ScienceDay, "TechFest"]
     externalUrl:
+    location: Sister Nivedita University
 
   - id: workshop-01
     title: Attended a Social Computing Workshop at IIITH
@@ -146,6 +164,7 @@ items:
     date: 2023-02-04
     tags: [Workshop]
     externalUrl: https://www.instagram.com/p/CoP0d7gsSFK/?img_index=1&igsh=MWk0bW40NmYwaHM2MA==
+    location: IIIT Hyderabad
 
   - id: tech_fest-01
     title: "Visited an IIT for the first time: IIT KGP Tech Fest"

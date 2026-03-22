@@ -19,10 +19,14 @@
           </p>
         </div>
       </div>
-
+      <div class="flex shrink-0 flex-col items-end gap-1>
       <span v-if="item.featured" class=" inline-flex rounded-[6px] pr-1.5 py-1.5">
         <v-icon size="16" class="mr-1 text-yellow-500">mdi-star</v-icon>
       </span>
+      <span v-if="item.location" class=" inline-flex max-w-[120px] rounded-[6px] font-medium text-slate-600/80 pr-1.5 py-1.5">
+        <v-icon size="14" class="mr-1 text-yellow-500">mdi-map-marker</v-icon>{{item.location}}
+      </span>
+    </div>
     </div>
 
     <div class="relative mt-5 h-[240px] overflow-hidden bg-slate-100 sm:h-[260px]">
