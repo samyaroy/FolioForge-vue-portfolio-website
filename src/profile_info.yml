@@ -476,14 +476,14 @@ attended_webinars_n_others:
 
   - title: "IASS - Seminal Ideas and Controversies in Statistics"
     type: webiner
-    speaker: ["Mr. Rod Little"]
+    speaker: ["Prof. Rod Little"]
     host:
       - name: "International Statistical Association"
         department: "International Association of Survey Statisticaian"
         location: 
     date: "23 March, 2026"
     mode: "Online"
-    cred_link:
+    cred_link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
 
 attended_bootcamps:
   - title: "AI VicharanasShala Bootcamp"
