@@ -36,6 +36,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showFDPs: false,
     showWorkshops: true,
     showBootcamps: true,
+    showOther: false,
   },
 
   showTeachings: {
