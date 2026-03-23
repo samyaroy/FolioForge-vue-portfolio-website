@@ -462,6 +462,29 @@ attended_workshops:
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
+attended_webinars_n_others:
+  - title: "COPSS-NISS Leadership Webinar: The Role of Bayesian Statistics in an Age of AI"
+    type: webiner
+    speaker: ["Prof. David Dunson", "Prof. Xuming He", "Prof. (Dr.) Nadja Klein"]
+    host:
+      - name: "National Institute of Statistical Sciences"
+        department: "Committee of the Presidents of Statistical Societies"
+        location: "Washington, DC"
+    date: "27 January, 2026"
+    mode: "Online"
+    cred_link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
+
+  - title: "IASS - Seminal Ideas and Controversies in Statistics"
+    type: webiner
+    speaker: ["Mr. Rod Little"]
+    host:
+      - name: "International Statistical Association"
+        department: "International Association of Survey Statisticaian"
+        location: 
+    date: "23 March, 2026"
+    mode: "Online"
+    cred_link:
+
 attended_bootcamps:
   - title: "AI VicharanasShala Bootcamp"
     instructor: "Prof. Sudarshan Iyengar"

@@ -69,6 +69,9 @@ Institute:
     - Name: Information Security Education and Awareness
       Website: https://isea.gov.in/
 
+    - Name: National Institute of Statistical Sciences
+      Website: https://www.niss.org/
+
 Person:
 
     - Name: Prof. Sudarshan Iyengar
@@ -97,3 +100,6 @@ Person:
 
     - Name: prof. Sheweta Agarwal
       Link: https://www.cse.iitm.ac.in/~shwetaag/
+    
+    - Name: Prof. David Dunson
+      Link: https://scholars.duke.edu/person/dunson

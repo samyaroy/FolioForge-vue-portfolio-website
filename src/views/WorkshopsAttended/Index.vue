@@ -6,8 +6,8 @@
         <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
           Conferences & Workshops
         </h1>
-        <p class="text-lg text-gray-600 max-w-4xl mx-auto">
-          Conferences attended, workshops completed, and intensive bootcamp training in Statistics, Data Science, AI, and emerging technologies
+        <p class="text-lg text-gray-600 max-w-5xl mx-auto">
+          During the journey of strengthening my skills, I have attended several conferences, workshops, and participated in intensive bootcamp training in Statistics, Data Science, AI, and emerging technologies. Few of then are lsited below.
         </p>
       </div>
 
@@ -51,6 +51,10 @@
           v-if="showBootcampsTab && activeTab === 'bootcamps'"
           :bootcamps="attendedBootcamps"
         />
+        <OtherTab
+          v-if="showOtherTab && activeTab === 'other'"
+          :others="attendedOther"
+        />
       </div>
     </div>
   </div>
@@ -62,12 +66,20 @@ import { useRoute } from 'vue-router'
 import ConferencesTab from './components/tabs/ConferencesTab.vue'
 import FDPsTab from './components/tabs/FDPsTab.vue'
 import WorkshopsTab from './components/tabs/WorkshopsTab.vue'
+import OtherTab from './components/tabs/OtherTab.vue'
 import BootcampsTab from './components/tabs/BootcampsTab.vue'
 
 import config from '@/profile_info.yml'
 import { isFeatureEnabled } from '@/config/featureFlags'
-const { attended_workshops, attended_bootcamps, attended_conferences, attended_fdps } = config
+const {
+  attended_workshops,
+  attended_webinars_n_others,
+  attended_bootcamps,
+  attended_conferences,
+  attended_fdps,
+} = config
 const attendedWorkshops = attended_workshops || []
+const attendedOther = attended_webinars_n_others || []
 const attendedBootcamps = attended_bootcamps || []
 const attendedConferences = attended_conferences || []
 const attendedFDPs = attended_fdps || []
@@ -75,6 +87,7 @@ const attendedFDPs = attended_fdps || []
 const showConferencesTab = isFeatureEnabled('showWorkshopsAttended.showConferences')
 const showFDPsTab = isFeatureEnabled('showWorkshopsAttended.showFDPs')
 const showWorkshopsTab = isFeatureEnabled('showWorkshopsAttended.showWorkshops')
+const showOtherTab = isFeatureEnabled('showWorkshopsAttended.showOther')
 const showBootcampsTab = isFeatureEnabled('showWorkshopsAttended.showBootcamps')
 
 const tabDefinitions = [
@@ -82,6 +95,7 @@ const tabDefinitions = [
   { id: 'fdps', name: 'FDPs', enabled: showFDPsTab },
   { id: 'workshops', name: 'Workshops', enabled: showWorkshopsTab },
   { id: 'bootcamps', name: 'Bootcamps', enabled: showBootcampsTab },
+  { id: 'other', name: 'Others', enabled: showOtherTab },
 ]
 
 const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
