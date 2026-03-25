@@ -20,6 +20,10 @@
         </div>
       </div>
       <div class="flex w-7/10 shrink-0 self-stretch flex-col items-end justify-end gap-1">
+        <span v-if="item.event" class="inline-flex w-full items-center justify-end rounded-[6px] text-[11px] text-right text-slate-600/80">
+          <v-icon size="14" class="mr-1 shrink-0 text-grey-500">mdi-pillar</v-icon>
+          <span class="truncate">{{ item.event }}</span>
+        </span>
         <span v-if="item.location" class="inline-flex w-full items-center justify-end rounded-[6px] text-[11px] text-right text-slate-600/80">
           <v-icon size="14" class="mr-1 shrink-0 text-grey-500">mdi-map-marker</v-icon>
           <span class="truncate">{{ item.location }}</span>

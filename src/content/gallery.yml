@@ -16,6 +16,7 @@ items:
 
   - id: academic_milestone-01
     title: Got my first Degree!
+    event: 9th Graduation Day, SNU
     caption: At the 9th Graduation Ceremony of [[SNU|Sister Nivedita University|Institute]], I received my **B.Sc degree in Statistics**. Kinda proud, kinda stressed about the future.
     type: linkedin
     date: 2026-02-24
@@ -43,6 +44,7 @@ items:
 
   - id: workshop-06
     title: Attended Cryptology Conclave at IIT Hyderabad
+    event: Cryptology Conclave 2026
     caption: 
     date: 2026-01-23
     tags: [Confclave, Workshop]
@@ -50,6 +52,7 @@ items:
 
   - id: workshop-05
     title: Visited IITM to attend the 5th International Conference on Security and Privacy
+    event: ISEA ISAP 2026
     caption: An overwhelming experience for me to attend [[ISEA|Information Security Education and Awareness|Institute]] **ISAP 2026**. Got to talk and learn from the best of the best.
     type: gallery
     date: 2026-01-18
@@ -84,6 +87,7 @@ items:
 
   - id: workshop-03
     title: Attended National Workshop on Cybersecurity and Blockchain at IIIT Hyderabad
+    event: NWBCSB 2025
     caption: Attended a 3-day workshop on Cybersecurity and Blockchain at [[IIIT Hyderabad|International Institute of Technology (IIIT) Hyderabad|Institute]]. It was an amazing experience to reexplore **Blockchain and Cryptocurrencies** along with the latest developments in this field and to interact with experts from academia and industry.
     type: gallery
     date: 2025-03-01
@@ -101,6 +105,7 @@ items:
 
   - id: workshop-02
     title: Completed a 1-Month Bootcamp at the Dept. of CSE, IIT Ropar
+    event: AI Vicharana Shala Bootcamp
     caption: A one-month roller-coaster journey of learning came to an end at [[IIT Ropar|Indian Institute of Technology Ropar|Institute]] at AI Vicharana Shala. I enjoyed every minute of it and am surely going to miss those early morning lectures by Prof. [[Sudarshan Sir|Prof. Sudarshan Iyengar|Person]] and late-night jamming sessions.
     type: linkedin
     date: 2024-08-15
@@ -110,6 +115,7 @@ items:
 
   - id: workshop-09
     title: Attended ACM ROCS at IIT Madras
+    event: ACM ROCS 2024, IIT Madras
     caption: Attended the ACM Research on Computer Systems (ROCS) conference at [[IIT Madras|Indian Institute of Technology Madras|Institute]]. Honestly, I believe this was my first step into exploring CS for real. Thanks to [[ACM|https://www.acm.org/|Link]] for hosting such a mindful event. Still greateful to [[Prof. Sheweta Agarwal|Prof. Sheweta Agarwal|Person]] ma'am for introducing me to the world of **Cryptography** through her session.
     type: gallery
     date: 2024-01-15
@@ -118,6 +124,7 @@ items:
 
   - id: event-01
     title: Represented IITM BS Degrre at Netaji Indoor Stadium Kolata
+    event: Education Interface 2023
     caption: GOt oppertunity to represent the IITM BS Degree program at Education Interface 2023, Kolkata. Grateful to [[Shib Sankar Das|https://www.linkedin.com/in/ssdcet/|Link]] sir for giving me this opportunity.
     type: linkedin
     date: 2023-05-28
@@ -127,6 +134,7 @@ items:
 
   - id: workshop-08
     title: Attended Google Cloud Community Day Kolkata
+    event: Google Cloud Community Day Kolkata 2023
     caption: Attended the Google Cloud Community Day event in Kolkata. It was an excellent opportunity to learn about the latest developments in cloud computing and interact with experts from the industry. The place where I got introduced to Flutter and Firebase for the first time.
     type: gallery
     date: 2023-05-07
@@ -135,6 +143,7 @@ items:
 
   - id: tech_fest-03
     title: "Visited IIT Delhi Tech Fest: Tryst"
+    event: Tryst 2023
     caption: Kinda stepping out of comfort zone, althrough lost every competition I participated in, it was a great experience to visit IIT Delhi and attend workshops and seminars at Tryst.
     type: gallery
     date: 2023-03-10
@@ -150,6 +159,7 @@ items:
 
   - id: tech_fest-02
     title: Why So Depressed? A Survey on Nationwide Mental Health on Science Day at SNU
+    event: Scientilia 2023
     caption: We, students of **UG Sem 2, Stats Dept. of SNU**, presented our survey on mental health at the Science Day poster competition.
     type: instagram
     date: 2023-02-28
@@ -168,6 +178,7 @@ items:
 
   - id: tech_fest-01
     title: "Visited an IIT for the first time: IIT KGP Tech Fest"
+    event: Kshitij 2023
     caption: Visited IIT Kharagpur for the first time to attend their tech fest, Kshitij. It was something really different for me to explore the campus and attend workshops and seminars at Kshitij. I rember attending an excellent workshop on investments and financial literact by **Upstox**.
     type: gallery
     date: 2023-01-14
