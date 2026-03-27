@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Minor Projects</h2>
+        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Other Projects</h2>
 
         <div v-if="projects && projects.length" class="space-y-6">
             <div v-for="(project, index) in projects" :key="project.title || index" :id="`minor-${index}`"
