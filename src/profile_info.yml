@@ -1,5 +1,5 @@
 # config.yml
-last_updated_on: Feb 2026
+last_updated_on: Mar 2026
 
 profile:
   name: Samyabrata Roy
@@ -212,14 +212,13 @@ projects:
     
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
-    type: "Technical Project"
+    type: "Minor Project"
     affiliation: Diploma Projects (MAD I, MAD II), BS in Data Science and Applications, Indian Institute of Technology Madras
     logo: ['IITM']
     tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
     guide:
     time_period: "Jan 2025 - Aug 2025"
     cred_link:
-      report: "https://drive.google.com/file/d/1XyZyXyZyXyZyXyZyXyZyXyZyXyZyXyZy/preview"
       github: "https://github.com/samyaroy/quiz_pilot_master_repo"
     
   - title: Doctor Vaahaan
