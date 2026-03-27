@@ -14,6 +14,16 @@ items:
   #   tags: [Design, Instagram]
   #   externalUrl: https://www.instagram.com/
 
+  - id: workshop-IDEAS-TIH-01
+    title: IDEAS-TIH hosted 3rd IDEASync Industry Connet Meet 2026
+    event: 3rd IDEASync Industry Connect Meet 2026
+    caption: Had the opportunity to attend the meet as a part of the hosting body, [[IDEAS-TIH, ISI Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was a great experience to see how the academia and industry is planning to bridge the gap between research and real-world applications in the field of data science and analytics in next few years.
+    type: gallery
+    date: 2026-03-26
+    tags: [Event]
+    location: Fairfield by Marriott, New Town, Kolkata
+    externalUrl: https://www.telegraphindia.com/my-kolkata/events/ideasync-2026-brings-industry-academia-and-policy-leaders-together-in-kolkata/cid/2153207
+
   - id: academic_milestone-01
     title: Got my first Degree!
     event: 9th Graduation Day, SNU

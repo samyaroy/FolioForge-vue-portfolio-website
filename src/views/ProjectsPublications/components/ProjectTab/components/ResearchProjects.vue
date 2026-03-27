@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
         <h2 class="text-2xl font-bold text-[#0e141b] mb-6">
-            Academic Projects
+            Research & Academic Projects
         </h2>
 
         <div v-if="projects && projects.length" class="space-y-6">

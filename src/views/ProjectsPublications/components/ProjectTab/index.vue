@@ -8,8 +8,12 @@
       v-if="showTechnicalProjectsSection"
       :projects="technicalProjects"
     />
+    <OtherProjects
+      v-if="minorProjects.length"
+      :projects="minorProjects"
+    />
     <div
-      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection"
+      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection && !minorProjects.length"
       class="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500 italic"
     >
       No project sections are enabled.
@@ -21,7 +25,12 @@
 import { computed } from 'vue'
 import TechnicalProjects from './components/TechnicalProjects.vue'
 import ResearchProjects from './components/ResearchProjects.vue'
+import OtherProjects from './components/OtherProjects.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
+
+defineOptions({
+  name: 'ProjectTabSection'
+})
 
 const props = defineProps({
   projects: {
@@ -36,6 +45,9 @@ const technicalProjects = computed(() =>
 )
 const researchProjects = computed(() =>
   props.projects.filter(p => p.type === 'Research Project')
+)
+const minorProjects = computed(() =>
+  props.projects.filter(p => p.type === 'Minor Project')
 )
 
 const showResearchProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showResearchProjects')
