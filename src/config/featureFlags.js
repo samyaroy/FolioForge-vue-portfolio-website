@@ -14,7 +14,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
       showTechnicalProjects: true,
     },
     showPublications: true,
-    showPosters: true,
+    showPosters: false,
   },
 
   showGallery: true,
@@ -33,27 +33,27 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showWorkshopsAttended: {
     showConferences: true,
-    showFDPs: true,
+    showFDPs: false,
     showWorkshops: true,
     showBootcamps: true,
-    showOther: true,
+    showOther: false,
   },
 
   showTeachings: {
-    showCoursesTaught: true,
-    showProjectsMentored: true,
-    showOtherTeachings: true,
+    showCoursesTaught: false,
+    showProjectsMentored: false,
+    showOtherTeachings: false,
   },
 
   showAffiliations: {
-    showAffiliations: true,
-    showCollaborators: true,
-    showMemberships: true,
+    showAffiliations: false,
+    showCollaborators: false,
+    showMemberships: false,
   },
 
   showProfessionalActivity: {
-    showInvitedTalks: true,
-    showHostedEvents: true,
+    showInvitedTalks: false,
+    showHostedEvents: false,
   },
 })
 
