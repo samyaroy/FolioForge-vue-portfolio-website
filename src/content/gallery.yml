@@ -37,6 +37,7 @@ items:
 
   - id: academic_milestone-02
     title: Got my article published at SXC!
+    event: Convergence 2026, SXC
     caption: My article **'Precision Without Understanding Uncertainty Is an Illusion of Control'** got published in *Gradient (Vol I)*, the annual magazine of the [[Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata|Institute]].
     type: linkedin
     date: 2026-02-17
