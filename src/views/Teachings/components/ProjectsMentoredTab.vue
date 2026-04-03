@@ -14,11 +14,8 @@
 
         <!-- Projects -->
         <div class="space-y-6">
-          <div
-            v-for="project in semesterBlock.projects"
-            :key="project.title"
-            class="border-l-4 border-slate-300 pl-6 py-4 pr-4 bg-slate-50 rounded-md"
-          >
+          <div v-for="project in semesterBlock.projects" :key="project.title"
+            class="border-l-4 border-slate-300 pl-6 py-4 pr-4 bg-slate-50 rounded-md">
             <div class="flex flex-col gap-4 md:flex-row md:items-start">
               <div class="w-full md:w-[92%]">
                 <!-- Header -->
@@ -30,27 +27,23 @@
 
                 <!-- Meta -->
                 <div class="space-y-1 text-slate-600 text-sm">
-                  <p v-if="project.course" class="flex items-center">
-                    <v-icon size="16" class="mr-2">mdi-book-open-variant</v-icon>
-                    <span class="font-medium">Course:</span>&nbsp;{{ project.course }}
-                  </p>
-
-                  <p
-                    v-if="project.students && project.students.length"
-                    class="flex items-start"
-                  >
+                  <p v-if="project.students && project.students.length" class="flex items-start">
                     <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
                     <span>
                       <span class="font-medium">Students:</span>&nbsp;
-                      <span
-                        v-for="(student, index) in project.students"
-                        :key="student"
-                      >
-                        <SmartLink :text="student.name" type="person" :href="student.linkedin"/><span v-if="index < project.students.length - 1">, </span>
+                      <span v-for="(student, index) in project.students" :key="student">
+                        <SmartLink :text="student.name" type="person" :href="student.linkedin" /><span
+                          v-if="student.email" class="ml-1"><a :href="`mailto:${student.email}`" target="_blank"
+                            rel="noopener noreferrer"><v-icon size="16"
+                              class="text-blue-700/70">mdi-email</v-icon></a></span><span
+                          v-if="index < project.students.length - 1">, </span>
                       </span>
                     </span>
                   </p>
-
+                  <p v-if="project.course" class="flex items-center">
+                    <v-icon size="16" class="mr-2">mdi-book-open-variant</v-icon>
+                    <span class="font-medium">Course/Paper:</span>&nbsp;{{ project.course }}
+                  </p>
                   <p v-if="project.registration_number" class="flex items-center">
                     <v-icon size="16" class="mr-2">mdi-identifier</v-icon>
                     <span class="font-medium">Registration No.:</span>&nbsp;
@@ -60,21 +53,16 @@
                   <p v-if="project.affiliation" class="flex items-center">
                     <v-icon size="16" class="mr-2">mdi-school</v-icon>
                     <span class="font-medium">Affiliation:</span>&nbsp;
-                    <SmartLink :text="project.affiliation"/>
+                    <SmartLink :text="project.affiliation" />
                   </p>
                 </div>
               </div>
 
               <div class="flex w-full justify-start md:w-[8%] md:justify-end">
-                <a
-                  v-if="getProjectReportLink(project)"
-                  :href="getProjectReportLink(project)"
-                  target="_blank"
+                <a v-if="getProjectReportLink(project)" :href="getProjectReportLink(project)" target="_blank"
                   rel="noopener noreferrer"
                   class="flex h-14 w-14 items-center justify-center rounded-full border border-[#1980e6] text-[#1980e6] transition hover:bg-[#1980e6] hover:text-white"
-                  aria-label="Open project report"
-                  title="Open project report"
-                >
+                  aria-label="Open project report" title="Open project report">
                   <v-icon size="20">mdi-file-document-outline</v-icon>
                 </a>
               </div>
