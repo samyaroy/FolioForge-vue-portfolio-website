@@ -6,205 +6,59 @@
 # - *italic*
 
 items:
-  # - id: instagram-01
-  #   title: Studio Light
-  #   caption: A calmer workspace has been helping me tighten the loop between design direction, implementation, and review.
-  #   type: instagram
-  #   date: 2026-02-12
-  #   tags: [Design, Instagram]
-  #   externalUrl: https://www.instagram.com/
-
-  - id: workshop-IDEAS-TIH-01
-    title: IDEAS-TIH hosted 3rd IDEASync Industry Connet Meet 2026
-    event: 3rd IDEASync Industry Connect Meet 2026
-    caption: Had the opportunity to attend the meet as a part of the hosting body, [[IDEAS-TIH, ISI Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was a great experience to see how the academia and industry is planning to bridge the gap between research and real-world applications in the field of data science and analytics in next few years.
+  - id: workshop-01
+    title: Presented at a data science workshop
+    event: Community Data Workshop
+    caption: Shared practical techniques for cleaning and validating tabular datasets with an interdisciplinary student group.
     type: gallery
     date: 2026-03-26
-    tags: [Event]
-    location: Fairfield by Marriott, New Town, Kolkata
-    externalUrl: https://www.telegraphindia.com/my-kolkata/events/ideasync-2026-brings-industry-academia-and-policy-leaders-together-in-kolkata/cid/2153207
+    tags: [Workshop, Event]
+    location: Example Convention Center
+    externalUrl: https://example.com/workshop-details
+    featured: true
 
   - id: academic_milestone-01
-    title: Got my first Degree!
-    event: 9th Graduation Day, SNU
-    caption: At the 9th Graduation Ceremony of [[SNU|Sister Nivedita University|Institute]], I received my **B.Sc degree in Statistics**. Kinda proud, kinda stressed about the future.
+    title: Completed a professional certification
+    event: Certificate Milestone
+    caption: Completed a focused certification track and documented key learning outcomes and project work.
     type: linkedin
     date: 2026-02-24
-    tags: ["Academic Milestone"]
-    externalUrl: https://www.linkedin.com/posts/samyabrata23_last-monday-23rd-february-i-received-my-activity-7432903965090070528-izVx?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
-    featured: true
-    location: Sister Nivedita University
-
-  - id: academic_milestone-02
-    title: Got my article published at SXC!
-    event: Convergence 2026, SXC
-    caption: My article **'Precision Without Understanding Uncertainty Is an Illusion of Control'** got published in *Gradient (Vol I)*, the annual magazine of the [[Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata|Institute]].
-    type: linkedin
-    date: 2026-02-17
-    tags: [Article, "New Publication"]
-    externalUrl: https://www.linkedin.com/posts/pgds-sxccal_gradient-vol-i-activity-7429850321499201536-hpb0?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
+    tags: ["Academic Milestone", "New Publication"]
+    externalUrl: https://example.com/certification-post
+    location: Online
 
   - id: guest_event-01
-    title: Hosted a guest event on Federated Learning at IITM
-    caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
+    title: Hosted a guest lecture session
+    caption: Coordinated a guest session and moderated Q&A on practical machine learning workflows.
     type: youtube
-    alt: Abstract structural lines against a blue sky with editorial framing
+    alt: Abstract image representing a lecture hall event
     date: 2026-02-05
     tags: ["Guest Event"]
-    externalUrl: https://www.youtube.com/live/0iSF4Ggwa3Q?si=CWmS1q9WQWQGwhQU
+    externalUrl: https://example.com/guest-lecture
 
-  - id: workshop-06
-    title: Attended Cryptology Conclave at IIT Hyderabad
-    event: Cryptology Conclave 2026
-    caption: 
-    date: 2026-01-23
-    tags: [Confclave, Workshop]
-    location: CSE Dept.,IIT Hyderabad
-
-  - id: workshop-05
-    title: Visited IITM to attend the 5th International Conference on Security and Privacy
-    event: ISEA ISAP 2026
-    caption: An overwhelming experience for me to attend [[ISEA|Information Security Education and Awareness|Institute]] **ISAP 2026**. Got to talk and learn from the best of the best.
+  - id: workshop-02
+    title: Attended cybersecurity bootcamp
+    event: Cybersecurity Bootcamp
+    caption: Participated in hands-on sessions on secure coding and modern threat modeling.
     type: gallery
-    date: 2026-01-18
-    tags: [Conference, Workshop]
-    location: ICSR, IIT Madras
-
-  - id: academic_milestone-03
-    title: Got my first-ever article published!
-    caption: "My article **'Revisiting Outliers: Smarter Ways to Handle Them in Regression'**, a thought piece, got published in EPOCHS 2.0, the annual magazine of Wayanad House's ML Group at the IITM BS program."
-    type: gallery
-    date: 2025-11-30
-    tags: [Article, "New Publication"]
-    externalUrl: https://epochs.netlify.app/
+    date: 2025-03-01
+    tags: [Workshop, Bootcamp]
+    location: Example Institute of Technology
 
   - id: new_role-01
-    title: Joined IDEAS-TIH at ISI Kolkata as an Associate Software Developer
-    caption: After completing my 8 months of internship at [[IDEAS-TIH, Indian Statistical Institute, Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]], I am super excited to join the team as an Associate Software Developer. Looking forward to contributing to impactful projects and learning from the amazing minds at ISI ecosystem.
+    title: Joined a new engineering role
+    caption: Started a new role focused on full-stack feature delivery and data-centric product improvements.
     type: gallery
     date: 2025-10-21
     tags: ["New Role"]
     featured: true
-    location: ISI Kolkata
-
-  - id: workshop-04
-    title: Attended MAD 1 and MAD 2 bootcamps at IITM and secured S grade!
-    caption: Efforts paid off! I secured an S grade in both MAD 1 and MAD 2 projects at the IITM BS Degree program. All credit goes to those late-night debugging sessions at CCD and the amazing [[Rohit sir|https://www.linkedin.com/in/rohit-kumar-39b974151/|Link]].
-    type: linkedin
-    date: 2025-06-10
-    tags: [Workshop, Bootcamp]
-    externalUrl: https://www.linkedin.com/posts/samyabrata23_cogitocode-activity-7368899808171872256-17Wx?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
-    location: HSB, IIT Madras
-
-  - id: workshop-03
-    title: Attended National Workshop on Cybersecurity and Blockchain at IIIT Hyderabad
-    event: NWBCSB 2025
-    caption: Attended a 3-day workshop on Cybersecurity and Blockchain at [[IIIT Hyderabad|International Institute of Technology (IIIT) Hyderabad|Institute]]. It was an amazing experience to reexplore **Blockchain and Cryptocurrencies** along with the latest developments in this field and to interact with experts from academia and industry.
-    type: gallery
-    date: 2025-03-01
-    tags: [Workshop]
-    location: IIIT Hyderabad
-
-  - id: new_role-02
-    title: Joined IDEAS-TIH at ISI Kolkata as a Student Intern
-    caption: I joined my first offline paid internship at [[IDEAS-TIH, ISI Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. I am super excited to learn and contribute to real-world projects at IDEAS-TIH.
-    type: gallery
-    date: 2025-02-18
-    tags: ["New Role", Internship]
-    featured: true
-    location: R A Fisher bhawan, ISI Kolkata
-
-  - id: workshop-02
-    title: Completed a 1-Month Bootcamp at the Dept. of CSE, IIT Ropar
-    event: AI Vicharana Shala Bootcamp
-    caption: A one-month roller-coaster journey of learning came to an end at [[IIT Ropar|Indian Institute of Technology Ropar|Institute]] at AI Vicharana Shala. I enjoyed every minute of it and am surely going to miss those early morning lectures by Prof. [[Sudarshan Sir|Prof. Sudarshan Iyengar|Person]] and late-night jamming sessions.
-    type: linkedin
-    date: 2024-08-15
-    tags: [Workshop, Bootcamp]
-    externalUrl: https://www.linkedin.com/posts/samyabrata23_aivicharanashalabootcamp-iitropar-ai-activity-7217160263765045248-Ano0?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
-    location: CSE Dept.,IIT Ropar
-
-  - id: workshop-09
-    title: Attended ACM ROCS at IIT Madras
-    event: ACM ROCS 2024, IIT Madras
-    caption: Attended the ACM Research on Computer Systems (ROCS) conference at [[IIT Madras|Indian Institute of Technology Madras|Institute]]. Honestly, I believe this was my first step into exploring CS for real. Thanks to [[ACM|https://www.acm.org/|Link]] for hosting such a mindful event. Still greateful to [[Prof. Sheweta Agarwal|Prof. Sheweta Agarwal|Person]] ma'am for introducing me to the world of **Cryptography** through her session.
-    type: gallery
-    date: 2024-01-15
-    tags: [Workshop]
-    location: IIT Madras
-
-  - id: event-01
-    title: Represented IITM BS Degrre at Netaji Indoor Stadium Kolata
-    event: Education Interface 2023
-    caption: GOt oppertunity to represent the IITM BS Degree program at Education Interface 2023, Kolkata. Grateful to [[Shib Sankar Das|https://www.linkedin.com/in/ssdcet/|Link]] sir for giving me this opportunity.
-    type: linkedin
-    date: 2023-05-28
-    tags: [Event]
-    externalUrl: https://www.linkedin.com/posts/samyabrata23_it-was-an-excellent-experience-representing-activity-7068892535384928256-TaBz?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
-    location: Netaji Indoor Stadium, kolkata
-
-  - id: workshop-08
-    title: Attended Google Cloud Community Day Kolkata
-    event: Google Cloud Community Day Kolkata 2023
-    caption: Attended the Google Cloud Community Day event in Kolkata. It was an excellent opportunity to learn about the latest developments in cloud computing and interact with experts from the industry. The place where I got introduced to Flutter and Firebase for the first time.
-    type: gallery
-    date: 2023-05-07
-    tags: [Workshop]
-    location: Biswa Bangla Convension Center, Kolkata
-
-  - id: tech_fest-03
-    title: "Visited IIT Delhi Tech Fest: Tryst"
-    event: Tryst 2023
-    caption: Kinda stepping out of comfort zone, althrough lost every competition I participated in, it was a great experience to visit IIT Delhi and attend workshops and seminars at Tryst.
-    type: gallery
-    date: 2023-03-10
-    tags: ["TechFest"]
-
-  - id: meetup-05
-    title: "Official IITM BS Kolkata Meetup: Met course instructors and students"
-    caption: The first official meetup for IITM BS students in Kolkata at [[UEM|University of Engineering and Management|Institute]] was a great success. I finally met Prof. [[Andrew Sir|Prof. Andrew Thangaraj|Person]] and [[Bharti Ma'am||Link]] in person and had a great time interacting with fellow students of the program.
-    type: gallery
-    date: 2023-03-10
-    tags: [Meetup]
-    location: University of Engineering and Management
-
-  - id: tech_fest-02
-    title: Why So Depressed? A Survey on Nationwide Mental Health on Science Day at SNU
-    event: Scientilia 2023
-    caption: We, students of **UG Sem 2, Stats Dept. of SNU**, presented our survey on mental health at the Science Day poster competition.
-    type: instagram
-    date: 2023-02-28
-    tags: [Poster Presentation, ScienceDay, "TechFest"]
-    externalUrl:
-    location: Block A, Sister Nivedita University
-
-  - id: workshop-01
-    title: Attended a Social Computing Workshop at IIITH
-    caption: An amazing day attending Prof. [[P.K. Sir|Prof. Ponnurangam Kumaraguru|Person]]'s workshop at **IIIT Hyderabad**. I got to learn about the latest research and developments in this field of LLM and how it could be used reasearch for social computing, and I am excited to apply this knowledge in my future work. Here I also got introduced to the concept of **Legall AI**.
-    type: instagram
-    date: 2023-02-04
-    tags: [Workshop]
-    externalUrl: https://www.instagram.com/p/CoP0d7gsSFK/?img_index=1&igsh=MWk0bW40NmYwaHM2MA==
-    location: IIIT Hyderabad
-
-  - id: tech_fest-01
-    title: "Visited an IIT for the first time: IIT KGP Tech Fest"
-    event: Kshitij 2023
-    caption: Visited IIT Kharagpur for the first time to attend their tech fest, Kshitij. It was something really different for me to explore the campus and attend workshops and seminars at Kshitij. I rember attending an excellent workshop on investments and financial literact by **Upstox**.
-    type: gallery
-    date: 2023-01-14
-    tags: ["TechFest"]
+    location: Example Technology Hub
 
   - id: meetup-01
-    title: Hosted a meetup for IITM BS students in Kolkata
-    caption: The online degree came offline for a day to meet the students of the IITM BS program in Kolkata. **Subhajit Sir (Instructor, IITM BS)** joined us too.
-    type: gallery
+    title: Organized a local learner meetup
+    caption: Hosted a peer meetup focused on project feedback, study systems, and portfolio building.
+    type: instagram
     date: 2023-01-14
-    tags: [Meetup]
-
-  # - id: gallery-02
-  #   title: Making mentoring repeatable
-  #   caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.
-  #   type: gallery
-  #   date: 2025-11-18
-  #   tags: [Teaching, Mentoring]
+    tags: [Meetup, Collaboration]
+    externalUrl: https://www.instagram.com/
+    location: Example Community Space

@@ -1,49 +1,13 @@
 Institute:
 
+    - Name: Example University
+      Website: https://www.example.edu/
+
+    - Name: Example Institute of Technology
+      Website: https://www.example-tech.edu/
+
     - Name: Royal Statistical Society
       Website: https://www.rss.org.uk/
-
-    - Name: Johns Hopkins University
-      Website: https://www.jhu.edu/
-
-    - Name: Whiting School of Engineering, Johns Hopkins University
-      Website: https://engineering.jhu.edu/
-
-    - Name: Indian Statistical Institute, Kolkata
-      Website: https://www.isical.ac.in/
-
-    - Name: Indian Statistical Institute
-      Website: https://www.isical.ac.in/
-
-    - Name: Indian Institute of Technology Hyderabad
-      Website: https://www.iith.ac.in/
-
-    - Name: Isaac Newton Institute for Mathematical Sciences
-      Website: https://www.newton.ac.uk/
-
-    - Name: Indian Institute of Technology Bombay
-      Website: https://www.iitb.ac.in/
-
-    - Name: Indian Institute of Technology Ropar
-      Website: https://www.iitrpr.ac.in/
-
-    - Name: International Institute of Technology (IIIT) Hyderabad
-      Website: https://www.iiit.ac.in/
-
-    - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
-      Website: https://www.ideas-tih.org/
-
-    - Name: Indian Institute of Technology Madras
-      Website: https://study.iitm.ac.in/ds/
-
-    - Name: University of Engineering and Management
-      Website: https://uem.edu.in/
-
-    - Name: Indian Institute of Technology Kanpur
-      Website: https://www.iitk.ac.in/
-
-    - Name: Sister Nivedita University
-      Website: https://snuniv.ac.in/
 
     - Name: Coursera
       Website: https://www.coursera.org/
@@ -51,58 +15,16 @@ Institute:
     - Name: NPTEL
       Website: https://nptel.ac.in/
 
-    - Name: Chandigarh Institute of Technology and Consultancy
-      Website: https://citcchandigarh.com/
-
-    - Name: Nava Nalanda High School
-      Website: https://navanalanda.org.in/
-
-    - Name: St. Xavier’s College (Autonomous), Kolkata
-      Website: https://www.sxccal.edu/
-
-    - Name: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
-      Website: https://vicharanashala.ai/
- 
-    - Name: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
-      Website: https://sxccal.edu/postgraduate-department-of-data-science
-
-    - Name: Information Security Education and Awareness
-      Website: https://isea.gov.in/
-
-    - Name: National Institute of Statistical Sciences
-      Website: https://www.niss.org/
-
-    - Name: International Statistical Institute
-      Website: https://isi-web.org/
-
 Person:
 
-    - Name: Prof. Sudarshan Iyengar
-      Link: https://www.linkedin.com/in/sudarshan-iyengar-3560b8145/
+    - Name: Prof. Mentor Name
+      Link: https://www.linkedin.com/
 
-    - Name: Prof. Ponnurangam Kumaraguru
-      Link: https://www.linkedin.com/in/ponguru/
-
-    - Name: Prof. Manisha Padala
-      Link: https://iitgn.ac.in/faculty/cse/fac-manisha
-      
-    - Name: Mr. Diptendu Dutta
-      Link: https://www.researchgate.net/profile/Diptendu-Dutta
+    - Name: Prof. Guide Name
+      Link: https://www.linkedin.com/
 
     - Name: Prof. Michael Shields
       Link: https://engineering.jhu.edu/faculty/michael-shields/
 
-    - Name: Prof. Aniruddha Choudhuri
-      Link: https://www.linkedin.com/in/aniruddha-choudhuri-9376b174/
-
-    - Name: Mr. Debashis Ghosh
-      Link: https://www.linkedin.com/in/debashis-ghosh-b5a756b/
-    
-    - Name: Prof. Andrew Thangaraj
-      Link: https://www.ee.iitm.ac.in/andrew/
-
-    - Name: prof. Sheweta Agarwal
-      Link: https://www.cse.iitm.ac.in/~shwetaag/
-    
-    - Name: Prof. David Dunson
-      Link: https://scholars.duke.edu/person/dunson
+    - Name: Mr. Supervisor Name
+      Link: https://www.linkedin.com/
