@@ -548,9 +548,13 @@ projects_mentored:
         course: "Spring Internship Program on Data Science 2026"
         students:
           - name: "SAPTARSHI DEY"
+            email: saptarshidey6290186223@gmail.com
           - name: "AYUSHI MITRA"
+            email: mitraayushi2020@gmail.com
           - name: "ANSHUMAN RAY"
+            email: rayanshuman4@gmail.com
           - name: "SONU SHAW"
+            email: sonushaw.work@gmail.com
         registration_number: ""
         affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
         cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
@@ -568,12 +572,14 @@ projects_mentored:
 
 other_teachings:
   - title: "Private Tutor"
-    institution: "Codeium Classes"
+    institution:
+      name: "Codeium Classes"
+      location: "New Town, Kolkata"
     link: "https://codeium.xyz/"
     role: "Founder & Instructor"
     duration: "May 2023 – April 2025"
     audience: "Secondary & Higher Secondary school students"
-    students: "15+ students tutored"
+    students: "25+ students tutored"
     description: "Provided private tuition in mathematics, Computer Science, and Computer Applications for school (CBSE & ICSE) students."
 
 affiliations:
