@@ -12,7 +12,7 @@
             </div>
 
             <!-- Right: content (85%) -->
-            <div class="flex-1 space-y-2">
+            <div class="flex-1">
                 <div class="flex items-start justify-between gap-1">
                     <div>
                         <h3 class="text-lg font-semibold text-slate-900">
@@ -23,26 +23,17 @@
                     <span v-if="membership.location" class="text-gray-500 text-sm">
                         <v-icon size="14">mdi-map-marker</v-icon> {{ membership.location }}
                     </span>
-
                 </div>
-                <div class="flex items-start justify-between gap-1">
-                    <div v-if="membership.role" class="text-gray-700">
-                        {{ membership.role }}
+                <div class="flex items-start justify-between ">
+                    <div v-if="membership.role" class="text-gray-700 pl-1">
+                        {{ membership.role }} <span class="font-mono text-sm text-gray-600"> [Membership Id: {{
+                            membership.membership_id }}] </span>
                     </div>
                     <span v-if="membership.period" class="text-sm text-gray-500">
                         {{ membership.period }}
                     </span>
 
-
                 </div>
-
-
-                <!-- <div v-if="membership.link">
-                    <a :href="membership.link" target="_blank" rel="noopener noreferrer"
-                        class="text-[#1980e6] font-medium hover:underline">
-                        View credential
-                    </a>
-                </div> -->
             </div>
         </div>
     </div>
