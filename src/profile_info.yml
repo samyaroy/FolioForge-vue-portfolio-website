@@ -595,7 +595,8 @@ collaborators:
 memberships:
   - organization: Royal Statistics Society
     chapter:
-    role: Student Member
+    role: e-Student Member
+    membership_id: 233855
     period: 2026 - Present
     location: London, UK
     cred_link:
