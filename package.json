@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "build": "vite build",
     "preview": "vite preview",
+    "boneyard:build": "node scripts/build-boneyard-gallery.mjs",
     "deploy": "vite build && gh-pages -d dist"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
+    "boneyard-js": "^1.6.4",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1",
     "vuetify": "^3.9.5",
@@ -26,9 +28,9 @@
     "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "autoprefixer": "^10.4.21",
+    "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.2",
     "eslint-plugin-vue": "^10.7.0",
-    "baseline-browser-mapping": "^2.9.19",
     "gh-pages": "^6.3.0",
     "globals": "^17.1.0",
     "postcss": "^8.5.6",

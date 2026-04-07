@@ -6,7 +6,17 @@
           <!-- Profile Image Section -->
           <div
             class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg md:h-auto md:min-w-[400px] lg:w-full flex items-center justify-center -mt-4"
-            style='background-image: url("/SamyabrataRoy2.jpg");'></div>
+          >
+            <img
+              ref="heroImageRef"
+              src="/SamyabrataRoy2.jpg"
+              alt="Portrait of Samyabrata Roy"
+              class="h-full w-full rounded-lg object-cover"
+              loading="eager"
+              @load="handleHeroImageLoad"
+              @error="handleHeroImageError"
+            >
+          </div>
 
           <!-- Content Section -->
           <div class="flex flex-col gap-6 md:min-w-[400px] md:gap-8 lg:justify-center">
@@ -57,7 +67,12 @@
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue'
 import config from "@/profile_info.yml"
+
+const emit = defineEmits(['hero-media-loaded'])
+const heroImageRef = ref(null)
+const hasEmittedHeroMediaLoaded = ref(false)
 
 const { profile, contacts, socials } = config
 
@@ -68,10 +83,6 @@ const cv_link = profile.cv
 
 const email = contacts.email
 const email_link = `mailto:${email}`
-
-const email2 = contacts.email2
-const email2_link = `mailto:${email2}`
-
 
 const github_personal = socials.github
 const linkedin = socials.linkedin
@@ -84,9 +95,29 @@ const downloadCV = () => {
   link.download = `${name.replace(" ", "_")}_CV.pdf`
   link.click()
 }
+
+function notifyHeroMediaLoaded() {
+  if (hasEmittedHeroMediaLoaded.value) return
+
+  hasEmittedHeroMediaLoaded.value = true
+  emit('hero-media-loaded')
+}
+
+function handleHeroImageLoad() {
+  notifyHeroMediaLoaded()
+}
+
+function handleHeroImageError() {
+  notifyHeroMediaLoaded()
+}
+
+onMounted(() => {
+  if (heroImageRef.value?.complete) {
+    notifyHeroMediaLoaded()
+  }
+})
 </script>
 
 <style scoped>
 /* Custom styles if needed */
 </style>
-

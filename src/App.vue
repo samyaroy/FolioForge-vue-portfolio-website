@@ -1,14 +1,8 @@
 <script setup>
-import { useRoute } from 'vue-router' 
-// Import global components
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer/index.vue'
 
-// get current route
-const route = useRoute()
-
-
-const showLayout = true //set to true
+const showLayout = true
 </script>
 
 <template>

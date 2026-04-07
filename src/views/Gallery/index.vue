@@ -34,6 +34,8 @@ defineOptions({
   name: 'GalleryPage',
 })
 
+const shouldExposeAllItemsForCapture = typeof window !== 'undefined' && window.__BONEYARD_BUILD === true
+
 const rawItems = Array.isArray(galleryContent?.items) ? galleryContent.items : []
 const configuredTags = Array.isArray(galleryTagMetadata?.tags) ? galleryTagMetadata.tags : []
 const configuredTagIds = new Set(
@@ -92,8 +94,14 @@ const filteredItems = computed(() => {
   ))
 })
 
-const visibleItems = computed(() => filteredItems.value.slice(0, visibleCount.value))
-const canLoadMore = computed(() => filteredItems.value.length > visibleCount.value)
+const visibleItems = computed(() => (
+  shouldExposeAllItemsForCapture
+    ? filteredItems.value
+    : filteredItems.value.slice(0, visibleCount.value)
+))
+const canLoadMore = computed(() => (
+  !shouldExposeAllItemsForCapture && filteredItems.value.length > visibleCount.value
+))
 
 watch(activeFilters, () => {
   visibleCount.value = initialVisibleCount
