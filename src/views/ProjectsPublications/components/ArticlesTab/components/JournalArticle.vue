@@ -45,19 +45,33 @@
           <span class="px-3">{{ article.field }}</span>
         </p>
 
-        <p v-if="article.link" class="text-gray-600 mb-4">
-          <v-icon size="20">mdi-web</v-icon>
-          <span class="px-3">
+        <div v-if="article.link || article.cred_link" class="flex items-start gap-4 mb-4">
+          <p v-if="article.link" class="text-gray-600 flex-1 min-w-0 text-left">
+            <v-icon size="20">mdi-web</v-icon>
+            <span class="px-3">
+              <a
+                :href="article.link"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="break-all"
+              >
+                {{ article.link }}
+              </a>
+            </span>
+          </p>
+
+          <div class="ml-auto shrink-0 text-right">
             <a
-              :href="article.link"
+              v-if="article.cred_link"
+              :href="article.cred_link"
               target="_blank"
               rel="noopener noreferrer"
-              class="break-all"
+              class="text-[#1980e6] hover:underline text-sm shrink-0"
             >
-              {{ article.link }}
+              Read More <span v-if="article.link && article.link !== article.cred_link">(Archived copy)</span> ->
             </a>
-          </span>
-        </p>
+          </div>
+        </div>
 
         <div class="flex items-center justify-between gap-4">
           <!-- <div v-if="getCategories(article.categories).length" class="flex flex-wrap gap-2">
@@ -71,16 +85,6 @@
           </div>
           <div v-else />
         -->
-
-          <a
-            v-if="article.cred_link"
-            :href="article.cred_link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-[#1980e6] hover:underline text-sm shrink-0"
-          >
-            Read More <span v-if="article.link && article.link !== article.cred_link">(Archived copy)</span> ->
-          </a>
         </div>
       </div>
     </div>
