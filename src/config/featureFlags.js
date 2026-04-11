@@ -8,7 +8,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   },
   
   showProjectsPublications: {
-    showArticles: true,
+    showArticles: {
+      showGeneralArticles: true,
+      showJournalArticles: true,
+    },
     showProjects: {
       showResearchProjects: true,
       showTechnicalProjects: true,

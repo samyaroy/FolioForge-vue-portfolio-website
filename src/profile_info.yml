@@ -264,9 +264,11 @@ articles:
       name: Gradient (Vol I) 2026, pp. 59-64
       host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
     field: Statistical Inference, Machine Learning, Uncertainty Quantification
+#    categories: [Uncertainty Quantification, Statistical Inference, Machine Learning]
     date: Feb 2026
     link: https://sxccal.edu/magazines
-    type: Magazine Article
+    type: general
+    article_type: Magazine Article
     cred_link: https://drive.google.com/file/d/1OZ3R8fMiUPXyaSi2AQX-VoEPGC5cMPci/preview
 
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
@@ -274,10 +276,24 @@ articles:
       name: EPOCHS 2025 (2nd Edition)
       host: Wayanad Houses ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
     field: Statistical Modeling, Outliers Detection, Robust modeling
+#    categories: [Robust Regression, Outlier Analysis, Statistical Modeling]
     date: Dec 2025
     link: https://epochs.netlify.app/
-    type: E-newsletter Article
+    type: general
+    article_type: E-newsletter Article
     cred_link: https://drive.google.com/file/d/1zhduEtlKr-jpYax6M9QJmAUvIMb_ztC4/preview
+
+#   - title: 'Bayesian Calibration for Small-Sample Forecasting: A Dummy Journal Entry'
+#     publication:
+#       name: Journal of Applied Statistical Notes, Vol. 1, No. 1, pp. 1-8
+#       host: Example Research Press
+#     field: Bayesian Modeling, Forecasting, Uncertainty Quantification
+# #    categories: [Dummy Entry, Journal Layout, Forecasting]
+#     date: Apr 2026
+#     link: https://example.com/journal-article
+#     type: journal
+#     article_type: Journal Article
+#     cred_link: https://example.com/journal-article.pdf
   
   # Add more fields as needed
 

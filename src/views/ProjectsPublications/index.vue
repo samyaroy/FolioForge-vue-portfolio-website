@@ -61,7 +61,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PublicationsTab from './components/PublicationsTab.vue'
 import ProjectsTab from './components/ProjectTab/index.vue'
-import ArticlesTab from './components/ArticlesTab.vue'
+import ArticlesTab from './components/ArticlesTab/index.vue'
 import PostersTab from './components/PostersTab.vue'
 import config from '@/profile_info.yml'
 import { isFeatureEnabled } from '@/config/featureFlags'
@@ -69,7 +69,7 @@ import { isFeatureEnabled } from '@/config/featureFlags'
 const { projects, publications, articles, posters } = config
 
 const showProjectsTab = isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' })
-const showArticlesTab = isFeatureEnabled('showProjectsPublications.showArticles')
+const showArticlesTab = isFeatureEnabled('showProjectsPublications.showArticles', { mode: 'any' })
 const showPublicationsTab = isFeatureEnabled('showProjectsPublications.showPublications')
 const showPostersTab = isFeatureEnabled('showProjectsPublications.showPosters')
 
