@@ -16,7 +16,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showProjectsPublications: {
     showArticles: {
       showGeneralArticles: true,
-      showJournalArticles: true,
+      showJournalArticles: false,
     },
     showProjects: {
       showResearchProjects: true,
