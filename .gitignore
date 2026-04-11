@@ -28,3 +28,6 @@ dist-ssr
 src/components/Footer/Index.vue
 
 .github/mcp.json
+
+.env
+
