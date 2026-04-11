@@ -21,7 +21,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showProjectsPublications: {
     showArticles: {
       showGeneralArticles: true,
-      showJournalArticles: true,
+      showJournalArticles: false,
     },
     // Controls whether collapsible article sections start expanded (true) or collapsed (false)
     expandArticleSectionsByDefault: {
