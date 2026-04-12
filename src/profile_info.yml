@@ -294,7 +294,8 @@ articles:
 #     type: journal
 #     article_type: Journal Article
 #     cred_link: https://example.com/journal-article.pdf
-  
+#      logo: ['JASN']
+
   # Add more fields as needed
 
 publications:
