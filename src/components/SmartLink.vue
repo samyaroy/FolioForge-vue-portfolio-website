@@ -46,7 +46,9 @@ const props = defineProps<{
     preferHref?: boolean
 }>()
 
-const INLINE_LINK_PATTERN = /`([^`]+)`/g
+// Two inline forms: `Name` looks the url up in hyperlinkMetadata.yml, while
+// [Name](https://…) carries its own url for one-off links not worth an entry.
+const INLINE_LINK_PATTERN = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|`([^`]+)`/g
 
 const segments = computed<Segment[]>(() => buildSegments(props.text))
 
@@ -65,11 +67,12 @@ function buildSegments(text: string) {
             parsedSegments.push(createSegment(text.slice(lastIndex, matchIndex)))
         }
 
-        const linkedText = match[1]
+        const [, explicitText, explicitHref, lookupOnlyText] = match
+        const linkedText = explicitHref ? explicitText : lookupOnlyText
         parsedSegments.push(
             createSegment(
                 linkedText,
-                resolveUrl({
+                explicitHref ?? resolveUrl({
                     text: linkedText,
                     type: props.type,
                 })

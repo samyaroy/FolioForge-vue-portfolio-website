@@ -16,26 +16,28 @@
 
     <!-- Right column: content -->
     <div class="flex flex-1 flex-col py-0 relative z-10">
-      <div class="flex items-center justify-between">
+      <!-- Role and dates sit on one line from `sm` up; on a phone the date drops
+           below the title rather than squeezing it into a couple of words. -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         <p class="text-[#0e141b] text-base font-medium leading-normal">
           {{ title }}
           <span v-if="cred_link" class="inline-block ml-1 align-middle">
             <DocumentViewer :src="cred_link" />
           </span>
         </p>
-        <p class="text-[#4e7397] text-sm font-normal">{{ time }}</p>
+        <p class="text-[#4e7397] text-sm font-normal sm:shrink-0">{{ time }}</p>
       </div>
 
-      <div class="flex items-start justify-between gap-4 mt-1">
-        <div class="flex min-w-0 flex-1 items-center gap-2">
-          <v-icon class="text-[#4e7397]" size="16">mdi-domain</v-icon>
+      <div class="flex flex-wrap items-start justify-between gap-x-4 gap-y-1 mt-1">
+        <div class="flex min-w-0 flex-1 basis-full sm:basis-0 items-center gap-2">
+          <v-icon class="text-[#4e7397] shrink-0" size="16">mdi-domain</v-icon>
           <p class="text-[#4e7397] text-sm">
             <SmartLink :text="organization" />
           </p>
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <v-icon class="text-[#4e7397]" size="16">mdi-map-marker</v-icon>
+            <v-icon class="text-[#4e7397] shrink-0" size="16">mdi-map-marker</v-icon>
             <p class="text-[#4e7397] text-sm">{{ location }}</p>
           </div>
         </div>
@@ -49,7 +51,10 @@
         </p>
       </div>
 
-      <div v-if="projects" class="grid grid-cols-[auto,auto,1fr] gap-x-2 mt-1 items-start">
+      <!-- On a phone the nowrap label plus a 1fr list leaves the project titles
+           a couple of words wide, so the list drops under the label there and
+           only shares its row from `sm` up. -->
+      <div v-if="projects" class="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_auto_1fr] gap-x-2 mt-1 items-start">
         <!-- Icon -->
         <v-icon class="text-[#4e7397] mt-[2px]" size="16">
           mdi-puzzle-outline
@@ -61,9 +66,19 @@
         </span>
 
         <!-- Project list -->
-        <ul class="grid gap-1 text-[#4e7397] text-sm">
+        <ul class="col-start-2 sm:col-start-3 grid gap-1 text-[#4e7397] text-sm">
           <li v-for="(project, index) in projects" :key="index" class="leading-tight">
-           <span> &bull; </span><SmartLink :text="project" />
+            <div>
+              <span> &bull; </span><SmartLink :text="projectTitle(project)" />
+            </div>
+            <div v-if="projectPrincipalInvestigator(project)" class="ml-4 mt-0.5 flex items-start gap-1 text-xs text-[#5f7f9d]">
+              <v-icon class="text-[#5f7f9d] mt-[1px] shrink-0" size="14">mdi-account-school</v-icon>
+              <span>
+                PI: 
+                <SmartLink :type="'Person'" :text="projectPrincipalInvestigator(project)[0]"/>, 
+                <SmartLink :type="'Person'" :text="projectPrincipalInvestigator(project)[1]"/>
+              </span>
+            </div>
           </li>
         </ul>
       </div>
@@ -77,7 +92,7 @@
 
 
       <!-- Description -->
-      <div class="col-span-2 px-6 pb-6 mt-1 relative" v-if="description">
+      <div class="col-span-2 px-0 sm:px-6 pb-4 sm:pb-6 mt-1 relative" v-if="description">
         <p v-for="(line, index) in description" :key="index" class="content-justify text-[#0e141b] text-sm"><v-icon
             class="text-[#4e7397]" size="16">mdi-circle-small</v-icon>
           <SmartLink :text="line" />
@@ -90,6 +105,24 @@
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+
+const projectTitle = (project) => {
+  return typeof project === 'string' ? project : project?.title
+}
+
+const projectPrincipalInvestigator = (project) => {
+  const pi = typeof project === 'string' ? null : project?.principal_investigator
+
+  if (!pi) {
+    return null
+  }
+
+  if (typeof pi === 'string') {
+    return pi
+  }
+
+  return [pi.name, [ pi.title, pi.department, pi.institution].filter(Boolean).join(', ')]
+}
 
 defineProps({
   isfirst: { type: Boolean, default: false },
