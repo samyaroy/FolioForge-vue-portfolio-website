@@ -2,7 +2,7 @@
     <div class="bg-white rounded-lg shadow-sm p-8">
         <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Other Projects</h2>
 
-        <div v-if="projects && projects.length" class="space-y-6">
+        <div v-if="projects && projects.length" class="space-y-6 text-sm">
             <div v-for="(project, index) in projects" :key="project.title || index" :id="`minor-${index}`"
                 class="border-l-4 border-[#1980e6] pl-6 pt-4 pb-2 pr-4 rounded-md bg-slate-50">
                 <div class="flex items-start justify-between gap-4 pb-4">

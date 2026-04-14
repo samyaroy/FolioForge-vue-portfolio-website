@@ -14,7 +14,7 @@
                 </h3>
 
                 <!-- MAIN FLEX ROW -->
-                <div class="flex flex-col md:flex-row items-stretch">
+                <div class="flex flex-col md:flex-row items-stretch text-sm">
                     <!-- LEFT CONTENT (88%) -->
                     <div class="w-full md:w-[88%] md:pr-6">
 
