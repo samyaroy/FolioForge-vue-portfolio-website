@@ -21,7 +21,7 @@
                         <div class="flex items-start gap-2 mb-2">
                             <v-icon class="text-gray-600">mdi-school</v-icon>
                             <p class="text-gray-600">
-                                {{ project.affiliation }}
+                                <SmartLink :type="'Institution'" :text="project.affiliation" />
                             </p>
                         </div>
 

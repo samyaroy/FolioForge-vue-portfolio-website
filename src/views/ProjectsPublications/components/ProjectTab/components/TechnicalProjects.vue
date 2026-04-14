@@ -8,11 +8,15 @@
                     <h3 class="text-lg font-semibold text-[#0e141b]">{{ project.title }}</h3>
                     <span class="text-sm text-gray-500">{{ project.time_period }}</span>
                 </div>
-                <div v-if="project.affiliation || project.logo" class="flex items-start">
-                    <div class="mr-2 w-[3%]"><v-icon size="16">mdi-attachment</v-icon></div>
-                    <div v-if="project.affiliation" class="text-sm w-[90%]">{{ project.affiliation }}</div>
-                    <div class="items-center"><img v-for="logo in project.logo" :key="logo" :src="getLogoPath(logo)"
-                            :alt="logo" :title="logo" class="max-h-8"></div>
+                <div v-if="project.affiliation || project.logo" class="flex items-start gap-2">
+                    <div class="shrink-0 pt-0.5">
+                        <v-icon size="16">mdi-attachment</v-icon>
+                    </div>
+                    <div v-if="project.affiliation" class="min-w-0 flex-1 text-sm leading-6">{{ project.affiliation }}</div>
+                    <div v-if="project.logo" class="flex shrink-0 items-center gap-2">
+                        <img v-for="logo in project.logo" :key="logo" :src="getLogoPath(logo)" :alt="logo" :title="logo"
+                            class="max-h-8">
+                    </div>
                 </div>
                 <br />
                 <div class="flex flex-wrap gap-2 mb-4">

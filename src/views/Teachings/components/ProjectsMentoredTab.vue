@@ -31,7 +31,7 @@
                     <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
                     <span>
                       <span class="font-medium">Students:</span>&nbsp;
-                      <span v-for="(student, index) in project.students" :key="student">
+                      <span v-for="(student, index) in project.students" :key="getStudentKey(student, index)">
                         <SmartLink :text="student.name" type="person" :href="student.linkedin" /><span
                           v-if="student.email" class="ml-1"><a :href="`mailto:${student.email}`" target="_blank"
                             rel="noopener noreferrer"><v-icon size="16"
@@ -49,12 +49,6 @@
                     <span class="font-medium">Registration No.:</span>&nbsp;
                     {{ project.registration_number }}
                   </p>
-
-                  <p v-if="project.affiliation" class="flex items-center">
-                    <v-icon size="16" class="mr-2">mdi-school</v-icon>
-                    <span class="font-medium">Affiliation:</span>&nbsp;
-                    <SmartLink :text="project.affiliation" />
-                  </p>
                 </div>
               </div>
 
@@ -65,6 +59,23 @@
                   aria-label="Open project report" title="Open project report">
                   <v-icon size="20">mdi-file-document-outline</v-icon>
                 </a>
+              </div>
+            </div>
+            <div v-if="getAffiliationName(project) || getAffiliationLocation(project)"
+              class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2 text-sm text-slate-600">
+              <div>
+                <p v-if="getAffiliationName(project)" class="flex min-w-0 items-center">
+                  <v-icon size="16" class="mr-2">mdi-school</v-icon>
+                  <span class="font-medium">Affiliation:</span>&nbsp;
+                  <SmartLink :text="getAffiliationName(project)" />
+                </p>
+              </div>
+              <div v-if="getAffiliationLocation(project)"
+                class="flex items-center justify-self-end text-sm text-slate-500">
+                <v-icon size="16" class="mr-1">mdi-map-marker</v-icon>
+                <span>
+                  {{ getAffiliationLocation(project) }}
+                </span>
               </div>
             </div>
           </div>
@@ -100,5 +111,32 @@ const getProjectReportLink = (project) => {
   }
 
   return ''
+}
+
+const getStudentKey = (student, index) => {
+  if (student?.email) return student.email
+  if (student?.name) return student.name
+  return `student-${index}`
+}
+
+const getAffiliationName = (project) => {
+  const affiliation = project?.affiliation
+
+  if (typeof affiliation === 'string') return affiliation
+  if (affiliation && typeof affiliation === 'object' && typeof affiliation.name === 'string') {
+    return affiliation.name
+  }
+
+  return NaN
+}
+
+const getAffiliationLocation = (project) => {
+  const affiliation = project?.affiliation
+
+  if (affiliation && typeof affiliation === 'object' && typeof affiliation.location === 'string') {
+    return affiliation.location
+  }
+
+  return NaN
 }
 </script>

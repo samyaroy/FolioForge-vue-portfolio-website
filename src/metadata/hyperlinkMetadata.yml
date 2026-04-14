@@ -9,10 +9,10 @@ Institute:
     - Name: Whiting School of Engineering, Johns Hopkins University
       Website: https://engineering.jhu.edu/
 
-    - Name: Indian Statistical Institute, Kolkata
-      Website: https://www.isical.ac.in/
-
     - Name: Indian Statistical Institute
+      Aliases:
+        - Indian Statistical Institute, Kolkata
+        - ISI Kolkata
       Website: https://www.isical.ac.in/
 
     - Name: Indian Institute of Technology Hyderabad
@@ -28,12 +28,37 @@ Institute:
       Website: https://www.iitrpr.ac.in/
 
     - Name: International Institute of Technology (IIIT) Hyderabad
+      Aliases:
+        - IIIT Hyderabad
+        - International Institute of Information Technology Hyderabad
       Website: https://www.iiit.ac.in/
 
-    - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+    - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+      Aliases:
+        - Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+        - Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
+        - IDEAS-TIH
+        - IDEAS - TIH
       Website: https://www.ideas-tih.org/
 
+    - Name: Mahalanobis National Crop Forecast Centre (MNCFC)
+      Aliases:
+        - Mahalanobis National Crop Forecast Centre
+        - MNCFC
+      Website: https://www.ncfc.gov.in/
+
+    - Name: MoAFW, GoI
+      Aliases:
+        - MoAFW
+        - Ministry of Agriculture and Farmers Welfare
+        - Ministry of Agriculture & Farmers Welfare
+        - Ministry of Agriculture and Farmers Welfare, Government of India
+        - Ministry of Agriculture & Farmers Welfare, Government of India
+      Website: https://agriwelfare.gov.in/
+
     - Name: Indian Institute of Technology Madras
+      Aliases:
+        - IIT Madras
       Website: https://study.iitm.ac.in/ds/
 
     - Name: University of Engineering and Management
@@ -58,15 +83,26 @@ Institute:
       Website: https://navanalanda.org.in/
 
     - Name: St. Xavier’s College (Autonomous), Kolkata
+      Aliases:
+        - St. Xavier's College (Autonomous), Kolkata
       Website: https://www.sxccal.edu/
 
     - Name: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+      Aliases:
+        - Vicharanashala Lab for Education of Design, Indian Institute of Technology Ropar
+        - VLED, Indian Institute of Technology Ropar
+        - VLED
       Website: https://vicharanashala.ai/
  
     - Name: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
+      Aliases:
+        - Postgraduate Department of Data Science, St. Xavier's College (Autonomous), Kolkata
       Website: https://sxccal.edu/postgraduate-department-of-data-science
 
     - Name: Information Security Education and Awareness
+      Aliases:
+        - Information Security Education and Awareness (ISEA)
+        - ISEA
       Website: https://isea.gov.in/
 
     - Name: National Institute of Statistical Sciences
