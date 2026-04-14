@@ -213,7 +213,7 @@ projects:
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
     type: "Minor Project"
-    affiliation: Diploma Projects (MAD I, MAD II), BS in Data Science and Applications, Indian Institute of Technology Madras
+    affiliation: Diploma Projects (MAD I, MAD II), `BS in Data Science and Applications, Indian Institute of Technology Madras`
     logo: ['IITM']
     tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
     guide:
@@ -274,7 +274,7 @@ articles:
   - title: 'Revisiting Outliers: Smarter Ways to Handle Them in Regression'
     publication:
       name: EPOCHS 2025 (2nd Edition)
-      host: Wayanad Houses ML Group under ML Series initiative, Indian Institute of Technology Madras BS Degree
+      host: Wayanad Houses ML Group under ML Series initiative, `Indian Institute of Technology Madras BS Degree`
     field: Statistical Modeling, Outliers Detection, Robust modeling
 #    categories: [Robust Regression, Outlier Analysis, Statistical Modeling]
     date: Dec 2025
@@ -366,7 +366,7 @@ co_curriculars:
         host: Nilgiri House
         location: Indian Institute of Technology Madras BS Degree
         description: Created and led the statistics community of 500+ members over 2 years. Organized more than 20 workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
-        time_period: 2023 - 2025
+        time_period: 2023 - 2026
         skills: Leadership, Event Management, Team Building
 
       #Add more entries as needed
@@ -374,7 +374,7 @@ co_curriculars:
   - title: volunteering_roles
     entries:
       - role: Teaching Assistant (Revision Sessions)
-        organization: "Chi-Square: Statistics Club X Nilgiri House, Indian Institute of Technology Madras BS Degree"
+        organization: "Chi-Square: Statistics Club X Nilgiri House, `Indian Institute of Technology Madras BS Degree`"
         field:
           - sub_field: 'Course: Statistics I'
             time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
