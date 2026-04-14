@@ -92,7 +92,7 @@ internships:
     cred_link:
 
   - role: Data Science Intern (Autumn 2024)
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     location: Remote
     time_period: Jun 2024 - Oct 2024
     description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing.
@@ -113,9 +113,9 @@ internships:
 experience:
   - job_role: Associate Software Developer
     type: Employment
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     location: Kolkata, WB
-    projects: ["National Platform for Crop Yield Forecasting (NPCYF) — part of the FASAL 2.0 initiative by Mahalanobis National Crop Forecast Centre (MNCFC), MoAFW, GoI"]
+    projects: ["National Platform for Crop Yield Forecasting (NPCYF) — part of the FASAL 2.0 initiative by `Mahalanobis National Crop Forecast Centre (MNCFC)`, `MoAFW, GoI`"]
     time_period: Oct 2025 - Present
     description: ["Contributed to the NPCYF platform by implementing an ARIMAX-based forecasting workflow, optimizing frontend performance with caching, developing backend APIs, enabling feature-flag-driven releases, and automating data ingestion into a MinIO-based data lake."]
   
@@ -130,7 +130,7 @@ experience:
 
   - job_role: Student Intern
     type: Internship
-    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     supervisor:
       name: Mr. Diptendu Dutta
       title: Technology Lead
@@ -178,7 +178,7 @@ projects:
     description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
     type: Research Project
     doi: 10.13140/RG.2.2.16657.13926
-    affiliation:  BSc. (Hons.) Degree Project, Sister Nivedita University
+    affiliation:  BSc. (Hons.) Degree Project, `Sister Nivedita University`
     logo : ['SNU']
     tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
     guide:
@@ -197,7 +197,7 @@ projects:
     description: Conducted a comprehensive survey among college students (aged 18-25) in Kolkata to understand their career preferences. Utilized multivariate inference to identify key factors influencing career choices and segment students based on their preferences.
     type: Research Project
     doi:
-    affiliation: Internship Project (Data Science Intern), Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH), Indian Statistical Institute, Kolkata
+    affiliation: Internship Project (Data Science Intern), `Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)`, `Indian Statistical Institute, Kolkata`
     logo : ['IDEAS']
     tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
     guide:
@@ -382,7 +382,7 @@ co_curriculars:
         cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
 
       # - role: Teaching Assistant (Project)
-      #   organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+      #   organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
       #   field: 
       #     - sub_field: 'Autumn Internship 2025: Data Science'  
       #       time_period: Sept 2025 - Oct 2025
@@ -429,7 +429,7 @@ attended_workshops:
 
   - title: "Mini-Symposium on Contemporary Advancements in Computational Intelligence"
     institution:
-      - name: "Indian Statistical Institute"
+      - name: "Indian Statistical Institute, Kolkata"
         location: "Kolkata, WB"
     date: "July 2025"
     mode: "Offline"
@@ -573,7 +573,9 @@ projects_mentored:
           - name: "SONU SHAW"
             email: sonushaw.work@gmail.com
         registration_number: ""
-        affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
+        affiliation:
+          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+          location: Kolkata, WB
         cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
 
       # - title: "Uncertainty-Aware Liver Cirrhosis Prediction under Noisy and Outlier-Rich Pathological Data"
@@ -584,7 +586,7 @@ projects_mentored:
       #     - name: "ANSHUMAN RAY"
       #     - name: "SONU SHAW"
       #   registration_number: ""
-      #   affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata"
+      #   affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
       #   cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
 
 other_teachings:
