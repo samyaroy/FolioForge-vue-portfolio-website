@@ -15,7 +15,7 @@
     <!-- Organization -->
     <p class="text-gray-700 mb-3 flex items-start gap-2">
       <v-icon size="16" class="mt-1">mdi-domain</v-icon>
-      {{ volunteering.organization }}
+      <SmartLink :type="'Institution'" :text="volunteering.organization" />
     </p>
 
     <!-- Fields & Time Periods -->
@@ -70,6 +70,7 @@
 
 <script setup>
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import SmartLink from '@/components/SmartLink.vue'
 
 defineProps({
   volunteering: {

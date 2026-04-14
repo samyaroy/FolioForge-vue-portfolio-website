@@ -25,11 +25,11 @@
           </div>
           <div v-if="leadership.host" class="flex items-center space-x-1">
             <v-icon small class="text-[#1980e6]">mdi-home</v-icon>
-            <span class="text-gray-700">{{ leadership.host }}</span>
+            <span class="text-gray-700"><SmartLink :type="'Institution'" :text="leadership.host" /></span>
           </div>
           <div class="flex items-center space-x-1">
             <v-icon small class="text-[#1980e6]">mdi-map-marker</v-icon>
-            <span class="text-gray-700">{{ leadership.location }}</span>
+            <span class="text-gray-700"><SmartLink :type="'Institution'" :text="leadership.location" /></span>
           </div>
         </div>
         <p class="text-gray-700 mb-3">{{ leadership.description }}</p>
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-
+import SmartLink from '@/components/SmartLink.vue'
 
 defineProps({
   leadership: Object
