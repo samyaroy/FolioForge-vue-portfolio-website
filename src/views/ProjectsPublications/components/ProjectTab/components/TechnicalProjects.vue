@@ -3,8 +3,8 @@
         <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Technical Projects</h2>
         <div v-if="projects && projects.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div v-for="project in projects" :key="project.id"
-                class="relative  border rounded-lg p-6 hover:shadow-md transition-shadow duration-200">
-                <div class="flex items-center justify-between mb-4">
+                class="relative  border rounded-lg p-6 hover:shadow-md transition-shadow duration-200 text-sm">
+                <div class="flex items-center justify-between mb-4 ">
                     <h3 class="text-lg font-semibold text-[#0e141b]">{{ project.title }}</h3>
                     <span class="text-sm text-gray-500">{{ project.time_period }}</span>
                 </div>

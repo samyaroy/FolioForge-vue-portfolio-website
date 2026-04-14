@@ -2,7 +2,7 @@
   <div class="bg-white rounded-lg shadow-sm p-8">
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Articles & Blog Posts</h2>
 
-    <div v-if="articles.length" class="space-y-6">
+    <div v-if="articles.length" class="space-y-6 text-sm">
       <div v-for="(article, index) in articles" :key="article.title || index"
         class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
         <div class="flex items-start justify-between gap-4 mb-3">

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8">
+  <div class="bg-white rounded-lg shadow-sm p-8 text-sm">
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6 flex items-center">
       <svg class="w-6 h-6 mr-3 text-[#1980e6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
