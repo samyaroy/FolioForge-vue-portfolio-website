@@ -332,16 +332,16 @@ ongoing_projects:
     description: The objective was to build a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
     tech_stack: Machine Learning, NLP, Python
     type: Course Project
-    affiliation: Machine Learning Practice - Project, BS Degree (Data Science and Applications), Indian Institute of Technology Madras
+    affiliation: Machine Learning Practice - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
     guide:
     time_period: Jan 2026 - Apr 2026
     cred_link:
       kaggle: 
 
   - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
-    description: Robust music genre classification under realistic and noisy mixing conditions.
+    description: The objective was to classify music genres from noisy mashups created by mixing instrument stems from different tracks of the same genre. The main challenge was handling distribution shift between clean training data and noisy, mixed test audio
     type: Course Project
-    affiliation: DLGenAI - Project, BS Degree (Data Science and Applications), Indian Institute of Technology Madras
+    affiliation: DLGenAI - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
     tech_stack: ML, Dl
     guide: 
     collaborators: 

@@ -1,18 +1,19 @@
 <template>
   <div
-    class="border-l-4 border-[#10b981] pl-6 py-4 hover:shadow-lg transition-all duration-300 rounded-lg bg-white hover:bg-green-50">
+    class="border-l-4 border-[#10b981] pl-6 py-4 hover:shadow-lg transition-all duration-300 rounded-lg bg-white hover:bg-green-50 text-sm">
     <!-- Header -->
-    <div class="flex items-center justify-between mb-3 pr-4">
-      <div class="flex items-center gap-4">
-        <h3 class="text-lg font-semibold text-[#0e141b]">
+    <div class="flex items-start justify-between gap-4 mb-3 pr-2">
+      <div class="min-w-0 flex-1">
+        <h3 class="min-w-0 text-lg font-semibold text-[#0e141b]">
           {{ project.title }}
-          <span v-if="project.type" class="text-sm text-blue-600 bg-blue-100 px-2 py-1 rounded">
+          <!-- <span v-if="project.type" class="text-sm text-blue-600 bg-blue-100 px-2 py-1 rounded">
             {{ project.type }}
-          </span>
+          </span> -->
         </h3>
       </div>
 
-      <span v-if="project.time_period" class="text-sm text-gray-500 bg-green-100 px-2 py-1 rounded-full">
+      <span v-if="project.time_period" class="shrink-0 whitespace-nowrap flex items-center gap-1 px-2 text-sm text-gray-500">
+        <v-icon size="16">mdi-calendar-outline</v-icon>
         {{ project.time_period }}
       </span>
     </div>
@@ -20,19 +21,19 @@
     <!-- Meta Info -->
     <div class="space-y-2 mb-3">
       <p v-if="project.instructor" class="text-gray-600 flex items-center">
-        <v-icon size="small" class="mr-2">mdi-account-tie</v-icon>
+        <v-icon size="16" class="mr-2">mdi-account-tie</v-icon>
         <span class="font-medium mr-1">Instructor:</span>
-        {{ project.instructor }}
+        <SmartLink :text="project.instructor" type="Person" />
       </p>
 
       <p v-if="project.institution" class="text-gray-600 flex items-center">
-        <v-icon size="small" class="mr-2">mdi-school</v-icon>
+        <v-icon size="16" class="mr-2">mdi-school</v-icon>
         <span class="font-medium mr-1">Institution:</span>
-        {{ project.institution }}
+        <SmartLink :text="project.institution" type="Organization" />
       </p>
 
       <p v-if="project.duration" class="text-gray-600 flex items-center">
-        <v-icon size="small" class="mr-2">mdi-clock-outline</v-icon>
+        <v-icon size="16" class="mr-2">mdi-clock-outline</v-icon>
         <span class="font-medium mr-1">Duration:</span>
         {{ project.duration }}
       </p>
@@ -47,7 +48,7 @@
     <div v-if="project.affiliation" class="flex items-center gap-2 mb-4">
       <v-icon class="text-[#4e7397]" size="16">mdi-domain</v-icon>
       <p class="text-[#4e7397] text-sm">
-        Affiliation: {{ project.affiliation }}
+        Affiliation: <SmartLink :text="project.affiliation" type="Organization" />
       </p>
     </div>
 
@@ -87,6 +88,8 @@
 </template>
 
 <script setup>
+import SmartLink from '@/components/SmartLink.vue'
+
 defineProps({
   project: {
     type: Object, // FIXED (was Array — wrong)
