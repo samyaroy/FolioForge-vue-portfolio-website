@@ -332,7 +332,7 @@ ongoing_projects:
     description: The objective was to build a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
     tech_stack: Machine Learning, NLP, Python
     type: Course Project
-    affiliation: Machine Learning Practice - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
+    affiliation: MLP - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
     guide:
     time_period: Jan 2026 - Apr 2026
     cred_link:
