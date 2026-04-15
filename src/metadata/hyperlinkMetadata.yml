@@ -56,12 +56,21 @@ Institute:
         - Ministry of Agriculture & Farmers Welfare, Government of India
       Website: https://agriwelfare.gov.in/
 
+    - Name: Indian Institute of Technology Gandhinagar
+      Website: https://iitgn.ac.in/
+    
     - Name: Indian Institute of Technology Madras
       Aliases:
-        - IIT Madras BS
+        - IIT Madras
+        - Indian Institute of Technology Madras
+      Website: https://www.iitm.ac.in/
+
+    - Name: IIT Madras BS
+      Aliases:
         - BS in Data Science and Applications, Indian Institute of Technology Madras
         - IITM BS
         - Indian Institute of Technology Madras BS Degree
+        - BS Degree (Data Science and Applications), Indian Institute of Technology Madras
       Website: https://study.iitm.ac.in/ds/
 
     - Name: University of Engineering and Management
