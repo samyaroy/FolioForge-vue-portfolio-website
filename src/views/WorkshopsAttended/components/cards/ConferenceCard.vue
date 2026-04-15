@@ -1,6 +1,6 @@
 <template>
   <div class="border-l-4 border-indigo-600 pl-5 py-3 rounded-lg bg-white
-           hover:shadow-md transition-all duration-200">
+           hover:shadow-md transition-all duration-200 text-sm">
     <!-- PARENT: flex -->
     <div class="flex gap-4">
 
