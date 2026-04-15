@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l-4 border-[#a82eff] pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white">
+  <div class="border-l-4 border-[#a82eff] pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white text-sm">
     <!-- HEADER -->
     <div class="flex pr-4">
       <!-- LEFT (80%) -->

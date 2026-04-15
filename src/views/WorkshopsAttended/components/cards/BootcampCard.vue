@@ -1,7 +1,7 @@
 <template>
   <div
     class="border-l-4 border-[#32e4ff] pl-5 py-3 rounded-lg bg-white
-           hover:bg-green-50 hover:shadow-lg transition-all duration-300"
+           hover:bg-green-50 hover:shadow-lg transition-all duration-300 text-sm"
   >
     <!-- PARENT -->
     <div class="flex gap-4">

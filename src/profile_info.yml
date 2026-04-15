@@ -328,24 +328,24 @@ ongoing_projects:
   #   cred_link:
   #     github: 
 
-  - title: 'Comment Category Prediction'
-    description: Multi-feature classification system to predict the final category of user-generated comments using textual, behavioral, and system-level signals.
-    tech_stack: Machine Learning, Time Series Forecasting, Python
+  - title: 'Political Comment Classification using Reddit Data (US Election 2024)'
+    description: The objective was to build a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
+    tech_stack: Machine Learning, NLP, Python
     type: Course Project
-    affiliation: Machine Learning Practice - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
+    affiliation: Machine Learning Practice - Project, BS Degree (Data Science and Applications), Indian Institute of Technology Madras
     guide:
-    time_period: Jan 2026 - Present
+    time_period: Jan 2026 - Apr 2026
     cred_link:
       kaggle: 
 
-  - title: 'Messy Mashup'
+  - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
     description: Robust music genre classification under realistic and noisy mixing conditions.
     type: Course Project
-    affiliation: GenAI - Project, BS Degree(Data Science and Applications), Indian Institute of Technology Madras
+    affiliation: DLGenAI - Project, BS Degree (Data Science and Applications), Indian Institute of Technology Madras
     tech_stack: ML, Dl
     guide: 
     collaborators: 
-    time_period: Jan 2026 - Present
+    time_period: Jan 2026 - Apr 2026
     cred_link:
       kaggle:
 
