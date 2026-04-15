@@ -19,7 +19,7 @@
                 </div>
 
                 <!-- Meta -->
-                <div class="space-y-1 text-slate-600">
+                <div class="space-y-1 text-slate-600 text-sm">
                     <div class="flex items-center space-x-4">
                         <div>
                             <p v-if="item.institution.name" class="flex items-center">
