@@ -82,14 +82,14 @@ education:
   # Add more fields as needed
 
 internships:
-  - role: "MERN Stack Developer Intern (Cohort 4 - RSAian)"
-    company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
-    guide: Prof. Sudarshan Iyengar
-    location: Virtual
-    time_period: Feb 2026 - Present
-    description: 
-    type: Virtual Internship
-    cred_link:
+  # - role: "MERN Stack Developer Intern (Cohort 4 - RSAian)"
+  #   company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+  #   guide: Prof. Sudarshan Iyengar
+  #   location: Virtual
+  #   time_period: Feb 2026 - Present
+  #   description: 
+  #   type: Virtual Internship
+  #   cred_link:
 
   - role: Data Science Intern (Autumn 2024)
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
