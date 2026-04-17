@@ -9,11 +9,11 @@
       :projects="technicalProjects"
     />
     <OtherProjects
-      v-if="minorProjects.length"
+      v-if="showOtherProjectsSection"
       :projects="minorProjects"
     />
     <div
-      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection && !minorProjects.length"
+      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection && !showOtherProjectsSection"
       class="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500 italic"
     >
       No project sections are enabled.
@@ -52,5 +52,6 @@ const minorProjects = computed(() =>
 
 const showResearchProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showResearchProjects')
 const showTechnicalProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showTechnicalProjects')
+const showOtherProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showOtherProjects')
 
 </script>
