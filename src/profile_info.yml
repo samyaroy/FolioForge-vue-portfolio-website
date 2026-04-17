@@ -221,15 +221,15 @@ projects:
     cred_link:
       github: "https://github.com/samyaroy/quiz_pilot_master_repo"
     
-  - title: Doctor Vaahaan
-    description: Responsive website for vehicle decabonation services, deployed with Laravel, MySQL, and Bootstrap.
-    type: "Technical Project"
-    affiliation: Freelance Project
-    tech_stack: Laravel, MySQL, Bootstrap
-    guide:
-    time_period: "Nov 2024 - Dec 2024"
-    cred_link:
-      website: "https://doctorvaahaan.com/"
+  # - title: Doctor Vaahaan
+  #   description: Responsive website for vehicle decabonation services, deployed with Laravel, MySQL, and Bootstrap.
+  #   type: "Technical Project"
+  #   affiliation: Freelance Project
+  #   tech_stack: Laravel, MySQL, Bootstrap
+  #   guide:
+  #   time_period: "Nov 2024 - Dec 2024"
+  #   cred_link:
+  #     website: "https://doctorvaahaan.com/"
 
   # - title: FolioForge Portfolio Website
   #   description: Personal portfolio website built with Vue.js and Tailwind CSS, featuring dynamic content and responsive design.
