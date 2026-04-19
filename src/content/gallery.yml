@@ -14,6 +14,15 @@ items:
   #   tags: [Design, Instagram]
   #   externalUrl: https://www.instagram.com/
 
+  - id: intern-project-01
+    title: Mentored a group of Spring Interns at IDEAS-TIH
+    event:
+    location:
+    caption: I had the opportunity to mentor a group of Spring Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
+    type: gallery
+    date: 2026-03-31
+    tags: [Mentoring]
+
   - id: workshop-IDEAS-TIH-01
     title: IDEAS-TIH hosted 3rd IDEASync Industry Connet Meet 2026
     event: 3rd IDEASync Industry Connect Meet 2026
