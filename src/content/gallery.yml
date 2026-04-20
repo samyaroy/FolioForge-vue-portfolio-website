@@ -65,7 +65,7 @@ items:
   - id: workshop-06
     title: Attended Cryptology Conclave at IIT Hyderabad
     event: Cryptology Conclave 2026
-    caption: 
+    caption: An introduction to new exploration, got introduced to lattice-based cryptography, PQC an their applications and need in the conclave. Great oppetunity to learn from the bests in the country in the field of Cryptography and Network Security.
     date: 2026-01-23
     tags: [Confclave, Workshop]
     location: CSE Dept.,IIT Hyderabad
