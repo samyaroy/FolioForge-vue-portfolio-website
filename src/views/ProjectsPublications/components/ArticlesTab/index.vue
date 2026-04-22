@@ -1,12 +1,13 @@
 <template>
   <div class="space-y-8">
-    <GeneralArticle
-      v-if="showGeneralArticlesSection"
-      :articles="generalArticles"
-    />
+    
     <JournalArticle
       v-if="showJournalArticlesSection"
       :articles="journalArticles"
+    />
+    <GeneralArticle
+      v-if="showGeneralArticlesSection"
+      :articles="generalArticles"
     />
     <div
       v-if="!showGeneralArticlesSection && !showJournalArticlesSection"
