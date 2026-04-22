@@ -63,7 +63,7 @@
         <!-- Project list -->
         <ul class="grid gap-1 text-[#4e7397] text-sm">
           <li v-for="(project, index) in projects" :key="index" class="leading-tight">
-            <SmartLink :text="project" />
+           <span> &bull; </span><SmartLink :text="project" />
           </li>
         </ul>
       </div>
