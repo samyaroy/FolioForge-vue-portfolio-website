@@ -1,5 +1,10 @@
 Institute:
 
+    - Name: National Institute of Science Education and Research
+      Aliases:
+        - NISER
+      Website: https://www.niser.ac.in/
+
     - Name: Royal Statistical Society
       Website: https://www.rss.org.uk/
 

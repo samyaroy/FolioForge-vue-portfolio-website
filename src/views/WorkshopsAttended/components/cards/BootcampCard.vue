@@ -7,7 +7,7 @@
     <div class="flex gap-4">
 
       <!-- LEFT: 80% -->
-      <div class="w-[75%] space-y-2">
+      <div class="w-[80%] space-y-2">
 
         <!-- Header -->
         <div class="flex items-start gap-2">
@@ -102,7 +102,7 @@
       </div>
 
       <!-- RIGHT: 15% -->
-      <div class="w-[25%] text-right text-sm text-gray-500 space-y-1 mr-4">
+      <div class="w-[20%] text-right text-sm text-gray-500 space-y-1 mr-4">
 
         <div
           v-if="bootcamp.date"
