@@ -14,6 +14,7 @@ const publicRoutes = [
   '/internships-certifications',
   '/professional-activity',
   '/contact',
+  '/privacy-policy',
 ]
 
 // https://vite.dev/config/

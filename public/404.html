@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found</title>
+    <style>
+      :root {
+        color: #0e141b;
+        background: #f8fafc;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 640px;
+        background: #ffffff;
+        border: 1px solid #dbe4ee;
+        border-radius: 24px;
+        padding: 32px;
+        text-align: center;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: #4e7397;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 16px 0 12px;
+        font-size: 42px;
+        line-height: 1.1;
+      }
+
+      p {
+        margin: 0;
+        color: #52606d;
+        line-height: 1.6;
+      }
+
+      .actions {
+        margin-top: 28px;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 12px 20px;
+        border-radius: 12px;
+        background: #0f62fe;
+        color: #ffffff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .button:hover {
+        background: #0842a0;
+        color: #ffffff;
+      }
+    </style>
+    <script>
+      (function redirectToSpa404() {
+        var currentPath = window.location.pathname + window.location.search + window.location.hash;
+        if (window.location.pathname === '/404.html') {
+          return;
+        }
+
+        var target = '/#/404?from=' + encodeURIComponent(currentPath);
+        window.location.replace(target);
+      })();
+    </script>
+  </head>
+  <body>
+    <main class="card">
+      <p class="eyebrow">404 Error</p>
+      <h1>Page not found</h1>
+      <p>The page you requested does not exist. Use the link below to go back home.</p>
+      <div class="actions">
+        <a class="button" href="/">Go to Home</a>
+      </div>
+    </main>
+  </body>
+</html>

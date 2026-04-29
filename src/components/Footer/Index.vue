@@ -77,25 +77,25 @@
 
             <li v-if="showOngoingProjectsLink">
               <router-link to="/ongoing-projects"
-                class="text-black-300 hover:text-black transition-colors duration-200">
+                class="footer-link">
                 Ongoing Projects
               </router-link>
             </li>
             <li v-if="showInternshipCertificationsLink">
               <router-link to="/internships-certifications"
-                class="text-black-300 hover:text-black transition-colors duration-200">
+                class="footer-link">
                 Internships & Certifications
               </router-link>
             </li>
             <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
-                class="text-black-300 hover:text-black transition-colors duration-200">
+                class="footer-link">
                 Affiliations, Collaborators & Memberships
               </router-link>
             </li>
             <li v-if="showWorkshopsAttendedLink">
               <router-link to="/workshops-bootcamps-attended"
-                class="text-black-300 hover:text-black transition-colors duration-200">
+                class="footer-link">
                 Conferences, Workshops & Bootcamps attended
               </router-link>
             </li>
@@ -113,10 +113,10 @@
 
           <ul class="space-y-2">
             <li>
-              <a :href="google_scholar" target="_blank">Google Scholar</a>
+              <a :href="google_scholar" target="_blank" class="footer-link">Google Scholar</a>
             </li>
             <li>
-              <a :href="researchgate" target="_blank">ResearchGate</a>
+              <a :href="researchgate" target="_blank" class="footer-link">ResearchGate</a>
             </li>
           </ul>
         </div>
@@ -154,13 +154,24 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="flex space-x-4 mt-2 md:mt-0">
-          <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
+        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
+          <p class="text-gray-500 text-sm">
+            Looking for beta version?
+            <a
+              :href="betaVersionUrl"
+              class="footer-link text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              see here
+            </a>
+          </p>
+          <router-link
+            :to="{ name: 'PrivacyPolicy' }"
+            class="footer-link text-sm"
+          >
             Privacy Policy
-          </a>
-          <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
-            Terms of Service
-          </a>
+          </router-link>
         </div>
       </div>
 
@@ -168,7 +179,7 @@
         <div>
           <p class="text-gray-500 text-sm ml-4">
             Source code available at
-            <a class="underline hover:text-white"
+            <a class="footer-link"
               href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template" target="_blank">
               GitHub Repo
             </a>
@@ -178,11 +189,11 @@
 
           <p class="text-gray-500 text-sm mt-1">
             &#9432; Some icons used are made by
-            <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
+            <a href="https://www.flaticon.com/authors/freepik" target="_blank" class="footer-link">Freepik</a>
             &
-            <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a>
+            <a href="https://www.flaticon.com/authors/smashicons" target="_blank" class="footer-link">Smashicons</a>
             from
-            <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
+            <a href="https://www.flaticon.com/free-icons/class" target="_blank" class="footer-link">Flaticon</a>
           </p>
         </div>
 
@@ -204,7 +215,7 @@ export default {
     Logos,
   },
   data() {
-    const { profile, contacts, socials, last_updated_on } = config;
+    const { profile, contacts, socials } = config;
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
@@ -227,6 +238,7 @@ export default {
       // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
       logos: ['SNU', 'IITM', 'IDEAS'],
       last_updated_on: config.last_updated_on,
+      betaVersionUrl: profile.beta_version_url,
       showOngoingProjectsLink,
       showInternshipCertificationsLink,
       showWorkshopsAttendedLink,
@@ -247,5 +259,16 @@ export default {
   width: 100%;
   margin: 0 auto 1rem;
   border-radius: 5px;
+}
+
+.footer-link {
+  color: #646cff;
+  text-decoration: none;
+  transition: none;
+}
+
+.footer-link:hover {
+  color: #646cff;
+  text-decoration: none;
 }
 </style>
