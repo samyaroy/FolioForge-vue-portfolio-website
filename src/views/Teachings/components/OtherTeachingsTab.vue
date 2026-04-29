@@ -52,7 +52,7 @@
                 </div>
 
                 <!-- Description -->
-                <p v-if="item.description" class="text-slate-700 leading-relaxed mt-2">
+                <p v-if="item.description" class="content-justify text-slate-700 leading-relaxed mt-2">
                     {{ item.description }}
                 </p>
             </div>

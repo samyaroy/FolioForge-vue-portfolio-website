@@ -40,7 +40,7 @@
     </div>
 
     <!-- Description -->
-    <p v-if="project.description" class="text-gray-700 mb-3 text-sm leading-relaxed">
+    <p v-if="project.description" class="content-justify text-gray-700 mb-3 text-sm leading-relaxed pr-6">
       {{ project.description }}
     </p>
 

@@ -32,7 +32,7 @@
             <span class="text-gray-700"><SmartLink :type="'Institution'" :text="leadership.location" /></span>
           </div>
         </div>
-        <p class="text-gray-700 mb-3">{{ leadership.description }}</p>
+        <p class="content-justify text-gray-700 mb-3">{{ leadership.description }}</p>
         <div class="flex flex-wrap gap-2">
           <span v-for="skill in leadership.skills.split(',').map(item => item.trim())" :key="skill"
             class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">

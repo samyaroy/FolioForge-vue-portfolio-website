@@ -78,7 +78,7 @@
 
       <!-- Description -->
       <div class="col-span-2 px-6 pb-6 mt-1 relative" v-if="description">
-        <p v-for="(line, index) in description" :key="index" class="text-[#0e141b] text-sm"><v-icon
+        <p v-for="(line, index) in description" :key="index" class="content-justify text-[#0e141b] text-sm"><v-icon
             class="text-[#4e7397]" size="16">mdi-circle-small</v-icon>
           <SmartLink :text="line" />
         </p>

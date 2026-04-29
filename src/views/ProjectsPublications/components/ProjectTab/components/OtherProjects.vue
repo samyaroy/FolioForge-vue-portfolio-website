@@ -41,7 +41,7 @@
 
 
 
-                        <p class="text-gray-700 mb-3">
+                        <p class="content-justify text-gray-700 mb-3">
                             {{ project.description }}
                         </p>
 

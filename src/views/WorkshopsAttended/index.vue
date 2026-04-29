@@ -6,7 +6,7 @@
         <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
           Conferences & Workshops
         </h1>
-        <p class="text-lg text-gray-600 max-w-5xl mx-auto">
+        <p class="content-justify text-lg text-gray-600 max-w-5xl mx-auto">
           During the journey of strengthening my skills, I have attended several conferences, workshops, and participated in intensive bootcamp training in Statistics, Data Science, AI, and emerging technologies. Few of then are lsited below.
         </p>
       </div>

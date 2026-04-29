@@ -8,7 +8,7 @@
             <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
               Get in Touch
             </h1>
-            <p class="text-lg text-gray-600 max-w-6xl mx-auto">
+            <p class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
               I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!
             </p>
           </div>

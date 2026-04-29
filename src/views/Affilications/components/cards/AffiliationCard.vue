@@ -26,7 +26,7 @@
       {{ affiliation.role || affiliation.position }}
     </p>
 
-    <p v-if="affiliation.description" class="mt-3 text-gray-600 leading-relaxed">
+    <p v-if="affiliation.description" class="content-justify mt-3 text-gray-600 leading-relaxed">
       {{ affiliation.description }}
     </p>
 
@@ -51,4 +51,3 @@ defineProps({
   },
 })
 </script>
-

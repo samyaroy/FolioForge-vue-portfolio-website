@@ -12,7 +12,7 @@
         </div>
         <p v-if="poster.event" class="text-gray-700 mb-3"><v-icon size="20">mdi-calendar-text</v-icon><span class="px-3">{{ poster.event }}</span></p>
         <p v-if="poster.authors" class="text-gray-600 mb-2"><v-icon size="20">mdi-account-group</v-icon><span class="px-3">{{ poster.authors }}</span></p>
-        <p v-if="poster.description" class="text-gray-700 mb-3">{{ poster.description }}</p>
+        <p v-if="poster.description" class="content-justify text-gray-700 mb-3">{{ poster.description }}</p>
         <div v-if="poster.link" class="mb-3">
           <a :href="poster.link" target="_blank" class="text-[#1980e6] hover:underline text-sm flex items-center">
             <v-icon size="20" class="mr-1">mdi-link</v-icon> View Poster
