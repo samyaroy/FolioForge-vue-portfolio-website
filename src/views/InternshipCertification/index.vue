@@ -2,20 +2,20 @@
   <div class="min-h-screen bg-slate-50 py-8">
     <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-8">
-        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+        <h1 class="text-3xl sm:text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
           Internships & Certifications
         </h1>
-        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+        <p v-if="showPageDescription" class="content-justify text-base sm:text-lg text-gray-600 max-w-4xl mx-auto">
           {{ pageDescription }}
         </p>
       </div>
 
       <!-- Navigation Tabs -->
       <div v-if="tabs.length" class="flex justify-center mb-8">
-        <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
+        <div class="flex flex-wrap justify-center gap-1 bg-white rounded-lg p-1 shadow-sm">
           <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
-            'px-6 py-3 rounded-md text-sm font-medium transition-all duration-200',
+            'px-3 py-2 sm:px-6 sm:py-3 rounded-md text-sm font-medium transition-all duration-200',
             activeTab === tab.id
               ? 'bg-[#1980e6] text-white shadow-sm'
               : 'text-gray-600 hover:text-[#1980e6] hover:bg-gray-50'
@@ -42,12 +42,14 @@
         <div v-if="showCertificationsTab && activeTab === 'certifications'" class="mb-16">
           <div v-if="credly" class="max-w-4xl mx-auto mb-6">
             <div class="bg-white rounded-lg shadow-md flex items-center overflow-hidden">
-              <!-- Left 20%: Credly Logo -->
-              <div class="w-[20%] flex items-start justify-center px-6 pt-3 pb-3 border-r border-[#166fd1]">
-                <img :src="credlyIcon" alt="Credly logo" class="w-full max-w-[160px] h-12" />
+              <!-- Left 20%: Credly Logo. At 20% of a phone-width card the box is
+                   narrower than its own `px-6`, which crushed the logo; the
+                   padding and share both scale down below `sm`. -->
+              <div class="w-[30%] sm:w-[20%] shrink-0 flex items-start justify-center px-2 sm:px-6 pt-3 pb-3 border-r border-[#166fd1]">
+                <img :src="credlyIcon" alt="Credly logo" class="w-full max-w-[160px] h-8 sm:h-12 object-contain" />
               </div>
               <!-- Right 80%: Text -->
-              <div class="w-[80%] py-2 pl-6 pr-6">
+              <div class="w-[70%] sm:w-[80%] py-2 px-3 sm:pl-6 sm:pr-6">
                 <p class="text-sm text-[#4e7397]">
                   View my verified badges on
                   <a :href="credly" target="_blank" rel="noopener noreferrer"

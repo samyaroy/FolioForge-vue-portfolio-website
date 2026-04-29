@@ -33,9 +33,18 @@ body {
   min-height: 100vh;
 }
 
+/* Justification is an editorial nicety that only works when the measure is wide
+   enough to absorb the extra word spacing. On a phone column it produces rivers
+   and stretched lines, so the helper falls back to ragged-right below `sm`. */
 .content-justify {
-  text-align: justify;
-  text-justify: inter-word;
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .content-justify {
+    text-align: justify;
+    text-justify: inter-word;
+  }
 }
 
 /* "See more" affordances that end in a right arrow -- usually bottom-right of a
