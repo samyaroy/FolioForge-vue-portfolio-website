@@ -33,6 +33,11 @@ body {
   min-height: 100vh;
 }
 
+.content-justify {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

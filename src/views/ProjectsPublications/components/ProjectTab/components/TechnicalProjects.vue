@@ -27,7 +27,7 @@
                         {{ tag }}
                     </span>
                 </div>
-                <p class="text-gray-600 mb-4">{{ project.description }}</p>
+                <p class="content-justify text-gray-600 mb-4">{{ project.description }}</p>
 
                 <!-- Bottom-right buttons -->
                 <br />

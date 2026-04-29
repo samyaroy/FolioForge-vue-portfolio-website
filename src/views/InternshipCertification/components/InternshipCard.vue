@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <p v-if="internship.description" class="text-[#0e141b] text-base leading-relaxed mb-4">
+    <p v-if="internship.description" class="content-justify text-[#0e141b] text-base leading-relaxed mb-4">
       {{ internship.description }}
     </p>
 

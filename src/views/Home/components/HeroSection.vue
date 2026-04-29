@@ -15,7 +15,7 @@
               <h1
                 class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]" v-html="heading"></h1>
               <h2
-                class="text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
+                class="content-justify text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
                 {{ about }}
               </h2>
             </div>
@@ -89,4 +89,3 @@ const downloadCV = () => {
 <style scoped>
 /* Custom styles if needed */
 </style>
-

@@ -6,7 +6,7 @@
         <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
           Teachings
         </h1>
-        <p class="text-lg text-gray-600 max-w-4xl mx-auto">
+        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
           Courses taught, projects mentored, and other academic teaching contributions.
         </p>
       </div>
