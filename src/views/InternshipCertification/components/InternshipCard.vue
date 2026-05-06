@@ -8,7 +8,9 @@
         </div>
         <div class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-domain</v-icon>
-          <span><SmartLink :type="'Institute'" :text="internship.company" /></span>
+          <span>
+            <SmartLink :type="'Institute'" :text="internship.company" />
+          </span>
         </div>
         <div v-if="internship.department" class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-office-building</v-icon>
@@ -16,7 +18,9 @@
         </div>
         <div v-if="internship.guide" class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-account-tie</v-icon>
-          <span>Supervisor: <SmartLink :type="'Person'" :text="internship.guide" /></span>
+          <span>Supervisor:
+            <SmartLink :type="'Person'" :text="internship.guide" />
+          </span>
         </div>
         <div class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-map-marker</v-icon>
@@ -29,12 +33,14 @@
 
         <div v-if="internship.project" class="flex items-start gap-2 text-[#4e7397] text-sm mb-3">
           <v-icon size="16">mdi-folder-outline</v-icon>
-          <span v-if="internship.project.rel_link"><a :href="internship.project.rel_link">Project: {{ internship.project.title }}</a></span>
+          <span v-if="internship.project.rel_link"><a :href="internship.project.rel_link">Project: {{
+            internship.project.title }}</a></span>
           <span v-else>Project: {{ internship.project.title }}</span>
         </div>
       </div>
       <div class="ml-4 flex items-start gap-2">
-        <span v-if="internship.type" class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
+        <span v-if="internship.type"
+          class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
           {{ internship.type }}
         </span>
         <DocumentViewer :src="internship.cred_link" />
