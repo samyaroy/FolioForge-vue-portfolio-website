@@ -31,20 +31,23 @@
                     <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
                     <span>
                       <span class="font-medium">Students:</span>&nbsp;
-                      <span v-for="(student, index) in project.students" :key="getStudentKey(student, index)">
-                        <SmartLink :text="student.name" type="person" :href="student.linkedin" /><span
-                          v-if="student.email" class="ml-1"><a :href="`mailto:${student.email}`" target="_blank"
-                            rel="noopener noreferrer"><v-icon size="16"
-                              class="text-blue-700/70">mdi-email</v-icon></a></span><span
-                          v-if="index < project.students.length - 1">, </span>
+                        <span v-for="(student, index) in project.students" :key="getStudentKey(student, index)">
+                          <SmartLink :text="student.name" type="person" :href="student.linkedin" />
+                          <span v-if="student.email" class="ml-1">
+                            <a :href="`mailto:${student.email}`" target="_blank" rel="noopener noreferrer">
+                            <v-icon size="16" class="text-gray-500/90">mdi-email-outline</v-icon>
+                            </a>
+                          </span>
+                          <span
+                          v-if="index < project.students.length - 1">, &nbsp;</span>
+                          </span>
                       </span>
-                    </span>
                   </p>
                   <p v-if="project.course" class="flex items-center">
                     <v-icon size="16" class="mr-2">mdi-book-open-variant</v-icon>
-                    <span class="font-medium">Course/Paper:</span>&nbsp;{{ project.course }}
+                    <span class="font-medium">Course / Paper:</span>&nbsp;{{ project.course }}
                   </p>
-                  <p v-if="project.registration_number" class="flex items-center">
+                  <p v-if="project.registration_number" class="flex items-center mt-2">
                     <v-icon size="16" class="mr-2">mdi-identifier</v-icon>
                     <span class="font-medium">Registration No.:</span>&nbsp;
                     {{ project.registration_number }}
@@ -62,7 +65,7 @@
               </div>
             </div>
             <div v-if="getAffiliationName(project) || getAffiliationLocation(project)"
-              class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2 text-sm text-slate-600">
+              class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2 text-sm text-slate-600 mt-1">
               <div>
                 <p v-if="getAffiliationName(project)" class="flex min-w-0 items-center">
                   <v-icon size="16" class="mr-2">mdi-school</v-icon>
