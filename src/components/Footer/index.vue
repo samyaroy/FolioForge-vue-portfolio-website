@@ -6,7 +6,9 @@
 
     <div class="container mx-auto px-1 md:px-2">
       <!-- Footer content -->
-      <div class="grid grid-cols-1 gap-0 md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
+      <!-- Stacked on mobile the three blocks need vertical breathing room; side
+           by side on md they get it from the column gap instead. -->
+      <div class="grid grid-cols-1 gap-y-8 md:gap-y-0 md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
         <!-- Brand Section -->
         <div>
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
@@ -132,7 +134,7 @@
           </ul>
         </div>
 
-        <div class="grid grid-cols-1 gap-11 md:grid-cols-[max-content_max-content] md:justify-self-end pl-3">
+        <div class="grid grid-cols-1 gap-8 md:gap-11 md:grid-cols-[max-content_max-content] md:justify-self-end md:pl-3">
           <!-- Social Links -->
           <div>
             <h4 class="text-lg font-semibold mb-2">Social Links</h4>
@@ -153,6 +155,10 @@
             <div class="space-y-2 text-black-300">
               <!-- Gmail gets the animated icon; hover is driven from the whole
                    row so the 18px glyph isn't the only target. -->
+              <div v-if="address" class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-location</v-icon>
+                <span>{{ address }}</span>
+              </div>
               <div
                 v-if="gmail"
                 class="flex items-center"
@@ -175,9 +181,12 @@
                 <span>{{ location }}</span>
               </div>
             </div>
-            <div class="pt-4 pb-0">
+            <!-- The counter is a server-rendered image, so its height comes from
+                 the row count: maxflags / columns. 24 flags over 3 columns = 8
+                 rows instead of the previous 5. -->
+            <div class="pt-2 pb-0">
               <a href="https://info.flagcounter.com/Wh9G"><img
-                  src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_15/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
+                  src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
                   alt="Flag Counter" border="0"></a>
             </div>
           </div>
@@ -185,37 +194,46 @@
       </div>
 
       <!-- Bottom Section -->
-      <v-divider class="my-2 bg-gray-600"></v-divider>
+      <v-divider class="my-1 bg-gray-600"></v-divider>
 
       <div class="flex flex-col md:flex-row justify-between items-center">
         <p class="text-gray-500 text-sm">
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
-          <p v-if="showBetaVersionLink" class="text-gray-500 text-sm">
-            Looking for beta version?
-            <a
-              :href="betaVersionUrl"
-              class="footer-link text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              see here
-            </a>
-          </p>
-          <router-link
-            :to="{ name: 'PrivacyPolicy' }"
+        <p v-if="showBetaVersionLink" class="mt-2 text-gray-500 text-sm md:mt-0">
+          Looking for beta version?
+          <a
+            :href="betaVersionUrl"
             class="footer-link text-sm"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Privacy Policy
+            see here
+          </a>
+        </p>
+
+        <!-- The beta-side counterpart of the pointer above: the dashboard is a
+             beta-only route, so the link is shown exactly where it resolves.
+             The two are mutually exclusive, which keeps this bar at two items. -->
+        <p v-else-if="showCredentialsDashboardLink" class="mt-2 text-sm md:mt-0">
+          <router-link to="/credentials-dashboard" class="footer-link text-sm">
+            Credentials dashboard
           </router-link>
-        </div>
+        </p>
       </div>
 
-      <div class="flex flex-col md:flex-row justify-between items-center mt-0">
-        <div>
-          <p class="text-gray-500 text-sm ml-4">
+      <!-- Same column template as the blocks above so the privacy link lines up
+           under the "Other Links" column, level with the last-updated line. -->
+      <div
+        class="mt-1 grid grid-cols-1 gap-y-2 justify-items-center md:gap-y-0 md:items-center md:justify-items-start md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
+        <!-- Vuetify also ships a `.text-center`, and its copy is
+             `text-align:center!important` late in the bundle, so Tailwind's
+             `md:text-left` can never win. Its own `text-md-left` helper would,
+             but Vuetify's md starts at 960px while this grid goes side by side
+             at Tailwind's 768px — hence the scoped override below. -->
+        <div class="text-center footer-meta">
+          <p class="text-gray-500 text-sm footer-source">
             Source code available at
             <a class="underline hover:text-white"
               href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template" target="_blank">
@@ -235,7 +253,14 @@
           </p>
         </div>
 
-        <p class="text-gray-500 text-sm mt-2 md:mt-0">
+        <router-link
+          :to="{ name: 'PrivacyPolicy' }"
+          class="footer-link text-sm"
+        >
+          Privacy Policy
+        </router-link>
+
+        <p class="text-gray-500 text-sm shrink-0 md:justify-self-end">
           &#10038; Last updated: {{ last_updated_on }}
         </p>
       </div>
@@ -248,7 +273,7 @@ import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
-import { isStableSite } from '@/config/siteEnvironment'
+import { isBetaSite, isStableSite } from '@/config/siteEnvironment'
 
 export default {
   components: {
@@ -269,6 +294,7 @@ export default {
 
     return {
       profile,
+      address: contacts.address,
       gmail: contacts.gmail,
       email: contacts.email,
       phone: contacts.phone,
@@ -283,10 +309,13 @@ export default {
       // Only the stable site points at beta; on beta itself the header badge
       // already points the other way, and on localhost neither applies.
       showBetaVersionLink: Boolean(profile.betaVersionUrl) && isStableSite(),
+      // Mirrors the router's betaOnly guard, so the link is only ever offered
+      // where /credentials-dashboard actually resolves instead of redirecting.
+      showCredentialsDashboardLink: isBetaSite(),
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},   
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
       // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
-      logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},  
+      logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'University of Calcutta'},  
       // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute'},
 
       last_updated_on: config.last_updated_on,
@@ -312,6 +341,21 @@ export default {
   width: 100%;
   margin: 0 auto 1rem;
   border-radius: 5px;
+}
+
+/* Beats Vuetify's `.text-center { text-align: center !important }` — the scoped
+   attribute selector adds the specificity, `!important` matches its weight — at
+   Tailwind's md breakpoint rather than Vuetify's 960px one. */
+@media (min-width: 768px) {
+  .footer-meta {
+    text-align: left !important;
+  }
+
+  /* Only the source-code lines tuck under the "2026" (the copyright line's "© "
+     measures 16.14px here); the icon attribution below stays flush left. */
+  .footer-source {
+    margin-left: 1rem;
+  }
 }
 
 .footer-link {
