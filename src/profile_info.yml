@@ -511,6 +511,16 @@ attended_bootcamps:
     location: "Rupnagar, PB"
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
 
+  # - title: Foundational Lecture Series on Theoretical Computer Science 2026
+  #   instructor:
+  #   institution:
+  #     - name: The Institute of Mathematical Sciences
+  #     - name: Homi Bhabha National Institute
+  #   date: "June 2026"
+  #   duration: "2 Weeks"
+  #   location: "Chennai, TN"
+  #   cred_link: 
+    
   # - title: "Summer Outreach Programme in Computing (SOPC)"
   #   instructor:
   #   institution:

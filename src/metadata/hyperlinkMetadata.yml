@@ -128,6 +128,16 @@ Institute:
     - Name: International Statistical Institute
       Website: https://isi-web.org/
 
+    - Name: Homi Bhabha National Institute
+      Website: https://www.hbni.ac.in/
+
+    - Name: Institute of Mathematical Sciences
+      Aliases:
+        - Institute of Mathematical Sciences, Chennai
+        - IMSc
+        - The Institute of Mathematical Sciences
+      Website: https://www.imsc.res.in/
+
 Person:
 
     - Name: Prof. Sudarshan Iyengar
