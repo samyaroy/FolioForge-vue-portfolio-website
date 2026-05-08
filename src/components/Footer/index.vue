@@ -225,7 +225,9 @@ export default {
       google_scholar: socials.google_scholar,
       researchgate: socials.researchgate,
       // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
-      logos: ['SNU', 'IITM', 'IDEAS'],
+      logos: ['SNU', 'IITM', 'IDEAS-ISI'],
+      // logos: ['SNU', 'IITM', 'IDEAS'],
+
       last_updated_on: config.last_updated_on,
       showOngoingProjectsLink,
       showInternshipCertificationsLink,
