@@ -1,5 +1,10 @@
 Institute:
 
+    - Name: National Institute of Science Education and Research
+      Aliases:
+        - NISER
+      Website: https://www.niser.ac.in/
+
     - Name: Royal Statistical Society
       Website: https://www.rss.org.uk/
 
@@ -122,6 +127,16 @@ Institute:
 
     - Name: International Statistical Institute
       Website: https://isi-web.org/
+
+    - Name: Homi Bhabha National Institute
+      Website: https://www.hbni.ac.in/
+
+    - Name: Institute of Mathematical Sciences
+      Aliases:
+        - Institute of Mathematical Sciences, Chennai
+        - IMSc
+        - The Institute of Mathematical Sciences
+      Website: https://www.imsc.res.in/
 
 Person:
 
