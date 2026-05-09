@@ -9,7 +9,7 @@
 
         <!-- Header -->
         <div class="flex items-start">
-         <h3 class="text-lg font-semibold text-slate-900">
+         <h3 class="text-md font-semibold text-slate-900">
   {{ conference.title }}
   
   <a

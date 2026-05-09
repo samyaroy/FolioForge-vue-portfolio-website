@@ -5,7 +5,7 @@
       <!-- LEFT (80%) -->
       <div class="w-[85%]">
         <div>
-          <h3 class="text-lg font-semibold text-[#0e141b]">
+          <h3 class="text-md font-semibold text-[#0e141b]">
             {{ workshop.title }}
             <span v-if="workshop.cred_link" class="inline-block ml-1 align-middle">
               <DocumentViewer :src="workshop.cred_link" />
@@ -57,7 +57,7 @@
       </div>
 
       <!-- RIGHT (20%) -->
-      <div class="w-[15%] text-sm text-gray-500 flex flex-col items-start">
+      <div :class="metaColumnClass">
         <!-- Date -->
         <span>{{ workshop.date }}</span>
 
@@ -91,12 +91,21 @@ import DocumentViewer from '@/components/DocumentViewer.vue'
 
 import inPersonIcon from '@/assets/icons/persons-in-a-class-by-flaticon.png'
 
-defineProps({
+const props = defineProps({
   workshop: {
     type: Object,
     required: true
+  },
+  compactMetaText: {
+    type: Boolean,
+    default: false
   }
 })
+
+const metaColumnClass = [
+  'w-[15%] text-gray-500 flex flex-col items-start',
+  props.compactMetaText ? 'text-xs' : 'text-sm'
+]
 </script>
 
 <style scoped>

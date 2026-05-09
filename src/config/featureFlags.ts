@@ -44,7 +44,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showWorkshopsAttended: {
     showConferences: true,
     showFDPs: false,
-    showWorkshops: true,
+    showWorkshops:{
+      main: true,
+      others: false,
+    },
     showBootcamps: true,
     showOther: false,
   },

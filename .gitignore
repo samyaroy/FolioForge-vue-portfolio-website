@@ -31,3 +31,9 @@ src/components/Footer/Index.vue
 
 .env
 
+.github
+.codex
+.vscode
+.idea
+.DS_Store
+.copilot

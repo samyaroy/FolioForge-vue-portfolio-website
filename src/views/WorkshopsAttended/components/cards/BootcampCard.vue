@@ -9,7 +9,7 @@
 
         <!-- Header -->
         <div class="flex items-start gap-2">
-          <h3 class="text-lg font-semibold text-[#0e141b]">
+          <h3 class="text-md font-semibold text-[#0e141b]">
             {{ bootcamp.title }}
             <span v-if="bootcamp.cred_link" class="inline-block ml-1 align-middle">
               <DocumentViewer :src="bootcamp.cred_link" />
