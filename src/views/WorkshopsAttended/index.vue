@@ -46,6 +46,9 @@
         <WorkshopsTab
           v-if="showWorkshopsTab && activeTab === 'workshops'"
           :workshops="attendedWorkshops"
+          :other-learning-engagements="attendedOtherWorkshops"
+          :show-main="showWorkshopsMain"
+          :show-other-learning-engagements="showWorkshopsOthers"
         />
         <BootcampsTab
           v-if="showBootcampsTab && activeTab === 'bootcamps'"
@@ -74,19 +77,23 @@ import { isFeatureEnabled } from '@/config/featureFlags'
 const {
   attended_workshops,
   attended_webinars_n_others,
+  attended_other_workshops,
   attended_bootcamps,
   attended_conferences,
   attended_fdps,
 } = config
 const attendedWorkshops = attended_workshops || []
 const attendedOther = attended_webinars_n_others || []
+const attendedOtherWorkshops = attended_other_workshops || []
 const attendedBootcamps = attended_bootcamps || []
 const attendedConferences = attended_conferences || []
 const attendedFDPs = attended_fdps || []
 
 const showConferencesTab = isFeatureEnabled('showWorkshopsAttended.showConferences')
 const showFDPsTab = isFeatureEnabled('showWorkshopsAttended.showFDPs')
-const showWorkshopsTab = isFeatureEnabled('showWorkshopsAttended.showWorkshops')
+const showWorkshopsTab = isFeatureEnabled('showWorkshopsAttended.showWorkshops', { mode: 'any' })
+const showWorkshopsMain = isFeatureEnabled('showWorkshopsAttended.showWorkshops.main')
+const showWorkshopsOthers = isFeatureEnabled('showWorkshopsAttended.showWorkshops.others')
 const showOtherTab = isFeatureEnabled('showWorkshopsAttended.showOther')
 const showBootcampsTab = isFeatureEnabled('showWorkshopsAttended.showBootcamps')
 

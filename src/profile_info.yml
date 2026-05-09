@@ -500,8 +500,40 @@ attended_webinars_n_others:
     mode: "Online"
     cred_link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
 
+attended_other_workshops:
+  - title: "Audio & Image Analysis Using Python"
+    instructor: "Prof. Vikranth Racherla"
+    institution:
+      - name: "Indian Institute of Technology Kharagpur"
+        department: "CoEAT/CRR"
+        location: "Kharagpur, WB"
+    date: "28 - 29 March, 2026"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/1aEEaQGAKpGacIqCPVnrizCZJSZkQU-FV/preview
+
+  - title: "Mathematical Foundations for Machine Learning"
+    instructor:
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        role:
+    date: "August, 2025"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/1Z7AeZgeEIFE5n4hTHaGVRDAnmLiLuaGT/preview
+
+  - title: "Implementing Machine Learning Techniques using Numpy"
+    instructor:
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        role:
+    date: "September, 2025"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/14daqILuPpEPdDhKmm02byokI4rKJ3sbp/preview
+
+  
 attended_bootcamps:
-  - title: "AI VicharanasShala Bootcamp"
+  - title: "AI Vicharana Shala Bootcamp"
     instructor: "Prof. Sudarshan Iyengar"
     institution:
       - name: "Indian Institute of Technology Ropar"

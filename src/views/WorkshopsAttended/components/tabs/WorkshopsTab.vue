@@ -1,6 +1,22 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div v-if="workshopsByYear.length > 0">
+    <div v-if="showOtherLearningEngagements" class="text-sm text-end">
+      <a
+        href="#other-learning-engagements"
+        class="inline-flex items-center  font-medium text-[#1980e6] hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-[#1980e6] focus:ring-offset-2"
+        @click.prevent="isOtherLearningModalOpen = true"
+      >
+        <span>Other Learning Engagements</span>
+        <v-icon size="14">mdi-arrow-right</v-icon>
+      </a>
+    </div>
+
+    <OtherLearningEngagementsModal
+      v-model="isOtherLearningModalOpen"
+      :engagements="otherLearningEngagements"
+    />
+
+    <div v-if="showMain && workshopsByYear.length > 0">
       <div v-for="yearGroup in workshopsByYear" :key="yearGroup.year" class="mb-12">
         <!-- Year Divider -->
         <div class="flex items-center gap-4 mb-6">
@@ -16,22 +32,41 @@
       </div>
     </div>
     
-    <div v-else class="text-center py-12">
+    <div v-else-if="showMain" class="text-center py-12">
       <p class="text-gray-500 text-lg">No workshops attended yet</p>
+    </div>
+
+    <div v-else-if="!showOtherLearningEngagements" class="text-center py-12">
+      <p class="text-gray-500 text-lg">Workshops are currently hidden</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import WorkshopCard from '../cards/WorkshopCard.vue'
+import OtherLearningEngagementsModal from '../modal/OtherLearningEngagementsModal.vue'
 
 const props = defineProps({
   workshops: {
     type: Array,
     default: () => []
+  },
+  otherLearningEngagements: {
+    type: Array,
+    default: () => []
+  },
+  showMain: {
+    type: Boolean,
+    default: true
+  },
+  showOtherLearningEngagements: {
+    type: Boolean,
+    default: true
   }
 })
+
+const isOtherLearningModalOpen = ref(false)
 
 // Utility function to extract year from date string
 function extractYear(dateString) {

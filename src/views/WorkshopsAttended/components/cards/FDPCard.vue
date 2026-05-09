@@ -5,7 +5,7 @@
       <!-- LEFT (80%) -->
       <div class="w-[85%]">
         <div>
-          <h3 class="text-lg font-semibold text-[#0e141b]">
+          <h3 class="text-md font-semibold text-[#0e141b]">
             {{ fdp.title }}
             <span v-if="fdp.cred_link" class="inline-block ml-1 align-middle">
               <DocumentViewer :src="fdp.cred_link" />
