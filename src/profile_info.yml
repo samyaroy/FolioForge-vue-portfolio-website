@@ -1,5 +1,5 @@
 # config.yml
-last_updated_on: Mar 2026
+last_updated_on: May 2026
 
 profile:
   name: Samyabrata Roy
@@ -189,11 +189,34 @@ certifications:
     certificate: true
 
 projects:
+  - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
+    type: Research Project
+    description: Built a deep learning pipeline for robust music genre classification under noisy mashup conditions, simulating distribution shift beyond clean training data and achieving 87% accuracy. Generated on-the-fly same-genre mashups from multi-stem audio, engineered Mel-spectrogram/MFCC representations with environmental noise augmentation, and trained CNN classifiers using both from-scratch and pretrained backbones.
+    affiliation: Diploma Project (DLGenAI), BS in Data Science and Applications, `Indian Institute of Technology Madras`
+    logo : ['IITM']
+    tech_stack: Data Augmentation, Audio Classification, CNN, CRNN,  ResNet18, EfficientNet B0
+    time_period: Jan 2026 - Apr 2026
+    cred_link:
+      report: https://drive.google.com/file/d/1Mpb0flVqw7FS4XTDYXEJvqx9agT7P-Ih/view?usp=drive_link
+      github: https://github.com/22f2001443/MessyMashup-dl-genai-peoject
+      kaggle: 
+
+  - title: Political Comment Classification using Reddit Data (US Election 2024)
+    type: Research Project
+    description: Built a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
+    affiliation: Diploma Project (MLP), BS in Data Science and Applications, `Indian Institute of Technology Madras`
+    logo : ['IITM']
+    tech_stack: NLP, Logistic Regression, Random Forest, XGBoost, Naive Bayes, Python
+    guide:
+    time_period: Jan 2026 - Apr 2026
+    cred_link:
+      github: https://github.com/22f2001443/Comment-Category-Prediction-MLP_P-t1_2026
+
   - title: 'Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset'
     description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
     type: Research Project
     doi: 10.13140/RG.2.2.16657.13926
-    affiliation:  BSc. (Hons.) Degree Project, `Sister Nivedita University`
+    affiliation:  Degree Project, BSc. (Hons.) in Statistics , `Sister Nivedita University`
     logo : ['SNU']
     tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
     guide:
@@ -331,6 +354,7 @@ posters:
   #   tags: ["Statistical Modeling", "Deep Learning", "Time Series"]
 
 ongoing_projects:
+  
   # - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
   #   description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.
   #   type: Research Project
@@ -342,34 +366,25 @@ ongoing_projects:
   #   cred_link:
   #     github: 
 
-  - title: 'Political Comment Classification using Reddit Data (US Election 2024)'
-    description: The objective was to build a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
-    tech_stack: Machine Learning, NLP, Python
-    type: Course Project
-    affiliation: MLP - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
-    guide:
-    time_period: Jan 2026 - Apr 2026
-    cred_link:
-      kaggle: 
-
-  - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
-    description: The objective was to classify music genres from noisy mashups created by mixing instrument stems from different tracks of the same genre. The main challenge was handling distribution shift between clean training data and noisy, mixed test audio
-    type: Course Project
-    affiliation: DLGenAI - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
-    tech_stack: ML, Dl
-    guide: 
-    collaborators: 
-    time_period: Jan 2026 - Apr 2026
-    cred_link:
-      kaggle:
+  # - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
+  #   description: The objective was to classify music genres from noisy mashups created by mixing instrument stems from different tracks of the same genre. The main challenge was handling distribution shift between clean training data and noisy, mixed test audio
+  #   type: Course Project
+  #   affiliation: DLGenAI - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
+  #   tech_stack: ML, Dl
+  #   guide: 
+  #   collaborators: 
+  #   time_period: Jan 2026 - Apr 2026
+  #   cred_link:
+  #     kaggle:
 
   # Add more fields as needed
-# awards:
-#   - title: Award Title
-#     year: 2021
-#     organization: Tech Company 1
-#     category: Academic
-#     prize: First Place
+
+awards:
+  # - title: Award Title
+  #   year: 2021
+  #   organization: Tech Company 1
+  #   category: Academic
+  #   prize: First Place
 
 co_curriculars:
   - title: leadership_roles

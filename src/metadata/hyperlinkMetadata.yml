@@ -1,18 +1,31 @@
 Institute:
 
-    - Name: National Institute of Science Education and Research
+    - Name: Homi Bhabha National Institute
+      Website: https://www.hbni.ac.in/
+
+    - Name: Indian Institute of Technology Bombay
+      Website: https://www.iitb.ac.in/
+
+    - Name: Indian Institute of Technology Gandhinagar
+      Website: https://iitgn.ac.in/
+
+    - Name: Indian Institute of Technology Hyderabad
+      Website: https://www.iith.ac.in/
+
+    - Name: Indian Institute of Technology Kanpur
+      Website: https://www.iitk.ac.in/
+
+    - Name: Indian Institute of Technology Kharagpur
+      Website: https://www.iitkgp.ac.in/
+
+    - Name: Indian Institute of Technology Madras
       Aliases:
-        - NISER
-      Website: https://www.niser.ac.in/
+        - IIT Madras
+        - Indian Institute of Technology Madras
+      Website: https://www.iitm.ac.in/
 
-    - Name: Royal Statistical Society
-      Website: https://www.rss.org.uk/
-
-    - Name: Johns Hopkins University
-      Website: https://www.jhu.edu/
-
-    - Name: Whiting School of Engineering, Johns Hopkins University
-      Website: https://engineering.jhu.edu/
+    - Name: Indian Institute of Technology Ropar
+      Website: https://www.iitrpr.ac.in/
 
     - Name: Indian Statistical Institute
       Aliases:
@@ -20,17 +33,12 @@ Institute:
         - ISI Kolkata
       Website: https://www.isical.ac.in/
 
-    - Name: Indian Institute of Technology Hyderabad
-      Website: https://www.iith.ac.in/
-
-    - Name: Isaac Newton Institute for Mathematical Sciences
-      Website: https://www.newton.ac.uk/
-
-    - Name: Indian Institute of Technology Bombay
-      Website: https://www.iitb.ac.in/
-
-    - Name: Indian Institute of Technology Ropar
-      Website: https://www.iitrpr.ac.in/
+    - Name: Institute of Mathematical Sciences
+      Aliases:
+        - Institute of Mathematical Sciences, Chennai
+        - IMSc
+        - The Institute of Mathematical Sciences
+      Website: https://www.imsc.res.in/
 
     - Name: International Institute of Technology (IIIT) Hyderabad
       Aliases:
@@ -38,13 +46,51 @@ Institute:
         - International Institute of Information Technology Hyderabad
       Website: https://www.iiit.ac.in/
 
-    - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+    - Name: Isaac Newton Institute for Mathematical Sciences
+      Website: https://www.newton.ac.uk/
+
+    - Name: Johns Hopkins University
+      Website: https://www.jhu.edu/
+
+    - Name: National Institute of Science Education and Research
       Aliases:
-        - Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
-        - Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
-        - IDEAS-TIH
-        - IDEAS - TIH
-      Website: https://www.ideas-tih.org/
+        - NISER
+      Website: https://www.niser.ac.in/
+
+    - Name: Sister Nivedita University
+      Website: https://snuniv.ac.in/
+
+    - Name: St. Xavier’s College (Autonomous), Kolkata
+      Aliases:
+        - St. Xavier's College (Autonomous), Kolkata
+      Website: https://www.sxccal.edu/
+
+    - Name: University of Engineering and Management
+      Website: https://uem.edu.in/
+
+    - Name: Whiting School of Engineering, Johns Hopkins University
+      Website: https://engineering.jhu.edu/
+
+
+    - Name: IIT Madras BS
+      Aliases:
+        - BS in Data Science and Applications, Indian Institute of Technology Madras
+        - IITM BS
+        - Indian Institute of Technology Madras BS Degree
+        - BS Degree (Data Science and Applications), Indian Institute of Technology Madras
+      Website: https://study.iitm.ac.in/ds/
+
+    - Name: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
+      Aliases:
+        - Postgraduate Department of Data Science, St. Xavier's College (Autonomous), Kolkata
+      Website: https://sxccal.edu/postgraduate-department-of-data-science
+
+
+    - Name: Information Security Education and Awareness
+      Aliases:
+        - Information Security Education and Awareness (ISEA)
+        - ISEA
+      Website: https://isea.gov.in/
 
     - Name: Mahalanobis National Crop Forecast Centre (MNCFC)
       Aliases:
@@ -61,48 +107,14 @@ Institute:
         - Ministry of Agriculture & Farmers Welfare, Government of India
       Website: https://agriwelfare.gov.in/
 
-    - Name: Indian Institute of Technology Gandhinagar
-      Website: https://iitgn.ac.in/
-    
-    - Name: Indian Institute of Technology Madras
+
+    - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
       Aliases:
-        - IIT Madras
-        - Indian Institute of Technology Madras
-      Website: https://www.iitm.ac.in/
-
-    - Name: IIT Madras BS
-      Aliases:
-        - BS in Data Science and Applications, Indian Institute of Technology Madras
-        - IITM BS
-        - Indian Institute of Technology Madras BS Degree
-        - BS Degree (Data Science and Applications), Indian Institute of Technology Madras
-      Website: https://study.iitm.ac.in/ds/
-
-    - Name: University of Engineering and Management
-      Website: https://uem.edu.in/
-
-    - Name: Indian Institute of Technology Kanpur
-      Website: https://www.iitk.ac.in/
-
-    - Name: Sister Nivedita University
-      Website: https://snuniv.ac.in/
-
-    - Name: Coursera
-      Website: https://www.coursera.org/
-
-    - Name: NPTEL
-      Website: https://nptel.ac.in/
-
-    - Name: Chandigarh Institute of Technology and Consultancy
-      Website: https://citcchandigarh.com/
-
-    - Name: Nava Nalanda High School
-      Website: https://navanalanda.org.in/
-
-    - Name: St. Xavier’s College (Autonomous), Kolkata
-      Aliases:
-        - St. Xavier's College (Autonomous), Kolkata
-      Website: https://www.sxccal.edu/
+        - Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+        - Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
+        - IDEAS-TIH
+        - IDEAS - TIH
+      Website: https://www.ideas-tih.org/
 
     - Name: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
       Aliases:
@@ -110,33 +122,30 @@ Institute:
         - VLED, Indian Institute of Technology Ropar
         - VLED
       Website: https://vicharanashala.ai/
- 
-    - Name: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
-      Aliases:
-        - Postgraduate Department of Data Science, St. Xavier's College (Autonomous), Kolkata
-      Website: https://sxccal.edu/postgraduate-department-of-data-science
 
-    - Name: Information Security Education and Awareness
-      Aliases:
-        - Information Security Education and Awareness (ISEA)
-        - ISEA
-      Website: https://isea.gov.in/
-
-    - Name: National Institute of Statistical Sciences
-      Website: https://www.niss.org/
 
     - Name: International Statistical Institute
       Website: https://isi-web.org/
 
-    - Name: Homi Bhabha National Institute
-      Website: https://www.hbni.ac.in/
+    - Name: National Institute of Statistical Sciences
+      Website: https://www.niss.org/
 
-    - Name: Institute of Mathematical Sciences
-      Aliases:
-        - Institute of Mathematical Sciences, Chennai
-        - IMSc
-        - The Institute of Mathematical Sciences
-      Website: https://www.imsc.res.in/
+    - Name: Royal Statistical Society
+      Website: https://www.rss.org.uk/
+
+
+    - Name: Coursera
+      Website: https://www.coursera.org/
+
+    - Name: NPTEL
+      Website: https://nptel.ac.in/
+
+
+    - Name: Chandigarh Institute of Technology and Consultancy
+      Website: https://citcchandigarh.com/
+
+    - Name: Nava Nalanda High School
+      Website: https://navanalanda.org.in/
 
 Person:
 
