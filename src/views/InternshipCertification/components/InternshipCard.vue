@@ -19,23 +19,31 @@
         <div v-if="internship.guide" class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-account-tie</v-icon>
           <span>Supervisor:
-            <SmartLink :type="'Person'" :text="internship.guide" />
-          </span>
+            <SmartLink :type="'Person'" :text="internship.guide.name" /><span v-if="internship.guide.designation">,
+            </span>
+          </span><span v-if="internship.guide.designation">{{ internship.guide.designation }}</span>
         </div>
         <div class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-map-marker</v-icon>
           <span>{{ internship.location }}</span>
         </div>
-        <div class="flex items-start gap-2 text-[#4e7397] text-sm mb-3">
+        <div class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-calendar</v-icon>
           <span>{{ internship.time_period }}</span>
         </div>
 
-        <div v-if="internship.project" class="flex items-start gap-2 text-[#4e7397] text-sm mb-3">
-          <v-icon size="16">mdi-folder-outline</v-icon>
-          <span v-if="internship.project.rel_link"><a :href="internship.project.rel_link">Project: {{
-            internship.project.title }}</a></span>
-          <span v-else>Project: {{ internship.project.title }}</span>
+        <div v-if="projectList.length"
+          class="grid grid-cols-[auto,auto,1fr] gap-x-2 text-[#4e7397] text-sm mb-3 items-start">
+          <v-icon size="16" class="mt-[2px]">mdi-puzzle-outline</v-icon>
+          <span class="font-medium whitespace-nowrap">Project(s):</span>
+          <ul class="grid">
+            <li v-for="(project, index) in projectList" :key="index" class="leading-tight">
+              <span v-if="projectList.length > 1">&bull; </span>
+              <a v-if="project.cred_link" :href="project.cred_link" target="_blank" rel="noopener">{{ project.title
+                }}</a>
+              <span v-else>{{ project.title }}</span>
+            </li>
+          </ul>
         </div>
       </div>
       <div class="ml-4 flex items-start gap-2">
@@ -61,13 +69,20 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 
-defineProps({
+const props = defineProps({
   internship: {
     type: Object,
     required: true
   }
+})
+
+const projectList = computed(() => {
+  const p = props.internship.project
+  if (!p) return []
+  return Array.isArray(p) ? p : [p]
 })
 </script>

@@ -47,7 +47,7 @@
           <div class="flex items-center justify-end gap-1 empty:hidden">
             <template v-for="(logo, index) in certification.logo" :key="logo">
               <img :src="getLogoPath(logo)" :alt="logo" :title="logo"
-                class="max-h-4 md:max-h-6 object-contain" @error="handleLogoError">
+                class="h-5 md:h-7 w-auto object-contain" @error="handleLogoError">
               <span v-if="index < certification.logo.length - 1" class="text-slate-500/50"> </span>
             </template>
           </div>
