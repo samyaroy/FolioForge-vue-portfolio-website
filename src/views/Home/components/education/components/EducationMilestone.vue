@@ -42,16 +42,48 @@
             <DocumentViewer :src="cred_link" />
           </span>
         </p>
+        <div v-if="subFields.length" class="mt-0.5 space-y-0.5">
+          <div
+            v-for="subFieldEntry in subFields"
+            :key="`${subFieldEntry.label}:${subFieldEntry.name}`"
+            class="flex items-center gap-2"
+          >
+            <v-icon class="text-[#4e7397]" size="15">
+              mdi-certificate-outline
+            </v-icon>
+            <p class="text-slate-700 text-[15px] font-medium leading-normal">
+              {{ subFieldEntry.text }}
+            </p>
+            <span v-if="subFieldEntry.credLink" class="inline-block align-middle">
+              <DocumentViewer :src="subFieldEntry.credLink" :size="15" />
+            </span>
+          </div>
+        </div>
       </div>
 
-      <!-- Time -->
-      <div class="flex items-center gap-2 mt-1">
-        <v-icon class="text-[#4e7397]" size="16">
-          mdi-calendar
-        </v-icon>
-        <p class="text-[#4e7397] text-base font-normal leading-normal">
-          {{ time }}
-        </p>
+      <!-- Time, plus how far along the programme is when it's still running -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-1 mt-1">
+        <div class="flex items-center gap-2">
+          <v-icon class="text-[#4e7397]" size="16">
+            mdi-calendar
+          </v-icon>
+          <!-- 15px: a step down from the title's text-base, still a step above
+               the text-sm institution/location row below. -->
+          <p class="text-[#4e7397] text-[15px] font-normal leading-normal">
+            {{ time }}
+          </p>
+        </div>
+
+        <div v-if="currentLevel" class="flex items-center gap-2">
+          <v-icon class="text-[#4e7397]" size="16">
+            mdi-progress-clock
+          </v-icon>
+          <!-- 15px: a step down from the title's text-base, still a step above
+               the text-sm institution/location row below. -->
+          <p class="text-[#4e7397] text-[15px] font-normal leading-normal">
+            {{ currentLevel }}
+          </p>
+        </div>
       </div>
 
       <!-- Campus, Institution & Location -->
@@ -116,10 +148,13 @@ import CourseCirriculumModal from './CourseCirriculumModal.vue'
 const props = defineProps({
   title: { type: String, required: true },
   subject: { type: String, default: '' },
+  subField: { type: [String, Array, Object], default: '' },
+  subFieldCredLink: { type: String, default: '' },
   time: { type: String, required: true },
   institution: { type: String, required: true },
   location: { type: String, required: true },
   campus: { type: String, default: '' },
+  currentLevel: { type: String, default: '' },
   category: { type: String, default: '' },
   extra: { type: String, default: '' },
   icon: { type: String, default: 'mdi-school' },
@@ -131,6 +166,52 @@ const props = defineProps({
 })
 
 const showCurriculumModal = ref(false)
+
+function formatSubFieldText(label, name) {
+  const normalizedLabel = String(label || '').trim()
+  if (!normalizedLabel) return name
+
+  if (normalizedLabel.toLowerCase() === 'minor') {
+    return `Minor in ${name}`
+  }
+
+  return `${normalizedLabel} in ${name}`
+}
+
+function normalizeSubField(value) {
+  if (!value) return null
+
+  if (typeof value === 'string') {
+    const label = 'Minor'
+    return {
+      name: value,
+      label,
+      text: formatSubFieldText(label, value),
+      credLink: props.subFieldCredLink || '',
+    }
+  }
+
+  const name = value.name || value.title || value.value || ''
+  if (!name) return null
+  const label = value.label || 'Minor'
+
+  return {
+    name,
+    label,
+    text: formatSubFieldText(label, name),
+    credLink:
+      value.cred_link ||
+      value.credential_link ||
+      value.credentialLink ||
+      props.subFieldCredLink ||
+      '',
+  }
+}
+
+const subFields = computed(() => {
+  const entries = Array.isArray(props.subField) ? props.subField : [props.subField]
+  return entries.map(normalizeSubField).filter(Boolean)
+})
 
 const hasCurriculum = computed(() =>
   props.cirriculum && Object.keys(props.cirriculum).some(k => k !== 'link')
