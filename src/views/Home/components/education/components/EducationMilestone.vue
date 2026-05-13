@@ -23,7 +23,22 @@
         <p class="text-[#0e141b] text-base font-medium leading-normal">
           {{ title }}
           <span v-if="subject">in {{ subject }}</span>
-          <span v-if="cred_link" class="inline-block ml-1 align-middle">
+          <span v-if="hasCurriculum" class="inline-block ml-2 align-middle">
+            <v-tooltip text="View Curriculum" location="top">
+              <template #activator="{ props: tooltipProps }">
+                <v-icon
+                  v-bind="tooltipProps"
+                  size="16"
+                  class="cursor-pointer text-[#4e7397] hover:text-[#1980e6] transition-colors"
+                  @click="showCurriculumModal = true"
+                >
+                  mdi-information-variant-circle-outline
+                </v-icon>
+              </template>
+            </v-tooltip>
+          </span>
+
+          <span v-if="cred_link" class="inline-block ml-4 align-middle">
             <DocumentViewer :src="cred_link" />
           </span>
         </p>
@@ -70,16 +85,23 @@
         </p>
       </div>
     </div>
+
+    <!-- Curriculum Modal -->
+    <CourseCirriculumModal
+      v-model="showCurriculumModal"
+      :cirriculum="cirriculum"
+      :degree-name="subject ? `${title} in ${subject}` : title"
+    />
   </div>
 </template>
 
-
-
 <script setup>
+import { ref, computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import CourseCirriculumModal from './CourseCirriculumModal.vue'
 
-defineProps({
+const props = defineProps({
   title: { type: String, required: true },
   subject: { type: String, default: '' },
   time: { type: String, required: true },
@@ -90,6 +112,13 @@ defineProps({
   iconColor: { type: String, default: 'text-[#1980e6]' },
   isFirst: { type: Boolean, default: false },
   isLast: { type: Boolean, default: false },
-  cred_link: { type: String, default: '' }
+  cred_link: { type: String, default: '' },
+  cirriculum: { type: Object, default: () => ({}) }
 })
+
+const showCurriculumModal = ref(false)
+
+const hasCurriculum = computed(() =>
+  props.cirriculum && Object.keys(props.cirriculum).some(k => k !== 'link')
+)
 </script>
