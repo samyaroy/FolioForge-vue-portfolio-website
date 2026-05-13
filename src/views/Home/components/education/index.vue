@@ -20,6 +20,7 @@
         :isFirst="index === 0"
         :isLast="index === education.length - 1"
         :cred_link="edu.cred_link || '#'"
+        :cirriculum="edu.cirriculum|| {}"
       />
 
       <!-- See certification link -->
