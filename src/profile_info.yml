@@ -305,16 +305,16 @@ internships:
   #   type: Virtual Internship
   #   cred_link:
 
-  # - role: Summer Intern (Vicharanashala Summership 2026 - VINS)
-  #   company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
-  #   location: Romote
-  #   time_period: 15 May 2026 - 15 July 2026
-  #   guide:
-  #     name: Prof. Sudarshan Iyengar
-  #     designation: Principal Investigator, Vicharanashala Lab for Education Design
-  #   description: 
-  #   cred_link:
-  #   project:
+  - role: Summer Intern (Vicharanashala Summership 2026 - VINS)
+    company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+    location: Romote
+    time_period: 15 May 2026 - 15 July 2026
+    guide:
+      name: Prof. Sudarshan Iyengar
+      designation: Principal Investigator, Vicharanashala Lab for Education Design
+    description: 
+    cred_link:
+    project:
 
 
   - role: Data Science Intern (Autumn 2024)
@@ -654,7 +654,7 @@ attended_fdps:
   #     - name: "Indian Institute of Technology Roorkee"
         
   #   date: "18 -29 May 2026"  
-  #   duration: "7 Days"
+  #   duration: "10 Days"
   #   mode: "Online"
   #   cred_link:
 
@@ -757,6 +757,17 @@ attended_webinars_n_others:
     date: "23 March, 2026"
     mode: "Online"
     cred_link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
+
+  - title: "Causal Learning for Individual and Population Health in the Era of AI"
+    type: webiner
+    speaker: ["Dr. Linda Valeri"]
+    host:
+      - name: "CUNY Graduate School of Public Health and Health Policy"
+        department:
+        location: New York, NY  
+    date: "14 May, 2026"
+    mode: "Online"
+    cred_link:
 
 attended_other_workshops:
   - title: "Audio & Image Analysis Using Python"
