@@ -643,20 +643,20 @@ attended_fdps:
     mode: "Online"
     cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
 
-  # - title: "Joint online Faculty Development Programme on CLASSICAL ML"
-  #   institution: 
-  #     - name: "National Institute of Technology Patna"
-  #       department: "E & ICT Academic"
-  #       location: "Patna, BR"
-  #     - name: "Indian Institute of Technology Gandhinagar"
-  #     - name: "Indian Institute of Technology Kanpur"
-  #     - name: "Malaviya National Institute of Technology Jaipur"
-  #     - name: "Indian Institute of Technology Roorkee"
+  - title: "Joint online Faculty Development Programme on CLASSICAL ML"
+    institution: 
+      - name: "National Institute of Technology Patna"
+        department: "E & ICT Academic"
+        location: "Patna, BR"
+      - name: "Indian Institute of Technology Gandhinagar"
+      - name: "Indian Institute of Technology Kanpur"
+      - name: "Malaviya National Institute of Technology Jaipur"
+      - name: "Indian Institute of Technology Roorkee"
         
-  #   date: "18 -29 May 2026"  
-  #   duration: "10 Days"
-  #   mode: "Online"
-  #   cred_link:
+    date: "18 -29 May 2026"  
+    duration: "10 Days"
+    mode: "Online"
+    cred_link:
 
 attended_workshops:
   - title: "Systems for LLMs"
