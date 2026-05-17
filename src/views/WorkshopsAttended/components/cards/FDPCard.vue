@@ -28,7 +28,7 @@
 
             <div class="flex-1 flex items-start">
               <div class="font-medium mb-0.5">
-                <span>Institution:</span>
+                <span>Institution(s):</span>
               </div>
 
               <div class="ml-2">
@@ -74,7 +74,7 @@
             {{ fdp.mode }}
           </span>
 
-          <span v-if="fdp.institution?.length">
+          <span v-if="fdp.institution?.length && fdp.institution[0].location" class="flex items-center gap-1 mt-1">
             <v-icon size="14">mdi-map-marker</v-icon> {{ fdp.institution[0].location }}
           </span>
         </div>

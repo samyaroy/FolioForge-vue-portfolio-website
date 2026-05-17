@@ -645,13 +645,13 @@ attended_fdps:
 
   - title: "Joint online Faculty Development Programme on CLASSICAL ML"
     institution: 
+      - name: "Indian Institute of Technology Gandhinagar"
+        department: "Electronics & ICT Academic"
       - name: "National Institute of Technology Patna"
         department: "E & ICT Academic"
-        location: "Patna, BR"
-      - name: "Indian Institute of Technology Gandhinagar"
       - name: "Indian Institute of Technology Kanpur"
-      - name: "Malaviya National Institute of Technology Jaipur"
-      - name: "Indian Institute of Technology Roorkee"
+      # - name: "Malaviya National Institute of Technology Jaipur"
+      # - name: "Indian Institute of Technology Roorkee"
         
     date: "18 -29 May 2026"  
     duration: "10 Days"
@@ -746,6 +746,13 @@ attended_webinars_n_others:
     date: "27 January, 2026"
     mode: "Online"
     cred_link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
+
+  # - title: "Responsible AI Use for Journal Publishing"
+  #   type: webiner
+  #   host:
+  #     - name: "Wiley"
+  #   date: "7 May, 2026"
+  #   mode: "Online"
 
   - title: "IASS - Seminal Ideas and Controversies in Statistics"
     type: webiner
