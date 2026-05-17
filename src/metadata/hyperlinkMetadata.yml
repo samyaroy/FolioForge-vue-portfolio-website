@@ -33,6 +33,9 @@ Institute:
         - ISI Kolkata
       Website: https://www.isical.ac.in/
 
+    - Name: National Institute of Technology Patna
+      Website: https://www.nitp.ac.in/
+
     - Name: Institute of Mathematical Sciences
       Aliases:
         - Institute of Mathematical Sciences, Chennai
@@ -123,6 +126,10 @@ Institute:
         - VLED
       Website: https://vicharanashala.ai/
 
+    - Name: CUNY Graduate School of Public Health and Health Policy
+      Aliases:
+        - CUNY SPH
+      Website: https://sph.cuny.edu/
 
     - Name: International Statistical Institute
       Website: https://isi-web.org/
@@ -178,3 +185,7 @@ Person:
     
     - Name: Prof. David Dunson
       Link: https://scholars.duke.edu/person/dunson
+    
+    - Name: Dr. Linda Valeri
+      Link: https://www.publichealth.columbia.edu/profile/linda-valeri-phd
+

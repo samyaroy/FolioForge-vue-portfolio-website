@@ -645,6 +645,21 @@ attended_fdps:
     mode: "Online"
     cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
 
+  # - title: "Joint online Faculty Development Programme on CLASSICAL ML"
+  #   institution: 
+  #     - name: "National Institute of Technology Patna"
+  #       department: "E & ICT Academic"
+  #       location: "Patna, BR"
+  #     - name: "Indian Institute of Technology Gandhinagar"
+  #     - name: "Indian Institute of Technology Kanpur"
+  #     - name: "Malaviya National Institute of Technology Jaipur"
+  #     - name: "Indian Institute of Technology Roorkee"
+        
+  #   date: "18 -29 May 2026"  
+  #   duration: "10 Days"
+  #   mode: "Online"
+  #   cred_link:
+
 attended_workshops:
   - title: "Systems for LLMs"
     institution:
@@ -744,6 +759,17 @@ attended_webinars_n_others:
     date: "23 March, 2026"
     mode: "Online"
     cred_link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
+
+  - title: "Causal Learning for Individual and Population Health in the Era of AI"
+    type: webiner
+    speaker: ["Dr. Linda Valeri"]
+    host:
+      - name: "CUNY Graduate School of Public Health and Health Policy"
+        department:
+        location: New York, NY  
+    date: "14 May, 2026"
+    mode: "Online"
+    cred_link:
 
 attended_other_workshops:
   - title: "Audio & Image Analysis Using Python"
