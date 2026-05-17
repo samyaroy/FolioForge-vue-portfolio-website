@@ -40,7 +40,7 @@
             <v-icon size="small" class="mr-2 mt-0.5">mdi-account-group</v-icon>
 
             <div class="flex-1 flex">
-              <div class="font-medium mr-2">Organizer:</div>
+              <div class="font-medium mr-2">Organizer(s):</div>
 
               <div>
                 <div v-for="(org, index) in normalizedOrganizers" :key="index">

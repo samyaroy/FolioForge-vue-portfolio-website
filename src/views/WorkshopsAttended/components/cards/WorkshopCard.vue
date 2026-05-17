@@ -28,7 +28,7 @@
 
             <div class="flex-1 flex items-start">
               <div class="font-medium mb-0.5">
-                <span>Institution:</span>
+                <span>Institution(s):</span>
               </div>
 
               <div class="ml-2">
@@ -74,7 +74,7 @@
             {{ workshop.mode }}
           </span>
 
-          <span v-if="workshop.institution?.length">
+          <span v-if="workshop.institution?.length && workshop.institution[0].location" class="flex items-center gap-1 mt-1">
             <v-icon size="14">mdi-map-marker</v-icon> {{ workshop.institution[0].location }}
           </span>
         </div>
