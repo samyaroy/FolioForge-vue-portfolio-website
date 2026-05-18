@@ -98,9 +98,9 @@ education:
           type: Project
 
       diploma_in_data_science:
-        - course_code: BSMS2001
-          course_name: Business Data Management
-          type: CC
+        # - course_code: BSMS2001
+        #   course_name: Business Data Management
+        #   type: CC
         - course_code: BSSE2002
           course_name: Tools in Data Science
           type: CC
@@ -123,22 +123,22 @@ education:
           course_name: Deep Learning and Generative AI - Project
           type: Project
           
-      degree(BSc & BS):
-        - course_code: BSCS3001
-          course_name: Software Engineering
-          type: CC
-        - course_code: BSCS3002
-          course_name: Software Testing
-          type: CC
-        - course_code: BSCS3003
-          course_name: "AI: Search Methods for Problem Solving"
-          type: CC
-        - course_code: BSCS3004
-          course_name: Deep Learning
-          type: CC
-        - course_code: BSMA3014
-          course_name: Statistical Computing
-          type: EC
+      # degree(BSc & BS):
+      #   - course_code: BSCS3001
+      #     course_name: Software Engineering
+      #     type: CC
+      #   - course_code: BSCS3002
+      #     course_name: Software Testing
+      #     type: CC
+      #   - course_code: BSCS3003
+      #     course_name: "AI: Search Methods for Problem Solving"
+      #     type: CC
+      #   - course_code: BSCS3004
+      #     course_name: Deep Learning
+      #     type: CC
+      #   - course_code: BSMA3014
+      #     course_name: Statistical Computing
+      #     type: EC
 
       link: https://study.iitm.ac.in/ds/academics.html
 
@@ -325,6 +325,7 @@ internships:
     time_period: Jun 2024 - Oct 2024
     guide:
       name: Mr. Debashis Ghosh
+      designation: Head, Technology Business Development & Incubation, IDEAS - TIH
     description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing
     type: Training Internship
     cred_link: https://drive.google.com/file/d/1mTATc-tbkC9iIoL0vHuNeJWgaRCJtFOE/preview
@@ -380,7 +381,6 @@ certifications:
     date: 29 Nov 2025
     duration: 3 Weeks (Approx. 29 hours)
     cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/preview'
-    certificate: true  
   
   - title: Introduction to Programming in C
     logo: ['IITK','NPTEL']
@@ -391,7 +391,7 @@ certifications:
     date: Apr 2023
     duration: 8 weeks
     cred_link: 'https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview'
-    certificate: true
+    tag: 'Elite'
 
   - title: Diploma in Web Designing (DWD)
     logo: ['CITC']
@@ -401,7 +401,7 @@ certifications:
     date: 14 Sep 2020
     duration: 6 Months
     cred_link: 'https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview'
-    certificate: true
+    tag: "Grade: A"
 
 projects:
   - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'

@@ -1,7 +1,10 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+  <div class="relative bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+    <div v-if="certification.tag" class="certification-tag">
+      <span>{{ certification.tag }}</span>
+    </div>
     <div class="flex items-stretch gap-4 sm:gap-6">
-      <div class="w-[85%] min-w-0">
+      <div class="w-[85%] min-w-0 ml-6">
         <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ certification.title }}</h3>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-school</v-icon>
@@ -76,3 +79,27 @@ function handleLogoError(event) {
   event.target.remove()
 }
 </script>
+
+<style scoped>
+.certification-tag {
+  position: absolute;
+  top: 18px;
+  left: -42px;
+  width: 140px;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  background: #b81f2d;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 3px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  z-index: 10;
+  pointer-events: none;
+}
+</style>
