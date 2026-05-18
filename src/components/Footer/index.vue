@@ -81,16 +81,16 @@
                 Ongoing Projects
               </router-link>
             </li>
-            <li v-if="showInternshipCertificationsLink">
-              <router-link to="/internships-certifications"
-                class="text-black-300 hover:text-black transition-colors duration-200">
-                Internships & Certifications
-              </router-link>
-            </li>
             <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Affiliations, Collaborators & Memberships
+              </router-link>
+            </li>
+            <li v-if="showInternshipCertificationsLink">
+              <router-link to="/internships-certifications"
+                class="text-black-300 hover:text-black transition-colors duration-200">
+                Internships & Certifications
               </router-link>
             </li>
             <li v-if="showWorkshopsAttendedLink">
