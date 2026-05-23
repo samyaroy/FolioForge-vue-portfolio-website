@@ -93,12 +93,12 @@
                 Affiliations, Collaborators & Memberships
               </router-link>
             </li>
-            <li v-if="showInternshipCertificationsLink">
+            <!-- <li v-if="showInternshipCertificationsLink">
               <router-link to="/internships-certifications"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Internships & Certifications
               </router-link>
-            </li>
+            </li> -->
             <li v-if="showWorkshopsAttendedLink">
               <router-link to="/workshops-bootcamps-attended"
                 class="footer-link">
