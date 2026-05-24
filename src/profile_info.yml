@@ -313,7 +313,7 @@ internships:
   #   time_period: 15 May 2026 - 15 July 2026
   #   guide:
   #     name: Prof. Sudarshan Iyengar
-  #     designation: Principal Investigator, Vicharanashala Lab for Education Design
+  #     designation: Principal Investigator, Vicharanashala Lab for Education Design, IIT Ropar
   #   description: 
   #   cred_link:
   #   project:
@@ -605,14 +605,27 @@ co_curriculars:
   - title: leadership_roles
     entries:
       - role: Founder, Club Administrator
-        organization: 'Chi-Square: Statistics Club'
-        web_link: https://22f2001443.github.io/chi-square/
-        host: Nilgiri House
-        location: Indian Institute of Technology Madras BS Degree
+        organization:
+          name:  'Chi-Square: Statistics Club'
+          web_link: https://22f2001443.github.io/chi-square/
+        host:
+          name: Nilgiri House
+          web_link:
+        institute: Indian Institute of Technology Madras BS Degree
         description: Created and led the statistics community of 500+ members over 2 years. Organized more than 20 workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
         time_period: 2023 - 2026
         skills: Leadership, Event Management, Team Building
 
+      # - role: Event Head, Super Coordinator
+      #   event:
+      #     name: Probably Paradoxical
+      #   host:
+      #     name: Paradox 2026
+      #   institute: Indian Institute of Technology Madras BS Degree
+      #   description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe`.
+      #   time_period: June 2026
+      #   skills: Event Management, Team Coordination, Sponsor Management
+      
       #Add more entries as needed
 
   - title: volunteering_roles
