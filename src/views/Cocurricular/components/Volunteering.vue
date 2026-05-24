@@ -19,38 +19,31 @@
     </p>
 
     <!-- Fields & Time Periods -->
-<div class="flex mb-2">
+    <div class="flex mb-1">
 
-  <!-- Icon column -->
-  <div class="w-5 flex justify-center pt-1 mr-1">
-    <v-icon size="16" class="text-gray-400">
-      mdi-tag-outline
-    </v-icon>
-  </div>
-
-  <!-- Fields column -->
-  <div class="flex-1">
-    <div
-      v-for="(f, index) in volunteering.field"
-      :key="index"
-      class="flex items-start justify-between mb-2"
-    >
-      <p class="text-gray-600">
-        {{ f.sub_field }}
-      </p>
-
-      <div class="text-sm text-gray-500 flex flex-col items-end">
-        <span
-          v-for="(period, i) in f.time_period.split(';')"
-          :key="i"
-        >
-          {{ period.trim() }}
-        </span>
+      <!-- Icon column -->
+      <div class="w-5 flex justify-center pt-1 mr-1">
+        <v-icon size="16" class="text-gray-400">
+          mdi-tag-outline
+        </v-icon>
       </div>
-    </div>
-  </div>
 
-</div>
+      <!-- Fields column -->
+      <div class="flex-1">
+        <div v-for="(f, index) in volunteering.field" :key="index" class="flex items-start justify-between mb-2">
+          <p class="text-gray-600">
+            {{ f.sub_field }}
+          </p>
+
+          <div class="text-sm text-gray-500 flex flex-col items-end">
+            <span v-for="(period, i) in f.time_period.split(';')" :key="i">
+              {{ period.trim() }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
     <!-- Skills (plain text, because that’s what it is) -->
     <div class="mb-2">
       <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
@@ -58,12 +51,12 @@
       </span>
     </div>
 
-    <!-- Details link -->
+    <!-- Details link
     <div v-if="volunteering.details_cred" class="text-right">
       <a :href="volunteering.details_cred" target="_blank" class="text-[#1980e6] hover:underline text-sm">
         See Details →
       </a>
-    </div>
+    </div> -->
 
   </div>
 </template>
