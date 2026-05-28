@@ -46,80 +46,104 @@ education:
         - course_code: BSHS1001
           course_name: English I
           type: CC
+          credit: 4
         - course_code: BSMA1001
           course_name: Mathematics for Data Science I
           type: CC
+          credit: 4
         - course_code: BSMA1002
           course_name: Statistics for Data Science I
           type: CC
+          credit: 4
         - course_code: BSCS1001
           course_name: Computational Thinking
           type: CC
+          credit: 4
         - course_code: BSHS1002
           course_name: English II
           type: CC
+          credit: 4
         - course_code: BSMA1003
           course_name: Mathematics for Data Science II
           type: CC
+          credit: 4
         - course_code: BSMA1004
           course_name: Statistics for Data Science II
           type: CC
+          credit: 4
         - course_code: BSCS1002
           course_name: Programming in Python
           type: CC
+          credit: 4
 
     
       dimpola_in_programming:
         - course_code: BSCS2002
           course_name: Programming, Data Structures and Algorithms using Python
           type: CC
+          credit: 4
         - course_code: BSCS2001
           course_name: Database Management Systems
           type: CC
+          credit: 4
         - course_code: BSCS2005
           course_name: Programming Concepts using Java
           type: CC
+          credit: 4
         - course_code: BSSE2001
           course_name: System Commands
           type: CC
+          credit: 3
         - course_code: BSCS2003
           course_name: Modern Application Development I
           type: CC
+          credit: 4
         - course_code: BSCS2006
           course_name: Modern Application Development II
           type: CC
+          credit: 4
         - course_code: BSCS2003P
           course_name: Modern Application Development I - Project
           type: Project
+          credit: 2
         - course_code: BSCS2006P
           course_name: Modern Application Development II - Project
           type: Project
+          credit: 2
 
       diploma_in_data_science:
         - course_code: BSMS2001
           course_name: Business Data Management
           type: CC
+          credit: 4
         - course_code: BSSE2002
           course_name: Tools in Data Science
           type: CC
+          credit: 3
         - course_code: BSCS2004
           course_name: Machine Learning Foundations
           type: CC
+          credit: 4
         - course_code: BSCS2007
           course_name: Machine Learning Techniques
           type: CC
+          credit: 4
         - course_code: BSCS2008
           course_name: Machine Learning Practice
           type: CC
+          credit: 4
         - course_code: BSDA2001
           course_name: Introduction to Deep Learning and Generative AI
           type: CC
+          credit: 4
         - course_code: BSCS2008P
           course_name: Machine Learning Practice - Project
           type: Project
+          credit: 2
         - course_code: BSDA2001P
           course_name: Deep Learning and Generative AI - Project
           type: Project
+          credit: 2
           
       degree(BSc & BS):
         - course_code: BSCS3001
@@ -315,7 +339,11 @@ internships:
     description: 
     cred_link:
     project:
-
+    cirriculum:
+      - course_code: 
+        course_name: Fundamentals of AI using Agriculture Dataset
+        credit: 1
+    
 
   - role: Data Science Intern (Autumn 2024)
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
@@ -789,7 +817,26 @@ attended_webinars_n_others:
     mode: "Online"
     cred_link:
 
+  # - title: "Causal Learning for Individual and Population Health in the Era of AI"
+  #   type: webiner
+  #   speaker: ["Dr. Linda Valeri"]
+  #   host:
+  #     - name: "CUNY Graduate School of Public Health and Health Policy"
+  #       department:
+  #       location: New York, NY  
+  #   date: "14 May, 2026"
+  #   mode: "Online"
+  #   cred_link:
+
 attended_other_workshops:
+  - title: "Cryptography for Beginners"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+    date: "19 May, 2026"
+    mode: "Online"
+    cred_link: 
+
   - title: "Audio & Image Analysis Using Python"
     instructor: "Prof. Vikranth Racherla"
     institution:

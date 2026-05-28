@@ -26,11 +26,17 @@
             <div
               v-for="(course, idx) in courses"
               :key="idx"
-              class="flex flex-col px-3 py-2.5 rounded-md bg-[#f8fafc]"
+              class="grid grid-cols-[85fr_15fr] gap-3 px-3 py-2.5 rounded-md bg-[#f8fafc]"
               :style="{ border: `1px solid ${isCC(course.type) ? '#bbf7d0' : '#bfdbfe'}` }"
             >
-              <p class="text-[#0e141b] text-sm font-medium leading-snug">{{ course.course_name }}</p>
-              <p class="text-[#4e7397] text-xs mt-0.5 font-mono">{{ course.type }}<v-icon size="6" class="ml-1">mdi-circle</v-icon> {{ formatCourseCode(course.course_code) }}</p>
+              <div class="min-w-0">
+                <p class="text-[#0e141b] text-sm font-medium leading-snug">{{ course.course_name }}</p>
+                <p class="text-[#4e7397] text-xs mt-0.5 font-mono">{{ course.type }}<v-icon size="6" class="ml-1">mdi-circle</v-icon> {{ formatCourseCode(course.course_code) }}</p>
+              </div>
+              <div v-if="course.credit" class="flex flex-col items-center justify-center border-l border-[#d0dbe7] pl-2">
+                <p class="text-[#0e141b] text-xl font-bold leading-none">{{ course.credit }}</p>
+                <p class="text-[#4e7397] text-[10px] font-semibold uppercase leading-tight mt-1">Credit</p>
+              </div>
             </div>
           </div>
         </div>
@@ -71,11 +77,16 @@ const isOpen = computed({
 })
 
 const sections = computed(() => {
-  const { link, ...rest } = props.cirriculum || {}
-  return rest
+  if (Array.isArray(props.cirriculum)) {
+    return { curriculum: props.cirriculum }
+  }
+
+  return Object.fromEntries(
+    Object.entries(props.cirriculum || {}).filter(([key]) => key !== 'link')
+  )
 })
 
-const curriculumLink = computed(() => props.cirriculum?.link || '')
+const curriculumLink = computed(() => Array.isArray(props.cirriculum) ? '' : props.cirriculum?.link || '')
 
 function formatSection(key) {
   return key.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase())

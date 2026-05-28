@@ -3,7 +3,23 @@
     <div class="flex items-start justify-between mb-2">
       <div class="flex-1">
         <div class="flex items-center gap-4">
-          <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ internship.role }}</h3>
+          <h3 class="text-xl font-bold text-[#0e141b] mb-2">
+            {{ internship.role }}
+            <span v-if="hasCurriculum" class="inline-block ml-2 align-middle">
+              <v-tooltip text="View Curriculum" location="top">
+                <template #activator="{ props: tooltipProps }">
+                  <v-icon
+                    v-bind="tooltipProps"
+                    size="16"
+                    class="cursor-pointer text-[#4e7397] hover:text-[#1980e6] transition-colors"
+                    @click="showCurriculumModal = true"
+                  >
+                    mdi-information-variant-circle-outline
+                  </v-icon>
+                </template>
+              </v-tooltip>
+            </span>
+          </h3>
         </div>
       </div>
       <div class="ml-4 flex items-start gap-2">
@@ -65,19 +81,34 @@
         {{ skill }}
       </span>
     </div>
+
+    <CourseCirriculumModal
+      v-model="showCurriculumModal"
+      :cirriculum="internship.cirriculum"
+      :degree-name="internship.role"
+    />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import CourseCirriculumModal from '@/views/Home/components/education/components/CourseCirriculumModal.vue'
 
 const props = defineProps({
   internship: {
     type: Object,
     required: true
   }
+})
+
+const showCurriculumModal = ref(false)
+
+const hasCurriculum = computed(() => {
+  const curriculum = props.internship.cirriculum
+  if (Array.isArray(curriculum)) return curriculum.length > 0
+  return curriculum && Object.keys(curriculum).some(k => k !== 'link')
 })
 
 const projectList = computed(() => {
