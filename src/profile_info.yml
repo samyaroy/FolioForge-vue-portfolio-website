@@ -783,7 +783,7 @@ attended_webinars_n_others:
     host:
       - name: "National Institute of Statistical Sciences"
         department: "Committee of the Presidents of Statistical Societies"
-        location: "Washington, DC"
+        location: "Washington DC, US"
     date: "27 January, 2026"
     mode: "Online"
     cred_link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
@@ -812,7 +812,18 @@ attended_webinars_n_others:
     host:
       - name: "CUNY Graduate School of Public Health and Health Policy"
         department:
-        location: New York, NY  
+        location: New York, US  
+    date: "14 May, 2026"
+    mode: "Online"
+    cred_link:
+
+  - title: "Discussion on Bayesian Analysis"
+    type: webiner
+    speaker: 
+    host:
+      - name: "The International Society for Bayesian Analysis"
+        department:
+        location: Rome, IT  
     date: "14 May, 2026"
     mode: "Online"
     cred_link:
