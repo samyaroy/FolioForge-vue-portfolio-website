@@ -340,7 +340,7 @@ internships:
     cred_link:
     project:
     cirriculum:
-      - course_code: 
+      - course_code: AI-101
         course_name: Fundamentals of AI using Agriculture Dataset
         credit: 1
     
