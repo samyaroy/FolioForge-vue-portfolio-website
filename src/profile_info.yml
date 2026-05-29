@@ -339,6 +339,7 @@ internships:
     description: 
     cred_link:
     project:
+      title: "Rogāre : Crowd-sourced FAQ Solution & Discussion Portal"
     cirriculum:
       - course_code: AI-101
         course_name: Fundamentals of AI using Agriculture Dataset
