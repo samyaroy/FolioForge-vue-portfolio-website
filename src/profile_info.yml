@@ -490,6 +490,40 @@ projects:
       report: https://drive.google.com/file/d/1pRxfzda-l3rIbrJZztygDYiXcSL4L3Zc/view?usp=drive_link
       github: https://github.com/samyaroy/Multivariate_Analysis_of_Career_Preference_in_Kolkata
     
+  - title: "Rogāre : Crowd-sourced FAQ Solution & Discussion Portal"
+    description: ""
+    type: "Minor Project"
+    affiliation: "Internship Project (VINS Summer Intern), `VLED, Indian Institute of Technology Ropar`"
+    guide:
+      name: Prof. Sudarshan Iyengar
+      title: Principal Investigator
+      department: Vicharanashala Lab for Education Design
+      institution: IIT Ropar
+    logo: ['VLED-IITRPR']
+    tech_stack: Mongodb, Express.js, React.js, Node.js (MERN Stack), Tailwind CSS, Headless UI
+    time_period: "May 2026 - Jun 2026"
+    collaborators:
+      - name: Nandini
+        link: https://www.linkedin.com/in/nandini-221619268/
+      - name: Abhi Sriya
+        link: https://www.linkedin.com/in/abhi-1b609b409/
+      - name: Ansh Varshney
+        link: https://www.linkedin.com/in/anshvarshneyy/
+      - name: Samad Mohammed
+        link: https://www.linkedin.com/in/mohdsamad83/
+      - name: Shreya Choudhary
+        link: http://www.linkedin.com/in/shreya-choudhary-1b350a362/
+      - name: Kashish Panwar
+        link: http://www.linkedin.com/in/kashish-panwar-b10297322/
+      - name: Rahul Prasad
+        link: https://www.linkedin.com/in/rahulprsad
+      - name: Udarsh Goyel
+        link: https://www.linkedin.com/in/udarsh-goyal-256095383/
+      - name: Adhin Mahesh
+        link: https://www.linkedin.com/in/adhinmahesh/
+    cred_link:
+      github: "https://github.com/vicharanashala/cs9"
+
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
     type: "Minor Project"
@@ -841,6 +875,14 @@ attended_webinars_n_others:
   #   cred_link:
 
 attended_other_workshops:
+  - title: "Testing and Automation of Web Apps using Playwright"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+    date: "19 May, 2026"
+    mode: "Online"
+    cred_link:
+
   - title: "Cryptography for Beginners"
     institution:
       - name: "Indian Institute of Technology Madras"

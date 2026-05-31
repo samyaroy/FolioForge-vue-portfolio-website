@@ -25,6 +25,8 @@ Institute:
       Website: https://www.iitm.ac.in/
 
     - Name: Indian Institute of Technology Ropar
+      Aliases:
+        - IIT Ropar
       Website: https://www.iitrpr.ac.in/
 
     - Name: Indian Institute of Technology Roorkee
@@ -129,6 +131,7 @@ Institute:
       Aliases:
         - Vicharanashala Lab for Education of Design, Indian Institute of Technology Ropar
         - VLED, Indian Institute of Technology Ropar
+        - Vicharanashala Lab for Education Design
         - VLED
       Website: https://vicharanashala.ai/
 
