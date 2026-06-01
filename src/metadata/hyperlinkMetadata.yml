@@ -82,7 +82,6 @@ Institute:
     - Name: Whiting School of Engineering, Johns Hopkins University
       Website: https://engineering.jhu.edu/
 
-
     - Name: IIT Madras BS
       Aliases:
         - BS in Data Science and Applications, Indian Institute of Technology Madras
@@ -95,7 +94,6 @@ Institute:
       Aliases:
         - Postgraduate Department of Data Science, St. Xavier's College (Autonomous), Kolkata
       Website: https://sxccal.edu/postgraduate-department-of-data-science
-
 
     - Name: Information Security Education and Awareness
       Aliases:
@@ -118,7 +116,6 @@ Institute:
         - Ministry of Agriculture & Farmers Welfare, Government of India
       Website: https://agriwelfare.gov.in/
 
-
     - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
       Aliases:
         - Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
@@ -134,6 +131,15 @@ Institute:
         - Vicharanashala Lab for Education Design
         - VLED
       Website: https://vicharanashala.ai/
+
+    - Name: Annam.ai
+      Website: https://annam.ai/
+
+    - Name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
+      Aliases:
+        - iHub – AWaDH - Technology Innovation Hub, IIT Ropar
+        - iHub – AWaDH"
+      Website: https://ihub-awadh.in/
 
     - Name: CUNY Graduate School of Public Health and Health Policy
       Aliases:

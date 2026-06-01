@@ -30,10 +30,13 @@
         <DocumentViewer :src="internship.cred_link" />
       </div>
     </div>
-    <div class="flex items-start  text-[#4e7397] text-sm mb-1">
+    <div class="flex items-start text-[#4e7397] text-sm mb-1">
       <v-icon size="16">mdi-domain</v-icon>
-      <span class="ml-2">
-        <SmartLink :type="'Institute'" :text="internship.company" />
+      <span class="ml-2 inline-flex flex-wrap items-center gap-x-2 gap-y-1">
+        <template v-for="(company, index) in companyList" :key="`${company}-${index}`">
+          <SmartLink :type="'Institute'" :text="company" />
+          <span v-if="index < companyList.length - 1" class="text-xs font-semibold text-[#4e7397]">X</span>
+        </template>
       </span>
     </div>
     <div v-if="internship.department" class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
@@ -115,5 +118,11 @@ const projectList = computed(() => {
   const p = props.internship.project
   if (!p) return []
   return Array.isArray(p) ? p : [p]
+})
+
+const companyList = computed(() => {
+  const company = props.internship.company
+  if (!company) return []
+  return Array.isArray(company) ? company.filter(Boolean) : [company]
 })
 </script>

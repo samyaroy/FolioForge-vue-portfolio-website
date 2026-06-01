@@ -330,7 +330,9 @@ internships:
   #   cred_link:
 
   - role: Summer Intern (Vicharanashala Summership 2026 - VINS)
-    company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+    company:
+      - Annam.ai
+      - Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
     location: Romote
     time_period: 16 May 2026 - 15 July 2026
     guide:
@@ -924,10 +926,15 @@ attended_other_workshops:
   
 attended_bootcamps:
   - title: "AI Vicharana Shala Bootcamp"
-    instructor: "Prof. Sudarshan Iyengar"
+    instructor:
+      name: "Prof. Sudarshan Iyengar"
+      designation: HoD
+      department: Department of CSE
+      institution: IIT Ropar
     institution:
       - name: "Indian Institute of Technology Ropar"
         department: "Department of CSE"
+      - name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
     date: "June 2024 - July 2024"
     duration: "1 Month"
     location: "Rupnagar, PB"
