@@ -1,7 +1,18 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Other Projects</h2>
+        <button type="button"
+            class="w-full flex items-center justify-between text-left focus:outline-none"
+            :class="isOpen ? 'mb-6' : ''"
+            :aria-expanded="isOpen"
+            @click="isOpen = !isOpen">
+            <h2 class="text-2xl font-bold text-[#0e141b]">Other Projects</h2>
+            <v-icon class="text-[#0e141b]">
+                {{ isOpen ? 'mdi-unfold-less-horizontal' : 'mdi-unfold-more-horizontal' }}
+            </v-icon>
+        </button>
 
+        <v-expand-transition>
+        <div v-show="isOpen">
         <div v-if="projects && projects.length" class="space-y-6 text-sm">
             <div v-for="(project, index) in projects" :key="project.title || index" :id="`minor-${index}`"
                 class="border-l-4 border-[#1980e6] pl-6 pt-4 pb-2 pr-4 rounded-md bg-slate-50">
@@ -114,11 +125,18 @@
         <div v-else class="text-center text-gray-500 italic">
             No Minor Projects Yet
         </div>
+        </div>
+        </v-expand-transition>
     </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import { isFeatureEnabled } from '@/config/featureFlags'
+
+// Default expanded/collapsed state is controlled by a feature flag
+const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.otherProjects'))
 
 defineProps({
     projects: {

@@ -1,6 +1,18 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Technical Projects</h2>
+        <button type="button"
+            class="w-full flex items-center justify-between text-left focus:outline-none"
+            :class="isOpen ? 'mb-6' : ''"
+            :aria-expanded="isOpen"
+            @click="isOpen = !isOpen">
+            <h2 class="text-2xl font-bold text-[#0e141b]">Technical Projects</h2>
+            <v-icon class="text-[#0e141b]">
+                {{ isOpen ? 'mdi-unfold-less-horizontal' : 'mdi-unfold-more-horizontal' }}
+            </v-icon>
+        </button>
+
+        <v-expand-transition>
+        <div v-show="isOpen">
         <div v-if="projects && projects.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div v-for="project in projects" :key="project.id"
                 class="relative  border rounded-lg p-6 hover:shadow-md transition-shadow duration-200 text-sm">
@@ -48,10 +60,18 @@
         <div v-else class="text-center text-gray-500 italic">
             No Applied Projects Yet
         </div>
+        </div>
+        </v-expand-transition>
     </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { isFeatureEnabled } from '@/config/featureFlags'
+
+// Default expanded/collapsed state is controlled by a feature flag
+const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.technicalProjects'))
+
 defineProps({
     projects: {
         type: Array,

@@ -36,9 +36,6 @@
         >
           Professional Activity
         </router-link>
-        <router-link v-if="showCocurricularNavLink" to="/cocurricular" class="nav-link" active-class="active-link">
-          Co-curricular
-        </router-link>
         <router-link :to="{ name: 'Contact' }" class="nav-link" active-class="active-link">
           Contact
         </router-link>
@@ -117,15 +114,6 @@
           >
             Professional Activity
           </router-link>
-          <router-link
-            v-if="showCocurricularNavLink"
-            to="/cocurricular"
-            @click="drawer = false"
-            class="nav-link"
-            active-class="active-link"
-          >
-            Co-curricular
-          </router-link>
           <router-link :to="{ name: 'Contact' }" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
@@ -156,10 +144,6 @@ const showTeachingsNavLink = computed(() => (
 const showProjectsPublicationsNavLink = computed(() => (
   isFeatureEnabled('showProjectsPublications', { mode: 'any' })
   && router.hasRoute('ProjectsPublications')
-))
-
-const showCocurricularNavLink = computed(() => (
-  isFeatureEnabled('showCocurricular', { mode: 'any' }) && router.hasRoute('Cocurricular')
 ))
 
 const showProfessionalActivityNavLink = computed(() => (
