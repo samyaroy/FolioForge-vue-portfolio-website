@@ -890,8 +890,8 @@ attended_other_workshops:
         department: "BS Degree"
     date: "19 May, 2026"
     mode: "Online"
-    cred_link: 
-
+    cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
+    
   - title: "Audio & Image Analysis Using Python"
     instructor: "Prof. Vikranth Racherla"
     institution:
