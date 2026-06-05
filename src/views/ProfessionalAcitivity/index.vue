@@ -42,6 +42,9 @@
         <HostedEventsTab
           v-if="showHostedEventsTab && activeTab === 'hosted-events'"
           :events="hostedEvents"
+          :other-hosted-events="otherHostedEvents"
+          :show-main="showHostedEventsMain"
+          :show-other-hosted-events="showHostedEventsOthers"
         />
       </div>
     </div>
@@ -57,13 +60,16 @@ import HostedEventsTab from './components/tabs/HostedEventsTab.vue'
 import config from '@/profile_info.yml'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
-// NOTE: The user should add invited_talks and hosted_events to profile_info.yml
-const { invited_talks, hosted_events } = config
+// NOTE: The user should add invited_talks, hosted_events and other_hosted_events to profile_info.yml
+const { invited_talks, hosted_events, other_hosted_events } = config
 const invitedTalks = invited_talks || []
 const hostedEvents = hosted_events || []
+const otherHostedEvents = other_hosted_events || []
 
 const showInvitedTalksTab = isFeatureEnabled('showProfessionalActivity.showInvitedTalks')
-const showHostedEventsTab = isFeatureEnabled('showProfessionalActivity.showHostedEvents')
+const showHostedEventsTab = isFeatureEnabled('showProfessionalActivity.showHostedEvents', { mode: 'any' })
+const showHostedEventsMain = isFeatureEnabled('showProfessionalActivity.showHostedEvents.main')
+const showHostedEventsOthers = isFeatureEnabled('showProfessionalActivity.showHostedEvents.others')
 
 const tabDefinitions = [
   { id: 'invited-talks', name: 'Invited Talks', enabled: showInvitedTalksTab },

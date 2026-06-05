@@ -71,7 +71,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showProfessionalActivity: {
     showInvitedTalks: true,
-    showHostedEvents: true,
+    showHostedEvents: {
+      main: true,
+      others: true,
+    },
   },
 }) satisfies FeatureFlagNode
 

@@ -99,6 +99,12 @@
                 Conferences, Workshops & Bootcamps attended
               </router-link>
             </li>
+            <li v-if="showCocurricularLink">
+              <router-link to="/cocurricular"
+                class="text-black-300 hover:text-black transition-colors duration-200">
+                Co-curricular Activities
+              </router-link>
+            </li>
             <!-- <li>
               <router-link 
                 to="/contact" 
@@ -205,6 +211,7 @@ export default {
   },
   data() {
     const { profile, contacts, socials, last_updated_on } = config;
+    const showCocurricularLink = isFeatureEnabled('showCocurricular', { mode: 'any' })
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
@@ -229,6 +236,7 @@ export default {
       // logos: ['SNU', 'IITM', 'IDEAS'],
 
       last_updated_on: config.last_updated_on,
+      showCocurricularLink,
       showOngoingProjectsLink,
       showInternshipCertificationsLink,
       showWorkshopsAttendedLink,

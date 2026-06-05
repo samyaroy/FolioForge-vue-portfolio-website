@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8">
-    <h2 class="text-2xl font-bold text-[#0e141b] mb-6">
+  <div class="bg-white rounded-lg shadow-sm p-8 text-sm">
+    <h2 class="text-lg font-bold text-[#0e141b] mb-6">
       Projects Mentored
     </h2>
 
@@ -8,25 +8,25 @@
       <!-- Semester Loop -->
       <div v-for="semesterBlock in projects" :key="semesterBlock.semester">
         <!-- Semester Heading -->
-        <h3 class="text-xl font-semibold text-[#0e141b] mb-4 border-b pb-2">
+        <h3 class="text-lg font-semibold text-[#0e141b] mb-4 border-b pb-2">
           {{ semesterBlock.semester }}
         </h3>
 
         <!-- Projects -->
         <div class="space-y-6">
           <div v-for="project in semesterBlock.projects" :key="project.title"
-            class="border-l-4 border-slate-300 pl-6 py-4 pr-4 bg-slate-50 rounded-md">
+            class="border-l-4 border-slate-300 pl-5 py-3 pr-4 bg-slate-50 rounded-lg">
             <div class="flex flex-col gap-4 md:flex-row md:items-start">
               <div class="w-full md:w-[92%]">
                 <!-- Header -->
                 <div class="mb-2">
-                  <h4 class="text-lg font-semibold text-[#0e141b]">
+                  <h4 class="text-md font-semibold text-[#0e141b]">
                     {{ project.title }}
                   </h4>
                 </div>
 
                 <!-- Meta -->
-                <div class="space-y-1 text-slate-600 text-sm">
+                <div class="space-y-1 text-slate-600">
                   <p v-if="project.students && project.students.length" class="flex items-start">
                     <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
                     <span>
@@ -65,7 +65,7 @@
               </div>
             </div>
             <div v-if="getAffiliationName(project) || getAffiliationLocation(project)"
-              class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2 text-sm text-slate-600 mt-1">
+              class="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-2 text-slate-600 mt-1">
               <div>
                 <p v-if="getAffiliationName(project)" class="flex min-w-0 items-center">
                   <v-icon size="16" class="mr-2">mdi-school</v-icon>
@@ -74,7 +74,7 @@
                 </p>
               </div>
               <div v-if="getAffiliationLocation(project)"
-                class="flex items-center justify-self-end text-sm text-slate-500">
+                class="flex items-center justify-self-end text-slate-500">
                 <v-icon size="16" class="mr-1">mdi-map-marker</v-icon>
                 <span>
                   {{ getAffiliationLocation(project) }}

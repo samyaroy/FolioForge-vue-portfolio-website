@@ -880,15 +880,15 @@ attended_other_workshops:
     institution:
       - name: "Indian Institute of Technology Madras"
         department: "BS Degree"
-    date: "19 May, 2026"
+    date: "May, 2026"
     mode: "Online"
-    cred_link:
+    cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
 
   - title: "Cryptography for Beginners"
     institution:
       - name: "Indian Institute of Technology Madras"
         department: "BS Degree"
-    date: "19 May, 2026"
+    date: "May, 2026"
     mode: "Online"
     cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
     
@@ -1116,3 +1116,49 @@ hosted_events:
   #   location: "Chennai, TN"
   #   date: "July 2024"
   #   cred_link: "https://example.com/event2"
+
+other_hosted_events:
+  - title: "Questionnaire and Survey Design: Probably Paradoxical Context"
+    guest_speakers:
+      - name: "Prof. Shyamolina Ghosh"
+        designation: Assistant Professor
+        department: "AERU"
+        institution: "Indian Statistical Institute, Kolkata"
+    event_type: "Guest Session"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        location: "Chennai, TN"
+        affiliation: "Probably Paradoxical, Paradox 2026"
+    date: "June 2, 2026"
+    mode: "Online"
+
+  - title: "Privacy in Deep Learning"
+    guest_speakers:
+      - name: "Prof. Manisha Padala"
+        designation: Assistant Professor
+        department: Computer Science and Engineering
+        institution: "Indian Institute of Technology Gandhinagar"
+    event_type: "Guest Session"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        affiliation: "Nilgiri House Statistics Community"
+        location: "Chennai, TN"
+    date: "February 5, 2026"
+    mode: "Online"
+
+  - title: "Understanding and Applying Statistics: Real-Life Uses & Research Pathways"
+    guest_speakers:
+      - name: "Prashant Sharma"
+        designation: Course Instructor
+        department: BS Degree
+        institution: "Indian Institute of Technology Madras"
+    event_type: "Academic Session"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        affiliation: "Nilgiri House Statistics Community"
+        location: "Chennai, TN"
+    date: "August 14, 2025"
+    mode: "Online"
