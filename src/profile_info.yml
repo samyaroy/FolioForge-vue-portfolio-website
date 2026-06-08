@@ -23,7 +23,7 @@ socials:
   google_scholar: https://scholar.google.com/citations?user=jC-lqxsAAAAJ&hl=en
   researchgate: https://www.researchgate.net/profile/Samyabrata-Roy
   orcid_id: https://orcid.org/0009-0000-5356-4684
-  credly: https://www.credly.com/users/samyabrata-roy
+  credly: https://www.credly.com/users/samyabrata-
 
 research_interests:
   - key: Machine_Learning 
@@ -346,6 +346,9 @@ internships:
       - course_code: AI-101
         course_name: Fundamentals of AI using Agriculture Dataset
         credit: 1
+      - course_code: 
+        course_name: MERN Stack Development
+        credit: 
     
 
   - role: Data Science Intern (Autumn 2024)
@@ -685,7 +688,7 @@ co_curriculars:
         host:
           name: Paradox 2026
         institute: Indian Institute of Technology Madras BS Degree
-        description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe`.
+        description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe` and `Dr. Naveen Sivadasan`.
         time_period: June 2026
         skills: Event Management, Team Coordination, Sponsor Management
       
@@ -882,7 +885,7 @@ attended_other_workshops:
         department: "BS Degree"
     date: "May, 2026"
     mode: "Online"
-    cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
+    cred_link: https://drive.google.com/file/d/1yQOyuTIoJXlRN0w87Zxg_S119hyQ4jTD/preview
 
   - title: "Cryptography for Beginners"
     institution:
@@ -939,15 +942,15 @@ attended_bootcamps:
     location: "Rupnagar, PB"
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
 
-  # - title: Foundational Lecture Series on Theoretical Computer Science 2026
-  #   instructor:
-  #   institution:
-  #     - name: The Institute of Mathematical Sciences
-  #     - name: Homi Bhabha National Institute
-  #   date: "June 2026"
-  #   duration: "2 Weeks"
-  #   location: "Chennai, TN"
-  #   cred_link: 
+  - title: Foundational Lecture Series on Theoretical Computer Science 2026
+    instructor:
+    institution:
+      - name: The Institute of Mathematical Sciences
+      - name: Homi Bhabha National Institute
+    date: "June 2026"
+    duration: "2 Weeks"
+    location: "Chennai, TN"
+    cred_link: 
     
   # - title: "Summer Outreach Programme in Computing (SOPC)"
   #   instructor:
