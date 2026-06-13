@@ -329,26 +329,26 @@ internships:
   #   type: Virtual Internship
   #   cred_link:
 
-  - role: Summer Intern (Vicharanashala Summership 2026 - VINS)
-    company:
-      - Annam.ai
-      - Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
-    location: Romote
-    time_period: 16 May 2026 - 15 July 2026
-    guide:
-      name: Prof. Sudarshan Iyengar
-      designation: Principal Investigator, Vicharanashala Lab for Education Design, IIT Ropar
-    description: 
-    cred_link:
-    project:
-      title: "Rogāre : Crowd-sourced FAQ Solution & Discussion Portal"
-    cirriculum:
-      - course_code: AI-101
-        course_name: Fundamentals of AI using Agriculture Dataset
-        credit: 1
-      - course_code: 
-        course_name: MERN Stack Development
-        credit: 
+  # - role: Summer Intern (Vicharanashala Summership 2026 - VINS)
+  #   company:
+  #     - Annam.ai
+  #     - Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+  #   location: Romote
+  #   time_period: 16 May 2026 - 15 July 2026
+  #   guide:
+  #     name: Prof. Sudarshan Iyengar
+  #     designation: Principal Investigator, Vicharanashala Lab for Education Design, IIT Ropar
+  #   description: 
+  #   cred_link:
+  #   project:
+  #     title: "Rogāre : Crowd-sourced FAQ Solution & Discussion Portal"
+  #   cirriculum:
+  #     - course_code: AI-101
+  #       course_name: Fundamentals of AI using Agriculture Dataset
+  #       credit: 1
+  #     - course_code: 
+  #       course_name: MERN Stack Development
+  #       credit: 
     
 
   - role: Data Science Intern (Autumn 2024)
@@ -499,12 +499,12 @@ projects:
     description: ""
     type: "Minor Project"
     affiliation: "Internship Project (VINS Summer Intern), `VLED, Indian Institute of Technology Ropar`"
-    guide:
-      name: Prof. Sudarshan Iyengar
-      title: Principal Investigator
-      department: Vicharanashala Lab for Education Design
-      institution: IIT Ropar
-    logo: ['VLED-IITRPR']
+    # guide:
+    #   name: Prof. Sudarshan Iyengar
+    #   title: Principal Investigator
+    #   department: Vicharanashala Lab for Education Design
+    #   institution: IIT Ropar
+    # logo: ['VLED-IITRPR']
     tech_stack: Mongodb, Express.js, React.js, Node.js (MERN Stack), Tailwind CSS, Headless UI
     time_period: "May 2026 - Jun 2026"
     collaborators:
@@ -688,7 +688,8 @@ co_curriculars:
         host:
           name: Paradox 2026
         institute: Indian Institute of Technology Madras BS Degree
-        description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe` and `Dr. Naveen Sivadasan`.
+        description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe`.
+        #  and `Dr. Naveen Sivadasan`.
         time_period: June 2026
         skills: Event Management, Team Coordination, Sponsor Management
       
@@ -879,6 +880,19 @@ attended_webinars_n_others:
   #   cred_link:
 
 attended_other_workshops:
+  - title: "Measurements in AI"
+    instructor:
+      - name: "Prof. Partha Pratim Das"
+        position: Professor
+        department: Computer Science
+        institution: Asoka University
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "Paradox 2026, BS Degreee"
+    date: "June, 2026"
+    mode: "Offline"
+    # cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
+
   - title: "Testing and Automation of Web Apps using Playwright"
     institution:
       - name: "Indian Institute of Technology Madras"
@@ -896,7 +910,8 @@ attended_other_workshops:
     cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
     
   - title: "Audio & Image Analysis Using Python"
-    instructor: "Prof. Vikranth Racherla"
+    instructor:
+      - name: "Prof. Vikranth Racherla"
     institution:
       - name: "Indian Institute of Technology Kharagpur"
         department: "CoEAT/CRR"

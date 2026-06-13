@@ -1,11 +1,13 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">
-            Research & Academic Projects
-        </h2>
+        <div class="mb-6 flex items-center justify-between gap-4">
+            <h2 class="text-2xl font-bold text-[#0e141b]">
+                Research & Academic Projects
+            </h2>
+        </div>
 
         <div v-if="projects && projects.length" class="space-y-6">
-            <div v-for="(project, index) in projects" :key="index" :id="`research-${index}`"
+            <div v-for="(project, index) in visibleProjects" :key="index" :id="`research-${index}`"
                 class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
 
                 <!-- TITLE -->
@@ -126,6 +128,19 @@
 
                 </div>
             </div>
+
+            <div v-if="showToggleButton" class="flex justify-end">
+                <a
+                    href="#"
+                    class="text-[#1980e6] hover:text-[#1980e6] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+                    @click.prevent="showAllProjects = !showAllProjects"
+                >
+                    {{ showAllProjects ? 'Hide all projects' : 'Load all projects' }}
+                    <v-icon size="16" class="text-[#1980e6]">
+                        {{ showAllProjects ? 'mdi-arrow-up' : 'mdi-arrow-right' }}
+                    </v-icon>
+                </a>
+            </div>
         </div>
 
         <div v-else class="text-center text-gray-500 italic">
@@ -135,13 +150,22 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 
-defineProps({
+const props = defineProps({
     projects: {
         type: Array,
         default: () => []
     }
+})
+
+const showAllProjects = ref(false)
+const showToggleButton = computed(() => props.projects.length > 2)
+const visibleProjects = computed(() => {
+    return showAllProjects.value || !showToggleButton.value
+        ? props.projects
+        : props.projects.slice(0, 2)
 })
 
 function getLogoPath(logo) {
