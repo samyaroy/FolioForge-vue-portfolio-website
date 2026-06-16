@@ -162,6 +162,12 @@ education:
           course_name: Statistical Computing
           type: EC
 
+      transfered_credits:
+        # - course_code: "Google"
+        #   course_name: Data Analysis with R Programming
+        #   type: Coursera
+
+
       link: https://study.iitm.ac.in/ds/academics.html
 
 
@@ -287,6 +293,11 @@ education:
         - course_code: 6090015101
           course_name: Foreign Language IV - Spanish
           type: USC/MUS
+      
+      transfered_credits:
+        - course_code: "Google"
+          course_name: Data Analysis with R Programming
+          type: Coursera
 
       link:
 

@@ -25,6 +25,9 @@ items:
   #   # featured: true
   #   tags: [Mentoring]
 
+
+# might add IMSC thing here..
+
 # Wrong info
   - id: guest_event-10
     title: Hosted Stats based Technical Event at Paradox 2026, IIT Madras
@@ -34,6 +37,7 @@ items:
     featured: true
     tags: ["Guest Event"]
     location: NAC-2, IIT Madras
+    event: Paradox 2026
     # externalUrl:
 
 # might add Vicharanashala thing here..
