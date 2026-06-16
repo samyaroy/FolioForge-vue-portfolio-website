@@ -685,6 +685,28 @@ awards:
     description: Brief description of the award and what it was for.
     cred_link:
 
+achievements:
+  - title: Achievement Title 1
+    year: 2025
+    category: Academic
+    description: Brief description of the achievement.
+    organization: Organization Name
+    cred_link:
+
+  - title: Achievement Title 2
+    year: 2024
+    category: Research
+    description: Brief description of the achievement.
+    organization: Organization Name
+    cred_link:
+
+  - title: Achievement Title 3
+    year: 2023
+    category: Extracurricular
+    description: Brief description of the achievement.
+    organization: Organization Name
+    cred_link:
+
 co_curriculars:
   - title: leadership_roles
     entries:
