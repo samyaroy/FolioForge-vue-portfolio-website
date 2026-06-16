@@ -1,87 +1,87 @@
 <template>
-  <div class="px-4 md:px-8 lg:px-20 py-8 bg-slate-50">
+  <div class="px-4 md:px-8 lg:px-20 py-4 bg-slate-50">
     <div class="max-w-[1200px] mx-auto">
-
-      <!-- Section Header -->
-      <div class="flex flex-wrap justify-between items-center gap-3 px-4 pb-6">
+      <div class="flex flex-wrap justify-between gap-3 p-4">
         <h2 class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">
-          Awards and Achievements
+          {{ currentSlide === 1 ? 'Achievements' : 'Award and Prize' }}
         </h2>
-        <span class="text-[#4e7397] text-sm font-medium">
-          {{ currentIndex + 1 }} / {{ allItems.length }}
-        </span>
       </div>
 
-      <!-- Carousel -->
-      <div class="relative" v-if="allItems.length">
-        <!-- Slide Track -->
-        <div class="overflow-hidden">
-          <div
-            class="flex transition-transform duration-500 ease-in-out"
-            :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
-          >
-            <div
-              v-for="(item, index) in allItems"
-              :key="index"
-              class="w-full flex-shrink-0 px-8"
-            >
-              <AwardCard
-                :title="item.title"
-                :year="item.year"
-                :organization="item.organization"
-                :category="iconMap[item.category] || 'mdi-star-circle'"
-                :prize="item.prize"
-                :description="item.description"
-                :cred_link="item.cred_link"
-                :type="item.type"
-              />
-            </div>
-          </div>
+      <div class="overflow-hidden">
+        <div
+          class="flex transition-transform duration-500 ease-in-out"
+          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
+        >
+          <AwardsSlide
+            :awards="awards"
+            :icon-map="iconMap"
+            :has-achievements="hasAchievements"
+            @show-achievements="setSlide(1)"
+          />
+
+          <AchievementsSlide
+            :achievements="achievements"
+            :icon-map="iconMap"
+            @show-awards="setSlide(0)"
+          />
         </div>
-
-        <!-- Prev Arrow -->
-        <button
-          @click="prev"
-          aria-label="Previous"
-          class="absolute left-0 top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow duration-200 z-10"
-        >
-          <v-icon color="#1980e6" size="20">mdi-chevron-left</v-icon>
-        </button>
-
-        <!-- Next Arrow -->
-        <button
-          @click="next"
-          aria-label="Next"
-          class="absolute right-0 top-1/2 -translate-y-1/2 w-9 h-9 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow duration-200 z-10"
-        >
-          <v-icon color="#1980e6" size="20">mdi-chevron-right</v-icon>
-        </button>
       </div>
 
-      <!-- Dot Indicators -->
-      <div class="flex justify-center items-center gap-2 mt-5">
+      <div v-if="hasAchievements" class="flex justify-center items-center gap-2 mt-2 mb-4">
         <button
-          v-for="(item, index) in allItems"
-          :key="index"
-          @click="goTo(index)"
-          :aria-label="`Go to item ${index + 1}`"
-          class="rounded-full transition-all duration-300"
-          :class="currentIndex === index
-            ? 'w-5 h-2 bg-[#1980e6]'
-            : 'w-2 h-2 bg-[#4e7397] opacity-40 hover:opacity-60'"
+          v-for="slide in slides"
+          :key="slide.index"
+          type="button"
+          class="awards-dot-button"
+          :class="{ 'is-active': currentSlide === slide.index }"
+          :aria-label="`Show ${slide.label}`"
+          @click="setSlide(slide.index)"
         />
       </div>
-
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import AwardCard from "./components/AwardCard.vue"
-import config from "@/profile_info.yml"
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import AchievementsSlide from "./components/slides/AchievementsSlide.vue";
+import AwardsSlide from "./components/slides/AwardsSlide.vue";
+import config from "@/profile_info.yml";
+const { awards, achievements } = config;
 
-const { awards, achievements } = config
+const AUTO_SLIDE_INTERVAL = 30000
+const currentSlide = ref(0)
+let autoSlideTimer = null
+
+const hasAchievements = computed(() => Boolean(achievements && achievements.length))
+const slides = [
+  { index: 0, label: 'awards and prizes' },
+  { index: 1, label: 'achievements' },
+]
+
+const stopAutoSlide = () => {
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer)
+    autoSlideTimer = null
+  }
+}
+
+const startAutoSlide = () => {
+  stopAutoSlide()
+
+  if (!hasAchievements.value) {
+    return
+  }
+
+  autoSlideTimer = setInterval(() => {
+    currentSlide.value = currentSlide.value === 0 ? 1 : 0
+  }, AUTO_SLIDE_INTERVAL)
+}
+
+const setSlide = (index) => {
+  currentSlide.value = index
+  startAutoSlide()
+}
 
 const iconMap = {
   Academic: "mdi-seal-variant",
@@ -92,40 +92,69 @@ const iconMap = {
   Extracurricular: "mdi-star-circle",
 }
 
-const allItems = computed(() => [
-  ...(awards || []).map(a => ({ ...a, type: 'award' })),
-  ...(achievements || []).map(a => ({ ...a, type: 'achievement' })),
-])
-
-const currentIndex = ref(0)
-let timer = null
-
-const startTimer = () => {
-  timer = setInterval(() => {
-    currentIndex.value = (currentIndex.value + 1) % allItems.value.length
-  }, 30000)
-}
-
-const resetTimer = () => {
-  clearInterval(timer)
-  startTimer()
-}
-
-const next = () => {
-  currentIndex.value = (currentIndex.value + 1) % allItems.value.length
-  resetTimer()
-}
-
-const prev = () => {
-  currentIndex.value = (currentIndex.value - 1 + allItems.value.length) % allItems.value.length
-  resetTimer()
-}
-
-const goTo = (index) => {
-  currentIndex.value = index
-  resetTimer()
-}
-
-onMounted(startTimer)
-onUnmounted(() => clearInterval(timer))
+onMounted(startAutoSlide)
+onUnmounted(stopAutoSlide)
 </script>
+
+<style scoped>
+:deep(.awards-text-button) {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1980e6;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  box-shadow: none;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+:deep(.awards-text-button:hover),
+:deep(.awards-text-button:focus),
+:deep(.awards-text-button:focus-visible) {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #0e141b;
+  box-shadow: none;
+}
+
+.awards-dot-button {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  border-radius: 9999px;
+  background: rgba(78, 115, 151, 0.4);
+  box-shadow: none;
+  cursor: pointer;
+  transition: width 300ms ease, background-color 300ms ease, opacity 300ms ease;
+}
+
+.awards-dot-button.is-active {
+  width: 1.25rem;
+  background: #1980e6;
+}
+
+.awards-dot-button:hover,
+.awards-dot-button:focus,
+.awards-dot-button:focus-visible {
+  border: 0;
+  outline: 0;
+  background: rgba(25, 128, 230, 0.7);
+  box-shadow: none;
+}
+
+.awards-dot-button.is-active:hover,
+.awards-dot-button.is-active:focus,
+.awards-dot-button.is-active:focus-visible {
+  background: #1980e6;
+}
+</style>
