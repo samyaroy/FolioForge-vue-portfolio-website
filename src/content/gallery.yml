@@ -14,6 +14,30 @@ items:
   #   tags: [Design, Instagram]
   #   externalUrl: https://www.instagram.com/
 
+# Wrong info
+  # - id: intern-project-02
+  #   title: Mentored 2 groups of Summer Interns at IDEAS-TIH
+  #   event:
+  #   location:
+  #   # caption: I had the opportunity to mentor a group of Summer Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
+  #   type: gallery
+  #   date: 2026-03-31
+  #   # featured: true
+  #   tags: [Mentoring]
+
+# Wrong info
+  - id: guest_event-10
+    title: Hosted Stats based Technical Event at Paradox 2026, IIT Madras
+    caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
+    type: Linkedin
+    date: 2026-06-12
+    featured: true
+    tags: ["Guest Event"]
+    location: NAC-2, IIT Madras
+    # externalUrl:
+
+# might add Vicharanashala thing here..
+
   - id: intern-project-01
     title: Mentored a group of Spring Interns at IDEAS-TIH
     event:
@@ -21,7 +45,7 @@ items:
     caption: I had the opportunity to mentor a group of Spring Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
     type: gallery
     date: 2026-03-31
-    featured: true
+    # featured: true
     tags: [Mentoring]
 
   - id: workshop-IDEAS-TIH-01
@@ -54,14 +78,13 @@ items:
     tags: [Article, "New Publication"]
     externalUrl: https://www.linkedin.com/posts/pgds-sxccal_gradient-vol-i-activity-7429850321499201536-hpb0?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
 
-  - id: guest_event-01
-    title: Hosted a guest event on Federated Learning at IITM
-    caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
-    type: youtube
-    alt: Abstract structural lines against a blue sky with editorial framing
-    date: 2026-02-05
-    tags: ["Guest Event"]
-    externalUrl: https://www.youtube.com/live/0iSF4Ggwa3Q?si=CWmS1q9WQWQGwhQU
+  # - id: guest_event-01
+  #   title: Hosted a guest event on Federated Learning at IITM
+  #   caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
+  #   type: youtube
+  #   date: 2026-02-05
+  #   tags: ["Guest Event"]
+  #   externalUrl: https://www.youtube.com/live/0iSF4Ggwa3Q?si=CWmS1q9WQWQGwhQU
 
   - id: workshop-06
     title: Attended Cryptology Conclave at IIT Hyderabad
