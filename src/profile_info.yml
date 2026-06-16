@@ -661,11 +661,29 @@ ongoing_projects:
   # Add more fields as needed
 
 awards:
-  # - title: Award Title
-  #   year: 2021
-  #   organization: Tech Company 1
-  #   category: Academic
-  #   prize: First Place
+  - title: Award Title 1
+    year: 2024
+    organization: Organization Name
+    category: Academic
+    prize: First Place / Merit Award
+    description: Brief description of the award and what it was for.
+    cred_link:
+
+  - title: Award Title 2
+    year: 2023
+    organization: Organization Name
+    category: Research
+    prize: Best Paper / Best Poster
+    description: Brief description of the award and what it was for.
+    cred_link:
+
+  - title: Award Title 3
+    year: 2023
+    organization: Organization Name
+    category: Extracurricular
+    prize: Recognition / Certificate of Excellence
+    description: Brief description of the award and what it was for.
+    cred_link:
 
 co_curriculars:
   - title: leadership_roles
