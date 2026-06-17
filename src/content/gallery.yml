@@ -220,7 +220,7 @@ items:
 
   - id: workshop-01
     title: Attended a Social Computing Workshop at IIITH
-    caption: An amazing day attending Prof. [[P.K. Sir|Prof. Ponnurangam Kumaraguru|Person]]'s workshop at **IIIT Hyderabad**. I got to learn about the latest research and developments in this field of LLM and how it could be used reasearch for social computing, and I am excited to apply this knowledge in my future work. Here I also got introduced to the concept of **Legall AI**.
+    caption: An amazing day attending Prof. [[P.K. Sir|Prof. Ponnurangam Kumaraguru|Person]]'s workshop at **IIIT Hyderabad**. I got to learn about the latest research and developments in this field of LLM and how it could be used reasearch for social computing, and I am excited to apply this knowledge in my future work. Here I also got introduced to the concept of **Legal AI**.
     type: instagram
     date: 2023-02-04
     tags: [Workshop]
@@ -240,6 +240,7 @@ items:
     caption: The online degree came offline for a day to meet the students of the IITM BS program in Kolkata. **Subhajit Sir (Instructor, IITM BS)** joined us too.
     type: gallery
     date: 2023-01-14
+    location: Kolkata
     tags: [Meetup]
 
   # - id: gallery-02
