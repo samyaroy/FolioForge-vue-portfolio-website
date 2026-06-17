@@ -6,32 +6,31 @@
 # - *italic*
 
 items:
-  # - id: instagram-01
-  #   title: Studio Light
-  #   caption: A calmer workspace has been helping me tighten the loop between design direction, implementation, and review.
-  #   type: instagram
-  #   date: 2026-02-12
-  #   tags: [Design, Instagram]
-  #   externalUrl: https://www.instagram.com/
-
-# Wrong info
-  # - id: intern-project-02
-  #   title: Mentored 2 groups of Summer Interns at IDEAS-TIH
-  #   event:
-  #   location:
-  #   # caption: I had the opportunity to mentor a group of Summer Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
-  #   type: gallery
-  #   date: 2026-03-31
-  #   # featured: true
-  #   tags: [Mentoring]
 
 
-# might add IMSC thing here..
+  - id: intern-project-02
+    title: Mentored new groups of Summer Interns at IDEAS-TIH
+    event:
+    location:
+    # caption: I had the opportunity to mentor a group of Summer Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
+    type: gallery
+    date: 2026-07-31
+    # featured: true
+    tags: [Mentoring]
 
-# Wrong info
+
+  - id: workshop-07
+    title: Took convensionallty first step towards Theoretical Computer Science
+    caption: 
+    type: gallery
+    date: 2026-06-27
+    tags: [Bootcamp, Workshop]
+    event: FLSTCS 2026
+    location: Alladi Ramakrishnan Hall, IMSc, Chennai
+
   - id: guest_event-10
     title: Hosted Stats based Technical Event at Paradox 2026, IIT Madras
-    caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
+    caption: "Always wannted to make people connect stats to daily life. With this moto we statred [[Chi-Square: Statistics Club|Institute]] in 2023 at IITM BS, For the first time me and my team hosted a offline survey-based data analysis compitition name **Probably Paradoxical** during **Paradox 2026**. "
     type: Linkedin
     date: 2026-06-12
     featured: true
@@ -41,6 +40,14 @@ items:
     # externalUrl:
 
 # might add Vicharanashala thing here..
+  - id: intern-project-1001
+    title: Survived only one month at Vichalanshala Lab's VINS
+    event: ""
+    location: VLED lab, IIT Roper
+    caption:
+    type: Zoom
+    date: 2026-06-10
+    tags: ["New Role", Internship]
 
   - id: intern-project-01
     title: Mentored a group of Spring Interns at IDEAS-TIH

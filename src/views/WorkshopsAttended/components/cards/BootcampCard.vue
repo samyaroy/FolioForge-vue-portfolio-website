@@ -11,6 +11,16 @@
         <div class="flex items-start gap-2">
           <h3 class="text-md font-semibold text-[#0e141b]">
             {{ bootcamp.title }}
+            <a
+              v-if="bootcamp.link"
+              :href="bootcamp.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ml-1 inline-flex align-middle text-[#1980e6] transition-colors hover:text-[#0e141b]"
+              :aria-label="`Open ${bootcamp.title} link in a new tab`"
+            >
+              <v-icon size="16">mdi-open-in-new</v-icon>
+            </a>
             <span v-if="bootcamp.cred_link" class="inline-block ml-1 align-middle">
               <DocumentViewer :src="bootcamp.cred_link" />
             </span>

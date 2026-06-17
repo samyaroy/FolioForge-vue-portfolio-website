@@ -1,0 +1,122 @@
+# Auxiliary tracking manifest for Cloudflare gallery assets.
+# This file is generated from gallery.yml by scripts/sync-gallery-image-manifest.js.
+# Edit descriptions here; ids, dates, and category placement are synced automatically.
+
+categories:
+  - category: Academic Milestone
+    images:
+      - id: academic_milestone-01
+        date: 2026-02-24
+        description: First degree graduation
+
+  - category: Event
+    images:
+      - id: workshop-IDEAS-TIH-01
+        date: 2026-03-26
+        description: IDEASync Industry Connect Meet 2026
+
+      - id: event-01
+        date: 2023-05-28
+        description: IITM BS representation at Education Interface
+
+  - category: Guest Event
+    images:
+      - id: guest_event-10
+        date: 2026-06-12
+        description: Paradox 2026 statistics technical event
+
+  - category: Meetup
+    images:
+      - id: meetup-05
+        date: 2023-03-10
+        description: Official IITM BS Kolkata meetup
+
+      - id: meetup-01
+        date: 2023-01-14
+        description: Hosted IITM BS Kolkata meetup
+
+  - category: Mentoring
+    images:
+      - id: intern-project-02
+        date: 2026-07-31
+        description: Summer interns mentoring at IDEAS-TIH
+
+      - id: intern-project-01
+        date: 2026-03-31
+        description: Spring interns mentoring at IDEAS-TIH
+
+  - category: New Role and Internship
+    images:
+      - id: intern-project-1001
+        date: 2026-06-10
+        description: Vicharana Shala VINS month
+
+      - id: new_role-01
+        date: 2025-10-21
+        description: Associate Software Developer role at IDEAS-TIH
+
+      - id: new_role-02
+        date: 2025-02-18
+        description: Student intern role at IDEAS-TIH
+
+  - category: Publication
+    images:
+      - id: academic_milestone-02
+        date: 2026-02-17
+        description: SXC article publication
+
+      - id: academic_milestone-03
+        date: 2025-11-30
+        description: First article publication
+
+  - category: TechFest
+    images:
+      - id: tech_fest-03
+        date: 2023-03-10
+        description: Tryst tech fest at IIT Delhi
+
+      - id: tech_fest-02
+        date: 2023-02-28
+        description: Mental health survey poster at SNU
+
+      - id: tech_fest-01
+        date: 2023-01-14
+        description: First IIT visit at IIT KGP tech fest
+
+  - category: Workshop, Conference and Bootcamp
+    images:
+      - id: workshop-07
+        date: 2026-06-27
+        description: First step toward theoretical computer science
+
+      - id: workshop-06
+        date: 2026-01-23
+        description: Cryptology Conclave at IIT Hyderabad
+
+      - id: workshop-05
+        date: 2026-01-18
+        description: Security and Privacy conference at IITM
+
+      - id: workshop-04
+        date: 2025-06-10
+        description: MAD bootcamps at IITM
+
+      - id: workshop-03
+        date: 2025-03-01
+        description: Cybersecurity and blockchain workshop at IIIT Hyderabad
+
+      - id: workshop-02
+        date: 2024-08-15
+        description: AI Vicharana Shala bootcamp at IIT Ropar
+
+      - id: workshop-09
+        date: 2024-01-15
+        description: ACM ROCS at IIT Madras
+
+      - id: workshop-08
+        date: 2023-05-07
+        description: Google Cloud Community Day Kolkata
+
+      - id: workshop-01
+        date: 2023-02-04
+        description: Social computing workshop at IIITH

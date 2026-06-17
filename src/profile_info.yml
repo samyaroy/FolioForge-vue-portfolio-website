@@ -1009,6 +1009,7 @@ attended_bootcamps:
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
 
   - title: Foundational Lecture Series on Theoretical Computer Science 2026
+    link: "https://www.imsc.res.in/outreach/fstcs2026/"
     instructor:
     institution:
       - name: The Institute of Mathematical Sciences
