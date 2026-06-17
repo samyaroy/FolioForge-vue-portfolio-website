@@ -1093,7 +1093,9 @@ projects_mentored:
         affiliation:
           name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
           location: Kolkata, WB
-        cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
+        cred_link:
+          report: https://drive.google.com/file/d/1i-835QLggY2OWbRxr_RAw1i1wsRBDKCD/view
+          github: https://github.com/samyaroy/IDEAS_Spring_Internship_Contribution_2026
 
       # - title: "Dynamic Topic and Sentiment Evolution in Court Judgments or Policy Documents"
       #   course: "Summer Internship Program on Data Science 2026"
