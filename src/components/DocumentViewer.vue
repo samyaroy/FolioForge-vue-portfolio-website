@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- Trigger Icon -->
-        <v-icon v-if="src && src !== '#'" size="20" class="cursor-pointer"
-            @click="open" 
+        <v-icon v-if="src && src !== '#'" :size="size" class="cursor-pointer"
+            @click="open"
             @mouseenter="isHovered = true"
             @mouseleave="isHovered = false"
             :color="isHovered ? '#000000' : '#646cff'">
@@ -34,6 +34,10 @@ defineProps({
     src: {
         type: String,
         required: true
+    },
+    size: {
+        type: [String, Number],
+        default: 20
     }
 })
 

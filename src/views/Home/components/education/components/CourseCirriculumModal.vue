@@ -23,20 +23,22 @@
             {{ formatSection(section) }}
           </p>
           <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
-            <component
-              :is="course.cred_link ? 'a' : 'div'"
+            <div
               v-for="(course, idx) in courses"
               :key="idx"
-              :href="course.cred_link || undefined"
-              :target="course.cred_link ? '_blank' : undefined"
-              :rel="course.cred_link ? 'noopener noreferrer' : undefined"
-              class="grid grid-cols-[85fr_15fr] gap-3 px-3 py-2.5 rounded-md bg-[#f8fafc] no-underline text-inherit"
-              :class="{ 'hover:bg-[#f0f5fb] transition-colors': course.cred_link }"
+              class="grid grid-cols-[85fr_15fr] gap-3 px-3 py-2.5 rounded-md bg-[#f8fafc]"
               :style="{ border: `1px solid ${isCC(course.type) ? '#bbf7d0' : '#bfdbfe'}` }"
             >
               <div class="min-w-0">
-                <p class="text-[#0e141b] text-sm font-medium leading-snug">{{ course.course_name }}</p>
-                <p class="text-[#4e7397] text-xs mt-0.5 font-mono">{{ course.type }}<v-icon size="6" class="ml-1">mdi-circle</v-icon> {{ formatCourseCode(course.course_code) }}</p>
+                <div class="flex items-start gap-1.5">
+                  <p class="text-[#0e141b] text-sm font-medium leading-snug min-w-0">{{ course.course_name }}</p>
+                  <DocumentViewer v-if="course.cred_link" :src="course.cred_link" :size="16" class="shrink-0 mt-0.5" />
+                </div>
+                <p v-if="course.type || course.course_code" class="text-[#4e7397] text-xs mt-0.5 font-mono">
+                  <span v-if="course.type">{{ course.type }}</span>
+                  <v-icon v-if="course.type && course.course_code" size="6" class="mx-1">mdi-circle</v-icon>
+                  <span v-if="course.course_code">{{ formatCourseCode(course.course_code) }}</span>
+                </p>
                 <div v-if="course.logo" class="mt-2 flex items-center gap-1.5">
                   <template v-for="(logo, li) in normalizedLogos(course.logo)" :key="logo">
                     <img
@@ -53,12 +55,8 @@
               <div v-if="course.credit" class="flex flex-col items-center justify-center border-l border-[#d0dbe7] pl-2">
                 <p class="text-[#0e141b] text-xl font-bold leading-none">{{ course.credit }}</p>
                 <p class="text-[#4e7397] text-[10px] font-semibold uppercase leading-tight mt-1">Credit</p>
-                <v-icon v-if="course.cred_link" size="10" class="mt-1 text-[#93c5fd]">mdi-open-in-new</v-icon>
               </div>
-              <div v-else-if="course.cred_link" class="flex items-end justify-center pb-0.5">
-                <v-icon size="11" class="text-[#93c5fd]">mdi-open-in-new</v-icon>
-              </div>
-            </component>
+            </div>
           </div>
         </div>
       </v-card-text>
@@ -83,6 +81,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
