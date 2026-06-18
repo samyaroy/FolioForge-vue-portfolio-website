@@ -56,6 +56,87 @@
   }
 }
 
+/* "Read on" affordances that end in an arrow — here, the post footer's link to
+   the neighbouring post and its back link. Mirrors the main site's
+   src/style.css so the same control behaves the same in both apps: the arrow
+   sits still for most of the cycle and then double-nudges, and hover hands over
+   to a steady offset (a hover transform and the animation would otherwise both
+   drive `transform`, and the animation always wins). */
+@keyframes arrow-jiggle {
+  0%,
+  55%,
+  100% {
+    transform: translateX(0);
+  }
+
+  65% {
+    transform: translateX(3px);
+  }
+
+  75% {
+    transform: translateX(0);
+  }
+
+  85% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes arrow-jiggle-back {
+  0%,
+  55%,
+  100% {
+    transform: translateX(0);
+  }
+
+  65% {
+    transform: translateX(-3px);
+  }
+
+  75% {
+    transform: translateX(0);
+  }
+
+  85% {
+    transform: translateX(-3px);
+  }
+}
+
+.arrow-jiggle {
+  animation: arrow-jiggle 2.4s ease-in-out infinite;
+}
+
+.arrow-jiggle-back {
+  animation: arrow-jiggle-back 2.4s ease-in-out infinite;
+}
+
+a:hover .arrow-jiggle,
+.group:hover .arrow-jiggle {
+  animation: none;
+  transform: translateX(3px);
+  transition: transform 200ms ease;
+}
+
+a:hover .arrow-jiggle-back,
+.group:hover .arrow-jiggle-back {
+  animation: none;
+  transform: translateX(-3px);
+  transition: transform 200ms ease;
+}
+
+/* Motion here is decorative — the arrow glyph already carries the meaning. */
+@media (prefers-reduced-motion: reduce) {
+  .arrow-jiggle,
+  .arrow-jiggle-back,
+  a:hover .arrow-jiggle,
+  .group:hover .arrow-jiggle,
+  a:hover .arrow-jiggle-back,
+  .group:hover .arrow-jiggle-back {
+    animation: none;
+    transform: none;
+  }
+}
+
 /* Caret blink for the Typewriter component. */
 @keyframes caret-blink {
   50% {
