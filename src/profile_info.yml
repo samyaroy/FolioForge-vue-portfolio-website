@@ -298,6 +298,7 @@ education:
         - course_code: "Google"
           course_name: Data Analysis with R Programming
           type: Coursera
+          logo: COURSERA
 
       link:
 
