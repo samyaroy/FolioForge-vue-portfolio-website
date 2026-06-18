@@ -37,20 +37,12 @@ categories:
 
   - category: Mentoring
     images:
-      - id: intern-project-02
-        date: 2026-07-31
-        description: Summer interns mentoring at IDEAS-TIH
-
       - id: intern-project-01
         date: 2026-03-31
         description: Spring interns mentoring at IDEAS-TIH
 
   - category: New Role and Internship
     images:
-      - id: intern-project-1001
-        date: 2026-06-10
-        description: Vicharana Shala VINS month
-
       - id: new_role-01
         date: 2025-10-21
         description: Associate Software Developer role at IDEAS-TIH
@@ -85,10 +77,6 @@ categories:
 
   - category: Workshop, Conference and Bootcamp
     images:
-      - id: workshop-07
-        date: 2026-06-27
-        description: First step toward theoretical computer science
-
       - id: workshop-06
         date: 2026-01-23
         description: Cryptology Conclave at IIT Hyderabad

@@ -23,40 +23,12 @@
             {{ formatSection(section) }}
           </p>
           <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
-            <div
+            <CourseCard
               v-for="(course, idx) in courses"
               :key="idx"
-              class="grid grid-cols-[85fr_15fr] gap-3 px-3 py-2.5 rounded-md bg-[#f8fafc]"
-              :style="{ border: `1px solid ${isCC(course.type) ? '#bbf7d0' : '#bfdbfe'}` }"
-            >
-              <div class="min-w-0">
-                <div class="flex items-start gap-1.5">
-                  <p class="text-[#0e141b] text-sm font-medium leading-snug min-w-0">{{ course.course_name }}</p>
-                  <DocumentViewer v-if="course.cred_link" :src="course.cred_link" :size="16" class="shrink-0 mt-0.5" />
-                </div>
-                <p v-if="course.type || course.course_code" class="text-[#4e7397] text-xs mt-0.5 font-mono">
-                  <span v-if="course.type">{{ course.type }}</span>
-                  <v-icon v-if="course.type && course.course_code" size="6" class="mx-1">mdi-circle</v-icon>
-                  <span v-if="course.course_code">{{ formatCourseCode(course.course_code) }}</span>
-                </p>
-                <div v-if="course.logo" class="mt-2 flex items-center gap-1.5">
-                  <template v-for="(logo, li) in normalizedLogos(course.logo)" :key="logo">
-                    <img
-                      :src="getLogoPath(logo)"
-                      :alt="logo"
-                      :title="logo"
-                      class="h-3.5 w-auto object-contain opacity-60"
-                      @error="handleLogoError"
-                    >
-                    <span v-if="li < normalizedLogos(course.logo).length - 1" class="text-slate-300 text-[9px]">·</span>
-                  </template>
-                </div>
-              </div>
-              <div v-if="course.credit" class="flex flex-col items-center justify-center border-l border-[#d0dbe7] pl-2">
-                <p class="text-[#0e141b] text-xl font-bold leading-none">{{ course.credit }}</p>
-                <p class="text-[#4e7397] text-[10px] font-semibold uppercase leading-tight mt-1">Credit</p>
-              </div>
-            </div>
+              :course="course"
+              :section="section"
+            />
           </div>
         </div>
       </v-card-text>
@@ -81,7 +53,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import DocumentViewer from '@/components/DocumentViewer.vue'
+import CourseCard from './CourseCard.vue'
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
@@ -112,26 +84,4 @@ function formatSection(key) {
   return key.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase())
 }
 
-function formatCourseCode(code) {
-  if (Array.isArray(code)) return code.join(' / ')
-  return String(code)
-}
-
-function isCC(type) {
-  if (!type) return false
-  return String(type).split('/').every(t => ['CC', 'PCC'].includes(t.trim()))
-}
-
-function normalizedLogos(logo) {
-  if (!logo) return []
-  return Array.isArray(logo) ? logo : [logo]
-}
-
-function getLogoPath(logo) {
-  return `/logo/${logo}.png`
-}
-
-function handleLogoError(event) {
-  event.target.remove()
-}
 </script>
