@@ -16,14 +16,14 @@ items:
   #   # featured: true
   #   tags: [Mentoring]
 
-  # - id: workshop-07
-  #   title: Took convensionallty first step towards Theoretical Computer Science
-  #   caption: 
-  #   type: gallery
-  #   date: 2026-06-27
-  #   tags: [Bootcamp, Workshop]
-  #   event: FLSTCS 2026
-  #   location: Alladi Ramakrishnan Hall, IMSc, Chennai
+  - id: workshop-07
+    title: Took the first conventional step towards Theoretical Computer Science
+    caption: Visited [[IMSc|Institute of Mathematical Sciences, Chennai|Institute]] for 2 weeks to attend **Foundation Lecture Series on Theoretical Computer Science** and so many things started making sense every day. Thanks to [[Prof. Venkatesh Raman|Prof. Venkatesh Raman|Person]], Prof. Vikram Sharma and the whole team for letting us take those baby steps.
+    type: gallery
+    date: 2026-06-27
+    tags: [Bootcamp, Workshop]
+    event: FLSTCS 2026
+    location: Alladi Ramakrishnan Hall, IMSc
 
   - id: guest_event-10
     title: Hosted Stats based Technical Event at Paradox 2026, IIT Madras
@@ -85,13 +85,13 @@ items:
     tags: [Article, "New Publication"]
     externalUrl: https://www.linkedin.com/posts/pgds-sxccal_gradient-vol-i-activity-7429850321499201536-hpb0?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
 
-  # - id: guest_event-01
-  #   title: Hosted a guest event on Federated Learning at IITM
-  #   caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
-  #   type: youtube
-  #   date: 2026-02-05
-  #   tags: ["Guest Event"]
-  #   externalUrl: https://www.youtube.com/live/0iSF4Ggwa3Q?si=CWmS1q9WQWQGwhQU
+  - id: guest_event-01-01-01
+    title: Hosted a guest event on Federated Learning for IITM BS students
+    caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
+    type: youtube
+    date: 2026-02-05
+    tags: ["Guest Event"]
+    externalUrl: https://www.youtube.com/live/0iSF4Ggwa3Q?si=CWmS1q9WQWQGwhQU
 
   - id: workshop-06
     title: Attended Cryptology Conclave at IIT Hyderabad
