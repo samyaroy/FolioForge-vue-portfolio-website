@@ -13,7 +13,7 @@
       />
     </div>
 
-    <div class="flex justify-start mt-6 mb-4">
+    <div v-if="hasAwards" class="flex justify-start mt-6 mb-4">
       <button
         type="button"
         class="awards-text-button"
@@ -37,6 +37,10 @@ defineProps({
   iconMap: {
     type: Object,
     required: true,
+  },
+  hasAwards: {
+    type: Boolean,
+    default: false,
   },
 });
 

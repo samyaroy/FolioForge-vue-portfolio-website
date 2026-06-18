@@ -3,31 +3,34 @@
     <div class="max-w-[1200px] mx-auto">
       <div class="flex flex-wrap justify-between gap-3 p-4">
         <h2 class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">
-          {{ currentSlide === 1 ? 'Achievements' : 'Award and Prize' }}
+          {{ currentTitle }}
         </h2>
       </div>
 
       <div class="overflow-hidden">
         <div
           class="flex transition-transform duration-500 ease-in-out"
-          :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
+          :style="{ transform: `translateX(-${activeSlidePosition * 100}%)` }"
         >
           <AwardsSlide
+            v-if="canShowAwards"
             :awards="awards"
             :icon-map="iconMap"
-            :has-achievements="hasAchievements"
+            :has-achievements="canShowAchievements"
             @show-achievements="setSlide(1)"
           />
 
           <AchievementsSlide
+            v-if="canShowAchievements"
             :achievements="achievements"
             :icon-map="iconMap"
+            :has-awards="canShowAwards"
             @show-awards="setSlide(0)"
           />
         </div>
       </div>
 
-      <div v-if="hasAchievements" class="flex justify-center items-center gap-2 mt-2 mb-4">
+      <div v-if="slides.length > 1" class="flex justify-center items-center gap-2 mt-2 mb-4">
         <button
           v-for="slide in slides"
           :key="slide.index"
@@ -47,17 +50,29 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import AchievementsSlide from "./components/slides/AchievementsSlide.vue";
 import AwardsSlide from "./components/slides/AwardsSlide.vue";
 import config from "@/profile_info.yml";
+import { isFeatureEnabled } from '@/config/featureFlags'
 const { awards, achievements } = config;
 
 const AUTO_SLIDE_INTERVAL = 30000
 const currentSlide = ref(0)
 let autoSlideTimer = null
 
+const hasAwards = computed(() => Boolean(awards && awards.length))
 const hasAchievements = computed(() => Boolean(achievements && achievements.length))
-const slides = [
-  { index: 0, label: 'awards and prizes' },
-  { index: 1, label: 'achievements' },
-]
+const canShowAwards = computed(() => isFeatureEnabled('showHome.showAwards') && hasAwards.value)
+const canShowAchievements = computed(() => isFeatureEnabled('showHome.showAchivement') && hasAchievements.value)
+const slides = computed(() => [
+  ...(canShowAwards.value ? [{ index: 0, label: 'awards and prizes' }] : []),
+  ...(canShowAchievements.value ? [{ index: 1, label: 'achievements' }] : []),
+])
+
+const activeSlidePosition = computed(() =>
+  Math.max(0, slides.value.findIndex((slide) => slide.index === currentSlide.value))
+)
+
+const currentTitle = computed(() =>
+  slides.value[activeSlidePosition.value]?.index === 1 ? 'Achievements' : 'Award and Prize'
+)
 
 const stopAutoSlide = () => {
   if (autoSlideTimer) {
@@ -69,16 +84,22 @@ const stopAutoSlide = () => {
 const startAutoSlide = () => {
   stopAutoSlide()
 
-  if (!hasAchievements.value) {
+  if (slides.value.length < 2) {
     return
   }
 
   autoSlideTimer = setInterval(() => {
-    currentSlide.value = currentSlide.value === 0 ? 1 : 0
+    const currentIndex = slides.value.findIndex((slide) => slide.index === currentSlide.value)
+    const nextIndex = currentIndex === slides.value.length - 1 ? 0 : currentIndex + 1
+    currentSlide.value = slides.value[nextIndex].index
   }, AUTO_SLIDE_INTERVAL)
 }
 
 const setSlide = (index) => {
+  if (!slides.value.some((slide) => slide.index === index)) {
+    return
+  }
+
   currentSlide.value = index
   startAutoSlide()
 }
@@ -92,7 +113,10 @@ const iconMap = {
   Extracurricular: "mdi-star-circle",
 }
 
-onMounted(startAutoSlide)
+onMounted(() => {
+  currentSlide.value = slides.value[0]?.index ?? 0
+  startAutoSlide()
+})
 onUnmounted(stopAutoSlide)
 </script>
 

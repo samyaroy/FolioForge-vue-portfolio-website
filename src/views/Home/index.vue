@@ -14,7 +14,7 @@
       <Education v-if="homeFlags.showEducation" />
 
       <!--Awards Section-->
-      <Awards v-if="homeFlags.showAwards" />
+      <Awards v-if="homeFlags.showAwards || homeFlags.showAchivement" />
     
     </div>
   </div>
@@ -32,8 +32,9 @@ const homeFlags = {
   showHeroSection: isFeatureEnabled('showHome.showHeroSection'),
   showResearchInterests: isFeatureEnabled('showHome.showResearchInterests'),
   showExperience: isFeatureEnabled('showHome.showExperience'),
-  showEducation: isFeatureEnabled('showHome.showEducation'),
+  showEducation: isFeatureEnabled('showHome.showEducation.main'),
   showAwards: isFeatureEnabled('showHome.showAwards'),
+  showAchivement: isFeatureEnabled('showHome.showAchivement'),
 }
 </script>
 

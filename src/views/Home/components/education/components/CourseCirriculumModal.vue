@@ -23,21 +23,12 @@
             {{ formatSection(section) }}
           </p>
           <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
-            <div
+            <CourseCard
               v-for="(course, idx) in courses"
               :key="idx"
-              class="grid grid-cols-[85fr_15fr] gap-3 px-3 py-2.5 rounded-md bg-[#f8fafc]"
-              :style="{ border: `1px solid ${isCC(course.type) ? '#bbf7d0' : '#bfdbfe'}` }"
-            >
-              <div class="min-w-0">
-                <p class="text-[#0e141b] text-sm font-medium leading-snug">{{ course.course_name }}</p>
-                <p class="text-[#4e7397] text-xs mt-0.5 font-mono">{{ course.type }}<v-icon size="6" class="ml-1">mdi-circle</v-icon> {{ formatCourseCode(course.course_code) }}</p>
-              </div>
-              <div v-if="course.credit" class="flex flex-col items-center justify-center border-l border-[#d0dbe7] pl-2">
-                <p class="text-[#0e141b] text-xl font-bold leading-none">{{ course.credit }}</p>
-                <p class="text-[#4e7397] text-[10px] font-semibold uppercase leading-tight mt-1">Credit</p>
-              </div>
-            </div>
+              :course="course"
+              :section="section"
+            />
           </div>
         </div>
       </v-card-text>
@@ -62,6 +53,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import CourseCard from './CourseCard.vue'
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
@@ -92,13 +84,4 @@ function formatSection(key) {
   return key.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase())
 }
 
-function formatCourseCode(code) {
-  if (Array.isArray(code)) return code.join(' / ')
-  return String(code)
-}
-
-function isCC(type) {
-  if (!type) return false
-  return String(type).split('/').every(t => ['CC', 'PCC'].includes(t.trim()))
-}
 </script>

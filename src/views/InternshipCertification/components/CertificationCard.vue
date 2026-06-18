@@ -51,7 +51,7 @@
             <template v-for="(logo, index) in certification.logo" :key="logo">
               <img :src="getLogoPath(logo)" :alt="logo" :title="logo"
                 class="h-5 md:h-7 w-auto object-contain" @error="handleLogoError">
-              <span v-if="index < certification.logo.length - 1" class="text-slate-500/50"> </span>
+              <span v-if="index < certification.logo.length - 1"> &bull; </span>
             </template>
           </div>
         </div>
