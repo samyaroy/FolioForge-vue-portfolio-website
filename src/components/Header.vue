@@ -1,18 +1,21 @@
 <template>
   <header
-    class="sticky top-0 z-50 bg-white flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-10 py-4">
-    <!-- Logo/Brand -->
-    <div class="flex items-center gap-4 text-base_black">
-      <div class="size-4">
+    class="sticky top-0 z-50 bg-white flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-4 sm:px-6 md:px-10 py-4">
+    <!-- Logo/Brand. `min-w-0` + `truncate` so a long name yields to the
+         hamburger instead of pushing it off a narrow screen. -->
+    <div class="flex min-w-0 items-center gap-2 sm:gap-4 text-base_black">
+      <div class="size-4 shrink-0">
         <img src="/profile-icon.png" alt="Profile Icon" class="w-full h-full object-cover rounded-full" />
       </div>
-      <router-link to="/" class="text-base_black text-lg font-bold leading-tight tracking-[-0.015em] no-underline">
+      <router-link
+        to="/"
+        class="truncate text-base_black text-base sm:text-lg font-bold leading-tight tracking-[-0.015em] no-underline">
         {{ profile.name }}
       </router-link>
     </div>
 
     <!-- Navigation Links -->
-    <div class="flex flex-1 justify-end gap-8">
+    <div class="flex shrink-0 justify-end gap-8">
       <div class="hidden md:flex items-center gap-9">
         <router-link to="/" class="nav-link" active-class="active-link">
           Home
