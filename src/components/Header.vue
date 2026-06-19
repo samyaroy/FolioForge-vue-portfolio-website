@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 z-50 bg-white flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-10 py-2">
+    class="sticky top-0 z-50 bg-white flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-10 py-4">
     <!-- Logo/Brand -->
     <div class="flex items-center gap-4 text-base_black">
       <div class="size-4">
@@ -23,10 +23,10 @@
           class="nav-link"
           active-class="active-link"
         >
-          Projects & Publications
+          Project & Publication
         </router-link>
         <router-link v-if="showTeachingsNavLink" to="/teachings" class="nav-link" active-class="active-link">
-          Teachings
+          Teaching
         </router-link>
         <router-link
           v-if="showProfessionalActivityNavLink"
@@ -42,9 +42,9 @@
         <router-link v-if="showGalleryNavLink" to="/gallery" class="nav-link" active-class="active-link">
           Gallery
         </router-link>
-        <a v-if="vlogLink" :href="vlogLink" target="_blank" rel="noopener" class="vlog-link">
-          <v-icon size="14" class="vlog-star">mdi-star-four-points</v-icon>
-          Vlog
+        <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" class="blog-link text-base">
+          <v-icon size="16" class="blog-icon">mdi-post-outline</v-icon>
+          Blog
         </a>
       </div>
 
@@ -97,10 +97,10 @@
             class="nav-link"
             active-class="active-link"
           >
-            Projects & Publications
+            Project & Publication
           </router-link>
           <router-link v-if="showTeachingsNavLink" to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
-            Teachings
+            Teaching
           </router-link>
           <router-link
             v-if="showProfessionalActivityNavLink"
@@ -114,9 +114,9 @@
           <router-link :to="{ name: 'Contact' }" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
-          <a v-if="vlogLink" :href="vlogLink" target="_blank" rel="noopener" @click="drawer = false" class="vlog-link">
-            <v-icon size="14" class="vlog-star">mdi-star-four-points</v-icon>
-            Vlog
+          <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" @click="drawer = false" class="blog-link">
+            <v-icon size="14" class="blog-icon">mdi-post-outline</v-icon>
+            Blog
           </a>
         </nav>
       </div>
@@ -134,7 +134,11 @@ const router = useRouter()
 const drawer = ref(false)
 const { profile, socials } = config
 
-const vlogLink = socials.vlog
+const blogLink = socials.vlog
+
+const showBlogNavLink = computed(() => (
+  isFeatureEnabled('showBlog') && Boolean(blogLink)
+))
 
 const showGalleryNavLink = computed(() => (
   isFeatureEnabled('showGallery') && router.hasRoute('Gallery')
@@ -173,16 +177,15 @@ const showProfessionalActivityNavLink = computed(() => (
   @apply font-bold text-primary;
 }
 
-/* Highlighted Vlog link - emphasized with primary color and a sparkle star */
-.vlog-link {
-  @apply inline-flex items-center gap-1 text-sm font-bold text-primary no-underline transition-colors duration-200;
+.blog-link {
+  @apply inline-flex items-center gap-1 text-sm font-semibold text-base_black no-underline transition-colors duration-200;
 }
 
-.vlog-link:hover {
-  @apply text-primary-700;
+.blog-link:hover {
+  @apply text-primary;
 }
 
-.vlog-star {
-  @apply text-amber-400;
+.blog-icon {
+  @apply text-[#1980e6];
 }
 </style>

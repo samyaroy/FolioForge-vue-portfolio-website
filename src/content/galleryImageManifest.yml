@@ -25,6 +25,10 @@ categories:
         date: 2026-06-12
         description: Paradox 2026 statistics technical event
 
+      - id: guest_event-01-01-01
+        date: 2026-02-05
+        description: Hosted a guest event on Federated Learning for IITM BS students
+
   - category: Meetup
     images:
       - id: meetup-05
@@ -77,6 +81,10 @@ categories:
 
   - category: Workshop, Conference and Bootcamp
     images:
+      - id: workshop-07
+        date: 2026-06-27
+        description: Took the first conventional step towards Theoretical Computer Science
+
       - id: workshop-06
         date: 2026-01-23
         description: Cryptology Conclave at IIT Hyderabad

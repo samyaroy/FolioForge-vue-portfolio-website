@@ -40,6 +40,4 @@ npm run deploy     # build + wrangler deploy (Workers Static Assets)
 The Worker is named `folioforge-blog` (see `wrangler.jsonc`). After the first
 deploy, add the custom domain `blogs.samyabrata.codeium.xyz` to it in the
 Cloudflare dashboard (Workers → folioforge-blog → Domains & Routes). SPA routing
-is handled via `not_found_handling: single-page-application`; the
-`public/_redirects` file covers the same case if deployed as a Cloudflare Pages
-project instead.
+is handled via `not_found_handling: single-page-application`.

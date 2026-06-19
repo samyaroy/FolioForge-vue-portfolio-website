@@ -1,0 +1,27 @@
+# Resources content is rendered from this file.
+# Add entries under each category as they become available.
+
+categories:
+  - id: learning-materials
+    title: Learning Materials
+    icon: mdi-book-open-page-variant
+    description: Notes, references, and study materials that support teaching, workshops, and independent learning.
+    items: []
+
+  - id: documents
+    title: Documents
+    icon: mdi-file-document-outline
+    description: Helpful documents, templates, and supporting files for research, projects, and collaboration.
+    items: []
+
+  - id: useful-links
+    title: Useful Links
+    icon: mdi-link-variant
+    description: Selected external links and platforms that may be useful for students, collaborators, and readers.
+    items: []
+
+  - id: tools
+    title: Tools
+    icon: mdi-tools
+    description: Software, utilities, and workflows I find useful for technical, academic, and creative work.
+    items: []

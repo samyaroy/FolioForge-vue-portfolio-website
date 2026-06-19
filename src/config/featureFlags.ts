@@ -38,6 +38,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showGallery: true,
 
+  showBlog: true,
+
+  showResources: true,
+
   showCocurricular: {
     showLeadershipOrganizations: true,
     showVolunteering: true,

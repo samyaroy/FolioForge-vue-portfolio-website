@@ -105,6 +105,13 @@
                 Co-curricular Activities
               </router-link>
             </li>
+            <li v-if="showResourcesLink">
+              <router-link to="/resources"
+                class="inline-flex items-center gap-1 font-semibold text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
+                <v-icon size="16" class="text-[#1980e6]">mdi-book-open-page-variant</v-icon>
+                Resources
+              </router-link>
+            </li>
             <!-- <li>
               <router-link 
                 to="/contact" 
@@ -215,6 +222,7 @@ export default {
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
+    const showResourcesLink = isFeatureEnabled('showResources')
     const showAffiliationsLink = (
       isFeatureEnabled('showAffiliations.showAffiliations')
       || isFeatureEnabled('showAffiliations')
@@ -241,6 +249,7 @@ export default {
       showInternshipCertificationsLink,
       showWorkshopsAttendedLink,
       showAffiliationsLink,
+      showResourcesLink,
     };
   }
 }
