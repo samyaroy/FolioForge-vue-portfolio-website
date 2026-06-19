@@ -21,27 +21,26 @@
             </div>
 
             <!-- Action Buttons -->
-            <div class="flex flex-col gap-4 md:flex-row md:gap-4 w-full">
+            <div class="flex flex-row gap-3 w-full">
               <button
-                class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 md:h-12 md:px-5 bg-[#1980e6] text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] md:text-base md:font-bold md:leading-normal md:tracking-[0.015em] hover:bg-[#1565c0] transition-colors duration-200"
+                class="flex flex-1 cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-3 md:h-12 md:px-4 bg-[#1980e6] text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#1565c0] transition-colors duration-200"
                 @click="$router.push({ path: '/projects-publications', query: { tab: 'publications' } })">
+                <v-icon size="18">mdi-briefcase-outline</v-icon>
                 <span class="truncate">See my work</span>
               </button>
               <button
-                class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 md:h-12 md:px-5 bg-black border-2 border-[#1980e6] text-[#ffffff] text-sm font-bold leading-normal tracking-[0.015em] md:text-base md:font-bold md:leading-normal md:tracking-[0.015em] hover:bg-[#1980e6] hover:text-white transition-all duration-200"
+                class="flex flex-1 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-lg h-10 px-3 md:h-12 md:px-4 bg-black border-2 border-[#1980e6] text-[#ffffff] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#1980e6] hover:text-white transition-all duration-200"
                 @click="downloadCV">
-                <v-icon>mdi-tray-arrow-down</v-icon>
-                <span class="truncate gap-x-1 px-2"> My CV</span>
+                <v-icon size="18">mdi-tray-arrow-down</v-icon>
+                <span class="truncate px-1">My CV</span>
+              </button>
+              <button
+                class="flex flex-1 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-lg h-10 px-3 md:h-12 md:px-4 border-2 border-[#1980e6] text-[#1980e6] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#1980e6] hover:text-white transition-all duration-200"
+                @click="openGmailDraft">
+                <v-icon size="18">mdi-email-outline</v-icon>
+                <span class="truncate px-1">Get In Touch</span>
               </button>
             </div>
-
-            <!-- Get In Touch Button -->
-            <button
-              class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 md:h-12 md:px-5 border-2 border-[#1980e6] text-[#1980e6] text-sm font-bold leading-normal tracking-[0.015em] md:text-base md:font-bold hover:bg-[#1980e6] hover:text-white transition-all duration-200"
-              @click="openGmailDraft">
-              <v-icon size="18">mdi-email-outline</v-icon>
-              <span class="truncate">Get In Touch</span>
-            </button>
 
             <!-- Social Media Icons -->
             <div class="flex items-center gap-6 pt-2">
