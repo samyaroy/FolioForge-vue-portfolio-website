@@ -4,6 +4,16 @@
 # - [[Visible Text|Exact Metadata Name|Person]]
 # - **bold**
 # - *italic*
+#
+# Multiple images (carousel):
+# By default each card shows one image resolved from its `id`.
+# To show several, add an `images:` list. The first entry is shown first,
+# and left/right arrows + dots let visitors slide through the rest.
+# Each entry can be a full URL or a bare CDN key (resolved to <base>/<key>.jpeg).
+#   images:
+#     - guest_event-01-01        # CDN key -> https://media.../guest_event-01-01.jpeg
+#     - guest_event-01-01-2      # second photo
+#     - https://example.com/extra.jpg  # or a full URL
 
 items:
   # - id: intern-project-02
@@ -29,6 +39,8 @@ items:
     title: Hosted Stats based Technical Event at Paradox 2026, IIT Madras
     caption: "Always wannted to make people connect stats to daily life. With this moto we statred [[Chi-Square: Statistics Club|Institute]] in 2023 at IITM BS, For the first time me and my team hosted a offline survey-based data analysis compitition name **Probably Paradoxical** during **Paradox 2026**. "
     type: Linkedin
+    images:
+      - guest_event-10-1
     date: 2026-06-12
     featured: true
     tags: ["Guest Event"]

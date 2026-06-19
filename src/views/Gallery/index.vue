@@ -127,6 +127,7 @@ function normalizeGalleryItems(items) {
     categoryCounts.set(category, nextCount)
 
     const id = item?.id || createCategoryId(category, nextCount)
+    const images = resolveItemImages(id, item?.images)
 
     return {
       ...item,
@@ -134,7 +135,8 @@ function normalizeGalleryItems(items) {
       category,
       tags,
       filterTags,
-      image: resolveItemImage(id),
+      images,
+      image: images[0] || '',
       originalIndex: index,
     }
   })
@@ -182,8 +184,27 @@ function createCategoryId(category, count) {
   return `${category}-${String(count).padStart(2, '0')}`
 }
 
-function resolveItemImage(itemId) {
-  return getGalleryImageById(itemId)
+function resolveItemImages(itemId, rawImages) {
+  const explicitImages = Array.isArray(rawImages)
+    ? rawImages.map(resolveImageEntry).filter(Boolean)
+    : []
+
+  if (explicitImages.length) return explicitImages
+
+  const fallbackImage = getGalleryImageById(itemId)
+  return fallbackImage ? [fallbackImage] : []
+}
+
+function resolveImageEntry(entry) {
+  if (typeof entry !== 'string') return ''
+
+  const trimmedEntry = entry.trim()
+  if (!trimmedEntry) return ''
+
+  // Full URLs are used as-is; bare keys resolve through the centralized CDN base.
+  if (/^https?:\/\//i.test(trimmedEntry)) return trimmedEntry
+
+  return getGalleryImageById(trimmedEntry)
 }
 
 function getGalleryImageById(itemId) {
