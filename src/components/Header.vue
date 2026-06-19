@@ -42,14 +42,11 @@
         <router-link v-if="showGalleryNavLink" to="/gallery" class="nav-link" active-class="active-link">
           Gallery
         </router-link>
+        <a v-if="vlogLink" :href="vlogLink" target="_blank" rel="noopener" class="vlog-link">
+          <v-icon size="14" class="vlog-star">mdi-star-four-points</v-icon>
+          Vlog
+        </a>
       </div>
-
-      <!-- Hire Me Button -->
-      <button
-        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary-700 transition-colors duration-200"
-        @click="SEND_MAIL">
-        <span class="truncate">Hire Me</span>
-      </button>
 
       <!-- Mobile Menu Button -->
       <button class="md:hidden flex items-center justify-center w-10 h-10 transition-colors duration-200"
@@ -117,6 +114,10 @@
           <router-link :to="{ name: 'Contact' }" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
+          <a v-if="vlogLink" :href="vlogLink" target="_blank" rel="noopener" @click="drawer = false" class="vlog-link">
+            <v-icon size="14" class="vlog-star">mdi-star-four-points</v-icon>
+            Vlog
+          </a>
         </nav>
       </div>
     </div>
@@ -131,7 +132,9 @@ import { isFeatureEnabled } from '@/config/featureFlags'
 
 const router = useRouter()
 const drawer = ref(false)
-const { profile, contacts } = config
+const { profile, socials } = config
+
+const vlogLink = socials.vlog
 
 const showGalleryNavLink = computed(() => (
   isFeatureEnabled('showGallery') && router.hasRoute('Gallery')
@@ -151,12 +154,6 @@ const showProfessionalActivityNavLink = computed(() => (
   && (router.hasRoute('ProfessionalActivity') || router.hasRoute('ProfessionalAcitivity'))
 ))
 
-const SEND_MAIL = () => {
-  const subject = encodeURIComponent('Freelance Project:')
-  const body = encodeURIComponent('I would like to discuss a potential collaboration.')
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${contacts.email}&su=${subject}&body=${body}`
-  window.open(gmailUrl, '_blank')
-}
 </script>
 
 <style scoped>
@@ -174,5 +171,18 @@ const SEND_MAIL = () => {
 
 .active-link {
   @apply font-bold text-primary;
+}
+
+/* Highlighted Vlog link - emphasized with primary color and a sparkle star */
+.vlog-link {
+  @apply inline-flex items-center gap-1 text-sm font-bold text-primary no-underline transition-colors duration-200;
+}
+
+.vlog-link:hover {
+  @apply text-primary-700;
+}
+
+.vlog-star {
+  @apply text-amber-400;
 }
 </style>
