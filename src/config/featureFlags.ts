@@ -38,9 +38,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showGallery: true,
 
-  showBlog: true,
+  showBlog: false,
 
-  showResources: true,
+  showResources: false,
 
   showCocurricular: {
     showLeadershipOrganizations: true,
