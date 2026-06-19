@@ -44,13 +44,6 @@
         </router-link>
       </div>
 
-      <!-- Hire Me Button -->
-      <button
-        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary-700 transition-colors duration-200"
-        @click="SEND_MAIL">
-        <span class="truncate">Hire Me</span>
-      </button>
-
       <!-- Mobile Menu Button -->
       <button class="md:hidden flex items-center justify-center w-10 h-10 transition-colors duration-200"
         @click="drawer = !drawer">
@@ -131,7 +124,7 @@ import { isFeatureEnabled } from '@/config/featureFlags'
 
 const router = useRouter()
 const drawer = ref(false)
-const { profile, contacts } = config
+const { profile } = config
 
 const showGalleryNavLink = computed(() => (
   isFeatureEnabled('showGallery') && router.hasRoute('Gallery')
@@ -151,12 +144,6 @@ const showProfessionalActivityNavLink = computed(() => (
   && (router.hasRoute('ProfessionalActivity') || router.hasRoute('ProfessionalAcitivity'))
 ))
 
-const SEND_MAIL = () => {
-  const subject = encodeURIComponent('Freelance Project:')
-  const body = encodeURIComponent('I would like to discuss a potential collaboration.')
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${contacts.email}&su=${subject}&body=${body}`
-  window.open(gmailUrl, '_blank')
-}
 </script>
 
 <style scoped>

@@ -35,6 +35,14 @@
               </button>
             </div>
 
+            <!-- Get In Touch Button -->
+            <button
+              class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 md:h-12 md:px-5 border-2 border-[#1980e6] text-[#1980e6] text-sm font-bold leading-normal tracking-[0.015em] md:text-base md:font-bold hover:bg-[#1980e6] hover:text-white transition-all duration-200"
+              @click="contactDialog = true">
+              <v-icon size="18">mdi-email-outline</v-icon>
+              <span class="truncate">Get In Touch</span>
+            </button>
+
             <!-- Social Media Icons -->
             <div class="flex items-center gap-6 pt-2">
               <a :href=linkedin target="_blank"
@@ -54,9 +62,59 @@
       </div>
     </div>
   </div>
+
+  <!-- Contact Dialog -->
+  <v-dialog v-model="contactDialog" max-width="520">
+    <v-card rounded="lg" class="pa-2">
+      <v-card-title class="text-xl font-bold pt-4 px-5">
+        Let's work together!
+      </v-card-title>
+      <v-card-subtitle class="px-5 pb-3 text-sm text-gray-500">
+        Have a project, idea, or opportunity in mind? Drop me a message and I'll get back to you.
+      </v-card-subtitle>
+
+      <v-card-text class="px-5 pb-2">
+        <v-text-field
+          v-model="mailSubject"
+          label="Subject"
+          variant="outlined"
+          density="comfortable"
+          class="mb-3"
+          placeholder="e.g. Collaboration Opportunity"
+          prepend-inner-icon="mdi-format-title"
+        ></v-text-field>
+        <v-textarea
+          v-model="mailBody"
+          label="Message"
+          variant="outlined"
+          rows="5"
+          placeholder="Write your message here..."
+          prepend-inner-icon="mdi-message-text-outline"
+          no-resize
+        ></v-textarea>
+      </v-card-text>
+
+      <v-card-actions class="px-5 pb-4 pt-1">
+        <v-spacer></v-spacer>
+        <button
+          class="px-4 py-2 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors mr-2 rounded-lg"
+          @click="closeDialog">
+          Cancel
+        </button>
+        <button
+          class="flex items-center gap-2 px-5 py-2 bg-[#1980e6] text-white text-sm font-bold rounded-lg hover:bg-[#1565c0] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          :disabled="!mailSubject.trim() && !mailBody.trim()"
+          @click="sendMail">
+          <v-icon size="16">mdi-send</v-icon>
+          Send Message
+        </button>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import config from "@/profile_info.yml"
 
 const { profile, contacts, socials } = config
@@ -69,20 +127,32 @@ const cv_link = profile.cv
 const email = contacts.email
 const email_link = `mailto:${email}`
 
-const email2 = contacts.email2
-const email2_link = `mailto:${email2}`
-
-
 const github_personal = socials.github
 const linkedin = socials.linkedin
-//const twitter = socials.twitter
+
+const contactDialog = ref(false)
+const mailSubject = ref('')
+const mailBody = ref('')
 
 const downloadCV = () => {
-  // You can replace this with your actual CV download logic
   const link = document.createElement('a')
   link.href = cv_link
   link.download = `${name.replace(" ", "_")}_CV.pdf`
   link.click()
+}
+
+const closeDialog = () => {
+  contactDialog.value = false
+  mailSubject.value = ''
+  mailBody.value = ''
+}
+
+const sendMail = () => {
+  const subject = encodeURIComponent(mailSubject.value.trim() || 'Hello from your portfolio')
+  const body = encodeURIComponent(mailBody.value.trim())
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}&body=${body}`
+  window.open(gmailUrl, '_blank')
+  closeDialog()
 }
 </script>
 
