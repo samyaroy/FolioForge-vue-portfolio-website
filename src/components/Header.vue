@@ -43,7 +43,6 @@
           Gallery
         </router-link>
         <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" class="blog-link text-base">
-          <v-icon size="16" class="blog-icon">mdi-post-outline</v-icon>
           Blog
         </a>
       </div>
@@ -115,7 +114,6 @@
             Contact
           </router-link>
           <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" @click="drawer = false" class="blog-link">
-            <v-icon size="14" class="blog-icon">mdi-post-outline</v-icon>
             Blog
           </a>
         </nav>
@@ -178,14 +176,52 @@ const showProfessionalActivityNavLink = computed(() => (
 }
 
 .blog-link {
-  @apply inline-flex items-center gap-1 text-sm font-semibold text-base_black no-underline transition-colors duration-200;
+  @apply relative inline-flex items-center text-sm font-medium text-base_black no-underline transition-colors duration-200;
+  padding-right: 1.15rem;
 }
 
 .blog-link:hover {
   @apply text-primary;
 }
 
-.blog-icon {
-  @apply text-[#1980e6];
+.blog-link::before {
+  content: "";
+  position: absolute;
+  right: -0.35rem;
+  top: 50%;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 9999px;
+  background: #1980e6;
+  filter: blur(16px);
+  opacity: 0.22;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.blog-link::after {
+  content: "";
+  position: absolute;
+  right: 0.1rem;
+  top: 0.05rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 9999px;
+  background: #1980e6;
+  box-shadow: 0 0 12px rgba(25, 128, 230, 0.75);
+  opacity: 0.9;
+  animation: blog-dot-blink 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes blog-dot-blink {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 </style>

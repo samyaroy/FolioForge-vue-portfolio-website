@@ -11,7 +11,7 @@ import InternshipCertification from '@/views/InternshipCertification/index.vue'
 import Teachings from '@/views/Teachings/index.vue'
 import ProfessionalAcitivity from '@/views/ProfessionalAcitivity/index.vue'
 import Contact from '@/views/Contact.vue'
-import Resources from '@/views/Resources.vue'
+import Resources from '@/views/Resources/index.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const routes = [

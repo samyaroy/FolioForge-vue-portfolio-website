@@ -107,8 +107,10 @@
             </li>
             <li v-if="showResourcesLink">
               <router-link to="/resources"
-                class="inline-flex items-center gap-1 font-semibold text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
-                <v-icon size="16" class="text-[#1980e6]">mdi-book-open-page-variant</v-icon>
+                class="inline-flex items-baseline text-black-300 hover:text-black transition-colors duration-200">
+                <span class="resource-sparkle-wrap">
+                  <v-icon size="13" class="resource-sparkle text-yellow-500">mdi-creation</v-icon>
+                </span>
                 Resources
               </router-link>
             </li>
@@ -266,5 +268,45 @@ export default {
   width: 100%;
   margin: 0 auto 1rem;
   border-radius: 5px;
+}
+
+.resource-sparkle-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.2rem;
+  transform: translateY(-0.42em);
+}
+
+.resource-sparkle-wrap::before {
+  content: "";
+  position: absolute;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 9999px;
+  background: #facc15;
+  filter: blur(11px);
+  opacity: 0.26;
+  pointer-events: none;
+}
+
+.resource-sparkle {
+  position: relative;
+  z-index: 1;
+  animation: resource-sparkle-blink 1.8s ease-in-out infinite;
+}
+
+@keyframes resource-sparkle-blink {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.98);
+  }
+
+  45% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
 }
 </style>

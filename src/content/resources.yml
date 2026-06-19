@@ -1,27 +1,109 @@
 # Resources content is rendered from this file.
-# Add entries under each category as they become available.
+# The Resources page is a 3-pane layout:
+#   - left column  : vertical tabs (one per category below)
+#   - middle column: that category's `items` (contents)
+#   - right column : that category's `links` (external links)
+#
+# Schema per category:
+#   - id: unique-kebab-id
+#     title: Display name shown in the tab
+#     icon: any mdi-* icon name
+#     description: short blurb shown above the contents
+#     items:                      # middle column ("contents")
+#       - title: Entry title
+#         description: Optional supporting text
+#         meta: Optional small label (e.g. a date or type)
+#     links:                      # right column ("external links")
+#       - label: Link text
+#         url: https://example.com
+#         description: Optional one-liner
 
-categories:
-  - id: learning-materials
-    title: Learning Materials
-    icon: mdi-book-open-page-variant
-    description: Notes, references, and study materials that support teaching, workshops, and independent learning.
-    items: []
+subjects:
+  - title: "Linear Algebra"
+    materials:
+      - title: "Linear Algebra | MIT OpenCourseWare"
+        meta: "Course"
+        instructor: "Prof. Gilbert Strang"
+        distributor: "MIT OpenCourseWare"
+        link: https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/
 
-  - id: documents
-    title: Documents
-    icon: mdi-file-document-outline
-    description: Helpful documents, templates, and supporting files for research, projects, and collaboration.
-    items: []
+      - title: "Essence of Linear Algebra | 3Blue1Brown"
+        meta: "Video Series"
+        instructor: "Grant Sanderson"
+        distributor: "3Blue1Brown"
+        link: https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-fj53DwVRMYO3t5Yr
 
-  - id: useful-links
-    title: Useful Links
-    icon: mdi-link-variant
-    description: Selected external links and platforms that may be useful for students, collaborators, and readers.
-    items: []
+      - title: "Linear Algebra | University of California, Davis"
+        meta: Book
+        instructor: "David Cherney, Tom Denton, Rohit Thomas and Andrew Waldron"
+        distributor: "ucdavis"
+        link: https://www.math.ucdavis.edu/~linear/linear-guest.pdf
 
-  - id: tools
-    title: Tools
-    icon: mdi-tools
-    description: Software, utilities, and workflows I find useful for technical, academic, and creative work.
-    items: []
+  - title: "Probability Theory"
+    materials:
+      - title: "Bayes' Theorem"
+        description: "Understand Bayes' theorem and how it is used to update probabilities based on new evidence."
+        meta: "Tutorial"
+        link: https://example.com/bayes-theorem
+      - title: "Random Variables"
+        description: "Learn about random variables, their distributions, and how to calculate expected values."
+        meta: "Guide"
+        link: https://example.com/random-variables
+      - title: "Markov Chains"
+        description: "Explore the concept of Markov chains and their applications in modeling stochastic processes."
+        meta: "Course"
+        link: https://example.com/markov-chains
+
+
+  - title: "Inferential Statistics"
+    materials:
+      - title: "Hypothesis Testing"
+        description: "Learn how to perform hypothesis tests to make inferences about populations based on sample data."
+        meta: "Tutorial"
+        link: https://example.com/hypothesis-testing
+      - title: "Confidence Intervals"
+        description: "Understand how to calculate and interpret confidence intervals for population parameters."
+        meta: "Guide"
+        link: https://example.com/confidence-intervals
+      - title: "Regression Analysis"
+        description: "Explore linear and logistic regression techniques for modeling relationships between variables."
+        meta: "Course"
+        link: https://example.com/regression-analysis
+
+  - title: "Machine Learning"
+    materials:
+      - title: "Supervised Learning"
+        description: "Learn about supervised learning algorithms and their applications in predictive modeling."
+        meta: "Tutorial"
+        link: https://example.com/supervised-learning
+      - title: "Unsupervised Learning"
+        description: "Discover unsupervised learning techniques for clustering and dimensionality reduction."
+        meta: "Guide"
+        link: https://example.com/unsupervised-learning
+      - title: "Reinforcement Learning"
+        description: "Explore reinforcement learning methods for training agents to make decisions in dynamic environments."
+        meta: "Course"
+        link: https://example.com/reinforcement-learning
+
+  - title: "Theoretical Computer Science"
+    materials:
+      - title: "Automata Theory"
+        description: "Understand the fundamentals of automata theory and its applications in language recognition."
+        meta: "Tutorial"
+        link: https://example.com/automata-theory
+      - title: "Computational Complexity"
+        description: "Learn about computational complexity classes and the limits of efficient computation."
+        meta: "Guide"
+        link: https://example.com/computational-complexity
+      - title: "Algorithm Design"
+        description: "Explore algorithm design techniques for solving complex problems efficiently."
+        meta: "Course"
+        link: https://example.com/algorithm-design
+
+external:
+  - label: "RBCDSAI, IIT Madras"
+    url: https://rbcdsai.iitm.ac.in/
+  - label: "IHUB Data, IIIT Hyderabad"
+    url: https://ihub-data.iiit.ac.in/
+
+
