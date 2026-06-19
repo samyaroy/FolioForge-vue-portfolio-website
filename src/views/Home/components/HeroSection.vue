@@ -29,16 +29,16 @@
                 <span class="truncate">See my work</span>
               </button>
               <button
+                class="flex flex-1 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-lg h-10 px-3 md:h-12 md:px-4 bg-white border-2 border-[#1980e6] text-[#1980e6] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#1980e6] hover:text-white transition-all duration-200"
+                @click="openGmailDraft">
+                <v-icon size="18">mdi-email-outline</v-icon>
+                <span class="truncate px-1">Get In Touch</span>
+              </button>
+              <button
                 class="flex flex-1 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-lg h-10 px-3 md:h-12 md:px-4 bg-black border-2 border-[#1980e6] text-[#ffffff] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#1980e6] hover:text-white transition-all duration-200"
                 @click="downloadCV">
                 <v-icon size="18">mdi-tray-arrow-down</v-icon>
                 <span class="truncate px-1">My CV</span>
-              </button>
-              <button
-                class="flex flex-1 cursor-pointer items-center justify-center gap-1 overflow-hidden rounded-lg h-10 px-3 md:h-12 md:px-4 border-2 border-[#1980e6] text-[#1980e6] text-sm font-bold leading-normal tracking-[0.015em] hover:bg-[#1980e6] hover:text-white transition-all duration-200"
-                @click="openGmailDraft">
-                <v-icon size="18">mdi-email-outline</v-icon>
-                <span class="truncate px-1">Get In Touch</span>
               </button>
             </div>
 
