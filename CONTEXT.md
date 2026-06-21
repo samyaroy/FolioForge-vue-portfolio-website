@@ -82,14 +82,17 @@ Current route map:
 | `/professional-activity` | `ProfessionalAcitivity` | `src/views/ProfessionalAcitivity/index.vue` | `showProfessionalActivity`, any |
 | `/gallery` | `Gallery` | `src/views/Gallery/index.vue` | `showGallery` |
 | `/contact` | `Contact` | `src/views/Contact.vue` | none |
+| `/resources` | `Resources` | `src/views/Resources/index.vue` | `showResources` |
 
 The spelling `Affilications` and `ProfessionalAcitivity` appears in directory and route names. Treat it as an existing project convention unless intentionally renaming all imports, route names, and links in one coordinated change.
 
 [src/views/PrivacyPolicy.vue](src/views/PrivacyPolicy.vue) exists but is not currently registered in the router.
 
+The router guards flag-gated routes in `router.beforeEach`: a route with `meta.flagPath` redirects to `Home` when its flag is disabled (`meta.flagMode: 'any'` switches the check to "any descendant true"). `showBlog` and `showResources` are disabled by default, so the Resources route and the Blog/Resources nav and footer links are hidden until those flags are turned on.
+
 ## Navigation And Layout
 
-[src/components/Header.vue](src/components/Header.vue) renders the sticky top navigation, profile brand link, desktop nav, mobile drawer, and "Hire Me" mail action. Navigation links are conditionally shown based on feature flags and registered routes.
+[src/components/Header.vue](src/components/Header.vue) renders the sticky top navigation: a profile brand link (icon + name), a desktop nav row, a mobile hamburger that opens a right-side drawer, and a feature-flagged "Blog" link with an animated accent dot. Navigation links are conditionally shown based on feature flags and registered routes. The hero's "Get In Touch" (Gmail compose draft) and "My CV" (download) actions live in [src/views/Home/components/HeroSection.vue](src/views/Home/components/HeroSection.vue), not the header.
 
 [src/components/Footer/index.vue](src/components/Footer/index.vue) renders contact information, quick links, social and academic links, institution logo content, and the `last_updated_on` value from the profile YAML. Footer links also use feature flags.
 
@@ -111,6 +114,8 @@ Feature flags currently control:
 - Home sections
 - Projects, articles, publications, posters, and collapsible project defaults
 - Gallery route
+- Blog nav/footer link (`showBlog`, disabled by default)
+- Resources route and links (`showResources`, disabled by default)
 - Co-curricular sections
 - Ongoing projects
 - Internship and certification tabs
@@ -170,6 +175,7 @@ There is a fallback SVG at [src/views/Gallery/assets/gallery-fallback-sample.svg
 - [src/views/Teachings](src/views/Teachings): courses taught, mentored projects, and other teaching.
 - [src/views/WorkshopsAttended](src/views/WorkshopsAttended): conferences, FDPs, workshops, bootcamps, and other learning engagements.
 - [src/views/Contact.vue](src/views/Contact.vue): contact and profile links.
+- [src/views/Resources](src/views/Resources): curated resources page, gated behind the `showResources` flag (off by default).
 
 ## Styling
 
@@ -184,6 +190,8 @@ Tailwind is configured in [tailwind.config.js](tailwind.config.js). The project 
 Vuetify is installed globally in [src/main.js](src/main.js), with all Vuetify components and directives registered.
 
 Most components use a mix of Tailwind utility classes and scoped component CSS. Global anchor, body, button, heading, and app container styles live in [src/style.css](src/style.css).
+
+For the full visual language — color tokens, typography scale, spacing/layout conventions, and reusable component recipes (page shells, section headers, cards, tabs, buttons, modals, filters) — see [DESIGN.md](DESIGN.md). Read it before building a new page so a new view matches the existing look and feel.
 
 ## Build And Deployment
 
@@ -218,6 +226,7 @@ The root [CNAME](CNAME) and [public/CNAME](public/CNAME) are present for custom 
 - Run `npm run build` before deployment. It automatically syncs the gallery manifest.
 - Check feature flags when a route, tab, or section appears to be missing.
 - When adding a route, update `src/router/index.js`, `src/components/Header.vue`, `src/components/Footer/index.vue` if needed, and `vite.config.js` sitemap `publicRoutes` if the route should appear in the sitemap.
+- When building a new page or component, follow [DESIGN.md](DESIGN.md) so the UI/UX stays consistent with the rest of the site.
 - Static assets referenced with absolute paths such as `/profile-icon.png` must be in `public/`.
 - Imported assets should live under `src/` so Vite can process them.
 - This repository currently has no dedicated unit or end-to-end test setup beyond linting and production build checks.
