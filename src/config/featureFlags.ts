@@ -38,9 +38,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showGallery: true,
 
-  showBlog: false,
-
-  showResources: false,
+  showBlog: true,
 
   showCocurricular: {
     showLeadershipOrganizations: true,
@@ -84,6 +82,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
       others: true,
     },
   },
+
+  showResources: true,
 }) satisfies FeatureFlagNode
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {

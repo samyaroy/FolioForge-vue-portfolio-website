@@ -41,20 +41,29 @@ subjects:
 
   - title: "Probability Theory"
     materials:
-      - title: "Bayes' Theorem"
-        description: "Understand Bayes' theorem and how it is used to update probabilities based on new evidence."
-        meta: "Tutorial"
-        link: https://example.com/bayes-theorem
-      - title: "Random Variables"
-        description: "Learn about random variables, their distributions, and how to calculate expected values."
-        meta: "Guide"
-        link: https://example.com/random-variables
-      - title: "Markov Chains"
-        description: "Explore the concept of Markov chains and their applications in modeling stochastic processes."
+      # - title: "Bayes' Theorem"
+      #   description: "Understand Bayes' theorem and how it is used to update probabilities based on new evidence."
+      #   meta: "Tutorial"
+      #   link: https://example.com/bayes-theorem
+      # - title: "Random Variables"
+      #   description: "Learn about random variables, their distributions, and how to calculate expected values."
+      #   meta: "Guide"
+      #   link: https://example.com/random-variables
+      # - title: "Markov Chains"
+      #   description: "Explore the concept of Markov chains and their applications in modeling stochastic processes."
+      #   meta: "Course"
+      #   link: https://example.com/markov-chains
+
+
+  - title: "Introduction to CS"
+    materials:
+      - title: "Joy of Computing | NPTEL"
         meta: "Course"
-        link: https://example.com/markov-chains
-
-
+        instructor: "Prof. S R S Iyengar"
+        distributor: "NPTEL"
+        link: https://nptel.ac.in/courses/106106182
+  
+  
   - title: "Inferential Statistics"
     materials:
       - title: "Hypothesis Testing"
@@ -72,33 +81,15 @@ subjects:
 
   - title: "Machine Learning"
     materials:
-      - title: "Supervised Learning"
-        description: "Learn about supervised learning algorithms and their applications in predictive modeling."
-        meta: "Tutorial"
-        link: https://example.com/supervised-learning
-      - title: "Unsupervised Learning"
-        description: "Discover unsupervised learning techniques for clustering and dimensionality reduction."
-        meta: "Guide"
-        link: https://example.com/unsupervised-learning
-      - title: "Reinforcement Learning"
-        description: "Explore reinforcement learning methods for training agents to make decisions in dynamic environments."
+      - title: "Machine Learning Techniques"
         meta: "Course"
-        link: https://example.com/reinforcement-learning
+        instructor: "Prof. Arun Rajkumar"
+        distributor: "IIT Madras BS Degree"
+        link: https://www.youtube.com/watch?v=KMcUe7GQnf0&list=PLZ2ps__7DhBbA_e6_G3FI-BA1f7lCINUu
 
   - title: "Theoretical Computer Science"
     materials:
-      - title: "Automata Theory"
-        description: "Understand the fundamentals of automata theory and its applications in language recognition."
-        meta: "Tutorial"
-        link: https://example.com/automata-theory
-      - title: "Computational Complexity"
-        description: "Learn about computational complexity classes and the limits of efficient computation."
-        meta: "Guide"
-        link: https://example.com/computational-complexity
-      - title: "Algorithm Design"
-        description: "Explore algorithm design techniques for solving complex problems efficiently."
-        meta: "Course"
-        link: https://example.com/algorithm-design
+      
 
 external:
   - label: "RBCDSAI, IIT Madras"

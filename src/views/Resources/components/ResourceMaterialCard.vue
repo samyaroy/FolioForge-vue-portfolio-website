@@ -27,12 +27,6 @@
             mdi-open-in-new
           </v-icon>
         </h3>
-        <span
-          v-if="material.meta"
-          class="shrink-0 rounded-full bg-[#1980e6]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#1980e6]"
-        >
-          {{ material.meta }}
-        </span>
       </div>
       <p v-if="material.description" class="content-justify mt-2 text-sm leading-6 text-gray-600">
         {{ material.description }}
