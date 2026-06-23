@@ -8,9 +8,20 @@
       <!-- Semester Loop -->
       <div v-for="semesterBlock in projects" :key="semesterBlock.semester">
         <!-- Semester Heading -->
-        <h3 class="text-lg font-semibold text-[#0e141b] mb-4 border-b pb-2">
-          {{ semesterBlock.semester }}
-        </h3>
+        <div class="mb-4 flex items-center justify-between border-b pb-2">
+          <h3 class="text-lg font-semibold text-[#0e141b]">
+            {{ semesterBlock.semester }}
+          </h3>
+          <button type="button"
+            class="flex items-center justify-center focus:outline-none"
+            :aria-expanded="!isCollapsed(semesterBlock.semester)"
+            :aria-label="isCollapsed(semesterBlock.semester) ? 'Expand semester' : 'Collapse semester'"
+            @click="toggleSemester(semesterBlock.semester)">
+            <v-icon class="text-[#0e141b]">
+              {{ isCollapsed(semesterBlock.semester) ? 'mdi-unfold-more-horizontal' : 'mdi-unfold-less-horizontal' }}
+            </v-icon>
+          </button>
+        </div>
 
         <!-- Projects -->
         <div class="space-y-6">
@@ -19,14 +30,14 @@
             <div class="flex flex-col gap-4 md:flex-row md:items-start">
               <div class="w-full md:w-[92%]">
                 <!-- Header -->
-                <div class="mb-2">
+                <div :class="isCollapsed(semesterBlock.semester) ? '' : 'mb-2'">
                   <h4 class="text-md font-semibold text-[#0e141b]">
                     {{ project.title }}
                   </h4>
                 </div>
 
                 <!-- Meta -->
-                <div class="space-y-1 text-slate-600">
+                <div v-if="!isCollapsed(semesterBlock.semester)" class="space-y-1 text-slate-600">
                   <p v-if="project.students && project.students.length" class="flex items-start">
                     <v-icon size="16" class="mr-2 mt-0.5">mdi-account-multiple</v-icon>
                     <span>
@@ -61,7 +72,8 @@
                 </div>
               </div>
 
-              <div class="flex w-full justify-start gap-2 md:w-[8%] md:justify-end">
+              <div v-if="!isCollapsed(semesterBlock.semester)"
+                class="flex w-full justify-start gap-2 md:w-[8%] md:justify-end">
                 <v-tooltip v-for="link in getProjectActionLinks(project)" :key="link.type" location="top">
                   <template #activator="{ props }">
                     <a v-bind="props" :href="link.href" target="_blank"
@@ -104,6 +116,7 @@
 </template>
 
 <script setup>
+import { reactive } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 
 defineProps({
@@ -112,6 +125,15 @@ defineProps({
     default: () => []
   }
 })
+
+const collapsedSemesters = reactive({})
+
+// Semesters are collapsed by default; expanded only when explicitly toggled open.
+const isCollapsed = (semester) => collapsedSemesters[semester] !== false
+
+const toggleSemester = (semester) => {
+  collapsedSemesters[semester] = !collapsedSemesters[semester]
+}
 
 const normalizeLink = (link) => (
   typeof link === 'string' && link.trim() && link !== '#' ? link : ''
