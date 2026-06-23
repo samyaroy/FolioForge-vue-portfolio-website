@@ -12,6 +12,7 @@ import Teachings from '@/views/Teachings/index.vue'
 import ProfessionalAcitivity from '@/views/ProfessionalAcitivity/index.vue'
 import Contact from '@/views/Contact.vue'
 import Resources from '@/views/Resources/index.vue'
+import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const routes = [
@@ -103,6 +104,11 @@ const routes = [
     path: '/contact',
     name: 'Contact',
     component: Contact
+  },
+  {
+    path: '/privacy-policy',
+    name: 'PrivacyPolicy',
+    component: PrivacyPolicy
   },
   {
     path: '/resources',

@@ -17,6 +17,15 @@
 #       - label: Link text
 #         url: https://example.com
 #         description: Optional one-liner
+#
+# Material icon source (the round badge on each material):
+#   By default it's the favicon of the material's `link` domain
+#   (e.g. a youtube.com link shows the YouTube mark). It falls back to an
+#   mdi icon picked from `meta` when no favicon exists, and `meta: Book`
+#   always uses the mdi icon. Add an optional `logo:` to override it:
+#     logo: NPTEL          -> /logo/NPTEL.png (a file in public/logo)
+#     logo: https://…/x.png-> a full image URL
+#     logo: mdi-youtube    -> an mdi icon token
 
 subjects:
   - title: "Linear Algebra"
@@ -41,43 +50,30 @@ subjects:
 
   - title: "Probability Theory"
     materials:
-      # - title: "Bayes' Theorem"
-      #   description: "Understand Bayes' theorem and how it is used to update probabilities based on new evidence."
-      #   meta: "Tutorial"
-      #   link: https://example.com/bayes-theorem
-      # - title: "Random Variables"
-      #   description: "Learn about random variables, their distributions, and how to calculate expected values."
-      #   meta: "Guide"
-      #   link: https://example.com/random-variables
-      # - title: "Markov Chains"
-      #   description: "Explore the concept of Markov chains and their applications in modeling stochastic processes."
-      #   meta: "Course"
-      #   link: https://example.com/markov-chains
-
-
+      - title: "Fundamentals of statistics Vol.1"
+        meta: "Book"
+        instructor: "A. M. Goon, M. K. Gupta and B. Dasgupta"
+        link: http://ia601509.us.archive.org/2/items/in.ernet.dli.2015.463316/2015.463316.Fundamental-Of.pdf
+      
+      - title: Probability and Statistics
+        meta: "Course"
+        instructor: "Prof. Somesh Kumar"
+        distributor: "IIT Kharagpur, NPTEL"
+        logo: NPTEL
+        link: https://nptel.ac.in/courses/111105090
   - title: "Introduction to CS"
     materials:
       - title: "Joy of Computing | NPTEL"
         meta: "Course"
         instructor: "Prof. S R S Iyengar"
-        distributor: "NPTEL"
+        distributor: "IIT Madras, NPTEL"
+        logo: NPTEL
         link: https://nptel.ac.in/courses/106106182
   
   
   - title: "Inferential Statistics"
     materials:
-      - title: "Hypothesis Testing"
-        description: "Learn how to perform hypothesis tests to make inferences about populations based on sample data."
-        meta: "Tutorial"
-        link: https://example.com/hypothesis-testing
-      - title: "Confidence Intervals"
-        description: "Understand how to calculate and interpret confidence intervals for population parameters."
-        meta: "Guide"
-        link: https://example.com/confidence-intervals
-      - title: "Regression Analysis"
-        description: "Explore linear and logistic regression techniques for modeling relationships between variables."
-        meta: "Course"
-        link: https://example.com/regression-analysis
+      
 
   - title: "Machine Learning"
     materials:
@@ -86,6 +82,11 @@ subjects:
         instructor: "Prof. Arun Rajkumar"
         distributor: "IIT Madras BS Degree"
         link: https://www.youtube.com/watch?v=KMcUe7GQnf0&list=PLZ2ps__7DhBbA_e6_G3FI-BA1f7lCINUu
+      - title: "StatQuest with Josh Starmer"
+        meta: "Video Series"
+        instructor: "Dr. Joshua Starmer"
+        distributor: "youtube"
+        link: https://www.youtube.com/@statquest
 
   - title: "Theoretical Computer Science"
     materials:
@@ -96,5 +97,6 @@ external:
     url: https://rbcdsai.iitm.ac.in/
   - label: "IHUB Data, IIIT Hyderabad"
     url: https://ihub-data.iiit.ac.in/
+  - 
 
 

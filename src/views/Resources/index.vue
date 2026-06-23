@@ -56,16 +56,16 @@ const subjects = computed(() => {
     ? resourcesContent.subjects
     : []
 
-  return rawSubjects.map((subject, index) => ({
+  return rawSubjects.filter(isObject).map((subject, index) => ({
     id: subject.id || slugify(subject.title || `subject-${index}`),
     title: subject.title || 'Untitled',
     icon: subject.icon || DEFAULT_SUBJECT_ICON,
     description: subject.description || '',
     materials: Array.isArray(subject.materials)
-      ? subject.materials.map(normalizeMaterial)
+      ? subject.materials.filter(isObject).map(normalizeMaterial)
       : [],
     links: Array.isArray(subject.links)
-      ? subject.links.map(normalizeExternalLink)
+      ? subject.links.filter(isObject).map(normalizeExternalLink)
       : [],
   }))
 })
@@ -80,7 +80,7 @@ const activeMaterials = computed(() => (
 const externalLinks = computed(() => {
   if (activeSubject.value?.links?.length) return activeSubject.value.links
   return Array.isArray(resourcesContent?.external)
-    ? resourcesContent.external.map(normalizeExternalLink)
+    ? resourcesContent.external.filter(isObject).map(normalizeExternalLink)
     : []
 })
 
@@ -100,6 +100,12 @@ onMounted(() => {
   }
 })
 
+// Guards content maps against null/empty list entries (e.g. a dangling "-" in
+// the YAML), which would otherwise crash normalization and blank the page.
+function isObject(value) {
+  return Boolean(value) && typeof value === 'object'
+}
+
 function slugify(value) {
   return String(value || '')
     .toLowerCase()
@@ -115,6 +121,7 @@ function normalizeMaterial(material) {
     meta: material.meta || '',
     instructor: material.instructor || '',
     distributor: material.distributor || '',
+    logo: material.logo || '',
     url: material.link || material.url || '',
   }
 }

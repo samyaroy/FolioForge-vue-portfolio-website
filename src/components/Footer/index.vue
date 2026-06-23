@@ -8,7 +8,7 @@
       <!-- Footer content -->
       <div class="grid grid-cols-1 md:grid-cols-20 gap-8">
         <!-- Brand Section -->
-        <div class="col-span-1 md:col-span-9">
+        <div class="col-span-1 md:col-span-8">
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
             {{ profile.footer }}
@@ -47,7 +47,7 @@
 
 
         <!-- Other Links -->
-        <div class="col-span-1 md:col-span-7">
+        <div class="col-span-1 md:col-span-5">
           <h4 class="text-lg font-semibold mb-2">Other Links</h4>
           <ul class="space-y-2">
             <!-- <li>
@@ -123,7 +123,10 @@
               </router-link>
             </li>-->
           </ul>
-          <br />
+        </div>
+
+        <!-- Social Links -->
+        <div class="col-span-1 md:col-span-3">
           <h4 class="text-lg font-semibold mb-2">Social Links</h4>
 
           <ul class="space-y-2">
@@ -169,13 +172,13 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="flex space-x-4 mt-2 md:mt-0">
-          <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
+        <div class="mt-2 md:mt-0">
+          <router-link
+            :to="{ name: 'PrivacyPolicy' }"
+            class="footer-link text-sm"
+          >
             Privacy Policy
-          </a>
-          <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors duration-200">
-            Terms of Service
-          </a>
+          </router-link>
         </div>
       </div>
 
@@ -268,6 +271,17 @@ export default {
   width: 100%;
   margin: 0 auto 1rem;
   border-radius: 5px;
+}
+
+.footer-link {
+  color: #646cff;
+  text-decoration: none;
+  transition: none;
+}
+
+.footer-link:hover {
+  color: #646cff;
+  text-decoration: none;
 }
 
 .resource-sparkle-wrap {
