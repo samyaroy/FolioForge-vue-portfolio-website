@@ -4,11 +4,11 @@
   <v-footer class="bg-blue-800 text-black py-8">
     <!-- Colored horizontal bar -->
 
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-1 md:px-2">
       <!-- Footer content -->
-      <div class="grid grid-cols-1 md:grid-cols-20 gap-8">
+      <div class="grid grid-cols-1 gap-0 md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
         <!-- Brand Section -->
-        <div class="col-span-1 md:col-span-8">
+        <div>
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
             {{ profile.footer }}
@@ -47,7 +47,7 @@
 
 
         <!-- Other Links -->
-        <div class="col-span-1 md:col-span-5">
+        <div class="min-w-0">
           <h4 class="text-lg font-semibold mb-2">Other Links</h4>
           <ul class="space-y-2">
             <!-- <li>
@@ -125,41 +125,43 @@
           </ul>
         </div>
 
-        <!-- Social Links -->
-        <div class="col-span-1 md:col-span-3">
-          <h4 class="text-lg font-semibold mb-2">Social Links</h4>
+        <div class="grid grid-cols-1 gap-11 md:grid-cols-[max-content_max-content] md:justify-self-end pl-3">
+          <!-- Social Links -->
+          <div>
+            <h4 class="text-lg font-semibold mb-2">Social Links</h4>
 
-          <ul class="space-y-2">
-            <li>
-              <a :href="google_scholar" target="_blank">Google Scholar</a>
-            </li>
-            <li>
-              <a :href="researchgate" target="_blank">ResearchGate</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="col-span-1 md:col-span-4">
-          <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
-          <div class="space-y-2 text-black-300">
-            <div class="flex items-center">
-              <v-icon size="small" class="mr-2">mdi-email</v-icon>
-              <span>{{ email }}</span>
-            </div>
-            <div class="flex items-center">
-              <v-icon size="small" class="mr-2">mdi-phone</v-icon>
-              <span>{{ phone }}</span>
-            </div>
-            <div class="flex items-center">
-              <v-icon size="small" class="mr-2">mdi-map-marker</v-icon>
-              <span>{{ location }}</span>
-            </div>
+            <ul class="space-y-2">
+              <li>
+                <a :href="google_scholar" target="_blank">Google Scholar</a>
+              </li>
+              <li>
+                <a :href="researchgate" target="_blank">ResearchGate</a>
+              </li>
+            </ul>
           </div>
-          <div class="pt-4 pb-0">
-            <a href="https://info.flagcounter.com/Wh9G"><img
-                src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_15/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
-                alt="Flag Counter" border="0"></a>
+
+          <!-- Contact Info -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+            <div class="space-y-2 text-black-300">
+              <div class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-email</v-icon>
+                <span>{{ email }}</span>
+              </div>
+              <div class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-phone</v-icon>
+                <span>{{ phone }}</span>
+              </div>
+              <div class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-map-marker</v-icon>
+                <span>{{ location }}</span>
+              </div>
+            </div>
+            <div class="pt-4 pb-0">
+              <a href="https://info.flagcounter.com/Wh9G"><img
+                  src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_15/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
+                  alt="Flag Counter" border="0"></a>
+            </div>
           </div>
         </div>
       </div>
