@@ -1,8 +1,7 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
         <button type="button"
-            class="w-full flex items-center justify-between text-left focus:outline-none"
-            :class="isOpen ? 'mb-6' : ''"
+            class="w-full flex items-center justify-between text-left focus:outline-none mb-6"
             :aria-expanded="isOpen"
             @click="isOpen = !isOpen">
             <h2 class="text-2xl font-bold text-[#0e141b]">Other Projects</h2>
@@ -11,12 +10,10 @@
             </v-icon>
         </button>
 
-        <v-expand-transition>
-        <div v-show="isOpen">
         <div v-if="projects && projects.length" class="space-y-6 text-sm">
             <div v-for="(project, index) in projects" :key="project.title || index" :id="`minor-${index}`"
                 class="border-l-4 border-[#1980e6] pl-6 pt-4 pb-2 pr-4 rounded-md bg-slate-50">
-                <div class="flex items-start justify-between gap-4 pb-4">
+                <div class="flex items-start justify-between gap-4" :class="isOpen ? 'pb-4' : ''">
                     <h3 class="text-lg font-semibold text-[#0e141b]">
                         {{ project.title }}
                     </h3>
@@ -25,6 +22,8 @@
                         {{ project.time_period }}
                     </div>
                 </div>
+                <v-expand-transition>
+                <div v-show="isOpen">
                 <div class="flex flex-col md:flex-row items-stretch">
                     <div class="w-full md:w-[95%] md:pr-6">
                         <div v-if="project.affiliation" class="flex items-start gap-2 mb-2">
@@ -119,14 +118,14 @@
                         <span>Project Website</span>
                     </v-tooltip>
                 </div>
+                </div>
+                </v-expand-transition>
             </div>
         </div>
 
         <div v-else class="text-center text-gray-500 italic">
             No Minor Projects Yet
         </div>
-        </div>
-        </v-expand-transition>
     </div>
 </template>
 

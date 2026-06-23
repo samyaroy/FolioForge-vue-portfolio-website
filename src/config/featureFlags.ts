@@ -29,7 +29,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     },
     // Controls whether collapsible project sections start expanded (true) or collapsed (false)
     expandProjectSectionsByDefault: {
-      technicalProjects: true,
+      technicalProjects: false,
       otherProjects: false,
     },
     showPublications: true,
