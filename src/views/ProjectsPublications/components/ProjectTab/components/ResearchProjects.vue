@@ -11,9 +11,16 @@
                 class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
 
                 <!-- TITLE -->
-                <h3 class="text-lg font-semibold text-[#0e141b] mb-4">
-                    {{ project.title }}
-                </h3>
+                <div class="flex items-start justify-between gap-4 mb-4">
+                    <h3 class="text-lg font-semibold text-[#0e141b]">
+                        {{ project.title }}
+                    </h3>
+                    <p v-if="project.time_period"
+                        class="text-sm text-gray-600 flex items-center gap-1 shrink-0">
+                        <v-icon size="16">mdi-calendar-blank</v-icon>
+                        {{ project.time_period }}
+                    </p>
+                </div>
 
                 <!-- MAIN FLEX ROW -->
                 <div class="flex flex-col md:flex-row items-stretch text-sm">
@@ -39,11 +46,6 @@
                                 <SmartLink v-if="project.guide.institution" :text="project.guide.institution" />
                             </div>
                         </div>
-
-                        <p class="text-sm text-gray-600 mb-3 mt-2 flex items-center gap-1">
-                            <v-icon size="16">mdi-calendar-blank</v-icon>
-                            {{ project.time_period }}
-                        </p>
 
                         <p v-if="project.doi" class="text-sm text-gray-600 mb-3 flex items-center gap-1">
                             <v-icon size="16">mdi-web</v-icon>
@@ -89,7 +91,7 @@
                 </div>
 
                 <!-- ACTION BUTTONS -->
-                <div class="flex justify-end items-center mt-4">
+                <div class="flex justify-end items-center mt-2">
 
                     <v-tooltip location="top">
                         <template #activator="{ props }">

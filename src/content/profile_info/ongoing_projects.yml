@@ -1,0 +1,72 @@
+ongoing_projects:
+  
+  # - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
+  #   description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.
+  #   type: Research Project
+  #   affiliation: Own Project
+  #   tech_stack: Robust Regression, Machine Learning, R
+  #   guide: 
+  #   collaborators: 
+  #   time_period: 
+  #   cred_link:
+  #     github: 
+
+  # - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
+  #   description: The objective was to classify music genres from noisy mashups created by mixing instrument stems from different tracks of the same genre. The main challenge was handling distribution shift between clean training data and noisy, mixed test audio
+  #   type: Course Project
+  #   affiliation: DLGenAI - Project, `BS Degree (Data Science and Applications), Indian Institute of Technology Madras`
+  #   tech_stack: ML, Dl
+  #   guide: 
+  #   collaborators: 
+  #   time_period: Jan 2026 - Apr 2026
+  #   cred_link:
+  #     kaggle:
+
+  # Add more fields as needed
+
+          # awards:
+          #   - title: Award Title 1
+          #     year: 2024
+          #     organization: Organization Name
+          #     category: Academic
+          #     prize: First Place / Merit Award
+          #     description: Brief description of the award and what it was for.
+          #     cred_link:
+
+  # - title: Award Title 2
+  #   year: 2023
+  #   organization: Organization Name
+  #   category: Research
+  #   prize: Best Paper / Best Poster
+  #   description: Brief description of the award and what it was for.
+  #   cred_link:
+
+  # - title: Award Title 3
+  #   year: 2023
+  #   organization: Organization Name
+  #   category: Extracurricular
+  #   prize: Recognition / Certificate of Excellence
+  #   description: Brief description of the award and what it was for.
+  #   cred_link:
+
+          # achievements:
+          #   - title: Achievement Title 1
+          #     year: 2025
+          #     category: Academic
+          #     description: Brief description of the achievement.
+          #     organization: Organization Name
+          #     cred_link:
+
+  # - title: Achievement Title 2
+  #   year: 2024
+  #   category: Research
+  #   description: Brief description of the achievement.
+  #   organization: Organization Name
+  #   cred_link:
+
+  # - title: Achievement Title 3
+  #   year: 2023
+  #   category: Extracurricular
+  #   description: Brief description of the achievement.
+  #   organization: Organization Name
+  #   cred_link:

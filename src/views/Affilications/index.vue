@@ -1,12 +1,13 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <div class="container mx-auto px-4 py-8">
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Affiliations, Collaborators & Memberships
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          A quick overview of the networks, teams, and communities I am part of.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -31,7 +32,7 @@
         No sections are enabled right now.
       </div>
 
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-[1280px] mx-auto">
         <AffiliationsTab
           v-if="showAffiliationsTab && activeTab === 'affiliations'"
           :affiliations="affiliations"
@@ -55,8 +56,12 @@ import { useRoute } from 'vue-router'
 import AffiliationsTab from './components/tabs/AffiliationsTab.vue'
 import CollaboratorsTab from './components/tabs/CollaboratorsTab.vue'
 import MembershipsTab from './components/tabs/MembershipsTab.vue'
-import config from '@/profile_info.yml'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+
+const pageDescription = descriptions.affiliations
+const showPageDescription = isPageDescriptionEnabled('affiliations')
 
 const { affiliations = [], collaborators = [], past_collaborators = [], memberships = [] } = config
 // Combine all collaborators into one array - filtering will be done in CollaboratorsTab based on period

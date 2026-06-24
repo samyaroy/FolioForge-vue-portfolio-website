@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import YAML from 'yaml'
 
-const galleryPath = path.resolve('src/content/gallery.yml')
+const galleryPath = path.resolve('src/content/profile_info/gallery.yml')
 const manifestPath = path.resolve('src/content/galleryImageManifest.yml')
 
 const categoryOrder = [

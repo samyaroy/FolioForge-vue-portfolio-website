@@ -84,6 +84,24 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   },
 
   showResources: true,
+
+  // Controls the subtitle/description line under each page's title.
+  // Text for each page lives in src/content/profile_info/description.yml.
+  // `enabled` is the master switch: when false, every page description is hidden
+  // regardless of its per-page flag. When true, each page's own flag decides.
+  showPageDescriptions: {
+    enabled: false,
+    projectsPublications: false,
+    internshipCertifications: true,
+    cocurricular: true,
+    affiliations: true,
+    resources: true,
+    contact: true,
+    ongoingProjects: true,
+    professionalActivity: true,
+    teachings: true,
+    workshopsAttended: true,
+  },
 }) satisfies FeatureFlagNode
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
@@ -147,4 +165,14 @@ export function isFeatureEnabled(
   const mode = options.mode === 'any' ? 'any' : 'all'
   const target = resolveFlagNode(flagPath, featureFlags)
   return mode === 'any' ? evaluateAny(target) : evaluateAll(target)
+}
+
+// Whether a given page's title description line should render.
+// Gated by the master switch `showPageDescriptions.enabled`: if that is off,
+// no page description shows; if on, the page's own flag decides.
+export function isPageDescriptionEnabled(page: string): boolean {
+  return (
+    isFeatureEnabled('showPageDescriptions.enabled') &&
+    isFeatureEnabled(`showPageDescriptions.${page}`)
+  )
 }

@@ -27,7 +27,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import galleryContent from '@/content/gallery.yml'
+import galleryContent from '@/content/profile_info/gallery.yml'
 import galleryTagMetadata from '@/metadata/galleryTags.yml'
 import GalleryFilter from './components/GalleryFilter.vue'
 import GalleryGrid from './components/GalleryGrid.vue'

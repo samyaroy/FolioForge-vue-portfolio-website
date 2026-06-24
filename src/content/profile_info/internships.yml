@@ -1,0 +1,53 @@
+internships:
+  # - role: "MERN Stack Developer Intern (Cohort 4 - RSAian)"
+  #   company: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+  #   guide: Prof. Sudarshan Iyengar
+  #   location: Virtual
+  #   time_period: Feb 2026 - Present
+  #   description: 
+  #   type: Virtual Internship
+  #   cred_link:
+
+  # - role: Summer Intern (Vicharanashala Summership 2026 - VINS)
+  #   company:
+  #     - Annam.ai
+  #     - Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+  #   location: Romote
+  #   time_period: 16 May 2026 - 15 July 2026
+  #   guide:
+  #     name: Prof. Sudarshan Iyengar
+  #     designation: Principal Investigator, Vicharanashala Lab for Education Design, IIT Ropar
+  #   description: 
+  #   cred_link:
+  #   project:
+  #     title: "Rogāre : Crowd-sourced FAQ Solution & Discussion Portal"
+  #   cirriculum:
+  #     - course_code: AI-101
+  #       course_name: Fundamentals of AI using Agriculture Dataset
+  #       credit: 1
+  #     - course_code: 
+  #       course_name: MERN Stack Development
+  #       credit: 
+    
+
+  - role: Data Science Intern (Autumn 2024)
+    company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+    location: Remote
+    time_period: Jun 2024 - Oct 2024
+    guide:
+      name: Mr. Debashis Ghosh
+      designation: Head, Technology Business Development & Incubation, IDEAS - TIH
+    description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing
+    type: Training Internship
+    cred_link: https://drive.google.com/file/d/1mTATc-tbkC9iIoL0vHuNeJWgaRCJtFOE/preview
+    project: 
+      title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
+      cred_link:
+
+  - role: Growth Consultant Intern
+    company: Sorting Hat Technologies Private Limited (Unacademy)
+    location: Remote
+    time_period: Nov 2023 - Jan 2024
+    department: UnacademyX
+    description: 
+    cred_link: https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/preview

@@ -15,7 +15,7 @@
 
 <script setup>
 import Card from './components/Card.vue'
-import config from "@/profile_info.yml"
+import config from "@/content/profile_info"
 
 const { research_interests } = config
 

@@ -1,0 +1,84 @@
+invited_talks:
+  # - title: "The Future of Data Science in Academia"
+  #   event: "Annual Data Science Symposium"
+  #   organizer:
+  #     - name: "Indian Institute of Technology Madras"
+  #       department: "Department of Data Science"
+  #   location: "Chennai, TN"
+  #   date: "October 2025"
+  #   link: "https://example.com/talk1"
+
+  # - title: "Leveraging Machine Learning for Social Impact"
+  #   event: "Tech for Good Conference"
+  #   organizer:
+  #     - name: "University of California, Berkeley"
+  #   location: "Berkeley, CA"
+  #   date: "March 2025"
+  #   link: "https://example.com/talk2"
+
+hosted_events:
+  # - title: "International Conference on Statistical Learning"
+  #   role: "Co-Organizer"
+  #   event_type: "Conference"
+  #   institution:
+  #     - name: "Sister Nivedita University"
+  #       department: "Department of Statistics"
+  #   location: "Kolkata, WB"
+  #   date: "November 2024"
+  #   cred_link: "https://example.com/event1"
+
+  # - title: "Workshop on Advanced Python for Data Analysis"
+  #   role: "Convener"
+  #   event_type: "Workshop"
+  #   institution:
+  #     - name: "Indian Institute of Technology Madras"
+  #       department: "Department of Computer Science"
+  #   location: "Chennai, TN"
+  #   date: "July 2024"
+  #   cred_link: "https://example.com/event2"
+
+other_hosted_events:
+  - title: "Questionnaire and Survey Design: Probably Paradoxical Context"
+    guest_speakers:
+      - name: "Prof. Shyamolina Ghosh"
+        designation: Assistant Professor
+        department: "AERU"
+        institution: "Indian Statistical Institute, Kolkata"
+    event_type: "Guest Session"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        location: "Chennai, TN"
+        affiliation: "Probably Paradoxical, Paradox 2026"
+    date: "June 2, 2026"
+    mode: "Online"
+
+  - title: "Privacy in Deep Learning"
+    guest_speakers:
+      - name: "Prof. Manisha Padala"
+        designation: Assistant Professor
+        department: Computer Science and Engineering
+        institution: "Indian Institute of Technology Gandhinagar"
+    event_type: "Guest Session"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        affiliation: "Nilgiri House Statistics Community"
+        location: "Chennai, TN"
+    date: "February 5, 2026"
+    mode: "Online"
+
+  - title: "Understanding and Applying Statistics: Real-Life Uses & Research Pathways"
+    guest_speakers:
+      - name: "Prashant Sharma"
+        designation: Course Instructor
+        department: BS Degree
+        institution: "Indian Institute of Technology Madras"
+    event_type: "Academic Session"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        affiliation: "Nilgiri House Statistics Community"
+        location: "Chennai, TN"
+    date: "August 14, 2025"
+    mode: "Online"

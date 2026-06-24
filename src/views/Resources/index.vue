@@ -1,12 +1,13 @@
 <template>
   <div class="min-h-screen bg-[#eef3f8] py-8">
-    <div class="container mx-auto px-4">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
       <div class="mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Resources
         </h1>
-        <p class="text-lg text-gray-600 max-w-4xl">
-          A curated collection of useful links, materials, and references related to my academic and professional work.
+        <p v-if="showPageDescription" class="text-lg text-gray-600 max-w-4xl">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -40,10 +41,15 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import resourcesContent from '@/content/resources.yml'
+import resourcesContent from '@/content/profile_info/resources.yml'
+import descriptions from '@/content/profile_info/description.yml'
+import { isPageDescriptionEnabled } from '@/config/featureFlags'
 import ExternalLinksPane from './components/ExternalLinksPane.vue'
 import ResourceContentPane from './components/ResourceContentPane.vue'
 import SubjectTabs from './components/SubjectTabs.vue'
+
+const pageDescription = descriptions.resources
+const showPageDescription = isPageDescriptionEnabled('resources')
 
 defineOptions({
   name: 'ResourcesPage',
