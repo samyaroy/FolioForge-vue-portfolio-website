@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <div class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
       <div class="text-center mb-12">
         <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
@@ -12,7 +12,7 @@
         </p>
       </div>
 
-      <div class="max-w-6xl mx-auto space-y-8">
+      <div class="max-w-[1280px] mx-auto space-y-8">
         <!-- Leadership Component -->
         <div class="bg-white rounded-lg shadow-sm p-8 text-sm">
           <h2 class="text-2xl font-bold text-[#0e141b] mb-6 flex items-center">

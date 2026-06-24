@@ -90,7 +90,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   // `enabled` is the master switch: when false, every page description is hidden
   // regardless of its per-page flag. When true, each page's own flag decides.
   showPageDescriptions: {
-    enabled: true,
+    enabled: false,
     projectsPublications: false,
     internshipCertifications: true,
     cocurricular: true,

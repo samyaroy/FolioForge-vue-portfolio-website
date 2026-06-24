@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-slate-50 py-8">
-    <div class="container mx-auto px-4">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
@@ -11,7 +11,7 @@
         </p>
         </div>
       <!-- Workshops Section -->
-      <div class="mb-16 max-w-4xl mx-auto">
+      <div class="mb-16 max-w-[1280px] mx-auto">
         <!-- <h2 class="text-3xl font-bold text-[#0e141b] mb-6">Workshops Attended</h2> -->
         <!-- <p class="text-gray-600">Academic and professional workshops I've participated in</p> -->
 

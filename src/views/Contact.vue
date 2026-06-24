@@ -1,8 +1,8 @@
 <template>
   <div class="relative flex size-full min-h-screen flex-col bg-slate-50 group/design-root overflow-x-hidden">
     <div class="layout-container flex h-full grow flex-col">
-      <div class="px-8 md:px-16 lg:px-20 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col w-full max-w-[1400px] flex-1">
+      <div class="px-4 sm:px-6 lg:px-8 flex flex-1 justify-center py-8">
+        <div class="layout-content-container flex flex-col w-full max-w-[1280px] flex-1">
           <!-- Page Header -->
           <div class="text-center mb-12">
             <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
