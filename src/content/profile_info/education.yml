@@ -6,6 +6,10 @@ education:
     campus: Taraknath Palit Siksha Prangan (Ballygunge Science College)
     location: Kolkata, WB
     time_period: 2026 - Present
+    # Where the programme currently stands. Free text so it can hold a semester
+    # ("Semester I") or a programme stage ("Degree Level"); omit it once the
+    # programme is finished and only `time_period` needs to carry the dates.
+    current_level: Semester I
     gpa:
     cred_link:
     category: CCF
@@ -49,9 +53,14 @@ education:
   - type: University
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
+    sub_field:
+      - label: Minor
+        name: Algorithmic Decision Making
+        cred_link: ""
     institution: Indian Institute of Technology Madras
     location: Chennai, TN
     time_period: 2022 - Present
+    current_level: Degree Level
     gpa: Current CGPA - 5.97/10
     cred_link: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
     category: NEP 2020

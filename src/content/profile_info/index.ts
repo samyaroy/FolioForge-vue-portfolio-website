@@ -24,6 +24,26 @@ import professionalActivity from './professional_activity.yml'
 import pageQuotes from './page_quotes.yml'
 import ribbon from './ribbon.yml'
 
+export const profileInfoSources = [
+  { source: 'src/content/profile_info/meta.yml', data: meta },
+  { source: 'src/content/profile_info/profile.yml', data: profile },
+  { source: 'src/content/profile_info/research_interests.yml', data: researchInterests },
+  { source: 'src/content/profile_info/education.yml', data: education },
+  { source: 'src/content/profile_info/experience.yml', data: experience },
+  { source: 'src/content/profile_info/internships.yml', data: internships },
+  { source: 'src/content/profile_info/certifications.yml', data: certifications },
+  { source: 'src/content/profile_info/projects.yml', data: projects },
+  { source: 'src/content/profile_info/publications.yml', data: publications },
+  { source: 'src/content/profile_info/ongoing_projects.yml', data: ongoingProjects },
+  { source: 'src/content/profile_info/cocurricular.yml', data: cocurricular },
+  { source: 'src/content/profile_info/workshops.yml', data: workshops },
+  { source: 'src/content/profile_info/teaching.yml', data: teaching },
+  { source: 'src/content/profile_info/affiliations.yml', data: affiliations },
+  { source: 'src/content/profile_info/professional_activity.yml', data: professionalActivity },
+  { source: 'src/content/profile_info/page_quotes.yml', data: pageQuotes },
+  { source: 'src/content/profile_info/ribbon.yml', data: ribbon },
+] as const
+
 // Same reasoning as the `*.yml` shim in ./yml.d.ts — the merged config is
 // schemaless by design and is read with dotted property access everywhere.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

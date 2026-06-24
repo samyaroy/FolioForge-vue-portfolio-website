@@ -2,7 +2,7 @@
   <div class="px-4 md:px-8 lg:px-20 py-4 bg-white">
     <div class="max-w-[1200px] mx-auto">
       <div class="flex flex-wrap justify-between gap-3 p-4">
-        <h2 class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">Research Interest</h2>
+        <h2 class="text-[#0e141b] tracking-light text-2xl sm:text-[32px] font-bold leading-tight min-w-0 sm:min-w-72">Research Interest</h2>
       </div>
       <v-row class="px-4">
         <v-col cols="6" md="4" lg="3" v-for="interest in research_interests" :key="interest.key">
@@ -38,6 +38,7 @@ const iconMap = {
   Statistical_Modeling: "anim:chart-bar",
   Bayesian_Statistics: "anim:chart-bar",
   Hypothesis_Testing: "mdi-check-circle",
+  Nonparametric_Inference: "anim:chart-spline",
 
   Data_Science: "mdi-database",
   Data_Visualization: "mdi-chart-pie",
@@ -47,7 +48,7 @@ const iconMap = {
   Data_Mining: "mdi-database-search",
   Data_Cleaning: "mdi-broom",
   Data_Wrangling: "mdi-database-edit",
-  Data_Engineering: "mdi-database-cog",
+  Data_Engineering: "anim:database-zap",
 
   // 🌐 Web & Systems
   Web_Development: "mdi-web",

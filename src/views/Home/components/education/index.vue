@@ -2,7 +2,7 @@
   <div class="px-4 md:px-8 lg:px-20 py-4 bg-white">
     <div class="max-w-[1200px] mx-auto">
       <div class="flex flex-wrap justify-between gap-3 p-4">
-        <h2 class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">
+        <h2 class="text-[#0e141b] tracking-light text-2xl sm:text-[32px] font-bold leading-tight min-w-0 sm:min-w-72">
           Education
         </h2>
       </div>
@@ -13,10 +13,13 @@
         :icon="iconMap[edu.type]"
         :title="edu.degree"
         :subject="edu.field"
+        :sub-field="edu.sub_field"
+        :sub-field-cred-link="edu.sub_field_cred_link || edu.minor_cred_link"
         :time="String(edu.time_period)"
         :institution="edu.institution"
         :location="edu.location"
         :campus="edu.campus"
+        :currentLevel="edu.current_level"
         :category="edu.category"
         :extra="edu.extra"
         :isFirst="index === 0"
@@ -52,4 +55,3 @@ const iconMap = {
   University: "mdi-school"
 }
 </script>
-

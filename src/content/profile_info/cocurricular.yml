@@ -17,7 +17,12 @@ co_curriculars:
             institute: Indian Institute of Technology Madras BS Degree
             time_period: 2023 - 2026
         description: Created and led the statistics community of 700+ members over 2 years. Organized 20+ workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
-        # skills: Leadership, Event Management, Team Building
+        cred_link:
+          - label: Certificate 2024-2025
+            url: https://drive.google.com/file/d/1oVT6q9AyRm0qfffNGatqN1MPvr6-bsyY/preview
+          - label: Certificate 2023-2024
+            url: https://drive.google.com/file/d/1DgDJXTVzKSZIzrJhvsVp8mc0qEZVptu2/preview
+       # skills: Leadership, Event Management, Team Building
 
       - role: Event Head
         affiliation:
@@ -48,7 +53,7 @@ co_curriculars:
           time_period: February 2026 - March 2026
       #   skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
       #   details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
-
+      cred_link: '#'
     - role: Teaching Assistant (Revision Sessions)
       organization: "Chi-Square: Statistics Club X Nilgiri House, `Indian Institute of Technology Madras BS Degree`"
       field:
