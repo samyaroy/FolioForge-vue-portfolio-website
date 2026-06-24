@@ -2,10 +2,11 @@
   <div class="min-h-screen bg-slate-50 py-8">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Internships & Certifications
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
           Professional internships and certifications I have obtained during my journey.
         </p>
       </div>
@@ -31,10 +32,6 @@
       <div class="max-w-6xl mx-auto">
         <!-- Internships Section -->
         <div v-if="showInternshipsTab && activeTab === 'internships'" class="mb-16">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Training Internships</h2>
-          </div>
-
           <div class="space-y-6 max-w-4xl mx-auto">
             <InternshipCard v-for="(internship, index) in internships" :key="internship.index"
               :internship="internship" />
@@ -43,9 +40,6 @@
 
         <!-- Certifications Section -->
         <div v-if="showCertificationsTab && activeTab === 'certifications'" class="mb-16">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Certifications</h2>
-          </div>
           <div v-if="credly" class="max-w-4xl mx-auto mb-6">
             <div class="bg-white rounded-lg shadow-md flex items-center overflow-hidden">
               <!-- Left 20%: Credly Logo -->
@@ -90,6 +84,7 @@ const credly = config.socials.credly
 
 const showInternshipsTab = isFeatureEnabled('showInternshipCertifications.showInternships')
 const showCertificationsTab = isFeatureEnabled('showInternshipCertifications.showCertifications')
+const showPageDescription = isFeatureEnabled('showInternshipCertifications.showPageDescription')
 
 const tabDefinitions = [
   { id: 'internships', name: 'Training Internships', enabled: showInternshipsTab },

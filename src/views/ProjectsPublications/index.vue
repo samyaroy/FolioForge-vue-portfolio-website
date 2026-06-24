@@ -1,12 +1,13 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <div class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Project & Publication
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
           Explore my research publications, technical projects, and written articles showcasing my expertise.
         </p>
       </div>
@@ -34,7 +35,7 @@
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-[1280px] mx-auto">
         <PublicationsTab
           v-if="showPublicationsTab && activeTab === 'publications'"
           :publications="publications"
@@ -72,6 +73,7 @@ const showProjectsTab = isFeatureEnabled('showProjectsPublications.showProjects'
 const showArticlesTab = isFeatureEnabled('showProjectsPublications.showArticles', { mode: 'any' })
 const showPublicationsTab = isFeatureEnabled('showProjectsPublications.showPublications')
 const showPostersTab = isFeatureEnabled('showProjectsPublications.showPosters')
+const showPageDescription = isFeatureEnabled('showProjectsPublications.showPageDescription')
 
 const tabDefinitions = [
   { id: 'projects', name: 'Projects', enabled: showProjectsTab },

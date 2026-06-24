@@ -32,6 +32,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
       technicalProjects: false,
       otherProjects: false,
     },
+    // Controls the subtitle/description line under the page title
+    showPageDescription: false,
     showPublications: true,
     showPosters: true,
   },
@@ -50,6 +52,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showInternshipCertifications: {
     showInternships: true,
     showCertifications: true,
+    // Controls the subtitle/description line under the page title
+    showPageDescription: true,
   },
 
   showWorkshopsAttended: {

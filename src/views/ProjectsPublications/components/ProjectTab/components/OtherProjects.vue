@@ -25,7 +25,7 @@
                 <v-expand-transition>
                 <div v-show="isOpen">
                 <div class="flex flex-col md:flex-row items-stretch">
-                    <div class="w-full md:w-[95%] md:pr-6">
+                    <div class="w-full md:pr-6" :class="getLogos(project.logo).length ? 'md:w-[95%]' : 'md:w-full'">
                         <div v-if="project.affiliation" class="flex items-start gap-2 mb-2">
                             <v-icon class="text-gray-600">mdi-school</v-icon>
                             <p class="text-gray-600">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
 
-                    <div
+                    <div v-if="getLogos(project.logo).length"
                         class="w-full md:w-[7%] flex flex-col items-start justify-start gap-3 md:items-center mr-2 mt-4 md:mt-0">
                         <img v-for="logo in getLogos(project.logo)" :key="logo" :src="getLogoPath(logo)" :alt="logo"
                             :title="logo" class="max-h-8 md:max-h-10 object-contain opacity-90">
