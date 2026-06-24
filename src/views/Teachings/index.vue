@@ -57,7 +57,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 import CoursesTaughtTab from './components/CoursesTaughtTab.vue'

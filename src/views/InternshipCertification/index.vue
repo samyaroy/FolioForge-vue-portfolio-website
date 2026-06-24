@@ -76,7 +76,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
-import config from "@/profile_info.yml"
+import config from "@/content/profile_info"
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const { certifications, internships } = config

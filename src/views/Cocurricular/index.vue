@@ -58,7 +58,7 @@
 import Leadership from './components/Leadership.vue'
 import Volunteering from './components/Volunteering.vue'
 
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 import { isFeatureEnabled } from '@/config/featureFlags'
 const { co_curriculars } = config
 

@@ -49,7 +49,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import AchievementsSlide from "./components/slides/AchievementsSlide.vue";
 import AwardsSlide from "./components/slides/AwardsSlide.vue";
-import config from "@/profile_info.yml";
+import config from "@/content/profile_info";
 import { isFeatureEnabled } from '@/config/featureFlags'
 const { awards, achievements } = config;
 

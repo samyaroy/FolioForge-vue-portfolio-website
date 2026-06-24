@@ -57,7 +57,7 @@ import { useRoute } from 'vue-router'
 import InvitedTalksTab from './components/tabs/InvitedTalksTab.vue'
 import HostedEventsTab from './components/tabs/HostedEventsTab.vue'
 
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 // NOTE: The user should add invited_talks, hosted_events and other_hosted_events to profile_info.yml

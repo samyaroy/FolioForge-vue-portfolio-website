@@ -72,7 +72,7 @@ import WorkshopsTab from './components/tabs/WorkshopsTab.vue'
 import OtherTab from './components/tabs/OtherTab.vue'
 import BootcampsTab from './components/tabs/BootcampsTab.vue'
 
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 import { isFeatureEnabled } from '@/config/featureFlags'
 const {
   attended_workshops,

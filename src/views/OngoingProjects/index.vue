@@ -30,7 +30,7 @@
 <script setup>
 import ProjectCard from './components/ProjectCard.vue'
 
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 const { ongoing_projects } = config
 const ongoingProjects = ongoing_projects
 </script>

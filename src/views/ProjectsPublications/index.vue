@@ -64,7 +64,7 @@ import PublicationsTab from './components/PublicationsTab.vue'
 import ProjectsTab from './components/ProjectTab/index.vue'
 import ArticlesTab from './components/ArticlesTab/index.vue'
 import PostersTab from './components/PostersTab.vue'
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const { projects, publications, articles, posters } = config

@@ -1,0 +1,31 @@
+certifications:
+  - title: Introduction to Uncertainty Quantification
+    logo: ['JHU','COURSERA']
+    issuer:
+      institution: Whiting School of Engineering, Johns Hopkins University
+      platform: Coursera
+    instructor: Prof. Michael Shields
+    date: 29 Nov 2025
+    duration: 3 Weeks (Approx. 29 hours)
+    cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/preview'
+  
+  - title: Introduction to Programming in C
+    logo: ['IITK','NPTEL']
+    issuer:
+      institution: Indian Institute of Technology Kanpur
+      platform: NPTEL
+    instructor: 
+    date: Apr 2023
+    duration: 8 weeks
+    cred_link: 'https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview'
+    tag: 'Elite'
+
+  - title: Diploma in Web Designing (DWD)
+    logo: ['CITC']
+    issuer:
+      institution: Chandigarh Institute of Technology and Consultancy
+      location: Mohali, PB
+    date: 14 Sep 2020
+    duration: 6 Months
+    cred_link: 'https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview'
+    tag: "Grade: A"

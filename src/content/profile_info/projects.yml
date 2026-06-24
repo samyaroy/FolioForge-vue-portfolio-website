@@ -1,0 +1,141 @@
+projects:
+  - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
+    type: Research Project
+    description: Built a deep learning pipeline for robust music genre classification under noisy mashup conditions, simulating distribution shift beyond clean training data and achieving 87% accuracy. Generated on-the-fly same-genre mashups from multi-stem audio, engineered Mel-spectrogram/MFCC representations with environmental noise augmentation, and trained CNN classifiers using both from-scratch and pretrained backbones.
+    affiliation: Diploma Project (DLGenAI), BS in Data Science and Applications, `Indian Institute of Technology Madras`
+    logo : ['IITM']
+    tech_stack: Data Augmentation, Audio Classification, CNN, CRNN,  ResNet18, EfficientNet B0
+    time_period: Jan 2026 - Apr 2026
+    cred_link:
+      report: https://drive.google.com/file/d/1Mpb0flVqw7FS4XTDYXEJvqx9agT7P-Ih/view?usp=drive_link
+      github: https://github.com/22f2001443/MessyMashup-dl-genai-peoject
+      kaggle: 
+
+  - title: Political Comment Classification using Reddit Data (US Election 2024)
+    type: Research Project
+    description: Built a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
+    affiliation: Diploma Project (MLP), BS in Data Science and Applications, `Indian Institute of Technology Madras`
+    logo : ['IITM']
+    tech_stack: NLP, Logistic Regression, Random Forest, XGBoost, Naive Bayes, Python
+    guide:
+    time_period: Jan 2026 - Apr 2026
+    cred_link:
+      github: https://github.com/22f2001443/Comment-Category-Prediction-MLP_P-t1_2026
+
+  - title: 'Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset'
+    description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
+    type: Research Project
+    doi: 10.13140/RG.2.2.16657.13926
+    affiliation:  Degree Project, BSc. (Hons.) in Statistics , `Sister Nivedita University`
+    logo : ['SNU']
+    tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
+    guide:
+      name: Prof. Aniruddha Choudhuri
+      title: Assistant Professor
+      department: Department of Statistics
+      institution: Sister Nivedita University
+    collaborators:
+    time_period: Jan 2025 - May 2025
+    cred_link:
+      report: https://drive.google.com/file/d/1xgCwYBV9E-1docFJf7YEld2RyUpEOAUZ/view?usp=drive_link
+      github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
+      researchgate: researchgate.net/publication/391766786_Predicting_Wine_Quality_A_Comparison_of_Linear_Regression_Techniques_on_a_Multicollinear_and_Outlier-Affected_Dataset?_sg%5B0%5D=KMAA__Av1JZU5QW09RmRJh5HSiCHSKQOWtY16iDgz1a-BkmBHVSbh1ayNVa1l4i3mM_SCPfifAd86eWtOl8VXOuygtU2Crm3VRrYc31j.UhBIrCOgdI1HgmgNG6U-yPJyEd7STApaAvphsDR8B4MUGmog_jFi6eOzgU1CxGC8KFeV_7ktVVLz-Thb6YXr_Q&_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19
+
+  - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
+    description: Conducted a comprehensive survey among college students (aged 18-25) in Kolkata to understand their career preferences. Utilized multivariate inference to identify key factors influencing career choices and segment students based on their preferences.
+    type: Research Project
+    doi:
+    affiliation: Internship Project (Data Science Intern), `Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)`, `Indian Statistical Institute, Kolkata`
+    logo : ['IDEAS']
+    tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
+    guide:
+      name: Mr. Debashis Ghosh
+      title: Head, Technology Business Development & Incubation
+      institution: IDEAS - TIH
+    collaborators: Rishav Kumar banerjee, Saunak Datta
+    time_period: Jul 2024 - Dec 2024
+    cred_link:
+      report: https://drive.google.com/file/d/1pRxfzda-l3rIbrJZztygDYiXcSL4L3Zc/view?usp=drive_link
+      github: https://github.com/samyaroy/Multivariate_Analysis_of_Career_Preference_in_Kolkata
+    
+  - title: "Rogāre : Crowd-sourced FAQ Solution & Discussion Portal"
+    description: ""
+    type: "Minor Project"
+    affiliation: "Internship Project (VINS Summer Intern), `VLED, Indian Institute of Technology Ropar`"
+    # guide:
+    #   name: Prof. Sudarshan Iyengar
+    #   title: Principal Investigator
+    #   department: Vicharanashala Lab for Education Design
+    #   institution: IIT Ropar
+    # logo: ['VLED-IITRPR']
+    tech_stack: Mongodb, Express.js, React.js, Node.js (MERN Stack), Tailwind CSS, Headless UI
+    time_period: "May 2026 - Jun 2026"
+    collaborators:
+      - name: Nandini
+        link: https://www.linkedin.com/in/nandini-221619268/
+      - name: Abhi Sriya
+        link: https://www.linkedin.com/in/abhi-1b609b409/
+      - name: Ansh Varshney
+        link: https://www.linkedin.com/in/anshvarshneyy/
+      - name: Samad Mohammed
+        link: https://www.linkedin.com/in/mohdsamad83/
+      - name: Shreya Choudhary
+        link: http://www.linkedin.com/in/shreya-choudhary-1b350a362/
+      - name: Kashish Panwar
+        link: http://www.linkedin.com/in/kashish-panwar-b10297322/
+      - name: Rahul Prasad
+        link: https://www.linkedin.com/in/rahulprsad
+      - name: Udarsh Goyel
+        link: https://www.linkedin.com/in/udarsh-goyal-256095383/
+      - name: Adhin Mahesh
+        link: https://www.linkedin.com/in/adhinmahesh/
+    cred_link:
+      github: "https://github.com/vicharanashala/cs9"
+
+  - title: Quiz Pilot (V1 & V2)
+    description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
+    type: "Minor Project"
+    affiliation: Diploma Projects (MAD I, MAD II), `BS in Data Science and Applications, Indian Institute of Technology Madras`
+    logo: ['IITM']
+    tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
+    guide:
+    time_period: "Jan 2025 - Aug 2025"
+    cred_link:
+      github: "https://github.com/samyaroy/quiz_pilot_master_repo"
+    
+  - title: Doctor Vaahaan
+    description: Responsive website for vehicle decabonation services, deployed with Laravel, MySQL, and Bootstrap.
+    type: "Technical Project"
+    affiliation: Freelance Project
+    tech_stack: Laravel, MySQL, Bootstrap
+    guide:
+    time_period: "Nov 2024 - Dec 2024"
+    
+
+  # - title: FolioForge Portfolio Website
+  #   description: Personal portfolio website built with Vue.js and Tailwind CSS, featuring dynamic content and responsive design.
+  #   type: "Technical Project"
+  #   affiliation: 
+  #   tech_stack: Vue.js, Tailwind CSS, JavaScript
+  #   guide:
+  #   time_period: 
+  #   cred_link:
+  #     github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
+
+  # - title: Hand Raise Detector
+  #   description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams.
+  #   type: "Technical Project"
+  #   affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
+  #   tech_stack: YOLOv8, OpenCV, Python
+  #   guide:
+  #   time_period:
+  #   cred_link:
+  # - title: Hand Raise Detector
+  #   description: AI project using YOLOv8 and OpenCV to detect raised hands in real-time video streams.
+  #   type: "Technical Project"
+  #   affiliation: AI VicharanaShala Bootcamp, Indian Institute of Technology Ropar
+  #   tech_stack: YOLOv8, OpenCV, Python
+  #   guide:
+  #   time_period:
+  #   cred_link:
+      

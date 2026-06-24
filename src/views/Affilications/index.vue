@@ -55,7 +55,7 @@ import { useRoute } from 'vue-router'
 import AffiliationsTab from './components/tabs/AffiliationsTab.vue'
 import CollaboratorsTab from './components/tabs/CollaboratorsTab.vue'
 import MembershipsTab from './components/tabs/MembershipsTab.vue'
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const { affiliations = [], collaborators = [], past_collaborators = [], memberships = [] } = config

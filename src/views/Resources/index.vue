@@ -40,7 +40,7 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import resourcesContent from '@/content/resources.yml'
+import resourcesContent from '@/content/profile_info/resources.yml'
 import ExternalLinksPane from './components/ExternalLinksPane.vue'
 import ResourceContentPane from './components/ResourceContentPane.vue'
 import SubjectTabs from './components/SubjectTabs.vue'

@@ -39,7 +39,7 @@
 
 <script setup>
 import EducationMilestone from "./components/EducationMilestone.vue";
-import config from "@/profile_info.yml"
+import config from "@/content/profile_info"
 
 const { education, certifications } = config
 

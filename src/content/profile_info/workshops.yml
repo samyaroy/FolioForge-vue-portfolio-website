@@ -1,0 +1,288 @@
+attended_fdps:
+  - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
+    institution: 
+      - name: "Sister Nivedita University"
+        department: "Dept. of Statistics"
+        location: "Kolkata, WB"
+    date: "September 2024"  
+    duration: "7 Days"
+    mode: "Online"
+    cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
+
+  - title: "Joint online Faculty Development Programme on CLASSICAL ML"
+    institution: 
+      - name: "Indian Institute of Technology Gandhinagar"
+        department: "Electronics & ICT Academic"
+      - name: "National Institute of Technology Patna"
+        department: "E & ICT Academic"
+      - name: "Indian Institute of Technology Kanpur"
+      # - name: "Malaviya National Institute of Technology Jaipur"
+      # - name: "Indian Institute of Technology Roorkee"
+    date: "18 -29 May 2026"  
+    duration: "10 Days"
+    mode: "Online"
+    cred_link: "https://drive.google.com/file/d/1V9mDic5EwtYRJNOQNbhTxuAstktAuAyN/preview"
+
+attended_workshops:
+  - title: "Systems for LLMs"
+    institution:
+      - name: "Indian Institute of Technology Bombay"
+        department: "Department of Computer Science"
+        role: "Host"
+        location: "Mumbai, MH"
+      - name: "IBM Research"
+        role: "Industry Partner"
+    date: "September 2025"
+    mode: "Online"
+
+  - title: "Statistical Methods in Cyber Security"
+    institution:
+      - name: "Royal Statistical Society"
+        location: "London, UK"
+    date: "September 2025"
+    mode: "Online"
+
+  - title: "Uncertainty in Machine Learning: Challenges and Opportunities"
+    institution:
+      - name: "Isaac Newton Institute for Mathematical Sciences"
+        location: "Cambridge, UK"
+    date: "August 2025"
+    mode: "Online"
+
+  - title: "Mini-Symposium on Contemporary Advancements in Computational Intelligence"
+    institution:
+      - name: "Indian Statistical Institute, Kolkata"
+        location: "Kolkata, WB"
+    date: "July 2025"
+    mode: "Offline"
+
+  - title: "National Workshop and Bootcamp on Cyber Security and Blockchain (NWBCSB 2025)"
+    institution:
+      - name: "International Institute of Technology (IIIT) Hyderabad"
+        location: "Hyderabad, TS"
+    date: "March 2025"
+    duration: "7 Days"
+    mode: "Offline"
+    details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/preview"
+
+  - title: "Numerical Algorithms & Computations in Science & Technology with Matlab"
+    institution:
+      - name: "Indian Institute of Technology Ropar"
+        department: "Dept. of Mathematics"
+        location: "Rupnagar, PB"
+    date: "July 2024"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/preview"
+
+  - title: "Democratizing Data Science: Exploring Open Source Statistical Software"
+    institution: 
+      - name: "Sister Nivedita University"
+        department: "Dept. of Statistics"
+        location: "Kolkata, WB"
+    date: "March 2024"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/preview"
+
+  - title: "Research Opportunities in Computer Science (ROCS) - ACM"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        location: "Chennai, TN"
+    date: "January 2024"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/preview"
+
+  - title: "Social Computing (One day workshop) - NPTEL"
+    instructor: "Prof. Ponnurangam Kumaraguru"
+    institution:
+      - name: "International Institute of Technology (IIIT) Hyderabad"
+        location: "Hyderabad, TS"
+    date: "February 2023"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
+
+attended_webinars_n_others:
+  - title: "COPSS-NISS Leadership Webinar: The Role of Bayesian Statistics in an Age of AI"
+    type: webiner
+    speaker: ["Prof. David Dunson", "Prof. Xuming He", "Prof. (Dr.) Nadja Klein"]
+    host:
+      - name: "National Institute of Statistical Sciences"
+        department: "Committee of the Presidents of Statistical Societies"
+        location: "Washington DC, US"
+    date: "27 January, 2026"
+    mode: "Online"
+    cred_link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
+
+  # - title: "Responsible AI Use for Journal Publishing"
+  #   type: webiner
+  #   host:
+  #     - name: "Wiley"
+  #   date: "7 May, 2026"
+  #   mode: "Online"
+
+  - title: "IASS - Seminal Ideas and Controversies in Statistics"
+    type: webiner
+    speaker: ["Prof. Rod Little"]
+    host:
+      - name: "International Statistical Association"
+        department: "International Association of Survey Statisticaian"
+        location: 
+    date: "23 March, 2026"
+    mode: "Online"
+    cred_link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
+
+  - title: "Causal Learning for Individual and Population Health in the Era of AI"
+    type: webiner
+    speaker: ["Dr. Linda Valeri"]
+    host:
+      - name: "CUNY Graduate School of Public Health and Health Policy"
+        department:
+        location: New York, US  
+    date: "14 May, 2026"
+    mode: "Online"
+    cred_link:
+
+  - title: "Discussion on Bayesian Analysis"
+    type: webiner
+    speaker: 
+    host:
+      - name: "The International Society for Bayesian Analysis"
+        department:
+        location: Rome, IT  
+    date: "14 May, 2026"
+    mode: "Online"
+    cred_link:
+
+  # - title: "Causal Learning for Individual and Population Health in the Era of AI"
+  #   type: webiner
+  #   speaker: ["Dr. Linda Valeri"]
+  #   host:
+  #     - name: "CUNY Graduate School of Public Health and Health Policy"
+  #       department:
+  #       location: New York, NY  
+  #   date: "14 May, 2026"
+  #   mode: "Online"
+  #   cred_link:
+
+attended_other_workshops:
+  - title: "Measurements in AI"
+    instructor:
+      - name: "Prof. Partha Pratim Das"
+        position: Professor
+        department: Computer Science
+        institution: Asoka University
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "Paradox 2026, BS Degreee"
+    date: "June, 2026"
+    mode: "Offline"
+    # cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
+
+  - title: "Testing and Automation of Web Apps using Playwright"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+    date: "May, 2026"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/1yQOyuTIoJXlRN0w87Zxg_S119hyQ4jTD/preview
+
+  - title: "Cryptography for Beginners"
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+    date: "May, 2026"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
+    
+  - title: "Audio & Image Analysis Using Python"
+    instructor:
+      - name: "Prof. Vikranth Racherla"
+    institution:
+      - name: "Indian Institute of Technology Kharagpur"
+        department: "CoEAT/CRR"
+        location: "Kharagpur, WB"
+    date: "28 - 29 March, 2026"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/1aEEaQGAKpGacIqCPVnrizCZJSZkQU-FV/preview
+
+  - title: "Mathematical Foundations for Machine Learning"
+    instructor:
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        role:
+    date: "August, 2025"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/1Z7AeZgeEIFE5n4hTHaGVRDAnmLiLuaGT/preview
+
+  - title: "Implementing Machine Learning Techniques using Numpy"
+    instructor:
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "BS Degree"
+        role:
+    date: "September, 2025"
+    mode: "Online"
+    cred_link: https://drive.google.com/file/d/14daqILuPpEPdDhKmm02byokI4rKJ3sbp/preview
+
+  
+attended_bootcamps:
+  - title: "AI Vicharana Shala Bootcamp"
+    instructor:
+      name: "Prof. Sudarshan Iyengar"
+      designation: HoD
+      department: Department of CSE
+      institution: IIT Ropar
+    institution:
+      - name: "Indian Institute of Technology Ropar"
+        department: "Department of CSE"
+      - name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
+    date: "June 2024 - July 2024"
+    duration: "1 Month"
+    location: "Rupnagar, PB"
+    cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
+
+  - title: Foundational Lecture Series on Theoretical Computer Science 2026
+    link: "https://www.imsc.res.in/outreach/fstcs2026/"
+    instructor:
+    institution:
+      - name: The Institute of Mathematical Sciences
+      - name: Homi Bhabha National Institute
+    date: "June 2026"
+    duration: "2 Weeks"
+    location: "Chennai, TN"
+    cred_link: 
+    
+  # - title: "Summer Outreach Programme in Computing (SOPC)"
+  #   instructor:
+  #   institution:
+  #     - name: "National Institute of Science Education and Research"
+  #       department: "School of Computer Sciences"
+  #   date: "June 2026"
+  #   duration: "2 Weeks"
+  #   location: "Bhubaneswar, OD"
+  #   # cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
+
+attended_conferences:
+  - title: "Fifth International Conference on Security and Privacy (ISEA-ISAP 2026)"
+  #  link: "https://isea-isap2026.iitm.ac.in/"
+    organizer:
+      - name: "Indian Institute of Technology Madras"
+        department: "CyStar"
+      - name: "MeitY, GoI" 
+        department: "Information Security Education and Awareness (ISEA)"
+    location: "Chennai, TN"  
+    institution:
+      - name: "Indian Institute of Technology Madras"
+    date: "January 16-18, 2026" 
+    cred_link: "https://drive.google.com/file/d/11f1dKYe_2jSlnKWkZRHlzh90j9r6GJHb/preview"
+
+  - title: "Cryptology Conclave 2026"
+    link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
+    organizer:
+      - name: "Indian Institute of Technology Hyderabad"
+        department: "Center for Cryptography and Cybersecurity"
+    location: "Hyderabad, TS"
+    institution:
+      - name: "Indian Institute of Technology Hyderabad"
+    date: "January 22-23, 2026" 
+    cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"

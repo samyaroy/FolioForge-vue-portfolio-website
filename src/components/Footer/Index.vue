@@ -215,7 +215,7 @@
 </template>
 
 <script>
-import config from "@/profile_info.yml"
+import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
 

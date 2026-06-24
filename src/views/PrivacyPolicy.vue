@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
 
 const email = config.contacts.email
 const emailLink = `mailto:${email}`
