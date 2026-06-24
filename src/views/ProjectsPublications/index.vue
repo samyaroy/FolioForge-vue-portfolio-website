@@ -8,7 +8,7 @@
           Project & Publication
         </h1>
         <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          Explore my research publications, technical projects, and written articles showcasing my expertise.
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -65,15 +65,17 @@ import ProjectsTab from './components/ProjectTab/index.vue'
 import ArticlesTab from './components/ArticlesTab/index.vue'
 import PostersTab from './components/PostersTab.vue'
 import config from '@/content/profile_info'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
 const { projects, publications, articles, posters } = config
+const pageDescription = descriptions.projectsPublications
 
 const showProjectsTab = isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' })
 const showArticlesTab = isFeatureEnabled('showProjectsPublications.showArticles', { mode: 'any' })
 const showPublicationsTab = isFeatureEnabled('showProjectsPublications.showPublications')
 const showPostersTab = isFeatureEnabled('showProjectsPublications.showPosters')
-const showPageDescription = isFeatureEnabled('showProjectsPublications.showPageDescription')
+const showPageDescription = isPageDescriptionEnabled('projectsPublications')
 
 const tabDefinitions = [
   { id: 'projects', name: 'Projects', enabled: showProjectsTab },

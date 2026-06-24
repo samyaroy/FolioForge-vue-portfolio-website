@@ -2,11 +2,12 @@
   <div class="min-h-screen bg-slate-50 py-8">
     <div class="container mx-auto px-4">
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Ongoing Projects
         </h1>
-         <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto"> 
-          List of all projects I'm currently working on, including personal, academic, and collaborative projects.
+         <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+          {{ pageDescription }}
         </p>
         </div>
       <!-- Workshops Section -->
@@ -31,8 +32,12 @@
 import ProjectCard from './components/ProjectCard.vue'
 
 import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isPageDescriptionEnabled } from '@/config/featureFlags'
 const { ongoing_projects } = config
 const ongoingProjects = ongoing_projects
+const pageDescription = descriptions.ongoingProjects
+const showPageDescription = isPageDescriptionEnabled('ongoingProjects')
 </script>
 
 <style scoped>

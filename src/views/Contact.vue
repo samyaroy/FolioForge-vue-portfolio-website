@@ -5,11 +5,12 @@
         <div class="layout-content-container flex flex-col w-full max-w-[1400px] flex-1">
           <!-- Page Header -->
           <div class="text-center mb-12">
-            <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+            <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+              :class="{ 'mb-4': showPageDescription }">
               Get in Touch
             </h1>
-            <p class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!
+            <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
+              {{ pageDescription }}
             </p>
           </div>
 
@@ -144,6 +145,11 @@
 
 <script setup>
 import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isPageDescriptionEnabled } from '@/config/featureFlags'
+
+const pageDescription = descriptions.contact
+const showPageDescription = isPageDescriptionEnabled('contact')
 
 const {profile, contacts, socials} = config
 

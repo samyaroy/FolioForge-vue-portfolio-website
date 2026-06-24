@@ -3,11 +3,12 @@
     <div class="container mx-auto px-4 py-8">
       <!-- Page Header -->
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Professional Activities
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          Invited talks, and events hosted or convened.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -58,7 +59,11 @@ import InvitedTalksTab from './components/tabs/InvitedTalksTab.vue'
 import HostedEventsTab from './components/tabs/HostedEventsTab.vue'
 
 import config from '@/content/profile_info'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+
+const pageDescription = descriptions.professionalActivity
+const showPageDescription = isPageDescriptionEnabled('professionalActivity')
 
 // NOTE: The user should add invited_talks, hosted_events and other_hosted_events to profile_info.yml
 const { invited_talks, hosted_events, other_hosted_events } = config

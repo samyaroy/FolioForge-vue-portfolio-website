@@ -7,7 +7,7 @@
           Internships & Certifications
         </h1>
         <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          Professional internships and certifications I have obtained during my journey.
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -77,14 +77,16 @@ import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
 import config from "@/content/profile_info"
-import { isFeatureEnabled } from '@/config/featureFlags'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
 const { certifications, internships } = config
 const credly = config.socials.credly
+const pageDescription = descriptions.internshipCertifications
 
 const showInternshipsTab = isFeatureEnabled('showInternshipCertifications.showInternships')
 const showCertificationsTab = isFeatureEnabled('showInternshipCertifications.showCertifications')
-const showPageDescription = isFeatureEnabled('showInternshipCertifications.showPageDescription')
+const showPageDescription = isPageDescriptionEnabled('internshipCertifications')
 
 const tabDefinitions = [
   { id: 'internships', name: 'Training Internships', enabled: showInternshipsTab },

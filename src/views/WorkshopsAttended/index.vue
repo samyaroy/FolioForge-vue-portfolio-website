@@ -3,11 +3,12 @@
     <div class="container mx-auto px-4 py-8">
       <!-- Page Header -->
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Conferences & Workshops
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-5xl mx-auto">
-          During the journey of strengthening my skills, I have attended several conferences, workshops, and participated in intensive bootcamp training in Statistics, Data Science, AI, and emerging technologies. Few of then are lsited below.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-5xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -73,7 +74,11 @@ import OtherTab from './components/tabs/OtherTab.vue'
 import BootcampsTab from './components/tabs/BootcampsTab.vue'
 
 import config from '@/content/profile_info'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+
+const pageDescription = descriptions.workshopsAttended
+const showPageDescription = isPageDescriptionEnabled('workshopsAttended')
 const {
   attended_workshops,
   attended_webinars_n_others,
