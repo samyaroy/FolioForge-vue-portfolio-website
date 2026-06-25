@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import type { PostMeta } from '../types'
-import { formatDate } from '../lib/format'
+import type { PostMeta } from '../../types'
+import { formatDate } from '../../lib/format'
 
 export function PostCard({ post }: { post: PostMeta }) {
   return (
@@ -8,11 +8,14 @@ export function PostCard({ post }: { post: PostMeta }) {
       <h2 className="post-card__title">
         <Link to={`/posts/${post.slug}`}>{post.title}</Link>
       </h2>
-      {post.date && (
-        <time className="post-card__date" dateTime={post.date}>
-          {formatDate(post.date)}
-        </time>
-      )}
+      <div className="post-card__meta">
+        <span>Article</span>
+        {post.date && (
+          <time dateTime={post.date}>
+            {formatDate(post.date)}
+          </time>
+        )}
+      </div>
       {post.description && (
         <p className="post-card__excerpt">{post.description}</p>
       )}
