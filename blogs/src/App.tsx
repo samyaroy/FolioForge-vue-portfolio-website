@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { HomePage } from './views/Home'
@@ -5,6 +6,11 @@ import { PostPage } from './views/Post'
 import { NotFoundPage } from './views/NotFound'
 import { SectionPage } from './views/Section'
 import { isFeatureEnabled } from './config/featureFlags'
+
+// Travel pulls in ECharts (~1 MB); load it only when the route is visited.
+const TravelPage = lazy(() =>
+  import('./views/Travel').then((m) => ({ default: m.TravelPage })),
+)
 
 const optionalRoutes = [
   isFeatureEnabled('showReadings')
@@ -23,11 +29,9 @@ const optionalRoutes = [
     ? {
         path: '/travel',
         element: (
-          <SectionPage
-            title="Travel"
-            description="Places, routes, small observations, and memories collected along the way."
-            tag="travel"
-          />
+          <Suspense fallback={<p className="empty">Loading map…</p>}>
+            <TravelPage />
+          </Suspense>
         ),
       }
     : null,
