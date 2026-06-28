@@ -85,6 +85,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showResources: true,
 
+  // Controls the quote pane rendered between page content and the footer.
+  showPageQuotePane: true,
+
   // Controls the subtitle/description line under each page's title.
   // Text for each page lives in src/content/profile_info/description.yml.
   // `enabled` is the master switch: when false, every page description is hidden
