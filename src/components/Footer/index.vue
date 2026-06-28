@@ -81,35 +81,18 @@
                 Ongoing Projects
               </router-link>
             </li>
-<<<<<<< HEAD
-            <li v-if="showInternshipCertificationsLink">
-              <router-link to="/internships-certifications"
-                class="footer-link">
-                Internships & Certifications
-              </router-link>
-            </li>
-=======
->>>>>>> origin/V1
             <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
                 class="footer-link">
                 Affiliations, Collaborators & Memberships
               </router-link>
             </li>
-<<<<<<< HEAD
-            <!-- <li v-if="showInternshipCertificationsLink">
-=======
             <li v-if="showInternshipCertificationsLink">
->>>>>>> origin/V1
               <router-link to="/internships-certifications"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Internships & Certifications
               </router-link>
-<<<<<<< HEAD
-            </li> -->
-=======
             </li>
->>>>>>> origin/V1
             <li v-if="showWorkshopsAttendedLink">
               <router-link to="/workshops-bootcamps-attended"
                 class="footer-link">
@@ -140,20 +123,6 @@
               </router-link>
             </li>-->
           </ul>
-<<<<<<< HEAD
-          <br />
-          <h4 class="text-lg font-semibold mb-2">Social Links</h4>
-
-          <ul class="space-y-2">
-            <li>
-              <a :href="google_scholar" target="_blank" class="footer-link">Google Scholar</a>
-            </li>
-            <li>
-              <a :href="researchgate" target="_blank" class="footer-link">ResearchGate</a>
-            </li>
-          </ul>
-=======
->>>>>>> origin/V1
         </div>
 
         <div class="grid grid-cols-1 gap-11 md:grid-cols-[max-content_max-content] md:justify-self-end pl-3">
@@ -170,12 +139,6 @@
               </li>
             </ul>
           </div>
-<<<<<<< HEAD
-          <div class="pt-4 pb-0">
-            <a href="https://info.flagcounter.com/Wh9G"><img
-                src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_15/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
-                alt="Flag Counter" border="0"></a>
-=======
 
           <!-- Contact Info -->
           <div>
@@ -199,7 +162,6 @@
                   src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_15/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
                   alt="Flag Counter" border="0"></a>
             </div>
->>>>>>> origin/V1
           </div>
         </div>
       </div>
@@ -212,22 +174,7 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-<<<<<<< HEAD
-        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
-          <p class="text-gray-500 text-sm">
-            Looking for beta version?
-            <a
-              :href="betaVersionUrl"
-              class="footer-link text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              see here
-            </a>
-          </p>
-=======
         <div class="mt-2 md:mt-0">
->>>>>>> origin/V1
           <router-link
             :to="{ name: 'PrivacyPolicy' }"
             class="footer-link text-sm"
@@ -277,12 +224,8 @@ export default {
     Logos,
   },
   data() {
-<<<<<<< HEAD
-    const { profile, contacts, socials } = config;
-=======
     const { profile, contacts, socials, last_updated_on } = config;
     const showCocurricularLink = isFeatureEnabled('showCocurricular', { mode: 'any' })
->>>>>>> origin/V1
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
@@ -308,11 +251,7 @@ export default {
       // logos: ['SNU', 'IITM', 'IDEAS'],
 
       last_updated_on: config.last_updated_on,
-<<<<<<< HEAD
-      betaVersionUrl: profile.beta_version_url,
-=======
       showCocurricularLink,
->>>>>>> origin/V1
       showOngoingProjectsLink,
       showInternshipCertificationsLink,
       showWorkshopsAttendedLink,
@@ -346,8 +285,6 @@ export default {
   color: #646cff;
   text-decoration: none;
 }
-<<<<<<< HEAD
-=======
 
 .resource-sparkle-wrap {
   position: relative;
@@ -388,5 +325,4 @@ export default {
     transform: scale(1.06);
   }
 }
->>>>>>> origin/V1
 </style>

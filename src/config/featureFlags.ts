@@ -9,37 +9,24 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showHeroSection: true,
     showResearchInterests: true,
     showExperience: true,
-<<<<<<< HEAD
-    showEducation: true,
-    showAwards: false,
-=======
     showEducation: {
       main: true,
       showCourseDetailsInfo: true,
     },
     showAwards: false,
     showAchivement: false,
->>>>>>> origin/V1
   },
 
   showProjectsPublications: {
     showArticles: {
       showGeneralArticles: true,
-<<<<<<< HEAD
-      showJournalArticles: false,
-=======
       showJournalArticles: true,
->>>>>>> origin/V1
     },
     showProjects: {
       showResearchProjects: true,
       showTechnicalProjects: true,
       showOtherProjects: true,
     },
-<<<<<<< HEAD
-    showPublications: true,
-    showPosters: false,
-=======
     // Controls whether collapsible project sections start expanded (true) or collapsed (false)
     expandProjectSectionsByDefault: {
       technicalProjects: false,
@@ -47,16 +34,12 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     },
     showPublications: true,
     showPosters: true,
->>>>>>> origin/V1
   },
 
   showGallery: true,
 
-<<<<<<< HEAD
-=======
   showBlog: true,
 
->>>>>>> origin/V1
   showCocurricular: {
     showLeadershipOrganizations: true,
     showVolunteering: true,
@@ -71,32 +54,6 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showWorkshopsAttended: {
     showConferences: true,
-<<<<<<< HEAD
-    showFDPs: false,
-    showWorkshops:{
-      main: true,
-      others: false,
-    },
-    showBootcamps: true,
-    showOther: false,
-  },
-
-  showTeachings: {
-    showCoursesTaught: false,
-    showProjectsMentored: false,
-    showOtherTeachings: false,
-  },
-
-  showAffiliations: {
-    showAffiliations: false,
-    showCollaborators: false,
-    showMemberships: false,
-  },
-
-  showProfessionalActivity: {
-    showInvitedTalks: false,
-    showHostedEvents: false,
-=======
     showFDPs: true,
     showWorkshops: {
       main: true,
@@ -144,7 +101,6 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     professionalActivity: true,
     teachings: true,
     workshopsAttended: true,
->>>>>>> origin/V1
   },
 }) satisfies FeatureFlagNode
 
@@ -210,8 +166,6 @@ export function isFeatureEnabled(
   const target = resolveFlagNode(flagPath, featureFlags)
   return mode === 'any' ? evaluateAny(target) : evaluateAll(target)
 }
-<<<<<<< HEAD
-=======
 
 // Whether a given page's title description line should render.
 // Gated by the master switch `showPageDescriptions.enabled`: if that is off,
@@ -222,4 +176,3 @@ export function isPageDescriptionEnabled(page: string): boolean {
     isFeatureEnabled(`showPageDescriptions.${page}`)
   )
 }
->>>>>>> origin/V1
