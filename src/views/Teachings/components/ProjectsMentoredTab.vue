@@ -220,30 +220,4 @@ const getAffiliationLocation = (project) => {
   return NaN
 }
 
-const getStudentKey = (student, index) => {
-  if (student?.email) return student.email
-  if (student?.name) return student.name
-  return `student-${index}`
-}
-
-const getAffiliationName = (project) => {
-  const affiliation = project?.affiliation
-
-  if (typeof affiliation === 'string') return affiliation
-  if (affiliation && typeof affiliation === 'object' && typeof affiliation.name === 'string') {
-    return affiliation.name
-  }
-
-  return NaN
-}
-
-const getAffiliationLocation = (project) => {
-  const affiliation = project?.affiliation
-
-  if (affiliation && typeof affiliation === 'object' && typeof affiliation.location === 'string') {
-    return affiliation.location
-  }
-
-  return NaN
-}
 </script>

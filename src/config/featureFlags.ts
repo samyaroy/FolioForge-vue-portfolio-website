@@ -20,7 +20,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showProjectsPublications: {
     showArticles: {
       showGeneralArticles: true,
-      showJournalArticles: true,
+      showJournalArticles: false,
     },
     showProjects: {
       showResearchProjects: true,
@@ -33,19 +33,19 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
       otherProjects: false,
     },
     showPublications: true,
-    showPosters: true,
+    showPosters: false,
   },
 
   showGallery: true,
 
-  showBlog: true,
+  showBlog: false,
 
   showCocurricular: {
     showLeadershipOrganizations: true,
     showVolunteering: true,
   },
 
-  showOngoingProjects: true,
+  showOngoingProjects: false,
 
   showInternshipCertifications: {
     showInternships: true,
@@ -54,36 +54,36 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showWorkshopsAttended: {
     showConferences: true,
-    showFDPs: true,
+    showFDPs: false,
     showWorkshops: {
       main: true,
       others: true,
     },
     showBootcamps: true,
-    showOther: true,
+    showOther: false,
   },
 
   showTeachings: {
-    showCoursesTaught: true,
-    showProjectsMentored: true,
-    showOtherTeachings: true,
+    showCoursesTaught: false,
+    showProjectsMentored: false,
+    showOtherTeachings: false,
   },
 
   showAffiliations: {
-    showAffiliations: true,
-    showCollaborators: true,
-    showMemberships: true,
+    showAffiliations: false,
+    showCollaborators: false,
+    showMemberships: false,
   },
 
   showProfessionalActivity: {
-    showInvitedTalks: true,
+    showInvitedTalks: false,
     showHostedEvents: {
-      main: true,
-      others: true,
+      main: false,
+      others: false,
     },
   },
 
-  showResources: true,
+  showResources: false,
 
   // Controls the subtitle/description line under each page's title.
   // Text for each page lives in src/content/profile_info/description.yml.
@@ -95,9 +95,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     internshipCertifications: true,
     cocurricular: true,
     affiliations: true,
-    resources: true,
+    resources: false,
     contact: true,
-    ongoingProjects: true,
+    ongoingProjects: false,
     professionalActivity: true,
     teachings: true,
     workshopsAttended: true,
