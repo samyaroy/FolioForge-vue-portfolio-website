@@ -5,14 +5,24 @@ type FeatureFlagNode = {
 
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showBlogHome: true,
+  showRecommended: true,
   showReadings: true,
-  showMovies: false,
+  showMovies: true,
   showTravel: true,
   showHobbies: true,
   showGallery: true,
+  // "Worth Your Time" nav link to /recommended. Separate from showRecommended
+  // so the page and the blog home teaser can stay on while the header link is
+  // off -- the teaser's "All N recommendations" link is then the way in.
+  showRecommendedNavLink: false,
   // "Did you know?" nav link to the main site's /facts route.
   showFactsLink: false,
   showPortfolioLink: true,
+
+  // Post page: the scroll-position bar pinned to the top of the viewport, and
+  // the estimated reading time in the byline.
+  showReadingProgress: true,
+  showReadingTime: true,
 
   // Controls the subtitle/description line under each page's title.
   // Text for each page lives in blogs/src/content/sections.yml.
@@ -21,6 +31,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showPageDescriptions: {
     enabled: true,
     blogs: true,
+    recommended: true,
     readings: true,
     movies: true,
     travel: true,
