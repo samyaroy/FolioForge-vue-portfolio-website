@@ -1,5 +1,5 @@
-import { PostCard } from '../components/PostCard'
-import { posts } from '../lib/posts'
+import { PostCard } from '../../components/PostCard'
+import { posts } from '../../lib/posts'
 
 export function HomePage() {
   return (

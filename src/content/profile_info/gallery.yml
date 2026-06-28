@@ -143,6 +143,9 @@ items:
     title: Attended MAD 1 and MAD 2 bootcamps at IITM and secured S grade!
     caption: Efforts paid off! I secured an S grade in both MAD 1 and MAD 2 projects at the IITM BS Degree program. All credit goes to those late-night debugging sessions at CCD and the amazing [[Rohit sir|https://www.linkedin.com/in/rohit-kumar-39b974151/|Link]].
     type: linkedin
+    images:
+      - workshop-04
+      - workshop-04-1
     date: 2025-06-10
     tags: [Workshop, Bootcamp]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_cogitocode-activity-7368899808171872256-17Wx?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
