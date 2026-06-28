@@ -1,10 +1,12 @@
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { Layout } from './components/Layout'
-import { HomePage } from './views/Home'
+import { BlogsPage } from './views/Blogs'
 import { PostPage } from './views/Post'
 import { NotFoundPage } from './views/NotFound'
-import { SectionPage } from './views/Section'
+import { ReadingsPage } from './views/Readings'
+import { HobbiesPage } from './views/Hobbies'
+import { GalleryPage } from './views/Gallery'
 import { isFeatureEnabled } from './config/featureFlags'
 
 // Travel pulls in ECharts (~1 MB); load it only when the route is visited.
@@ -16,13 +18,7 @@ const optionalRoutes = [
   isFeatureEnabled('showReadings')
     ? {
         path: '/readings',
-        element: (
-          <SectionPage
-            title="Readings"
-            description="Notes from books, papers, essays, and the ideas worth returning to."
-            tag="readings"
-          />
-        ),
+        element: <ReadingsPage />,
       }
     : null,
   isFeatureEnabled('showTravel')
@@ -38,25 +34,13 @@ const optionalRoutes = [
   isFeatureEnabled('showHobbies')
     ? {
         path: '/hobbies',
-        element: (
-          <SectionPage
-            title="Hobbies"
-            description="Personal notes from the things I do for curiosity, craft, and quiet joy."
-            tag="hobbies"
-          />
-        ),
+        element: <HobbiesPage />,
       }
     : null,
   isFeatureEnabled('showGallery')
     ? {
         path: '/gallery',
-        element: (
-          <SectionPage
-            title="Gallery"
-            description="A visual notebook for moments, places, projects, and fragments."
-            tag="gallery"
-          />
-        ),
+        element: <GalleryPage />,
       }
     : null,
 ].filter((route) => route !== null)
@@ -66,7 +50,7 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       ...(isFeatureEnabled('showBlogHome')
-        ? [{ path: '/', element: <HomePage /> }]
+        ? [{ path: '/', element: <BlogsPage /> }]
         : []),
       ...optionalRoutes,
       { path: '/posts/:slug', element: <PostPage /> },

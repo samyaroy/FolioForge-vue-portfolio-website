@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getPost } from '../../lib/posts'
 import { formatDate } from '../../lib/format'
+import { POST_COPY } from '../../content/sections'
 import { NotFoundPage } from '../NotFound'
 
 export function PostPage() {
@@ -17,7 +18,7 @@ export function PostPage() {
     <article className="post">
       <header className="post__header">
         <a className="post__back" href="/">
-          Back to Writing
+          {POST_COPY.backToBlogs}
         </a>
         <h1>{post.title}</h1>
         {post.date && (

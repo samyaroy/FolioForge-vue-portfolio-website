@@ -1,16 +1,8 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { isFeatureEnabled } from '../../config/featureFlags'
-
-const MAIN_SITE = 'https://samyabrata.codeium.xyz'
-
-const navItems = [
-  { to: '/', label: 'Blog', flag: 'showBlogHome' },
-  { to: '/readings', label: 'Readings', flag: 'showReadings' },
-  { to: '/travel', label: 'Travel', flag: 'showTravel' },
-  { to: '/hobbies', label: 'Hobbies', flag: 'showHobbies' },
-  { to: '/gallery', label: 'Gallery', flag: 'showGallery' },
-] as const
+import { MAIN_SITE_URL, NAV_ITEMS, PORTFOLIO_NAV_LABEL } from '../../content/navigation'
+import { SITE_PROFILE } from '../../content/site'
 
 function navLinkClass({ isActive }: { isActive: boolean }): string {
   return isActive
@@ -20,16 +12,16 @@ function navLinkClass({ isActive }: { isActive: boolean }): string {
 
 export function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const enabledNavItems = navItems.filter((item) => isFeatureEnabled(item.flag))
+  const enabledNavItems = NAV_ITEMS.filter((item) => isFeatureEnabled(item.flag))
 
   return (
     <>
       <header className="site-header">
-        <div className="site-header__brand" aria-label="Samyabrata Roy">
+        <div className="site-header__brand" aria-label={SITE_PROFILE.name}>
           <span className="site-header__avatar">
-            <img src="/profile-icon.png" alt="" />
+            <img src={SITE_PROFILE.profileIconPath} alt="" />
           </span>
-          <span>Samyabrata Roy</span>
+          <span>{SITE_PROFILE.name}</span>
         </div>
 
         <div className="site-header__nav-wrap">
@@ -45,8 +37,8 @@ export function Header() {
               </NavLink>
             ))}
             {isFeatureEnabled('showPortfolioLink') && (
-              <a href={MAIN_SITE} className="site-header__link site-header__link--muted">
-                Portfolio
+              <a href={MAIN_SITE_URL} className="site-header__link site-header__link--muted">
+                {PORTFOLIO_NAV_LABEL}
               </a>
             )}
           </nav>
@@ -94,11 +86,11 @@ export function Header() {
               ))}
               {isFeatureEnabled('showPortfolioLink') && (
                 <a
-                  href={MAIN_SITE}
+                  href={MAIN_SITE_URL}
                   className="site-header__link site-header__link--muted"
                   onClick={() => setDrawerOpen(false)}
                 >
-                  Portfolio
+                  {PORTFOLIO_NAV_LABEL}
                 </a>
               )}
             </nav>

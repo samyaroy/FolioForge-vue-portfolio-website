@@ -1,4 +1,4 @@
-import type { CityVisit } from './data'
+import type { CityVisit } from '../../../content/travel/data'
 
 // Resolve city names to coordinates at runtime via the Open-Meteo geocoding
 // API (free, no key, CORS-enabled). Results are cached in localStorage so the

@@ -1,4 +1,4 @@
-import { PostCard } from '../../components/PostCard'
+import { PostCard } from '../../views/Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
 
 type SectionPageProps = {

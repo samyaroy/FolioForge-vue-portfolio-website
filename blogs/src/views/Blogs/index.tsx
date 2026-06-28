@@ -1,12 +1,13 @@
-import { PostCard } from '../../components/PostCard'
 import { posts } from '../../lib/posts'
+import { BLOGS_SECTION } from '../../content/sections'
+import { PostCard } from './components/PostCard'
 
-export function HomePage() {
+export function BlogsPage() {
   return (
     <>
       <section className="intro">
-        <h1>Writing</h1>
-        <p>Notes on what I&apos;m building, learning, and thinking about.</p>
+        <h1>{BLOGS_SECTION.title}</h1>
+        <p>{BLOGS_SECTION.description}</p>
       </section>
 
       {posts.length === 0 ? (
