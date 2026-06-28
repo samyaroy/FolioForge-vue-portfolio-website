@@ -11,6 +11,16 @@
         <div class="flex items-start gap-2">
           <h3 class="text-md font-semibold text-[#0e141b]">
             {{ bootcamp.title }}
+            <a
+              v-if="bootcamp.link"
+              :href="bootcamp.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="ml-1 inline-flex align-middle text-[#1980e6] transition-colors hover:text-[#0e141b]"
+              :aria-label="`Open ${bootcamp.title} link in a new tab`"
+            >
+              <v-icon size="16">mdi-open-in-new</v-icon>
+            </a>
             <span v-if="bootcamp.cred_link" class="inline-block ml-1 align-middle">
               <DocumentViewer :src="bootcamp.cred_link" />
             </span>
@@ -20,28 +30,40 @@
         <!-- Meta -->
         <div class="space-y-1">
 
-          <p v-if="bootcamp.instructor" class="text-gray-600 flex items-center">
-            <v-icon size="small" class="mr-2">mdi-account-tie</v-icon>
-            <span class="font-medium mr-1">Instructor:</span>
-            <SmartLink :text="bootcamp.instructor" type="Person" />
-          </p>
+          <div v-if="instructorInfo" class="text-gray-600 flex items-start">
+            <v-icon size="small" class="mr-2 mt-0.5">mdi-account-tie</v-icon>
+
+            <div class="flex-1 flex items-start">
+              <div class="font-medium mr-2 shrink-0">
+                Instructor:
+              </div>
+
+              <div>
+                <SmartLink :text="instructorInfo.name" type="Person" />
+                <span v-if="instructorInfo.designation">, {{ instructorInfo.designation }}</span>
+                <span v-if="instructorInfo.department">, {{ instructorInfo.department }}</span>
+                <span v-if="instructorInfo.institution">, <SmartLink :text="instructorInfo.institution" type="Institute" /></span>
+              </div>
+            </div>
+          </div>
 
           <!-- Institution (array) -->
           <template v-if="Array.isArray(bootcamp.institution)">
             <div class="text-gray-600 flex items-start">
               <v-icon size="small" class="mr-2 mt-0.5">mdi-school</v-icon>
-              <div class="flex-1">
-                <span class="font-medium mr-2">Institution(s):</span>
-                <span class="inline-flex flex-wrap items-center">
-                  <template v-for="(inst, index) in bootcamp.institution" :key="index">
-                    <span v-if="index" class="mx-2 font-medium text-gray-400">X</span>
-                    <span>
-                      <span v-if="inst.department">{{ inst.department }}, </span>
-                      <SmartLink v-if="inst.name" :text="inst.name" />
-                      <span v-if="inst.location">, {{ inst.location }}</span>
-                    </span>
-                  </template>
-                </span>
+
+              <div class="flex-1 flex items-start">
+                <div class="font-medium mr-2 shrink-0">
+                  Institution(s):
+                </div>
+
+                <div class="space-y-0.5">
+                  <div v-for="(inst, index) in bootcamp.institution" :key="index">
+                    <span v-if="inst.department">{{ inst.department }}, </span>
+                    <SmartLink v-if="inst.name" :text="inst.name" />
+                    <span v-if="inst.location">, {{ inst.location }}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </template>
@@ -107,13 +129,27 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 
-defineProps({
+const props = defineProps({
   bootcamp: {
     type: Object,
     required: true
+  }
+})
+
+const instructorInfo = computed(() => {
+  const instructor = props.bootcamp.instructor
+  if (!instructor) return null
+  if (typeof instructor === 'string') return { name: instructor }
+  if (!instructor.name) return null
+  return {
+    name: instructor.name,
+    designation: instructor.designation || '',
+    department: instructor.department || '',
+    institution: instructor.institution || '',
   }
 })
 </script>

@@ -25,7 +25,15 @@ Institute:
       Website: https://www.iitm.ac.in/
 
     - Name: Indian Institute of Technology Ropar
+      Aliases:
+        - IIT Ropar
       Website: https://www.iitrpr.ac.in/
+
+    - Name: Indian Institute of Technology Roorkee
+      Website: https://www.iitr.ac.in/
+
+    - Name: Malaviya National Institute of Technology Jaipur
+      Website: https://www.mnit.ac.in/
 
     - Name: Indian Statistical Institute
       Aliases:
@@ -74,7 +82,6 @@ Institute:
     - Name: Whiting School of Engineering, Johns Hopkins University
       Website: https://engineering.jhu.edu/
 
-
     - Name: IIT Madras BS
       Aliases:
         - BS in Data Science and Applications, Indian Institute of Technology Madras
@@ -87,7 +94,6 @@ Institute:
       Aliases:
         - Postgraduate Department of Data Science, St. Xavier's College (Autonomous), Kolkata
       Website: https://sxccal.edu/postgraduate-department-of-data-science
-
 
     - Name: Information Security Education and Awareness
       Aliases:
@@ -110,7 +116,6 @@ Institute:
         - Ministry of Agriculture & Farmers Welfare, Government of India
       Website: https://agriwelfare.gov.in/
 
-
     - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
       Aliases:
         - Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
@@ -123,8 +128,18 @@ Institute:
       Aliases:
         - Vicharanashala Lab for Education of Design, Indian Institute of Technology Ropar
         - VLED, Indian Institute of Technology Ropar
+        - Vicharanashala Lab for Education Design
         - VLED
       Website: https://vicharanashala.ai/
+
+    - Name: Annam.ai
+      Website: https://annam.ai/
+
+    - Name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
+      Aliases:
+        - iHub – AWaDH - Technology Innovation Hub, IIT Ropar
+        - iHub – AWaDH"
+      Website: https://ihub-awadh.in/
 
     - Name: CUNY Graduate School of Public Health and Health Policy
       Aliases:
@@ -191,3 +206,12 @@ Person:
 
     - Name: Prof. Rahul R Marathe
       Link: https://doms.iitm.ac.in/index.php/people/faculty/rahulrm/
+
+    - Name: Dr. Naveen Sivadasan
+      Link: https://www.linkedin.com/in/naveen-sivadasan-b71027b2/
+
+    - Name: Dr. Partha Pratim Das
+      Link: https://www.ashoka.edu.in/profile/partha-pratim-das/
+
+    - Name: Prof. Venkatesh Raman
+      Link: https://www.imsc.res.in/venkatesh_raman

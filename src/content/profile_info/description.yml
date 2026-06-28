@@ -1,0 +1,13 @@
+# Page subtitle/description lines, keyed by page.
+# Each page imports this file and renders its line gated by the matching
+# `showPageDescriptions.<page>` flag in src/config/featureFlags.ts.
+projectsPublications: "Explore my research publications, technical projects, and written articles showcasing my expertise."
+internshipCertifications: "Professional internships and certifications I have obtained during my journey."
+cocurricular: "Beyond academics, I actively participate in various co-curricular activities to enhance my leadership, teamwork, and professional development."
+affiliations: "A quick overview of the networks, teams, and communities I am part of."
+resources: "A curated collection of useful links, materials, and references related to my academic and professional work."
+contact: "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!"
+ongoingProjects: "List of all projects I'm currently working on, including personal, academic, and collaborative projects."
+professionalActivity: "Invited talks, and events hosted or convened."
+teachings: "Courses taught, projects mentored, and other academic teaching contributions."
+workshopsAttended: "During the journey of strengthening my skills, I have attended several conferences, workshops, and participated in intensive bootcamp training in Statistics, Data Science, AI, and emerging technologies. Few of then are lsited below."

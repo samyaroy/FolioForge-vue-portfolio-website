@@ -1,13 +1,14 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <div class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
-          Projects & Publications
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
+          Project & Publication
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          Explore my research publications, technical projects, and written articles showcasing my expertise.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -34,7 +35,7 @@
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-[1280px] mx-auto">
         <PublicationsTab
           v-if="showPublicationsTab && activeTab === 'publications'"
           :publications="publications"
@@ -63,15 +64,18 @@ import PublicationsTab from './components/PublicationsTab.vue'
 import ProjectsTab from './components/ProjectTab/index.vue'
 import ArticlesTab from './components/ArticlesTab/index.vue'
 import PostersTab from './components/PostersTab.vue'
-import config from '@/profile_info.yml'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
 const { projects, publications, articles, posters } = config
+const pageDescription = descriptions.projectsPublications
 
 const showProjectsTab = isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' })
 const showArticlesTab = isFeatureEnabled('showProjectsPublications.showArticles', { mode: 'any' })
 const showPublicationsTab = isFeatureEnabled('showProjectsPublications.showPublications')
 const showPostersTab = isFeatureEnabled('showProjectsPublications.showPosters')
+const showPageDescription = isPageDescriptionEnabled('projectsPublications')
 
 const tabDefinitions = [
   { id: 'projects', name: 'Projects', enabled: showProjectsTab },

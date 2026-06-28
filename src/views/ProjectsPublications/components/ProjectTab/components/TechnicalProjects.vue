@@ -1,13 +1,24 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Technical Projects</h2>
+        <button type="button"
+            class="w-full flex items-center justify-between text-left focus:outline-none mb-6"
+            :aria-expanded="isOpen"
+            @click="isOpen = !isOpen">
+            <h2 class="text-2xl font-bold text-[#0e141b]">Technical Projects</h2>
+            <v-icon class="text-[#0e141b]">
+                {{ isOpen ? 'mdi-unfold-less-horizontal' : 'mdi-unfold-more-horizontal' }}
+            </v-icon>
+        </button>
+
         <div v-if="projects && projects.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div v-for="project in projects" :key="project.id"
                 class="relative  border rounded-lg p-6 hover:shadow-md transition-shadow duration-200 text-sm">
-                <div class="flex items-center justify-between mb-4 ">
+                <div class="flex items-center justify-between" :class="isOpen ? 'mb-4' : ''">
                     <h3 class="text-lg font-semibold text-[#0e141b]">{{ project.title }}</h3>
                     <span class="text-sm text-gray-500">{{ project.time_period }}</span>
                 </div>
+                <v-expand-transition>
+                <div v-show="isOpen">
                 <div v-if="project.affiliation || project.logo" class="flex items-start gap-2">
                     <div class="shrink-0 pt-0.5">
                         <v-icon size="16">mdi-attachment</v-icon>
@@ -43,6 +54,8 @@
                         <v-icon>mdi-web</v-icon>
                     </a>
                 </div>
+                </div>
+                </v-expand-transition>
             </div>
         </div>
         <div v-else class="text-center text-gray-500 italic">
@@ -52,6 +65,12 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { isFeatureEnabled } from '@/config/featureFlags'
+
+// Default expanded/collapsed state is controlled by a feature flag
+const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.technicalProjects'))
+
 defineProps({
     projects: {
         type: Array,

@@ -4,10 +4,13 @@
       <GalleryHero />
 
       <div class="relative z-30 -my-4 ml-auto flex w-full items-center">
-        <div class="w-[95%]">
+        <div class="flex-1">
           <hr class="border-slate-300">
         </div>
-        <div class="flex w-[05%] justify-end">
+        <div class="flex shrink-0 items-center justify-end gap-3 pl-4">
+          <span class="whitespace-nowrap text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+            {{ totalItemCount }} {{ totalItemCount === 1 ? 'entry' : 'entries' }}
+          </span>
           <GalleryFilter
             v-if="filterOptions.length > 1"
             :options="filterOptions.slice(1)"
@@ -24,7 +27,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import galleryContent from '@/content/gallery.yml'
+import galleryContent from '@/content/profile_info/gallery.yml'
 import galleryTagMetadata from '@/metadata/galleryTags.yml'
 import GalleryFilter from './components/GalleryFilter.vue'
 import GalleryGrid from './components/GalleryGrid.vue'
@@ -94,6 +97,7 @@ const filteredItems = computed(() => {
 
 const visibleItems = computed(() => filteredItems.value.slice(0, visibleCount.value))
 const canLoadMore = computed(() => filteredItems.value.length > visibleCount.value)
+const totalItemCount = computed(() => sortedItems.value.length)
 
 watch(activeFilters, () => {
   visibleCount.value = initialVisibleCount
@@ -123,6 +127,7 @@ function normalizeGalleryItems(items) {
     categoryCounts.set(category, nextCount)
 
     const id = item?.id || createCategoryId(category, nextCount)
+    const images = resolveItemImages(id, item?.images)
 
     return {
       ...item,
@@ -130,7 +135,8 @@ function normalizeGalleryItems(items) {
       category,
       tags,
       filterTags,
-      image: resolveItemImage(id),
+      images,
+      image: images[0] || '',
       originalIndex: index,
     }
   })
@@ -165,6 +171,7 @@ function resolveItemCategory(item, tags = []) {
   if (hasTag(tags, 'instagram')) return 'instagram'
   if (hasTag(tags, 'linkedin')) return 'linkedin'
   if (hasTag(tags, 'youtube')) return 'youtube'
+  if (hasTag(tags, 'zoom')) return 'zoom'
   if (hasTag(tags, 'twitter')) return 'twitter'
 
   const normalizedType = slugifySegment(item?.type)
@@ -177,8 +184,27 @@ function createCategoryId(category, count) {
   return `${category}-${String(count).padStart(2, '0')}`
 }
 
-function resolveItemImage(itemId) {
-  return getGalleryImageById(itemId)
+function resolveItemImages(itemId, rawImages) {
+  const explicitImages = Array.isArray(rawImages)
+    ? rawImages.map(resolveImageEntry).filter(Boolean)
+    : []
+
+  if (explicitImages.length) return explicitImages
+
+  const fallbackImage = getGalleryImageById(itemId)
+  return fallbackImage ? [fallbackImage] : []
+}
+
+function resolveImageEntry(entry) {
+  if (typeof entry !== 'string') return ''
+
+  const trimmedEntry = entry.trim()
+  if (!trimmedEntry) return ''
+
+  // Full URLs are used as-is; bare keys resolve through the centralized CDN base.
+  if (/^https?:\/\//i.test(trimmedEntry)) return trimmedEntry
+
+  return getGalleryImageById(trimmedEntry)
 }
 
 function getGalleryImageById(itemId) {

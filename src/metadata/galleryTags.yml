@@ -1,5 +1,5 @@
 # Gallery filter tags are defined here so chip order and labels stay separate
-# from the gallery item content in `src/content/gallery.yml`.
+# from the gallery item content in `src/content/profile_info/gallery.yml`.
 #
 # Schema:
 # tags:

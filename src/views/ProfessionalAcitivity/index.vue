@@ -1,13 +1,14 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <div class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Professional Activities
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          Invited talks, and events hosted or convened.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -34,7 +35,7 @@
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-[1280px] mx-auto">
         <InvitedTalksTab
           v-if="showInvitedTalksTab && activeTab === 'invited-talks'"
           :talks="invitedTalks"
@@ -42,6 +43,9 @@
         <HostedEventsTab
           v-if="showHostedEventsTab && activeTab === 'hosted-events'"
           :events="hostedEvents"
+          :other-hosted-events="otherHostedEvents"
+          :show-main="showHostedEventsMain"
+          :show-other-hosted-events="showHostedEventsOthers"
         />
       </div>
     </div>
@@ -54,16 +58,23 @@ import { useRoute } from 'vue-router'
 import InvitedTalksTab from './components/tabs/InvitedTalksTab.vue'
 import HostedEventsTab from './components/tabs/HostedEventsTab.vue'
 
-import config from '@/profile_info.yml'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
-// NOTE: The user should add invited_talks and hosted_events to profile_info.yml
-const { invited_talks, hosted_events } = config
+const pageDescription = descriptions.professionalActivity
+const showPageDescription = isPageDescriptionEnabled('professionalActivity')
+
+// NOTE: The user should add invited_talks, hosted_events and other_hosted_events to profile_info.yml
+const { invited_talks, hosted_events, other_hosted_events } = config
 const invitedTalks = invited_talks || []
 const hostedEvents = hosted_events || []
+const otherHostedEvents = other_hosted_events || []
 
 const showInvitedTalksTab = isFeatureEnabled('showProfessionalActivity.showInvitedTalks')
-const showHostedEventsTab = isFeatureEnabled('showProfessionalActivity.showHostedEvents')
+const showHostedEventsTab = isFeatureEnabled('showProfessionalActivity.showHostedEvents', { mode: 'any' })
+const showHostedEventsMain = isFeatureEnabled('showProfessionalActivity.showHostedEvents.main')
+const showHostedEventsOthers = isFeatureEnabled('showProfessionalActivity.showHostedEvents.others')
 
 const tabDefinitions = [
   { id: 'invited-talks', name: 'Invited Talks', enabled: showInvitedTalksTab },

@@ -9,26 +9,54 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showHeroSection: true,
     showResearchInterests: true,
     showExperience: true,
+<<<<<<< HEAD
     showEducation: true,
     showAwards: false,
+=======
+    showEducation: {
+      main: true,
+      showCourseDetailsInfo: true,
+    },
+    showAwards: false,
+    showAchivement: false,
+>>>>>>> origin/V1
   },
 
   showProjectsPublications: {
     showArticles: {
       showGeneralArticles: true,
+<<<<<<< HEAD
       showJournalArticles: false,
+=======
+      showJournalArticles: true,
+>>>>>>> origin/V1
     },
     showProjects: {
       showResearchProjects: true,
       showTechnicalProjects: true,
       showOtherProjects: true,
     },
+<<<<<<< HEAD
     showPublications: true,
     showPosters: false,
+=======
+    // Controls whether collapsible project sections start expanded (true) or collapsed (false)
+    expandProjectSectionsByDefault: {
+      technicalProjects: false,
+      otherProjects: false,
+    },
+    showPublications: true,
+    showPosters: true,
+>>>>>>> origin/V1
   },
 
   showGallery: true,
 
+<<<<<<< HEAD
+=======
+  showBlog: true,
+
+>>>>>>> origin/V1
   showCocurricular: {
     showLeadershipOrganizations: true,
     showVolunteering: true,
@@ -43,6 +71,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showWorkshopsAttended: {
     showConferences: true,
+<<<<<<< HEAD
     showFDPs: false,
     showWorkshops:{
       main: true,
@@ -67,6 +96,55 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showProfessionalActivity: {
     showInvitedTalks: false,
     showHostedEvents: false,
+=======
+    showFDPs: true,
+    showWorkshops: {
+      main: true,
+      others: true,
+    },
+    showBootcamps: true,
+    showOther: true,
+  },
+
+  showTeachings: {
+    showCoursesTaught: true,
+    showProjectsMentored: true,
+    showOtherTeachings: true,
+  },
+
+  showAffiliations: {
+    showAffiliations: true,
+    showCollaborators: true,
+    showMemberships: true,
+  },
+
+  showProfessionalActivity: {
+    showInvitedTalks: true,
+    showHostedEvents: {
+      main: true,
+      others: true,
+    },
+  },
+
+  showResources: true,
+
+  // Controls the subtitle/description line under each page's title.
+  // Text for each page lives in src/content/profile_info/description.yml.
+  // `enabled` is the master switch: when false, every page description is hidden
+  // regardless of its per-page flag. When true, each page's own flag decides.
+  showPageDescriptions: {
+    enabled: false,
+    projectsPublications: false,
+    internshipCertifications: true,
+    cocurricular: true,
+    affiliations: true,
+    resources: true,
+    contact: true,
+    ongoingProjects: true,
+    professionalActivity: true,
+    teachings: true,
+    workshopsAttended: true,
+>>>>>>> origin/V1
   },
 }) satisfies FeatureFlagNode
 
@@ -132,3 +210,16 @@ export function isFeatureEnabled(
   const target = resolveFlagNode(flagPath, featureFlags)
   return mode === 'any' ? evaluateAny(target) : evaluateAll(target)
 }
+<<<<<<< HEAD
+=======
+
+// Whether a given page's title description line should render.
+// Gated by the master switch `showPageDescriptions.enabled`: if that is off,
+// no page description shows; if on, the page's own flag decides.
+export function isPageDescriptionEnabled(page: string): boolean {
+  return (
+    isFeatureEnabled('showPageDescriptions.enabled') &&
+    isFeatureEnabled(`showPageDescriptions.${page}`)
+  )
+}
+>>>>>>> origin/V1

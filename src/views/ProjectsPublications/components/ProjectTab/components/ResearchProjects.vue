@@ -1,17 +1,26 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">
-            Research & Academic Projects
-        </h2>
+        <div class="mb-6 flex items-center justify-between gap-4">
+            <h2 class="text-2xl font-bold text-[#0e141b]">
+                Research & Academic Projects
+            </h2>
+        </div>
 
         <div v-if="projects && projects.length" class="space-y-6">
-            <div v-for="(project, index) in projects" :key="index" :id="`research-${index}`"
+            <div v-for="(project, index) in visibleProjects" :key="index" :id="`research-${index}`"
                 class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
 
                 <!-- TITLE -->
-                <h3 class="text-lg font-semibold text-[#0e141b] mb-4">
-                    {{ project.title }}
-                </h3>
+                <div class="flex items-start justify-between gap-4 mb-4">
+                    <h3 class="text-lg font-semibold text-[#0e141b]">
+                        {{ project.title }}
+                    </h3>
+                    <p v-if="project.time_period"
+                        class="text-sm text-gray-600 flex items-center gap-1 shrink-0">
+                        <v-icon size="16">mdi-calendar-blank</v-icon>
+                        {{ project.time_period }}
+                    </p>
+                </div>
 
                 <!-- MAIN FLEX ROW -->
                 <div class="flex flex-col md:flex-row items-stretch text-sm">
@@ -37,11 +46,6 @@
                                 <SmartLink v-if="project.guide.institution" :text="project.guide.institution" />
                             </div>
                         </div>
-
-                        <p class="text-sm text-gray-600 mb-3 mt-2 flex items-center gap-1">
-                            <v-icon size="16">mdi-calendar-blank</v-icon>
-                            {{ project.time_period }}
-                        </p>
 
                         <p v-if="project.doi" class="text-sm text-gray-600 mb-3 flex items-center gap-1">
                             <v-icon size="16">mdi-web</v-icon>
@@ -87,7 +91,7 @@
                 </div>
 
                 <!-- ACTION BUTTONS -->
-                <div class="flex justify-end items-center mt-4">
+                <div class="flex justify-end items-center mt-2">
 
                     <v-tooltip location="top">
                         <template #activator="{ props }">
@@ -126,6 +130,19 @@
 
                 </div>
             </div>
+
+            <div v-if="showToggleButton" class="flex justify-end">
+                <a
+                    href="#"
+                    class="text-[#1980e6] hover:text-[#1980e6] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+                    @click.prevent="showAllProjects = !showAllProjects"
+                >
+                    {{ showAllProjects ? 'Hide all projects' : 'Load all projects' }}
+                    <v-icon size="16" class="text-[#1980e6]">
+                        {{ showAllProjects ? 'mdi-arrow-up' : 'mdi-arrow-right' }}
+                    </v-icon>
+                </a>
+            </div>
         </div>
 
         <div v-else class="text-center text-gray-500 italic">
@@ -135,13 +152,22 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 
-defineProps({
+const props = defineProps({
     projects: {
         type: Array,
         default: () => []
     }
+})
+
+const showAllProjects = ref(false)
+const showToggleButton = computed(() => props.projects.length > 2)
+const visibleProjects = computed(() => {
+    return showAllProjects.value || !showToggleButton.value
+        ? props.projects
+        : props.projects.slice(0, 2)
 })
 
 function getLogoPath(logo) {

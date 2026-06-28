@@ -1,0 +1,66 @@
+courses_taught:
+  # - semester: "Spring 2025"
+  #   courses:
+  #     - title: "Introduction to Statistics"
+  #       institution: "Sister Nivedita University"
+  #       role: "Teaching Assistant"
+  #       collaborators:
+  #         - "Prof. XYZ"
+  #       students: 120
+  #     - title: "Data Analysis with Python"
+  #       institution: "IIT Madras"
+  #       role: "Guest Instructor"
+  #       students: 60
+
+  # - semester: "Autumn 2024"
+  #   courses:
+  #     - title: "Probability Theory"
+  #       institution: "Sister Nivedita University"
+  #       role: "Instructor"
+  #       students: 80
+
+projects_mentored:
+  - semester: "Spring 2026"
+    projects:
+      - title: "Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data"
+        course: "Spring Internship Program on Data Science 2026"
+        students:
+          - name: "SAPTARSHI DEY"
+            email: saptarshidey6290186223@gmail.com
+          - name: "AYUSHI MITRA"
+            email: mitraayushi2020@gmail.com
+          - name: "ANSHUMAN RAY"
+            email: rayanshuman4@gmail.com
+          - name: "SONU SHAW"
+            email: sonushaw.work@gmail.com
+        registration_number: ""
+        affiliation:
+          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+          location: Kolkata, WB
+        cred_link:
+          report: https://drive.google.com/file/d/1i-835QLggY2OWbRxr_RAw1i1wsRBDKCD/view
+          github: https://github.com/samyaroy/IDEAS_Spring_Internship_Contribution_2026
+
+      # - title: "Dynamic Topic and Sentiment Evolution in Court Judgments or Policy Documents"
+      #   course: "Summer Internship Program on Data Science 2026"
+      #   students:
+      #     - name: "SAPTARSHI DEY"
+      #     - name: "AYUSHI MITRA"
+      #     - name: "ANSHUMAN RAY"
+      #     - name: "SONU SHAW"
+      #   registration_number: ""
+      #   affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+      #   cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
+
+      
+other_teachings:
+  - title: "Private Tutor"
+    institution:
+      name: "Codeium Classes"
+      location: "New Town, Kolkata"
+    link: "https://codeium.xyz/"
+    role: "Founder & Instructor"
+    duration: "May 2023 – April 2025"
+    audience: "Secondary & Higher Secondary school students"
+    students: "25+ students tutored"
+    description: "Provided private tuition in mathematics, Computer Science, and Computer Applications for school (CBSE & ICSE) students."

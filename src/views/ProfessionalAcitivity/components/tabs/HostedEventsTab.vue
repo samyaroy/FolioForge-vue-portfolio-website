@@ -1,6 +1,22 @@
 <template>
   <div class="max-w-4xl mx-auto">
-    <div v-if="eventsByYear.length > 0">
+    <div v-if="showOtherHostedEventsLink" class="text-sm text-end">
+      <a
+        href="#other-hosted-events"
+        class="inline-flex items-center font-medium text-[#1980e6] hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-[#1980e6] focus:ring-offset-2"
+        @click.prevent="isOtherHostedEventsModalOpen = true"
+      >
+        <span>Other Hosted Events</span>
+        <v-icon size="14">mdi-arrow-right</v-icon>
+      </a>
+    </div>
+
+    <OtherHostedEventsModal
+      v-model="isOtherHostedEventsModalOpen"
+      :events="otherHostedEvents"
+    />
+
+    <div v-if="showMain && eventsByYear.length > 0">
       <div v-for="yearGroup in eventsByYear" :key="yearGroup.year" class="mb-12">
         <!-- Year Divider -->
         <div class="flex items-center gap-4 mb-6">
@@ -16,22 +32,42 @@
       </div>
     </div>
     
-    <div v-else class="text-center py-12">
+    <div v-else-if="showMain" class="text-center py-12">
       <p class="text-gray-500 text-lg">No hosted events yet</p>
+    </div>
+
+    <div v-else-if="!showOtherHostedEventsLink" class="text-center py-12">
+      <p class="text-gray-500 text-lg">Hosted events are currently hidden</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import HostedEventCard from '../cards/HostedEventCard.vue'
+import OtherHostedEventsModal from '../modal/OtherHostedEventsModal.vue'
 
 const props = defineProps({
   events: {
     type: Array,
     default: () => []
+  },
+  otherHostedEvents: {
+    type: Array,
+    default: () => []
+  },
+  showMain: {
+    type: Boolean,
+    default: true
+  },
+  showOtherHostedEvents: {
+    type: Boolean,
+    default: true
   }
 })
+
+const isOtherHostedEventsModalOpen = ref(false)
+const showOtherHostedEventsLink = computed(() => props.showOtherHostedEvents && props.otherHostedEvents.length > 0)
 
 // Utility function to extract year from date string
 function extractYear(dateString) {

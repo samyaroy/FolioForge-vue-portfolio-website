@@ -1,18 +1,18 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <div class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Co-curricular Activities
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
-          Beyond academics, I actively participate in various co-curricular activities to enhance my leadership,
-          teamwork, and professional development.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
-      <div class="max-w-6xl mx-auto space-y-8">
+      <div class="max-w-[1280px] mx-auto space-y-8">
         <!-- Leadership Component -->
         <div class="bg-white rounded-lg shadow-sm p-8 text-sm">
           <h2 class="text-2xl font-bold text-[#0e141b] mb-6 flex items-center">
@@ -58,8 +58,12 @@
 import Leadership from './components/Leadership.vue'
 import Volunteering from './components/Volunteering.vue'
 
-import config from '@/profile_info.yml'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+
+const pageDescription = descriptions.cocurricular
+const showPageDescription = isPageDescriptionEnabled('cocurricular')
 const { co_curriculars } = config
 
 const leadershipRoles = co_curriculars.find(c => c.title === "leadership_roles")?.entries || []

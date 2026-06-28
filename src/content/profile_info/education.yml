@@ -1,0 +1,333 @@
+education:
+  - type: University
+    degree: Bachelor of Science (BS)
+    field: Data Science and Applications
+    institution: Indian Institute of Technology Madras
+    location: Chennai, TN
+    time_period: 2022 - Present
+    gpa: Current CGPA - 5.97/10
+    cred_link: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
+    cirriculum:
+      foundation:
+        - course_code: BSHS1001
+          course_name: English I
+          type: CC
+          credit: 4
+        - course_code: BSMA1001
+          course_name: Mathematics for Data Science I
+          type: CC
+          credit: 4
+        - course_code: BSMA1002
+          course_name: Statistics for Data Science I
+          type: CC
+          credit: 4
+        - course_code: BSCS1001
+          course_name: Computational Thinking
+          type: CC
+          credit: 4
+        - course_code: BSHS1002
+          course_name: English II
+          type: CC
+          credit: 4
+        - course_code: BSMA1003
+          course_name: Mathematics for Data Science II
+          type: CC
+          credit: 4
+        - course_code: BSMA1004
+          course_name: Statistics for Data Science II
+          type: CC
+          credit: 4
+        - course_code: BSCS1002
+          course_name: Programming in Python
+          type: CC
+          credit: 4
+
+    
+      dimpola_in_programming:
+        - course_code: BSCS2002
+          course_name: Programming, Data Structures and Algorithms using Python
+          type: CC
+          credit: 4
+        - course_code: BSCS2001
+          course_name: Database Management Systems
+          type: CC
+          credit: 4
+        - course_code: BSCS2005
+          course_name: Programming Concepts using Java
+          type: CC
+          credit: 4
+        - course_code: BSSE2001
+          course_name: System Commands
+          type: CC
+          credit: 3
+        - course_code: BSCS2003
+          course_name: Modern Application Development I
+          type: CC
+          credit: 4
+        - course_code: BSCS2006
+          course_name: Modern Application Development II
+          type: CC
+          credit: 4
+        - course_code: BSCS2003P
+          course_name: Modern Application Development I - Project
+          type: Project
+          credit: 2
+        - course_code: BSCS2006P
+          course_name: Modern Application Development II - Project
+          type: Project
+          credit: 2
+
+      diploma_in_data_science:
+        - course_code: BSMS2001
+          course_name: Business Data Management
+          type: CC
+          credit: 4
+        - course_code: BSSE2002
+          course_name: Tools in Data Science
+          type: CC
+          credit: 3
+        - course_code: BSCS2004
+          course_name: Machine Learning Foundations
+          type: CC
+          credit: 4
+        - course_code: BSCS2007
+          course_name: Machine Learning Techniques
+          type: CC
+          credit: 4
+        - course_code: BSCS2008
+          course_name: Machine Learning Practice
+          type: CC
+          credit: 4
+        - course_code: BSDA2001
+          course_name: Introduction to Deep Learning and Generative AI
+          type: CC
+          credit: 4
+        - course_code: BSCS2008P
+          course_name: Machine Learning Practice - Project
+          type: Project
+          credit: 2
+        - course_code: BSDA2001P
+          course_name: Deep Learning and Generative AI - Project
+          type: Project
+          credit: 2
+          
+      degree(BSc & BS):
+        - course_code: BSCS3001
+          course_name: Software Engineering
+          type: CC
+        - course_code: BSCS3002
+          course_name: Software Testing
+          type: CC
+        - course_code: BSCS3003
+          course_name: "AI: Search Methods for Problem Solving"
+          type: CC
+        - course_code: BSCS3004
+          course_name: Deep Learning
+          type: CC
+        - course_code: BSMA3014
+          course_name: Statistical Computing
+          type: EC
+
+      transfered_credits:
+        # - course_code: "Google"
+        #   course_name: Data Analysis with R Programming
+        #   type: Coursera
+
+
+      link: https://study.iitm.ac.in/ds/academics.html
+
+
+  - type: University
+    degree: Bachelor of Science (BSc)
+    field: Statistics (Honours)
+    institution: Sister Nivedita University
+    location: Kolkata, WB
+    time_period: 2022 - 2025
+    gpa: CGPA - 7.01/10
+    cred_link: https://drive.google.com/file/d/1N5jnPq4nCegRzXy_h75CtfA725RJlskM/preview
+    cirriculum:
+      semester_1:
+        - course_code: [1090010101, 1090010202]
+          course_name: Descriptive Statistics and Probability I (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: 1090010103
+          course_name: Mathematics I
+          type: CC/PCC
+          credit: 6
+        - course_code: [2090010101, 2090010201]
+          course_name: Statistical Computing with C++ (Theory + Lab)
+          type: DSE/PEC
+          credit: 6
+        - course_code: 4090010101
+          course_name: Communicative English I
+          type: AECC/HSM/PAECC
+          credit: 2
+
+      semester_2:
+        - course_code: [1090011103, 1090011203]
+          course_name: Probability II (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: [1090011104, 1090011204]
+          course_name: Sampling Distributions (Theory + Lab)            
+          type: CC/PCC
+          credit: 6
+        - course_code: 4090011102
+          course_name: Communicative English II
+          type: AECC/HSM/PAECC
+          credit: 2
+        - course_code: 3090011123
+          course_name: Basics of Healthcare Management
+          type: GE/OE
+          credit: 4
+        - course_code: 5090011401
+          course_name: Mentored Seminar I
+          type: SEC/PSE/CLE
+          credit: 1
+        
+      semester_3:
+        - course_code: [1090012106, 1090012226]
+          course_name: Statistical Inference I (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: [1090012105, 1090012205]
+          course_name: Population Statistics (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: 2090012102
+          course_name: Mathematical Analysis
+          type: DSE/PEC
+          credit: 6
+        - course_code: 5090012402
+          course_name: Mentored Seminar II
+          type: SEC/PSE/CLE
+          credit: 1
+        - course_code: 4090012103
+          course_name: Environmental Science I
+          type: AECC/HSM/PAECC
+          credit: 2
+        - course_code: 6090012101
+          course_name: Foreign Language I - Spanish
+          type: USC/MUS
+          credit: 2
+        - course_code: 3090012106
+          course_name: Introduction to Numerical Analysis
+          type: GE/OE
+          credit: 4
+
+      semester_4:
+        - course_code: [1090013107, 1090013207]
+          course_name: Statistical Inference II (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: [1090013108, 1090013208]
+          course_name: Sample Survey & Indian Official Statistics (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: 2090013103
+          course_name: Genetics
+          type: DSE/PEC
+          credit: 6
+        - course_code: 5090013403
+          course_name: Mentored Seminar III
+          type: SEC/PSE/CLE
+          credit: 1
+        - course_code: 4090013102
+          course_name: Environmental Science II
+          type: AECC/HSM/PAECC
+          credit: 2
+        - course_code: 6090013801
+          course_name: Foreign Language II - Spanish
+          type: USC/MUS
+          credit: 2
+        - course_code: 3090013895
+          course_name: Introduction to Banking
+          type: GE/OE
+          credit: 4
+
+      semester_5:
+        - course_code: [1090014101, 1090014202]
+          course_name: Statistical Quality Control (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: [1090014103, 1090014204]
+          course_name: Linear Model and Regression (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: [1090014105, 1090014206]
+          course_name: Economic Statistics (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: 5090014404
+          course_name: Mentored Seminar IV
+          type: SEC/PSE/CLE
+          credit: 1
+        - course_code: 6090014101
+          course_name: Foreign Language III - Spanish
+          type: USC/MUS
+          credit: 2
+        - course_code: 3090014885
+          course_name: Introduction to Public Finance
+          type: GE/OE
+          credit: 4
+
+      semester_6:
+        - course_code: [1090015101, 1090015202]
+          course_name: Design of Experiment (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: [1090015103, 1090015204]
+          course_name: Numerical Computing (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: [1090015105, 1090015206]
+          course_name: Statistical Computing with R Language (Theory + Lab)
+          type: CC/PCC
+          credit: 6
+        - course_code: 1090015107
+          course_name: Project
+          type: CC/PCC
+          credit: 6
+        - course_code: 6090015101
+          course_name: Foreign Language IV - Spanish
+          type: USC/MUS
+          credit: 2
+      
+      transfered_credits:
+        - course_name: Data Analysis with R Programming
+          logo: [GOOGLE, COURSERA]
+          cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
+          # tag: 'Elite'
+          # credit: 1 
+
+      link:
+
+  # - type: Diploma
+  #   degree: Diploma
+  #   field: Web Designing (DWD)
+  #   institution: Chandigarh Institute of Technology and Consultancy
+  #   location: Mohali, PB
+  #   time_period: 2020
+  #   marks: 84.5%
+  #   cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview
+
+  # - type: School
+  #   degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
+  #   field:
+  #   institution: Nava Nalanda High School
+  #   location: Kolkata, WB
+  #   time_period: 2020 - 2022
+  #   marks: 83.8%
+  #   cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
+
+  # - type: School
+  #   degree: X - West Bengal Board of Secondary Education (WBBSE)
+  #   field:
+  #   institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
+  #   location: Rishra, WB
+  #   time_period: 2010 - 2020
+  #   marks: 85.71%
+  #   cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
+
+  # Add more fields as needed

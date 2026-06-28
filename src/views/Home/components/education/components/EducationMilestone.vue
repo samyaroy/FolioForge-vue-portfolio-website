@@ -23,7 +23,7 @@
         <p class="text-[#0e141b] text-base font-medium leading-normal">
           {{ title }}
           <span v-if="subject">in {{ subject }}</span>
-          <span v-if="hasCurriculum" class="inline-block ml-2 align-middle">
+          <span v-if="canViewCurriculum" class="inline-block ml-2 align-middle">
             <v-tooltip text="View Curriculum" location="top">
               <template #activator="{ props: tooltipProps }">
                 <v-icon
@@ -88,6 +88,7 @@
 
     <!-- Curriculum Modal -->
     <CourseCirriculumModal
+      v-if="canViewCurriculum"
       v-model="showCurriculumModal"
       :cirriculum="cirriculum"
       :degree-name="subject ? `${title} in ${subject}` : title"
@@ -99,6 +100,7 @@
 import { ref, computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import { isFeatureEnabled } from '@/config/featureFlags'
 import CourseCirriculumModal from './CourseCirriculumModal.vue'
 
 const props = defineProps({
@@ -120,5 +122,9 @@ const showCurriculumModal = ref(false)
 
 const hasCurriculum = computed(() =>
   props.cirriculum && Object.keys(props.cirriculum).some(k => k !== 'link')
+)
+
+const canViewCurriculum = computed(() =>
+  hasCurriculum.value && isFeatureEnabled('showHome.showEducation.showCourseDetailsInfo')
 )
 </script>

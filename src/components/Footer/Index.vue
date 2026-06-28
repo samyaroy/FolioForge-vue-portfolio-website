@@ -4,11 +4,11 @@
   <v-footer class="bg-blue-800 text-black py-8">
     <!-- Colored horizontal bar -->
 
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-1 md:px-2">
       <!-- Footer content -->
-      <div class="grid grid-cols-1 md:grid-cols-20 gap-8">
+      <div class="grid grid-cols-1 gap-0 md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
         <!-- Brand Section -->
-        <div class="col-span-1 md:col-span-9">
+        <div>
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
           <p class="text-black-300 mb-6 max-w-lg">
             {{ profile.footer }}
@@ -47,7 +47,7 @@
 
 
         <!-- Other Links -->
-        <div class="col-span-1 md:col-span-7">
+        <div class="min-w-0">
           <h4 class="text-lg font-semibold mb-2">Other Links</h4>
           <ul class="space-y-2">
             <!-- <li>
@@ -81,28 +81,37 @@
                 Ongoing Projects
               </router-link>
             </li>
-            <li v-if="showInternshipCertificationsLink">
-              <router-link to="/internships-certifications"
-                class="footer-link">
-                Internships & Certifications
-              </router-link>
-            </li>
             <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
                 class="footer-link">
                 Affiliations, Collaborators & Memberships
               </router-link>
             </li>
-            <!-- <li v-if="showInternshipCertificationsLink">
+            <li v-if="showInternshipCertificationsLink">
               <router-link to="/internships-certifications"
                 class="text-black-300 hover:text-black transition-colors duration-200">
                 Internships & Certifications
               </router-link>
-            </li> -->
+            </li>
             <li v-if="showWorkshopsAttendedLink">
               <router-link to="/workshops-bootcamps-attended"
                 class="footer-link">
                 Conferences, Workshops & Bootcamps attended
+              </router-link>
+            </li>
+            <li v-if="showCocurricularLink">
+              <router-link to="/cocurricular"
+                class="text-black-300 hover:text-black transition-colors duration-200">
+                Co-curricular Activities
+              </router-link>
+            </li>
+            <li v-if="showResourcesLink">
+              <router-link to="/resources"
+                class="inline-flex items-baseline text-black-300 hover:text-black transition-colors duration-200">
+                <span class="resource-sparkle-wrap">
+                  <v-icon size="13" class="resource-sparkle text-yellow-500">mdi-creation</v-icon>
+                </span>
+                Resources
               </router-link>
             </li>
             <!-- <li>
@@ -114,40 +123,45 @@
               </router-link>
             </li>-->
           </ul>
-          <br />
-          <h4 class="text-lg font-semibold mb-2">Social Links</h4>
-
-          <ul class="space-y-2">
-            <li>
-              <a :href="google_scholar" target="_blank" class="footer-link">Google Scholar</a>
-            </li>
-            <li>
-              <a :href="researchgate" target="_blank" class="footer-link">ResearchGate</a>
-            </li>
-          </ul>
         </div>
 
-        <!-- Contact Info -->
-        <div class="col-span-1 md:col-span-4">
-          <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
-          <div class="space-y-2 text-black-300">
-            <div class="flex items-center">
-              <v-icon size="small" class="mr-2">mdi-email</v-icon>
-              <span>{{ email }}</span>
-            </div>
-            <div class="flex items-center">
-              <v-icon size="small" class="mr-2">mdi-phone</v-icon>
-              <span>{{ phone }}</span>
-            </div>
-            <div class="flex items-center">
-              <v-icon size="small" class="mr-2">mdi-map-marker</v-icon>
-              <span>{{ location }}</span>
-            </div>
+        <div class="grid grid-cols-1 gap-11 md:grid-cols-[max-content_max-content] md:justify-self-end pl-3">
+          <!-- Social Links -->
+          <div>
+            <h4 class="text-lg font-semibold mb-2">Social Links</h4>
+
+            <ul class="space-y-2">
+              <li>
+                <a :href="google_scholar" target="_blank">Google Scholar</a>
+              </li>
+              <li>
+                <a :href="researchgate" target="_blank">ResearchGate</a>
+              </li>
+            </ul>
           </div>
-          <div class="pt-4 pb-0">
-            <a href="https://info.flagcounter.com/Wh9G"><img
-                src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_15/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
-                alt="Flag Counter" border="0"></a>
+
+          <!-- Contact Info -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+            <div class="space-y-2 text-black-300">
+              <div class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-email</v-icon>
+                <span>{{ email }}</span>
+              </div>
+              <div class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-phone</v-icon>
+                <span>{{ phone }}</span>
+              </div>
+              <div class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-map-marker</v-icon>
+                <span>{{ location }}</span>
+              </div>
+            </div>
+            <div class="pt-4 pb-0">
+              <a href="https://info.flagcounter.com/Wh9G"><img
+                  src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_15/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
+                  alt="Flag Counter" border="0"></a>
+            </div>
           </div>
         </div>
       </div>
@@ -160,18 +174,7 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
-          <p class="text-gray-500 text-sm">
-            Looking for beta version?
-            <a
-              :href="betaVersionUrl"
-              class="footer-link text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              see here
-            </a>
-          </p>
+        <div class="mt-2 md:mt-0">
           <router-link
             :to="{ name: 'PrivacyPolicy' }"
             class="footer-link text-sm"
@@ -212,7 +215,7 @@
 </template>
 
 <script>
-import config from "@/profile_info.yml"
+import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
 
@@ -221,10 +224,12 @@ export default {
     Logos,
   },
   data() {
-    const { profile, contacts, socials } = config;
+    const { profile, contacts, socials, last_updated_on } = config;
+    const showCocurricularLink = isFeatureEnabled('showCocurricular', { mode: 'any' })
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
+    const showResourcesLink = isFeatureEnabled('showResources')
     const showAffiliationsLink = (
       isFeatureEnabled('showAffiliations.showAffiliations')
       || isFeatureEnabled('showAffiliations')
@@ -246,11 +251,12 @@ export default {
       // logos: ['SNU', 'IITM', 'IDEAS'],
 
       last_updated_on: config.last_updated_on,
-      betaVersionUrl: profile.beta_version_url,
+      showCocurricularLink,
       showOngoingProjectsLink,
       showInternshipCertificationsLink,
       showWorkshopsAttendedLink,
       showAffiliationsLink,
+      showResourcesLink,
     };
   }
 }
@@ -278,5 +284,45 @@ export default {
 .footer-link:hover {
   color: #646cff;
   text-decoration: none;
+}
+
+.resource-sparkle-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.2rem;
+  transform: translateY(-0.42em);
+}
+
+.resource-sparkle-wrap::before {
+  content: "";
+  position: absolute;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 9999px;
+  background: #facc15;
+  filter: blur(11px);
+  opacity: 0.26;
+  pointer-events: none;
+}
+
+.resource-sparkle {
+  position: relative;
+  z-index: 1;
+  animation: resource-sparkle-blink 1.8s ease-in-out infinite;
+}
+
+@keyframes resource-sparkle-blink {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.98);
+  }
+
+  45% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
 }
 </style>

@@ -23,15 +23,12 @@
             {{ formatSection(section) }}
           </p>
           <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
-            <div
+            <CourseCard
               v-for="(course, idx) in courses"
               :key="idx"
-              class="flex flex-col px-3 py-2.5 rounded-md bg-[#f8fafc]"
-              :style="{ border: `1px solid ${isCC(course.type) ? '#bbf7d0' : '#bfdbfe'}` }"
-            >
-              <p class="text-[#0e141b] text-sm font-medium leading-snug">{{ course.course_name }}</p>
-              <p class="text-[#4e7397] text-xs mt-0.5 font-mono">{{ course.type }}<v-icon size="6" class="ml-1">mdi-circle</v-icon> {{ formatCourseCode(course.course_code) }}</p>
-            </div>
+              :course="course"
+              :section="section"
+            />
           </div>
         </div>
       </v-card-text>
@@ -56,6 +53,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import CourseCard from './CourseCard.vue'
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
@@ -71,23 +69,19 @@ const isOpen = computed({
 })
 
 const sections = computed(() => {
-  const { link, ...rest } = props.cirriculum || {}
-  return rest
+  if (Array.isArray(props.cirriculum)) {
+    return { curriculum: props.cirriculum }
+  }
+
+  return Object.fromEntries(
+    Object.entries(props.cirriculum || {}).filter(([key]) => key !== 'link')
+  )
 })
 
-const curriculumLink = computed(() => props.cirriculum?.link || '')
+const curriculumLink = computed(() => Array.isArray(props.cirriculum) ? '' : props.cirriculum?.link || '')
 
 function formatSection(key) {
   return key.replace(/_/g, ' ').replace(/^\w/, c => c.toUpperCase())
 }
 
-function formatCourseCode(code) {
-  if (Array.isArray(code)) return code.join(' / ')
-  return String(code)
-}
-
-function isCC(type) {
-  if (!type) return false
-  return String(type).split('/').every(t => ['CC', 'PCC'].includes(t.trim()))
-}
 </script>

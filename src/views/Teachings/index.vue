@@ -1,13 +1,14 @@
 <template>
   <div class="min-h-screen bg-slate-50">
-    <div class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
-          Teachings
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
+          Teaching
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          Courses taught, projects mentored, and other academic teaching contributions.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -34,7 +35,7 @@
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-[1280px] mx-auto">
         <CoursesTaughtTab
           v-if="showCoursesTaughtTab && activeTab === 'courses'"
           :courses="courses_taught"
@@ -57,8 +58,12 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import config from '@/profile_info.yml'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+
+const pageDescription = descriptions.teachings
+const showPageDescription = isPageDescriptionEnabled('teachings')
 
 import CoursesTaughtTab from './components/CoursesTaughtTab.vue'
 import ProjectsMentoredTab from './components/ProjectsMentoredTab.vue'

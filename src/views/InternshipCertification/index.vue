@@ -1,12 +1,13 @@
 <template>
   <div class="min-h-screen bg-slate-50 py-8">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+          :class="{ 'mb-4': showPageDescription }">
           Internships & Certifications
         </h1>
-        <p class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
-          Professional internships and certifications I have obtained during my journey.
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
+          {{ pageDescription }}
         </p>
       </div>
 
@@ -28,13 +29,9 @@
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-[1280px] mx-auto">
         <!-- Internships Section -->
         <div v-if="showInternshipsTab && activeTab === 'internships'" class="mb-16">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Training Internships</h2>
-          </div>
-
           <div class="space-y-6 max-w-4xl mx-auto">
             <InternshipCard v-for="(internship, index) in internships" :key="internship.index"
               :internship="internship" />
@@ -43,9 +40,6 @@
 
         <!-- Certifications Section -->
         <div v-if="showCertificationsTab && activeTab === 'certifications'" class="mb-16">
-          <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold text-[#0e141b] mb-2">Certifications</h2>
-          </div>
           <div v-if="credly" class="max-w-4xl mx-auto mb-6">
             <div class="bg-white rounded-lg shadow-md flex items-center overflow-hidden">
               <!-- Left 20%: Credly Logo -->
@@ -82,14 +76,17 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
-import config from "@/profile_info.yml"
-import { isFeatureEnabled } from '@/config/featureFlags'
+import config from "@/content/profile_info"
+import descriptions from '@/content/profile_info/description.yml'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
 const { certifications, internships } = config
 const credly = config.socials.credly
+const pageDescription = descriptions.internshipCertifications
 
 const showInternshipsTab = isFeatureEnabled('showInternshipCertifications.showInternships')
 const showCertificationsTab = isFeatureEnabled('showInternshipCertifications.showCertifications')
+const showPageDescription = isPageDescriptionEnabled('internshipCertifications')
 
 const tabDefinitions = [
   { id: 'internships', name: 'Training Internships', enabled: showInternshipsTab },

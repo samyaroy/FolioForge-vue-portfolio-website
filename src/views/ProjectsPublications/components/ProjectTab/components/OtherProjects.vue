@@ -1,11 +1,19 @@
 <template>
     <div class="bg-white rounded-lg shadow-sm p-8">
-        <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Other Projects</h2>
+        <button type="button"
+            class="w-full flex items-center justify-between text-left focus:outline-none mb-6"
+            :aria-expanded="isOpen"
+            @click="isOpen = !isOpen">
+            <h2 class="text-2xl font-bold text-[#0e141b]">Other Projects</h2>
+            <v-icon class="text-[#0e141b]">
+                {{ isOpen ? 'mdi-unfold-less-horizontal' : 'mdi-unfold-more-horizontal' }}
+            </v-icon>
+        </button>
 
         <div v-if="projects && projects.length" class="space-y-6 text-sm">
             <div v-for="(project, index) in projects" :key="project.title || index" :id="`minor-${index}`"
                 class="border-l-4 border-[#1980e6] pl-6 pt-4 pb-2 pr-4 rounded-md bg-slate-50">
-                <div class="flex items-start justify-between gap-4 pb-4">
+                <div class="flex items-start justify-between gap-4" :class="isOpen ? 'pb-4' : ''">
                     <h3 class="text-lg font-semibold text-[#0e141b]">
                         {{ project.title }}
                     </h3>
@@ -14,8 +22,10 @@
                         {{ project.time_period }}
                     </div>
                 </div>
+                <v-expand-transition>
+                <div v-show="isOpen">
                 <div class="flex flex-col md:flex-row items-stretch">
-                    <div class="w-full md:w-[95%] md:pr-6">
+                    <div class="w-full md:pr-6" :class="getLogos(project.logo).length ? 'md:w-[95%]' : 'md:w-full'">
                         <div v-if="project.affiliation" class="flex items-start gap-2 mb-2">
                             <v-icon class="text-gray-600">mdi-school</v-icon>
                             <p class="text-gray-600">
@@ -39,7 +49,23 @@
                             </div>
                         </div>
 
-
+                        <div v-if="getCollaborators(project.collaborators).length" class="flex items-start gap-2 mb-2">
+                            <div class="text-gray-600 flex items-start shrink-0">
+                                <v-icon class="mr-1">mdi-account-supervisor</v-icon>
+                                Collaborators:
+                            </div>
+                            <div class="text-gray-600">
+                                <template v-for="(collaborator, collaboratorIndex) in getCollaborators(project.collaborators)"
+                                    :key="collaborator.key">
+                                    <SmartLink
+                                        :type="'Person'"
+                                        :text="collaborator.name"
+                                        :href="collaborator.link"
+                                    />
+                                    <span class="mr-2" v-if="collaboratorIndex < getCollaborators(project.collaborators).length - 1">,</span>
+                                </template>
+                            </div>
+                        </div>
 
                         <p class="content-justify text-gray-700 mb-3">
                             {{ project.description }}
@@ -53,10 +79,10 @@
                         </div>
                     </div>
 
-                    <div
-                        class="w-full md:w-[5%] flex flex-col items-start justify-start gap-3 md:items-center mt-4 md:mt-0">
+                    <div v-if="getLogos(project.logo).length"
+                        class="w-full md:w-[7%] flex flex-col items-start justify-start gap-3 md:items-center mr-2 mt-4 md:mt-0">
                         <img v-for="logo in getLogos(project.logo)" :key="logo" :src="getLogoPath(logo)" :alt="logo"
-                            :title="logo" class="max-h-8 md:max-h-12 object-contain opacity-90">
+                            :title="logo" class="max-h-8 md:max-h-10 object-contain opacity-90">
                     </div>
                 </div>
 
@@ -92,6 +118,8 @@
                         <span>Project Website</span>
                     </v-tooltip>
                 </div>
+                </div>
+                </v-expand-transition>
             </div>
         </div>
 
@@ -102,7 +130,12 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import { isFeatureEnabled } from '@/config/featureFlags'
+
+// Default expanded/collapsed state is controlled by a feature flag
+const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.otherProjects'))
 
 defineProps({
     projects: {
@@ -136,6 +169,43 @@ function getLogos(logo) {
     }
 
     return []
+}
+
+function getCollaborators(collaborators) {
+    if (Array.isArray(collaborators)) {
+        return collaborators
+            .map((collaborator, index) => {
+                if (typeof collaborator === 'string') {
+                    return createCollaborator(collaborator, null, index)
+                }
+
+                return createCollaborator(
+                    collaborator?.name,
+                    collaborator?.link || collaborator?.website || collaborator?.url || null,
+                    index
+                )
+            })
+            .filter(collaborator => collaborator.name)
+    }
+
+    if (typeof collaborators === 'string') {
+        return collaborators
+            .split(',')
+            .map((name, index) => createCollaborator(name, null, index))
+            .filter(collaborator => collaborator.name)
+    }
+
+    return []
+}
+
+function createCollaborator(name, link, index) {
+    const trimmedName = typeof name === 'string' ? name.trim() : ''
+
+    return {
+        name: trimmedName,
+        link,
+        key: `${trimmedName}-${index}`,
+    }
 }
 
 function hasActionLinks(project) {

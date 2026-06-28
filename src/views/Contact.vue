@@ -1,15 +1,16 @@
 <template>
   <div class="relative flex size-full min-h-screen flex-col bg-slate-50 group/design-root overflow-x-hidden">
     <div class="layout-container flex h-full grow flex-col">
-      <div class="px-8 md:px-16 lg:px-20 flex flex-1 justify-center py-5">
-        <div class="layout-content-container flex flex-col w-full max-w-[1400px] flex-1">
+      <div class="px-4 sm:px-6 lg:px-8 flex flex-1 justify-center py-8">
+        <div class="layout-content-container flex flex-col w-full max-w-[1280px] flex-1">
           <!-- Page Header -->
           <div class="text-center mb-12">
-            <h1 class="text-4xl font-black text-[#0e141b] mb-4 tracking-[-0.033em]">
+            <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+              :class="{ 'mb-4': showPageDescription }">
               Get in Touch
             </h1>
-            <p class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to reach out!
+            <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
+              {{ pageDescription }}
             </p>
           </div>
 
@@ -143,7 +144,12 @@
 </template>
 
 <script setup>
-import config from '@/profile_info.yml'
+import config from '@/content/profile_info'
+import descriptions from '@/content/profile_info/description.yml'
+import { isPageDescriptionEnabled } from '@/config/featureFlags'
+
+const pageDescription = descriptions.contact
+const showPageDescription = isPageDescriptionEnabled('contact')
 
 const {profile, contacts, socials} = config
 

@@ -1,6 +1,6 @@
 <template>
   <header
-    class="sticky top-0 z-50 bg-white flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-10 py-2">
+    class="sticky top-0 z-50 bg-white flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e7edf3] px-10 py-4">
     <!-- Logo/Brand -->
     <div class="flex items-center gap-4 text-base_black">
       <div class="size-4">
@@ -23,10 +23,10 @@
           class="nav-link"
           active-class="active-link"
         >
-          Projects & Publications
+          Project & Publication
         </router-link>
         <router-link v-if="showTeachingsNavLink" to="/teachings" class="nav-link" active-class="active-link">
-          Teachings
+          Teaching
         </router-link>
         <router-link
           v-if="showProfessionalActivityNavLink"
@@ -36,23 +36,16 @@
         >
           Professional Activity
         </router-link>
-        <router-link v-if="showCocurricularNavLink" to="/cocurricular" class="nav-link" active-class="active-link">
-          Co-curricular
-        </router-link>
         <router-link :to="{ name: 'Contact' }" class="nav-link" active-class="active-link">
           Contact
         </router-link>
         <router-link v-if="showGalleryNavLink" to="/gallery" class="nav-link" active-class="active-link">
           Gallery
         </router-link>
+        <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" class="blog-link text-base">
+          Blog
+        </a>
       </div>
-
-      <!-- Hire Me Button -->
-      <button
-        class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-slate-50 text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary-700 transition-colors duration-200"
-        @click="SEND_MAIL">
-        <span class="truncate">Hire Me</span>
-      </button>
 
       <!-- Mobile Menu Button -->
       <button class="md:hidden flex items-center justify-center w-10 h-10 transition-colors duration-200"
@@ -103,10 +96,10 @@
             class="nav-link"
             active-class="active-link"
           >
-            Projects & Publications
+            Project & Publication
           </router-link>
           <router-link v-if="showTeachingsNavLink" to="/teachings" @click="drawer = false" class="nav-link" active-class="active-link">
-            Teachings
+            Teaching
           </router-link>
           <router-link
             v-if="showProfessionalActivityNavLink"
@@ -117,18 +110,12 @@
           >
             Professional Activity
           </router-link>
-          <router-link
-            v-if="showCocurricularNavLink"
-            to="/cocurricular"
-            @click="drawer = false"
-            class="nav-link"
-            active-class="active-link"
-          >
-            Co-curricular
-          </router-link>
           <router-link :to="{ name: 'Contact' }" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
+          <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" @click="drawer = false" class="blog-link">
+            Blog
+          </a>
         </nav>
       </div>
     </div>
@@ -138,12 +125,18 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import config from "@/profile_info.yml"
+import config from "@/content/profile_info"
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const router = useRouter()
 const drawer = ref(false)
-const { profile, contacts } = config
+const { profile, socials } = config
+
+const blogLink = socials.vlog
+
+const showBlogNavLink = computed(() => (
+  isFeatureEnabled('showBlog') && Boolean(blogLink)
+))
 
 const showGalleryNavLink = computed(() => (
   isFeatureEnabled('showGallery') && router.hasRoute('Gallery')
@@ -158,21 +151,11 @@ const showProjectsPublicationsNavLink = computed(() => (
   && router.hasRoute('ProjectsPublications')
 ))
 
-const showCocurricularNavLink = computed(() => (
-  isFeatureEnabled('showCocurricular', { mode: 'any' }) && router.hasRoute('Cocurricular')
-))
-
 const showProfessionalActivityNavLink = computed(() => (
   isFeatureEnabled('showProfessionalActivity', { mode: 'any' })
   && (router.hasRoute('ProfessionalActivity') || router.hasRoute('ProfessionalAcitivity'))
 ))
 
-const SEND_MAIL = () => {
-  const subject = encodeURIComponent('Freelance Project:')
-  const body = encodeURIComponent('I would like to discuss a potential collaboration.')
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${contacts.email}&su=${subject}&body=${body}`
-  window.open(gmailUrl, '_blank')
-}
 </script>
 
 <style scoped>
@@ -190,5 +173,55 @@ const SEND_MAIL = () => {
 
 .active-link {
   @apply font-bold text-primary;
+}
+
+.blog-link {
+  @apply relative inline-flex items-center text-sm font-medium text-base_black no-underline transition-colors duration-200;
+  padding-right: 1.15rem;
+}
+
+.blog-link:hover {
+  @apply text-primary;
+}
+
+.blog-link::before {
+  content: "";
+  position: absolute;
+  right: -0.35rem;
+  top: 50%;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 9999px;
+  background: #1980e6;
+  filter: blur(16px);
+  opacity: 0.22;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.blog-link::after {
+  content: "";
+  position: absolute;
+  right: 0.1rem;
+  top: 0.05rem;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 9999px;
+  background: #1980e6;
+  box-shadow: 0 0 12px rgba(25, 128, 230, 0.75);
+  opacity: 0.9;
+  animation: blog-dot-blink 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes blog-dot-blink {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 </style>

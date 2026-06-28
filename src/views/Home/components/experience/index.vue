@@ -26,7 +26,7 @@
 
 <script setup>
 import TimelineComponent from './components/TimelineComponent.vue'
-import config from "@/profile_info.yml"
+import config from "@/content/profile_info"
 
 const { experience, internships } = config
 

@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "lint": "eslint .",
+    "sync:gallery-manifest": "node scripts/sync-gallery-image-manifest.js",
+    "prebuild": "npm run sync:gallery-manifest",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",

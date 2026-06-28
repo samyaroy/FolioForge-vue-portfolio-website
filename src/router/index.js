@@ -11,8 +11,8 @@ import InternshipCertification from '@/views/InternshipCertification/index.vue'
 import Teachings from '@/views/Teachings/index.vue'
 import ProfessionalAcitivity from '@/views/ProfessionalAcitivity/index.vue'
 import Contact from '@/views/Contact.vue'
+import Resources from '@/views/Resources/index.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
-import NotFound from '@/views/NotFound.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const routes = [
@@ -111,18 +111,12 @@ const routes = [
     component: PrivacyPolicy
   },
   {
-    path: '/404',
-    name: 'NotFound',
-    component: NotFound
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    redirect: (to) => ({
-      name: 'NotFound',
-      query: {
-        from: to.fullPath,
-      },
-    }),
+    path: '/resources',
+    name: 'Resources',
+    component: Resources,
+    meta: {
+      flagPath: 'showResources',
+    },
   }
 ]
 
