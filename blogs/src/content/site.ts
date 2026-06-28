@@ -5,6 +5,7 @@ import raw from './site.yml'
 export interface SiteProfile {
   name: string
   profileIconPath: string
+  email: string
 }
 
 export interface HomeHero {
