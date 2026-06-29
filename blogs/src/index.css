@@ -309,7 +309,7 @@ a:hover {
   margin-top: 0;
 }
 
-.site-footer__meta > div p:first-child {
+.site-footer__meta > div:first-child p {
   margin-left: 1.25rem;
 }
 

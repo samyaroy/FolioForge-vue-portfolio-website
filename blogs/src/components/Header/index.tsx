@@ -43,7 +43,7 @@ export function Header() {
               </NavLink>
             ))}
             {isFeatureEnabled('showFactsLink') && (
-              <a href={FACTS_URL} className="site-header__link">
+              <a href={FACTS_URL} className="site-header__link site-header__link--muted">
                 {FACTS_NAV_LABEL}
               </a>
             )}
@@ -98,7 +98,7 @@ export function Header() {
               {isFeatureEnabled('showFactsLink') && (
                 <a
                   href={FACTS_URL}
-                  className="site-header__link"
+                  className="site-header__link site-header__link--muted"
                   onClick={() => setDrawerOpen(false)}
                 >
                   {FACTS_NAV_LABEL}
