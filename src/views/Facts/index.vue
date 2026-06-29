@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-[#eef3f8] py-8">
     <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
       <div class="mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+        <h1 class="text-3xl sm:text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
           Did you know?
         </h1>
