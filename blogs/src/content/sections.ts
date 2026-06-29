@@ -1,12 +1,14 @@
+import descriptions from './description.yml'
+
 export const BLOGS_SECTION = {
   title: 'Writing',
-  description: "Notes on what I'm building, learning, and thinking about.",
+  description: descriptions.blogs,
+  heroHeading: descriptions.blogsHeroHeading,
 }
 
 export const READINGS_SECTION = {
   title: 'Readings',
-  description:
-    'Notes from books, papers, essays, and the ideas worth returning to.',
+  description: descriptions.readings,
   tag: 'readings',
   cardLabel: 'Reading',
   emptyLabel: 'No readings here yet.',
@@ -15,23 +17,23 @@ export const READINGS_SECTION = {
 
 export const HOBBIES_SECTION = {
   title: 'Hobbies',
-  description:
-    'Personal notes from the things I do for curiosity, craft, and quiet joy.',
+  description: descriptions.hobbies,
   tag: 'hobbies',
 }
 
 export const GALLERY_SECTION = {
   title: 'Gallery',
-  description: 'A visual notebook for moments, places, projects, and fragments.',
+  description: descriptions.gallery,
   tag: 'gallery',
 }
 
 export const TRAVEL_SECTION = {
   title: 'Travel',
-  description:
-    "States I have been to for academic work, travel, or both; shaded by how many cities I've visited there, with stayed places circled separately. Hover a state for its purpose and city count.",
+  description: descriptions.travel,
   tag: 'travel',
   mapTitle: 'States & cities visited',
+  mapAttribution:
+    '* Map boundaries use india-maps-data GeoJSON; city coordinates are resolved with the Open-Meteo Geocoding API and rendered with ECharts.',
 }
 
 export const POST_COPY = {

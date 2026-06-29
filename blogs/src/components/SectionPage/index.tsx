@@ -1,9 +1,11 @@
 import { PostCard } from '../../views/Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
+import { isPageDescriptionEnabled } from '../../config/featureFlags'
 
 type SectionPageProps = {
   title: string
   description: string
+  pageKey: string
   tag?: string
 }
 
@@ -12,16 +14,22 @@ function matchesTag(postTags: string[], tag: string): boolean {
   return postTags.some((postTag) => postTag.toLowerCase() === normalizedTag)
 }
 
-export function SectionPage({ title, description, tag }: SectionPageProps) {
+export function SectionPage({
+  title,
+  description,
+  pageKey,
+  tag,
+}: SectionPageProps) {
   const sectionPosts = tag
     ? posts.filter((post) => matchesTag(post.tags, tag))
     : []
+  const showPageDescription = isPageDescriptionEnabled(pageKey)
 
   return (
     <>
       <section className="intro">
         <h1>{title}</h1>
-        <p>{description}</p>
+        {showPageDescription && <p>{description}</p>}
       </section>
 
       {sectionPosts.length === 0 ? (

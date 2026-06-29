@@ -3,6 +3,7 @@ import * as echarts from 'echarts'
 import { PostCard } from '../Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
 import { TRAVEL_SECTION } from '../../content/sections'
+import { isPageDescriptionEnabled } from '../../config/featureFlags'
 import {
   CITIES_PER_STATE,
   CITY_VISITS,
@@ -340,6 +341,7 @@ export function TravelPage() {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const showPageDescription = isPageDescriptionEnabled('travel')
 
   const travelPosts = useMemo(
     () =>
@@ -397,7 +399,7 @@ export function TravelPage() {
       <div className="travel-layout__main">
         <section className="intro">
           <h1>{TRAVEL_SECTION.title}</h1>
-          <p>{TRAVEL_SECTION.description}</p>
+          {showPageDescription && <p>{TRAVEL_SECTION.description}</p>}
         </section>
 
         {travelPosts.length > 0 && (
@@ -485,7 +487,12 @@ export function TravelPage() {
           </div>
         </div>
 
-        <div className="travel-map__canvas" ref={containerRef} />
+        <div className="travel-map__canvas-frame">
+          <div className="travel-map__canvas" ref={containerRef} />
+        </div>
+        <p className="travel-map__attribution">
+          {TRAVEL_SECTION.mapAttribution}
+        </p>
 
         {status === 'loading' && (
           <p className="travel-map__status">Loading map…</p>

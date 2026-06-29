@@ -6,6 +6,7 @@ export function HobbiesPage() {
     <SectionPage
       title={HOBBIES_SECTION.title}
       description={HOBBIES_SECTION.description}
+      pageKey="hobbies"
       tag={HOBBIES_SECTION.tag}
     />
   )
