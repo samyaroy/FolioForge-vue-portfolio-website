@@ -85,6 +85,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showResources: true,
 
+  // Controls the "Did you know?" facts page (/facts) and its nav link.
+  showFacts: true,
+
   // Controls the quote pane rendered between page content and the footer.
   showPageQuotePane: true,
 
@@ -104,6 +107,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     professionalActivity: true,
     teachings: true,
     workshopsAttended: true,
+    facts: true,
   },
 }) satisfies FeatureFlagNode
 

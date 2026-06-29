@@ -1,7 +1,13 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { isFeatureEnabled } from '../../config/featureFlags'
-import { MAIN_SITE_URL, NAV_ITEMS, PORTFOLIO_NAV_LABEL } from '../../content/navigation'
+import {
+  FACTS_NAV_LABEL,
+  FACTS_URL,
+  MAIN_SITE_URL,
+  NAV_ITEMS,
+  PORTFOLIO_NAV_LABEL,
+} from '../../content/navigation'
 import { SITE_PROFILE } from '../../content/site'
 
 function navLinkClass({ isActive }: { isActive: boolean }): string {
@@ -36,6 +42,11 @@ export function Header() {
                 {item.label}
               </NavLink>
             ))}
+            {isFeatureEnabled('showFactsLink') && (
+              <a href={FACTS_URL} className="site-header__link">
+                {FACTS_NAV_LABEL}
+              </a>
+            )}
             {isFeatureEnabled('showPortfolioLink') && (
               <a href={MAIN_SITE_URL} className="site-header__link site-header__link--muted">
                 {PORTFOLIO_NAV_LABEL}
@@ -84,6 +95,15 @@ export function Header() {
                   {item.label}
                 </NavLink>
               ))}
+              {isFeatureEnabled('showFactsLink') && (
+                <a
+                  href={FACTS_URL}
+                  className="site-header__link"
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  {FACTS_NAV_LABEL}
+                </a>
+              )}
               {isFeatureEnabled('showPortfolioLink') && (
                 <a
                   href={MAIN_SITE_URL}

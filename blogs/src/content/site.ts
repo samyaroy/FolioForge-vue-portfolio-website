@@ -23,7 +23,7 @@ export const SOCIAL_LINKS = [
 
 export const FOOTER_CONTENT = {
   privacyLabel: 'Privacy Policy',
-  privacyPath: '/#/privacy-policy',
+  privacyPath: '/privacy-policy',
   rightsText: 'Rights Reserved',
   lastUpdatedLabel: 'Last updated',
   lastUpdated: 'June 2026',

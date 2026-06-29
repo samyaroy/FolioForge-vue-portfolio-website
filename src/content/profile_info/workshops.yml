@@ -175,7 +175,7 @@ attended_other_workshops:
         department: "Paradox 2026, BS Degreee"
     date: "June, 2026"
     mode: "Offline"
-    # cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
+    cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
 
   - title: "Testing and Automation of Web Apps using Playwright"
     institution:
@@ -250,7 +250,7 @@ attended_bootcamps:
     date: "June 2026"
     duration: "2 Weeks"
     location: "Chennai, TN"
-    cred_link:
+    cred_link: https://drive.google.com/file/d/1R_NPR4NufUw6oxVlV6v-e0lWsd1mhcod/preview
     cirriculum:
       link: "https://www.imsc.res.in/outreach/fstcs2026/"
       week_1:

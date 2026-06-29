@@ -3,6 +3,9 @@
   "name": "folioforge-vue-portfolio-website",
   "compatibility_date": "2026-03-21",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    // Serve index.html for any unmatched path so the SPA's history-mode routes
+    // (e.g. /facts, /contact) resolve on direct load or refresh instead of 404.
+    "not_found_handling": "single-page-application"
   }
 }
