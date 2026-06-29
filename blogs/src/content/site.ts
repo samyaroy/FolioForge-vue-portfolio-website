@@ -43,4 +43,8 @@ export const FOOTER_CONTENT = {
       href: 'https://www.flaticon.com/free-icons/class',
     },
   ],
+  designCreditIntro: 'ⓘ Some UI designs are inspired from',
+  designCreditName: 'Asib uz zaman Nahid',
+  designCreditHref: 'https://dribbble.com/asibuzzaman',
+  designCreditOutro: "'s work",
 }

@@ -46,6 +46,17 @@ export function Footer() {
                   {FOOTER_CONTENT.iconAttributionLinks[2].label}
                 </a>
               </p>
+              <p>
+                {FOOTER_CONTENT.designCreditIntro}{' '}
+                <a
+                  href={FOOTER_CONTENT.designCreditHref}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {FOOTER_CONTENT.designCreditName}
+                </a>
+                {FOOTER_CONTENT.designCreditOutro}
+              </p>
             </div>
             <div className="site-footer__right-meta">
               <p>

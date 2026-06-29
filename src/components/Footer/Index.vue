@@ -204,11 +204,6 @@
             from
             <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
           </p>
-
-          <p class="text-gray-500 text-sm mt-1">
-            &#9432; Some UI designs are inspired from
-            <a href="https://dribbble.com/asibuzzaman" target="_blank">Asib uz zaman Nahid</a>'s work
-          </p>
         </div>
 
         <p class="text-gray-500 text-sm mt-2 md:mt-0">
