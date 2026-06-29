@@ -8,14 +8,15 @@ page_quotes:
       author: "Maximilien de Robespierre"
 
   ProjectsPublications:
-    - text: "A project is a question made concrete enough to test."
-      author: "Research notebook"
+    - text: "Most successes are unhappy. That's why they are successes-they have to reassure themselves about themselves by achieving something that the world will notice.... The happy people are failures because they are on such good terms with themselves that they don't give a damn."
+      source: "Sparkling Cyanide"
+      author: "Agatha Christie"
 
   OngoingProjects:
     - text: "Work in progress is still work with a pulse."
       author: "Project notebook"
 
-  Affilications:
+  Affiliations:
     - text: "Good collaborations make the room larger than the table."
       author: "Collaboration notebook"
 

@@ -255,11 +255,11 @@ attended_bootcamps:
       link: "https://www.imsc.res.in/outreach/fstcs2026/"
       week_1:
         - course_name: Algorithms and Lower bounds for Selection Problems
-        - course_name: "Maximum Coverage: From Polynomial-Time to FPT Approximation"
+        - course_name: "Maximum Coverage: From Poly-Time to FPT Approximation"
         - course_name: "Maximin Share Allocations: An Introduction"
         - course_name: VC Theory and PAC Learning
         - course_name: Combinatorics and Topology
-        - course_name: "The Power of Subspace Designs: Optimal List Decoding, Proximity Gaps, and More"
+        - course_name: "The Power of Subspace Designs"
         - course_name: Sunflower Lemma and Its Applications
         - course_name: Budget-feasible Egalitarian Allocation of Conflicting Jobs
         - course_name: The Math Behind Fixed Point Algorithms
