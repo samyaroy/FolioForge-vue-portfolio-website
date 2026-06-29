@@ -1,7 +1,12 @@
 <template>
   <div class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-2">
-      <h3 class="text-lg font-semibold text-[#0e141b]">{{ leadership.role }}</h3>
+      <h3 class="text-lg font-semibold text-[#0e141b]">
+        {{ leadership.role }}
+        <span v-if="leadership.cred_link" class="inline-block ml-2 align-middle">
+          <DocumentViewer :src="leadership.cred_link" />
+        </span>
+      </h3>
       <span v-if="leadership.time_period" class="text-sm text-gray-500">{{ leadership.time_period }}</span>
     </div>
 
@@ -58,6 +63,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
 import SmartLink from '@/components/SmartLink.vue'
 
 defineOptions({
