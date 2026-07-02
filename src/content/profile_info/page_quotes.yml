@@ -13,8 +13,8 @@ page_quotes:
       author: "Agatha Christie"
 
   OngoingProjects:
-    - text: "Work in progress is still work with a pulse."
-      author: "Project notebook"
+    - text: "You can outsource your thinking, but you cannot outsource your understanding."
+      author: "Andrej Karpathy"
 
   Affiliations:
     - text: "Good collaborations make the room larger than the table."
@@ -50,9 +50,10 @@ page_quotes:
       author: "Contact notebook"
 
   Resources:
-    - text: "The best resource is the one that helps you begin again."
-      author: "Resource notebook"
+    - text: "I can no other answer make but thanks, and thanks, and ever thanks."
+      source: "Twelfth Night"
+      author: "William Shakespeare"
 
-  PrivacyPolicy:
-    - text: "Trust is design you can read."
-      author: "Policy notebook"
+  # PrivacyPolicy:
+  #   - text: "Trust is design you can read."
+  #     author: "Policy notebook"
