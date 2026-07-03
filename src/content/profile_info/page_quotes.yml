@@ -16,38 +16,38 @@ page_quotes:
     - text: "You can outsource your thinking, but you cannot outsource your understanding."
       author: "Andrej Karpathy"
 
-  Affiliations:
-    - text: "Good collaborations make the room larger than the table."
-      author: "Collaboration notebook"
+  # Affiliations:
+  #   - text: "Good collaborations make the room larger than the table."
+  #     author: "Collaboration notebook"
 
-  Cocurricular:
-    - text: "The work outside the syllabus often teaches the shape of the person."
-      author: "Field notes"
+  # Cocurricular:
+  #   - text: "The work outside the syllabus often teaches the shape of the person."
+  #     author: "Field notes"
 
   Workshops:
     - text: "To live a creative life, we must lose our fear of being wrong."
       author: "Joseph Chilton Pearce"
 
-  Teachings:
-    - text: "Teaching is the art of making a path visible without walking it for someone."
-      author: "Teaching notebook"
+  # Teachings:
+  #   - text: "Teaching is the art of making a path visible without walking it for someone."
+  #     author: "Teaching notebook"
 
-  InternshipCertification:
-    - text: "Practice turns credentials into evidence."
-      author: "Learning notebook"
+  # InternshipCertification:
+  #   - text: "Practice turns credentials into evidence."
+  #     author: "Learning notebook"
 
-  ProfessionalAcitivity:
-    - text: "Communities grow where people keep showing up with care."
-      author: "Professional notebook"
+  # ProfessionalAcitivity:
+  #   - text: "Communities grow where people keep showing up with care."
+  #     author: "Professional notebook"
 
   Gallery:
     - text: "স্মৃতির পটে জীবনের ছবি কে আঁকিয়া যায় জানি না। কিন্তু যেই আঁকুক সে ছবিই আঁকুক সে ছবিই আঁকে।"
       source: "জীবন স্মৃতি, ১৯১২"
       author: "রবীন্দ্রনাথ ঠাকুর"
 
-  Contact:
-    - text: "A conversation is often the first draft of a collaboration."
-      author: "Contact notebook"
+  # Contact:
+  #   - text: "A conversation is often the first draft of a collaboration."
+  #     author: "Contact notebook"
 
   Resources:
     - text: "I can no other answer make but thanks, and thanks, and ever thanks."

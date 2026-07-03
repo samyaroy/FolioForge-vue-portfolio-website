@@ -108,6 +108,16 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 attended_webinars_n_others:
+  - title: "Rao's Score Test and its Applications"
+    type: lecture
+    speaker: ["Prof. K Muralidharan"]
+    host:
+      - name: "Sardar Patel University"
+        department: "Department of Statistics"
+    date: "29 June, 2026"
+    mode: "Online"
+    cred_link:  https://drive.google.com/file/d/1r0Oi_maOpuLbzfXDZm24XV3C4jWczuG7/preview
+
   - title: "COPSS-NISS Leadership Webinar: The Role of Bayesian Statistics in an Age of AI"
     type: webiner
     speaker: ["Prof. David Dunson", "Prof. Xuming He", "Prof. (Dr.) Nadja Klein"]
@@ -117,7 +127,7 @@ attended_webinars_n_others:
         location: "Washington DC, US"
     date: "27 January, 2026"
     mode: "Online"
-    cred_link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
+    link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
 
   # - title: "Responsible AI Use for Journal Publishing"
   #   type: webiner
@@ -135,8 +145,9 @@ attended_webinars_n_others:
         location: 
     date: "23 March, 2026"
     mode: "Online"
-    cred_link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
-
+    link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
+    cred_link: https://drive.google.com/file/d/1IavCi-jSf5otKqv0yF80ftE8Yk1LpTSO/preview
+  
   - title: "Causal Learning for Individual and Population Health in the Era of AI"
     type: webiner
     speaker: ["Dr. Linda Valeri"]
@@ -146,7 +157,6 @@ attended_webinars_n_others:
         location: New York, US  
     date: "14 May, 2026"
     mode: "Online"
-    cred_link:
 
   - title: "Discussion on Bayesian Analysis"
     type: webiner
@@ -157,7 +167,6 @@ attended_webinars_n_others:
         location: Rome, IT  
     date: "14 May, 2026"
     mode: "Online"
-    cred_link:
 
   # - title: "Causal Learning for Individual and Population Health in the Era of AI"
   #   type: webiner
@@ -168,7 +177,6 @@ attended_webinars_n_others:
   #       location: New York, NY  
   #   date: "14 May, 2026"
   #   mode: "Online"
-  #   cred_link:
 
 attended_other_workshops:
   - title: "Measurements in AI"
