@@ -1,41 +1,47 @@
-import descriptions from './description.yml'
+// Typed accessors over sections.yml (per-page titles, descriptions, labels).
+import raw from './sections.yml'
 
-export const BLOGS_SECTION = {
-  title: 'Writing',
-  description: descriptions.blogs,
-  heroHeading: descriptions.blogsHeroHeading,
+interface SectionsContent {
+  blogs: {
+    title: string
+    description: string
+    heroHeading: string
+  }
+  readings: {
+    title: string
+    description: string
+    tag: string
+    cardLabel: string
+    emptyLabel: string
+    reviewLabel: string
+  }
+  hobbies: {
+    title: string
+    description: string
+    tag: string
+  }
+  gallery: {
+    title: string
+    description: string
+    tag: string
+  }
+  travel: {
+    title: string
+    description: string
+    tag: string
+    mapTitle: string
+    mapAttribution: string
+  }
+  post: {
+    backToBlogs: string
+  }
 }
 
-export const READINGS_SECTION = {
-  title: 'Readings',
-  description: descriptions.readings,
-  tag: 'readings',
-  cardLabel: 'Reading',
-  emptyLabel: 'No readings here yet.',
-  reviewLabel: 'Read review ->',
-}
+const sections = raw as SectionsContent
 
-export const HOBBIES_SECTION = {
-  title: 'Hobbies',
-  description: descriptions.hobbies,
-  tag: 'hobbies',
-}
-
-export const GALLERY_SECTION = {
-  title: 'Gallery',
-  description: descriptions.gallery,
-  tag: 'gallery',
-}
-
-export const TRAVEL_SECTION = {
-  title: 'Travel',
-  description: descriptions.travel,
-  tag: 'travel',
-  mapTitle: 'States & cities visited',
-  mapAttribution:
-    '* Map boundaries use india-maps-data GeoJSON; city coordinates are resolved with the Open-Meteo Geocoding API and rendered with ECharts.',
-}
-
-export const POST_COPY = {
-  backToBlogs: 'Back to Writing',
-}
+export const BLOGS_SECTION = sections.blogs
+export const READINGS_SECTION = sections.readings
+export const HOBBIES_SECTION = sections.hobbies
+export const GALLERY_SECTION = sections.gallery
+export const TRAVEL_SECTION = sections.travel
+export const POST_COPY = sections.post

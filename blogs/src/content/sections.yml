@@ -1,0 +1,41 @@
+# Per-page section copy: titles, subtitle/description lines, and page labels.
+# Loaded through src/content/sections.ts, which applies the types.
+#
+# Each page's `description` line is gated by the matching
+# `showPageDescriptions.<page>` flag in src/config/featureFlags.ts.
+
+blogs:
+  title: Writing
+  description: "Notes on what I'm building, learning, and thinking about."
+  # Large heading shown above the hero image on the blog home page.
+  heroHeading: |-
+    The details are not the details.
+    They make the design
+
+readings:
+  title: Readings
+  description: "Notes from books, papers, essays, and the ideas worth returning to."
+  tag: readings
+  cardLabel: Reading
+  emptyLabel: No readings here yet.
+  reviewLabel: "Read review ->"
+
+hobbies:
+  title: Hobbies
+  description: "Personal notes from the things I do for curiosity, craft, and quiet joy."
+  tag: hobbies
+
+gallery:
+  title: Gallery
+  description: "A visual notebook for moments, places, projects, and fragments."
+  tag: gallery
+
+travel:
+  title: Travel
+  description: "States I have been to for academic work, travel, or both; shaded by how many cities I've visited there, with stayed places circled separately. Hover a state for its purpose and city count."
+  tag: travel
+  mapTitle: States & cities visited
+  mapAttribution: "* Map boundaries use india-maps-data GeoJSON; city coordinates are resolved with the Open-Meteo Geocoding API and rendered with ECharts."
+
+post:
+  backToBlogs: Back to Writing

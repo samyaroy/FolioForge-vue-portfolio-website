@@ -1,6 +1,7 @@
 # Auxiliary tracking manifest for Cloudflare gallery assets.
-# This file is generated from gallery.yml by scripts/sync-gallery-image-manifest.js.
-# Edit descriptions here; ids, dates, and category placement are synced automatically.
+# FULLY GENERATED from gallery.yml by scripts/sync-gallery-image-manifest.js — do not edit.
+# To change a description, set `manifestDescription` on the item in gallery.yml
+# (falls back to the item title when absent).
 
 categories:
   - category: Academic Milestone

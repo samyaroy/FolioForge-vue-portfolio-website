@@ -1,0 +1,27 @@
+# Header navigation and cross-site links.
+# Loaded through src/content/navigation.ts, which applies the types.
+
+mainSiteUrl: https://samyabrata.codeium.xyz
+portfolioNavLabel: Portfolio
+
+# "Did you know?" links to the main (portfolio) site's /facts route.
+factsNavLabel: "Did you know?"
+
+# `flag` must name a top-level boolean flag in src/config/featureFlags.ts;
+# navigation.ts warns in dev when a flag name doesn't exist.
+navItems:
+  - to: /
+    label: Blog
+    flag: showBlogHome
+  - to: /readings
+    label: Readings
+    flag: showReadings
+  - to: /travel
+    label: Travel
+    flag: showTravel
+  - to: /hobbies
+    label: Hobbies
+    flag: showHobbies
+  - to: /gallery
+    label: Gallery
+    flag: showGallery

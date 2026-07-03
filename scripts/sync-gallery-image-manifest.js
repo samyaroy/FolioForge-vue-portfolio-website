@@ -31,8 +31,6 @@ const categoryMatchers = [
 ]
 
 const gallery = readYaml(galleryPath)
-const existingManifest = fs.existsSync(manifestPath) ? readYaml(manifestPath) : {}
-const existingDescriptions = getExistingDescriptions(existingManifest)
 const items = Array.isArray(gallery?.items) ? gallery.items : []
 const groupedItems = new Map(categoryOrder.map(category => [category, []]))
 
@@ -46,7 +44,7 @@ items
     groupedItems.get(category).push({
       id: String(item.id),
       date: item.date ? String(item.date) : '',
-      description: existingDescriptions.get(String(item.id)) || getDefaultDescription(item),
+      description: getDescription(item),
     })
   })
 
@@ -62,23 +60,6 @@ fs.writeFileSync(manifestPath, output)
 
 function readYaml(filePath) {
   return YAML.parse(fs.readFileSync(filePath, 'utf8'))
-}
-
-function getExistingDescriptions(manifest) {
-  const descriptions = new Map()
-  const categories = Array.isArray(manifest?.categories) ? manifest.categories : []
-
-  categories.forEach((category) => {
-    const images = Array.isArray(category?.images) ? category.images : []
-
-    images.forEach((image) => {
-      if (!image?.id || !image.description) return
-
-      descriptions.set(String(image.id), String(image.description))
-    })
-  })
-
-  return descriptions
 }
 
 function getCategory(item) {
@@ -97,8 +78,8 @@ function normalizeTag(value) {
   return String(value).trim().toLowerCase()
 }
 
-function getDefaultDescription(item) {
-  return String(item.title || item.id)
+function getDescription(item) {
+  return String(item.manifestDescription || item.title || item.id)
     .replace(/\s+/g, ' ')
     .trim()
 }
@@ -111,8 +92,9 @@ function getTimestamp(value) {
 function renderManifest(groupedItems) {
   const lines = [
     '# Auxiliary tracking manifest for Cloudflare gallery assets.',
-    '# This file is generated from gallery.yml by scripts/sync-gallery-image-manifest.js.',
-    '# Edit descriptions here; ids, dates, and category placement are synced automatically.',
+    '# FULLY GENERATED from gallery.yml by scripts/sync-gallery-image-manifest.js — do not edit.',
+    '# To change a description, set `manifestDescription` on the item in gallery.yml',
+    '# (falls back to the item title when absent).',
     '',
     'categories:',
   ]

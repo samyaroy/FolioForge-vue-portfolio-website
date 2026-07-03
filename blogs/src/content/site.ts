@@ -1,50 +1,49 @@
-export const SITE_PROFILE = {
-  name: 'Samyabrata Roy',
-  profileIconPath: '/profile-icon.png',
+// Typed accessors over site.yml. The content lives in the YAML file; this
+// module only pins the shapes so consumers keep compile-time checking.
+import raw from './site.yml'
+
+export interface SiteProfile {
+  name: string
+  profileIconPath: string
 }
 
-// Full-bleed hero shown at the top of the blog home page.
-// Drop your own image at blogs/public/hero.jpg (any wide image works).
-// If that file is missing, the fallback below renders so the page is never empty.
-export const HOME_HERO = {
-  imagePath: '/hero.jpg',
-  fallbackImage: 'https://picsum.photos/1600/900?grayscale',
-  alt: 'Featured artwork',
-  caption: 'Generated using Gemini 3.1 Pro',
+export interface HomeHero {
+  imagePath: string
+  fallbackImage: string
+  alt: string
+  caption: string
 }
 
-// Social links rendered vertically on the right edge of the hero.
-// Edit the hrefs to point at your own profiles; remove any you don't use.
-export const SOCIAL_LINKS = [
-  { label: 'X', href: 'https://x.com/' },
-  { label: 'Instagram', href: 'https://www.instagram.com/the_pessimist_one/' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/samyabrata23/' },
-] as const satisfies ReadonlyArray<{ label: string; href: string }>
-
-export const FOOTER_CONTENT = {
-  privacyLabel: 'Privacy Policy',
-  privacyPath: '/privacy-policy',
-  rightsText: 'Rights Reserved',
-  lastUpdatedLabel: 'Last updated',
-  lastUpdated: 'June 2026',
-  iconAttributionIntro: 'ⓘ Some icons used are made by',
-  iconAttributionSource: 'from',
-  iconAttributionLinks: [
-    {
-      label: 'Freepik',
-      href: 'https://www.flaticon.com/authors/freepik',
-    },
-    {
-      label: 'Smashicons',
-      href: 'https://www.flaticon.com/authors/smashicons',
-    },
-    {
-      label: 'Flaticon',
-      href: 'https://www.flaticon.com/free-icons/class',
-    },
-  ],
-  designCreditIntro: 'ⓘ Some UI designs are inspired from',
-  designCreditName: 'Asib uz zaman Nahid',
-  designCreditHref: 'https://dribbble.com/asibuzzaman',
-  designCreditOutro: "'s work",
+export interface LabeledLink {
+  label: string
+  href: string
 }
+
+export interface FooterContent {
+  privacyLabel: string
+  privacyPath: string
+  rightsText: string
+  lastUpdatedLabel: string
+  lastUpdated: string
+  iconAttributionIntro: string
+  iconAttributionSource: string
+  iconAttributionLinks: LabeledLink[]
+  designCreditIntro: string
+  designCreditName: string
+  designCreditHref: string
+  designCreditOutro: string
+}
+
+interface SiteContent {
+  profile: SiteProfile
+  hero: HomeHero
+  socialLinks: LabeledLink[]
+  footer: FooterContent
+}
+
+const site = raw as SiteContent
+
+export const SITE_PROFILE = site.profile
+export const HOME_HERO = site.hero
+export const SOCIAL_LINKS = site.socialLinks
+export const FOOTER_CONTENT = site.footer

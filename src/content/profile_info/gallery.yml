@@ -1,4 +1,9 @@
 # Gallery content is rendered from this file only.
+#
+# `manifestDescription` is a short summary used only for the generated
+# Cloudflare asset manifest (src/content/galleryImageManifest.yml); it is not
+# shown in the gallery UI. When omitted, the item title is used instead.
+#
 # Caption helpers:
 # - [[Visible Text|Institute]]
 # - [[Visible Text|Exact Metadata Name|Person]]
@@ -37,6 +42,7 @@ items:
 
   - id: guest_event-10
     title: Hosted Stats based Technical Event at Paradox 2026, IIT Madras
+    manifestDescription: Paradox 2026 statistics technical event
     caption: "Always wannted to make people connect stats to daily life. With this moto we statred [[Chi-Square: Statistics Club|Institute]] in 2023 at IITM BS, For the first time me and my team hosted a offline survey-based data analysis compitition name **Probably Paradoxical** during **Paradox 2026**. "
     type: Linkedin
     images:
@@ -59,6 +65,7 @@ items:
 
   - id: intern-project-01
     title: Mentored a group of Spring Interns at IDEAS-TIH
+    manifestDescription: Spring interns mentoring at IDEAS-TIH
     event:
     location:
     caption: I had the opportunity to mentor a group of Spring Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
@@ -69,6 +76,7 @@ items:
 
   - id: workshop-IDEAS-TIH-01
     title: IDEAS-TIH hosted 3rd IDEASync Industry Connet Meet 2026
+    manifestDescription: IDEASync Industry Connect Meet 2026
     event: 3rd IDEASync Industry Connect Meet 2026
     caption: Had the opportunity to attend the meet as a part of the hosting body, [[IDEAS-TIH, ISI Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was a great experience to see how the academia and industry is planning to bridge the gap between research and real-world applications in the field of data science and analytics in next few years.
     type: gallery
@@ -79,6 +87,7 @@ items:
 
   - id: academic_milestone-01
     title: Got my first Degree!
+    manifestDescription: First degree graduation
     event: 9th Graduation Day, SNU
     caption: At the 9th Graduation Ceremony of [[SNU|Sister Nivedita University|Institute]], I received my **B.Sc degree in Statistics**. Kinda proud, kinda stressed about the future.
     type: linkedin
@@ -90,6 +99,7 @@ items:
 
   - id: academic_milestone-02
     title: Got my article published at SXC!
+    manifestDescription: SXC article publication
     event: Convergence 2026, SXC
     caption: My article **'Precision Without Understanding Uncertainty Is an Illusion of Control'** got published in *Gradient (Vol I)*, the annual magazine of the [[Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata|Institute]].
     type: linkedin
@@ -107,6 +117,7 @@ items:
 
   - id: workshop-06
     title: Attended Cryptology Conclave at IIT Hyderabad
+    manifestDescription: Cryptology Conclave at IIT Hyderabad
     event: Cryptology Conclave 2026
     caption: An introduction to new exploration, got introduced to lattice-based cryptography, PQC an their applications and need in the conclave. Great oppetunity to learn from the bests in the country in the field of Cryptography and Network Security.
     date: 2026-01-23
@@ -115,6 +126,7 @@ items:
 
   - id: workshop-05
     title: Visited IITM to attend the 5th International Conference on Security and Privacy
+    manifestDescription: Security and Privacy conference at IITM
     event: ISEA ISAP 2026
     caption: An overwhelming experience for me to attend [[ISEA|Information Security Education and Awareness|Institute]] **ISAP 2026**. Got to talk and learn from the best of the best.
     type: gallery
@@ -124,6 +136,7 @@ items:
 
   - id: academic_milestone-03
     title: Got my first-ever article published!
+    manifestDescription: First article publication
     caption: "My article **'Revisiting Outliers: Smarter Ways to Handle Them in Regression'**, a thought piece, got published in EPOCHS 2.0, the annual magazine of Wayanad House's ML Group at the IITM BS program."
     type: gallery
     date: 2025-11-30
@@ -132,6 +145,7 @@ items:
 
   - id: new_role-01
     title: Joined IDEAS-TIH at ISI Kolkata as an Associate Software Developer
+    manifestDescription: Associate Software Developer role at IDEAS-TIH
     caption: After completing my 8 months of internship at [[IDEAS-TIH, Indian Statistical Institute, Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]], I am super excited to join the team as an Associate Software Developer. Looking forward to contributing to impactful projects and learning from the amazing minds at ISI ecosystem.
     type: gallery
     date: 2025-10-21
@@ -141,6 +155,7 @@ items:
 
   - id: workshop-04
     title: Attended MAD 1 and MAD 2 bootcamps at IITM and secured S grade!
+    manifestDescription: MAD bootcamps at IITM
     caption: Efforts paid off! I secured an S grade in both MAD 1 and MAD 2 projects at the IITM BS Degree program. All credit goes to those late-night debugging sessions at CCD and the amazing [[Rohit sir|https://www.linkedin.com/in/rohit-kumar-39b974151/|Link]].
     type: linkedin
     images:
@@ -153,6 +168,7 @@ items:
 
   - id: workshop-03
     title: Attended National Workshop on Cybersecurity and Blockchain at IIIT Hyderabad
+    manifestDescription: Cybersecurity and blockchain workshop at IIIT Hyderabad
     event: NWBCSB 2025
     caption: Attended a 3-day workshop on Cybersecurity and Blockchain at [[IIIT Hyderabad|International Institute of Technology (IIIT) Hyderabad|Institute]]. It was an amazing experience to reexplore **Blockchain and Cryptocurrencies** along with the latest developments in this field and to interact with experts from academia and industry.
     type: gallery
@@ -162,6 +178,7 @@ items:
 
   - id: new_role-02
     title: Joined IDEAS-TIH at ISI Kolkata as a Student Intern
+    manifestDescription: Student intern role at IDEAS-TIH
     caption: I joined my first offline paid internship at [[IDEAS-TIH, ISI Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. I am super excited to learn and contribute to real-world projects at IDEAS-TIH.
     type: gallery
     date: 2025-02-18
@@ -171,6 +188,7 @@ items:
 
   - id: workshop-02
     title: Completed a 1-Month Bootcamp at the Dept. of CSE, IIT Ropar
+    manifestDescription: AI Vicharana Shala bootcamp at IIT Ropar
     event: AI Vicharana Shala Bootcamp
     caption: A one-month roller-coaster journey of learning came to an end at [[IIT Ropar|Indian Institute of Technology Ropar|Institute]] at AI Vicharana Shala. I enjoyed every minute of it and am surely going to miss those early morning lectures by Prof. [[Sudarshan Sir|Prof. Sudarshan Iyengar|Person]] and late-night jamming sessions.
     type: linkedin
@@ -181,6 +199,7 @@ items:
 
   - id: workshop-09
     title: Attended ACM ROCS at IIT Madras
+    manifestDescription: ACM ROCS at IIT Madras
     event: ACM ROCS 2024, IIT Madras
     caption: Attended the ACM Research on Computer Systems (ROCS) conference at [[IIT Madras|Indian Institute of Technology Madras|Institute]]. Honestly, I believe this was my first step into exploring CS for real. Thanks to [[ACM|https://www.acm.org/|Link]] for hosting such a mindful event. Still greateful to [[Prof. Sheweta Agarwal|Prof. Sheweta Agarwal|Person]] ma'am for introducing me to the world of **Cryptography** through her session.
     type: gallery
@@ -190,6 +209,7 @@ items:
 
   - id: event-01
     title: Represented IITM BS Degrre at Netaji Indoor Stadium Kolata
+    manifestDescription: IITM BS representation at Education Interface
     event: Education Interface 2023
     caption: GOt oppertunity to represent the IITM BS Degree program at Education Interface 2023, Kolkata. Grateful to [[Shib Sankar Das|https://www.linkedin.com/in/ssdcet/|Link]] sir for giving me this opportunity.
     type: linkedin
@@ -200,6 +220,7 @@ items:
 
   - id: workshop-08
     title: Attended Google Cloud Community Day Kolkata
+    manifestDescription: Google Cloud Community Day Kolkata
     event: Google Cloud Community Day Kolkata 2023
     caption: Attended the Google Cloud Community Day event in Kolkata. It was an excellent opportunity to learn about the latest developments in cloud computing and interact with experts from the industry. The place where I got introduced to Flutter and Firebase for the first time.
     type: gallery
@@ -209,6 +230,7 @@ items:
 
   - id: tech_fest-03
     title: "Visited IIT Delhi Tech Fest: Tryst"
+    manifestDescription: Tryst tech fest at IIT Delhi
     event: Tryst 2023
     caption: Kinda stepping out of comfort zone, althrough lost every competition I participated in, it was a great experience to visit IIT Delhi and attend workshops and seminars at Tryst.
     type: gallery
@@ -217,6 +239,7 @@ items:
 
   - id: meetup-05
     title: "Official IITM BS Kolkata Meetup: Met course instructors and students"
+    manifestDescription: Official IITM BS Kolkata meetup
     caption: The first official meetup for IITM BS students in Kolkata at [[UEM|University of Engineering and Management|Institute]] was a great success. I finally met Prof. [[Andrew Sir|Prof. Andrew Thangaraj|Person]] and [[Bharti Ma'am||Link]] in person and had a great time interacting with fellow students of the program.
     type: gallery
     date: 2023-03-10
@@ -225,6 +248,7 @@ items:
 
   - id: tech_fest-02
     title: Why So Depressed? A Survey on Nationwide Mental Health on Science Day at SNU
+    manifestDescription: Mental health survey poster at SNU
     event: Scientilia 2023
     caption: We, students of **UG Sem 2, Stats Dept. of SNU**, presented our survey on mental health at the Science Day poster competition.
     type: instagram
@@ -235,6 +259,7 @@ items:
 
   - id: workshop-01
     title: Attended a Social Computing Workshop at IIITH
+    manifestDescription: Social computing workshop at IIITH
     caption: An amazing day attending Prof. [[P.K. Sir|Prof. Ponnurangam Kumaraguru|Person]]'s workshop at **IIIT Hyderabad**. I got to learn about the latest research and developments in this field of LLM and how it could be used reasearch for social computing, and I am excited to apply this knowledge in my future work. Here I also got introduced to the concept of **Legal AI**.
     type: instagram
     date: 2023-02-04
@@ -244,6 +269,7 @@ items:
 
   - id: tech_fest-01
     title: "Visited an IIT for the first time: IIT KGP Tech Fest"
+    manifestDescription: First IIT visit at IIT KGP tech fest
     event: Kshitij 2023
     caption: Visited IIT Kharagpur for the first time to attend their tech fest, Kshitij. It was something really different for me to explore the campus and attend workshops and seminars at Kshitij. I rember attending an excellent workshop on investments and financial literact by **Upstox**.
     type: gallery
@@ -252,6 +278,7 @@ items:
 
   - id: meetup-01
     title: Hosted a meetup for IITM BS students in Kolkata
+    manifestDescription: Hosted IITM BS Kolkata meetup
     caption: The online degree came offline for a day to meet the students of the IITM BS program in Kolkata. **Subhajit Sir (Instructor, IITM BS)** joined us too.
     type: gallery
     date: 2023-01-14

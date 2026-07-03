@@ -14,7 +14,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showPortfolioLink: true,
 
   // Controls the subtitle/description line under each page's title.
-  // Text for each page lives in blogs/src/content/description.yml.
+  // Text for each page lives in blogs/src/content/sections.yml.
   // `enabled` is the master switch: when false, every page description is hidden
   // regardless of its per-page flag. When true, each page's own flag decides.
   showPageDescriptions: {

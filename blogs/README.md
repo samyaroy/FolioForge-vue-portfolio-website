@@ -30,6 +30,23 @@ Body in Markdown (GitHub-flavored).
 - The slug is the filename minus the date prefix and `.md` → `/posts/slug`.
 - `draft: true` shows the post in dev only, never in production builds.
 
+## Edit site content
+
+All non-post content lives in per-section YAML files under `src/content/`,
+each paired with a small `.ts` module that applies the TypeScript types
+(edit the YAML; the `.ts` files only pin shapes and derive values):
+
+| YAML file           | Contents                                          |
+| ------------------- | ------------------------------------------------- |
+| `site.yml`          | Profile, home hero, social links, footer copy     |
+| `sections.yml`      | Per-page titles, description lines, labels        |
+| `navigation.yml`    | Header nav items, cross-links to the main site    |
+| `readings/data.yml` | Reading notes (sorted newest-first automatically) |
+| `travel/data.yml`   | Travel-map state/city visit data, legend labels   |
+
+Keep dates quoted (`"2026-06-20"`) so they stay strings, and quote values
+containing `:` or starting with punctuation.
+
 ## Build & deploy (Cloudflare)
 
 ```bash
