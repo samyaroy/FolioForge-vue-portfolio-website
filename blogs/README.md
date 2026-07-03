@@ -20,6 +20,7 @@ Add a Markdown file to `src/content/posts/`, named `YYYY-MM-DD-slug.md`:
 title: My post
 date: 2026-06-18
 description: One-line summary for the listing page.
+cover: /my-image.jpg
 tags: [tag-a, tag-b]
 draft: false
 ---
@@ -29,6 +30,9 @@ Body in Markdown (GitHub-flavored).
 
 - The slug is the filename minus the date prefix and `.md` → `/posts/slug`.
 - `draft: true` shows the post in dev only, never in production builds.
+- `cover` (optional) fills the left 40% image pane of the post's card on the
+  home page — a public path (drop the file in `public/`) or a full URL. When
+  omitted, a placeholder pattern renders instead.
 
 ## Edit site content
 

@@ -9,6 +9,18 @@ type PostCardProps = {
 export function PostCard({ post }: PostCardProps) {
   return (
     <article className="post-card">
+      <div className="post-card__media" aria-hidden="true">
+        {post.cover ? (
+          <img
+            className="post-card__image"
+            src={post.cover}
+            alt=""
+            loading="lazy"
+          />
+        ) : (
+          <span className="post-card__media-fallback">✳</span>
+        )}
+      </div>
       <div className="post-card__content">
         <h2 className="post-card__title">
           <Link to={`/posts/${post.slug}`}>{post.title}</Link>
