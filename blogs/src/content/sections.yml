@@ -9,6 +9,20 @@ blogs:
   # Heading of the year-grouped post index beside the post list.
   allPostsTitle: All posts
 
+recommended:
+  title: Recommended reads
+  # Small kicker above the heading, on the home teaser and the page itself.
+  kicker: Not mine
+  emptyLabel: Nothing recommended here yet.
+  # Home teaser link through to the full page; {count} becomes the number
+  # of recommendations.
+  allLabel: "All {count} recommendations"
+  # Card links. The full page names the destination, the teaser stays short.
+  readLabel: Read on
+  readShortLabel: Read it
+  # Closing line under the full list.
+  disclaimer: Every link here leaves this site. None of it is my writing.
+
 readings:
   title: Readings
   tag: readings
@@ -49,4 +63,18 @@ travel:
   routeMapAttribution: "* Map boundaries use india-maps-data GeoJSON; coordinates are resolved with the Open-Meteo Geocoding API; road and walking routes use OSRM; rail routes use RailRadar; rendered with ECharts."
 
 post:
-  backToBlogs: Back to Writing
+  backToBlogs: Back to Home
+  share: Share
+  # Kicker above the title. Tags stand in for it when the post has any.
+  kicker: Writing
+  # Suffix on the estimated reading time in the byline: "3 min read".
+  readingTime: min read
+  # Footer hand-off to the neighbouring post: the older one where there is one,
+  # the newer one at the bottom of the archive.
+  nextLabel: Next up
+  previousLabel: Previously
+
+privacy:
+  title: Privacy Policy
+  lastUpdatedLabel: Last updated
+  lastUpdated: August 16, 2026

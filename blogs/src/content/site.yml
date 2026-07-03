@@ -4,6 +4,7 @@
 profile:
   name: Samyabrata Roy
   profileIconPath: /profile-icon.png
+  email: samyaroy00@gmail.com
 
 # Full-bleed hero shown at the top of the blog home page.
 # Drop your own image at blogs/public/hero.jpg (any wide image works).
