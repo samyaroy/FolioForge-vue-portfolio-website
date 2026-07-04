@@ -6,6 +6,7 @@ type FeatureFlagNode = {
 
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showHome: {
+    showRibbon: true,
     showHeroSection: true,
     showResearchInterests: true,
     showExperience: true,
