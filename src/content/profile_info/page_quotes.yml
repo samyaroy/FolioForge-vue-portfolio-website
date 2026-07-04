@@ -28,13 +28,14 @@ page_quotes:
     - text: "To live a creative life, we must lose our fear of being wrong."
       author: "Joseph Chilton Pearce"
 
-  # Teachings:
-  #   - text: "Teaching is the art of making a path visible without walking it for someone."
-  #     author: "Teaching notebook"
+  Teachings:
+    - text: "Education never ends, Watson. It is a series of lessons, with the greatest for the last."
+      source: "His Last Bow"
+      author: "Sir Arthur Conan Doyle"
 
-  # InternshipCertification:
-  #   - text: "Practice turns credentials into evidence."
-  #     author: "Learning notebook"
+  InternshipCertification:
+    - text: "Those who make peaceful revolution impossible will make violent revolution inevitable."
+      author: "John F. Kennedy"
 
   # ProfessionalAcitivity:
   #   - text: "Communities grow where people keep showing up with care."
