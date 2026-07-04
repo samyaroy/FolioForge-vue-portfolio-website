@@ -160,6 +160,9 @@ Institute:
       Website: https://www.coursera.org/
 
     - Name: NPTEL
+      Aliases:
+        - National Programme on Technology Enhanced Learning
+        - National Programme on Technology Enhanced Learning (NPTEL)
       Website: https://nptel.ac.in/
 
 
@@ -218,3 +221,6 @@ Person:
 
     - Name: Prof. K muralidharan
       Link: https://www.linkedin.com/in/muralidharan-kunnummal/
+
+    - Name: Prof. Indu Joshi
+      Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
