@@ -1,6 +1,13 @@
 import { PostCard } from '../../views/Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
+import {
+  EMPTY_TEXT_CLASS,
+  INTRO_SECTION_CLASS,
+  INTRO_TEXT_CLASS,
+  INTRO_TITLE_CLASS,
+  POST_LIST_CLASS,
+} from '../../lib/ui'
 
 type SectionPageProps = {
   title: string
@@ -27,15 +34,15 @@ export function SectionPage({
 
   return (
     <>
-      <section className="intro">
-        <h1>{title}</h1>
-        {showPageDescription && <p>{description}</p>}
+      <section className={INTRO_SECTION_CLASS}>
+        <h1 className={INTRO_TITLE_CLASS}>{title}</h1>
+        {showPageDescription && <p className={INTRO_TEXT_CLASS}>{description}</p>}
       </section>
 
       {sectionPosts.length === 0 ? (
-        <p className="empty">No posts here yet.</p>
+        <p className={EMPTY_TEXT_CLASS}>No posts here yet.</p>
       ) : (
-        <div className="post-list">
+        <div className={POST_LIST_CLASS}>
           {sectionPosts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}

@@ -11,7 +11,17 @@ import {
   TRAVEL_LEGEND_LABELS,
   type Purpose,
 } from '../../content/travel/data'
+import {
+  INTRO_SECTION_CLASS,
+  INTRO_TEXT_CLASS,
+  INTRO_TITLE_CLASS,
+  POST_LIST_CLASS,
+} from '../../lib/ui'
 import { geocodeCities, type GeoCity } from './components/geocode'
+
+const LEGEND_ROW_CLASS = 'inline-flex items-center gap-[0.35rem]'
+const LEGEND_HATCH_CLASS =
+  'inline-block size-3 rounded-[3px] border border-border bg-[#f1f5f9]'
 
 // India boundaries pulled from a maintained, post-2019 dataset (Ladakh & J&K
 // split, current names) served over a CDN — no GeoJSON is vendored in-repo.
@@ -395,15 +405,17 @@ export function TravelPage() {
   }, [])
 
   return (
-    <div className="travel-layout">
-      <div className="travel-layout__main">
-        <section className="intro">
-          <h1>{TRAVEL_SECTION.title}</h1>
-          {showPageDescription && <p>{TRAVEL_SECTION.description}</p>}
+    <div className="ml-[50%] grid w-[min(calc(100vw-2rem),78rem)] -translate-x-1/2 grid-cols-1 gap-6 min-[900px]:grid-cols-[55%_45%] min-[900px]:items-start">
+      <div className="min-w-0">
+        <section className={INTRO_SECTION_CLASS}>
+          <h1 className={INTRO_TITLE_CLASS}>{TRAVEL_SECTION.title}</h1>
+          {showPageDescription && (
+            <p className={INTRO_TEXT_CLASS}>{TRAVEL_SECTION.description}</p>
+          )}
         </section>
 
         {travelPosts.length > 0 && (
-          <div className="post-list">
+          <div className={POST_LIST_CLASS}>
             {travelPosts.map((post) => (
               <PostCard key={post.slug} post={post} />
             ))}
@@ -412,18 +424,22 @@ export function TravelPage() {
       </div>
 
       <section
-        className="travel-map travel-layout__map"
+        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
         aria-label="Map of states visited in India"
       >
-        <div className="travel-map__head">
-          <h2>{TRAVEL_SECTION.mapTitle}</h2>
+        <div className="mb-2">
+          <h2 className="text-[1.1rem] text-ink">{TRAVEL_SECTION.mapTitle}</h2>
 
-          <div className="travel-map__legend">
-            <span className="travel-legend__row">
+          <div className="absolute top-[0.85rem] right-4 z-2 flex flex-col items-end gap-[0.3rem] rounded-lg border border-border bg-[rgba(255,255,255,0.85)] px-[0.6rem] py-2 text-right text-[0.72rem] text-muted backdrop-blur-[2px]">
+            <span className={LEGEND_ROW_CLASS}>
               <span>{COUNT_LABELS[0]}</span>
-              <span className="travel-legend__strip">
+              <span className="inline-flex overflow-hidden rounded-[3px] border border-border">
                 {COUNT_PALETTE.map((c) => (
-                  <i key={c} style={{ background: c }} />
+                  <i
+                    key={c}
+                    className="block h-2.5 w-[13px]"
+                    style={{ background: c }}
+                  />
                 ))}
               </span>
               <span>
@@ -432,45 +448,48 @@ export function TravelPage() {
               </span>
             </span>
 
-            <span className="travel-legend__row">
-              <span className="travel-legend__hatch travel-legend__hatch--academic" />
+            <span className={LEGEND_ROW_CLASS}>
+              <span
+                className={`${LEGEND_HATCH_CLASS} bg-[image:repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+              />
               {TRAVEL_LEGEND_LABELS.academic}
             </span>
-            <span className="travel-legend__row">
-              <span className="travel-legend__hatch travel-legend__hatch--travel" />
+            <span className={LEGEND_ROW_CLASS}>
+              <span
+                className={`${LEGEND_HATCH_CLASS} bg-[image:repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+              />
               {TRAVEL_LEGEND_LABELS.travel}
             </span>
-            <span className="travel-legend__row">
-              <span className="travel-legend__hatch travel-legend__hatch--both" />
+            <span className={LEGEND_ROW_CLASS}>
+              <span
+                className={`${LEGEND_HATCH_CLASS} bg-[image:radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] [background-size:3px_3px]`}
+              />
               {TRAVEL_LEGEND_LABELS.both}
             </span>
 
             {homeState && (
-              <span className="travel-legend__row">
-                <span
-                  className="travel-legend__swatch"
-                  style={{ background: HOME_COLOR }}
-                />
+              <span className={LEGEND_ROW_CLASS}>
+                <span style={{ background: HOME_COLOR }} />
                 {TRAVEL_LEGEND_LABELS.homeState} ({homeState})
               </span>
             )}
 
-            <span className="travel-legend__row">
-              <span className="travel-legend__dot" />
+            <span className={LEGEND_ROW_CLASS}>
+              <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#ef4444] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
               {TRAVEL_LEGEND_LABELS.cityVisited}
             </span>
 
             {stayedCities.length > 0 && (
-              <span className="travel-legend__row">
-                <span className="travel-legend__stayed" />
+              <span className={LEGEND_ROW_CLASS}>
+                <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#2563eb] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
                 {TRAVEL_LEGEND_LABELS.stayed}
               </span>
             )}
 
             {homeCity && (
-              <span className="travel-legend__row">
+              <span className={LEGEND_ROW_CLASS}>
                 <svg
-                  className="travel-legend__pin"
+                  className="inline-block h-3 w-[9px]"
                   viewBox="0 0 24 32"
                   aria-hidden="true"
                 >
@@ -487,18 +506,18 @@ export function TravelPage() {
           </div>
         </div>
 
-        <div className="travel-map__canvas-frame">
-          <div className="travel-map__canvas" ref={containerRef} />
+        <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white">
+          <div className="h-[92vh] min-h-[600px] w-full bg-white" ref={containerRef} />
         </div>
-        <p className="travel-map__attribution">
+        <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
           {TRAVEL_SECTION.mapAttribution}
         </p>
 
         {status === 'loading' && (
-          <p className="travel-map__status">Loading map…</p>
+          <p className="mt-2 text-[0.9rem] text-muted">Loading map…</p>
         )}
         {status === 'error' && (
-          <p className="travel-map__status travel-map__status--error">
+          <p className="mt-2 text-[0.9rem] text-[#dc2626]">
             Could not load the map data. Please try again later.
           </p>
         )}

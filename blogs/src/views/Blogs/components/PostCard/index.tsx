@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom'
 import type { PostMeta } from '../../../../types'
 import { formatDate } from '../../../../lib/format'
+import {
+  CARD_ART_BACKDROP_CLASS,
+  CARD_EXCERPT_CLASS,
+  CARD_META_CLASS,
+  CARD_SHELL_CLASS,
+  CARD_TITLE_CLASS,
+} from '../../../../lib/ui'
 
 type PostCardProps = {
   post: PostMeta
@@ -8,34 +15,49 @@ type PostCardProps = {
 
 export function PostCard({ post }: PostCardProps) {
   return (
-    <article className="post-card">
-      <div className="post-card__media" aria-hidden="true">
+    <article
+      className={`grid grid-cols-1 items-stretch rounded-xl ${CARD_SHELL_CLASS} md:min-h-52 md:grid-cols-[40%_minmax(0,1fr)]`}
+    >
+      <div
+        className={`relative grid min-h-40 place-items-center overflow-hidden border-b border-[rgba(15,23,42,0.07)] ${CARD_ART_BACKDROP_CLASS} md:min-h-0 md:border-r md:border-b-0`}
+        aria-hidden="true"
+      >
         {post.cover ? (
           <img
-            className="post-card__image"
+            className="absolute inset-0 size-full object-cover"
             src={post.cover}
             alt=""
             loading="lazy"
           />
         ) : (
-          <span className="post-card__media-fallback">✳</span>
+          <span className="text-[2rem] text-primary opacity-55">✳</span>
         )}
       </div>
-      <div className="post-card__content">
-        <h2 className="post-card__title">
-          <Link to={`/posts/${post.slug}`}>{post.title}</Link>
+      <div className="min-w-0 px-[1.6rem] py-6">
+        <h2 className={CARD_TITLE_CLASS}>
+          <Link
+            className="text-ink transition-colors duration-200 hover:text-primary"
+            to={`/posts/${post.slug}`}
+          >
+            {post.title}
+          </Link>
         </h2>
-        <div className="post-card__meta">
-          <span>Article</span>
+        <div className={CARD_META_CLASS}>
+          <span className="after:ml-2 after:inline-block after:size-1 after:rounded-full after:bg-primary after:align-middle after:content-['']">
+            Article
+          </span>
           {post.date && <time dateTime={post.date}>{formatDate(post.date)}</time>}
         </div>
         {post.description && (
-          <p className="post-card__excerpt">{post.description}</p>
+          <p className={CARD_EXCERPT_CLASS}>{post.description}</p>
         )}
         {post.tags.length > 0 && (
-          <ul className="tag-list">
+          <ul className="mt-4 flex flex-wrap gap-[0.4rem]">
             {post.tags.map((tag) => (
-              <li key={tag} className="tag">
+              <li
+                key={tag}
+                className="rounded-[5px] bg-[rgba(219,234,254,0.5)] px-[0.4rem] py-1 text-[0.625rem] leading-none font-semibold tracking-widest text-[#475569] uppercase"
+              >
                 {tag}
               </li>
             ))}

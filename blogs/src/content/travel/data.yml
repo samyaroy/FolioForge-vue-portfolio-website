@@ -79,6 +79,7 @@ cityVisits:
 
   # Andhra Pradesh
   - { name: Visakhapatnam, visits: 1, state: Andhra Pradesh }
+  - { name: Araku, visits: 1, state: Andhra Pradesh }
 
   # West Bengal
   - { name: Kolkata, visits: 1, state: West Bengal, home: true }

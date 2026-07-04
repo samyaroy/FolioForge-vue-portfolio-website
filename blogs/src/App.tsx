@@ -8,6 +8,7 @@ import { ReadingsPage } from './views/Readings'
 import { HobbiesPage } from './views/Hobbies'
 import { GalleryPage } from './views/Gallery'
 import { isFeatureEnabled } from './config/featureFlags'
+import { EMPTY_TEXT_CLASS } from './lib/ui'
 
 // Travel pulls in ECharts (~1 MB); load it only when the route is visited.
 const TravelPage = lazy(() =>
@@ -25,7 +26,7 @@ const optionalRoutes = [
     ? {
         path: '/travel',
         element: (
-          <Suspense fallback={<p className="empty">Loading map…</p>}>
+          <Suspense fallback={<p className={EMPTY_TEXT_CLASS}>Loading map…</p>}>
             <TravelPage />
           </Suspense>
         ),

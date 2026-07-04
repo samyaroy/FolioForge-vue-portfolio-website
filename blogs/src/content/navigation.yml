@@ -14,13 +14,13 @@ navItems:
     label: Blog
     flag: showBlogHome
   - to: /readings
-    label: Readings
+    label: What I Read
     flag: showReadings
   - to: /travel
-    label: Travel
+    label: TravelBook
     flag: showTravel
   - to: /hobbies
-    label: Hobbies
+    label: Hobby Lobby
     flag: showHobbies
   - to: /gallery
     label: Gallery
