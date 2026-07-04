@@ -92,7 +92,7 @@ projects:
     cred_link:
       report: https://drive.google.com/file/d/1HZ2ZXDpfW3abasiGvcABKqvP03hpM9PO/view?usp=drive_link
       github: "https://github.com/vicharanashala/cs9"
-    logo: ['VLED-IITRPR']
+    logo: ['VLED-IITRPR3']
 
   - title: Quiz Pilot (V1 & V2)
     description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
