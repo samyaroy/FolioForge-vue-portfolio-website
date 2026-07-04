@@ -14,7 +14,7 @@ export type StateVisit = {
 export type CityVisit = {
   name: string
   visits?: number
-  /** Optional state, used only to disambiguate geocoding (matches admin1). */
+  /** Filled in from the parent state entry; used to disambiguate geocoding. */
   state?: string
   /** Places where you lived/stayed for college, work, or similar reasons. */
   stayed?: boolean
@@ -36,16 +36,25 @@ export interface TravelLegendLabels {
   homeCityCenter: string
 }
 
+interface StateEntry extends StateVisit {
+  cities?: Omit<CityVisit, 'state'>[]
+}
+
 interface TravelContent {
   legendLabels: TravelLegendLabels
-  stateVisits: StateVisit[]
-  cityVisits: CityVisit[]
+  states: StateEntry[]
 }
 
 const travel = raw as TravelContent
 
-export const STATE_VISITS: StateVisit[] = travel.stateVisits
-export const CITY_VISITS: CityVisit[] = travel.cityVisits
+export const STATE_VISITS: StateVisit[] = travel.states.map(
+  ({ state, purpose, home }) => ({ state, purpose, home }),
+)
+
+export const CITY_VISITS: CityVisit[] = travel.states.flatMap((entry) =>
+  (entry.cities ?? []).map((city) => ({ ...city, state: entry.state })),
+)
+
 export const TRAVEL_LEGEND_LABELS: TravelLegendLabels = travel.legendLabels
 
 /**
