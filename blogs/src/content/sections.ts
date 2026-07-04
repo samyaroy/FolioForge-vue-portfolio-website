@@ -1,15 +1,14 @@
-// Typed accessors over sections.yml (per-page titles, descriptions, labels).
+// Typed accessors over sections.yml (per-page titles and labels).
+// Page subtitle/description lines live in descriptions.yml / descriptions.ts.
 import raw from './sections.yml'
 
 interface SectionsContent {
   blogs: {
     title: string
-    description: string
     heroHeading: string
   }
   readings: {
     title: string
-    description: string
     tag: string
     cardLabel: string
     emptyLabel: string
@@ -17,17 +16,14 @@ interface SectionsContent {
   }
   hobbies: {
     title: string
-    description: string
     tag: string
   }
   gallery: {
     title: string
-    description: string
     tag: string
   }
   travel: {
     title: string
-    description: string
     tag: string
     mapTitle: string
     mapAttribution: string

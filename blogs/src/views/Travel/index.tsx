@@ -3,6 +3,7 @@ import * as echarts from 'echarts'
 import { PostCard } from '../Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
 import { TRAVEL_SECTION } from '../../content/sections'
+import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
 import {
   CITIES_PER_STATE,
@@ -410,7 +411,7 @@ export function TravelPage() {
         <section className={INTRO_SECTION_CLASS}>
           <h1 className={INTRO_TITLE_CLASS}>{TRAVEL_SECTION.title}</h1>
           {showPageDescription && (
-            <p className={INTRO_TEXT_CLASS}>{TRAVEL_SECTION.description}</p>
+            <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.travel}</p>
           )}
         </section>
 
@@ -437,7 +438,7 @@ export function TravelPage() {
                 {COUNT_PALETTE.map((c) => (
                   <i
                     key={c}
-                    className="block h-2.5 w-[13px]"
+                    className="block h-2.5 w-3.25"
                     style={{ background: c }}
                   />
                 ))}
@@ -450,19 +451,19 @@ export function TravelPage() {
 
             <span className={LEGEND_ROW_CLASS}>
               <span
-                className={`${LEGEND_HATCH_CLASS} bg-[image:repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+                className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
               />
               {TRAVEL_LEGEND_LABELS.academic}
             </span>
             <span className={LEGEND_ROW_CLASS}>
               <span
-                className={`${LEGEND_HATCH_CLASS} bg-[image:repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+                className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
               />
               {TRAVEL_LEGEND_LABELS.travel}
             </span>
             <span className={LEGEND_ROW_CLASS}>
               <span
-                className={`${LEGEND_HATCH_CLASS} bg-[image:radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] [background-size:3px_3px]`}
+                className={`${LEGEND_HATCH_CLASS} bg-[radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] bg-size-[3px_3px]`}
               />
               {TRAVEL_LEGEND_LABELS.both}
             </span>
@@ -489,7 +490,7 @@ export function TravelPage() {
             {homeCity && (
               <span className={LEGEND_ROW_CLASS}>
                 <svg
-                  className="inline-block h-3 w-[9px]"
+                  className="inline-block h-3 w-2.25"
                   viewBox="0 0 24 32"
                   aria-hidden="true"
                 >
@@ -507,7 +508,7 @@ export function TravelPage() {
         </div>
 
         <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white">
-          <div className="h-[92vh] min-h-[600px] w-full bg-white" ref={containerRef} />
+          <div className="h-[92vh] min-h-150 w-full bg-white" ref={containerRef} />
         </div>
         <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
           {TRAVEL_SECTION.mapAttribution}

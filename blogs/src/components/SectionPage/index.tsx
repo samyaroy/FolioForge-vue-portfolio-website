@@ -1,6 +1,7 @@
 import { PostCard } from '../../views/Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
+import { PAGE_DESCRIPTIONS, type PageKey } from '../../content/descriptions'
 import {
   EMPTY_TEXT_CLASS,
   INTRO_SECTION_CLASS,
@@ -11,8 +12,7 @@ import {
 
 type SectionPageProps = {
   title: string
-  description: string
-  pageKey: string
+  pageKey: PageKey
   tag?: string
 }
 
@@ -21,12 +21,7 @@ function matchesTag(postTags: string[], tag: string): boolean {
   return postTags.some((postTag) => postTag.toLowerCase() === normalizedTag)
 }
 
-export function SectionPage({
-  title,
-  description,
-  pageKey,
-  tag,
-}: SectionPageProps) {
+export function SectionPage({ title, pageKey, tag }: SectionPageProps) {
   const sectionPosts = tag
     ? posts.filter((post) => matchesTag(post.tags, tag))
     : []
@@ -36,7 +31,9 @@ export function SectionPage({
     <>
       <section className={INTRO_SECTION_CLASS}>
         <h1 className={INTRO_TITLE_CLASS}>{title}</h1>
-        {showPageDescription && <p className={INTRO_TEXT_CLASS}>{description}</p>}
+        {showPageDescription && (
+          <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS[pageKey]}</p>
+        )}
       </section>
 
       {sectionPosts.length === 0 ? (

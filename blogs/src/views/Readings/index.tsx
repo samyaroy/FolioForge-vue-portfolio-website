@@ -1,5 +1,6 @@
 import { READINGS_SECTION } from '../../content/sections'
 import { READINGS } from '../../content/readings/data'
+import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
 import {
   EMPTY_TEXT_CLASS,
@@ -17,7 +18,7 @@ export function ReadingsPage() {
       <section className={INTRO_SECTION_CLASS}>
         <h1 className={INTRO_TITLE_CLASS}>{READINGS_SECTION.title}</h1>
         {showPageDescription && (
-          <p className={INTRO_TEXT_CLASS}>{READINGS_SECTION.description}</p>
+          <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.readings}</p>
         )}
       </section>
 
