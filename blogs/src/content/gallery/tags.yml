@@ -1,0 +1,28 @@
+# Gallery filter tags are defined here so chip order and labels stay separate
+# from the gallery item content in `blogs/src/content/gallery/data.yml`.
+#
+# Schema:
+# tags:
+#   - id: stable tag identifier used in gallery item `tags`
+#     label: display label shown in the filter UI
+
+tags:
+  - id: Featured
+    label: Featured
+  - id: "Academic Milestone"
+    label: "Academic Milestone"
+  - id: "New Role"
+    label: "New Role"
+  - id: Collaboration
+    label: Collaboration
+  - id: Workshop
+    label: "Conference, Workshop & Bootcamp"
+  - id: Mentoring
+    label: Mentoring
+  - id: "Guest Event"
+    label: "Guest Event"
+  - id: "New Publication"
+    label: "New Article & Publication"
+  - id: TechFest
+    label: TechFest
+  

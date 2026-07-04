@@ -39,7 +39,7 @@ export function HobbiesPage() {
       </section>
 
       <section
-        className="mx-auto max-w-6xl rounded-2xl bg-ink p-4 sm:p-5"
+        className="ml-[50%] w-[min(calc(100vw-2rem),78rem)] -translate-x-1/2 rounded-2xl bg-ink p-4 sm:p-5"
         aria-label="Hobbies"
       >
         <ul className="flex flex-wrap justify-center gap-3 sm:gap-4">

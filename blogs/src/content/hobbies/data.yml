@@ -9,12 +9,12 @@
 #   tint  — true renders the tile with the soft blue accent background
 
 tiles:
-  - { label: Book, icon: mdi-book-open-variant }
+  - { label: Book, icon: mdi-book-open-page-variant }
   - { label: Badminton, icon: mdi-badminton }
   - { label: Hiking, icon: mdi-hiking, tint: true }
   - { label: Bike, icon: mdi-bike }
-  - { label: Football, icon: mdi-soccer }
-  - { label: Code, icon: mdi-code-braces, tint: true }
+  - { label: Football, icon: mdi-soccer, tint: true }
+  - { label: Code, icon: mdi-code-block-braces, tint: true }
   # - { label: Photography, icon: mdi-camera }
   # - { label: Travelling, icon: mdi-airplane, tint: true }
   # - { label: Music, icon: mdi-music }

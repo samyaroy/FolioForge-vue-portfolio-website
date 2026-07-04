@@ -20,10 +20,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showPageDescriptions: {
     enabled: true,
     blogs: true,
-    readings: true,
+    readings: false,
     travel: true,
-    hobbies: true,
-    gallery: true,
+    hobbies: false,
+    gallery: false,
   },
 }) satisfies FeatureFlagNode
 
