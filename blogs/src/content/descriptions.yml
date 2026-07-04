@@ -4,8 +4,10 @@
 # src/config/featureFlags.ts (mirrors the root site's description.yml).
 
 blogs: "Notes on what I'm building, learning, and thinking about."
+recommended: "Writing by other people that I keep going back to, and think you would get something out of too."
 readings: "Notes from books, papers, essays, and the ideas worth returning to..."
 movies: "Films that were worth the evening — what I watched, what stayed with me, and what I'd happily sit through again"
 travel: "Notes from my travels, documenting few places I've been, the experiences I've had, and the lessons I've learned along the way"
 hobbies: "Personal notes from the things I do for curiosity, craft, and quiet joy"
 gallery: "A curated timeline of my career highlights, showcasing key milestones, achievements, and memorable moments that have shaped my journey so far"
+privacy: "How this blog handles hosting data, browser storage, remote content, external services, and privacy requests."

@@ -4,10 +4,12 @@ import raw from './descriptions.yml'
 
 export type PageKey =
   | 'blogs'
+  | 'recommended'
   | 'readings'
   | 'movies'
   | 'travel'
   | 'hobbies'
   | 'gallery'
+  | 'privacy'
 
 export const PAGE_DESCRIPTIONS = raw as Record<PageKey, string>
