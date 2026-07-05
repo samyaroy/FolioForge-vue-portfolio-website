@@ -21,6 +21,8 @@ import workshops from './workshops.yml'
 import teaching from './teaching.yml'
 import affiliations from './affiliations.yml'
 import professionalActivity from './professional_activity.yml'
+import pageQuotes from './page_quotes.yml'
+import ribbon from './ribbon.yml'
 
 const config: Record<string, any> = {
   ...meta,
@@ -38,6 +40,8 @@ const config: Record<string, any> = {
   ...teaching,
   ...affiliations,
   ...professionalActivity,
+  ...pageQuotes,
+  ...ribbon,
 }
 
 export default config

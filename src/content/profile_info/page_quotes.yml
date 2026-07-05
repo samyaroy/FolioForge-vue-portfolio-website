@@ -1,0 +1,60 @@
+page_quotes:
+  default:
+    - text: "To punish the oppressors of humanity is clemency; to forgive them is cruelty."
+      author: "Maximilien de Robespierre"
+
+  Home:
+    - text: "To punish the oppressors of humanity is clemency; to forgive them is cruelty."
+      author: "Maximilien de Robespierre"
+
+  ProjectsPublications:
+    - text: "Most successes are unhappy. That's why they are successes-they have to reassure themselves about themselves by achieving something that the world will notice.... The happy people are failures because they are on such good terms with themselves that they don't give a damn."
+      source: "Sparkling Cyanide"
+      author: "Agatha Christie"
+
+  OngoingProjects:
+    - text: "You can outsource your thinking, but you cannot outsource your understanding."
+      author: "Andrej Karpathy"
+
+  # Affiliations:
+  #   - text: "Good collaborations make the room larger than the table."
+  #     author: "Collaboration notebook"
+
+  # Cocurricular:
+  #   - text: "The work outside the syllabus often teaches the shape of the person."
+  #     author: "Field notes"
+
+  Workshops:
+    - text: "To live a creative life, we must lose our fear of being wrong."
+      author: "Joseph Chilton Pearce"
+
+  Teachings:
+    - text: "Education never ends, Watson. It is a series of lessons, with the greatest for the last."
+      source: "His Last Bow"
+      author: "Sir Arthur Conan Doyle"
+
+  InternshipCertification:
+    - text: "Those who make peaceful revolution impossible will make violent revolution inevitable."
+      author: "John F. Kennedy"
+
+  # ProfessionalAcitivity:
+  #   - text: "Communities grow where people keep showing up with care."
+  #     author: "Professional notebook"
+
+  Gallery:
+    - text: "স্মৃতির পটে জীবনের ছবি কে আঁকিয়া যায় জানি না। কিন্তু যেই আঁকুক সে ছবিই আঁকুক সে ছবিই আঁকে।"
+      source: "জীবন স্মৃতি, ১৯১২"
+      author: "রবীন্দ্রনাথ ঠাকুর"
+
+  # Contact:
+  #   - text: "A conversation is often the first draft of a collaboration."
+  #     author: "Contact notebook"
+
+  Resources:
+    - text: "I can no other answer make but thanks, and thanks, and ever thanks."
+      source: "Twelfth Night"
+      author: "William Shakespeare"
+
+  # PrivacyPolicy:
+  #   - text: "Trust is design you can read."
+  #     author: "Policy notebook"

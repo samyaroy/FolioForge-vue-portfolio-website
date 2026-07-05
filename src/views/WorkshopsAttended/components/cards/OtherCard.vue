@@ -16,6 +16,9 @@
           <div>
             <h3 class="text-md font-semibold text-[#0e141b]">
               {{ other.title }}
+              <span v-if="credentialLink" class="inline-block ml-1 align-middle">
+                <DocumentViewer :src="credentialLink" />
+              </span>
             </h3>
           </div>
 
@@ -82,6 +85,7 @@
 <script setup>
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import DocumentViewer from '@/components/DocumentViewer.vue'
 
 
 import inPersonIcon from '@/assets/icons/persons-in-a-class-by-flaticon.png'
@@ -148,7 +152,9 @@ const normalizedHosts = computed(() => {
   return []
 })
 
-const externalLink = computed(() => props.other?.link || props.other?.cred_link || null)
+const credentialLink = computed(() => props.other?.cred_link || '')
+
+const externalLink = computed(() => props.other?.link || null)
 
 const displayLocation = computed(() => {
   return props.other?.location || normalizedHosts.value[0]?.location || ''

@@ -77,13 +77,13 @@
 
             <li v-if="showOngoingProjectsLink">
               <router-link to="/ongoing-projects"
-                class="footer-link">
+                class="text-black-300 hover:text-black transition-colors duration-200">
                 Ongoing Projects
               </router-link>
             </li>
             <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
-                class="footer-link">
+                class="text-black-300 hover:text-black transition-colors duration-200">
                 Affiliations, Collaborators & Memberships
               </router-link>
             </li>
@@ -95,7 +95,7 @@
             </li>
             <li v-if="showWorkshopsAttendedLink">
               <router-link to="/workshops-bootcamps-attended"
-                class="footer-link">
+                class="text-black-300 hover:text-black transition-colors duration-200">
                 Conferences, Workshops & Bootcamps attended
               </router-link>
             </li>
@@ -174,18 +174,7 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
-          <p class="text-gray-500 text-sm">
-            Looking for beta version?
-            <a
-              :href="betaVersionUrl"
-              class="footer-link text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              see here
-            </a>
-          </p>
+        <div class="mt-2 md:mt-0">
           <router-link
             :to="{ name: 'PrivacyPolicy' }"
             class="footer-link text-sm"
@@ -199,7 +188,7 @@
         <div>
           <p class="text-gray-500 text-sm ml-4">
             Source code available at
-            <a class="footer-link"
+            <a class="underline hover:text-white"
               href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template" target="_blank">
               GitHub Repo
             </a>
@@ -209,11 +198,11 @@
 
           <p class="text-gray-500 text-sm mt-1">
             &#9432; Some icons used are made by
-            <a href="https://www.flaticon.com/authors/freepik" target="_blank" class="footer-link">Freepik</a>
+            <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
             &
-            <a href="https://www.flaticon.com/authors/smashicons" target="_blank" class="footer-link">Smashicons</a>
+            <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a>
             from
-            <a href="https://www.flaticon.com/free-icons/class" target="_blank" class="footer-link">Flaticon</a>
+            <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
           </p>
         </div>
 
@@ -240,7 +229,7 @@ export default {
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
-    const showResourcesLink = isFeatureEnabled('showResources')
+    const showResourcesLink = isFeatureEnabled('showResources.main')
     const showAffiliationsLink = (
       isFeatureEnabled('showAffiliations.showAffiliations')
       || isFeatureEnabled('showAffiliations')
@@ -258,7 +247,8 @@ export default {
       google_scholar: socials.google_scholar,
       researchgate: socials.researchgate,
       // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
-      logos: ['SNU', 'IITM', 'IDEAS-ISI'],
+      // logos: ['SNU', 'IITM', 'IDEAS-ISI','VLED-IITRPR2'],
+      logos: ['SNU', 'IITM', 'IDEAS-ISI'],   
       // logos: ['SNU', 'IITM', 'IDEAS'],
 
       last_updated_on: config.last_updated_on,

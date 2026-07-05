@@ -28,6 +28,7 @@ export const posts: Post[] = Object.entries(rawPosts)
         typeof attributes.description === 'string'
           ? attributes.description
           : undefined,
+      cover: typeof attributes.cover === 'string' ? attributes.cover : undefined,
       tags: Array.isArray(attributes.tags) ? attributes.tags : [],
       draft: attributes.draft === true,
       body,

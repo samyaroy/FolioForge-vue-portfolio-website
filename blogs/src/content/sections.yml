@@ -1,0 +1,34 @@
+# Per-page section copy: titles and page labels.
+# Loaded through src/content/sections.ts, which applies the types.
+# Page subtitle/description lines live in src/content/descriptions.yml.
+
+blogs:
+  title: Writing
+  # Large heading shown above the hero image on the blog home page.
+  heroHeading: |-
+    The details are not the details.
+    They make the design
+
+readings:
+  title: Readings
+  tag: readings
+  cardLabel: Reading
+  emptyLabel: No readings here yet.
+  reviewLabel: "Read review ->"
+
+hobbies:
+  title: Hobbies
+  tag: hobbies
+
+gallery:
+  title: Gallery
+  tag: gallery
+
+travel:
+  title: Travel
+  tag: travel
+  mapTitle: States & cities visited
+  mapAttribution: "* Map boundaries use india-maps-data GeoJSON; city coordinates are resolved with the Open-Meteo Geocoding API and rendered with ECharts."
+
+post:
+  backToBlogs: Back to Writing

@@ -2,6 +2,7 @@
 title: Markdown features that work out of the box
 date: 2026-06-10
 description: Tables, task lists, code blocks, and other GFM niceties.
+cover: /hero.jpg
 tags: [markdown, reference]
 draft: false
 ---

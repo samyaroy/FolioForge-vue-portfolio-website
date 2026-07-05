@@ -42,6 +42,9 @@
         <router-link v-if="showGalleryNavLink" to="/gallery" class="nav-link" active-class="active-link">
           Gallery
         </router-link>
+        <router-link v-if="showFactsNavLink" to="/facts" class="nav-link" active-class="active-link">
+          Did you know?
+        </router-link>
         <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" class="blog-link text-base">
           Blog
         </a>
@@ -113,6 +116,9 @@
           <router-link :to="{ name: 'Contact' }" @click="drawer = false" class="nav-link" active-class="active-link">
             Contact
           </router-link>
+          <router-link v-if="showFactsNavLink" to="/facts" @click="drawer = false" class="nav-link" active-class="active-link">
+            Did you know?
+          </router-link>
           <a v-if="showBlogNavLink" :href="blogLink" target="_blank" rel="noopener" @click="drawer = false" class="blog-link">
             Blog
           </a>
@@ -140,6 +146,10 @@ const showBlogNavLink = computed(() => (
 
 const showGalleryNavLink = computed(() => (
   isFeatureEnabled('showGallery') && router.hasRoute('Gallery')
+))
+
+const showFactsNavLink = computed(() => (
+  isFeatureEnabled('showFacts') && router.hasRoute('Facts')
 ))
 
 const showTeachingsNavLink = computed(() => (

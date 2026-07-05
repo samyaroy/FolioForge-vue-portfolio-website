@@ -13,10 +13,24 @@
 #       - title: Entry title
 #         description: Optional supporting text
 #         meta: Optional small label (e.g. a date or type)
-#     links:                      # right column ("external links")
-#       - label: Link text
-#         url: https://example.com
-#         description: Optional one-liner
+#
+# Top-level `external` (right column): a list of link groups.
+# Each `group` renders as a heading with its `links` underneath:
+#   external:
+#     - group: Group heading
+#       links:
+#         - label: Link text
+#           url: https://example.com
+#             `url` is optional when the label — or a `ref:` you provide —
+#             matches a Name/Alias in src/metadata/hyperlinkMetadata.yml;
+#             the Website from there is used instead (an explicit url wins)
+#           ref: Optional metadata Name/Alias to resolve the url from
+#           description: Optional one-liner
+#           speciality: Optional focus area, shown as a small dot-tag under
+#                       the entry name (the `specility` spelling also works)
+#           incharge: Optional person in charge, shown below the entry with an
+#                     account icon; linked via the Person list in
+#                     src/metadata/hyperlinkMetadata.yml when the name matches
 #
 # Material icon source (the round badge on each material):
 #   By default it's the favicon of the material's `link` domain
@@ -68,12 +82,14 @@ subjects:
         instructor: "Prof. S R S Iyengar"
         distributor: "IIT Madras, NPTEL"
         logo: NPTEL
-        link: https://nptel.ac.in/courses/106106182
-  
+        link: https://nptel.ac.in/courses/106106182 
   
   - title: "Inferential Statistics"
     materials:
-      
+      - title: "Statistical Inference"
+        meta: "Book"
+        instructor: "Geoge Casella and Roger L. Berger"
+        distributor: "CENEGAGE Learning"
 
   - title: "Machine Learning"
     materials:
@@ -92,11 +108,45 @@ subjects:
     materials:
       
 
+# Right column: groups of links. Each `group` becomes a heading in the pane.
 external:
-  - label: "RBCDSAI, IIT Madras"
-    url: https://rbcdsai.iitm.ac.in/
-  - label: "IHUB Data, IIIT Hyderabad"
-    url: https://ihub-data.iiit.ac.in/
-  - 
+  - group: "Research Labs (Data Science, AI/ML, Cybersecurity)"
+    links:
+      - label: "RBCDSAI, IIT Madras"
+        url: https://rbcdsai.iitm.ac.in/
+        incharge: "Prof. Balaraman Ravindran"
+      - label: Trust Lab, IIT Bombay
+        url: https://trustlab.iitb.ac.in/
+        specility: "Cybersecurity"
+        incharge: "Prof. Chetan Kamath"
+      - label: PreCog, IIIT Hyderabad
+        url: https://precog.iiit.ac.in/index.html
+        incharge: "Prof. Ponnurangam Kumaraguru"
+      - label: "SCDLDS, Ashoka University"
+        url: https://www.ashoka.edu.in/page/centre-for-data-learning-and-decision-sciences-cdlds/
+        specility: "Decision Sciences"
+      - label: "VLED, IIT Roper"
+        ref: VLED
+        incharge: "Prof. Sudarshan Iyengar"
+        specility: "Education Design"
+  
+  - group: "TIHs (Technology Innovation Hubs)"
+    links:
+      - label: "IHUB Data, IIIT Hyderabad"
+        url: https://ihub-data.iiit.ac.in/
+      - label: "IDEAS-TIH, ISI Kolkata"
+        ref: IDEAS-TIH
+      - label: "iHub-AWaDH, IIT Ropar"
+        ref: "iHub – AWaDH"
+      - label: "C3iHub, IIT Kanpur"
+        url: https://c3ihub.org/
 
-
+  - group: "Club or Society (Statistics)"
+    links:
+      - label: RoSE Network
+        url: https://www.rose-network.org/
+      - label: The International Society for Bayesian Analysis 
+        url: https://bayesian.org/
+      - label: American Statistical Association
+        url: https://www.amstat.org/
+      - label: Royal Statistical Society

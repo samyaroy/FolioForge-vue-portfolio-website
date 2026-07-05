@@ -24,6 +24,13 @@ attended_fdps:
     cred_link: "https://drive.google.com/file/d/1V9mDic5EwtYRJNOQNbhTxuAstktAuAyN/preview"
 
 attended_workshops:
+  - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
+    instructor: "Prof. Indu Joshi"
+    institution:
+      - name: "National Programme on Technology Enhanced Learning (NPTEL)"
+    date: "June-July 2026"
+    mode: "Online"
+
   - title: "Systems for LLMs"
     institution:
       - name: "Indian Institute of Technology Bombay"
@@ -101,6 +108,16 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 attended_webinars_n_others:
+  - title: "Rao's Score Test and its Applications"
+    type: lecture
+    speaker: ["Prof. K Muralidharan"]
+    host:
+      - name: "Sardar Patel University"
+        department: "Department of Statistics"
+    date: "29 June, 2026"
+    mode: "Online"
+    cred_link:  https://drive.google.com/file/d/1r0Oi_maOpuLbzfXDZm24XV3C4jWczuG7/preview
+
   - title: "COPSS-NISS Leadership Webinar: The Role of Bayesian Statistics in an Age of AI"
     type: webiner
     speaker: ["Prof. David Dunson", "Prof. Xuming He", "Prof. (Dr.) Nadja Klein"]
@@ -110,7 +127,7 @@ attended_webinars_n_others:
         location: "Washington DC, US"
     date: "27 January, 2026"
     mode: "Online"
-    cred_link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
+    link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
 
   # - title: "Responsible AI Use for Journal Publishing"
   #   type: webiner
@@ -128,8 +145,9 @@ attended_webinars_n_others:
         location: 
     date: "23 March, 2026"
     mode: "Online"
-    cred_link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
-
+    link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
+    cred_link: https://drive.google.com/file/d/1IavCi-jSf5otKqv0yF80ftE8Yk1LpTSO/preview
+  
   - title: "Causal Learning for Individual and Population Health in the Era of AI"
     type: webiner
     speaker: ["Dr. Linda Valeri"]
@@ -139,7 +157,6 @@ attended_webinars_n_others:
         location: New York, US  
     date: "14 May, 2026"
     mode: "Online"
-    cred_link:
 
   - title: "Discussion on Bayesian Analysis"
     type: webiner
@@ -150,7 +167,6 @@ attended_webinars_n_others:
         location: Rome, IT  
     date: "14 May, 2026"
     mode: "Online"
-    cred_link:
 
   # - title: "Causal Learning for Individual and Population Health in the Era of AI"
   #   type: webiner
@@ -161,7 +177,6 @@ attended_webinars_n_others:
   #       location: New York, NY  
   #   date: "14 May, 2026"
   #   mode: "Online"
-  #   cred_link:
 
 attended_other_workshops:
   - title: "Measurements in AI"
@@ -175,7 +190,7 @@ attended_other_workshops:
         department: "Paradox 2026, BS Degreee"
     date: "June, 2026"
     mode: "Offline"
-    # cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
+    cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
 
   - title: "Testing and Automation of Web Apps using Playwright"
     institution:
@@ -250,8 +265,38 @@ attended_bootcamps:
     date: "June 2026"
     duration: "2 Weeks"
     location: "Chennai, TN"
-    cred_link: 
-    
+    cred_link: https://drive.google.com/file/d/1R_NPR4NufUw6oxVlV6v-e0lWsd1mhcod/preview
+    cirriculum:
+      link: "https://www.imsc.res.in/outreach/fstcs2026/"
+      week_1:
+        - course_name: Algorithms and Lower bounds for Selection Problems
+        - course_name: "Maximum Coverage: From Poly-Time to FPT Approximation"
+        - course_name: "Maximin Share Allocations: An Introduction"
+        - course_name: VC Theory and PAC Learning
+        - course_name: Combinatorics and Topology
+        - course_name: "The Power of Subspace Designs"
+        - course_name: Sunflower Lemma and Its Applications
+        - course_name: Budget-feasible Egalitarian Allocation of Conflicting Jobs
+        - course_name: The Math Behind Fixed Point Algorithms
+        - course_name: NP-Completeness and Beyond
+        - course_name: Introduction to Model Checking
+        - course_name: Introduction to Distributed Computing
+        - course_name: Introduction to Proof Complexity
+        - course_name: Hitting Set and Bounded VC Dimension
+      week_2:
+        - course_name: Introduction to Coding Theory
+        - course_name: Eigenvalues of Graphs
+        - course_name: Polynomials and Computation
+        - course_name: Diagonalization and Beyond
+        - course_name: Cactus Representation of Mincuts
+        - course_name: Aspects of Computing
+        - course_name: Introduction to Linear Programming
+        - course_name: "Connected Vertex Cover: A 2^k Algorithm"
+        - course_name: Combinatorics and Roots of Polynomials
+        - course_name: Introduction to Randomized Algorithms
+        - course_name: How to Guard A Museum?
+        - course_name: Polynomial Identity Testing
+
   # - title: "Summer Outreach Programme in Computing (SOPC)"
   #   instructor:
   #   institution:

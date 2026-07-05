@@ -1,26 +1,34 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as echarts from 'echarts'
-import { PostCard } from '../../components/PostCard'
+import { PostCard } from '../Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
+import { TRAVEL_SECTION } from '../../content/sections'
+import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
+import { isPageDescriptionEnabled } from '../../config/featureFlags'
 import {
   CITIES_PER_STATE,
   CITY_VISITS,
   STATE_VISITS,
+  TRAVEL_LEGEND_LABELS,
   type Purpose,
-} from './data'
-import { geocodeCities, type GeoCity } from './geocode'
+} from '../../content/travel/data'
+import {
+  INTRO_SECTION_CLASS,
+  INTRO_TEXT_CLASS,
+  INTRO_TITLE_CLASS,
+  POST_LIST_CLASS,
+} from '../../lib/ui'
+import { geocodeCities, type GeoCity } from './components/geocode'
+
+const LEGEND_ROW_CLASS = 'inline-flex items-center gap-[0.35rem]'
+const LEGEND_HATCH_CLASS =
+  'inline-block size-3 rounded-[3px] border border-border bg-[#f1f5f9]'
 
 // India boundaries pulled from a maintained, post-2019 dataset (Ladakh & J&K
 // split, current names) served over a CDN — no GeoJSON is vendored in-repo.
 const INDIA_GEOJSON_URL =
   'https://cdn.jsdelivr.net/gh/udit-001/india-maps-data@main/geojson/india.geojson'
 const INDIA_MAP_NAME = 'india'
-
-const PURPOSE_LABEL: Record<Purpose, string> = {
-  academic: 'Academic',
-  travel: 'Travel',
-  both: 'Academic + Travel',
-}
 
 // States are shaded by how many cities I've visited there, using a fixed
 // diverging palette (brown → cream → teal) applied as discrete count buckets.
@@ -73,10 +81,12 @@ const HOME_COLOR = '#7c3aed'
 
 const byState = new Map(STATE_VISITS.map((s) => [s.state, s]))
 const homeState = STATE_VISITS.find((s) => s.home)?.state
-const homeCity = CITY_VISITS.find((c) => c.home)?.name
+const homeCity = CITY_VISITS.find((c) => c.home && !c.stayed)?.name
+const stayedCities = CITY_VISITS.filter((c) => c.stayed).map((c) => c.name)
 
 // The home city is marked with a pin (vs plain dots for other cities).
 const HOME_CITY_COLOR = '#f59e0b'
+const STAYED_CITY_COLOR = '#2563eb'
 
 function bucketFor(count: number): number {
   const i = COUNT_UPPER.findIndex((u) => count <= u)
@@ -95,7 +105,14 @@ function tooltipFormatter(params: unknown): string {
     data?: { visits?: number }
   }
   if (p.seriesType === 'scatter') {
-    const d = p.data as { visits?: number; home?: boolean } | undefined
+    const d =
+      p.data as
+        | { visits?: number; home?: boolean; stayed?: boolean; stayReason?: string }
+        | undefined
+    if (d?.stayed) {
+      const reason = d.stayReason ? `<br/><em>${d.stayReason}</em>` : ''
+      return `<strong>${p.name}</strong><br/>${TRAVEL_LEGEND_LABELS.stayedTooltip}${reason}`
+    }
     if (d?.home) {
       return `<strong>${p.name}</strong><br/>⭐ <em>home city</em>`
     }
@@ -112,7 +129,6 @@ function tooltipFormatter(params: unknown): string {
   if (cities > 0) {
     lines.push(`Cities visited: ${cities}`)
   }
-  lines.push(`Purpose: ${PURPOSE_LABEL[s.purpose]}`)
   return lines.join('<br/>')
 }
 
@@ -234,21 +250,53 @@ function buildOption(
           color: '#0e141b',
         },
         data: cities
-          .filter((c) => !c.home)
+          .filter((c) => !c.home && !c.stayed)
           .map((c) => ({
             name: c.name,
-            value: [c.lng, c.lat, c.visits],
-            visits: c.visits,
+            value: [c.lng, c.lat, c.visits ?? 1],
+            visits: c.visits ?? 1,
           })),
         zlevel: 1,
       },
       {
+        name: TRAVEL_LEGEND_LABELS.stayed,
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        symbol: 'circle',
+        symbolSize: 6,
+        itemStyle: {
+          color: STAYED_CITY_COLOR,
+          borderColor: '#ffffff',
+          borderWidth: 1.2,
+          shadowBlur: 4,
+          shadowColor: 'rgba(0,0,0,0.25)',
+        },
+        emphasis: { scale: 1.4, label: { show: true } },
+        label: {
+          show: false,
+          formatter: '{b}',
+          position: 'right',
+          fontSize: 10,
+          color: '#0e141b',
+        },
+        data: cities
+          .filter((c) => c.stayed)
+          .map((c) => ({
+            name: c.name,
+            value: [c.lng, c.lat],
+            stayed: true,
+            stayReason: c.stayReason,
+            home: c.home,
+          })),
+        zlevel: 2,
+      },
+      {
         // The home city gets a distinct pin marker, drawn on top of the dots.
-        name: 'Home city',
+        name: TRAVEL_LEGEND_LABELS.homeCity,
         type: 'scatter',
         coordinateSystem: 'geo',
         symbol: 'pin',
-        symbolSize: 28,
+        symbolSize: 24,
         // Anchor the pin's tip on the coordinate.
         symbolOffset: [0, '-45%'],
         itemStyle: {
@@ -267,13 +315,34 @@ function buildOption(
           color: '#0e141b',
         },
         data: cities
-          .filter((c) => c.home)
+          .filter((c) => c.home && !c.stayed)
           .map((c) => ({
             name: c.name,
             value: [c.lng, c.lat],
             home: true,
           })),
         zlevel: 2,
+      },
+      {
+        name: TRAVEL_LEGEND_LABELS.homeCityCenter,
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        symbol: 'circle',
+        symbolSize: 6.5,
+        symbolOffset: [0, -13],
+        silent: true,
+        itemStyle: {
+          color: '#ffffff',
+          borderColor: '#7c2d12',
+          borderWidth: 0.8,
+        },
+        data: cities
+          .filter((c) => c.home && !c.stayed)
+          .map((c) => ({
+            name: c.name,
+            value: [c.lng, c.lat],
+          })),
+        zlevel: 3,
       },
     ],
   }
@@ -283,6 +352,7 @@ export function TravelPage() {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const showPageDescription = isPageDescriptionEnabled('travel')
 
   const travelPosts = useMemo(
     () =>
@@ -336,19 +406,17 @@ export function TravelPage() {
   }, [])
 
   return (
-    <div className="travel-layout">
-      <div className="travel-layout__main">
-        <section className="intro">
-          <h1>Travel</h1>
-          <p>
-            States I have been to for academic work, travel, or both — shaded by
-            how many cities I've visited there, with those cities marked on top.
-            Hover a state for its purpose and city count.
-          </p>
+    <div className="ml-[50%] grid w-[min(calc(100vw-2rem),78rem)] -translate-x-1/2 grid-cols-1 gap-6 min-[900px]:grid-cols-[55%_45%] min-[900px]:items-start">
+      <div className="min-w-0">
+        <section className={INTRO_SECTION_CLASS}>
+          <h1 className={INTRO_TITLE_CLASS}>{TRAVEL_SECTION.title}</h1>
+          {showPageDescription && (
+            <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.travel}</p>
+          )}
         </section>
 
         {travelPosts.length > 0 && (
-          <div className="post-list">
+          <div className={POST_LIST_CLASS}>
             {travelPosts.map((post) => (
               <PostCard key={post.slug} post={post} />
             ))}
@@ -357,55 +425,72 @@ export function TravelPage() {
       </div>
 
       <section
-        className="travel-map travel-layout__map"
+        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
         aria-label="Map of states visited in India"
       >
-        <div className="travel-map__head">
-          <h2>States &amp; cities visited</h2>
+        <div className="mb-2">
+          <h2 className="text-[1.1rem] text-ink">{TRAVEL_SECTION.mapTitle}</h2>
 
-          <div className="travel-map__legend">
-            <span className="travel-legend__row">
+          <div className="absolute top-[0.85rem] right-4 z-2 flex flex-col items-end gap-[0.3rem] rounded-lg border border-border bg-[rgba(255,255,255,0.85)] px-[0.6rem] py-2 text-right text-[0.72rem] text-muted backdrop-blur-[2px]">
+            <span className={LEGEND_ROW_CLASS}>
               <span>{COUNT_LABELS[0]}</span>
-              <span className="travel-legend__strip">
+              <span className="inline-flex overflow-hidden rounded-[3px] border border-border">
                 {COUNT_PALETTE.map((c) => (
-                  <i key={c} style={{ background: c }} />
+                  <i
+                    key={c}
+                    className="block h-2.5 w-3.25"
+                    style={{ background: c }}
+                  />
                 ))}
               </span>
-              <span>{COUNT_LABELS[COUNT_LABELS.length - 1]} cities</span>
+              <span>
+                {COUNT_LABELS[COUNT_LABELS.length - 1]}{' '}
+                {TRAVEL_LEGEND_LABELS.citiesSuffix}
+              </span>
             </span>
 
-            <span className="travel-legend__row">
-              <span className="travel-legend__hatch travel-legend__hatch--academic" />
-              Academic
+            <span className={LEGEND_ROW_CLASS}>
+              <span
+                className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+              />
+              {TRAVEL_LEGEND_LABELS.academic}
             </span>
-            <span className="travel-legend__row">
-              <span className="travel-legend__hatch travel-legend__hatch--travel" />
-              Travel
+            <span className={LEGEND_ROW_CLASS}>
+              <span
+                className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+              />
+              {TRAVEL_LEGEND_LABELS.travel}
             </span>
-            <span className="travel-legend__row">
-              <span className="travel-legend__hatch travel-legend__hatch--both" />
-              Both
+            <span className={LEGEND_ROW_CLASS}>
+              <span
+                className={`${LEGEND_HATCH_CLASS} bg-[radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] bg-size-[3px_3px]`}
+              />
+              {TRAVEL_LEGEND_LABELS.both}
             </span>
 
             {homeState && (
-              <span className="travel-legend__row">
-                <span
-                  className="travel-legend__swatch"
-                  style={{ background: HOME_COLOR }}
-                />
-                Home state ({homeState})
+              <span className={LEGEND_ROW_CLASS}>
+                <span style={{ background: HOME_COLOR }} />
+                {TRAVEL_LEGEND_LABELS.homeState} ({homeState})
               </span>
             )}
 
-            <span className="travel-legend__row">
-              <span className="travel-legend__dot" />
-              City visited
+            <span className={LEGEND_ROW_CLASS}>
+              <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#ef4444] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
+              {TRAVEL_LEGEND_LABELS.cityVisited}
             </span>
 
+            {stayedCities.length > 0 && (
+              <span className={LEGEND_ROW_CLASS}>
+                <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#2563eb] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
+                {TRAVEL_LEGEND_LABELS.stayed}
+              </span>
+            )}
+
             {homeCity && (
-              <span className="travel-legend__row">
+              <span className={LEGEND_ROW_CLASS}>
                 <svg
-                  className="travel-legend__pin"
+                  className="inline-block h-3 w-2.25"
                   viewBox="0 0 24 32"
                   aria-hidden="true"
                 >
@@ -416,19 +501,24 @@ export function TravelPage() {
                   />
                   <circle cx="12" cy="12" r="4.5" fill="#fff" />
                 </svg>
-                Home city ({homeCity})
+                {TRAVEL_LEGEND_LABELS.homeCity} ({homeCity})
               </span>
             )}
           </div>
         </div>
 
-        <div className="travel-map__canvas" ref={containerRef} />
+        <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white">
+          <div className="h-[92vh] min-h-150 w-full bg-white" ref={containerRef} />
+        </div>
+        <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
+          {TRAVEL_SECTION.mapAttribution}
+        </p>
 
         {status === 'loading' && (
-          <p className="travel-map__status">Loading map…</p>
+          <p className="mt-2 text-[0.9rem] text-muted">Loading map…</p>
         )}
         {status === 'error' && (
-          <p className="travel-map__status travel-map__status--error">
+          <p className="mt-2 text-[0.9rem] text-[#dc2626]">
             Could not load the map data. Please try again later.
           </p>
         )}

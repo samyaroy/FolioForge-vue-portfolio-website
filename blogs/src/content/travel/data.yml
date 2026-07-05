@@ -1,0 +1,97 @@
+# Personal visit data for the travel map. Loaded through data.ts, which
+# applies the types, flattens cities out of their states, and derives
+# per-state city counts.
+#
+# State names MUST match the `st_nm` property in the CDN GeoJSON
+# (udit-001/india-maps-data). Edit the list below to keep the map up to
+# date; everything else is derived automatically.
+#
+# states entries:
+#   state    — display/GeoJSON state name
+#   purpose  — academic | travel | both
+#   home     — true marks your home state (hatched pattern overlay on the map)
+#   cities   — cities visited in that state; each entry:
+#     name       — city name
+#     visits     — number of visits
+#     stayed     — true for places where you lived/stayed (college, work, etc.)
+#     stayReason — optional label for why you stayed
+#     home       — true marks your home city (drawn with a distinct marker)
+
+legendLabels:
+  citiesSuffix: cities
+  academic: Academic
+  travel: Travel
+  both: Both
+  homeState: Home state
+  cityVisited: City visited
+  stayed: Stayed / lived
+  stayedTooltip: Stayed / lived here
+  homeCity: Home city
+  homeCityCenter: Home city center
+
+states:
+  - state: Delhi
+    purpose: both
+    cities:
+      - { name: New Delhi, visits: 2 }
+
+  - state: Tamil Nadu
+    purpose: academic
+    cities:
+      - { name: Chennai, visits: 5, stayed: true }
+      - { name: Mamallapuram, visits: 1 }
+
+  - state: Telangana
+    purpose: both
+    cities:
+      - { name: Hyderabad, visits: 4 }
+
+  - state: Uttar Pradesh
+    purpose: travel
+    cities:
+      - { name: Varanasi, visits: 1 }
+      - { name: Agra, visits: 1 }
+
+  - state: Uttarakhand
+    purpose: travel
+    cities:
+      - { name: Rishikesh, visits: 2 }
+      - { name: Kedarnath, visits: 1 }
+      - { name: Mussoorie, visits: 1 }
+      - { name: Rudraprayag, visits: 1 }
+      - { name: Haridwar, visits: 2 }
+      - { name: Dehradun, visits: 1 }
+      - { name: Nainital, visits: 1 }
+      - { name: Uttarkashi, visits: 1 }
+      - { name: Badrinath, visits: 1 }
+      - { name: Ranikhet, visits: 1 }
+      - { name: Gaurikund, visits: 1 }
+
+  - state: Odisha
+    purpose: travel
+    cities:
+      - { name: Puri, visits: 7 }
+      - { name: Bhubaneswar, visits: 1 }
+
+  - state: Punjab
+    purpose: academic
+    cities:
+      - { name: Rupnagar, visits: 1 }
+      - { name: Chandigarh, visits: 1 }
+
+  - state: Andhra Pradesh
+    purpose: travel
+    cities:
+      - { name: Visakhapatnam, visits: 1 }
+      - { name: Araku, visits: 1 }
+      - { name: Lammasingi, visits: 1 }
+
+  - state: West Bengal
+    purpose: both
+    home: true
+    cities:
+      - { name: Kolkata, visits: 1, home: true }
+      - { name: Darjeeling, visits: 1 }
+      - { name: Digha, visits: 2 }
+      - { name: Mandarmani, visits: 1 }
+      - { name: Krishnagar, visits: 1 }

@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/Home/index.vue'
 import Gallery from '@/views/Gallery/index.vue'
 import ProjectPublications from '@/views/ProjectsPublications/index.vue'
@@ -12,6 +12,7 @@ import Teachings from '@/views/Teachings/index.vue'
 import ProfessionalAcitivity from '@/views/ProfessionalAcitivity/index.vue'
 import Contact from '@/views/Contact.vue'
 import Resources from '@/views/Resources/index.vue'
+import Facts from '@/views/Facts/index.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
@@ -115,13 +116,21 @@ const routes = [
     name: 'Resources',
     component: Resources,
     meta: {
-      flagPath: 'showResources',
+      flagPath: 'showResources.main',
+    },
+  },
+  {
+    path: '/facts',
+    name: 'Facts',
+    component: Facts,
+    meta: {
+      flagPath: 'showFacts',
     },
   }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

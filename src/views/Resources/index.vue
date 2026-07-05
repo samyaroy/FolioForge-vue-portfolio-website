@@ -1,6 +1,19 @@
 <template>
-  <div class="min-h-screen bg-[#eef3f8] py-8">
-    <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+  <InfoRibbon
+    v-if="showRibbon && ribbonMessage && !isRibbonDismissed"
+    :icon="ribbonIcon"
+    :message="ribbonMessage"
+    @dismissed="isRibbonDismissed = true"
+  />
+
+  <div class="relative min-h-screen bg-[#eef3f8] py-8">
+    <RibbonToggle
+      v-if="showRibbon && ribbonMessage && isRibbonDismissed"
+      :icon="ribbonIcon"
+      @open="isRibbonDismissed = false"
+    />
+
+    <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
       <div class="mb-12">
         <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
@@ -13,7 +26,7 @@
 
       <div
         v-if="subjects.length"
-        class="grid grid-cols-1 gap-y-6 lg:grid-cols-[220px_minmax(0,1fr)_260px] lg:gap-x-0"
+        class="grid grid-cols-1 gap-y-6 lg:grid-cols-[270px_minmax(0,1fr)_auto] lg:gap-x-0"
       >
         <SubjectTabs
           :subjects="subjects"
@@ -23,12 +36,13 @@
         />
 
         <ResourceContentPane
+          class="lg:self-start"
           :subject="activeSubject"
           :materials="activeMaterials"
           :active-index="activeIndex"
         />
 
-        <ExternalLinksPane :links="externalLinks" />
+        <ExternalLinksPane :groups="externalLinkGroups" />
       </div>
 
       <div v-else class="mx-auto max-w-2xl text-center text-gray-500">
@@ -43,13 +57,22 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import resourcesContent from '@/content/profile_info/resources.yml'
 import descriptions from '@/content/profile_info/description.yml'
-import { isPageDescriptionEnabled } from '@/config/featureFlags'
+import config from '@/content/profile_info'
+import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+import { resolveHyperlink } from '@/utils/resolveHyperlink'
+import InfoRibbon from '@/components/InfoRibbon.vue'
+import RibbonToggle from '@/components/RibbonToggle.vue'
 import ExternalLinksPane from './components/ExternalLinksPane.vue'
 import ResourceContentPane from './components/ResourceContentPane.vue'
 import SubjectTabs from './components/SubjectTabs.vue'
 
 const pageDescription = descriptions.resources
 const showPageDescription = isPageDescriptionEnabled('resources')
+
+const showRibbon = isFeatureEnabled('showResources.showRibbon')
+const ribbonMessage = config.ribbon?.message
+const ribbonIcon = config.ribbon?.icon || 'mdi-information'
+const isRibbonDismissed = ref(false)
 
 defineOptions({
   name: 'ResourcesPage',
@@ -83,11 +106,24 @@ const activeSubject = computed(() => subjects.value[activeIndex.value] || null)
 const activeMaterials = computed(() => (
   Array.isArray(activeSubject.value?.materials) ? activeSubject.value.materials : []
 ))
-const externalLinks = computed(() => {
-  if (activeSubject.value?.links?.length) return activeSubject.value.links
-  return Array.isArray(resourcesContent?.external)
-    ? resourcesContent.external.filter(isObject).map(normalizeExternalLink)
+const externalLinkGroups = computed(() => {
+  if (activeSubject.value?.links?.length) {
+    return [{ title: '', links: activeSubject.value.links }]
+  }
+
+  const rawGroups = Array.isArray(resourcesContent?.external)
+    ? resourcesContent.external
     : []
+
+  return rawGroups
+    .filter(isObject)
+    .map(group => ({
+      title: group.group || group.title || '',
+      links: Array.isArray(group.links)
+        ? group.links.filter(isObject).map(normalizeExternalLink)
+        : [],
+    }))
+    .filter(group => group.links.length)
 })
 
 watch(subjects, (nextSubjects) => {
@@ -133,10 +169,13 @@ function normalizeMaterial(material) {
 }
 
 function normalizeExternalLink(link) {
+  const label = link.label || link.title || 'Untitled link'
   return {
-    label: link.label || link.title || 'Untitled link',
-    url: link.url || link.link || '',
+    label,
+    url: link.url || link.link || resolveHyperlink(link.ref || label) || '',
     description: link.description || '',
+    incharge: link.incharge || '',
+    speciality: link.speciality || link.specialty || link.specility || '',
   }
 }
 </script>

@@ -6,6 +6,7 @@ type FeatureFlagNode = {
 
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showHome: {
+    showRibbon: true,
     showHeroSection: true,
     showResearchInterests: true,
     showExperience: true,
@@ -20,7 +21,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showProjectsPublications: {
     showArticles: {
       showGeneralArticles: true,
-      showJournalArticles: false,
+      showJournalArticles: true,
     },
     showProjects: {
       showResearchProjects: true,
@@ -33,19 +34,19 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
       otherProjects: false,
     },
     showPublications: true,
-    showPosters: false,
+    showPosters: true,
   },
 
   showGallery: true,
 
-  showBlog: false,
+  showBlog: true,
 
   showCocurricular: {
     showLeadershipOrganizations: true,
     showVolunteering: true,
   },
 
-  showOngoingProjects: false,
+  showOngoingProjects: true,
 
   showInternshipCertifications: {
     showInternships: true,
@@ -54,36 +55,45 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showWorkshopsAttended: {
     showConferences: true,
-    showFDPs: false,
+    showFDPs: true,
     showWorkshops: {
       main: true,
       others: true,
     },
     showBootcamps: true,
-    showOther: false,
+    showOther: true,
   },
 
   showTeachings: {
-    showCoursesTaught: false,
-    showProjectsMentored: false,
-    showOtherTeachings: false,
+    showCoursesTaught: true,
+    showProjectsMentored: true,
+    showOtherTeachings: true,
   },
 
   showAffiliations: {
-    showAffiliations: false,
-    showCollaborators: false,
-    showMemberships: false,
+    showAffiliations: true,
+    showCollaborators: true,
+    showMemberships: true,
   },
 
   showProfessionalActivity: {
-    showInvitedTalks: false,
+    showInvitedTalks: true,
     showHostedEvents: {
-      main: false,
-      others: false,
+      main: true,
+      others: true,
     },
   },
 
-  showResources: false,
+  showResources: {
+    main: true,
+    showRibbon: true,
+  },
+
+  // Controls the "Did you know?" facts page (/facts) and its nav link.
+  showFacts: true,
+
+  // Controls the quote pane rendered between page content and the footer.
+  showPageQuotePane: true,
 
   // Controls the subtitle/description line under each page's title.
   // Text for each page lives in src/content/profile_info/description.yml.
@@ -95,12 +105,13 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     internshipCertifications: true,
     cocurricular: true,
     affiliations: true,
-    resources: false,
+    resources: true,
     contact: true,
-    ongoingProjects: false,
+    ongoingProjects: true,
     professionalActivity: true,
     teachings: true,
     workshopsAttended: true,
+    facts: true,
   },
 }) satisfies FeatureFlagNode
 

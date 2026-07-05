@@ -20,6 +20,7 @@ Add a Markdown file to `src/content/posts/`, named `YYYY-MM-DD-slug.md`:
 title: My post
 date: 2026-06-18
 description: One-line summary for the listing page.
+cover: /my-image.jpg
 tags: [tag-a, tag-b]
 draft: false
 ---
@@ -29,6 +30,26 @@ Body in Markdown (GitHub-flavored).
 
 - The slug is the filename minus the date prefix and `.md` → `/posts/slug`.
 - `draft: true` shows the post in dev only, never in production builds.
+- `cover` (optional) fills the left 40% image pane of the post's card on the
+  home page — a public path (drop the file in `public/`) or a full URL. When
+  omitted, a placeholder pattern renders instead.
+
+## Edit site content
+
+All non-post content lives in per-section YAML files under `src/content/`,
+each paired with a small `.ts` module that applies the TypeScript types
+(edit the YAML; the `.ts` files only pin shapes and derive values):
+
+| YAML file           | Contents                                          |
+| ------------------- | ------------------------------------------------- |
+| `site.yml`          | Profile, home hero, social links, footer copy     |
+| `sections.yml`      | Per-page titles, description lines, labels        |
+| `navigation.yml`    | Header nav items, cross-links to the main site    |
+| `readings/data.yml` | Reading notes (sorted newest-first automatically) |
+| `travel/data.yml`   | Travel-map state/city visit data, legend labels   |
+
+Keep dates quoted (`"2026-06-20"`) so they stay strings, and quote values
+containing `:` or starting with punctuation.
 
 ## Build & deploy (Cloudflare)
 

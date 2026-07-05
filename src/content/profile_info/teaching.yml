@@ -20,6 +20,50 @@ courses_taught:
   #       students: 80
 
 projects_mentored:
+  # - semester: "Summer 2026"
+  #   projects:
+  #     - title: "Weather-Uncertainty-Aware Crop Yield Prediction Using Climatic Disturbance Indicators (based on Indian Datasets)"
+  #       course: "Summer Internship Program on Data Science 2026"
+  #       students:
+  #         - name: "DOROTHY"
+  #           Linkedin: 
+  #         - name: "DHARANI KRISHNA SAHITHI"
+  #           Linkedin:
+  #         - name: "RAHUL KUMAR YADAV"
+  #           Linkedin:
+  #         - name: "SWAGATO LAHIRI"
+  #           Linkedin:
+  #       registration_number: ""
+  #       affiliation:
+  #         name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+  #         location: Kolkata, WB
+      
+  #     - title: "An Open-Source Framework for Gamified Learning and Progress Tracking Using YouTube Playlists"
+  #       course: "Summer Internship Program on Data Science 2026"
+  #       students:
+  #         - name: "NIRNOY CHATTERJEE"
+  #           Linkedin: 
+  #         - name: "SHREYAN GHOSH"
+  #           Linkedin:
+  #         - name: "PRINCE KUMAR SINGH"
+  #           Linkedin:
+  #       registration_number: ""
+  #       affiliation:
+  #         name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+  #         location: Kolkata, WB
+
+  #     - title: "Interpretable Machine Learning application in Bird Migration Trajectory Analysis Using GPS Data"
+  #       course: "Summer Internship Program on Data Science 2026"
+  #       students:
+  #         - name: "BADABALLA JASVANTH"
+  #           Linkedin: 
+  #         - name: "JAYANT PANDEY"
+  #           Linkedin:
+  #       registration_number: ""
+  #       affiliation:
+  #         name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+  #         location: Kolkata, WB
+
   - semester: "Spring 2026"
     projects:
       - title: "Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data"
@@ -40,18 +84,6 @@ projects_mentored:
         cred_link:
           report: https://drive.google.com/file/d/1i-835QLggY2OWbRxr_RAw1i1wsRBDKCD/view
           github: https://github.com/samyaroy/IDEAS_Spring_Internship_Contribution_2026
-
-      # - title: "Dynamic Topic and Sentiment Evolution in Court Judgments or Policy Documents"
-      #   course: "Summer Internship Program on Data Science 2026"
-      #   students:
-      #     - name: "SAPTARSHI DEY"
-      #     - name: "AYUSHI MITRA"
-      #     - name: "ANSHUMAN RAY"
-      #     - name: "SONU SHAW"
-      #   registration_number: ""
-      #   affiliation: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-      #   cred_link: https://drive.google.com/file/d/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9/preview
-
       
 other_teachings:
   - title: "Private Tutor"

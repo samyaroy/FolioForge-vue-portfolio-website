@@ -81,10 +81,7 @@ const github_personal = socials.github
 const linkedin = socials.linkedin
 
 const downloadCV = () => {
-  const link = document.createElement('a')
-  link.href = cv_link
-  link.download = `${name.replace(" ", "_")}_CV.pdf`
-  link.click()
+  window.open(cv_link, '_blank', 'noopener,noreferrer')
 }
 
 const openGmailDraft = () => {

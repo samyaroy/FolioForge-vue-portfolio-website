@@ -1,0 +1,13 @@
+# "Did you know?" facts shown on the /facts page (src/views/Facts/index.vue).
+# Each entry renders as a card. Edit/add freely.
+#   icon: any Material Design Icon name (https://pictogrammers.com/library/mdi/)
+facts:
+  - title: This site is open source
+    description: The entire portfolio and blog are built with Vue, React, and Tailwind, and the source code is freely available to fork and clone.
+    icon: mdi-github
+  - title: Two sites, one place
+    description: The main portfolio and the blog are separate apps that link to each other, so you can jump between professional work and personal writing seamlessly.
+    icon: mdi-link-variant
+  - title: Always evolving
+    description: New sections, projects, and writings are added regularly — check back to see what's new.
+    icon: mdi-rocket-launch

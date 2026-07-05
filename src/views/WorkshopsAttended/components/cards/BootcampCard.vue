@@ -11,6 +11,24 @@
         <div class="flex items-start gap-2">
           <h3 class="text-md font-semibold text-[#0e141b]">
             {{ bootcamp.title }}
+            <span v-if="hasCurriculum" class="inline-block ml-1 align-middle">
+              <v-tooltip text="View Curriculum" location="top">
+                <template #activator="{ props: tooltipProps }">
+                  <v-btn
+                    v-bind="tooltipProps"
+                    icon
+                    variant="text"
+                    density="compact"
+                    size="x-small"
+                    class="text-[#4e7397] hover:text-[#1980e6]"
+                    aria-label="View Curriculum"
+                    @click="showCurriculumModal = true"
+                  >
+                    <v-icon size="16">mdi-information-variant-circle-outline</v-icon>
+                  </v-btn>
+                </template>
+              </v-tooltip>
+            </span>
             <a
               v-if="bootcamp.link"
               :href="bootcamp.link"
@@ -125,19 +143,34 @@
       </div>
 
     </div>
+
+    <CourseCirriculumModal
+      v-model="showCurriculumModal"
+      :cirriculum="bootcamp.cirriculum"
+      :degree-name="bootcamp.title"
+    />
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import CourseCirriculumModal from '@/views/Home/components/education/components/CourseCirriculumModal.vue'
 
 const props = defineProps({
   bootcamp: {
     type: Object,
     required: true
   }
+})
+
+const showCurriculumModal = ref(false)
+
+const hasCurriculum = computed(() => {
+  const curriculum = props.bootcamp.cirriculum
+  if (Array.isArray(curriculum)) return curriculum.length > 0
+  return curriculum && Object.keys(curriculum).some(k => k !== 'link')
 })
 
 const instructorInfo = computed(() => {

@@ -137,8 +137,8 @@ Institute:
 
     - Name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
       Aliases:
-        - iHub – AWaDH - Technology Innovation Hub, IIT Ropar
-        - iHub – AWaDH"
+        - "iHub – AWaDH - Technology Innovation Hub, IIT Ropar"
+        - "iHub – AWaDH"
       Website: https://ihub-awadh.in/
 
     - Name: CUNY Graduate School of Public Health and Health Policy
@@ -155,11 +155,20 @@ Institute:
     - Name: Royal Statistical Society
       Website: https://www.rss.org.uk/
 
+    - Name: "Chi-Square: Statistics Club"
+      Aliases:
+        - Chi-Square
+        - Chi-Square Statistics Club
+      Website: https://22f2001443.github.io/chi-square/
+
 
     - Name: Coursera
       Website: https://www.coursera.org/
 
     - Name: NPTEL
+      Aliases:
+        - National Programme on Technology Enhanced Learning
+        - National Programme on Technology Enhanced Learning (NPTEL)
       Website: https://nptel.ac.in/
 
 
@@ -215,3 +224,15 @@ Person:
 
     - Name: Prof. Venkatesh Raman
       Link: https://www.imsc.res.in/venkatesh_raman
+
+    - Name: Prof. K muralidharan
+      Link: https://www.linkedin.com/in/muralidharan-kunnummal/
+
+    - Name: Prof. Indu Joshi
+      Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
+
+    - Name: Prof. Balaraman Ravindran
+      Link: https://wsai.iitm.ac.in/~ravi/
+
+    - Name: Prof. Chetan Kamath
+      Link: https://www.cse.iitb.ac.in/~ckamath/
