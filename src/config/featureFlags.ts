@@ -21,7 +21,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showProjectsPublications: {
     showArticles: {
       showGeneralArticles: true,
-      showJournalArticles: true,
+      showJournalArticles: false,
     },
     showProjects: {
       showResearchProjects: true,
@@ -34,7 +34,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
       otherProjects: false,
     },
     showPublications: true,
-    showPosters: true,
+    showPosters: false,
   },
 
   showGallery: true,
@@ -46,7 +46,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showVolunteering: true,
   },
 
-  showOngoingProjects: true,
+  showOngoingProjects: false,
 
   showInternshipCertifications: {
     showInternships: true,
@@ -55,7 +55,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showWorkshopsAttended: {
     showConferences: true,
-    showFDPs: true,
+    showFDPs: false,
     showWorkshops: {
       main: true,
       others: true,
@@ -65,32 +65,32 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   },
 
   showTeachings: {
-    showCoursesTaught: true,
-    showProjectsMentored: true,
-    showOtherTeachings: true,
+    showCoursesTaught: false,
+    showProjectsMentored: false,
+    showOtherTeachings: false,
   },
 
   showAffiliations: {
-    showAffiliations: true,
-    showCollaborators: true,
-    showMemberships: true,
+    showAffiliations: false,
+    showCollaborators: false,
+    showMemberships: false,
   },
 
   showProfessionalActivity: {
-    showInvitedTalks: true,
+    showInvitedTalks: false,
     showHostedEvents: {
-      main: true,
-      others: true,
+      main: false,
+      others: false,
     },
   },
 
   showResources: {
     main: true,
-    showRibbon: true,
+    showRibbon: false,
   },
 
   // Controls the "Did you know?" facts page (/facts) and its nav link.
-  showFacts: true,
+  showFacts: false,
 
   // Controls the quote pane rendered between page content and the footer.
   showPageQuotePane: true,
@@ -102,16 +102,16 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showPageDescriptions: {
     enabled: false,
     projectsPublications: false,
-    internshipCertifications: true,
-    cocurricular: true,
-    affiliations: true,
-    resources: true,
-    contact: true,
-    ongoingProjects: true,
-    professionalActivity: true,
-    teachings: true,
-    workshopsAttended: true,
-    facts: true,
+    internshipCertifications: false,
+    cocurricular: false,
+    affiliations: false,
+    resources: false,
+    contact: false,
+    ongoingProjects: false,
+    professionalActivity: false,
+    teachings: false,
+    workshopsAttended: false,
+    facts: false,
   },
 }) satisfies FeatureFlagNode
 
