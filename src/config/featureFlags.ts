@@ -84,7 +84,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     },
   },
 
-  showResources: true,
+  showResources: {
+    main: true,
+    showRibbon: true,
+  },
 
   // Controls the "Did you know?" facts page (/facts) and its nav link.
   showFacts: true,

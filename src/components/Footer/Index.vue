@@ -229,7 +229,7 @@ export default {
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
-    const showResourcesLink = isFeatureEnabled('showResources')
+    const showResourcesLink = isFeatureEnabled('showResources.main')
     const showAffiliationsLink = (
       isFeatureEnabled('showAffiliations.showAffiliations')
       || isFeatureEnabled('showAffiliations')

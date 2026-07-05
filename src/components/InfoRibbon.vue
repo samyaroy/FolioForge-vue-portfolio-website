@@ -1,6 +1,6 @@
 <template>
   <Transition name="info-ribbon" @after-leave="emitDismissed">
-    <section v-if="isVisible" class="info-ribbon-shell" aria-label="Homepage announcement">
+    <section v-if="isVisible" class="info-ribbon-shell" aria-label="Announcement">
       <div class="info-ribbon-panel">
         <div class="info-ribbon-content">
           <span class="info-ribbon-icon">

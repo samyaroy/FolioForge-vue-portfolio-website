@@ -137,8 +137,8 @@ Institute:
 
     - Name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
       Aliases:
-        - iHub – AWaDH - Technology Innovation Hub, IIT Ropar
-        - iHub – AWaDH"
+        - "iHub – AWaDH - Technology Innovation Hub, IIT Ropar"
+        - "iHub – AWaDH"
       Website: https://ihub-awadh.in/
 
     - Name: CUNY Graduate School of Public Health and Health Policy
@@ -224,3 +224,9 @@ Person:
 
     - Name: Prof. Indu Joshi
       Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
+
+    - Name: Prof. Balaraman Ravindran
+      Link: https://wsai.iitm.ac.in/~ravi/
+
+    - Name: Prof. Chetan Kamath
+      Link: https://www.cse.iitb.ac.in/~ckamath/

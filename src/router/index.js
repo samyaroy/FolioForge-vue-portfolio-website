@@ -116,7 +116,7 @@ const routes = [
     name: 'Resources',
     component: Resources,
     meta: {
-      flagPath: 'showResources',
+      flagPath: 'showResources.main',
     },
   },
   {
