@@ -155,6 +155,12 @@ Institute:
     - Name: Royal Statistical Society
       Website: https://www.rss.org.uk/
 
+    - Name: "Chi-Square: Statistics Club"
+      Aliases:
+        - Chi-Square
+        - Chi-Square Statistics Club
+      Website: https://22f2001443.github.io/chi-square/
+
 
     - Name: Coursera
       Website: https://www.coursera.org/
