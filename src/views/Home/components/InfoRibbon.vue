@@ -6,7 +6,9 @@
           <span class="info-ribbon-icon">
             <v-icon color="#ffffff" size="14">{{ icon }}</v-icon>
           </span>
-          <span class="info-ribbon-message">{{ message }}</span>
+          <span class="info-ribbon-message">
+            <CaptionContent :text="message" />
+          </span>
           <button class="info-ribbon-close" type="button" aria-label="Close announcement" @click="closeRibbon">
             <v-icon color="#ffffff" size="14">mdi-close</v-icon>
           </button>
@@ -18,6 +20,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import CaptionContent from '@/components/CaptionContent.vue'
 
 defineProps({
   message: {
@@ -113,6 +116,28 @@ function emitDismissed() {
   line-height: 1.3;
   letter-spacing: 0;
   text-wrap: balance;
+}
+
+.info-ribbon-message :deep(a) {
+  color: #ffffff;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.55);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 160ms ease;
+}
+
+.info-ribbon-message :deep(a:hover) {
+  text-decoration-color: #ffffff;
+}
+
+.info-ribbon-message :deep(a:focus-visible) {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
+}
+
+.info-ribbon-message :deep(strong),
+.info-ribbon-message :deep(em) {
+  color: inherit;
 }
 
 .info-ribbon-close {

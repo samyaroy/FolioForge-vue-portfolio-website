@@ -43,16 +43,17 @@
                     <span>
                       <span class="font-medium">Students:</span>&nbsp;
                         <span v-for="(student, index) in project.students" :key="getStudentKey(student, index)">
-                          <SmartLink :text="student.name" type="person" :href="student.linkedin" />
+                          <span>{{ student.name }}</span>
                           <span v-if="student.email" class="ml-1">
-                            <a :href="`mailto:${student.email}`" target="_blank" rel="noopener noreferrer">
-                            <v-icon size="16" class="text-gray-500/90">mdi-email-outline</v-icon>
+                            <a :href="`mailto:${student.email}`" target="_blank" rel="noopener noreferrer"
+                              aria-label="Email student" title="Email student">
+                            <v-icon size="16" class="text-[#1980e6]">mdi-email-outline</v-icon>
                             </a>
                           </span>
-                          <span v-if="student.linkedin" class="ml-1">
-                            <a :href="student.linkedin" target="_blank" rel="noopener noreferrer"
+                          <span v-if="getStudentLinkedInUrl(student)" class="ml-1">
+                            <a :href="getStudentLinkedInUrl(student)" target="_blank" rel="noopener noreferrer"
                               aria-label="Open student LinkedIn profile" title="Open student LinkedIn profile">
-                              <v-icon size="16" class="text-gray-500/90">mdi-linkedin</v-icon>
+                              <v-icon size="16" class="text-[#1980e6]">mdi-linkedin</v-icon>
                             </a>
                           </span>
                           <span
@@ -139,6 +140,23 @@ const normalizeLink = (link) => (
   typeof link === 'string' && link.trim() && link !== '#' ? link : ''
 )
 
+const getStudentLinkedInValue = (student) => (
+  normalizeLink(student?.linkedin) ||
+  normalizeLink(student?.Linkedin) ||
+  normalizeLink(student?.LinkedIn)
+)
+
+const getStudentLinkedInUrl = (student) => {
+  const linkedIn = getStudentLinkedInValue(student)
+
+  if (!linkedIn) return ''
+  if (/^https?:\/\//i.test(linkedIn)) return linkedIn
+  if (/^www\./i.test(linkedIn)) return `https://${linkedIn}`
+  if (/^linkedin\.com\//i.test(linkedIn)) return `https://www.${linkedIn}`
+
+  return `https://www.linkedin.com/in/${linkedIn.replace(/^@/, '')}`
+}
+
 const getProjectActionLinks = (project) => {
   const credLink = project?.cred_link
 
@@ -177,7 +195,7 @@ const getProjectActionLinks = (project) => {
 
 const getStudentKey = (student, index) => {
   if (student?.email) return student.email
-  if (student?.linkedin) return student.linkedin
+  if (getStudentLinkedInUrl(student)) return getStudentLinkedInUrl(student)
   if (student?.name) return student.name
   return `student-${index}`
 }
