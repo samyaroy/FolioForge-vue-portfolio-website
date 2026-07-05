@@ -20,9 +20,9 @@ page_quotes:
   #   - text: "Good collaborations make the room larger than the table."
   #     author: "Collaboration notebook"
 
-  # Cocurricular:
-  #   - text: "The work outside the syllabus often teaches the shape of the person."
-  #     author: "Field notes"
+  Cocurricular:
+    - text: "Know all the theories, master all the techniques, but as you touch a human soul, be just another human soul."
+      author: "Carl Jung"
 
   Workshops:
     - text: "To live a creative life, we must lose our fear of being wrong."
@@ -46,9 +46,10 @@ page_quotes:
       source: "জীবন স্মৃতি, ১৯১২"
       author: "রবীন্দ্রনাথ ঠাকুর"
 
-  # Contact:
-  #   - text: "A conversation is often the first draft of a collaboration."
-  #     author: "Contact notebook"
+  Contact:
+    - text: "प्रकृतेः क्रियमाणानि गुणैः कर्माणि सर्वशः।अहंकारविमूढात्मा कर्ताहमिति मन्यते॥"
+      source: "Verse 3.27"
+      author: "The Bhagavad Gita"
 
   Resources:
     - text: "I can no other answer make but thanks, and thanks, and ever thanks."
