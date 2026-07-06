@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-4xl mx-auto">
     <div v-if="othersByYear.length > 0">
-      <div v-for="yearGroup in othersByYear" :key="yearGroup.year" class="mb-12">
+      <div v-for="yearGroup in visibleOthersByYear" :key="yearGroup.year" class="mb-12">
         <div class="flex items-center gap-4 mb-6">
           <span class="text-lg font-semibold text-gray-400">{{ yearGroup.year }}</span>
           <div class="flex-1 h-px bg-gray-200"></div>
@@ -15,6 +15,17 @@
           />
         </div>
       </div>
+
+      <div v-if="hasMoreOthers" class="flex justify-end">
+        <a
+          href="#"
+          class="text-[#1980e6] hover:text-[#1980e6] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+          @click.prevent="loadMoreOthers"
+        >
+          Load more
+          <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
+        </a>
+      </div>
     </div>
 
     <div v-else class="text-center py-12">
@@ -24,7 +35,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import OtherCard from '../cards/OtherCard.vue'
 
 const props = defineProps({
@@ -75,4 +86,26 @@ function groupByYear(items) {
 }
 
 const othersByYear = computed(() => groupByYear(props.others))
+
+// Pagination: show 10 entries at a time, in display order across year groups
+const PAGE_SIZE = 10
+const visibleCount = ref(PAGE_SIZE)
+
+const visibleOthersByYear = computed(() => {
+  let remaining = visibleCount.value
+  const limited = []
+  for (const group of othersByYear.value) {
+    if (remaining <= 0) break
+    const items = group.items.slice(0, remaining)
+    remaining -= items.length
+    limited.push({ year: group.year, items })
+  }
+  return limited
+})
+
+const hasMoreOthers = computed(() => visibleCount.value < props.others.length)
+
+function loadMoreOthers() {
+  visibleCount.value += PAGE_SIZE
+}
 </script>

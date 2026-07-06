@@ -17,18 +17,29 @@
     />
 
     <div v-if="showMain && workshopsByYear.length > 0">
-      <div v-for="yearGroup in workshopsByYear" :key="yearGroup.year" class="mb-12">
+      <div v-for="yearGroup in visibleWorkshopsByYear" :key="yearGroup.year" class="mb-12">
         <!-- Year Divider -->
         <div class="flex items-center gap-4 mb-6">
           <span class="text-lg font-semibold text-gray-400">{{ yearGroup.year }}</span>
           <div class="flex-1 h-px bg-gray-200"></div>
         </div>
-        
+
         <!-- Cards for this year -->
         <div class="space-y-6">
-          <WorkshopCard v-for="(workshop, index) in yearGroup.items" 
+          <WorkshopCard v-for="(workshop, index) in yearGroup.items"
                         :key="index" :workshop="workshop" />
         </div>
+      </div>
+
+      <div v-if="hasMoreWorkshops" class="flex justify-end">
+        <a
+          href="#"
+          class="text-[#1980e6] hover:text-[#1980e6] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
+          @click.prevent="loadMoreWorkshops"
+        >
+          Load more
+          <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
+        </a>
       </div>
     </div>
     
@@ -94,4 +105,26 @@ function groupByYear(items) {
 
 // Computed property for grouped data
 const workshopsByYear = computed(() => groupByYear(props.workshops))
+
+// Pagination: show 10 entries at a time, in display order across year groups
+const PAGE_SIZE = 10
+const visibleCount = ref(PAGE_SIZE)
+
+const visibleWorkshopsByYear = computed(() => {
+  let remaining = visibleCount.value
+  const limited = []
+  for (const group of workshopsByYear.value) {
+    if (remaining <= 0) break
+    const items = group.items.slice(0, remaining)
+    remaining -= items.length
+    limited.push({ year: group.year, items })
+  }
+  return limited
+})
+
+const hasMoreWorkshops = computed(() => visibleCount.value < props.workshops.length)
+
+function loadMoreWorkshops() {
+  visibleCount.value += PAGE_SIZE
+}
 </script>
