@@ -1,4 +1,20 @@
 Institute:
+    - Name: Indian Institute of Science Education and Research, Pune
+      Aliases:
+        - IISER Pune
+      Website: https://www.iiserpune.ac.in/
+
+    - Nmae: Indian Institute of Science Education and Research, Kolkata
+      Aliases:
+        - IISER Kolkata
+      Website: https://www.iiserkol.ac.in/
+
+    - Name: Indian Institute of Science
+      Aliases:
+        - IISc
+        - Indian Institute of Science, Bangalore
+        - Indian Institute of Science (IISc)
+      Website: https://www.iisc.ac.in/
 
     - Name: Homi Bhabha National Institute
       Website: https://www.hbni.ac.in/
@@ -140,6 +156,16 @@ Institute:
         - "iHub – AWaDH - Technology Innovation Hub, IIT Ropar"
         - "iHub – AWaDH"
       Website: https://ihub-awadh.in/
+
+    - Name: I-Hub Foundation for Cobotics
+      Aliases:
+        - I-Hub Foundation for Cobotics, IIT Delhi
+        - I-Hub Foundation for Cobotics, Indian Institute of Technology Delhi
+        - IHFC
+        - IHFC, IIT Delhi
+        - IHFC - Technology Innovation Hub of IIT Delhi
+        - IHFC - Technology Innovation Hub, IIT Delhi
+      Website: https://www.ihfc.co.in/
 
     - Name: CUNY Graduate School of Public Health and Health Policy
       Aliases:
