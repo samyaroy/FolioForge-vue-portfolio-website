@@ -4,6 +4,7 @@ profile:
   heading: Web Developer<br>Data Science, Statistics Enthusiast #will be used in home page hero section
   footer: Rookie Statistician | Data Science Student | Full-Stack Developer
   cv: https://drive.google.com/uc?export=download&id=1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz # google drive link for direct download  #environment: development   # or staging / production
+  betaVersionUrl: https://beta.samyabrata.codeium.xyz # link to beta version of the website
 
 contacts:
   email: samyaroy00@gmail.com

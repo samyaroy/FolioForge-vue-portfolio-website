@@ -174,7 +174,18 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="mt-2 md:mt-0">
+        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
+          <p v-if="betaVersionUrl" class="text-gray-500 text-sm">
+            Looking for beta version?
+            <a
+              :href="betaVersionUrl"
+              class="footer-link text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              see here
+            </a>
+          </p>
           <router-link
             :to="{ name: 'PrivacyPolicy' }"
             class="footer-link text-sm"
@@ -246,6 +257,7 @@ export default {
       kaggle: socials.kaggle,
       google_scholar: socials.google_scholar,
       researchgate: socials.researchgate,
+      betaVersionUrl: profile.betaVersionUrl,
       // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
       // logos: ['SNU', 'IITM', 'IDEAS-ISI','VLED-IITRPR2'],
       logos: ['SNU', 'IITM', 'IDEAS-ISI'],   
