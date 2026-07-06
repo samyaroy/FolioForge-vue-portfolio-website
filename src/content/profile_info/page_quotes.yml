@@ -4,8 +4,10 @@ page_quotes:
       author: "Maximilien de Robespierre"
 
   Home:
-    - text: "To punish the oppressors of humanity is clemency; to forgive them is cruelty."
-      author: "Maximilien de Robespierre"
+    - text: "Yesterday is history, tomorrow is a mystery, today is a gift, which is why we call it the present."
+      source: "Kung Fu Panda" 
+      author: "Master Oogway"
+
 
   ProjectsPublications:
     - text: "Most successes are unhappy. That's why they are successes-they have to reassure themselves about themselves by achieving something that the world will notice.... The happy people are failures because they are on such good terms with themselves that they don't give a damn."
@@ -16,9 +18,9 @@ page_quotes:
     - text: "You can outsource your thinking, but you cannot outsource your understanding."
       author: "Andrej Karpathy"
 
-  # Affiliations:
-  #   - text: "Good collaborations make the room larger than the table."
-  #     author: "Collaboration notebook"
+  Affiliations:
+    - text: "When you can't make them see the light, make them feel the heat."
+      author: "Ronald Reagan"
 
   Cocurricular:
     - text: "Know all the theories, master all the techniques, but as you touch a human soul, be just another human soul."
@@ -37,9 +39,9 @@ page_quotes:
     - text: "Those who make peaceful revolution impossible will make violent revolution inevitable."
       author: "John F. Kennedy"
 
-  # ProfessionalAcitivity:
-  #   - text: "Communities grow where people keep showing up with care."
-  #     author: "Professional notebook"
+  ProfessionalAcitivity:
+    - text: "Forgive, O Lord, my little jokes on Thee   And I'll forgive Thy great big one on me."
+      author: "Robert Frost"
 
   Gallery:
     - text: "স্মৃতির পটে জীবনের ছবি কে আঁকিয়া যায় জানি না। কিন্তু যেই আঁকুক সে ছবিই আঁকুক সে ছবিই আঁকে।"
@@ -56,6 +58,6 @@ page_quotes:
       source: "Twelfth Night"
       author: "William Shakespeare"
 
-  # PrivacyPolicy:
-  #   - text: "Trust is design you can read."
-  #     author: "Policy notebook"
+  PrivacyPolicy:
+    - text: "To punish the oppressors of humanity is clemency; to forgive them is cruelty."
+      author: "Maximilien de Robespierre"

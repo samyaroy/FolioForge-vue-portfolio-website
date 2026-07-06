@@ -11,8 +11,8 @@
         <span class="vertical-type-label">{{ other.type }}</span>
       </div>
 
-      <div class="flex flex-1 min-w-0">
-        <div class="w-[80%] min-w-0">
+      <div class="relative flex flex-1 min-w-0">
+        <div :class="mainColumnClass">
           <div>
             <h3 class="text-md font-semibold text-[#0e141b]">
               {{ other.title }}
@@ -44,20 +44,22 @@
                 mdi-office-building
               </v-icon>
 
-              <div class="flex-1 text-sm">
-                <span class="font-medium">Host:&nbsp;</span>
-                <template v-for="(host, index) in normalizedHosts" :key="`${host.name}-${index}`">
-                  <span v-if="host.department">{{ host.department }}, </span>
-                  <SmartLink :text="host.name" :href="host.link || host.href || null" />
-                  <span v-if="index < normalizedHosts.length - 1">;&nbsp;</span>
-                </template>
+              <div class="flex-1 text-sm flex items-start min-w-0">
+                <span class="font-medium shrink-0">Host:&nbsp;</span>
+                <span class="min-w-0 flex-1 break-words">
+                  <template v-for="(host, index) in normalizedHosts" :key="`${host.name}-${index}`">
+                    <span v-if="host.department">{{ formatDepartments(host.department) }}, </span>
+                    <SmartLink :text="host.name" :href="host.link || host.href || null" />
+                    <span v-if="index < normalizedHosts.length - 1">;&nbsp;</span>
+                  </template>
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="w-[20%] text-[12px] text-gray-500 flex flex-col items-end text-right">
-          <span><v-icon size="14">mdi-calendar</v-icon> {{ other.date }}</span>
+        <div v-if="hasMetaColumn" :class="metaColumnClass">
+          <span v-if="other.date"><v-icon size="14">mdi-calendar</v-icon> {{ other.date }}</span>
 
           <div class="flex flex-col items-end mt-1">
             <div v-if="other.mode || displayLocation" class="mt-1 flex items-center justify-end gap-1 min-w-0">
@@ -123,21 +125,59 @@ const stackSpeakers = computed(() => {
 
 const normalizedType = computed(() => props.other?.type?.trim().toLowerCase() || '')
 
-const isWebinarType = computed(() => {
-  return normalizedType.value === 'webiner' || normalizedType.value === 'webinar'
+const typeThemes = {
+  webinar: {
+    border: 'border-green-500',
+    tone: 'bg-green-50/40 text-green-700'
+  },
+  webiner: {
+    border: 'border-green-500',
+    tone: 'bg-green-50/40 text-green-700'
+  },
+  seminar: {
+    border: 'border-pink-500',
+    tone: 'bg-red-50/50 text-pink-700'
+  },
+  lecture: {
+    border: 'border-amber-500',
+    tone: 'bg-amber-50/50 text-amber-700'
+  },
+  workshop: {
+    border: 'border-violet-500',
+    tone: 'bg-violet-50/50 text-violet-700'
+  },
+  conference: {
+    border: 'border-cyan-500',
+    tone: 'bg-cyan-50/50 text-cyan-700'
+  },
+  talk: {
+    border: 'border-rose-500',
+    tone: 'bg-rose-50/50 text-rose-700'
+  },
+}
+
+const typeTheme = computed(() => {
+  return typeThemes[normalizedType.value] || {
+    border: 'border-slate-400',
+    tone: 'bg-slate-50/60 text-slate-700'
+  }
 })
 
 const borderClass = computed(() => {
-  return isWebinarType.value
-    ? 'border-green-500'
-    : 'border-yellow-400'
+  return typeTheme.value.border
 })
 
 const typeToneClass = computed(() => {
-  return isWebinarType.value
-    ? 'bg-green-50/40 text-green-700'
-    : 'bg-yellow-50/40 text-yellow-700'
+  return typeTheme.value.tone
 })
+
+function formatDepartments(department) {
+  if (Array.isArray(department)) {
+    return department.filter(Boolean).join(' / ')
+  }
+
+  return department || ''
+}
 
 const normalizedHosts = computed(() => {
   const host = props.other?.host
@@ -182,6 +222,22 @@ const externalLink = computed(() => props.other?.link || null)
 
 const displayLocation = computed(() => {
   return props.other?.location || normalizedHosts.value[0]?.location || ''
+})
+
+const hasMetaColumn = computed(() => {
+  return Boolean(props.other?.date || props.other?.mode || displayLocation.value || externalLink.value)
+})
+
+const mainColumnClass = computed(() => {
+  return externalLink.value ? 'w-[80%] min-w-0' : 'w-full min-w-0'
+})
+
+const metaColumnClass = computed(() => {
+  const baseClass = 'text-[12px] text-gray-500 flex flex-col items-end text-right'
+
+  return externalLink.value
+    ? `${baseClass} w-[20%]`
+    : `${baseClass} absolute right-0 top-0 w-[20%] pointer-events-none`
 })
 </script>
 
