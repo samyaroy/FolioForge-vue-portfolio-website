@@ -42,13 +42,6 @@ attended_workshops:
     date: "September 2025"
     mode: "Online"
 
-  - title: "Statistical Methods in Cyber Security"
-    institution:
-      - name: "Royal Statistical Society"
-        location: "London, UK"
-    date: "September 2025"
-    mode: "Online"
-
   - title: "Uncertainty in Machine Learning: Challenges and Opportunities"
     institution:
       - name: "Isaac Newton Institute for Mathematical Sciences"
@@ -129,6 +122,19 @@ attended_webinars_n_others:
     mode: "Online"
     link: https://www.niss.org/events/copss-niss-leadership-webinar-role-bayesian-statistics-age-ai
 
+  - title: "Statistical Methods in Cyber Security"
+    type: webiner
+    speaker: |-
+      Daniyar Ghani (Imperial College London)
+      Lekha Patel (Sandia National Laboratories)
+      Leigh Shlomovich (Head of Research, Alpha Level Security)
+    host:
+      - name: "Royal Statistical Society"
+        location: "London, UK"
+    date: "29 September, 2025"
+    mode: "Online"
+    link: https://rss.org.uk/training-events/events/events-2025/section-groups/statistical-methods-in-cybersecurity/
+
   # - title: "Responsible AI Use for Journal Publishing"
   #   type: webiner
   #   host:
@@ -167,16 +173,6 @@ attended_webinars_n_others:
         location: Rome, IT  
     date: "14 May, 2026"
     mode: "Online"
-
-  # - title: "Causal Learning for Individual and Population Health in the Era of AI"
-  #   type: webiner
-  #   speaker: ["Dr. Linda Valeri"]
-  #   host:
-  #     - name: "CUNY Graduate School of Public Health and Health Policy"
-  #       department:
-  #       location: New York, NY  
-  #   date: "14 May, 2026"
-  #   mode: "Online"
 
 attended_other_workshops:
   - title: "Measurements in AI"

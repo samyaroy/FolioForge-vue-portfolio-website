@@ -146,7 +146,7 @@ external:
       - label: RoSE Network
         url: https://www.rose-network.org/
       - label: The International Society for Bayesian Analysis 
-        url: https://bayesian.org/
+        ref: ISBA
       - label: American Statistical Association
         url: https://www.amstat.org/
       - label: Royal Statistical Society

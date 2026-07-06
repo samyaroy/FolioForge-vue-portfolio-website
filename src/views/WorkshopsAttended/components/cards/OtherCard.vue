@@ -23,13 +23,20 @@
           </div>
 
           <div>
-            <p v-if="other.speaker" :class="['text-gray-600 mb-1 flex items-center', 'text-sm']">
-              <v-icon size="14" class="mr-2">mdi-account</v-icon>
+            <p v-if="speakers.length" :class="['text-gray-600 mb-1 flex items-start', 'text-sm']">
+              <v-icon size="14" class="mr-2 mt-0.5">mdi-account</v-icon>
               <span>Speaker:&nbsp;</span>
-              <template v-for="(s, index) in other.speaker" :key="s">
-                <SmartLink :text="s" type="Person" />
-                <span v-if="index < other.speaker.length - 1">,&nbsp;</span>
-              </template>
+              <span v-if="stackSpeakers" class="flex flex-col">
+                <span v-for="s in speakers" :key="s">
+                  <SmartLink :text="s" type="Person" />
+                </span>
+              </span>
+              <span v-else>
+                <template v-for="(s, index) in speakers" :key="s">
+                  <SmartLink :text="s" type="Person" />
+                  <span v-if="index < speakers.length - 1">,&nbsp;</span>
+                </template>
+              </span>
             </p>
 
             <div v-if="normalizedHosts.length" class="text-gray-600 mb-1 flex items-start">
@@ -95,6 +102,23 @@ const props = defineProps({
     type: Object,
     required: true
   }
+})
+
+// Speakers written as a YAML list ([] or -) render comma-separated on one
+// line; a multi-line block string (|-) renders one speaker per line.
+const speakers = computed(() => {
+  const speaker = props.other?.speaker
+  if (Array.isArray(speaker)) {
+    return speaker.filter(Boolean)
+  }
+  if (typeof speaker === 'string') {
+    return speaker.split('\n').map(s => s.trim()).filter(Boolean)
+  }
+  return []
+})
+
+const stackSpeakers = computed(() => {
+  return typeof props.other?.speaker === 'string' && speakers.value.length > 1
 })
 
 const normalizedType = computed(() => props.other?.type?.trim().toLowerCase() || '')
