@@ -14,6 +14,8 @@
 #   summary    — short description of the trip
 #   coverImage — full URL (or CDN key) for a cover photo
 #   tags       — free-form labels, e.g. [Mountains, Conference]
+#   detailsUrl — target for the "See details ->" link on the trip card:
+#                an internal path (e.g. /posts/some-post) or a full URL
 #
 # Example:
 #   - id: uttarakhand-2024
@@ -24,5 +26,39 @@
 #     places: [Haridwar, Rishikesh, Uttarkashi, Kedarnath, Badrinath]
 #     summary: Two weeks winding through the Garhwal Himalayas.
 #     tags: [Mountains, Pilgrimage]
+#     detailsUrl: /posts/char-dham-2024
 
-trips: []
+# Dummy entries below — replace with real trips.
+trips:
+  - id: chennai-flstcs-2026
+    title: Two weeks of Theoretical CS at IMSc, Chennai
+    startDate: 2026-06-15
+    endDate: 2026-06-27
+    purpose: academic
+    places: [Chennai, Mamallapuram]
+    summary: Attended the Foundation Lecture Series on Theoretical Computer
+      Science at IMSc, with a weekend detour to the shore temples of
+      Mamallapuram.
+    tags: [Bootcamp, Workshop]
+    detailsUrl: /posts/hello-world
+
+  - id: hyderabad-conclave-2026
+    title: Cryptology Conclave at IIT Hyderabad
+    startDate: 2026-01-22
+    endDate: 2026-01-24
+    purpose: academic
+    places: [Hyderabad]
+    summary: A short hop to IIT Hyderabad for the Cryptology Conclave —
+      lattices, PQC, and a lot of filter coffee.
+    tags: [Conference]
+    detailsUrl: https://example.com/cryptology-conclave-2026
+
+  - id: uttarakhand-2024
+    title: Char Dham circuit through Uttarakhand
+    startDate: 2024-05-10
+    endDate: 2024-05-22
+    purpose: travel
+    places: [Haridwar, Rishikesh, Uttarkashi, Kedarnath, Badrinath]
+    summary: Two weeks winding through the Garhwal Himalayas, from the ghats
+      of Haridwar up to Kedarnath and Badrinath.
+    tags: [Mountains, Pilgrimage]

@@ -12,6 +12,8 @@ import {
   TRAVEL_LEGEND_LABELS,
   type Purpose,
 } from '../../content/travel/data'
+import { TRIPS } from '../../content/travel/trips'
+import { TripCard } from './components/TripCard'
 import {
   INTRO_SECTION_CLASS,
   INTRO_TEXT_CLASS,
@@ -419,6 +421,17 @@ export function TravelPage() {
           <div className={POST_LIST_CLASS}>
             {travelPosts.map((post) => (
               <PostCard key={post.slug} post={post} />
+            ))}
+          </div>
+        )}
+
+        {TRIPS.length > 0 && (
+          <div className="mt-6 flex flex-col gap-6">
+            <h2 className="w-[90%] text-[1.1rem] text-ink">
+              {TRAVEL_SECTION.tripsTitle}
+            </h2>
+            {TRIPS.map((trip) => (
+              <TripCard key={trip.id} trip={trip} />
             ))}
           </div>
         )}

@@ -29,6 +29,8 @@ travel:
   tag: travel
   mapTitle: States & cities visited
   mapAttribution: "* Map boundaries use india-maps-data GeoJSON; city coordinates are resolved with the Open-Meteo Geocoding API and rendered with ECharts."
+  tripsTitle: Trips
+  detailsLabel: "See details ->"
 
 post:
   backToBlogs: Back to Writing

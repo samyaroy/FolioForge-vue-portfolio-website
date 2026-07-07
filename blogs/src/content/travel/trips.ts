@@ -17,6 +17,8 @@ export type Trip = {
   /** Full URL or CDN key for a cover photo. */
   coverImage?: string
   tags?: string[]
+  /** Target for the "See details ->" link: an internal path (e.g. /posts/slug) or a full URL. */
+  detailsUrl?: string
 }
 
 interface TripsContent {
