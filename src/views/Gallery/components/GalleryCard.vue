@@ -45,9 +45,13 @@
       >
         <v-icon size="20">mdi-magnify-plus-outline</v-icon>
       </button>
-      <img :src="currentImage" :alt="resolvedAlt"
-        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy"
-        @error="handleImageError">
+      <Transition :name="slideTransitionName">
+        <div :key="currentIndex" class="absolute inset-0">
+          <img :src="currentImage" :alt="resolvedAlt"
+            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy"
+            @error="handleImageError">
+        </div>
+      </Transition>
 
       <template v-if="hasMultipleImages">
         <button
@@ -71,23 +75,30 @@
             v-for="(image, index) in images"
             :key="index"
             type="button"
-            class="h-1.5 rounded-full p-0 transition-all"
-            :class="index === currentIndex ? 'w-4 bg-white' : 'w-1.5 bg-white/60 hover:bg-white/80'"
+            class="relative h-1.5 overflow-hidden rounded-full p-0 transition-all"
+            :class="index === currentIndex ? 'w-5 bg-white/40' : 'w-1.5 bg-white/60 hover:bg-white/80'"
             :aria-label="`Show image ${index + 1} of ${images.length}`"
             :aria-current="index === currentIndex"
             @click="showImageAt(index)"
-          />
+          >
+            <span
+              v-if="index === currentIndex"
+              :key="`dot-progress-${isZoomOpen}`"
+              class="gallery-dot-progress absolute inset-0 rounded-full bg-white"
+              :style="dotProgressStyle"
+            />
+          </button>
         </div>
       </template>
     </div>
 
     <div class="relative flex flex-1 flex-col gap-4 p-6">
-      <h2 class="font-serif text-[1.25rem] font-semibold leading-tight tracking-[-0.02em] text-base_black">
+      <h2 class="min-h-[3.125rem] font-serif text-[1.25rem] font-semibold leading-tight tracking-[-0.02em] text-base_black">
         {{ item.title }}
       </h2>
 
-      <div v-if="hasCaption" class="text-[0.90rem] leading-7 text-slate-500">
-        <CaptionContent :text="item.caption" />
+      <div class="min-h-[8.75rem] text-justify text-[0.90rem] leading-7 text-slate-500">
+        <CaptionContent v-if="hasCaption" :text="item.caption" />
       </div>
       <div v-if="visibleTags.length || item.externalUrl" class="mt-auto flex w-full items-end gap-4">
         <div class="w-[90%]">
@@ -172,7 +183,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CaptionContent from '@/components/CaptionContent.vue'
 import galleryFallbackSample from '../assets/gallery-fallback-sample.svg'
 
@@ -198,9 +209,12 @@ const visibleTags = computed(() => (
 const hasCaption = computed(() => (
   typeof props.item.caption === 'string' && props.item.caption.trim().length > 0
 ))
+const AUTO_ROTATE_INTERVAL = 6000
 const failedIndices = ref(new Set())
 const currentIndex = ref(0)
+const slideDirection = ref('next')
 const isZoomOpen = ref(false)
+let autoRotateTimer = null
 const images = computed(() => {
   if (Array.isArray(props.item.images) && props.item.images.length) {
     return props.item.images
@@ -213,6 +227,11 @@ const images = computed(() => {
   return remoteImage ? [remoteImage] : []
 })
 const hasMultipleImages = computed(() => images.value.length > 1)
+const slideTransitionName = computed(() => `gallery-slide-${slideDirection.value}`)
+const dotProgressStyle = computed(() => ({
+  animationDuration: `${AUTO_ROTATE_INTERVAL}ms`,
+  animationPlayState: isZoomOpen.value ? 'paused' : 'running',
+}))
 const currentImage = computed(() => {
   const source = images.value[currentIndex.value]
 
@@ -260,9 +279,13 @@ watch(() => props.item.id, () => {
   currentIndex.value = 0
   failedIndices.value = new Set()
   closeZoom()
+  startAutoRotate()
 })
 
 watch(isZoomOpen, (isOpen) => {
+  if (isOpen) stopAutoRotate()
+  else startAutoRotate()
+
   if (typeof document === 'undefined') return
 
   if (isOpen) {
@@ -275,7 +298,11 @@ watch(isZoomOpen, (isOpen) => {
   document.body.style.overflow = ''
 })
 
+onMounted(startAutoRotate)
+
 onBeforeUnmount(() => {
+  stopAutoRotate()
+
   if (typeof document === 'undefined') return
 
   document.removeEventListener('keydown', handleZoomKeydown)
@@ -326,19 +353,40 @@ function handleImageError() {
   failedIndices.value = nextFailedIndices
 }
 
-function showImageAt(index) {
+function stopAutoRotate() {
+  if (autoRotateTimer) {
+    clearInterval(autoRotateTimer)
+    autoRotateTimer = null
+  }
+}
+
+function startAutoRotate() {
+  stopAutoRotate()
+
+  if (!hasMultipleImages.value || isZoomOpen.value) return
+
+  autoRotateTimer = setInterval(() => {
+    slideDirection.value = 'next'
+    currentIndex.value = (currentIndex.value + 1) % images.value.length
+  }, AUTO_ROTATE_INTERVAL)
+}
+
+function showImageAt(index, direction = '') {
   const total = images.value.length
   if (total === 0) return
 
-  currentIndex.value = ((index % total) + total) % total
+  const nextIndex = ((index % total) + total) % total
+  slideDirection.value = direction || (nextIndex >= currentIndex.value ? 'next' : 'prev')
+  currentIndex.value = nextIndex
+  startAutoRotate()
 }
 
 function showPrevImage() {
-  showImageAt(currentIndex.value - 1)
+  showImageAt(currentIndex.value - 1, 'prev')
 }
 
 function showNextImage() {
-  showImageAt(currentIndex.value + 1)
+  showImageAt(currentIndex.value + 1, 'next')
 }
 
 function openZoom() {
@@ -363,6 +411,44 @@ function handleZoomKeydown(event) {
 </script>
 
 <style scoped>
+.gallery-dot-progress {
+  transform-origin: left;
+  animation: gallery-dot-fill linear both;
+}
+
+@keyframes gallery-dot-fill {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.gallery-slide-next-enter-active,
+.gallery-slide-next-leave-active,
+.gallery-slide-prev-enter-active,
+.gallery-slide-prev-leave-active {
+  transition: transform 450ms ease;
+}
+
+.gallery-slide-next-enter-from {
+  transform: translateX(100%);
+}
+
+.gallery-slide-next-leave-to {
+  transform: translateX(-100%);
+}
+
+.gallery-slide-prev-enter-from {
+  transform: translateX(-100%);
+}
+
+.gallery-slide-prev-leave-to {
+  transform: translateX(100%);
+}
+
 .gallery-zoom-fade-enter-active,
 .gallery-zoom-fade-leave-active {
   transition: opacity 160ms ease;

@@ -1,0 +1,28 @@
+# Individual trips for the travel page. Loaded through trips.ts, which
+# applies the types and sorts trips newest-first by start date.
+#
+# The list is empty for now — fill it in as trips happen. An empty list is
+# fine; nothing renders until entries are added.
+#
+# trips entries:
+#   id         — unique slug for the trip
+#   title      — headline for the trip
+#   startDate  — YYYY-MM-DD
+#   endDate    — YYYY-MM-DD (omit for single-day trips)
+#   purpose    — academic | travel | both
+#   places     — cities/places touched on the trip, in order
+#   summary    — short description of the trip
+#   coverImage — full URL (or CDN key) for a cover photo
+#   tags       — free-form labels, e.g. [Mountains, Conference]
+#
+# Example:
+#   - id: uttarakhand-2024
+#     title: Char Dham circuit through Uttarakhand
+#     startDate: 2024-05-10
+#     endDate: 2024-05-22
+#     purpose: travel
+#     places: [Haridwar, Rishikesh, Uttarkashi, Kedarnath, Badrinath]
+#     summary: Two weeks winding through the Garhwal Himalayas.
+#     tags: [Mountains, Pilgrimage]
+
+trips: []

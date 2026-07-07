@@ -54,14 +54,14 @@ items:
     event: Paradox 2026
     # externalUrl:
 
-  # - id: intern-project-1001
-  #   title: Survived only one month at Vichalanshala Lab's VINS
-  #   event: ""
-  #   location: VLED lab, IIT Roper
-  #   caption:
-  #   type: Zoom
-  #   date: 2026-06-10
-  #   tags: ["New Role", Internship]
+  - id: new_people-02
+
+    title: An experiment so unique that gained people over certificates
+    event: "Vicharashala Summership 2026"
+    location: VLED lab, IIT Roper
+    caption: While managing a degree and a job simultaneousely, I got myself into another roller coaster ride at [[Vicharashala|VLED|Institute]] **Summer Internship** for 2 months. Although it wasn't a success story in the way it was supposed to be, but got such an amazing group of peer in phrase 1 to lead, that I had to rethink the way I painted sucess earlier.
+    date: 2026-07-07
+    tags: [Internship]
 
   - id: intern-project-01
     title: Mentored a group of Spring Interns at IDEAS-TIH
@@ -258,6 +258,9 @@ items:
     location: Block A, Sister Nivedita University
 
   - id: workshop-01
+    images:
+      - workshop-01
+      - workshop-01-01
     title: Attended a Social Computing Workshop at IIITH
     manifestDescription: Social computing workshop at IIITH
     caption: An amazing day attending Prof. [[P.K. Sir|Prof. Ponnurangam Kumaraguru|Person]]'s workshop at **IIIT Hyderabad**. I got to learn about the latest research and developments in this field of LLM and how it could be used reasearch for social computing, and I am excited to apply this knowledge in my future work. Here I also got introduced to the concept of **Legal AI**.
