@@ -7,10 +7,15 @@
       aria-live="polite"
       @before-leave="pinLeavingCard"
     >
+      <!-- The id is what a shared card link lands on; see galleryAnchorId. -->
       <div
         v-for="item in items"
+        :id="galleryAnchorId(item.id)"
         :key="item.id"
-        class="h-full"
+        class="flex h-full rounded-[12px] transition-shadow duration-500"
+        :class="item.id === highlightedId
+          ? 'ring-2 ring-primary ring-offset-4 ring-offset-slate-50'
+          : ''"
       >
         <GalleryCard :item="item" />
       </div>
@@ -37,6 +42,7 @@
 
 <script setup>
 import GalleryCard from './GalleryCard.vue'
+import { galleryAnchorId } from '@/utils/shareLinks'
 
 defineProps({
   items: {
@@ -46,6 +52,11 @@ defineProps({
   canLoadMore: {
     type: Boolean,
     default: false,
+  },
+  /** Card a shared link pointed at; ringed until the visitor interacts. */
+  highlightedId: {
+    type: String,
+    default: '',
   },
 })
 
