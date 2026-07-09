@@ -185,11 +185,29 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
       textStyle: { color: '#0e141b', fontSize: 12 },
       formatter: tooltipFormatter,
     },
+    // Fills and strokes are split into separate layers: when a single layer
+    // draws fill+stroke per district, each district's opaque fill paints
+    // over the stroke its neighbour already drew, wiping out the thin
+    // dotted dividers. A stroke-only pass above every fill keeps them crisp.
     geo: [
       {
-        // Land on top: the registered GeoJSON is district-granularity, so
-        // every internal edge (district and state alike) renders as a
-        // dotted, semi-transparent divider over the opaque land fill.
+        // Division borders on top: the registered GeoJSON is district-
+        // granularity, so every internal edge (district and state alike)
+        // renders as a dotted, semi-transparent divider.
+        map: INDIA_MAP_NAME,
+        nameProperty: 'st_nm',
+        silent: true,
+        z: 3,
+        boundingCoords,
+        itemStyle: {
+          areaColor: 'transparent',
+          borderColor: 'rgba(100,116,139,0.5)',
+          borderWidth: 0.8,
+          borderType: 'dotted',
+        },
+      },
+      {
+        // Land fill, borderless.
         map: INDIA_MAP_NAME,
         nameProperty: 'st_nm',
         silent: true,
@@ -197,9 +215,8 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
         boundingCoords,
         itemStyle: {
           areaColor: LAND_COLOR,
-          borderColor: 'rgba(100,116,139,0.45)',
-          borderWidth: 0.7,
-          borderType: 'dotted',
+          borderColor: 'transparent',
+          borderWidth: 0,
         },
       },
       {
