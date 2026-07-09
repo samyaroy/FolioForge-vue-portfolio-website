@@ -46,7 +46,7 @@
 
 # Dummy entries below — replace with real trips.
 trips:
-  - id: mhfg
+  - id: hyderabad-solo-202
     title: First solo trip to Hyderabad
     date: 2024-01-01
     location: Tamil Nadu
@@ -82,10 +82,9 @@ trips:
       - The weekend in between belonged to Mamallapuram. The shore temples,
         carved granite against the Bay of Bengal, were a fitting counterpoint
         to a fortnight of blackboards and chalk dust.
-    # stats:
-    #   - { label: Days on campus, value: '12' }
-    #   - { label: Lecture sessions, value: '24' }
-    #   - { label: Cities covered, value: 2 (Chennai & Mamallapuram) }
+    stats:
+      - { label: Distance (One Way), value: '57 KM' }
+      - { label: Days, value: '14' }
     gallery:
       - 
 
