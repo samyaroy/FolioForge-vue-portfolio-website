@@ -105,19 +105,40 @@ function tooltipFormatter(params: unknown): string {
   return lines.join('<br/>')
 }
 
-function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
-  // Frame the camera on the route: bounding box of the stops plus padding
-  // (with a minimum span so two nearby cities don't zoom in absurdly far).
+// Rough extent of the registered India GeoJSON; used to convert the route's
+// bounding box into a geo zoom factor relative to the full-map view.
+const INDIA_VIEW = { minLng: 68, maxLng: 97.5, minLat: 6.5, maxLat: 37.2 }
+
+/**
+ * Camera that frames the route: bounding box of the stops plus padding
+ * (with a minimum span so two nearby cities don't zoom in absurdly far).
+ */
+function routeCamera(stops: LocatedStop[]): {
+  center: [number, number]
+  zoom: number
+} {
   const lngs = stops.map((s) => s.lng)
   const lats = stops.map((s) => s.lat)
   const padLng = Math.max((Math.max(...lngs) - Math.min(...lngs)) * 0.4, 1.5)
   const padLat = Math.max((Math.max(...lats) - Math.min(...lats)) * 0.4, 1.5)
+  const spanLng = Math.max(...lngs) - Math.min(...lngs) + padLng * 2
+  const spanLat = Math.max(...lats) - Math.min(...lats) + padLat * 2
+  return {
+    center: [
+      (Math.min(...lngs) + Math.max(...lngs)) / 2,
+      (Math.min(...lats) + Math.max(...lats)) / 2,
+    ],
+    zoom: Math.max(
+      1,
+      Math.min(
+        (INDIA_VIEW.maxLng - INDIA_VIEW.minLng) / spanLng,
+        (INDIA_VIEW.maxLat - INDIA_VIEW.minLat) / spanLat,
+      ),
+    ),
+  }
+}
 
-  const boundingCoords = [
-    [Math.min(...lngs) - padLng, Math.max(...lats) + padLat],
-    [Math.max(...lngs) + padLng, Math.min(...lats) - padLat],
-  ]
-
+function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
   // Group the legs by drawing style so each style becomes one lines series
   // (plus its overlay pass, when the style has one).
   const legsByStyle = new Map<
@@ -178,6 +199,10 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
 
   return {
     backgroundColor: WATER_COLOR,
+    // Drives the camera fly-in: geo center/zoom updates animate with this
+    // duration, so the map appears to zoom from all-India into the route.
+    animationDurationUpdate: 1100,
+    animationEasingUpdate: 'cubicInOut',
     tooltip: {
       trigger: 'item',
       confine: true,
@@ -185,6 +210,10 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
       textStyle: { color: '#0e141b', fontSize: 12 },
       formatter: tooltipFormatter,
     },
+    // The three layers start at the default full-India view — matching the
+    // map pane on the travel page, which the view transition morphs into
+    // this card — and are then zoomed to the route by a center/zoom update.
+    //
     // Fills and strokes are split into separate layers: when a single layer
     // draws fill+stroke per district, each district's opaque fill paints
     // over the stroke its neighbour already drew, wiping out the thin
@@ -198,7 +227,7 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
         nameProperty: 'st_nm',
         silent: true,
         z: 3,
-        boundingCoords,
+        aspectScale: 0.9,
         itemStyle: {
           areaColor: 'transparent',
           borderColor: 'rgba(100,116,139,0.5)',
@@ -212,7 +241,7 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
         nameProperty: 'st_nm',
         silent: true,
         z: 2,
-        boundingCoords,
+        aspectScale: 0.9,
         itemStyle: {
           areaColor: LAND_COLOR,
           borderColor: 'transparent',
@@ -227,7 +256,7 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
         nameProperty: 'st_nm',
         silent: true,
         z: 1,
-        boundingCoords,
+        aspectScale: 0.9,
         itemStyle: {
           areaColor: 'transparent',
           borderColor: '#64748b',
@@ -285,6 +314,7 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
 
   useEffect(() => {
     let cancelled = false
+    let zoomTimer: number | undefined
     const el = containerRef.current
     if (!el) return
 
@@ -300,8 +330,15 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
         ])
         if (cancelled) return
         if (stops.length < 2) throw new Error('fewer than two locatable stops')
+        // First paint: the full-India view, continuing the map the user just
+        // left on the travel page. Then fly the camera into the route once
+        // the page's view transition has settled.
         chart.setOption(buildOption(stops))
         setStatus('ready')
+        const camera = routeCamera(stops)
+        zoomTimer = window.setTimeout(() => {
+          chart.setOption({ geo: [camera, camera, camera] })
+        }, 450)
       } catch (err) {
         console.error('Failed to load trip route map', err)
         if (!cancelled) setStatus('error')
@@ -311,6 +348,7 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
 
     return () => {
       cancelled = true
+      window.clearTimeout(zoomTimer)
       window.removeEventListener('resize', onResize)
       chart.dispose()
     }
