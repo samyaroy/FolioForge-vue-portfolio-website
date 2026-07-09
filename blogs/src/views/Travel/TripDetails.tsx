@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { TRAVEL_SECTION } from '../../content/sections'
 import { getTrip, tripStops } from '../../content/travel/trips'
@@ -5,6 +6,14 @@ import { formatDate } from '../../lib/format'
 import { CARD_ART_BACKDROP_CLASS } from '../../lib/ui'
 import { NotFoundPage } from '../NotFound'
 import { TripRoute } from './components/TripRoute'
+
+// The route map pulls in ECharts (~1 MB); load it only when a details page
+// with a plottable route actually renders.
+const TripRouteMap = lazy(() =>
+  import('./components/TripRouteMap').then((m) => ({
+    default: m.TripRouteMap,
+  })),
+)
 
 const CHIP_CLASS =
   'inline-flex items-center rounded-full border border-border bg-surface-soft px-3 py-1 text-xs leading-normal tracking-[0.16em] uppercase'
@@ -113,12 +122,25 @@ export function TripDetailsPage() {
         {/* Right column: route map & gallery */}
         <div className="flex min-w-0 flex-col gap-6">
           {(showRoute || mapImage) && (
-            <section className="rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]">
+            <section className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]">
               <h2 className="mb-3 text-[1.1rem] text-ink">
                 {TRAVEL_SECTION.routeMapTitle}
               </h2>
               {showRoute ? (
-                <TripRoute trip={trip} />
+                <>
+                  <Suspense
+                    fallback={
+                      <p className="text-[0.9rem] text-muted">Loading route…</p>
+                    }
+                  >
+                    <TripRouteMap trip={trip} />
+                  </Suspense>
+                  {/* Compact itinerary pinned to the pane's corner, like the
+                      legend on the travel page map. */}
+                  <div className="absolute top-14 right-6 z-2 max-h-[75%] overflow-y-auto rounded-lg border border-border bg-[rgba(255,255,255,0.88)] px-2 py-1 backdrop-blur-[2px]">
+                    <TripRoute trip={trip} />
+                  </div>
+                </>
               ) : (
                 <div
                   className={`overflow-hidden rounded-lg ${CARD_ART_BACKDROP_CLASS}`}

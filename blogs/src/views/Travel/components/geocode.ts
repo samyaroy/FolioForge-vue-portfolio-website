@@ -6,6 +6,9 @@ import type { CityVisit } from '../../../content/travel/data'
 
 export type GeoCity = CityVisit & { lat: number; lng: number }
 
+/** Minimal shape a geocoding query needs; CityVisit and TripStop both fit. */
+export type GeocodeQuery = { name: string; state?: string }
+
 const ENDPOINT = 'https://geocoding-api.open-meteo.com/v1/search'
 const CACHE_KEY = 'travel-geocode-v1'
 
@@ -35,11 +38,11 @@ function writeCache(cache: Cache): void {
   }
 }
 
-function keyFor(city: CityVisit): string {
+function keyFor(city: GeocodeQuery): string {
   return city.state ? `${city.name}|${city.state}` : city.name
 }
 
-async function lookup(city: CityVisit): Promise<Coord | null> {
+async function lookup(city: GeocodeQuery): Promise<Coord | null> {
   const url = `${ENDPOINT}?name=${encodeURIComponent(
     city.name,
   )}&count=10&language=en&format=json`
@@ -64,7 +67,9 @@ async function lookup(city: CityVisit): Promise<Coord | null> {
   return { lat: pick.latitude, lng: pick.longitude }
 }
 
-export async function geocodeCities(cities: CityVisit[]): Promise<GeoCity[]> {
+export async function geocodeCities<T extends GeocodeQuery>(
+  cities: T[],
+): Promise<(T & Coord)[]> {
   const cache = readCache()
   let dirty = false
 
@@ -85,5 +90,5 @@ export async function geocodeCities(cities: CityVisit[]): Promise<GeoCity[]> {
   )
 
   if (dirty) writeCache(cache)
-  return resolved.filter((c): c is GeoCity => c !== null)
+  return resolved.filter((c): c is T & Coord => c !== null)
 }

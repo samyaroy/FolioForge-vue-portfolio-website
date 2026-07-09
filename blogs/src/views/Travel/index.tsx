@@ -21,16 +21,11 @@ import {
   POST_LIST_CLASS,
 } from '../../lib/ui'
 import { geocodeCities, type GeoCity } from './components/geocode'
+import { INDIA_MAP_NAME, loadIndiaMap } from './components/indiaMap'
 
 const LEGEND_ROW_CLASS = 'inline-flex items-center gap-[0.35rem]'
 const LEGEND_HATCH_CLASS =
   'inline-block size-3 rounded-[3px] border border-border bg-[#f1f5f9]'
-
-// India boundaries pulled from a maintained, post-2019 dataset (Ladakh & J&K
-// split, current names) served over a CDN — no GeoJSON is vendored in-repo.
-const INDIA_GEOJSON_URL =
-  'https://cdn.jsdelivr.net/gh/udit-001/india-maps-data@main/geojson/india.geojson'
-const INDIA_MAP_NAME = 'india'
 
 // States are shaded by how many cities I've visited there, using a fixed
 // diverging palette (brown → cream → teal) applied as discrete count buckets.
@@ -379,17 +374,11 @@ export function TravelPage() {
     async function load() {
       try {
         // Map geometry and city coordinates are fetched in parallel.
-        const [res, cities] = await Promise.all([
-          fetch(INDIA_GEOJSON_URL),
+        const [allStates, cities] = await Promise.all([
+          loadIndiaMap(),
           geocodeCities(CITY_VISITS),
         ])
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const geojson = await res.json()
         if (cancelled) return
-        echarts.registerMap(INDIA_MAP_NAME, geojson)
-        const allStates: string[] = (geojson.features ?? [])
-          .map((f: { properties?: { st_nm?: string } }) => f.properties?.st_nm)
-          .filter((n: string | undefined): n is string => Boolean(n))
         chart.setOption(buildOption(cities, allStates))
         setStatus('ready')
       } catch (err) {
