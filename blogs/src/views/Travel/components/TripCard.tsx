@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { tripStops, type Trip } from '../../../content/travel/trips'
+import type { Trip } from '../../../content/travel/trips'
 import { TRAVEL_SECTION } from '../../../content/sections'
 import { formatDate } from '../../../lib/format'
 import {
@@ -17,9 +17,6 @@ type TripCardProps = {
 
 export function TripCard({ trip }: TripCardProps) {
   const formattedDate = formatDate(trip.date)
-  const placeNames = tripStops(trip)
-    .map((stop) => stop.name)
-    .join(' → ')
 
   return (
     <article className={`flex rounded-xl ${CARD_SHELL_CLASS}`}>
@@ -52,13 +49,16 @@ export function TripCard({ trip }: TripCardProps) {
               {formattedDate}
             </time>
           )}
+          {trip.location && (
+            <span className="inline-flex items-center gap-1 font-normal">
+              <span
+                className="mdi mdi-map-marker-outline leading-none"
+                aria-hidden="true"
+              />
+              {trip.location}
+            </span>
+          )}
         </div>
-
-        {placeNames && (
-          <p className="mt-2 text-[0.8rem] leading-normal text-faint">
-            {placeNames}
-          </p>
-        )}
 
         {trip.summary && (
           <p className="mt-2 text-justify text-[0.9rem] leading-[1.7] text-muted">

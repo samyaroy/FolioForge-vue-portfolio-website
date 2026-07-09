@@ -7,6 +7,8 @@
 #   id            — unique slug for the trip (also the details page URL)
 #   title         — headline for the trip
 #   date          — YYYY-MM-DD
+#   location      — where the trip went, shown as a chip next to the date
+#                   (e.g. "Hyderabad, Telangana")
 #   places        — stops on the trip, in travel order (see below)
 #   summary       — short description shown on the trip card
 #   coverImage    — full URL (or CDN key) for a cover photo
@@ -44,9 +46,10 @@
 
 # Dummy entries below — replace with real trips.
 trips:
-  - id: mahababipuram26
-    title: Dummy trip 1
+  - id: mhfg
+    title: First solo trip to Hyderabad
     date: 2024-01-01
+    location: Tamil Nadu
     places:
       - Chennai
       - { name: Mahabalipuram, mode: bus }
@@ -62,15 +65,14 @@ trips:
       - https://picsum.photos/seed/dummy-trip-1-1/600/600
       - https://picsum.photos/seed/dummy-trip-1-2/600/600
 
-  - id: hyd-1
-    title: First solo trip to Hyderabad
-    date: 2025-03-15
+  - id: mahababipuram26
+    title: qazxswedc
+    date: 2026-06-28
+    location: Mamallapuram, Tamil Nadu
     places:
       - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
-    summary: Attended the Foundation Lecture Series on Theoretical Computer
-      Science at IMSc, with a weekend detour to the shore temples of
-      Mamallapuram.
+    summary: 
     coverImage: https://picsum.photos/seed/chennai-flstcs-2026/480/360
     tags: [Solo Trip]
     narrative:
@@ -80,18 +82,17 @@ trips:
       - The weekend in between belonged to Mamallapuram. The shore temples,
         carved granite against the Bay of Bengal, were a fitting counterpoint
         to a fortnight of blackboards and chalk dust.
-    stats:
-      - { label: Days on campus, value: '12' }
-      - { label: Lecture sessions, value: '24' }
-      - { label: Cities covered, value: 2 (Chennai & Mamallapuram) }
+    # stats:
+    #   - { label: Days on campus, value: '12' }
+    #   - { label: Lecture sessions, value: '24' }
+    #   - { label: Cities covered, value: 2 (Chennai & Mamallapuram) }
     gallery:
-      - https://picsum.photos/seed/chennai-1/600/600
-      - https://picsum.photos/seed/chennai-2/600/600
-      - https://picsum.photos/seed/chennai-3/600/600
+      - 
 
   - id: hyderabad-conclave-2026
     title: Cryptology Conclave at IIT Hyderabad
     date: 2026-01-22
+    location: Hyderabad, Telangana
     places:
       - Kolkata
       - { name: Hyderabad, mode: flight }
@@ -117,6 +118,7 @@ trips:
   - id: uttarakhand-2024
     title: Char Dham circuit through Uttarakhand
     date: 2024-05-10
+    location: Uttarakhand
     places:
       - Haridwar
       - { name: Rishikesh, mode: bus }

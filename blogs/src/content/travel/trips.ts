@@ -36,6 +36,8 @@ export type Trip = {
   title: string
   /** ISO date (YYYY-MM-DD). */
   date: string
+  /** Where the trip went, shown as a chip (e.g. "Hyderabad, Telangana"). */
+  location?: string
   /** Stops on the trip, in travel order. */
   places?: TripPlace[]
   summary?: string

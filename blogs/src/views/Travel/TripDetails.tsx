@@ -37,10 +37,10 @@ export function TripDetailsPage() {
       : []
   const mapImage = trip.routeMapImage ?? trip.coverImage
   const stats = trip.stats ?? []
-  const stops = tripStops(trip)
-  const placeNames = stops.map((stop) => stop.name).join(' → ')
   // The itinerary needs at least one leg; single-stop trips keep the image.
-  const showRoute = stops.length >= 2
+  const showRoute = tripStops(trip).length >= 2
+  // Half-filled yml entries can leave null holes in the list; skip them.
+  const gallery = (trip.gallery ?? []).filter(Boolean)
 
   return (
     // Break out of the layout's default column to the same width as the
@@ -79,13 +79,16 @@ export function TripDetailsPage() {
                   <time dateTime={trip.date}>{formattedDate}</time>
                 </span>
               )}
+              {trip.location && (
+                <span className={`${CHIP_CLASS} gap-1 font-normal text-faint`}>
+                  <span
+                    className="mdi mdi-map-marker-outline leading-none"
+                    aria-hidden="true"
+                  />
+                  {trip.location}
+                </span>
+              )}
             </div>
-
-            {placeNames && (
-              <p className="mb-4 text-[0.85rem] leading-normal text-faint">
-                {placeNames}
-              </p>
-            )}
 
             <div className="flex flex-col gap-4 text-justify text-base leading-[1.8] text-muted">
               {paragraphs.map((paragraph) => (
@@ -155,9 +158,9 @@ export function TripDetailsPage() {
             </section>
           )}
 
-          {trip.gallery && trip.gallery.length > 0 && (
+          {gallery.length > 0 && (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {trip.gallery.map((src) => (
+              {gallery.map((src) => (
                 <div
                   key={src}
                   className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-surface-soft"
