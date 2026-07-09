@@ -19,15 +19,11 @@ export type TransportMode =
 export type TripStop = {
   /** Display name; also the geocoding query for the route map. */
   name: string
-  /** State, to disambiguate geocoding between same-named places. */
-  state?: string
   /** Explicit coordinates; when set, geocoding is skipped for this stop. */
   lat?: number
   lng?: number
   /** How this stop was reached from the previous one (omit on the first). */
   mode?: TransportMode
-  /** Nights stayed here; can size the stop's marker on the map. */
-  nights?: number
   /** Short tooltip line, e.g. "Shore temples". */
   note?: string
 }

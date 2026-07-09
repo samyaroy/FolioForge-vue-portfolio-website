@@ -32,16 +32,13 @@ function tooltipFormatter(params: unknown): string {
   const p = params as {
     seriesType?: string
     name: string
-    data?: { mode?: string; nights?: number; note?: string; legLabel?: string }
+    data?: { mode?: string; note?: string; legLabel?: string }
   }
   if (p.seriesType === 'lines') {
     return p.data?.legLabel ?? ''
   }
   const lines = [`<strong>${p.name}</strong>`]
   if (p.data?.mode) lines.push(`arrived by ${p.data.mode}`)
-  if (p.data?.nights != null) {
-    lines.push(`${p.data.nights} night${p.data.nights === 1 ? '' : 's'}`)
-  }
   if (p.data?.note) lines.push(`<em>${p.data.note}</em>`)
   return lines.join('<br/>')
 }
@@ -135,7 +132,6 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
           name: s.name,
           value: [s.lng, s.lat],
           mode: s.mode,
-          nights: s.nights,
           note: s.note,
         })),
         zlevel: 2,

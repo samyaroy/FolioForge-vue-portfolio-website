@@ -24,10 +24,8 @@
 #   mode   — how this stop was reached from the PREVIOUS one; omit on the
 #            first stop. One of: flight | train | bus | car | ferry | foot.
 #            Will pick the animation style (e.g. arced path for flights).
-#   state  — disambiguates geocoding between same-named places
 #   lat    — explicit coordinates; when both are set, geocoding is
 #   lng      skipped for this stop (use for small places the geocoder misses)
-#   nights — nights stayed here; can size the stop's marker on the map
 #   note   — short tooltip line, e.g. "Shore temples"
 #
 # Example:
@@ -65,10 +63,10 @@ trips:
       - https://picsum.photos/seed/dummy-trip-1-2/600/600
 
   - id: hyd-1
-    title: First solo trip @19 y/o
-    date: 2026-06-15
+    title: First solo trip to Hyderabad
+    date: 2025-03-15
     places:
-      - { name: Chennai, state: Tamil Nadu, nights: 12 }
+      - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
     summary: Attended the Foundation Lecture Series on Theoretical Computer
       Science at IMSc, with a weekend detour to the shore temples of
@@ -96,7 +94,7 @@ trips:
     date: 2026-01-22
     places:
       - Kolkata
-      - { name: Hyderabad, mode: flight, nights: 3 }
+      - { name: Hyderabad, mode: flight }
     summary: A short hop to IIT Hyderabad for the Cryptology Conclave —
       lattices, PQC, and a lot of filter coffee.
     coverImage: https://picsum.photos/seed/hyderabad-conclave-2026/480/360
@@ -120,11 +118,11 @@ trips:
     title: Char Dham circuit through Uttarakhand
     date: 2024-05-10
     places:
-      - { name: Haridwar, state: Uttarakhand }
-      - { name: Rishikesh, mode: bus, nights: 2 }
-      - { name: Uttarkashi, mode: car, nights: 3 }
-      - { name: Kedarnath, mode: foot, lat: 30.7346, lng: 79.0669, nights: 4 }
-      - { name: Badrinath, mode: car, nights: 3, note: Last stop of the circuit }
+      - Haridwar
+      - { name: Rishikesh, mode: bus }
+      - { name: Uttarkashi, mode: car }
+      - { name: Kedarnath, mode: foot, lat: 30.7346, lng: 79.0669 }
+      - { name: Badrinath, mode: car, note: Last stop of the circuit }
     summary: Two weeks winding through the Garhwal Himalayas, from the ghats
       of Haridwar up to Kedarnath and Badrinath.
     coverImage: https://picsum.photos/seed/uttarakhand-2024/480/360

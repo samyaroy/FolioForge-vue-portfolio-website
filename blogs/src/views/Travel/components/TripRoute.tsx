@@ -71,19 +71,10 @@ export function TripRoute({ trip }: TripRouteProps) {
             <div className="min-w-0">
               <div className="text-[0.95rem] leading-[1.35] font-bold text-ink">
                 {stop.name}
-                {stop.state && (
-                  <span className="font-normal text-faint"> · {stop.state}</span>
-                )}
               </div>
-              {(stop.nights != null || stop.note) && (
+              {stop.note && (
                 <div className="mt-0.5 text-[0.8rem] leading-normal text-muted">
-                  {stop.nights != null && (
-                    <span>
-                      {stop.nights} night{stop.nights === 1 ? '' : 's'}
-                    </span>
-                  )}
-                  {stop.nights != null && stop.note && <span> · </span>}
-                  {stop.note && <span>{stop.note}</span>}
+                  {stop.note}
                 </div>
               )}
             </div>
