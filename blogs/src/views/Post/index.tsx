@@ -45,9 +45,13 @@ export function PostPage() {
         </h1>
         {post.date && (
           <time
-            className="text-xs leading-normal font-bold tracking-[0.16em] text-faint uppercase"
+            className="inline-flex items-center gap-1 text-xs leading-normal font-normal tracking-[0.16em] text-faint uppercase"
             dateTime={post.date}
           >
+            <span
+              className="mdi mdi-calendar-blank-outline leading-none"
+              aria-hidden="true"
+            />
             {formatDate(post.date)}
           </time>
         )}

@@ -33,7 +33,7 @@ export function PostCard({ post }: PostCardProps) {
           <span className="text-[2rem] text-primary opacity-55">✳</span>
         )}
       </div>
-      <div className="min-w-0 px-[1.6rem] py-6">
+      <div className="flex min-w-0 flex-col px-[1.6rem] py-6">
         <h2 className={CARD_TITLE_CLASS}>
           <Link
             className="text-ink transition-colors duration-200 hover:text-primary"
@@ -42,17 +42,25 @@ export function PostCard({ post }: PostCardProps) {
             {post.title}
           </Link>
         </h2>
-        <div className={CARD_META_CLASS}>
-          <span className="after:ml-2 after:inline-block after:size-1 after:rounded-full after:bg-primary after:align-middle after:content-['']">
-            Article
-          </span>
-          {post.date && <time dateTime={post.date}>{formatDate(post.date)}</time>}
-        </div>
+        {post.date && (
+          <div className={CARD_META_CLASS}>
+            <time
+              dateTime={post.date}
+              className="inline-flex items-center gap-1 font-normal"
+            >
+              <span
+                className="mdi mdi-calendar-blank-outline leading-none"
+                aria-hidden="true"
+              />
+              {formatDate(post.date)}
+            </time>
+          </div>
+        )}
         {post.description && (
           <p className={CARD_EXCERPT_CLASS}>{post.description}</p>
         )}
         {post.tags.length > 0 && (
-          <ul className="mt-4 flex flex-wrap gap-[0.4rem]">
+          <ul className="mt-auto flex flex-wrap gap-[0.4rem] pt-4">
             {post.tags.map((tag) => (
               <li
                 key={tag}

@@ -9,6 +9,8 @@ import { HobbiesPage } from './views/Hobbies'
 import { GalleryPage } from './views/Gallery'
 import { isFeatureEnabled } from './config/featureFlags'
 import { EMPTY_TEXT_CLASS } from './lib/ui'
+// Trip details render plain markup (no ECharts), so a direct import is fine.
+import { TripDetailsPage } from './views/Travel/TripDetails'
 
 // Travel pulls in ECharts (~1 MB); load it only when the route is visited.
 const TravelPage = lazy(() =>
@@ -30,6 +32,12 @@ const optionalRoutes = [
             <TravelPage />
           </Suspense>
         ),
+      }
+    : null,
+  isFeatureEnabled('showTravel')
+    ? {
+        path: '/travel/:tripId',
+        element: <TripDetailsPage />,
       }
     : null,
   isFeatureEnabled('showHobbies')

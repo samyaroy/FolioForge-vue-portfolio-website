@@ -27,8 +27,9 @@ interface SectionsContent {
     tag: string
     mapTitle: string
     mapAttribution: string
-    tripsTitle: string
     detailsLabel: string
+    backToTravel: string
+    routeMapTitle: string
   }
   post: {
     backToBlogs: string

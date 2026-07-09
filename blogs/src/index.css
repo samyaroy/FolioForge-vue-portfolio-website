@@ -55,3 +55,15 @@
     color: var(--color-primary-hover);
   }
 }
+
+/* Shared-element transitions between the travel page and a trip's details
+   page: the "Travel" title morphs into the back button, and the map card
+   morphs into the route-map image. The names are assigned via
+   [view-transition-name:...] utilities in the TSX; navigation is opted in
+   with the Link viewTransition prop. Browsers without the View Transitions
+   API just navigate instantly. */
+::view-transition-group(travel-title),
+::view-transition-group(travel-map) {
+  animation-duration: 350ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}

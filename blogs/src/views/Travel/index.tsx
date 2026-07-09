@@ -408,10 +408,12 @@ export function TravelPage() {
   }, [])
 
   return (
-    <div className="ml-[50%] grid w-[min(calc(100vw-2rem),78rem)] -translate-x-1/2 grid-cols-1 gap-6 min-[900px]:grid-cols-[55%_45%] min-[900px]:items-start">
+    <div className="ml-[50%] grid w-[min(calc(100vw-1.5rem),84rem)] -translate-x-1/2 grid-cols-1 gap-3 min-[900px]:grid-cols-[55fr_45fr] min-[900px]:items-start">
       <div className="min-w-0">
-        <section className={INTRO_SECTION_CLASS}>
-          <h1 className={INTRO_TITLE_CLASS}>{TRAVEL_SECTION.title}</h1>
+        <section className={`${INTRO_SECTION_CLASS} mb-4!`}>
+          <h1 className={`${INTRO_TITLE_CLASS} [view-transition-name:travel-title]`}>
+            {TRAVEL_SECTION.title}
+          </h1>
           {showPageDescription && (
             <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.travel}</p>
           )}
@@ -426,10 +428,7 @@ export function TravelPage() {
         )}
 
         {TRIPS.length > 0 && (
-          <div className="mt-6 flex flex-col gap-6">
-            <h2 className="w-[90%] text-[1.1rem] text-ink">
-              {TRAVEL_SECTION.tripsTitle}
-            </h2>
+          <div className="mt-2 flex flex-col gap-6">
             {TRIPS.map((trip) => (
               <TripCard key={trip.id} trip={trip} />
             ))}
@@ -438,7 +437,7 @@ export function TravelPage() {
       </div>
 
       <section
-        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]"
         aria-label="Map of states visited in India"
       >
         <div className="mb-2">

@@ -1,64 +1,124 @@
 # Individual trips for the travel page. Loaded through trips.ts, which
-# applies the types and sorts trips newest-first by start date.
+# applies the types and sorts trips newest-first by date.
 #
-# The list is empty for now — fill it in as trips happen. An empty list is
-# fine; nothing renders until entries are added.
+# Each trip card links to its own details page at /travel/<id>.
 #
 # trips entries:
-#   id         — unique slug for the trip
-#   title      — headline for the trip
-#   startDate  — YYYY-MM-DD
-#   endDate    — YYYY-MM-DD (omit for single-day trips)
-#   purpose    — academic | travel | both
-#   places     — cities/places touched on the trip, in order
-#   summary    — short description of the trip
-#   coverImage — full URL (or CDN key) for a cover photo
-#   tags       — free-form labels, e.g. [Mountains, Conference]
-#   detailsUrl — target for the "See details ->" link on the trip card:
-#                an internal path (e.g. /posts/some-post) or a full URL
+#   id            — unique slug for the trip (also the details page URL)
+#   title         — headline for the trip
+#   date          — YYYY-MM-DD
+#   places        — cities/places touched on the trip, in order
+#   summary       — short description shown on the trip card
+#   coverImage    — full URL (or CDN key) for a cover photo
+#   tags          — free-form labels, e.g. [Mountains, Conference]
+#   narrative     — list of long-form paragraphs for the details page
+#                   (falls back to summary when omitted)
+#   stats         — metric cards for the details page: {label, value} pairs
+#   routeMapImage — image for the details page "Route map" card
+#                   (falls back to coverImage when omitted)
+#   gallery       — photo URLs for the details page gallery grid
 #
 # Example:
 #   - id: uttarakhand-2024
 #     title: Char Dham circuit through Uttarakhand
-#     startDate: 2024-05-10
-#     endDate: 2024-05-22
-#     purpose: travel
+#     date: 2024-05-10
 #     places: [Haridwar, Rishikesh, Uttarkashi, Kedarnath, Badrinath]
 #     summary: Two weeks winding through the Garhwal Himalayas.
 #     tags: [Mountains, Pilgrimage]
-#     detailsUrl: /posts/char-dham-2024
+#     stats:
+#       - { label: Places stayed, value: 14 villages }
+#       - { label: Distance, value: 320 km }
 
 # Dummy entries below — replace with real trips.
 trips:
-  - id: chennai-flstcs-2026
-    title: Two weeks of Theoretical CS at IMSc, Chennai
-    startDate: 2026-06-15
-    endDate: 2026-06-27
-    purpose: academic
+  - id: mahababipuram26
+    title: Dummy trip 1
+    date: 2024-01-01
+    places: [City A, City B]
+    summary: A short trip to City A and City B.
+    coverImage: https://picsum.photos/seed/dummy-trip-1/480/360
+    tags: [Dummy, Test]
+    narrative:
+      - This is a dummy trip for testing purposes. It covers City A and City B.
+      - The trip was uneventful but provided valuable insights into the local culture.
+    stats:
+      - { label: Days, value: '5' }
+      - { label: Cities covered, value: 2 }
+    gallery:
+      - https://picsum.photos/seed/dummy-trip-1-1/600/600
+      - https://picsum.photos/seed/dummy-trip-1-2/600/600
+
+  - id: hyd-1
+    title: First solo trip @19 y/o
+    date: 2026-06-15
     places: [Chennai, Mamallapuram]
     summary: Attended the Foundation Lecture Series on Theoretical Computer
       Science at IMSc, with a weekend detour to the shore temples of
       Mamallapuram.
+    coverImage: https://picsum.photos/seed/chennai-flstcs-2026/480/360
     tags: [Bootcamp, Workshop]
-    detailsUrl: /posts/hello-world
+    narrative:
+      - Attended the Foundation Lecture Series on Theoretical Computer
+        Science at IMSc — two weeks of lectures spanning complexity theory,
+        automata, and the algebra that quietly holds both together.
+      - The weekend in between belonged to Mamallapuram. The shore temples,
+        carved granite against the Bay of Bengal, were a fitting counterpoint
+        to a fortnight of blackboards and chalk dust.
+    stats:
+      - { label: Days on campus, value: '12' }
+      - { label: Lecture sessions, value: '24' }
+      - { label: Cities covered, value: 2 (Chennai & Mamallapuram) }
+    gallery:
+      - https://picsum.photos/seed/chennai-1/600/600
+      - https://picsum.photos/seed/chennai-2/600/600
+      - https://picsum.photos/seed/chennai-3/600/600
 
   - id: hyderabad-conclave-2026
     title: Cryptology Conclave at IIT Hyderabad
-    startDate: 2026-01-22
-    endDate: 2026-01-24
-    purpose: academic
+    date: 2026-01-22
     places: [Hyderabad]
     summary: A short hop to IIT Hyderabad for the Cryptology Conclave —
       lattices, PQC, and a lot of filter coffee.
+    coverImage: https://picsum.photos/seed/hyderabad-conclave-2026/480/360
     tags: [Conference]
-    detailsUrl: https://example.com/cryptology-conclave-2026
+    narrative:
+      - Three intense days at IIT Hyderabad for the Cryptology Conclave.
+        The programme leaned hard into lattice-based constructions and the
+        state of post-quantum standardisation.
+      - Between sessions, the campus canteen's filter coffee did most of the
+        heavy lifting. Left with a notebook full of open problems and a few
+        new collaborators.
+    stats:
+      - { label: Days, value: '3' }
+      - { label: Talks attended, value: '11' }
+    gallery:
+      - https://picsum.photos/seed/hyderabad-1/600/600
+      - https://picsum.photos/seed/hyderabad-2/600/600
+      - https://picsum.photos/seed/hyderabad-3/600/600
 
   - id: uttarakhand-2024
     title: Char Dham circuit through Uttarakhand
-    startDate: 2024-05-10
-    endDate: 2024-05-22
-    purpose: travel
+    date: 2024-05-10
     places: [Haridwar, Rishikesh, Uttarkashi, Kedarnath, Badrinath]
     summary: Two weeks winding through the Garhwal Himalayas, from the ghats
       of Haridwar up to Kedarnath and Badrinath.
+    coverImage: https://picsum.photos/seed/uttarakhand-2024/480/360
     tags: [Mountains, Pilgrimage]
+    narrative:
+      - The crisp mountain air hits differently when you're navigating the
+        rugged terrain of the Garhwal Himalayas. This circuit was less about
+        reaching a specific shrine and more about understanding the silent
+        language of ancient stones and winding rivers.
+      - Starting from the ghats of Haridwar, every step upwards stripped away
+        the noise of the city, replacing it with the rhythmic crunch of boots
+        on gravel and the distant calls of highland birds. The communities
+        along the way offered a profound perspective on resilience and
+        simplicity.
+    stats:
+      - { label: Places stayed, value: 14 villages }
+      - { label: Distance, value: 320 km }
+      - { label: Total trekked, value: 115 km on foot }
+    gallery:
+      - https://picsum.photos/seed/uttarakhand-1/600/600
+      - https://picsum.photos/seed/uttarakhand-2/600/600
+      - https://picsum.photos/seed/uttarakhand-3/600/600

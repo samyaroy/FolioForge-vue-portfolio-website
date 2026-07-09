@@ -42,9 +42,13 @@ export function ReadingCard({
           <h2 className={`min-w-0 ${CARD_TITLE_CLASS}`}>{reading.title}</h2>
           {reading.date && (
             <time
-              className="flex-none text-left text-xs leading-[1.35] font-bold tracking-[0.12em] text-faint uppercase md:text-right"
+              className="inline-flex flex-none items-center gap-1 text-left text-xs leading-[1.35] font-normal tracking-[0.12em] text-faint uppercase md:text-right"
               dateTime={reading.date}
             >
+              <span
+                className="mdi mdi-calendar-blank-outline leading-none"
+                aria-hidden="true"
+              />
               {formatDate(reading.date)}
             </time>
           )}
