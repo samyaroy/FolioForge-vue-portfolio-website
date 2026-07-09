@@ -30,8 +30,8 @@ travel:
   mapTitle: States & cities visited
   mapAttribution: "* Map boundaries use india-maps-data GeoJSON; city coordinates are resolved with the Open-Meteo Geocoding API and rendered with ECharts."
   detailsLabel: "See details ->"
-  backToTravel: "<- Back to TravelBook"
-  routeMapTitle: Route map
+  backToTravel: "← Back to TravelBook"
+  routeMapTitle: Travel route
 
 post:
   backToBlogs: Back to Writing

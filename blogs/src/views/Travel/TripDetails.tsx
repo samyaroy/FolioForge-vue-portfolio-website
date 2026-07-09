@@ -1,9 +1,10 @@
 import { Link, useParams } from 'react-router-dom'
 import { TRAVEL_SECTION } from '../../content/sections'
-import { getTrip } from '../../content/travel/trips'
+import { getTrip, tripStops } from '../../content/travel/trips'
 import { formatDate } from '../../lib/format'
 import { CARD_ART_BACKDROP_CLASS } from '../../lib/ui'
 import { NotFoundPage } from '../NotFound'
+import { TripRoute } from './components/TripRoute'
 
 const CHIP_CLASS =
   'inline-flex items-center rounded-full border border-border bg-surface-soft px-3 py-1 text-xs leading-normal tracking-[0.16em] uppercase'
@@ -27,6 +28,10 @@ export function TripDetailsPage() {
       : []
   const mapImage = trip.routeMapImage ?? trip.coverImage
   const stats = trip.stats ?? []
+  const stops = tripStops(trip)
+  const placeNames = stops.map((stop) => stop.name).join(' → ')
+  // The itinerary needs at least one leg; single-stop trips keep the image.
+  const showRoute = stops.length >= 2
 
   return (
     // Break out of the layout's default column to the same width as the
@@ -67,9 +72,9 @@ export function TripDetailsPage() {
               )}
             </div>
 
-            {trip.places && trip.places.length > 0 && (
+            {placeNames && (
               <p className="mb-4 text-[0.85rem] leading-normal text-faint">
-                {trip.places.join(' → ')}
+                {placeNames}
               </p>
             )}
 
@@ -107,20 +112,24 @@ export function TripDetailsPage() {
 
         {/* Right column: route map & gallery */}
         <div className="flex min-w-0 flex-col gap-6">
-          {mapImage && (
+          {(showRoute || mapImage) && (
             <section className="rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]">
               <h2 className="mb-3 text-[1.1rem] text-ink">
                 {TRAVEL_SECTION.routeMapTitle}
               </h2>
-              <div
-                className={`overflow-hidden rounded-lg ${CARD_ART_BACKDROP_CLASS}`}
-              >
-                <img
-                  src={mapImage}
-                  alt={`Route map for ${trip.title}`}
-                  className="h-105 w-full object-cover"
-                />
-              </div>
+              {showRoute ? (
+                <TripRoute trip={trip} />
+              ) : (
+                <div
+                  className={`overflow-hidden rounded-lg ${CARD_ART_BACKDROP_CLASS}`}
+                >
+                  <img
+                    src={mapImage}
+                    alt={`Route map for ${trip.title}`}
+                    className="h-105 w-full object-cover"
+                  />
+                </div>
+              )}
             </section>
           )}
 
