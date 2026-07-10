@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && rm -f dist/_redirects && wrangler deploy"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
@@ -33,6 +33,7 @@
     "tailwindcss": "^4.3.1",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.1",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "wrangler": "^4.110.0"
   }
 }

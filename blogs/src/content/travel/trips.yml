@@ -46,25 +46,6 @@
 
 # Dummy entries below — replace with real trips.
 trips:
-  - id: hyderabad-solo-2023
-    title: First solo trip to Hyderabad
-    date: 2023-03
-    location: Hyderabad, Telangana
-    places:
-      - Kolkata
-      - { name: Hyderabad, mode: train }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
-    tags: [Dummy, Test]
-    narrative:
-      - This is a dummy trip for testing purposes. It covers City A and City B.
-      - The trip was uneventful but provided valuable insights into the local culture.
-    stats:
-      - { label: Days, value: '5' }
-      - { label: Cities covered, value: 2 }
-    gallery:
-      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-02.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-03.jpeg
-
   - id: mahababipuram26
     title: qazxswedc
     date: 2026-06-28
@@ -146,3 +127,22 @@ trips:
       - https://picsum.photos/seed/uttarakhand-1/600/600
       - https://picsum.photos/seed/uttarakhand-2/600/600
       - https://picsum.photos/seed/uttarakhand-3/600/600
+
+  - id: hyderabad-solo-2023
+    title: First solo trip to Hyderabad
+    date: 2023-03
+    location: Hyderabad, Telangana
+    places:
+      - Kolkata
+      - { name: Hyderabad, mode: train }
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
+    tags: [Dummy, Test]
+    narrative:
+      - This is a dummy trip for testing purposes. It covers City A and City B.
+      - The trip was uneventful but provided valuable insights into the local culture.
+    stats:
+      - { label: Days, value: '5' }
+      - { label: Cities covered, value: 2 }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-03.jpeg
