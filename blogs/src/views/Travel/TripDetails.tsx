@@ -21,6 +21,9 @@ const CHIP_CLASS =
 const STAT_CARD_CLASS =
   'rounded-xl border border-border bg-surface p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]'
 
+// Tiles per row in the full-width gallery strip under the map.
+const GALLERY_COLUMNS = 6
+
 export function TripDetailsPage() {
   const { tripId } = useParams<{ tripId: string }>()
   const trip = tripId ? getTrip(tripId) : undefined
@@ -42,6 +45,14 @@ export function TripDetailsPage() {
   const showRoute = tripStops(trip).length >= 2
   // Half-filled yml entries can leave null holes in the list; skip them.
   const gallery = (trip.gallery ?? []).filter(Boolean)
+  // The full-width gallery strip repeats the images until a whole row of
+  // GALLERY_COLUMNS tiles is filled.
+  const galleryTiles = gallery.length
+    ? Array.from(
+        { length: Math.max(GALLERY_COLUMNS, gallery.length) },
+        (_, i) => gallery[i % gallery.length],
+      )
+    : []
 
   return (
     // Break out of the layout's default column to the same width as the
@@ -57,7 +68,9 @@ export function TripDetailsPage() {
 
       {/* Same 55/45 split and gap as the travel page, so the right pane
           matches the map pane's width across both views. */}
-      <div className="grid grid-cols-1 gap-3 min-[900px]:grid-cols-[55fr_45fr] min-[900px]:items-start">
+      {/* Columns stretch to equal height so the stat cards can pin to the
+          pane bottom, level with the map's lower edge. */}
+      <div className="grid grid-cols-1 gap-3 min-[900px]:grid-cols-[55fr_45fr]">
         {/* Left column: narrative & metrics */}
         <div className="flex min-w-0 flex-col gap-8">
           <div>
@@ -101,7 +114,7 @@ export function TripDetailsPage() {
           </div>
 
           {stats.length > 0 && (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div className="mt-auto grid grid-cols-1 gap-4 sm:grid-cols-3">
               {stats.map((stat) => (
                 <div key={stat.label} className={STAT_CARD_CLASS}>
                   <div className="text-xs leading-normal font-bold tracking-[0.16em] text-faint uppercase">
@@ -116,8 +129,8 @@ export function TripDetailsPage() {
           )}
         </div>
 
-        {/* Right column: route map & gallery */}
-        <div className="flex min-w-0 flex-col gap-6">
+        {/* Right column: route map */}
+        <div className="min-w-0">
           {(showRoute || mapImage) && (
             <section className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]">
               <h2 className="mb-3 text-lg font-bold text-ink">
@@ -178,25 +191,32 @@ export function TripDetailsPage() {
             </section>
           )}
 
-          {gallery.length > 0 && (
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {gallery.map((src) => (
-                <div
-                  key={src}
-                  className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-surface-soft"
-                >
-                  <img
-                    src={src}
-                    alt=""
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Thin rule under the map row, spanning the full article width. */}
+      <div className="mt-6 h-px w-full bg-border" aria-hidden="true" />
+
+      {galleryTiles.length > 0 && (
+        <div
+          className="mt-6 grid grid-cols-3 gap-4 min-[900px]:grid-cols-6"
+          aria-label="Trip gallery"
+        >
+          {galleryTiles.map((src, i) => (
+            <div
+              key={`${src}-${i}`}
+              className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-surface-soft"
+            >
+              <img
+                src={src}
+                alt=""
+                loading="lazy"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </article>
   )
 }
