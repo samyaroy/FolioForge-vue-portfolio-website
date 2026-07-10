@@ -100,18 +100,9 @@ export function TripDetailsPage() {
           </div>
 
           {stats.length > 0 && (
-            <div className="grid grid-cols-2 gap-4">
-              {stats.map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className={`${STAT_CARD_CLASS} ${
-                    // An odd trailing stat spans both columns, like the
-                    // full-width "Total trekked" card in the design.
-                    i === stats.length - 1 && stats.length % 2 === 1
-                      ? 'col-span-2'
-                      : ''
-                  }`}
-                >
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {stats.map((stat) => (
+                <div key={stat.label} className={STAT_CARD_CLASS}>
                   <div className="text-xs leading-normal font-bold tracking-[0.16em] text-faint uppercase">
                     {stat.label}
                   </div>
