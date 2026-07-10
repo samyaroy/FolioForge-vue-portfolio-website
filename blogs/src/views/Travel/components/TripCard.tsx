@@ -32,7 +32,7 @@ export function TripCard({ trip }: TripCardProps) {
       </div>
 
       <div className="flex min-w-0 basis-3/4 flex-col px-5 py-4">
-        <h3 className="text-[1.05rem] leading-[1.35] font-bold tracking-[-0.02em] text-ink">
+        <h3 className="text-lg leading-[1.35] font-bold tracking-[-0.02em] text-ink">
           {trip.title}
         </h3>
 
@@ -40,7 +40,7 @@ export function TripCard({ trip }: TripCardProps) {
           {formattedDate && (
             <time
               dateTime={trip.date}
-              className="inline-flex items-center gap-1 font-normal"
+              className="inline-flex items-center gap-1 font-normal tracking-normal normal-case"
             >
               <span
                 className="mdi mdi-calendar-blank-outline leading-none"
@@ -61,7 +61,7 @@ export function TripCard({ trip }: TripCardProps) {
         </div>
 
         {trip.summary && (
-          <p className="mt-2 text-justify text-[0.9rem] leading-[1.7] text-muted">
+          <p className="mt-2 text-justify text-sm leading-[1.7] text-muted">
             {trip.summary}
           </p>
         )}

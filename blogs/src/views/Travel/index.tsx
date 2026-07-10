@@ -430,7 +430,7 @@ export function TravelPage() {
         aria-label="Map of states visited in India"
       >
         <div className="mb-2">
-          <h2 className="text-[1.1rem] text-ink">{TRAVEL_SECTION.mapTitle}</h2>
+          <h2 className="text-lg font-bold text-ink">{TRAVEL_SECTION.mapTitle}</h2>
 
           <div className="absolute top-[0.85rem] right-4 z-2 flex flex-col items-end gap-[0.3rem] rounded-lg border border-border bg-[rgba(255,255,255,0.85)] px-[0.6rem] py-2 text-right text-[0.72rem] text-muted backdrop-blur-[2px]">
             <span className={LEGEND_ROW_CLASS}>
@@ -516,10 +516,10 @@ export function TravelPage() {
         </p>
 
         {status === 'loading' && (
-          <p className="mt-2 text-[0.9rem] text-muted">Loading map…</p>
+          <p className="mt-2 text-sm text-muted">Loading map…</p>
         )}
         {status === 'error' && (
-          <p className="mt-2 text-[0.9rem] text-[#dc2626]">
+          <p className="mt-2 text-sm text-[#dc2626]">
             Could not load the map data. Please try again later.
           </p>
         )}

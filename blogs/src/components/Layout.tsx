@@ -7,7 +7,10 @@ export function Layout() {
     <div className="flex min-h-screen flex-col bg-page">
       <Header />
 
-      <main className="mx-auto w-full max-w-300 flex-1 px-4 pt-8 pb-16 md:px-8 lg:px-20 lg:pt-10 lg:pb-20">
+      {/* Container matches the root site's page shell
+          (mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8) so headings land
+          in the same position across both apps. */}
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
         <Outlet />
       </main>
 

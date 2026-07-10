@@ -56,6 +56,13 @@
   }
 }
 
+/* Caret blink for the Typewriter component. */
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
 /* Shared-element transitions between the travel page and a trip's details
    page: the "Travel" title morphs into the back button, and the map card
    morphs into the route-map image. The names are assigned via

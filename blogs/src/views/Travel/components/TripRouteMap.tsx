@@ -358,10 +358,10 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
     <div>
       <div ref={containerRef} className="h-105 w-full bg-white" />
       {status === 'loading' && (
-        <p className="mt-2 text-[0.9rem] text-muted">Loading route…</p>
+        <p className="mt-2 text-sm text-muted">Loading route…</p>
       )}
       {status === 'error' && (
-        <p className="mt-2 text-[0.9rem] text-[#dc2626]">
+        <p className="mt-2 text-sm text-[#dc2626]">
           Could not load the route map. Please try again later.
         </p>
       )}

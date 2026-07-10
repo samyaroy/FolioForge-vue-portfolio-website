@@ -71,7 +71,9 @@ export function TripDetailsPage() {
                 </span>
               ))}
               {formattedDate && (
-                <span className={`${CHIP_CLASS} gap-1 font-normal text-faint`}>
+                <span
+                  className={`${CHIP_CLASS} gap-1 font-normal tracking-normal normal-case text-faint`}
+                >
                   <span
                     className="mdi mdi-calendar-blank-outline leading-none"
                     aria-hidden="true"
@@ -126,14 +128,14 @@ export function TripDetailsPage() {
         <div className="flex min-w-0 flex-col gap-6">
           {(showRoute || mapImage) && (
             <section className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]">
-              <h2 className="mb-3 text-[1.1rem] text-ink">
+              <h2 className="mb-3 text-lg font-bold text-ink">
                 {TRAVEL_SECTION.routeMapTitle}
               </h2>
               {showRoute ? (
                 <>
                   <Suspense
                     fallback={
-                      <p className="text-[0.9rem] text-muted">Loading route…</p>
+                      <p className="text-sm text-muted">Loading route…</p>
                     }
                   >
                     <TripRouteMap trip={trip} />

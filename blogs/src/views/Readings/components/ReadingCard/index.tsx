@@ -42,7 +42,7 @@ export function ReadingCard({
           <h2 className={`min-w-0 ${CARD_TITLE_CLASS}`}>{reading.title}</h2>
           {reading.date && (
             <time
-              className="inline-flex flex-none items-center gap-1 text-left text-xs leading-[1.35] font-normal tracking-[0.12em] text-faint uppercase md:text-right"
+              className="inline-flex flex-none items-center gap-1 text-left text-xs leading-[1.35] font-normal tracking-normal normal-case text-faint md:text-right"
               dateTime={reading.date}
             >
               <span
@@ -63,7 +63,7 @@ export function ReadingCard({
         {reading.description && (
           <p className={CARD_EXCERPT_CLASS}>{reading.description}</p>
         )}
-        <span className="mt-auto self-end pt-4 text-[0.9rem] leading-[1.3] font-normal text-primary">
+        <span className="mt-auto self-end pt-4 text-sm leading-[1.3] font-normal text-primary">
           {READINGS_SECTION.reviewLabel}
         </span>
       </div>

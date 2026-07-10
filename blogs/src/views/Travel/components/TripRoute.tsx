@@ -69,11 +69,11 @@ export function TripRoute({ trip }: TripRouteProps) {
             </span>
 
             <div className="min-w-0">
-              <div className="text-[0.95rem] leading-[1.35] font-bold text-ink">
+              <div className="text-sm leading-[1.35] font-bold text-ink">
                 {stop.name}
               </div>
               {stop.note && (
-                <div className="mt-0.5 text-[0.8rem] leading-normal text-muted">
+                <div className="mt-0.5 text-xs leading-normal text-muted">
                   {stop.note}
                 </div>
               )}

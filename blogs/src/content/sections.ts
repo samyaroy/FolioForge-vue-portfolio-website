@@ -6,6 +6,7 @@ interface SectionsContent {
   blogs: {
     title: string
     heroHeading: string
+    allPostsTitle: string
   }
   readings: {
     title: string

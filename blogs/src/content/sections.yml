@@ -5,9 +5,9 @@
 blogs:
   title: Writing
   # Large heading shown above the hero image on the blog home page.
-  heroHeading: |-
-    The details are not the details.
-    They make the design
+  heroHeading: "Pound your thoughts and walk into the Auraverse..."
+  # Heading of the year-grouped post index beside the post list.
+  allPostsTitle: All posts
 
 readings:
   title: Readings

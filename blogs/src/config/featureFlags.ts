@@ -20,7 +20,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showPageDescriptions: {
     enabled: true,
     blogs: true,
-    readings: false,
+    readings: true,
     travel: true,
     hobbies: false,
     gallery: false,

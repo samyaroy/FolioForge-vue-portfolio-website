@@ -1,5 +1,5 @@
 ---
-title: Markdown features that work out of the box
+title: Markdown features 
 date: 2026-06-10
 description: Tables, task lists, code blocks, and other GFM niceties.
 cover: /hero.jpg

@@ -45,7 +45,7 @@ export function PostPage() {
         </h1>
         {post.date && (
           <time
-            className="inline-flex items-center gap-1 text-xs leading-normal font-normal tracking-[0.16em] text-faint uppercase"
+            className="inline-flex items-center gap-1 text-xs leading-normal font-normal tracking-normal normal-case text-faint"
             dateTime={post.date}
           >
             <span
