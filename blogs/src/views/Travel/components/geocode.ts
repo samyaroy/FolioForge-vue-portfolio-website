@@ -73,8 +73,12 @@ export async function geocodeCities<T extends GeocodeQuery>(
   const cache = readCache()
   let dirty = false
 
-  const resolved = await Promise.all(
-    cities.map(async (city) => {
+  // The async pipeline stays non-generic (Coord | null): Promise.all over
+  // the generic T would produce Awaited<T & Coord>, which TypeScript cannot
+  // reduce for an unbound T. Coordinates are zipped with the typed cities
+  // synchronously afterwards.
+  const coords = await Promise.all(
+    cities.map(async (city): Promise<Coord | null> => {
       const key = keyFor(city)
       let coord: Coord | undefined = cache[key]
       if (!coord) {
@@ -85,10 +89,16 @@ export async function geocodeCities<T extends GeocodeQuery>(
           dirty = true
         }
       }
-      return coord ? { ...city, ...coord } : null
+      return coord ?? null
     }),
   )
 
   if (dirty) writeCache(cache)
-  return resolved.filter((c): c is T & Coord => c !== null)
+
+  const resolved: (T & Coord)[] = []
+  cities.forEach((city, i) => {
+    const coord = coords[i]
+    if (coord) resolved.push({ ...city, ...coord })
+  })
+  return resolved
 }
