@@ -7,7 +7,11 @@ import {
   type TripStop,
 } from '../../../content/travel/trips'
 import { geocodeCities } from './geocode'
-import { INDIA_MAP_NAME, loadIndiaMap } from './indiaMap'
+import {
+  INDIA_MAP_NAME,
+  loadIndiaMap,
+  loadIndiaStateBorders,
+} from './indiaMap'
 
 type LocatedStop = TripStop & { lat: number; lng: number }
 
@@ -138,7 +142,10 @@ function routeCamera(stops: LocatedStop[]): {
   }
 }
 
-function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
+function buildOption(
+  stops: LocatedStop[],
+  stateBorders: number[][][],
+): echarts.EChartsCoreOption {
   // Group the legs by drawing style so each style becomes one lines series
   // (plus its overlay pass, when the style has one).
   const legsByStyle = new Map<
@@ -220,9 +227,10 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
     // dotted dividers. A stroke-only pass above every fill keeps them crisp.
     geo: [
       {
-        // Division borders on top: the registered GeoJSON is district-
-        // granularity, so every internal edge (district and state alike)
-        // renders as a dotted, semi-transparent divider.
+        // District borders on top: the registered GeoJSON is district-
+        // granularity, so every internal edge renders as a subtle dotted
+        // divider. State borders are drawn separately (solid, darker) by
+        // the "State borders" lines series so the two read differently.
         map: INDIA_MAP_NAME,
         nameProperty: 'st_nm',
         silent: true,
@@ -230,8 +238,8 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
         aspectScale: 0.9,
         itemStyle: {
           areaColor: 'transparent',
-          borderColor: 'rgba(100,116,139,0.5)',
-          borderWidth: 0.8,
+          borderColor: 'rgba(100,116,139,0.35)',
+          borderWidth: 0.6,
           borderType: 'dotted',
         },
       },
@@ -265,6 +273,19 @@ function buildOption(stops: LocatedStop[]): echarts.EChartsCoreOption {
       },
     ],
     series: [
+      {
+        // Solid inter-state boundaries, computed from the district geometry,
+        // drawn over the dotted district mesh but under the route.
+        name: 'State borders',
+        type: 'lines',
+        coordinateSystem: 'geo',
+        silent: true,
+        polyline: true,
+        data: stateBorders.map((coords) => ({ coords })),
+        lineStyle: { color: '#475569', width: 1.1, opacity: 0.75 },
+        zlevel: 0,
+        z: 4,
+      },
       ...legSeries,
       {
         name: 'Stops',
@@ -324,16 +345,17 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
 
     async function load() {
       try {
-        const [, stops] = await Promise.all([
+        const [, stops, stateBorders] = await Promise.all([
           loadIndiaMap(),
           locateStops(tripStops(trip)),
+          loadIndiaStateBorders(),
         ])
         if (cancelled) return
         if (stops.length < 2) throw new Error('fewer than two locatable stops')
         // First paint: the full-India view, continuing the map the user just
         // left on the travel page. Then fly the camera into the route once
         // the page's view transition has settled.
-        chart.setOption(buildOption(stops))
+        chart.setOption(buildOption(stops, stateBorders))
         setStatus('ready')
         const camera = routeCamera(stops)
         zoomTimer = window.setTimeout(() => {

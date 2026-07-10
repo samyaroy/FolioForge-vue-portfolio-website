@@ -46,14 +46,14 @@
 
 # Dummy entries below — replace with real trips.
 trips:
-  - id: hyderabad-solo-202
+  - id: hyderabad-solo-2023
     title: First solo trip to Hyderabad
-    date: 2024-01-01
-    location: Tamil Nadu
+    date: 2023-03
+    location: Hyderabad, Telangana
     places:
-      - Chennai
-      - { name: Mahabalipuram, mode: bus }
-    coverImage: https://picsum.photos/seed/dummy-trip-1/480/360
+      - Kolkata
+      - { name: Hyderabad, mode: train }
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
     tags: [Dummy, Test]
     narrative:
       - This is a dummy trip for testing purposes. It covers City A and City B.
@@ -62,8 +62,8 @@ trips:
       - { label: Days, value: '5' }
       - { label: Cities covered, value: 2 }
     gallery:
-      - https://picsum.photos/seed/dummy-trip-1-1/600/600
-      - https://picsum.photos/seed/dummy-trip-1-2/600/600
+      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-03.jpeg
 
   - id: mahababipuram26
     title: qazxswedc

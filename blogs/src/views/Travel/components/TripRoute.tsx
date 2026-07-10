@@ -40,12 +40,12 @@ export function TripRoute({ trip }: TripRouteProps) {
           {i > 0 && (
             <div className="flex items-stretch gap-3">
               <span className={RAIL_CLASS}>
-                <span className="min-h-10 w-0.5 rounded-full bg-border" />
+                <span className="min-h-5 w-0.5 rounded-full bg-border" />
               </span>
               {stop.mode && (
-                <span className="inline-flex items-center gap-1.5 self-center text-xs leading-normal font-normal tracking-[0.16em] text-muted uppercase">
+                <span className="inline-flex items-center gap-1 self-center text-[10px] leading-normal font-normal tracking-[0.16em] text-muted uppercase">
                   <span
-                    className={`mdi ${MODE_ICONS[stop.mode]} text-sm leading-none text-primary`}
+                    className={`mdi ${MODE_ICONS[stop.mode]} text-xs leading-none text-primary`}
                     aria-hidden="true"
                   />
                   {stop.mode}
