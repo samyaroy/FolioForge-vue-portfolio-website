@@ -123,7 +123,7 @@ export function TripDetailsPage() {
                 {TRAVEL_SECTION.routeMapTitle}
               </h2>
               {showRoute ? (
-                <>
+                <div className="relative">
                   <Suspense
                     fallback={
                       <p className="text-sm text-muted">Loading route…</p>
@@ -131,12 +131,12 @@ export function TripDetailsPage() {
                   >
                     <TripRouteMap trip={trip} />
                   </Suspense>
-                  {/* Compact itinerary pinned to the pane's corner, like the
-                      legend on the travel page map. */}
-                  <div className="absolute top-14 right-6 z-2 max-h-[75%] overflow-y-auto rounded-lg border border-border bg-[rgba(255,255,255,0.88)] px-2 py-1 backdrop-blur-[2px]">
+                  {/* Compact itinerary pinned flush to the map's top-right
+                      corner, like the legend on the travel page map. */}
+                  <div className="absolute top-0 right-0 z-2 max-h-full overflow-y-auto rounded-lg border border-border bg-[rgba(255,255,255,0.88)] px-2 py-1 backdrop-blur-[2px]">
                     <TripRoute trip={trip} />
                   </div>
-                </>
+                </div>
               ) : (
                 <div
                   className={`overflow-hidden rounded-lg ${CARD_ART_BACKDROP_CLASS}`}
