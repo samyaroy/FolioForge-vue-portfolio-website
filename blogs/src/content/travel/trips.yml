@@ -52,7 +52,7 @@ trips:
     location: Hyderabad, Telangana
     places:
       - Kolkata
-      - { name: Hyderabad, mode: Train }
+      - { name: Hyderabad, mode: train }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
     tags: [Dummy, Test]
     narrative:
