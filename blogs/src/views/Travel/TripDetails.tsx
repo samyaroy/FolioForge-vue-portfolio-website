@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { TRAVEL_SECTION } from '../../content/sections'
 import { getTrip, tripStops } from '../../content/travel/trips'
@@ -24,6 +24,7 @@ const STAT_CARD_CLASS =
 export function TripDetailsPage() {
   const { tripId } = useParams<{ tripId: string }>()
   const trip = tripId ? getTrip(tripId) : undefined
+  const [showItinerary, setShowItinerary] = useState(true)
 
   if (!trip) {
     return <NotFoundPage />
@@ -132,10 +133,36 @@ export function TripDetailsPage() {
                     <TripRouteMap trip={trip} />
                   </Suspense>
                   {/* Compact itinerary pinned flush to the map's top-right
-                      corner, like the legend on the travel page map. */}
-                  <div className="absolute top-0 right-0 z-2 max-h-full overflow-y-auto rounded-lg border border-border bg-[rgba(255,255,255,0.88)] px-2 py-1 backdrop-blur-[2px]">
-                    <TripRoute trip={trip} />
-                  </div>
+                      corner, like the legend on the travel page map. The ✕
+                      collapses it to an info button that brings it back. */}
+                  {showItinerary ? (
+                    <div className="absolute top-0 right-0 z-2 max-h-full overflow-y-auto rounded-lg rounded-tr-none border border-border bg-[rgba(255,255,255,0.88)] px-2 py-1 backdrop-blur-[2px]">
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 z-10 inline-flex h-5 w-5 items-center justify-center rounded text-muted transition-colors duration-200 hover:text-ink"
+                        aria-label="Hide itinerary"
+                        onClick={() => setShowItinerary(false)}
+                      >
+                        <span
+                          className="mdi mdi-close text-sm leading-none"
+                          aria-hidden="true"
+                        />
+                      </button>
+                      <TripRoute trip={trip} />
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="absolute top-0 right-0 z-2 inline-flex h-8 w-8 items-center justify-center rounded-lg rounded-tr-none border border-border bg-[rgba(255,255,255,0.88)] text-primary backdrop-blur-[2px] transition-colors duration-200 hover:text-ink"
+                      aria-label="Show itinerary"
+                      onClick={() => setShowItinerary(true)}
+                    >
+                      <span
+                        className="mdi mdi-information-outline text-base leading-none"
+                        aria-hidden="true"
+                      />
+                    </button>
+                  )}
                 </div>
               ) : (
                 <div
