@@ -130,6 +130,12 @@ trips:
       - { label: Days, value: 5 }
     gallery:
       - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-02.JPG
+      - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-03.JPG
+      - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-04.JPG
+      - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-05.JPG
+      - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-06.JPG
+      - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-07.JPG
+      - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-08.jpeg
     clicked_by:
       - name: Saunak Datta
         url: 
@@ -163,30 +169,30 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-04.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-05.jpeg
 
-  - id: derjeeling-2024
-    title: Another long weekend in the hills
-    date: 2024-05-15
-    location: Darjeeling, West Bengal
-    places:
-      - Kolkata
-      - { name: Darjeeling, mode: bus}
-    summary: MNO
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
-    tags: [Mountains]
-    narrative:
-      - MNO
-      - MNO
-    stats:
-      - { label: Places stayed, value: 14 villages }
-      - { label: Distance, value: 501 km }
-    gallery:
-      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-02.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-03.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-04.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-05.jpeg
-    clicked_by:
-      - name: Saubhadra Chatterjee
-        url: https://www.instagram.com/_sau.bhadraa_/
+  # - id: derjeeling-2024
+  #   title: Another long weekend in the hills
+  #   date: 2024-05-15
+  #   location: Darjeeling, West Bengal
+  #   places:
+  #     - Kolkata
+  #     - { name: Darjeeling, mode: bus}
+  #   summary: MNO
+  #   coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
+  #   tags: [Mountains]
+  #   narrative:
+  #     - MNO
+  #     - MNO
+  #   stats:
+  #     - { label: Places stayed, value: 14 villages }
+  #     - { label: Distance, value: 501 km }
+  #   gallery:
+  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-02.jpeg
+  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-03.jpeg
+  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-04.jpeg
+  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-05.jpeg
+  #   clicked_by:
+  #     - name: Saubhadra Chatterjee
+  #       url: https://www.instagram.com/_sau.bhadraa_/
   
   - id: bike-trip-digha-2024
     title: "A 2 days bike trip is all you need to refresh your mind"
@@ -278,6 +284,7 @@ trips:
     gallery:
       - https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras-02.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras-05.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras-04.jpeg
 
   - id: delhi-001-iitdelhi
