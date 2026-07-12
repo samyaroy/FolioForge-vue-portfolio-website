@@ -7,6 +7,11 @@ export type TripStat = {
   value: string
 }
 
+export type TripPhotoCredit = {
+  name: string
+  url?: string
+}
+
 /** How a stop was reached from the previous one; drives the route animation. */
 export type TransportMode =
   | 'flight'
@@ -56,6 +61,8 @@ export type Trip = {
   routeMapImage?: string
   /** Photo URLs for the details page gallery grid. */
   gallery?: string[]
+  /** People who took the gallery photos. */
+  clicked_by?: TripPhotoCredit[]
 }
 
 interface TripsContent {

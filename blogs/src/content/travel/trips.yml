@@ -19,6 +19,7 @@
 #   routeMapImage — image for the details page "Route map" card
 #                   (falls back to coverImage when omitted)
 #   gallery       — photo URLs for the details page gallery grid
+#   clicked_by    — photo credits shown below the gallery image belt
 #
 # places — each stop is either a bare name, or an object that will feed the
 # animated route map on the details page:
@@ -195,7 +196,7 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024-02.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024-03.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024-04.jpeg
-  
+
   - id: ropar-aivs-iitrpr
     title: One month at IIT Roper turned my life upside down
     date: 2024-07-15
@@ -280,7 +281,10 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi-02.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi-03.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi-04.jpeg
-  
+    clicked_by:
+      - name: Saubhadra Chatterjee
+        url: https://www.instagram.com/_sau.bhadraa_/
+
   - id: hyderabad-solo-2023
     title: First solo trip to Hyderabad
     date: 2023-03
