@@ -16,6 +16,9 @@
 #     stayed     — true for places where you lived/stayed (college, work, etc.)
 #     stayReason — optional label for why you stayed
 #     home       — true marks your home city (drawn with a distinct marker)
+#     lat        — explicit coordinates; when both are set, geocoding is
+#     lng          skipped for this city (use for small places the geocoder
+#                  misses, e.g. Nongriat)
 
 legendLabels:
   citiesSuffix: cities
@@ -95,3 +98,18 @@ states:
       - { name: Digha, visits: 2 }
       - { name: Mandarmani, visits: 1 }
       - { name: Krishnagar, visits: 1 }
+  
+  # - state: Meghalaya
+  #   purpose: travel
+  #   cities:
+  #     - { name: Shillong, visits: 1 }
+  #     # - { name: Cherrapunjee, visits: 1 }
+  #     - { name: Nongjrong, visits: 1 }
+  #     - { name: Nongriat, visits: 1, lat: 25.238915, lng: 91.679487 }
+  #     - { name: Jowai, visits: 1 }
+
+  # - state: Assam
+  #   purpose: travel
+  #   cities:
+  #     # - { name: Guwahati, visits: 1 }
+  #     - { name: Kamakhya, visits: 1 }

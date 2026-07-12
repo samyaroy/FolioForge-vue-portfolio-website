@@ -6,8 +6,14 @@ import type { CityVisit } from '../../../content/travel/data'
 
 export type GeoCity = CityVisit & { lat: number; lng: number }
 
-/** Minimal shape a geocoding query needs; CityVisit and TripStop both fit. */
-export type GeocodeQuery = { name: string; state?: string }
+/** Minimal shape a geocoding query needs; CityVisit and TripStop both fit.
+    Entries carrying explicit lat/lng bypass the geocoder entirely. */
+export type GeocodeQuery = {
+  name: string
+  state?: string
+  lat?: number
+  lng?: number
+}
 
 const ENDPOINT = 'https://geocoding-api.open-meteo.com/v1/search'
 const CACHE_KEY = 'travel-geocode-v1'
@@ -79,6 +85,9 @@ export async function geocodeCities<T extends GeocodeQuery>(
   // synchronously afterwards.
   const coords = await Promise.all(
     cities.map(async (city): Promise<Coord | null> => {
+      if (city.lat != null && city.lng != null) {
+        return { lat: city.lat, lng: city.lng }
+      }
       const key = keyFor(city)
       let coord: Coord | undefined = cache[key]
       if (!coord) {

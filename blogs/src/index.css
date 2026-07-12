@@ -63,6 +63,15 @@
   }
 }
 
+/* Conveyor for the trip-details gallery belt: the track holds the tile
+   sequence twice and slides by one copy's width — 50% of the track plus
+   half the 1rem flex gap — so the loop wraps seamlessly. */
+@keyframes gallery-marquee {
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
 /* Shared-element transitions between the travel page and a trip's details
    page: the "Travel" title morphs into the back button, and the map card
    morphs into the route-map image. The names are assigned via

@@ -261,17 +261,8 @@ function buildOption(
           shadowBlur: 4,
           shadowColor: 'rgba(0,0,0,0.25)',
         },
-        emphasis: {
-          scale: 1.4,
-          label: { show: true },
-        },
-        label: {
-          show: false,
-          formatter: '{b}',
-          position: 'right',
-          fontSize: 10,
-          color: '#0e141b',
-        },
+        // Hover feedback is the tooltip alone; no name label beside the dot.
+        emphasis: { scale: 1.4 },
         data: cities
           .filter((c) => !c.home && !c.stayed)
           .map((c) => ({
@@ -294,14 +285,7 @@ function buildOption(
           shadowBlur: 4,
           shadowColor: 'rgba(0,0,0,0.25)',
         },
-        emphasis: { scale: 1.4, label: { show: true } },
-        label: {
-          show: false,
-          formatter: '{b}',
-          position: 'right',
-          fontSize: 10,
-          color: '#0e141b',
-        },
+        emphasis: { scale: 1.4 },
         data: cities
           .filter((c) => c.stayed)
           .map((c) => ({
@@ -329,14 +313,7 @@ function buildOption(
           shadowBlur: 5,
           shadowColor: 'rgba(0,0,0,0.35)',
         },
-        emphasis: { scale: 1.3, label: { show: true } },
-        label: {
-          show: false,
-          formatter: '{b}',
-          position: 'right',
-          fontSize: 10,
-          color: '#0e141b',
-        },
+        emphasis: { scale: 1.3 },
         data: cities
           .filter((c) => c.home && !c.stayed)
           .map((c) => ({

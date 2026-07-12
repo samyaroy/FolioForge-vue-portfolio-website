@@ -21,8 +21,15 @@ const CHIP_CLASS =
 const STAT_CARD_CLASS =
   'rounded-xl border border-border bg-surface p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]'
 
-// Tiles per row in the full-width gallery strip under the map.
-const GALLERY_COLUMNS = 6
+// Minimum tiles per marquee pass in the gallery belt under the map; the
+// images repeat until one pass is wider than the article, so the belt
+// never shows a gap while it scrolls.
+const GALLERY_MIN_TILES = 7
+
+// Marquee pace: seconds each tile takes to cross a fixed point. Scaling the
+// loop duration with the tile count keeps the drift speed constant no
+// matter how many photos a trip has.
+const GALLERY_SECONDS_PER_TILE = 25
 
 export function TripDetailsPage() {
   const { tripId } = useParams<{ tripId: string }>()
@@ -45,11 +52,11 @@ export function TripDetailsPage() {
   const showRoute = tripStops(trip).length >= 2
   // Half-filled yml entries can leave null holes in the list; skip them.
   const gallery = (trip.gallery ?? []).filter(Boolean)
-  // The full-width gallery strip repeats the images until a whole row of
-  // GALLERY_COLUMNS tiles is filled.
+  // The gallery belt repeats the images until one marquee pass holds at
+  // least GALLERY_MIN_TILES tiles.
   const galleryTiles = gallery.length
     ? Array.from(
-        { length: Math.max(GALLERY_COLUMNS, gallery.length) },
+        { length: Math.max(GALLERY_MIN_TILES, gallery.length) },
         (_, i) => gallery[i % gallery.length],
       )
     : []
@@ -198,23 +205,32 @@ export function TripDetailsPage() {
       <div className="mt-6 h-px w-full bg-border" aria-hidden="true" />
 
       {galleryTiles.length > 0 && (
-        <div
-          className="mt-6 grid grid-cols-3 gap-4 min-[900px]:grid-cols-6"
-          aria-label="Trip gallery"
-        >
-          {galleryTiles.map((src, i) => (
-            <div
-              key={`${src}-${i}`}
-              className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-surface-soft"
-            >
-              <img
-                src={src}
-                alt=""
-                loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </div>
-          ))}
+        <div className="mt-6 overflow-hidden" aria-label="Trip gallery">
+          {/* The track holds the tile sequence twice (the second copy is
+              aria-hidden) and gallery-marquee slides it by one copy's width,
+              so the belt drifts left forever. Hover pauses it so the tile
+              zoom is usable; reduced-motion users get a static strip. */}
+          <div
+            className="flex w-max gap-4 animate-[gallery-marquee_linear_infinite] hover:[animation-play-state:paused] motion-reduce:animate-none"
+            style={{
+              animationDuration: `${galleryTiles.length * GALLERY_SECONDS_PER_TILE}s`,
+            }}
+          >
+            {[...galleryTiles, ...galleryTiles].map((src, i) => (
+              <div
+                key={`${src}-${i}`}
+                aria-hidden={i >= galleryTiles.length || undefined}
+                className="group relative aspect-square w-40 shrink-0 overflow-hidden rounded-lg border border-border bg-surface-soft sm:w-52"
+              >
+                <img
+                  src={src}
+                  alt=""
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </article>

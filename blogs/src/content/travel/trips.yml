@@ -67,32 +67,6 @@ trips:
       - { label: Distance (One Way), value: '57 KM' }
       - { label: Days, value: '14' }
 
-  - id: hyderabad-conclave-2026
-    title: Cryptology Conclave at IIT Hyderabad
-    date: 2026-01-22
-    location: Hyderabad, Telangana
-    places:
-      - Kolkata
-      - { name: Hyderabad, mode: flight }
-    summary: A short hop to IIT Hyderabad for the Cryptology Conclave —
-      lattices, PQC, and a lot of filter coffee.
-    coverImage: https://picsum.photos/seed/hyderabad-conclave-2026/480/360
-    tags: [Conference]
-    narrative:
-      - Three intense days at IIT Hyderabad for the Cryptology Conclave.
-        The programme leaned hard into lattice-based constructions and the
-        state of post-quantum standardisation.
-      - Between sessions, the campus canteen's filter coffee did most of the
-        heavy lifting. Left with a notebook full of open problems and a few
-        new collaborators.
-    stats:
-      - { label: Days, value: '3' }
-      - { label: Talks attended, value: '11' }
-    gallery:
-      - https://picsum.photos/seed/hyderabad-1/600/600
-      - https://picsum.photos/seed/hyderabad-2/600/600
-      - https://picsum.photos/seed/hyderabad-3/600/600
-
   - id: uttarakhand-2024
     title: Char Dham circuit through Uttarakhand
     date: 2024-05-10
@@ -126,25 +100,7 @@ trips:
       - https://picsum.photos/seed/uttarakhand-2/600/600
       - https://picsum.photos/seed/uttarakhand-3/600/600
 
-  - id: hyderabad-solo-2023
-    title: First solo trip to Hyderabad
-    date: 2023-03
-    location: Hyderabad, Telangana
-    places:
-      - Kolkata
-      - { name: Hyderabad, mode: train }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
-    tags: [Dummy, Test]
-    narrative:
-      - This is a dummy trip for testing purposes. It covers City A and City B.
-      - The trip was uneventful but provided valuable insights into the local culture.
-    stats:
-      - { label: Days, value: '5' }
-      - { label: Cities covered, value: 2 }
-    gallery:
-      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-02.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-03.jpeg
-
+  
   # --- Sample entries below: edit titles, dates, narratives, and swap the
   # --- picsum placeholders for real photos.
 
@@ -202,7 +158,7 @@ trips:
 
   - id: varanasi-2024
     title: Ghats and galis of Varanasi
-    date: 2024-11-02
+    date: 2025-11-02
     location: Varanasi, Uttar Pradesh
     places:
       - Kolkata
@@ -226,72 +182,44 @@ trips:
       - https://picsum.photos/seed/varanasi-2/600/600
       - https://picsum.photos/seed/varanasi-3/600/600
 
-  - id: rajasthan-2024
-    title: Forts and dunes across Rajasthan
-    date: 2024-02-09
-    location: Rajasthan
+  - id: uttrakhand-trip-01
+    title: Took my parent with me this time
+    date: 2024-11
+    location: Delhi, Uttarpradesh, Uttarakhand
     places:
       - Kolkata
-      - { name: Jaipur, mode: flight }
-      - { name: Jodhpur, mode: train, note: The blue city }
-      - { name: Jaisalmer, mode: car, note: Desert camp at Sam dunes }
-    summary: Ten days tracing the fort line west — Jaipur's palaces,
-      Jodhpur's blue lanes, and a night under the stars near Jaisalmer.
-    coverImage: https://picsum.photos/seed/rajasthan-2024/480/360
-    tags: [Heritage, Desert]
+      - { name: Delhi, mode: flight }
+      - {name: Agra, mode: car, note: Taj Mahal}
+      - { name: Varanasi, mode: flight, note: Spent Durga Puja there }
+      - { name: Haridwar, mode: train}
+      - { name: DehraDun, mode: car}
+      - {name: Mussoorie, mode: car}
+      - { name: Rishikesh, mode: car}
+    summary: 
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.jpeg
+    tags: [Mountains, Pilgrimage]
     narrative:
-      - Every city on this route has its own colour. Jaipur is pink by
-        decree, Jodhpur blue by tradition, and Jaisalmer gold by geology —
-        the sandstone forts seem to grow straight out of the desert.
-      - The night at the Sam dunes was the trip's quiet centrepiece. Camel
-        silhouettes, a horizon with nothing on it, and more stars than the
-        city lets you remember exist.
     stats:
-      - { label: Days, value: '10' }
-      - { label: Forts, value: '5' }
-      - { label: Distance, value: '1,100 km' }
+      - { label: Days, value: '22' }
+      - { label: Cities, value: '6-7' }
     gallery:
-      - https://picsum.photos/seed/rajasthan-1/600/600
-      - https://picsum.photos/seed/rajasthan-2/600/600
-      - https://picsum.photos/seed/rajasthan-3/600/600
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-05.jpeg
 
-  - id: kerala-2023
-    title: Backwaters and hill roads of Kerala
-    date: 2023-12-22
-    location: Kerala
+  - id: roper-aivs-iitrpr
+    title: One month at IIT Roper turned my life upside down
+    date: 2024-07-15
+    location: Rupnagar, Panjab
     places:
       - Kolkata
-      - { name: Kochi, mode: flight }
-      - { name: Alappuzha, mode: car, note: Houseboat on the backwaters }
-      - { name: Munnar, mode: car, note: Tea country }
-    summary: From a houseboat drifting through Alleppey's canals to the tea
-      slopes of Munnar — Kerala in one unhurried week.
-    coverImage: https://picsum.photos/seed/kerala-2023/480/360
-    tags: [Backwaters, Nature]
-    narrative:
-      - The houseboat day recalibrates your sense of speed. Coconut groves
-        slide past at walking pace, and dinner is whatever the canal-side
-        market had that morning.
-      - Munnar is the opposite trick — hairpin roads climbing into cloud,
-        with tea bushes stitched over every slope like corduroy.
-    stats:
-      - { label: Days, value: '8' }
-      - { label: Houseboat hours, value: '22' }
-    gallery:
-      - https://picsum.photos/seed/kerala-1/600/600
-      - https://picsum.photos/seed/kerala-2/600/600
-
-  - id: mumbai-techfest-2023
-    title: Techfest weekend at IIT Bombay
-    date: 2023-08-18
-    location: Mumbai, Maharashtra
-    places:
-      - Kolkata
-      - { name: Mumbai, mode: flight }
+      - { name: Chandigarh, mode: flight, via: Delhi }
+      - { name: Rupnagar, mode: car, note: IIT Roper campus}
     summary: A whirlwind conference weekend — talks and demos by day, Marine
       Drive and vada pav by night.
-    coverImage: https://picsum.photos/seed/mumbai-techfest-2023/480/360
-    tags: [Conference]
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr.jpeg
+    tags: [Bootcamp]
     narrative:
       - The campus at Powai turns into a small city during the fest. I spent
         most of it hopping between robotics demos and a lecture hall that
@@ -300,36 +228,68 @@ trips:
         the long curve of Marine Drive, and the discovery that sea breeze
         pairs unreasonably well with cutting chai.
     stats:
-      - { label: Days, value: '3' }
-      - { label: Talks attended, value: '9' }
+      - { label: Days, value: '31' }
     gallery:
-      - https://picsum.photos/seed/mumbai-1/600/600
-      - https://picsum.photos/seed/mumbai-2/600/600
+      - https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr-04.jpeg
 
-  - id: sikkim-2022
-    title: Gangtok and the high lakes of East Sikkim
-    date: 2022-04-15
-    location: Sikkim
+  - id: chennai-001-iitmadras
+    title: "Visiting IIT Madras Campus for the first time, Chennai trip was an add-on"
+    date: 2024-01-22
+    location: Chennai, Tamil Nadu
     places:
       - Kolkata
-      - { name: Bagdogra, mode: flight }
-      - { name: Gangtok, mode: car, note: NH10 along the Teesta }
-      - { name: Tsomgo Lake, mode: car, lat: 27.3742, lng: 88.7627, note: Frozen at the edges even in April }
-    summary: Mountain roads along the Teesta, monastery mornings in Gangtok,
-      and the still-frozen shore of Tsomgo Lake.
-    coverImage: https://picsum.photos/seed/sikkim-2022/480/360
-    tags: [Mountains]
+      - { name: Chennai, mode: train }
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.jpeg
+    tags: [Dummy, Test]
     narrative:
-      - The road from Bagdogra shadows the Teesta for hours, and the river's
-        jade colour never quite stops feeling improbable. Gangtok arrives in
-        layers — prayer flags first, then the town.
-      - At Tsomgo the altitude does the talking. Twelve thousand feet, a lake
-        still rimmed with ice in April, and yaks entirely unbothered by any
-        of it.
+      - This is a dummy trip for testing purposes. It covers City A and City B.
+      - The trip was uneventful but provided valuable insights into the local culture.
+    stats:
+      - { label: Campus Stays, value: '3' }
+      - { label: City stays, value: 2 }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras-04.jpeg
+
+  - id: delhi-001-iitdelhi
+    title: "Two Friends, One long Weekend: IIT Delhi"
+    date: 2023-03
+    location: New Delhi, Delhi
+    places:
+      - Kolkata
+      - { name: New Delhi, mode: train }
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.jpeg
+    tags: [Dummy, Test]
+    narrative:
+      - This is a dummy trip for testing purposes. It covers City A and City B.
+      - The trip was uneventful but provided valuable insights into the local culture.
+    stats:
+      - { label: Campus Stays, value: '3' }
+      - { label: City stays, value: 2 }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi-04.jpeg
+  
+  - id: hyderabad-solo-2023
+    title: First solo trip to Hyderabad
+    date: 2023-03
+    location: Hyderabad, Telangana
+    places:
+      - Kolkata
+      - { name: Hyderabad, mode: train }
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
+    tags: [Dummy, Test]
+    narrative:
+      - This is a dummy trip for testing purposes. It covers City A and City B.
+      - The trip was uneventful but provided valuable insights into the local culture.
     stats:
       - { label: Days, value: '5' }
-      - { label: Highest point, value: '3,753 m' }
+      - { label: Cities covered, value: 2 }
     gallery:
-      - https://picsum.photos/seed/sikkim-1/600/600
-      - https://picsum.photos/seed/sikkim-2/600/600
-      - https://picsum.photos/seed/sikkim-3/600/600
+      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-04.jpeg

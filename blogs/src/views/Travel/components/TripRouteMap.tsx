@@ -113,6 +113,11 @@ function tooltipFormatter(params: unknown): string {
 // bounding box into a geo zoom factor relative to the full-map view.
 const INDIA_VIEW = { minLng: 68, maxLng: 97.5, minLat: 6.5, maxLat: 37.2 }
 
+// Camera tour pacing: each frame's fly animation is animationDurationUpdate
+// (1100ms) long, plus a dwell on the city before moving to the next stop.
+const TOUR_FIRST_FRAME_MS = 450
+const TOUR_STEP_MS = 1700
+
 /**
  * Camera that frames the route: bounding box of the stops plus padding
  * (with a minimum span so two nearby cities don't zoom in absurdly far).
@@ -335,7 +340,7 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
 
   useEffect(() => {
     let cancelled = false
-    let zoomTimer: number | undefined
+    const tourTimers: number[] = []
     const el = containerRef.current
     if (!el) return
 
@@ -353,14 +358,21 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
         if (cancelled) return
         if (stops.length < 2) throw new Error('fewer than two locatable stops')
         // First paint: the full-India view, continuing the map the user just
-        // left on the travel page. Then fly the camera into the route once
-        // the page's view transition has settled.
+        // left on the travel page. Then run the camera tour once the page's
+        // view transition has settled: fly into the starting city, pan along
+        // the route through each stop, and settle framing the visited cities
+        // (the faraway origin excluded, so the ending stays zoomed in).
         chart.setOption(buildOption(stops, stateBorders))
         setStatus('ready')
-        const camera = routeCamera(stops)
-        zoomTimer = window.setTimeout(() => {
-          chart.setOption({ geo: [camera, camera, camera] })
-        }, 450)
+        const frames = stops.map((stop) => routeCamera([stop]))
+        if (stops.length > 2) frames.push(routeCamera(stops.slice(1)))
+        frames.forEach((camera, i) => {
+          tourTimers.push(
+            window.setTimeout(() => {
+              chart.setOption({ geo: [camera, camera, camera] })
+            }, TOUR_FIRST_FRAME_MS + i * TOUR_STEP_MS),
+          )
+        })
       } catch (err) {
         console.error('Failed to load trip route map', err)
         if (!cancelled) setStatus('error')
@@ -370,7 +382,7 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
 
     return () => {
       cancelled = true
-      window.clearTimeout(zoomTimer)
+      tourTimers.forEach((timer) => window.clearTimeout(timer))
       window.removeEventListener('resize', onResize)
       chart.dispose()
     }
