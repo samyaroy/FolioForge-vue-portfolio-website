@@ -79,6 +79,11 @@ export function TripMapPane({ trip, onLoadingChange }: TripMapPaneProps) {
             />
           </div>
         )}
+        {showRoute && (
+          <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
+            {TRAVEL_SECTION.routeMapAttribution}
+          </p>
+        )}
       </section>
     </div>
   )

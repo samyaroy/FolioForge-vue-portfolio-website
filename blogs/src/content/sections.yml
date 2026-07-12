@@ -35,6 +35,7 @@ travel:
   detailsLabel: "See details ->"
   backToTravel: "← Back to TravelBook"
   routeMapTitle: Travel route
+  routeMapAttribution: "* Map boundaries use india-maps-data GeoJSON; coordinates are resolved with the Open-Meteo Geocoding API; road and walking routes use OSRM; rail routes use RailRadar; rendered with ECharts."
 
 post:
   backToBlogs: Back to Writing

@@ -33,6 +33,7 @@ interface SectionsContent {
     detailsLabel: string
     backToTravel: string
     routeMapTitle: string
+    routeMapAttribution: string
   }
   post: {
     backToBlogs: string
