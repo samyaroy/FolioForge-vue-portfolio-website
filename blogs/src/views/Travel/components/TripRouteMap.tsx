@@ -379,6 +379,7 @@ function buildOption(
 
 type TripRouteMapProps = {
   trip: Trip
+  onLoadingChange?: (isLoading: boolean) => void
 }
 
 /**
@@ -388,11 +389,12 @@ type TripRouteMapProps = {
  * (briefly) its name as it arrives. Falls into an error state when fewer
  * than two stops can be located.
  */
-export function TripRouteMap({ trip }: TripRouteMapProps) {
+export function TripRouteMap({ trip, onLoadingChange }: TripRouteMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
 
   useEffect(() => {
+    onLoadingChange?.(true)
     let cancelled = false
     const timers: number[] = []
     const el = containerRef.current
@@ -441,6 +443,7 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
           buildOption(stops, frameStops, stateBorders, legGeoms, view),
         )
         setStatus('ready')
+        onLoadingChange?.(false)
 
         const render = () => {
           chart.setOption({
@@ -498,7 +501,10 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
         })
       } catch (err) {
         console.error('Failed to load trip route map', err)
-        if (!cancelled) setStatus('error')
+        if (!cancelled) {
+          setStatus('error')
+          onLoadingChange?.(false)
+        }
       }
     }
     load()
@@ -509,16 +515,18 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
       window.removeEventListener('resize', onResize)
       chart.dispose()
     }
-  }, [trip])
+  }, [trip, onLoadingChange])
 
   return (
-    <div>
-      <div ref={containerRef} className="h-105 w-full bg-white" />
+    <div className="relative h-105 w-full bg-white">
+      <div ref={containerRef} className="h-full w-full" />
       {status === 'loading' && (
-        <p className="mt-2 text-sm text-muted">Loading route…</p>
+        <p className="pointer-events-none absolute inset-0 flex items-center justify-center text-sm text-muted">
+          Loading route…
+        </p>
       )}
       {status === 'error' && (
-        <p className="mt-2 text-sm text-[#dc2626]">
+        <p className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-[#dc2626]">
           Could not load the route map. Please try again later.
         </p>
       )}

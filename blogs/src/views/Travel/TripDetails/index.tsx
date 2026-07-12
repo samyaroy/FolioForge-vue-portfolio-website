@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { TRAVEL_SECTION } from '../../../content/sections'
-import { getTrip } from '../../../content/travel/trips'
+import { getTrip, tripStops } from '../../../content/travel/trips'
 import { usePageTitle } from '../../../lib/usePageTitle'
 import { NotFoundPage } from '../../NotFound'
 import { TripDetailsPane } from './components/TripDetailsPane'
@@ -10,6 +11,9 @@ import { TripMapPane } from './components/TripMapPane'
 export function TripDetailsPage() {
   const { tripId } = useParams<{ tripId: string }>()
   const trip = tripId ? getTrip(tripId) : undefined
+  const [routeLoading, setRouteLoading] = useState(
+    trip ? tripStops(trip).length >= 2 : false,
+  )
 
   usePageTitle(trip?.title)
 
@@ -26,8 +30,8 @@ export function TripDetailsPage() {
       </Link>
 
       <div className="grid grid-cols-1 gap-3 min-[900px]:grid-cols-[55fr_45fr]">
-        <TripDetailsPane trip={trip} />
-        <TripMapPane trip={trip} />
+        <TripDetailsPane trip={trip} statsLoading={routeLoading} />
+        <TripMapPane trip={trip} onLoadingChange={setRouteLoading} />
       </div>
 
       <div className="mt-6 h-px w-full bg-border" aria-hidden="true" />

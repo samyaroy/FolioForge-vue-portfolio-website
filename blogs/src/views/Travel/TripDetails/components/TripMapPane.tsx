@@ -12,9 +12,10 @@ const TripRouteMap = lazy(() =>
 
 type TripMapPaneProps = {
   trip: Trip
+  onLoadingChange?: (isLoading: boolean) => void
 }
 
-export function TripMapPane({ trip }: TripMapPaneProps) {
+export function TripMapPane({ trip, onLoadingChange }: TripMapPaneProps) {
   const [showItinerary, setShowItinerary] = useState(true)
   const mapImage = trip.routeMapImage ?? trip.coverImage
   const showRoute = tripStops(trip).length >= 2
@@ -30,9 +31,13 @@ export function TripMapPane({ trip }: TripMapPaneProps) {
         {showRoute ? (
           <div className="relative">
             <Suspense
-              fallback={<p className="text-sm text-muted">Loading route…</p>}
+              fallback={
+                <div className="flex h-105 w-full items-center justify-center bg-white">
+                  <p className="text-sm text-muted">Loading route…</p>
+                </div>
+              }
             >
-              <TripRouteMap trip={trip} />
+              <TripRouteMap trip={trip} onLoadingChange={onLoadingChange} />
             </Suspense>
             {showItinerary ? (
               <div className="absolute top-0 right-0 z-2 max-h-full overflow-y-auto rounded-lg rounded-tr-none border border-border bg-[rgba(255,255,255,0.88)] px-2 py-1 backdrop-blur-[2px]">

@@ -58,8 +58,7 @@ trips:
       - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
     summary: ABC
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26.jpeg
-    tags: [Weekend Trip]
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26.jpeg
     narrative:
       - ABC
       - ABC
@@ -67,9 +66,13 @@ trips:
       - { label: Distance (One Way), value: '57 KM' }
       - { label: Monuments, value: '4' }
     gallery:
-      - https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26-02.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26-03.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26-05.jpeg
+    clicked_by:
+      - name: Shuvadeep Mitra
+        url:
 
   - id: uttarakhand-devbhumi-2025
     title: Char Dham circuit through Uttarakhand
