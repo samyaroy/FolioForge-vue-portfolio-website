@@ -8,6 +8,11 @@ import {
 } from '../../../content/travel/trips'
 import { geocodeCities } from './geocode'
 import {
+  fetchLegGeometry,
+  simplifyLine,
+  type LegCoords,
+} from './routeGeometry'
+import {
   INDIA_MAP_NAME,
   loadIndiaMap,
   loadIndiaStateBorders,
@@ -82,15 +87,21 @@ const MODE_STYLE_KEY: Record<TransportMode, LegStyleKey> = {
 /**
  * Resolve every stop to coordinates: explicit lat/lng from the yml wins,
  * the rest go through the (cached) geocoder. Unresolvable stops are dropped.
+ * Only coordinates are taken from the lookup — a round trip visits the same
+ * name twice with different modes, and each stop must keep its own fields.
  */
 async function locateStops(stops: TripStop[]): Promise<LocatedStop[]> {
   const needsLookup = stops.filter((s) => s.lat == null || s.lng == null)
   const found = await geocodeCities(needsLookup)
-  const byName = new Map(found.map((s) => [s.name, s]))
+  const coordsByName = new Map(
+    found.map((s) => [s.name, { lat: s.lat, lng: s.lng }]),
+  )
   return stops
-    .map((s) =>
-      s.lat != null && s.lng != null ? (s as LocatedStop) : byName.get(s.name),
-    )
+    .map((s): LocatedStop | undefined => {
+      if (s.lat != null && s.lng != null) return s as LocatedStop
+      const coords = coordsByName.get(s.name)
+      return coords ? { ...s, ...coords } : undefined
+    })
     .filter((s): s is LocatedStop => s != null)
 }
 
@@ -113,10 +124,14 @@ function tooltipFormatter(params: unknown): string {
 // bounding box into a geo zoom factor relative to the full-map view.
 const INDIA_VIEW = { minLng: 68, maxLng: 97.5, minLat: 6.5, maxLat: 37.2 }
 
-// Camera tour pacing: each frame's fly animation is animationDurationUpdate
-// (1100ms) long, plus a dwell on the city before moving to the next stop.
-const TOUR_FIRST_FRAME_MS = 450
-const TOUR_STEP_MS = 1700
+// Journey pacing. The camera is fixed from the first paint (framed on the
+// destination stops); a single arrow then walks the route leg by leg:
+// LEG_TRAVEL_MS to fly a leg, then the arrival's name lingers LEG_DWELL_MS
+// before the arrow departs again. After the last stop every name is dropped
+// and the arrow retires — the itinerary plays exactly once.
+const JOURNEY_START_MS = 600
+const LEG_TRAVEL_MS = 1500
+const LEG_DWELL_MS = 900
 
 /**
  * Camera that frames the route: bounding box of the stops plus padding
@@ -147,43 +162,65 @@ function routeCamera(stops: LocatedStop[]): {
   }
 }
 
-function buildOption(
+/**
+ * What the journey animation currently shows: how many legs are drawn, how
+ * many stops have been reached (their dots exist), which stop's name is up
+ * (null: none), and which leg the single arrow is flying (null: no arrow).
+ */
+type JourneyView = {
+  revealed: number
+  reached: number
+  labeled: number | null
+  active: number | null
+}
+
+/**
+ * Every chart series: state borders, the revealed route legs, and the stop
+ * markers, per the given journey view. Series are stable by name and only
+ * ever added to, so renders merge by name — no series is torn down, which
+ * keeps the one-shot arrow effects from restarting on unrelated updates.
+ * `legGeoms` (aligned with the legs, i.e. stops[1..]) carries real route
+ * polylines where a router resolved them; legs without one draw the styled
+ * straight line between their two stops.
+ */
+function buildSeries(
   stops: LocatedStop[],
   stateBorders: number[][][],
-): echarts.EChartsCoreOption {
-  // Group the legs by drawing style so each style becomes one lines series
-  // (plus its overlay pass, when the style has one).
-  const legsByStyle = new Map<
-    LegStyleKey,
-    { coords: number[][]; legLabel: string }[]
-  >()
-  stops.slice(1).forEach((to, i) => {
+  legGeoms: (LegCoords | null)[],
+  view: JourneyView,
+): object[] {
+  const legSeries = stops.slice(1, view.revealed + 1).flatMap((to, i) => {
     const from = stops[i]
     const key: LegStyleKey = to.mode ? MODE_STYLE_KEY[to.mode] : 'default'
-    const group = legsByStyle.get(key) ?? []
-    group.push({
-      coords: [
-        [from.lng, from.lat],
-        [to.lng, to.lat],
-      ],
-      legLabel: `${from.name} → ${to.name}${to.mode ? ` · ${to.mode}` : ''}`,
-    })
-    legsByStyle.set(key, group)
-  })
-
-  const legSeries = [...legsByStyle.entries()].flatMap(([key, legs]) => {
     const style = LEG_STYLES[key] as LegStyle
+    // Ground legs render in polyline mode so they can carry full route
+    // geometry (a 2-point fallback still draws straight). Flights keep the
+    // 2-point mode, where curveness bends the leg into its arc.
+    const polyline = key !== 'flight'
+    const coords = legGeoms[i] ?? [
+      [from.lng, from.lat],
+      [to.lng, to.lat],
+    ]
     const series: object[] = [
       {
-        name: `Route (${key})`,
+        name: `Route leg ${i + 1}`,
         type: 'lines',
         coordinateSystem: 'geo',
-        data: legs,
+        polyline,
+        data: [
+          {
+            coords,
+            legLabel: `${from.name} → ${to.name}${to.mode ? ` · ${to.mode}` : ''}`,
+          },
+        ],
         lineStyle: { ...style.base, curveness: style.curveness },
-        // The moving comet that travels each leg — the "live" animation.
+        // The single travelling arrow: shown only on the active leg, flying
+        // it exactly once (the journey scheduler activates each leg in turn
+        // and retires the arrow after the final arrival).
         effect: {
-          show: true,
-          period: 4,
+          show: i === view.active,
+          period: LEG_TRAVEL_MS / 1000,
+          loop: false,
           trailLength: style.effect.trailLength,
           symbol: 'arrow',
           symbolSize: style.effect.symbolSize,
@@ -195,11 +232,12 @@ function buildOption(
     ]
     if (style.overlay) {
       series.push({
-        name: `Route (${key}) overlay`,
+        name: `Route leg ${i + 1} overlay`,
         type: 'lines',
         coordinateSystem: 'geo',
         silent: true,
-        data: legs.map(({ coords }) => ({ coords })),
+        polyline,
+        data: [{ coords }],
         // Must share the base pass's curveness so the two lines coincide.
         lineStyle: { ...style.overlay, curveness: style.curveness },
         zlevel: 1,
@@ -209,12 +247,66 @@ function buildOption(
     return series
   })
 
+  return [
+    {
+      // Solid inter-state boundaries, computed from the district geometry,
+      // drawn over the dotted district mesh but under the route.
+      name: 'State borders',
+      type: 'lines',
+      coordinateSystem: 'geo',
+      silent: true,
+      polyline: true,
+      data: stateBorders.map((coords) => ({ coords })),
+      lineStyle: { color: '#475569', width: 1.1, opacity: 0.75 },
+      zlevel: 0,
+      z: 4,
+    },
+    ...legSeries,
+    {
+      // Dots pop in as the arrow reaches them; only the just-reached stop
+      // shows its name (per-datum label), and the final state shows none —
+      // hovering a dot still names it via the tooltip.
+      name: 'Stops',
+      type: 'effectScatter',
+      coordinateSystem: 'geo',
+      rippleEffect: { brushType: 'stroke', scale: 3 },
+      symbolSize: 9,
+      itemStyle: {
+        color: STOP_COLOR,
+        shadowBlur: 4,
+        shadowColor: 'rgba(0,0,0,0.25)',
+      },
+      label: {
+        show: false,
+        formatter: '{b}',
+        position: 'right',
+        fontSize: 11,
+        color: '#0e141b',
+        textBorderColor: '#ffffff',
+        textBorderWidth: 2,
+      },
+      data: stops.slice(0, view.reached).map((s, i) => ({
+        name: s.name,
+        value: [s.lng, s.lat],
+        mode: s.mode,
+        note: s.note,
+        label: { show: i === view.labeled },
+      })),
+      zlevel: 2,
+    },
+  ]
+}
+
+function buildOption(
+  stops: LocatedStop[],
+  frameStops: LocatedStop[],
+  stateBorders: number[][][],
+  legGeoms: (LegCoords | null)[],
+  view: JourneyView,
+): echarts.EChartsCoreOption {
+  const camera = routeCamera(frameStops)
   return {
     backgroundColor: WATER_COLOR,
-    // Drives the camera fly-in: geo center/zoom updates animate with this
-    // duration, so the map appears to zoom from all-India into the route.
-    animationDurationUpdate: 1100,
-    animationEasingUpdate: 'cubicInOut',
     tooltip: {
       trigger: 'item',
       confine: true,
@@ -222,9 +314,8 @@ function buildOption(
       textStyle: { color: '#0e141b', fontSize: 12 },
       formatter: tooltipFormatter,
     },
-    // The three layers start at the default full-India view — matching the
-    // map pane on the travel page, which the view transition morphs into
-    // this card — and are then zoomed to the route by a center/zoom update.
+    // All three layers are framed on the route from the first paint — the
+    // camera never moves; only the route animates.
     //
     // Fills and strokes are split into separate layers: when a single layer
     // draws fill+stroke per district, each district's opaque fill paints
@@ -241,6 +332,7 @@ function buildOption(
         silent: true,
         z: 3,
         aspectScale: 0.9,
+        ...camera,
         itemStyle: {
           areaColor: 'transparent',
           borderColor: 'rgba(100,116,139,0.35)',
@@ -255,6 +347,7 @@ function buildOption(
         silent: true,
         z: 2,
         aspectScale: 0.9,
+        ...camera,
         itemStyle: {
           areaColor: LAND_COLOR,
           borderColor: 'transparent',
@@ -270,6 +363,7 @@ function buildOption(
         silent: true,
         z: 1,
         aspectScale: 0.9,
+        ...camera,
         itemStyle: {
           areaColor: 'transparent',
           borderColor: '#64748b',
@@ -277,50 +371,7 @@ function buildOption(
         },
       },
     ],
-    series: [
-      {
-        // Solid inter-state boundaries, computed from the district geometry,
-        // drawn over the dotted district mesh but under the route.
-        name: 'State borders',
-        type: 'lines',
-        coordinateSystem: 'geo',
-        silent: true,
-        polyline: true,
-        data: stateBorders.map((coords) => ({ coords })),
-        lineStyle: { color: '#475569', width: 1.1, opacity: 0.75 },
-        zlevel: 0,
-        z: 4,
-      },
-      ...legSeries,
-      {
-        name: 'Stops',
-        type: 'effectScatter',
-        coordinateSystem: 'geo',
-        rippleEffect: { brushType: 'stroke', scale: 3 },
-        symbolSize: 9,
-        itemStyle: {
-          color: STOP_COLOR,
-          shadowBlur: 4,
-          shadowColor: 'rgba(0,0,0,0.25)',
-        },
-        label: {
-          show: true,
-          formatter: '{b}',
-          position: 'right',
-          fontSize: 11,
-          color: '#0e141b',
-          textBorderColor: '#ffffff',
-          textBorderWidth: 2,
-        },
-        data: stops.map((s) => ({
-          name: s.name,
-          value: [s.lng, s.lat],
-          mode: s.mode,
-          note: s.note,
-        })),
-        zlevel: 2,
-      },
-    ],
+    series: buildSeries(stops, stateBorders, legGeoms, view),
   }
 }
 
@@ -329,10 +380,11 @@ type TripRouteMapProps = {
 }
 
 /**
- * Animated route map for the trip details page: the trip's stops on the
- * India map, connected by legs with a travelling-comet effect and pulsing
- * stop markers. Falls into an error state when fewer than two stops can be
- * located.
+ * Animated route map for the trip details page. The camera frames the
+ * destination stops up front and never moves; a single arrow then travels
+ * the route leg by leg — exactly once — revealing each stop's dot and
+ * (briefly) its name as it arrives. Falls into an error state when fewer
+ * than two stops can be located.
  */
 export function TripRouteMap({ trip }: TripRouteMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -340,7 +392,7 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
 
   useEffect(() => {
     let cancelled = false
-    const tourTimers: number[] = []
+    const timers: number[] = []
     const el = containerRef.current
     if (!el) return
 
@@ -357,21 +409,84 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
         ])
         if (cancelled) return
         if (stops.length < 2) throw new Error('fewer than two locatable stops')
-        // First paint: the full-India view, continuing the map the user just
-        // left on the travel page. Then run the camera tour once the page's
-        // view transition has settled: fly into the starting city, pan along
-        // the route through each stop, and settle framing the visited cities
-        // (the faraway origin excluded, so the ending stays zoomed in).
-        chart.setOption(buildOption(stops, stateBorders))
+
+        const legCount = stops.length - 1
+        const legGeoms: (LegCoords | null)[] = stops.slice(1).map(() => null)
+        // The frame is resolved from the destination stops only — places
+        // written as bare names in the yml (the faraway origin, usually) are
+        // excluded, so the camera stays on the area the trip is about.
+        const bareNames = new Set(
+          (trip.places ?? []).filter((p): p is string => typeof p === 'string'),
+        )
+        const framed = stops.filter((s) => !bareNames.has(s.name))
+        const frameStops = framed.length ? framed : stops
+        // First paint: camera already framing the route, only the start dot
+        // (named). Everything after is a series-only merge — the geo layers
+        // are never touched again, so nothing zooms or pans.
+        const view: JourneyView = {
+          revealed: 0,
+          reached: 1,
+          labeled: 0,
+          active: null,
+        }
+        chart.setOption(
+          buildOption(stops, frameStops, stateBorders, legGeoms, view),
+        )
         setStatus('ready')
-        const frames = stops.map((stop) => routeCamera([stop]))
-        if (stops.length > 2) frames.push(routeCamera(stops.slice(1)))
-        frames.forEach((camera, i) => {
-          tourTimers.push(
+
+        const render = () => {
+          chart.setOption({
+            series: buildSeries(stops, stateBorders, legGeoms, view),
+          })
+        }
+        const at = (ms: number, step: () => void) => {
+          timers.push(
             window.setTimeout(() => {
-              chart.setOption({ geo: [camera, camera, camera] })
-            }, TOUR_FIRST_FRAME_MS + i * TOUR_STEP_MS),
+              if (cancelled) return
+              step()
+              render()
+            }, ms),
           )
+        }
+
+        // The journey: for each leg, the arrow departs (previous name goes,
+        // dot stays), flies the leg, and on arrival the reached stop pops in
+        // with its name for the dwell.
+        const stepMs = LEG_TRAVEL_MS + LEG_DWELL_MS
+        for (let leg = 0; leg < legCount; leg++) {
+          const departMs = JOURNEY_START_MS + leg * stepMs
+          at(departMs, () => {
+            view.revealed = leg + 1
+            view.labeled = null
+            view.active = leg
+          })
+          at(departMs + LEG_TRAVEL_MS, () => {
+            view.reached = leg + 2
+            view.labeled = leg + 1
+            view.active = null
+          })
+        }
+        // Journey done: drop every name and retire the arrow — one full
+        // itinerary pass only. Dots and route lines stay.
+        at(JOURNEY_START_MS + legCount * stepMs, () => {
+          view.labeled = null
+          view.active = null
+        })
+
+        // Legs upgrade from straight lines to real route geometry (roads,
+        // treks, rail tracks) as the routers answer; a failed lookup keeps
+        // the straight fallback. Geometry is thinned to what the fixed zoom
+        // can resolve, so hairpin roads read as a line, not a scribble.
+        const geomTolerance =
+          (INDIA_VIEW.maxLng - INDIA_VIEW.minLng) /
+          routeCamera(frameStops).zoom /
+          400
+        stops.slice(1).forEach((to, i) => {
+          fetchLegGeometry(stops[i], to).then((coords) => {
+            if (cancelled || !coords) return
+            legGeoms[i] = simplifyLine(coords, geomTolerance)
+            render()
+          })
         })
       } catch (err) {
         console.error('Failed to load trip route map', err)
@@ -382,7 +497,7 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
 
     return () => {
       cancelled = true
-      tourTimers.forEach((timer) => window.clearTimeout(timer))
+      timers.forEach((timer) => window.clearTimeout(timer))
       window.removeEventListener('resize', onResize)
       chart.dispose()
     }

@@ -24,6 +24,9 @@ export type TripStop = {
   lng?: number
   /** How this stop was reached from the previous one (omit on the first). */
   mode?: TransportMode
+  /** Train number for mode: train legs; lets the route map draw the leg
+      along the real track (via the /api/rail-route proxy). */
+  train?: string | number
   /** Short tooltip line, e.g. "Shore temples". */
   note?: string
 }

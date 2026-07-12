@@ -28,6 +28,9 @@
 #            Will pick the animation style (e.g. arced path for flights).
 #   lat    — explicit coordinates; when both are set, geocoding is
 #   lng      skipped for this stop (use for small places the geocoder misses)
+#   train  — 5-digit train number for mode: train legs; the route map then
+#            draws the leg along the real track instead of a straight line
+#            (e.g. { name: Varanasi, mode: train, train: 22307 })
 #   note   — short tooltip line, e.g. "Shore temples"
 #
 # Example:
@@ -131,41 +134,16 @@ trips:
       - https://picsum.photos/seed/darjeeling-2/600/600
       - https://picsum.photos/seed/darjeeling-3/600/600
 
-  - id: goa-2025
-    title: Winter week on the Goan coast
-    date: 2025-12-19
-    location: Goa
-    places:
-      - Kolkata
-      - { name: Panaji, mode: flight }
-      - { name: Palolem, mode: car, note: South Goa beaches }
-    summary: A week of beaches, bikes, and Portuguese quarters — the
-      obligatory Goa trip, finally done right.
-    coverImage: https://picsum.photos/seed/goa-2025/480/360
-    tags: [Beach, Friends]
-    narrative:
-      - We split the week between the old quarters of Panaji and the quieter
-        beaches of the south. Fontainhas at golden hour looks like someone
-        colour-graded an entire neighbourhood.
-      - The scooter is the real hero of Goa. Fish thali stops chosen by
-        instinct, sunsets chosen by whichever beach was nearest.
-    stats:
-      - { label: Days, value: '7' }
-      - { label: Beaches, value: '6' }
-    gallery:
-      - https://picsum.photos/seed/goa-1/600/600
-      - https://picsum.photos/seed/goa-2/600/600
-
   - id: varanasi-2024
     title: Ghats and galis of Varanasi
     date: 2025-11-02
     location: Varanasi, Uttar Pradesh
     places:
       - Kolkata
-      - { name: Varanasi, mode: train, note: Vibhuti Express }
+      - { name: Varanasi, mode: train}
     summary: A solo wander through the oldest living city — dawn boat rides,
       evening aartis, and endless kachori lanes.
-    coverImage: https://picsum.photos/seed/varanasi-2024/480/360
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/varanasi-2024.jpeg
     tags: [Heritage, Solo Trip]
     narrative:
       - Varanasi doesn't do mornings quietly. By the time the sun cleared the
@@ -178,9 +156,7 @@ trips:
       - { label: Days, value: '3' }
       - { label: Ghats walked, value: '28' }
     gallery:
-      - https://picsum.photos/seed/varanasi-1/600/600
-      - https://picsum.photos/seed/varanasi-2/600/600
-      - https://picsum.photos/seed/varanasi-3/600/600
+      - https://media.samyabrata.codeium.xyz/blog-travel/varanasi-2024-01.jpeg
 
   - id: uttrakhand-trip-01
     title: Took my parent with me this time
@@ -189,12 +165,13 @@ trips:
     places:
       - Kolkata
       - { name: Delhi, mode: flight }
-      - {name: Agra, mode: car, note: Taj Mahal}
-      - { name: Varanasi, mode: flight, note: Spent Durga Puja there }
-      - { name: Haridwar, mode: train}
-      - { name: DehraDun, mode: car}
-      - {name: Mussoorie, mode: car}
-      - { name: Rishikesh, mode: car}
+      - { name: Agra, mode: car}
+      - { name: Varanasi, mode: flight}
+      - { name: DehraDun, mode: train, train: 12369}
+      - { name: Mussoorie, mode: car}
+      - { name: Haridwar, mode: car}
+      - { name: Delhi, mode: train, train: 12056}
+      - { name: Kolkata, mode: flight}
     summary: 
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.jpeg
     tags: [Mountains, Pilgrimage]
@@ -280,7 +257,8 @@ trips:
     location: Hyderabad, Telangana
     places:
       - Kolkata
-      - { name: Hyderabad, mode: train }
+      - { name: Hyderabad, mode: train, train: 18645}
+      - { name: kolkata, mode: train, train: 12704}
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
     tags: [Dummy, Test]
     narrative:

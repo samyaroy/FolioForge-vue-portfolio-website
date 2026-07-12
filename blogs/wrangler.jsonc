@@ -2,10 +2,17 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "folioforge-blog",
   "compatibility_date": "2026-03-21",
+  // The worker only backs /api/* (rail-route proxy for the travel map; needs
+  // the RAILRADAR_API_KEY secret: `npx wrangler secret put RAILRADAR_API_KEY`).
+  "main": "worker/index.js",
   // SPA: serve index.html for unknown paths so client-side routes
   // (e.g. /posts/:slug) work on refresh and direct links.
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
+    "binding": "ASSETS",
+    // Without this, /api/* would fall through to the SPA's index.html
+    // instead of reaching the worker.
+    "run_worker_first": ["/api/*"]
   }
 }
