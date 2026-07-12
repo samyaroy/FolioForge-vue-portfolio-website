@@ -66,8 +66,6 @@ trips:
     stats:
       - { label: Distance (One Way), value: '57 KM' }
       - { label: Days, value: '14' }
-    gallery:
-      - 
 
   - id: hyderabad-conclave-2026
     title: Cryptology Conclave at IIT Hyderabad
@@ -146,3 +144,192 @@ trips:
     gallery:
       - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-02.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-03.jpeg
+
+  # --- Sample entries below: edit titles, dates, narratives, and swap the
+  # --- picsum placeholders for real photos.
+
+  - id: darjeeling-2025
+    title: Toy trains and tea gardens in Darjeeling
+    date: 2025-10-14
+    location: Darjeeling, West Bengal
+    places:
+      - Kolkata
+      - { name: Siliguri, mode: train, note: Overnight from Sealdah }
+      - { name: Darjeeling, mode: car, note: Hill cart road climb }
+    summary: A long weekend of toy trains, tea estates, and the Kanchenjunga
+      skyline from Tiger Hill.
+    coverImage: https://picsum.photos/seed/darjeeling-2025/480/360
+    tags: [Mountains, Tea]
+    narrative:
+      - The overnight train from Sealdah dropped me into the plains at dawn,
+        and the drive up the hill cart road did the rest — every switchback
+        traded a degree of heat for a shade of green.
+      - Tiger Hill at 4 a.m. was a crowd of shivering strangers who all went
+        quiet at the same moment. Kanchenjunga catching the first light is
+        worth every lost hour of sleep.
+    stats:
+      - { label: Days, value: '4' }
+      - { label: Altitude, value: '2,042 m' }
+    gallery:
+      - https://picsum.photos/seed/darjeeling-1/600/600
+      - https://picsum.photos/seed/darjeeling-2/600/600
+      - https://picsum.photos/seed/darjeeling-3/600/600
+
+  - id: goa-2025
+    title: Winter week on the Goan coast
+    date: 2025-12-19
+    location: Goa
+    places:
+      - Kolkata
+      - { name: Panaji, mode: flight }
+      - { name: Palolem, mode: car, note: South Goa beaches }
+    summary: A week of beaches, bikes, and Portuguese quarters — the
+      obligatory Goa trip, finally done right.
+    coverImage: https://picsum.photos/seed/goa-2025/480/360
+    tags: [Beach, Friends]
+    narrative:
+      - We split the week between the old quarters of Panaji and the quieter
+        beaches of the south. Fontainhas at golden hour looks like someone
+        colour-graded an entire neighbourhood.
+      - The scooter is the real hero of Goa. Fish thali stops chosen by
+        instinct, sunsets chosen by whichever beach was nearest.
+    stats:
+      - { label: Days, value: '7' }
+      - { label: Beaches, value: '6' }
+    gallery:
+      - https://picsum.photos/seed/goa-1/600/600
+      - https://picsum.photos/seed/goa-2/600/600
+
+  - id: varanasi-2024
+    title: Ghats and galis of Varanasi
+    date: 2024-11-02
+    location: Varanasi, Uttar Pradesh
+    places:
+      - Kolkata
+      - { name: Varanasi, mode: train, note: Vibhuti Express }
+    summary: A solo wander through the oldest living city — dawn boat rides,
+      evening aartis, and endless kachori lanes.
+    coverImage: https://picsum.photos/seed/varanasi-2024/480/360
+    tags: [Heritage, Solo Trip]
+    narrative:
+      - Varanasi doesn't do mornings quietly. By the time the sun cleared the
+        far bank, the ghats were already three layers deep in pilgrims,
+        photographers, and priests.
+      - The lanes behind the ghats are the real map of the city. I stopped
+        trying to navigate and just followed the smell of kachori and the
+        sound of temple bells.
+    stats:
+      - { label: Days, value: '3' }
+      - { label: Ghats walked, value: '28' }
+    gallery:
+      - https://picsum.photos/seed/varanasi-1/600/600
+      - https://picsum.photos/seed/varanasi-2/600/600
+      - https://picsum.photos/seed/varanasi-3/600/600
+
+  - id: rajasthan-2024
+    title: Forts and dunes across Rajasthan
+    date: 2024-02-09
+    location: Rajasthan
+    places:
+      - Kolkata
+      - { name: Jaipur, mode: flight }
+      - { name: Jodhpur, mode: train, note: The blue city }
+      - { name: Jaisalmer, mode: car, note: Desert camp at Sam dunes }
+    summary: Ten days tracing the fort line west — Jaipur's palaces,
+      Jodhpur's blue lanes, and a night under the stars near Jaisalmer.
+    coverImage: https://picsum.photos/seed/rajasthan-2024/480/360
+    tags: [Heritage, Desert]
+    narrative:
+      - Every city on this route has its own colour. Jaipur is pink by
+        decree, Jodhpur blue by tradition, and Jaisalmer gold by geology —
+        the sandstone forts seem to grow straight out of the desert.
+      - The night at the Sam dunes was the trip's quiet centrepiece. Camel
+        silhouettes, a horizon with nothing on it, and more stars than the
+        city lets you remember exist.
+    stats:
+      - { label: Days, value: '10' }
+      - { label: Forts, value: '5' }
+      - { label: Distance, value: '1,100 km' }
+    gallery:
+      - https://picsum.photos/seed/rajasthan-1/600/600
+      - https://picsum.photos/seed/rajasthan-2/600/600
+      - https://picsum.photos/seed/rajasthan-3/600/600
+
+  - id: kerala-2023
+    title: Backwaters and hill roads of Kerala
+    date: 2023-12-22
+    location: Kerala
+    places:
+      - Kolkata
+      - { name: Kochi, mode: flight }
+      - { name: Alappuzha, mode: car, note: Houseboat on the backwaters }
+      - { name: Munnar, mode: car, note: Tea country }
+    summary: From a houseboat drifting through Alleppey's canals to the tea
+      slopes of Munnar — Kerala in one unhurried week.
+    coverImage: https://picsum.photos/seed/kerala-2023/480/360
+    tags: [Backwaters, Nature]
+    narrative:
+      - The houseboat day recalibrates your sense of speed. Coconut groves
+        slide past at walking pace, and dinner is whatever the canal-side
+        market had that morning.
+      - Munnar is the opposite trick — hairpin roads climbing into cloud,
+        with tea bushes stitched over every slope like corduroy.
+    stats:
+      - { label: Days, value: '8' }
+      - { label: Houseboat hours, value: '22' }
+    gallery:
+      - https://picsum.photos/seed/kerala-1/600/600
+      - https://picsum.photos/seed/kerala-2/600/600
+
+  - id: mumbai-techfest-2023
+    title: Techfest weekend at IIT Bombay
+    date: 2023-08-18
+    location: Mumbai, Maharashtra
+    places:
+      - Kolkata
+      - { name: Mumbai, mode: flight }
+    summary: A whirlwind conference weekend — talks and demos by day, Marine
+      Drive and vada pav by night.
+    coverImage: https://picsum.photos/seed/mumbai-techfest-2023/480/360
+    tags: [Conference]
+    narrative:
+      - The campus at Powai turns into a small city during the fest. I spent
+        most of it hopping between robotics demos and a lecture hall that
+        never seemed to empty.
+      - Evenings belonged to the city — the local train crush to Churchgate,
+        the long curve of Marine Drive, and the discovery that sea breeze
+        pairs unreasonably well with cutting chai.
+    stats:
+      - { label: Days, value: '3' }
+      - { label: Talks attended, value: '9' }
+    gallery:
+      - https://picsum.photos/seed/mumbai-1/600/600
+      - https://picsum.photos/seed/mumbai-2/600/600
+
+  - id: sikkim-2022
+    title: Gangtok and the high lakes of East Sikkim
+    date: 2022-04-15
+    location: Sikkim
+    places:
+      - Kolkata
+      - { name: Bagdogra, mode: flight }
+      - { name: Gangtok, mode: car, note: NH10 along the Teesta }
+      - { name: Tsomgo Lake, mode: car, lat: 27.3742, lng: 88.7627, note: Frozen at the edges even in April }
+    summary: Mountain roads along the Teesta, monastery mornings in Gangtok,
+      and the still-frozen shore of Tsomgo Lake.
+    coverImage: https://picsum.photos/seed/sikkim-2022/480/360
+    tags: [Mountains]
+    narrative:
+      - The road from Bagdogra shadows the Teesta for hours, and the river's
+        jade colour never quite stops feeling improbable. Gangtok arrives in
+        layers — prayer flags first, then the town.
+      - At Tsomgo the altitude does the talking. Twelve thousand feet, a lake
+        still rimmed with ice in April, and yaks entirely unbothered by any
+        of it.
+    stats:
+      - { label: Days, value: '5' }
+      - { label: Highest point, value: '3,753 m' }
+    gallery:
+      - https://picsum.photos/seed/sikkim-1/600/600
+      - https://picsum.photos/seed/sikkim-2/600/600
+      - https://picsum.photos/seed/sikkim-3/600/600

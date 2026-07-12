@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { ReadingItem } from '../../../../content/readings/data'
 import { READINGS_SECTION } from '../../../../content/sections'
 import { formatDate } from '../../../../lib/format'
@@ -8,6 +9,8 @@ import {
   CARD_SHELL_CLASS,
   CARD_TITLE_CLASS,
 } from '../../../../lib/ui'
+import { BookArt } from '../BookArt'
+import { ReadingModal } from '../ReadingModal'
 
 type ReadingCardProps = {
   reading: ReadingItem
@@ -18,6 +21,7 @@ export function ReadingCard({
   reading,
   illustrationSide = 'left',
 }: ReadingCardProps) {
+  const [isReviewOpen, setIsReviewOpen] = useState(false)
   const artRight = illustrationSide === 'right'
 
   return (
@@ -34,7 +38,7 @@ export function ReadingCard({
         }`}
         aria-hidden="true"
       >
-        <span className="relative block aspect-[0.72] w-[clamp(3.2rem,42%,5rem)] rounded-[6px_8px_8px_6px] [background:linear-gradient(135deg,#1980e6_0%,#1e3a8a_100%)] shadow-[-0.45rem_0.45rem_0_rgba(15,23,42,0.08),0_1rem_1.8rem_rgba(15,23,42,0.18)] before:absolute before:inset-[0.65rem_auto_0.65rem_0.55rem] before:w-[0.28rem] before:rounded-full before:bg-[rgba(255,255,255,0.72)] before:content-[''] after:absolute after:right-[0.65rem] after:bottom-3 after:left-[1.15rem] after:h-[0.28rem] after:rounded-full after:bg-[rgba(255,255,255,0.76)] after:shadow-[0_-0.65rem_0_rgba(255,255,255,0.54)] after:content-['']" />
+        <BookArt className="w-[clamp(3.2rem,42%,5rem)]" />
       </div>
 
       <div className="flex min-w-0 flex-col px-[1.6rem] py-6">
@@ -63,10 +67,18 @@ export function ReadingCard({
         {reading.description && (
           <p className={CARD_EXCERPT_CLASS}>{reading.description}</p>
         )}
-        <span className="mt-auto self-end pt-4 text-sm leading-[1.3] font-normal text-primary">
+        <button
+          type="button"
+          className="mt-auto self-end p-0 pt-4 text-sm leading-[1.3] font-normal text-primary transition-colors hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          onClick={() => setIsReviewOpen(true)}
+        >
           {READINGS_SECTION.reviewLabel}
-        </span>
+        </button>
       </div>
+
+      {isReviewOpen && (
+        <ReadingModal reading={reading} onClose={() => setIsReviewOpen(false)} />
+      )}
     </article>
   )
 }

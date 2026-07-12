@@ -32,7 +32,14 @@ src/components/Footer/Index.vue
 .env
 
 .codex
+.claude
 .vscode
 .idea
 .DS_Store
 .copilot
+*/.codex
+*/.claude
+*/.vscode
+*/.idea
+*/.DS_Store
+*/.copilot

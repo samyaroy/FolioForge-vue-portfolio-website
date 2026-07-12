@@ -12,7 +12,7 @@ import {
   TRAVEL_LEGEND_LABELS,
   type Purpose,
 } from '../../content/travel/data'
-import { TRIPS } from '../../content/travel/trips'
+import { TRIPS, type Trip } from '../../content/travel/trips'
 import { TripCard } from './components/TripCard'
 import {
   INTRO_SECTION_CLASS,
@@ -76,6 +76,27 @@ const PURPOSE_DECAL: Record<Purpose, object> = {
 // palette and the red city markers) so it stands apart at a glance.
 const HOME_COLOR = '#7c3aed'
 
+// Trip cards are sectioned under year dividers (mirroring the portfolio's
+// conferences tab). Input is already sorted newest-first, so consecutive
+// trips of the same year collapse into one group.
+function groupTripsByYear(trips: Trip[]): { year: string; trips: Trip[] }[] {
+  return trips.reduce<{ year: string; trips: Trip[] }[]>((groups, trip) => {
+    // The YAML loader hands dates over as Date objects at runtime (the Trip
+    // type says string), so go through the Date constructor for the year.
+    const year = String(new Date(trip.date).getFullYear())
+    const last = groups[groups.length - 1]
+    if (last?.year === year) {
+      last.trips.push(trip)
+    } else {
+      groups.push({ year, trips: [trip] })
+    }
+    return groups
+  }, [])
+}
+
+// How many trip cards are shown initially and added per "See more" click.
+const TRIPS_PAGE_SIZE = 7
+
 const byState = new Map(STATE_VISITS.map((s) => [s.state, s]))
 const homeState = STATE_VISITS.find((s) => s.home)?.state
 const homeCity = CITY_VISITS.find((c) => c.home && !c.stayed)?.name
@@ -129,6 +150,11 @@ function tooltipFormatter(params: unknown): string {
   return lines.join('<br/>')
 }
 
+// Shared placement for both geo layers (choropleth + border outline) so they
+// always overlap exactly. Slightly below center so the top isn't clipped.
+const MAP_LAYOUT_CENTER = ['50%', '52%']
+const MAP_LAYOUT_SIZE = '108%'
+
 function buildOption(
   cities: GeoCity[],
   allStates: string[],
@@ -152,8 +178,8 @@ function buildOption(
         z: 3,
         tooltip: { show: true, formatter: tooltipFormatter },
         // Zoom in to make better use of the (now taller) pane width.
-        layoutCenter: ['50%', '46%'],
-        layoutSize: '108%',
+        layoutCenter: MAP_LAYOUT_CENTER,
+        layoutSize: MAP_LAYOUT_SIZE,
         // Mild horizontal stretch (default 0.75 squeezes longitude; higher widens).
         aspectScale: 0.9,
         itemStyle: {
@@ -189,8 +215,8 @@ function buildOption(
         nameProperty: 'st_nm',
         z: 1,
         silent: true,
-        layoutCenter: ['50%', '46%'],
-        layoutSize: '108%',
+        layoutCenter: MAP_LAYOUT_CENTER,
+        layoutSize: MAP_LAYOUT_SIZE,
         aspectScale: 0.9,
         itemStyle: {
           areaColor: 'transparent',
@@ -349,7 +375,13 @@ export function TravelPage() {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [visibleTrips, setVisibleTrips] = useState(TRIPS_PAGE_SIZE)
   const showPageDescription = isPageDescriptionEnabled('travel')
+
+  const tripGroups = useMemo(
+    () => groupTripsByYear(TRIPS.slice(0, visibleTrips)),
+    [visibleTrips],
+  )
 
   const travelPosts = useMemo(
     () =>
@@ -368,8 +400,10 @@ export function TravelPage() {
     const chart = echarts.init(el)
     chartRef.current = chart
 
-    const onResize = () => chart.resize()
-    window.addEventListener('resize', onResize)
+    // The pane is flex-sized on desktop, so watch the container itself
+    // (covers window resizes and the loading note appearing/disappearing).
+    const observer = new ResizeObserver(() => chart.resize())
+    observer.observe(el)
 
     async function load() {
       try {
@@ -390,7 +424,7 @@ export function TravelPage() {
 
     return () => {
       cancelled = true
-      window.removeEventListener('resize', onResize)
+      observer.disconnect()
       chart.dispose()
       chartRef.current = null
     }
@@ -417,16 +451,38 @@ export function TravelPage() {
         )}
 
         {TRIPS.length > 0 && (
-          <div className="mt-2 flex flex-col gap-6">
-            {TRIPS.map((trip) => (
-              <TripCard key={trip.id} trip={trip} />
+          <div className="mt-2 flex flex-col gap-10">
+            {tripGroups.map((group) => (
+              <div key={group.year}>
+                <div className="mb-5 flex items-center gap-4">
+                  <span className="text-lg font-semibold text-faint">
+                    {group.year}
+                  </span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <div className="flex flex-col gap-6">
+                  {group.trips.map((trip) => (
+                    <TripCard key={trip.id} trip={trip} />
+                  ))}
+                </div>
+              </div>
             ))}
+
+            {visibleTrips < TRIPS.length && (
+              <button
+                type="button"
+                onClick={() => setVisibleTrips((n) => n + TRIPS_PAGE_SIZE)}
+                className="self-end text-sm font-normal text-primary transition-colors duration-200 hover:text-ink"
+              >
+                See more →
+              </button>
+            )}
           </div>
         )}
       </div>
 
       <section
-        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]"
+        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map] min-[900px]:sticky min-[900px]:top-19 min-[900px]:flex min-[900px]:h-[calc(110vh-4.4rem)] min-[900px]:flex-col min-[900px]:overflow-hidden"
         aria-label="Map of states visited in India"
       >
         <div className="mb-2">
@@ -508,8 +564,11 @@ export function TravelPage() {
           </div>
         </div>
 
-        <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white">
-          <div className="h-[92vh] min-h-150 w-full bg-white" ref={containerRef} />
+        <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white min-[900px]:h-auto min-[900px]:min-h-0 min-[900px]:flex-1">
+          <div
+            className="h-[92vh] min-h-150 w-full bg-white min-[900px]:h-full min-[900px]:min-h-0"
+            ref={containerRef}
+          />
         </div>
         <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
           {TRAVEL_SECTION.mapAttribution}

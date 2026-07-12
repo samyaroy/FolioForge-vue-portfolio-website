@@ -14,6 +14,8 @@ interface SectionsContent {
     cardLabel: string
     emptyLabel: string
     reviewLabel: string
+    noteLabel: string
+    linkLabel: string
   }
   hobbies: {
     title: string

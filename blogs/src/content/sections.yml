@@ -15,6 +15,9 @@ readings:
   cardLabel: Reading
   emptyLabel: No readings here yet.
   reviewLabel: "Read review ->"
+  # Labels inside the review modal opened from a reading card.
+  noteLabel: My note
+  linkLabel: More about this book
 
 hobbies:
   title: Hobbies
