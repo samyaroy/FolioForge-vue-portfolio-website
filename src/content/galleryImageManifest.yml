@@ -48,6 +48,10 @@ categories:
 
   - category: New Role and Internship
     images:
+      - id: new_people-02
+        date: 2026-07-07
+        description: An experiment so unique that gained people over certificates
+
       - id: new_role-01
         date: 2025-10-21
         description: Associate Software Developer role at IDEAS-TIH

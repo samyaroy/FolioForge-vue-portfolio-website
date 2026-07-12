@@ -101,31 +101,31 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 attended_webinars_n_others:
-  # - title: "Towards Trustworthy Generative AI"
-  #   type: "seminar"
-  #   speaker: ["Prof Karthik Nandakumar"]
-  #   host:
-  #     - name: "Indian Institute of Science (IISc)"
-  #       department:
-  #         - "Dept. of Computational and Data Sciences"
-  #         - "Kotak IISc AI-ML Centre (KIAC)"
-  #       location: "Bengaluru, KA"
-  #   date: "6 July, 2026"
-  #   mode: "Online"
-  #   cred_link: ""
+  - title: "Towards Trustworthy Generative AI"
+    type: "seminar"
+    speaker: ["Prof Karthik Nandakumar"]
+    host:
+      - name: "Indian Institute of Science (IISc)"
+        department:
+          - "Dept. of Computational and Data Sciences"
+          - "Kotak IISc AI-ML Centre (KIAC)"
+        location: "Bengaluru, KA"
+    date: "6 July, 2026"
+    mode: "Online"
+    cred_link: ""
 
-  # - title: "Towards Trustworthy Generative AI"
+  # - title: "Wearable Computing, Long-Term Memory & AI Agents"
   #   type: "seminar"
-  #   speaker: ["Prof Karthik Nandakumar"]
+  #   speaker: ["Ashwani Yadav, Founder of NeuroDrishti"]
   #   host:
-  #     - name: "Indian Institute of Science (IISc)"
+  #     - name: "Indian Institute of Technology Delhi"
   #       department:
-  #         - "Dept. of Computational and Data Sciences"
-  #         - "Kotak IISc AI-ML Centre (KIAC)"
-  #       location: "Bengaluru, KA"
-  #   date: "6 July, 2026"
+  #         - "I-Hub Foundation for Cobotics (IHFC), the Technology Innovation Hub"
+  #       location: "New Delhi, DL"
+  #   date: "8 July, 2026"
   #   mode: "Online"
   #   cred_link: ""
+  #   link: https://www.ihfc.co.in/seminar-cobotalks/we-are-pleased-to-bring-to-you-the-64th-edition-of-cobotalks/
 
   - title: "Rao's Score Test and its Applications"
     type: lecture
@@ -197,7 +197,7 @@ attended_webinars_n_others:
       - name: "The International Society for Bayesian Analysis"
         department:
         location: Rome, IT  
-    date: "14 May, 2026"
+    date: "28 May, 2026"
     mode: "Online"
 
 attended_other_workshops:

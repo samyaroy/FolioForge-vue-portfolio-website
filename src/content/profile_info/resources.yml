@@ -1,8 +1,11 @@
 # Resources content is rendered from this file.
-# The Resources page is a 3-pane layout:
+# The Resources page's "Study Material" tab is a 3-pane layout:
 #   - left column  : vertical tabs (one per category below)
 #   - middle column: that category's `items` (contents)
 #   - right column : that category's `links` (external links)
+# The "Worth Exploring" tab renders the top-level `explore` groups as cards
+# (YouTube videos, articles, or anything fun to wander into); each entry
+# supports the same fields as `external` links below.
 #
 # Schema per category:
 #   - id: unique-kebab-id
@@ -145,8 +148,47 @@ external:
     links:
       - label: RoSE Network
         url: https://www.rose-network.org/
-      - label: The International Society for Bayesian Analysis 
+      - label: The International Society for Bayesian Analysis
         ref: ISBA
       - label: American Statistical Association
         url: https://www.amstat.org/
       - label: Royal Statistical Society
+
+# "Worth Exploring" tab: groups of cards for YouTube videos, articles, or
+# anything else worth a detour. Same fields as `external` links above
+# (label, url/ref, description, speciality/specility, incharge).
+explore:
+  - group: "Webinars and Interviews Worth Watching"
+    links:
+      - label: "Bayesian Analysis discussion webinar"
+        url: https://www.youtube.com/live/8A0bgU6ALf4?si=h5BoWyLFvIJ2rZ8O
+        description: "Bayesian Analysis webinar on “Model Uncertainty and Missing Data: An Objective Bayesian Perspective” by Gonzalo García-Donato, María Eugenia Castellanos, Stefano Cabras, Alicia Quirós, and Anabel Forte, which took place on Wednesday, Nov 5, 2025."
+        speciality: "Model Uncertainty"
+      # - label: "But what is a neural network? | 3Blue1Brown"
+      #   url: https://www.youtube.com/watch?v=aircAruvnKk
+      #   description: "A visual, ground-up introduction to neural networks"
+      #   speciality: "Deep Learning"
+
+  - group: "Articles & Interactive Reads"
+    links:
+      # - label: "A Visual Introduction to Machine Learning"
+      #   url: http://www.r2d3.us/visual-intro-to-machine-learning-part-1/
+      #   description: "Scroll-driven visual explanation of how decision trees learn"
+      #   speciality: "Machine Learning"
+      - label: "Seeing Theory"
+        url: https://seeing-theory.brown.edu/
+        description: "Interactive visualisations of probability and statistics"
+        speciality: "Statistics"
+
+  - group: "Random Rabbit Holes"
+    links:
+      - label: "Distill"
+        url: https://distill.pub/
+        description: "Clear, interactive explanations of machine learning research"
+  
+  - group: "Exercises to Build Intuition"
+    links:
+      - label: "OceanVesre"
+        url: https://sudarshansudarshan.github.io/aicamp/oceanverse/
+        description: "A series of challenging mathematical/computer programming problems to build intuition in linear algebra, probability, statistics, and machine learning by `Prof. Sudarshan Iyengar` and his team."
+        speciality: "Foundation of ML"
