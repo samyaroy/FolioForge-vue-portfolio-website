@@ -104,59 +104,8 @@ trips:
       - https://picsum.photos/seed/uttarakhand-3/600/600
 
   
-  # --- Sample entries below: edit titles, dates, narratives, and swap the
-  # --- picsum placeholders for real photos.
 
-  - id: darjeeling-2025
-    title: Toy trains and tea gardens in Darjeeling
-    date: 2025-10-14
-    location: Darjeeling, West Bengal
-    places:
-      - Kolkata
-      - { name: Siliguri, mode: train, note: Overnight from Sealdah }
-      - { name: Darjeeling, mode: car, note: Hill cart road climb }
-    summary: A long weekend of toy trains, tea estates, and the Kanchenjunga
-      skyline from Tiger Hill.
-    coverImage: https://picsum.photos/seed/darjeeling-2025/480/360
-    tags: [Mountains, Tea]
-    narrative:
-      - The overnight train from Sealdah dropped me into the plains at dawn,
-        and the drive up the hill cart road did the rest — every switchback
-        traded a degree of heat for a shade of green.
-      - Tiger Hill at 4 a.m. was a crowd of shivering strangers who all went
-        quiet at the same moment. Kanchenjunga catching the first light is
-        worth every lost hour of sleep.
-    stats:
-      - { label: Days, value: '4' }
-      - { label: Altitude, value: '2,042 m' }
-    gallery:
-      - https://picsum.photos/seed/darjeeling-1/600/600
-      - https://picsum.photos/seed/darjeeling-2/600/600
-      - https://picsum.photos/seed/darjeeling-3/600/600
-
-  - id: varanasi-2024
-    title: Ghats and galis of Varanasi
-    date: 2025-11-02
-    location: Varanasi, Uttar Pradesh
-    places:
-      - Kolkata
-      - { name: Varanasi, mode: train}
-    summary: A solo wander through the oldest living city — dawn boat rides,
-      evening aartis, and endless kachori lanes.
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/varanasi-2024.jpeg
-    tags: [Heritage, Solo Trip]
-    narrative:
-      - Varanasi doesn't do mornings quietly. By the time the sun cleared the
-        far bank, the ghats were already three layers deep in pilgrims,
-        photographers, and priests.
-      - The lanes behind the ghats are the real map of the city. I stopped
-        trying to navigate and just followed the smell of kachori and the
-        sound of temple bells.
-    stats:
-      - { label: Days, value: '3' }
-      - { label: Ghats walked, value: '28' }
-    gallery:
-      - https://media.samyabrata.codeium.xyz/blog-travel/varanasi-2024-01.jpeg
+  
 
   - id: uttrakhand-trip-01
     title: Took my parent with me this time
@@ -185,7 +134,7 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-04.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-05.jpeg
 
-  - id: roper-aivs-iitrpr
+  - id: ropar-aivs-iitrpr
     title: One month at IIT Roper turned my life upside down
     date: 2024-07-15
     location: Rupnagar, Panjab
@@ -195,7 +144,7 @@ trips:
       - { name: Rupnagar, mode: car, note: IIT Roper campus}
     summary: A whirlwind conference weekend — talks and demos by day, Marine
       Drive and vada pav by night.
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.jpeg
     tags: [Bootcamp]
     narrative:
       - The campus at Powai turns into a small city during the fest. I spent
@@ -207,17 +156,38 @@ trips:
     stats:
       - { label: Days, value: '31' }
     gallery:
-      - https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr-02.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr-03.jpeg
-      - https://media.samyabrata.codeium.xyz/blog-travel/roper-aivs-iitrpr-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr-04.jpeg
 
+  - id: derjeeling-2024
+    title: Another long weekend in the hills
+    date: 2024-05-15
+    location: Darjeeling, West Bengal
+    places:
+      - Kolkata
+      - { name: Darjeeling, mode: bus}
+    summary: 
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
+    tags: [Mountains]
+    narrative:
+      
+    stats:
+      - { label: Places stayed, value: 14 villages }
+      - { label: Distance, value: 501 km }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-05.jpeg
+  
   - id: chennai-001-iitmadras
     title: "Visiting IIT Madras Campus for the first time, Chennai trip was an add-on"
     date: 2024-01-22
     location: Chennai, Tamil Nadu
     places:
       - Kolkata
-      - { name: Chennai, mode: train }
+      - { name: Chennai, mode: train, train: 12841 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.jpeg
     tags: [Dummy, Test]
     narrative:
@@ -237,7 +207,7 @@ trips:
     location: New Delhi, Delhi
     places:
       - Kolkata
-      - { name: New Delhi, mode: train }
+      - { name: New Delhi, mode: train, train: 12301 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.jpeg
     tags: [Dummy, Test]
     narrative:
@@ -258,7 +228,7 @@ trips:
     places:
       - Kolkata
       - { name: Hyderabad, mode: train, train: 18645}
-      - { name: kolkata, mode: train, train: 12704}
+      - { name: Kolkata, mode: train, train: 12704}
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
     tags: [Dummy, Test]
     narrative:

@@ -415,10 +415,16 @@ export function TripRouteMap({ trip }: TripRouteMapProps) {
         // The frame is resolved from the destination stops only — places
         // written as bare names in the yml (the faraway origin, usually) are
         // excluded, so the camera stays on the area the trip is about.
+        // Matching is by case-insensitive name, so a return leg to the
+        // origin ("kolkata" after a bare "Kolkata") stays out of the frame.
         const bareNames = new Set(
-          (trip.places ?? []).filter((p): p is string => typeof p === 'string'),
+          (trip.places ?? [])
+            .filter((p): p is string => typeof p === 'string')
+            .map((p) => p.toLowerCase()),
         )
-        const framed = stops.filter((s) => !bareNames.has(s.name))
+        const framed = stops.filter(
+          (s) => !bareNames.has(s.name.toLowerCase()),
+        )
         const frameStops = framed.length ? framed : stops
         // First paint: camera already framing the route, only the start dot
         // (named). Everything after is a series-only merge — the geo layers

@@ -50,10 +50,17 @@ async function railRoute(url, env, ctx) {
       .json()
       .then((b) => b?.error?.message)
       .catch(() => null)
-    return json(
+    const res = json(
       { error: `railradar ${upstream.status}${detail ? `: ${detail}` : ''}` },
       502,
     )
+    if (upstream.status === 404) {
+      // A train RailRadar doesn't know stays unknown; cache the miss so a
+      // yml typo can't drain the request quota one page-view at a time.
+      res.headers.set('cache-control', 'public, max-age=3600, s-maxage=86400')
+      ctx.waitUntil(caches.default.put(cacheKey, res.clone()))
+    }
+    return res
   }
 
   const res = new Response(upstream.body, {
