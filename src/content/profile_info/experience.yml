@@ -5,7 +5,7 @@ experience:
     location: Kolkata, WB
     projects: ["National Platform for Crop Yield Forecasting (NPCYF) - part of the FASAL 2.0 initiative by `Mahalanobis National Crop Forecast Centre (MNCFC)`, `MoAFW, GoI`" , "Upatto - a end-to-end data curation and model-building platform" ]
     time_period: Oct 2025 - Present
-    description: [  "Contributed to the NPCYF platform by implementing ARIMAX and Random Forest-based forecasting workflows, integrating hyperparameter tuning into the platform pipeline, optimizing frontend performance through caching, developing backend APIs, enabling feature-flag-driven releases, and automating data ingestion into a MinIO-based data lake"]
+    description: [  "Contributed to the NPCYF platform by implementing MLP and TabPFN-based forecasting workflows, integrating hyperparameter tuning into the platform pipeline, optimizing frontend performance through caching, developing backend APIs, enabling feature-flag-driven releases, and automating data ingestion into a MinIO-based data lake"]
   
   # - job_role: Freelance Web Developer
   #   type: Freelance
