@@ -173,7 +173,16 @@ async function railGeometry(
     `/api/rail-route?train=${encodeURIComponent(train)}`,
   )
   const line = extractLineCoords(payload)
-  return line && line.length >= 2 ? trimToLeg(line, from, to) : null
+  if (!line || line.length < 2) return null
+  const leg = trimToLeg(line, from, to)
+  // A wrong train number for this leg trims to some unrelated stretch of
+  // that train's track; unless the trimmed ends actually sit near the two
+  // cities (~0.7° ≈ 75 km), fall back to the straight line instead.
+  const near = (p: number[], q: LegPoint) =>
+    Math.abs(p[0] - q.lng) < 0.7 && Math.abs(p[1] - q.lat) < 0.7
+  return leg.length >= 2 && near(leg[0], from) && near(leg[leg.length - 1], to)
+    ? leg
+    : null
 }
 
 /**
