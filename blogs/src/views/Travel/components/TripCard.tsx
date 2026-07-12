@@ -19,8 +19,12 @@ export function TripCard({ trip }: TripCardProps) {
   const formattedDate = formatDate(trip.date)
 
   return (
-    <article className={`flex rounded-xl ${CARD_SHELL_CLASS}`}>
-      <div className={`shrink-0 basis-1/4 ${CARD_ART_BACKDROP_CLASS}`}>
+    <article
+      className={`flex max-h-[17rem] min-h-[14rem] overflow-hidden rounded-xl max-sm:max-h-none max-sm:flex-col ${CARD_SHELL_CLASS}`}
+    >
+      <div
+        className={`h-auto shrink-0 basis-[28%] max-sm:h-56 max-sm:basis-auto ${CARD_ART_BACKDROP_CLASS}`}
+      >
         {trip.coverImage && (
           <img
             src={trip.coverImage}
@@ -31,7 +35,7 @@ export function TripCard({ trip }: TripCardProps) {
         )}
       </div>
 
-      <div className="flex min-w-0 basis-3/4 flex-col px-5 py-4">
+      <div className="flex min-w-0 basis-[72%] flex-col overflow-hidden px-5 py-4 max-sm:basis-auto">
         <h3 className="text-lg leading-[1.35] font-bold tracking-[-0.02em] text-ink">
           {trip.title}
         </h3>
@@ -61,7 +65,7 @@ export function TripCard({ trip }: TripCardProps) {
         </div>
 
         {trip.summary && (
-          <p className="mt-2 text-justify text-sm leading-[1.7] text-muted">
+          <p className="mt-2 overflow-hidden text-justify text-sm leading-[1.7] text-muted [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:5] max-sm:[-webkit-line-clamp:4]">
             {trip.summary}
           </p>
         )}
