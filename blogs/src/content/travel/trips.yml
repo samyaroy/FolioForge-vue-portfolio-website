@@ -50,62 +50,79 @@
 # Dummy entries below — replace with real trips.
 trips:
   - id: mahababipuram26
-    title: qazxswedc
+    title: Never miss a trip to Mamallapuram specialy if you made new friends in Chennai
     date: 2026-06-28
     location: Mamallapuram, Tamil Nadu
     places:
       - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
-    summary: 
-    coverImage: https://picsum.photos/seed/chennai-flstcs-2026/480/360
-    tags: [Solo Trip]
+    summary: ABC
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26.jpeg
+    tags: [Weekend Trip]
     narrative:
-      - Attended the Foundation Lecture Series on Theoretical Computer
-        Science at IMSc — two weeks of lectures spanning complexity theory,
-        automata, and the algebra that quietly holds both together.
-      - The weekend in between belonged to Mamallapuram. The shore temples,
-        carved granite against the Bay of Bengal, were a fitting counterpoint
-        to a fortnight of blackboards and chalk dust.
+      - ABC
+      - ABC
     stats:
       - { label: Distance (One Way), value: '57 KM' }
-      - { label: Days, value: '14' }
+      - { label: Monuments, value: '4' }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/mahababipuram26-04.jpeg
 
-  - id: uttarakhand-2024
+  - id: uttarakhand-devbhumi-2025
     title: Char Dham circuit through Uttarakhand
-    date: 2024-05-10
+    date: 2025-05-28
     location: Uttarakhand
     places:
-      - Haridwar
-      - { name: Rishikesh, mode: bus }
+      - Kolkata
+      - { name: Dehradun, mode: flight }
       - { name: Uttarkashi, mode: car }
-      - { name: Kedarnath, mode: foot, lat: 30.7346, lng: 79.0669 }
-      - { name: Badrinath, mode: car, note: Last stop of the circuit }
-    summary: Two weeks winding through the Garhwal Himalayas, from the ghats
-      of Haridwar up to Kedarnath and Badrinath.
-    coverImage: https://picsum.photos/seed/uttarakhand-2024/480/360
+      - { name: Gangotri, mode: car }
+      - { name: Rudraprayag, mode: car }
+      - { name: Gaurikund, mode: car }
+      - { name: Kedarnath, mode: foot }
+      - { name: Gaurikund, mode: car }
+      - { name: Badrinath, mode: car }
+      - { name: Ranikhet, mode: car }
+      - { name: Nainital, mode: car }
+    summary: BCD
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025.jpeg
     tags: [Mountains, Pilgrimage]
     narrative:
-      - The crisp mountain air hits differently when you're navigating the
-        rugged terrain of the Garhwal Himalayas. This circuit was less about
-        reaching a specific shrine and more about understanding the silent
-        language of ancient stones and winding rivers.
-      - Starting from the ghats of Haridwar, every step upwards stripped away
-        the noise of the city, replacing it with the rhythmic crunch of boots
-        on gravel and the distant calls of highland birds. The communities
-        along the way offered a profound perspective on resilience and
-        simplicity.
+      - BCD
+      - BCD
     stats:
       - { label: Places stayed, value: 14 villages }
       - { label: Distance, value: 320 km }
       - { label: Total trekked, value: 115 km on foot }
     gallery:
-      - https://picsum.photos/seed/uttarakhand-1/600/600
-      - https://picsum.photos/seed/uttarakhand-2/600/600
-      - https://picsum.photos/seed/uttarakhand-3/600/600
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025-05.jpeg
 
-  
-
-  
+  - id: vizag-01-2025
+    title: Term Break utilized perfectly
+    date: 2025-02-15
+    location: Visakhapatnam, Andhra Pradesh
+    places:
+      - Kolkata
+      - { name: Visakhapatnam, mode: train, train: 12841 }
+      - { name: Lammasingi, mode: bike}
+      - { name: Araku, mode: train, train: 12842}
+    summary: XYZ
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/vizag-01-2025.jpeg
+    tags: [Mountains, Pilgrimage]
+    narrative:
+      - XYZ
+      - XYZ
+    stats:
+      - { label: Places stayed, value: 3 }
+      - { label: Distance Ridden, value: 320 km }
+      - { label: Days, value: 5 }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/vizag-001-2025-02.JPG
 
   - id: uttrakhand-trip-01
     title: Took my parent with me this time
@@ -121,10 +138,12 @@ trips:
       - { name: Haridwar, mode: car}
       - { name: Delhi, mode: train, train: 12056}
       - { name: Kolkata, mode: flight}
-    summary: 
+    summary: PQR
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.jpeg
     tags: [Mountains, Pilgrimage]
     narrative:
+      - PQR
+      - PQR
     stats:
       - { label: Days, value: '22' }
       - { label: Cities, value: '6-7' }
@@ -134,6 +153,49 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-04.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-05.jpeg
 
+  - id: derjeeling-2024
+    title: Another long weekend in the hills
+    date: 2024-05-15
+    location: Darjeeling, West Bengal
+    places:
+      - Kolkata
+      - { name: Darjeeling, mode: bus}
+    summary: MNO
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
+    tags: [Mountains]
+    narrative:
+      - MNO
+      - MNO
+    stats:
+      - { label: Places stayed, value: 14 villages }
+      - { label: Distance, value: 501 km }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-05.jpeg
+  
+  - id: bike-trip-digha-2024
+    title: "A 2 days bike trip is all you need to refresh your mind"
+    date: 2024-12-30
+    location: New Digha, West Bengal
+    summary: SSS
+    places:
+      - Kolkata
+      - { name: New Digha, mode: bike }
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024.jpeg
+    tags: [Bike Trip, New Year]
+    narrative:
+      - SSS
+      - SSS
+    stats:
+      - { label: Distance Ridden, value: '385 Km' }
+      - { label: Days, value: 2 }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024-04.jpeg
+  
   - id: ropar-aivs-iitrpr
     title: One month at IIT Roper turned my life upside down
     date: 2024-07-15
@@ -142,17 +204,12 @@ trips:
       - Kolkata
       - { name: Chandigarh, mode: flight, via: Delhi }
       - { name: Rupnagar, mode: car, note: IIT Roper campus}
-    summary: A whirlwind conference weekend — talks and demos by day, Marine
-      Drive and vada pav by night.
+    summary: QAZ
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.jpeg
     tags: [Bootcamp]
     narrative:
-      - The campus at Powai turns into a small city during the fest. I spent
-        most of it hopping between robotics demos and a lecture hall that
-        never seemed to empty.
-      - Evenings belonged to the city — the local train crush to Churchgate,
-        the long curve of Marine Drive, and the discovery that sea breeze
-        pairs unreasonably well with cutting chai.
+      - QAZ
+      - QAZ
     stats:
       - { label: Days, value: '31' }
     gallery:
@@ -167,11 +224,12 @@ trips:
     places:
       - Kolkata
       - { name: Darjeeling, mode: bus}
-    summary: 
+    summary: UVW
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
     tags: [Mountains]
     narrative:
-      
+      - UVW
+      - UVW
     stats:
       - { label: Places stayed, value: 14 villages }
       - { label: Distance, value: 501 km }
@@ -189,10 +247,11 @@ trips:
       - Kolkata
       - { name: Chennai, mode: train, train: 12841 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.jpeg
+    summary: MNO
     tags: [Dummy, Test]
     narrative:
-      - This is a dummy trip for testing purposes. It covers City A and City B.
-      - The trip was uneventful but provided valuable insights into the local culture.
+      - MNO
+      - MNO
     stats:
       - { label: Campus Stays, value: '3' }
       - { label: City stays, value: 2 }
@@ -205,14 +264,15 @@ trips:
     title: "Two Friends, One long Weekend: IIT Delhi"
     date: 2023-03
     location: New Delhi, Delhi
+    summary: MNO
     places:
       - Kolkata
       - { name: New Delhi, mode: train, train: 12301 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.jpeg
     tags: [Dummy, Test]
     narrative:
-      - This is a dummy trip for testing purposes. It covers City A and City B.
-      - The trip was uneventful but provided valuable insights into the local culture.
+      - MNO
+      - MNO
     stats:
       - { label: Campus Stays, value: '3' }
       - { label: City stays, value: 2 }
@@ -225,6 +285,7 @@ trips:
     title: First solo trip to Hyderabad
     date: 2023-03
     location: Hyderabad, Telangana
+    summary: MNO
     places:
       - Kolkata
       - { name: Hyderabad, mode: train, train: 18645}
@@ -232,8 +293,8 @@ trips:
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
     tags: [Dummy, Test]
     narrative:
-      - This is a dummy trip for testing purposes. It covers City A and City B.
-      - The trip was uneventful but provided valuable insights into the local culture.
+      - MNO
+      - MNO
     stats:
       - { label: Days, value: '5' }
       - { label: Cities covered, value: 2 }
