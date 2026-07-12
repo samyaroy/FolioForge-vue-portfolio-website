@@ -34,12 +34,26 @@ async function railRoute(url, env, ctx) {
   const cached = await caches.default.match(cacheKey)
   if (cached) return cached
 
+  // Tolerate common paste mistakes in the secret: surrounding quotes,
+  // whitespace, or an included "Bearer " prefix.
+  const key = env.RAILRADAR_API_KEY.trim()
+    .replace(/^["']|["']$/g, '')
+    .replace(/^Bearer\s+/i, '')
   const upstream = await fetch(
     `https://api.railradar.in/v1/trains/${train}/route`,
-    { headers: { Authorization: `Bearer ${env.RAILRADAR_API_KEY}` } },
+    { headers: { Authorization: `Bearer ${key}` } },
   )
   if (!upstream.ok) {
-    return json({ error: `railradar responded ${upstream.status}` }, 502)
+    // Relay RailRadar's own error message so a bad key or unknown train is
+    // diagnosable from the browser's network tab.
+    const detail = await upstream
+      .json()
+      .then((b) => b?.error?.message)
+      .catch(() => null)
+    return json(
+      { error: `railradar ${upstream.status}${detail ? `: ${detail}` : ''}` },
+      502,
+    )
   }
 
   const res = new Response(upstream.body, {
