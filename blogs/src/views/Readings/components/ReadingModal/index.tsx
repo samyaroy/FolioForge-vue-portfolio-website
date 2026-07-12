@@ -97,11 +97,16 @@ export function ReadingModal({ reading, onClose }: ReadingModalProps) {
           <div className="flex min-w-0 flex-col px-6 py-6">
             <div className={`${CARD_META_CLASS} mt-0`}>
               <span>{reading.genre}</span>
-              <span className="tracking-normal text-primary" aria-hidden="true">
-                •
-              </span>
               {reading.date && (
-                <time dateTime={reading.date}>{formatDate(reading.date)}</time>
+                <>
+                  <span
+                    className="tracking-normal text-primary"
+                    aria-hidden="true"
+                  >
+                    •
+                  </span>
+                  <time dateTime={reading.date}>{formatDate(reading.date)}</time>
+                </>
               )}
             </div>
 
