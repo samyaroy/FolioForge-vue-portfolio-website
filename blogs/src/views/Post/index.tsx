@@ -3,8 +3,13 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getPost } from '../../lib/posts'
 import { formatDate } from '../../lib/format'
+import { usePageTitle } from '../../lib/usePageTitle'
+import { absoluteUrl, SITE_URL } from '../../lib/seo'
 import { POST_COPY } from '../../content/sections'
+import { SITE_PROFILE } from '../../content/site'
+import { MAIN_SITE_URL } from '../../content/navigation'
 import { NotFoundPage } from '../NotFound'
+import type { Post } from '../../types'
 
 // Markdown styling: react-markdown emits bare elements, so every rule targets
 // descendants of the wrapper via arbitrary variants.
@@ -23,9 +28,36 @@ const PROSE_CLASS = [
   '[&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-left',
 ].join(' ')
 
+// schema.org BlogPosting for search engines; the author entry points at the
+// portfolio so both sites resolve to the same Person entity.
+function postJsonLd(post: Post): string {
+  const url = `${SITE_URL}/posts/${post.slug}`
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    url,
+    mainEntityOfPage: url,
+    datePublished: post.date || undefined,
+    description: post.description,
+    image: post.cover ? absoluteUrl(post.cover) : undefined,
+    keywords: post.tags.length ? post.tags.join(', ') : undefined,
+    author: {
+      '@type': 'Person',
+      name: SITE_PROFILE.name,
+      url: MAIN_SITE_URL,
+    },
+  }
+  // "<" is escaped so a "</script>" inside post text can't close the tag.
+  return JSON.stringify(data).replace(/</g, '\\u003c')
+}
+
 export function PostPage() {
   const { slug } = useParams<{ slug: string }>()
   const post = slug ? getPost(slug) : undefined
+
+  // undefined while the post is missing: the NotFoundPage owns the title then.
+  usePageTitle(post?.title)
 
   if (!post) {
     return <NotFoundPage />
@@ -33,6 +65,10 @@ export function PostPage() {
 
   return (
     <article className="mx-auto max-w-4xl">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: postJsonLd(post) }}
+      />
       <header className="mb-10 text-center">
         <a
           className="mb-5 inline-flex text-xs leading-normal font-bold tracking-[0.16em] text-primary uppercase"

@@ -4,6 +4,7 @@ import { TRAVEL_SECTION } from '../../content/sections'
 import { getTrip, tripStops } from '../../content/travel/trips'
 import { formatDate } from '../../lib/format'
 import { CARD_ART_BACKDROP_CLASS } from '../../lib/ui'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { NotFoundPage } from '../NotFound'
 import { TripRoute } from './components/TripRoute'
 
@@ -35,6 +36,9 @@ export function TripDetailsPage() {
   const { tripId } = useParams<{ tripId: string }>()
   const trip = tripId ? getTrip(tripId) : undefined
   const [showItinerary, setShowItinerary] = useState(true)
+
+  // undefined while the trip is missing: the NotFoundPage owns the title then.
+  usePageTitle(trip?.title)
 
   if (!trip) {
     return <NotFoundPage />

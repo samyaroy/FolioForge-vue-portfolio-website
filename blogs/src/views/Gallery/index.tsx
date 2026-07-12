@@ -3,11 +3,14 @@ import { GalleryFilter } from './components/GalleryFilter'
 import { GalleryGrid } from './components/GalleryGrid'
 import { GalleryHero } from './components/GalleryHero'
 import { GALLERY_FILTER_OPTIONS, GALLERY_ITEMS } from '../../content/gallery/data'
+import { GALLERY_SECTION } from '../../content/sections'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { getTimestamp } from './utils'
 
 const VISIBLE_BATCH_SIZE = 16
 
 export function GalleryPage() {
+  usePageTitle(GALLERY_SECTION.title)
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [visibleCount, setVisibleCount] = useState(VISIBLE_BATCH_SIZE)
 

@@ -201,18 +201,18 @@ attended_webinars_n_others:
     mode: "Online"
 
 attended_other_workshops:
-  - title: "Measurements in AI"
-    instructor:
-      - name: "Prof. Partha Pratim Das"
-        position: Professor
-        department: Computer Science
-        institution: Asoka University
-    institution:
-      - name: "Indian Institute of Technology Madras"
-        department: "Paradox 2026, BS Degreee"
-    date: "June, 2026"
-    mode: "Offline"
-    cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
+  # - title: "Measurements in AI"
+  #   instructor:
+  #     - name: "Prof. Partha Pratim Das"
+  #       position: Professor
+  #       department: Computer Science
+  #       institution: Asoka University
+  #   institution:
+  #     - name: "Indian Institute of Technology Madras"
+  #       department: "Paradox 2026, BS Degreee"
+  #   date: "June, 2026"
+  #   mode: "Offline"
+  #   cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
 
   - title: "Testing and Automation of Web Apps using Playwright"
     institution:

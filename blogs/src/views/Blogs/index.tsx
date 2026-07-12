@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { posts } from '../../lib/posts'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { BLOGS_SECTION } from '../../content/sections'
 import { EMPTY_TEXT_CLASS } from '../../lib/ui'
 import { HomeHero } from './components/HomeHero'
@@ -19,6 +20,9 @@ const POSTS_BY_YEAR = (() => {
 })()
 
 export function BlogsPage() {
+  // null → the base "Samyabrata Roy · Blog" title for the home page.
+  usePageTitle(null)
+
   return (
     <>
       <HomeHero />

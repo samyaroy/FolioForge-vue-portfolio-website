@@ -10,6 +10,7 @@ import {
   INTRO_TITLE_CLASS,
   POST_LIST_CLASS,
 } from '../../lib/ui'
+import { usePageTitle } from '../../lib/usePageTitle'
 
 const TILE_CLASS =
   'flex aspect-square w-[calc((100%-1.5rem)/3)] items-center justify-center rounded-2xl transition-transform duration-300 ease-[ease] hover:-translate-y-1 sm:w-[calc((100%-3rem)/4)] lg:w-[calc((100%-4rem)/5)]'
@@ -23,6 +24,7 @@ function getTileImageSrc(tile: (typeof HOBBY_TILES)[number]) {
 }
 
 export function HobbiesPage() {
+  usePageTitle(HOBBIES_SECTION.title)
   const showPageDescription = isPageDescriptionEnabled('hobbies')
   const tag = HOBBIES_SECTION.tag.toLowerCase()
   const hobbyPosts = posts.filter((post) =>

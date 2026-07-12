@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import { PostCard } from '../Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { TRAVEL_SECTION } from '../../content/sections'
 import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
@@ -349,6 +350,7 @@ function buildOption(
 }
 
 export function TravelPage() {
+  usePageTitle(TRAVEL_SECTION.title)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')

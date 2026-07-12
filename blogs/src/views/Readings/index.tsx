@@ -8,9 +8,11 @@ import {
   INTRO_TEXT_CLASS,
   INTRO_TITLE_CLASS,
 } from '../../lib/ui'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { ReadingCard } from './components/ReadingCard'
 
 export function ReadingsPage() {
+  usePageTitle(READINGS_SECTION.title)
   const showPageDescription = isPageDescriptionEnabled('readings')
 
   return (

@@ -23,6 +23,7 @@
     "@eslint/js": "^9.39.2",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@tailwindcss/vite": "^4.3.1",
+    "@types/node": "^26.1.1",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
@@ -34,6 +35,8 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.1",
     "vite": "^7.1.2",
-    "wrangler": "^4.110.0"
+    "vite-plugin-sitemap": "^0.8.2",
+    "wrangler": "^4.110.0",
+    "yaml": "^2.9.0"
   }
 }
