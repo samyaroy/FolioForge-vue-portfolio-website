@@ -27,6 +27,7 @@ const routes = [
     name: 'ProjectsPublications',
     component: ProjectPublications,
     meta: {
+      title: 'Projects & Publications',
       flagPath: 'showProjectsPublications',
       flagMode: 'any',
     },
@@ -36,6 +37,7 @@ const routes = [
     name: 'Affilications',
     component: Affilications,
     meta: {
+      title: 'Affiliations & Memberships',
       flagPath: 'showAffiliations',
       flagMode: 'any',
     },
@@ -45,6 +47,7 @@ const routes = [
     name: 'OngoingProjects',
     component: OngoingProjects,
     meta: {
+      title: 'Ongoing Projects',
       flagPath: 'showOngoingProjects',
     },
   },
@@ -53,6 +56,7 @@ const routes = [
     name: 'Cocurricular',
     component: Cocurricular,
     meta: {
+      title: 'Co-curricular',
       flagPath: 'showCocurricular',
       flagMode: 'any',
     },
@@ -62,6 +66,7 @@ const routes = [
     name: 'Workshops',
     component: WorkshopsAttended,
     meta: {
+      title: 'Workshops & Bootcamps',
       flagPath: 'showWorkshopsAttended',
       flagMode: 'any',
     },
@@ -71,6 +76,7 @@ const routes = [
     name: 'Teachings',
     component: Teachings,
     meta: {
+      title: 'Teaching',
       flagPath: 'showTeachings',
       flagMode: 'any',
     },
@@ -80,6 +86,7 @@ const routes = [
     name: 'InternshipCertification',
     component: InternshipCertification,
     meta: {
+      title: 'Internships & Certifications',
       flagPath: 'showInternshipCertifications',
       flagMode: 'any',
     },
@@ -89,6 +96,7 @@ const routes = [
     name: 'ProfessionalAcitivity',
     component: ProfessionalAcitivity,
     meta: {
+      title: 'Professional Activity',
       flagPath: 'showProfessionalActivity',
       flagMode: 'any',
     },
@@ -98,24 +106,32 @@ const routes = [
     name: 'Gallery',
     component: Gallery,
     meta: {
+      title: 'Gallery',
       flagPath: 'showGallery',
     },
   },
   {
     path: '/contact',
     name: 'Contact',
-    component: Contact
+    component: Contact,
+    meta: {
+      title: 'Contact',
+    },
   },
   {
     path: '/privacy-policy',
     name: 'PrivacyPolicy',
-    component: PrivacyPolicy
+    component: PrivacyPolicy,
+    meta: {
+      title: 'Privacy Policy',
+    },
   },
   {
     path: '/resources',
     name: 'Resources',
     component: Resources,
     meta: {
+      title: 'Resources',
       flagPath: 'showResources.main',
     },
   },
@@ -124,6 +140,7 @@ const routes = [
     name: 'Facts',
     component: Facts,
     meta: {
+      title: 'Did You Know?',
       flagPath: 'showFacts',
     },
   }
@@ -152,6 +169,14 @@ router.beforeEach((to) => {
 
   if (to.name === 'Home') return true
   return { name: 'Home' }
+})
+
+// Keep in sync with the static <title> in index.html, which is what crawlers
+// and the first paint see before the app mounts.
+const BASE_TITLE = 'Samyabrata Roy - Portfolio'
+
+router.afterEach((to) => {
+  document.title = to.meta?.title ? `${to.meta.title} · Samyabrata Roy` : BASE_TITLE
 })
 
 export default router
