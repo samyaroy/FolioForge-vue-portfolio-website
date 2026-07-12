@@ -30,7 +30,7 @@ const GALLERY_MIN_TILES = 7
 // Marquee pace: seconds each tile takes to cross a fixed point. Scaling the
 // loop duration with the tile count keeps the drift speed constant no
 // matter how many photos a trip has.
-const GALLERY_SECONDS_PER_TILE = 25
+const GALLERY_SECONDS_PER_TILE = 40
 
 export function TripDetailsPage() {
   const { tripId } = useParams<{ tripId: string }>()

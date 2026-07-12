@@ -249,6 +249,7 @@ export async function fetchLegGeometry(
   let lookup: () => Promise<LegCoords | null>
   switch (to.mode) {
     case 'car':
+    case 'bike':
     case 'bus':
       kind = 'road'
       lookup = () => osrmGeometry(ROAD_ENDPOINT, from, to)

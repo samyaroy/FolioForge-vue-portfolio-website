@@ -9,6 +9,7 @@ const MODE_ICONS: Record<TransportMode, string> = {
   train: 'mdi-train',
   bus: 'mdi-bus',
   car: 'mdi-car',
+  bike: 'mdi-motorbike',
   ferry: 'mdi-ferry',
   foot: 'mdi-walk',
 }

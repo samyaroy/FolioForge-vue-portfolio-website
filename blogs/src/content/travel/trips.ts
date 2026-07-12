@@ -13,6 +13,7 @@ export type TransportMode =
   | 'train'
   | 'bus'
   | 'car'
+  | 'bike'
   | 'ferry'
   | 'foot'
 

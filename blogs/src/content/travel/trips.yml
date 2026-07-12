@@ -24,7 +24,7 @@
 # animated route map on the details page:
 #   name   — display name; also the geocoding query (required)
 #   mode   — how this stop was reached from the PREVIOUS one; omit on the
-#            first stop. One of: flight | train | bus | car | ferry | foot.
+#            first stop. One of: flight | train | bus | car | bike | ferry | foot.
 #            Will pick the animation style (e.g. arced path for flights).
 #   lat    — explicit coordinates; when both are set, geocoding is
 #   lng      skipped for this stop (use for small places the geocoder misses)
@@ -182,7 +182,7 @@ trips:
     summary: SSS
     places:
       - Kolkata
-      - { name: New Digha, mode: bike }
+      - { name: Digha, mode: bike, lat: 21.6266, lng: 87.5074 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024.jpeg
     tags: [Bike Trip, New Year]
     narrative:
@@ -199,11 +199,11 @@ trips:
   - id: ropar-aivs-iitrpr
     title: One month at IIT Roper turned my life upside down
     date: 2024-07-15
-    location: Rupnagar, Panjab
+    location: Ropar, Panjab
     places:
       - Kolkata
       - { name: Chandigarh, mode: flight, via: Delhi }
-      - { name: Rupnagar, mode: car, note: IIT Roper campus}
+      - { name: Ropar, mode: car, note: IIT Roper campus}
     summary: QAZ
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.jpeg
     tags: [Bootcamp]
@@ -288,8 +288,8 @@ trips:
     summary: MNO
     places:
       - Kolkata
-      - { name: Hyderabad, mode: train, train: 18645}
-      - { name: Kolkata, mode: train, train: 12704}
+      - { name: Hyderabad, mode: train, train: 12703 }
+      - { name: Kolkata, mode: train, train: 12704 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
     tags: [Dummy, Test]
     narrative:

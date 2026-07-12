@@ -79,7 +79,7 @@ states:
   - state: Punjab
     purpose: academic
     cities:
-      - { name: Rupnagar, visits: 1 }
+      - { name: Ropar, visits: 1 }
       - { name: Chandigarh, visits: 1 }
 
   - state: Andhra Pradesh

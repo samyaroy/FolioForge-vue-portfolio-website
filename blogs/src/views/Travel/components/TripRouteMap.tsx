@@ -30,6 +30,7 @@ type LineType = 'solid' | 'dashed' | 'dotted' | number[]
 // Each leg is drawn in the style of its transport: roads are wide asphalt
 // with a dashed centre line, railways a dark bed with sleeper dashes on top,
 // flights a dashed arc, walks a dotted trail, ferries a dash-dot water line.
+// Bikes use the same road styling and geometry as cars.
 type LegStyle = {
   curveness: number
   base: { color: string; width: number; type: LineType; opacity: number }
@@ -80,6 +81,7 @@ const MODE_STYLE_KEY: Record<TransportMode, LegStyleKey> = {
   train: 'rail',
   bus: 'road',
   car: 'road',
+  bike: 'road',
   ferry: 'ferry',
   foot: 'foot',
 }
