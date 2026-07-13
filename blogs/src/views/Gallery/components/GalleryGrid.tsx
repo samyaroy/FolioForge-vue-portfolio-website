@@ -28,7 +28,7 @@ export function GalleryGrid({
   return (
     <section className="flex flex-col gap-10">
       <div
-        className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,16rem),1fr))] items-stretch gap-4"
         aria-live="polite"
       >
         {items.map((item) => (

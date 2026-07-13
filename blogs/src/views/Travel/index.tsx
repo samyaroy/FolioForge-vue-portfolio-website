@@ -410,7 +410,7 @@ export function TravelPage() {
   }, [])
 
   return (
-    <div className="ml-[50%] grid w-[min(calc(100vw-1.5rem),84rem)] -translate-x-1/2 grid-cols-1 gap-3 min-[900px]:grid-cols-[55fr_45fr] min-[900px]:items-start">
+    <div className="ml-[50%] grid w-[85vw] -translate-x-1/2 grid-cols-1 gap-[clamp(0.75rem,2vw,2.5rem)] min-[900px]:grid-cols-[55fr_45fr] min-[900px]:items-start">
       <div className="min-w-0">
         <section className={`${INTRO_SECTION_CLASS} mb-4!`}>
           <h1 className={`${INTRO_TITLE_CLASS} [view-transition-name:travel-title]`}>

@@ -4,7 +4,7 @@ import { Header } from './Header'
 
 export function Layout() {
   return (
-    <div className="flex min-h-screen flex-col bg-page">
+    <div className="flex min-h-screen flex-col overflow-x-clip bg-page">
       <Header />
 
       {/* Container matches the root site's page shell

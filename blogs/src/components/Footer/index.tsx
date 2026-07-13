@@ -16,28 +16,18 @@ export function Footer() {
       {/* px-4 replicates v-footer's built-in 16px inset on the root site. */}
       <footer className="border-t border-[#cbd5e1] bg-[#f1f5f9] px-4 py-4 text-sm leading-normal text-black">
         <div className="mx-auto w-full px-1 sm:max-w-160 md:max-w-3xl md:px-2 lg:max-w-5xl xl:max-w-7xl 2xl:max-w-384">
-          <a
-            className="mb-2 inline-flex items-center gap-[0.3rem] text-xl leading-7 font-bold text-black transition-colors duration-200 hover:text-black"
-            href={MAIN_SITE_URL}
-          >
-            <span>{SITE_PROFILE.name}</span>
-            <span
-              className="mdi mdi-open-in-new text-sm leading-none"
-              aria-hidden="true"
-            />
-          </a>
-
-          <div className="mb-2 flex justify-end">
-            <a
-              className="text-sm font-medium text-[#646cff] transition-colors duration-200 hover:text-[#535bf2]"
-              href={`${MAIN_SITE_URL}${FOOTER_CONTENT.privacyPath}`}
-            >
-              {FOOTER_CONTENT.privacyLabel}
-            </a>
-          </div>
-
-          <div className="flex flex-col items-start justify-between gap-2 md:flex-row md:items-center">
+          <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-start">
             <div>
+              <a
+                className="mb-2 inline-flex items-center gap-[0.3rem] text-xl leading-7 font-bold text-black transition-colors duration-200 hover:text-black"
+                href={MAIN_SITE_URL}
+              >
+                <span>{SITE_PROFILE.name}</span>
+                <span
+                  className="mdi mdi-open-in-new text-sm leading-none"
+                  aria-hidden="true"
+                />
+              </a>
               <p className={META_TEXT_CLASS}>
                 {FOOTER_CONTENT.iconAttributionIntro}{' '}
                 <a
@@ -80,15 +70,38 @@ export function Footer() {
                 {FOOTER_CONTENT.designCreditOutro}
               </p>
             </div>
-            <div className="text-right">
-              <p className={META_TEXT_CLASS}>
-                © {new Date().getFullYear()}{' '}
-                <span className="font-bold">{SITE_PROFILE.name}</span>.{' '}
-                {FOOTER_CONTENT.rightsText}
-              </p>
-              <p className={`mt-1 ${META_TEXT_CLASS}`}>
-                ✶ {FOOTER_CONTENT.lastUpdatedLabel}: {FOOTER_CONTENT.lastUpdated}
-              </p>
+            <div className="flex min-w-0 flex-col items-start gap-4 md:flex-row md:items-start">
+              <div className="text-right">
+                <p className={META_TEXT_CLASS}>
+                  © {new Date().getFullYear()}{' '}
+                  <span className="font-bold">{SITE_PROFILE.name}</span>.{' '}
+                  {FOOTER_CONTENT.rightsText}
+                </p>
+                <p className={`mt-1 ${META_TEXT_CLASS}`}>
+                  ✶ {FOOTER_CONTENT.lastUpdatedLabel}: {FOOTER_CONTENT.lastUpdated}
+                </p>
+                <p className="mt-1">
+                  <a
+                    className={`text-sm ${META_LINK_CLASS}`}
+                    href={`${MAIN_SITE_URL}${FOOTER_CONTENT.privacyPath}`}
+                  >
+                    {FOOTER_CONTENT.privacyLabel}
+                  </a>
+                </p>
+              </div>
+              <div className="flex min-w-0 justify-end">
+                <a
+                  href="https://www.flagcounter.me/details/hCW"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img
+                    className="inline-block h-auto w-[350px] max-w-full"
+                    src="https://www.flagcounter.me/hCW/"
+                    alt="Flag Counter"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
