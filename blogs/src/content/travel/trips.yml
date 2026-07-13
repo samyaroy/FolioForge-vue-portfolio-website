@@ -117,7 +117,8 @@ trips:
       - Kolkata
       - { name: Visakhapatnam, mode: train, train: 12841 }
       - { name: Lammasingi, mode: bike}
-      - { name: Araku, mode: train, train: 12842}
+      - { name: Visakhapatnam, mode: bike}
+      - { name: Araku, mode: train, train: 08551}
     summary: XYZ
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/vizag-01-2025.jpeg
     tags: [Mountains, Pilgrimage]
