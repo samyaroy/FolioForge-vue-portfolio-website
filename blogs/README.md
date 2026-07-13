@@ -51,6 +51,36 @@ each paired with a small `.ts` module that applies the TypeScript types
 Keep dates quoted (`"2026-06-20"`) so they stay strings, and quote values
 containing `:` or starting with punctuation.
 
+## Rail-route geometry (train map)
+
+Train legs on the travel map are drawn from real route geometry. To stay within
+RailRadar's free tier (50 requests/day per key, shared across all visitors),
+each train's route is fetched **once** at commit time and stored in Workers KV;
+the Worker serves every visitor from KV instead of calling RailRadar live.
+
+One-time setup:
+
+```bash
+cd blogs
+npm run hooks:install                       # enable the pre-commit sync hook
+npx wrangler kv namespace create RAIL       # paste the printed id into wrangler.jsonc
+printf 'RAILRADAR_API_KEY=your-key\n' > .dev.vars   # local key, gitignored
+npx wrangler secret put RAILRADAR_API_KEY   # same key, for the Worker's KV-miss fallback
+```
+
+After that, every commit that changes `src/content/travel/trips.yml` fetches any
+new train numbers and uploads them to KV automatically. Manual controls:
+
+```bash
+npm run sync-rail              # fetch + upload only new trains
+node scripts/sync-rail.mjs --reseed   # re-upload every cached route to KV
+```
+
+Fetched routes are cached in `scripts/rail-cache/<train>.json` (committed, since
+a train's route never changes) — that folder is the re-seed source if KV is ever
+lost. A failed fetch never blocks the commit; that leg just falls back to a
+straight line.
+
 ## Build & deploy (Cloudflare)
 
 ```bash

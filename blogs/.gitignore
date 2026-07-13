@@ -8,3 +8,7 @@ dist-ssr
 *.local
 
 .DS_Store
+
+# Local secrets for wrangler / sync scripts
+.dev.vars
+.env

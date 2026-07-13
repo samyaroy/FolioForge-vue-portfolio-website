@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint .",
+    "sync-rail": "node scripts/sync-rail.mjs",
+    "hooks:install": "git config core.hooksPath blogs/scripts/hooks",
     "deploy": "npm run build && rm -f dist/_redirects && wrangler deploy"
   },
   "dependencies": {

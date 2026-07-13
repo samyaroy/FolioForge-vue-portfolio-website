@@ -14,5 +14,12 @@
     // Without this, /api/* would fall through to the SPA's index.html
     // instead of reaching the worker.
     "run_worker_first": ["/api/*"]
-  }
+  },
+  // Rail-route geometry, precomputed at commit time (scripts/sync-rail.mjs) so
+  // every visitor is served from KV instead of RailRadar's 50-req/day quota.
+  // Create the namespace once, then paste its id below:
+  //   npx wrangler kv namespace create RAIL
+  "kv_namespaces": [
+    { "binding": "RAIL", "id": "14ac58126fab4c46aa2be6c5c37b836e" }
+  ]
 }

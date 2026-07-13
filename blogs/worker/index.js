@@ -2,16 +2,22 @@
 // wrangler.jsonc); only /api/* reaches this script, via run_worker_first.
 //
 // GET /api/rail-route?train=NNNNN
-//   Relays RailRadar's route-geometry endpoint for one train, keeping the
-//   API key server-side (secret: `npx wrangler secret put RAILRADAR_API_KEY`).
-//   Responses are cached at the edge AND marked cacheable for the browser,
-//   because the free RailRadar tier is 50 requests/day per key — shared
-//   across all visitors, so every cache layer counts.
+//   Returns RailRadar route geometry for one train. Geometry is precomputed at
+//   commit time (scripts/sync-rail.mjs) and stored in Workers KV, so the common
+//   path never touches RailRadar — the free tier is only 50 requests/day per
+//   key, shared across ALL visitors. On a KV miss (a train not synced yet) the
+//   Worker fetches once from RailRadar and writes it back, so it self-heals and
+//   the next request — on any device — comes straight from KV.
 
-// Matches the client's localStorage TTL (6 h) for the browser; the edge
-// keeps entries longer — a train's route geometry effectively never changes.
+// Browser cache mirrors the client's localStorage TTL (6 h); the stored
+// geometry itself never changes, so KV is the durable source of truth.
 const BROWSER_TTL_S = 6 * 60 * 60
-const EDGE_TTL_S = 7 * 24 * 60 * 60
+// Remember a RailRadar "unknown train" (a yml typo) for a day so it can't drain
+// the daily quota one page-view at a time.
+const MISS_TTL_S = 24 * 60 * 60
+
+const KEY = (train) => `rail:${train}`
+const MISS_KEY = (train) => `railmiss:${train}`
 
 function json(body, status) {
   return new Response(JSON.stringify(body), {
@@ -20,20 +26,37 @@ function json(body, status) {
   })
 }
 
+function geometry(bodyStream, source) {
+  return new Response(bodyStream, {
+    headers: {
+      'content-type': 'application/json',
+      'cache-control': `public, max-age=${BROWSER_TTL_S}`,
+      'x-rail-source': source,
+    },
+  })
+}
+
 async function railRoute(url, env, ctx) {
   const train = (url.searchParams.get('train') || '').trim()
   if (!/^\d{3,6}$/.test(train)) {
     return json({ error: 'invalid train number' }, 400)
   }
-  if (!env.RAILRADAR_API_KEY) {
-    return json({ error: 'rail-route proxy not configured' }, 503)
+
+  // Primary path: geometry precomputed at commit time, served from KV.
+  if (env.RAIL) {
+    const stored = await env.RAIL.get(KEY(train), 'stream')
+    if (stored) return geometry(stored, 'kv')
+    // A train RailRadar already told us it doesn't know — don't ask again.
+    if (await env.RAIL.get(MISS_KEY(train))) {
+      return json({ error: 'railradar 404: unknown train' }, 502)
+    }
   }
 
-  // Normalised synthetic cache key: one entry per train, per colo.
-  const cacheKey = new Request(`${url.origin}/api/rail-route?train=${train}`)
-  const cached = await caches.default.match(cacheKey)
-  if (cached) return cached
-
+  // Fallback: KV miss (train not synced, or KV binding absent). Fetch once from
+  // RailRadar, keeping the API key server-side, and write the result back to KV.
+  if (!env.RAILRADAR_API_KEY) {
+    return json({ error: 'rail-route not in store and proxy not configured' }, 503)
+  }
   // Tolerate common paste mistakes in the secret: surrounding quotes,
   // whitespace, or an included "Bearer " prefix.
   const key = env.RAILRADAR_API_KEY.trim()
@@ -50,27 +73,18 @@ async function railRoute(url, env, ctx) {
       .json()
       .then((b) => b?.error?.message)
       .catch(() => null)
-    const res = json(
+    if (upstream.status === 404 && env.RAIL) {
+      ctx.waitUntil(env.RAIL.put(MISS_KEY(train), '1', { expirationTtl: MISS_TTL_S }))
+    }
+    return json(
       { error: `railradar ${upstream.status}${detail ? `: ${detail}` : ''}` },
       502,
     )
-    if (upstream.status === 404) {
-      // A train RailRadar doesn't know stays unknown; cache the miss so a
-      // yml typo can't drain the request quota one page-view at a time.
-      res.headers.set('cache-control', 'public, max-age=3600, s-maxage=86400')
-      ctx.waitUntil(caches.default.put(cacheKey, res.clone()))
-    }
-    return res
   }
 
-  const res = new Response(upstream.body, {
-    headers: {
-      'content-type': 'application/json',
-      'cache-control': `public, max-age=${BROWSER_TTL_S}, s-maxage=${EDGE_TTL_S}`,
-    },
-  })
-  ctx.waitUntil(caches.default.put(cacheKey, res.clone()))
-  return res
+  const body = await upstream.text()
+  if (env.RAIL) ctx.waitUntil(env.RAIL.put(KEY(train), body))
+  return geometry(body, 'railradar')
 }
 
 export default {

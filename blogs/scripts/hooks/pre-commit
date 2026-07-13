@@ -1,0 +1,10 @@
+#!/bin/sh
+# Keep the rail-geometry KV store in sync with the travel data. Runs whenever
+# trips.yml is part of the commit; never blocks the commit — a failed fetch just
+# leaves that leg to the map's straight-line fallback.
+if git diff --cached --name-only | grep -q '^blogs/src/content/travel/trips\.yml$'; then
+  echo "[rail] trips.yml staged — syncing train geometry to KV..."
+  ( cd blogs && node scripts/sync-rail.mjs )
+  git add blogs/scripts/rail-cache 2>/dev/null || true
+fi
+exit 0
