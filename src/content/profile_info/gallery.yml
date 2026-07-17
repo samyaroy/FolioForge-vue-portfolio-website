@@ -25,6 +25,11 @@ items:
   #   title: Mentored new groups of Summer Interns at IDEAS-TIH
   #   event:
   #   location:
+  #   images:
+  #     - intern-project-02
+  #     - intern-project-02-01
+  #     - intern-project-02-02
+  #     - intern-project-02-03
   #   # caption: I had the opportunity to mentor a group of Summer Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
   #   type: gallery
   #   date: 2026-07-31

@@ -9,6 +9,30 @@ Institute:
         - IISER Kolkata
       Website: https://www.iiserkol.ac.in/
 
+    - Name: Indian Institute of Science Education and Research, Mohali
+      Aliases:
+        - IISER Mohali
+      Website: https://www.iisermohali.ac.in/
+
+    - Name: Indian Institute of Science Education and Research, Bhopal
+      Aliases:
+        - IISER Bhopal
+      Website: https://www.iiserb.ac.in/
+
+    - Name: International Centre for Theoretical Sciences
+      Aliases:
+        - ICTS
+        - International Centre for Theoretical Sciences, Bangalore
+        - International Centre for Theoretical Sciences (ICTS)
+      Website: https://www.icts.res.in/
+
+    - Name: Tata Institute of Fundamental Research
+      Aliases:
+        - TIFR
+        - Tata Institute of Fundamental Research, Mumbai
+        - Tata Institute of Fundamental Research (TIFR)
+      Website: https://www.tifr.res.in/
+
     - Name: Indian Institute of Science
       Aliases:
         - IISc

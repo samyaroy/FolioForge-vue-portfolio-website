@@ -101,6 +101,21 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 attended_webinars_n_others:
+  - title: "Learning machines"
+    type: "lecture"
+    speaker: ["Prof. Piyush Srivastava, TIFR"]
+    host:
+      - name: "Tata Institute of Fundamental Research"
+        department:
+          name: "International Centre for Theoretical Sciences (ICTS)"
+          link: "https://www.icts.res.in"
+        sub_department:
+          name: "Maths Circle India"
+          link: "https://www.icts.res.in/outreach/maths-circle-india"
+    date: "17 July, 2026"
+    mode: "Online"
+    link:
+    
   - title: "Towards Trustworthy Generative AI"
     type: "seminar"
     speaker: ["Prof Karthik Nandakumar"]
@@ -136,6 +151,7 @@ attended_webinars_n_others:
     date: "29 June, 2026"
     mode: "Online"
     cred_link:  https://drive.google.com/file/d/1r0Oi_maOpuLbzfXDZm24XV3C4jWczuG7/preview
+    link: https://youtu.be/7oS2JPjuKjs?si=0XN2ur6MKKs_tt1a
 
   - title: "COPSS-NISS Leadership Webinar: The Role of Bayesian Statistics in an Age of AI"
     type: webiner

@@ -45,14 +45,28 @@
               </v-icon>
 
               <div class="flex-1 text-sm flex items-start min-w-0">
-                <span class="font-medium shrink-0">Host:&nbsp;</span>
-                <span class="min-w-0 flex-1 break-words">
-                  <template v-for="(host, index) in normalizedHosts" :key="`${host.name}-${index}`">
-                    <span v-if="host.department">{{ formatDepartments(host.department) }}, </span>
-                    <SmartLink :text="host.name" :href="host.link || host.href || null" />
-                    <span v-if="index < normalizedHosts.length - 1">;&nbsp;</span>
-                  </template>
+                <span class="font-medium shrink-0">
+                  Host<span v-if="normalizedHosts.length > 1">s</span>:&nbsp;
                 </span>
+                <div class="min-w-0 flex-1 break-words">
+                  <div v-for="(host, index) in normalizedHosts" :key="`${host.name}-${index}`">
+                    <template v-if="host.subDepartments.length">
+                      <template v-for="(part, partIndex) in host.subDepartments" :key="`${host.name}-sub-${part.text}-${partIndex}`">
+                        <SmartLink :text="part.text" :href="part.href" />
+                        <span v-if="partIndex < host.subDepartments.length - 1"> / </span>
+                      </template>
+                      <span>{{ separator }}</span>
+                    </template>
+                    <template v-if="host.departments.length">
+                      <template v-for="(part, partIndex) in host.departments" :key="`${host.name}-dept-${part.text}-${partIndex}`">
+                        <SmartLink :text="part.text" :href="part.href" />
+                        <span v-if="partIndex < host.departments.length - 1"> / </span>
+                      </template>
+                      <span>{{ separator }}</span>
+                    </template>
+                    <SmartLink :text="host.name" :href="host.link || host.href || null" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -105,6 +119,8 @@ const props = defineProps({
     required: true
   }
 })
+
+const separator = ', '
 
 // Speakers written as a YAML list ([] or -) render comma-separated on one
 // line; a multi-line block string (|-) renders one speaker per line.
@@ -171,12 +187,29 @@ const typeToneClass = computed(() => {
   return typeTheme.value.tone
 })
 
-function formatDepartments(department) {
-  if (Array.isArray(department)) {
-    return department.filter(Boolean).join(' / ')
+function normalizeLinkPart(part) {
+  if (!part) return null
+
+  if (typeof part === 'string') {
+    return { text: part, href: null }
   }
 
-  return department || ''
+  const text = part.name || part.text || part.title || part.value || ''
+  if (!text) return null
+
+  return {
+    text,
+    href: part.link || part.href || part.url || part.web_link || null,
+  }
+}
+
+function normalizeLinkParts(value) {
+  const entries = Array.isArray(value) ? value : [value]
+  return entries.map(normalizeLinkPart).filter(Boolean)
+}
+
+function getSubDepartment(host) {
+  return host?.sub_department || host?.subDepartment || host?.subDept || ''
 }
 
 const normalizedHosts = computed(() => {
@@ -186,11 +219,12 @@ const normalizedHosts = computed(() => {
     return host
       .map(entry => {
         if (typeof entry === 'string') {
-          return { name: entry, department: '', location: '', link: null, href: null }
+          return { name: entry, departments: [], subDepartments: [], location: '', link: null, href: null }
         }
         return {
           name: entry?.name || '',
-          department: entry?.department || '',
+          departments: normalizeLinkParts(entry?.department),
+          subDepartments: normalizeLinkParts(getSubDepartment(entry)),
           location: entry?.location || '',
           link: entry?.link || null,
           href: entry?.href || null,
@@ -200,13 +234,14 @@ const normalizedHosts = computed(() => {
   }
 
   if (typeof host === 'string') {
-    return [{ name: host, department: '', location: '', link: null, href: null }]
+    return [{ name: host, departments: [], subDepartments: [], location: '', link: null, href: null }]
   }
 
   if (host?.name) {
     return [{
       name: host.name,
-      department: host.department || '',
+      departments: normalizeLinkParts(host.department),
+      subDepartments: normalizeLinkParts(getSubDepartment(host)),
       location: host.location || '',
       link: host.link || null,
       href: host.href || null,
