@@ -114,7 +114,7 @@ attended_webinars_n_others:
   #         link: "https://www.icts.res.in/outreach/maths-circle-india"
   #   date: "17 July, 2026"
   #   mode: "Online"
-  #   link:
+  #   link: https://www.youtube.com/live/7GNjUyAmmpI?si=Cs1mKCW9hf56pST7
     
   # - title: "Towards Trustworthy Generative AI"
   #   type: "seminar"
