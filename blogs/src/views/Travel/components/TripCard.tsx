@@ -20,7 +20,7 @@ export function TripCard({ trip }: TripCardProps) {
 
   return (
     <article
-      className={`flex max-h-[17rem] min-h-[14rem] overflow-hidden rounded-xl max-sm:max-h-none max-sm:flex-col ${CARD_SHELL_CLASS}`}
+      className={`flex max-h-62 min-h-56 overflow-hidden rounded-xl max-sm:max-h-none max-sm:flex-col ${CARD_SHELL_CLASS}`}
     >
       <div
         className={`h-auto shrink-0 basis-[28%] max-sm:h-56 max-sm:basis-auto ${CARD_ART_BACKDROP_CLASS}`}
@@ -65,7 +65,7 @@ export function TripCard({ trip }: TripCardProps) {
         </div>
 
         {trip.summary && (
-          <p className="mt-2 overflow-hidden text-justify text-sm leading-[1.7] text-muted [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:5] max-sm:[-webkit-line-clamp:4]">
+          <p className="mt-2 overflow-hidden text-justify text-sm leading-[1.7] text-muted [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:4]">
             {trip.summary}
           </p>
         )}

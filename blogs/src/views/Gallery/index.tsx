@@ -59,7 +59,7 @@ export function GalleryPage() {
             <span className="whitespace-nowrap text-xs font-semibold tracking-[0.16em] text-slate-400 uppercase">
               {totalItemCount} {totalItemCount === 1 ? 'entry' : 'entries'}
             </span>
-            {GALLERY_FILTER_OPTIONS.length > 1 && (
+            {totalItemCount > 0 && GALLERY_FILTER_OPTIONS.length > 1 && (
               <GalleryFilter
                 options={GALLERY_FILTER_OPTIONS.slice(1)}
                 selectedFilters={activeFilters}
@@ -71,6 +71,7 @@ export function GalleryPage() {
 
         <GalleryGrid
           items={visibleItems}
+          hasEntries={totalItemCount > 0}
           canLoadMore={canLoadMore}
           onLoadMore={() => setVisibleCount((count) => count + LOAD_MORE_INCREMENT)}
         />

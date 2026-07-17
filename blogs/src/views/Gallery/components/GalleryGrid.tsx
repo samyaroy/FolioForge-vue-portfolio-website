@@ -3,12 +3,14 @@ import { GalleryCard } from './GalleryCard'
 
 type GalleryGridProps = {
   items: GalleryItem[]
+  hasEntries: boolean
   canLoadMore: boolean
   onLoadMore: () => void
 }
 
 export function GalleryGrid({
   items,
+  hasEntries,
   canLoadMore,
   onLoadMore,
 }: GalleryGridProps) {
@@ -16,10 +18,12 @@ export function GalleryGrid({
     return (
       <div className="rounded-[24px] border border-dashed border-slate-300 bg-white p-10 text-center shadow-sm">
         <h2 className="text-2xl font-bold text-base_black">
-          No gallery items match this filter.
+          {hasEntries ? 'No gallery items match this filter.' : 'Coming soon…'}
         </h2>
         <p className="mt-3 text-sm leading-6 text-slate-500">
-          Try another tag or add new entries
+          {hasEntries
+            ? 'Try another tag or add new entries'
+            : 'The first clicks are being curated — check back soon.'}
         </p>
       </div>
     )
