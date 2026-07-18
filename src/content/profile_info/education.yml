@@ -176,8 +176,7 @@ education:
           course_name: Descriptive Statistics and Probability I (Theory + Lab)
           type: CC/PCC
           credit: 6
-          faculty:
-            name: [Prof. (Dr.) Pradip Dutta Gupta, Argha Bhattacharya]
+          faculty: [Prof. (Dr.) Pradip Dutta Gupta, Argha Bhattacharya]
         - course_code: 1090010103
           course_name: Mathematics I
           type: CC/PCC
@@ -197,7 +196,7 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            name: Biswajit Basak
+            - name: Biswajit Basak
         - course_code: [1090011104, 1090011204]
           course_name: Sampling Distributions (Theory + Lab)            
           type: CC/PCC
@@ -207,8 +206,8 @@ education:
           type: DSE/PEC
           credit: 6
           faculty:
-            name: Subhadeep Naskar
-            link: https://www.researchgate.net/profile/Subhadeep-Naskar
+            - name: Subhadeep Naskar
+              link: https://www.researchgate.net/profile/Subhadeep-Naskar
         - course_code: 4090011102
           course_name: Communicative English II
           type: AECC/HSM/PAECC
@@ -228,7 +227,7 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            name: Biswajit Basak
+            - name: Biswajit Basak
         - course_code: [1090012105, 1090012205]
           course_name: Population Statistics (Theory + Lab)
           type: CC/PCC
@@ -256,8 +255,8 @@ education:
           type: GE/OE
           credit: 4
           faculty:
-            name: Subhadeep Naskar
-            link: https://www.researchgate.net/profile/Subhadeep-Naskar
+            - name: Subhadeep Naskar
+              link: https://www.researchgate.net/profile/Subhadeep-Naskar
 
       semester_4:
         - course_code: [1090013107, 1090013207]
@@ -265,7 +264,7 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            name: Biswajit Basak
+            - name: Biswajit Basak
         - course_code: [1090013108, 1090013208]
           course_name: Sample Survey & Indian Official Statistics (Theory + Lab)
           type: CC/PCC
@@ -325,7 +324,7 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            name: Dr. Anindita Ghoshal
+            - name: Dr. Anindita Ghoshal
         - course_code: [1090015103, 1090015204]
           course_name: Numerical Computing (Theory + Lab)
           type: CC/PCC

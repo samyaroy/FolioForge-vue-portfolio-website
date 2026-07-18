@@ -114,12 +114,15 @@ const facultyList = computed(() => {
   if (!faculty) return []
   const entries = Array.isArray(faculty) ? faculty : [faculty]
   return entries
-    .map(entry =>
-      entry && typeof entry === 'object'
-        ? { name: entry.name, link: entry.link }
-        : { name: String(entry) }
-    )
-    .filter(entry => entry.name)
+    .flatMap(entry => {
+      if (entry && typeof entry === 'object') {
+        const names = Array.isArray(entry.name) ? entry.name : [entry.name]
+        return names.map(name => ({ name, link: entry.link }))
+      }
+      return [{ name: entry }]
+    })
+    .filter(entry => entry.name != null && entry.name !== '')
+    .map(entry => ({ ...entry, name: String(entry.name) }))
 })
 
 function formatCourseCode(code) {
