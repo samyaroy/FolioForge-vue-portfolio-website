@@ -236,6 +236,8 @@ Institute:
 Person:
 
     - Name: Prof. Sudarshan Iyengar
+      Aliases:
+        - Sudarshan Iyengar
       Link: https://www.linkedin.com/in/sudarshan-iyengar-3560b8145/
 
     - Name: Prof. Ponnurangam Kumaraguru
@@ -251,12 +253,16 @@ Person:
       Link: https://engineering.jhu.edu/faculty/michael-shields/
 
     - Name: Prof. Aniruddha Choudhuri
+      Aliases:
+        - Aniruddha Choudhuri
       Link: https://www.linkedin.com/in/aniruddha-choudhuri-9376b174/
 
     - Name: Mr. Debashis Ghosh
       Link: https://www.linkedin.com/in/debashis-ghosh-b5a756b/
     
     - Name: Prof. Andrew Thangaraj
+      Aliases:
+        - Andrew Thangaraj
       Link: https://www.ee.iitm.ac.in/andrew/
 
     - Name: prof. Sheweta Agarwal
@@ -275,6 +281,8 @@ Person:
       Link: https://www.linkedin.com/in/naveen-sivadasan-b71027b2/
 
     - Name: Dr. Partha Pratim Das
+      Aliases:
+        - Partha Pratim Das
       Link: https://www.ashoka.edu.in/profile/partha-pratim-das/
 
     - Name: Prof. Venkatesh Raman

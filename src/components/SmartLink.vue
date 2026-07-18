@@ -35,6 +35,7 @@ interface ResolveUrlOptions {
     type?: string
     href?: string | null
     lookupText?: string | null
+    preferHref?: boolean
 }
 
 const props = defineProps<{
@@ -42,6 +43,7 @@ const props = defineProps<{
     type?: string
     href?: string | null
     lookupText?: string | null
+    preferHref?: boolean
 }>()
 
 const INLINE_LINK_PATTERN = /`([^`]+)`/g
@@ -87,6 +89,7 @@ function buildSegments(text: string) {
                         type: props.type,
                         href: props.href,
                         lookupText: props.lookupText,
+                        preferHref: props.preferHref,
                     })
                 ),
                 0
@@ -104,6 +107,8 @@ function buildSegments(text: string) {
 }
 
 function resolveUrl(options: ResolveUrlOptions) {
+    if (options.preferHref && options.href) return options.href
+
     const groups = links as Record<string, LinkItem[]>
     const requestedType = normalizeValue(options.type ?? 'Institute')
     const groupKey = Object.keys(groups).find(

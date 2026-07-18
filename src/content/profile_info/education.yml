@@ -13,34 +13,42 @@ education:
           course_name: English I
           type: CC
           credit: 4
+          faculty: Rajesh Kumar
         - course_code: BSMA1001
           course_name: Mathematics for Data Science I
           type: CC
           credit: 4
+          faculty: [Neelesh Upadhye, Madhavan Mukund]
         - course_code: BSMA1002
           course_name: Statistics for Data Science I
           type: CC
           credit: 4
+          faculty: Usha Mohan
         - course_code: BSCS1001
           course_name: Computational Thinking
           type: CC
           credit: 4
+          faculty: [Madhavan Mukund, G Venkatesh]
         - course_code: BSHS1002
           course_name: English II
           type: CC
           credit: 4
+          faculty: Rajesh Kumar
         - course_code: BSMA1003
           course_name: Mathematics for Data Science II
           type: CC
           credit: 4
+          faculty: Sarang S Sane
         - course_code: BSMA1004
           course_name: Statistics for Data Science II
           type: CC
           credit: 4
+          faculty: Andrew Thangaraj
         - course_code: BSCS1002
           course_name: Programming in Python
           type: CC
           credit: 4
+          faculty: Sudarshan Iyengar
 
     
       dimpola_in_programming:
@@ -48,26 +56,32 @@ education:
           course_name: Programming, Data Structures and Algorithms using Python
           type: CC
           credit: 4
+          faculty: Madhavan Mukund
         - course_code: BSCS2001
           course_name: Database Management Systems
           type: CC
           credit: 4
+          faculty: Partha Pratim Das
         - course_code: BSCS2005
           course_name: Programming Concepts using Java
           type: CC
           credit: 4
+          faculty: Madhavan Mukund
         - course_code: BSSE2001
           course_name: System Commands
           type: CC
           credit: 3
+          faculty: Gandham Phanikumar
         - course_code: BSCS2003
           course_name: Modern Application Development I
           type: CC
           credit: 4
+          faculty: [Thejesh G N, Nitin Chandrachoodan]
         - course_code: BSCS2006
           course_name: Modern Application Development II
           type: CC
           credit: 4
+          faculty: [Thejesh G N, Nitin Chandrachoodan]
         - course_code: BSCS2003P
           course_name: Modern Application Development I - Project
           type: Project
@@ -82,26 +96,32 @@ education:
           course_name: Business Data Management
           type: CC
           credit: 4
+          faculty: [Ashwin J. Baliga, Siddharth Arora, Aaditya Chandel]
         - course_code: BSSE2002
           course_name: Tools in Data Science
           type: CC
           credit: 3
+          faculty: S Anand
         - course_code: BSCS2004
           course_name: Machine Learning Foundations
           type: CC
           credit: 4
+          faculty: [Harish Guruprasad Ramaswamy, Arun Rajkumar, Prashanth L.A.]
         - course_code: BSCS2007
           course_name: Machine Learning Techniques
           type: CC
           credit: 4
+          faculty: Arun Rajkumar
         - course_code: BSCS2008
           course_name: Machine Learning Practice
           type: CC
           credit: 4
+          faculty: Ashish Tendulkar
         - course_code: BSDA2001
           course_name: Introduction to Deep Learning and Generative AI
           type: CC
           credit: 4
+          faculty: [Balaji Srinivasan, Ganapathy Krishnamurthi]
         - course_code: BSCS2008P
           course_name: Machine Learning Practice - Project
           type: Project
@@ -115,18 +135,23 @@ education:
         - course_code: BSCS3001
           course_name: Software Engineering
           type: CC
+          faculty: [Sridhar Iyer, Prajish Prasad]
         - course_code: BSCS3002
           course_name: Software Testing
           type: CC
+          faculty: Meenakshi D'Souza
         - course_code: BSCS3003
           course_name: "AI: Search Methods for Problem Solving"
           type: CC
+          faculty: Deepak Khemani
         - course_code: BSCS3004
           course_name: Deep Learning
           type: CC
+          faculty: Mitesh M. Khapra
         - course_code: BSMA3014
           course_name: Statistical Computing
           type: EC
+          faculty: Dootika Vats
 
       transfered_credits:
         # - course_code: "Google"
@@ -151,6 +176,8 @@ education:
           course_name: Descriptive Statistics and Probability I (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty:
+            name: [Prof. (Dr.) Pradip Dutta Gupta, Argha Bhattacharya]
         - course_code: 1090010103
           course_name: Mathematics I
           type: CC/PCC
@@ -169,10 +196,19 @@ education:
           course_name: Probability II (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty:
+            name: Biswajit Basak
         - course_code: [1090011104, 1090011204]
           course_name: Sampling Distributions (Theory + Lab)            
           type: CC/PCC
           credit: 6
+        - course_code: 
+          course_name: Mathematics II
+          type: DSE/PEC
+          credit: 6
+          faculty:
+            name: Subhadeep Naskar
+            link: https://www.researchgate.net/profile/Subhadeep-Naskar
         - course_code: 4090011102
           course_name: Communicative English II
           type: AECC/HSM/PAECC
@@ -191,14 +227,18 @@ education:
           course_name: Statistical Inference I (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty:
+            name: Biswajit Basak
         - course_code: [1090012105, 1090012205]
           course_name: Population Statistics (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty: [Ardhendu Banerjee]
         - course_code: 2090012102
           course_name: Mathematical Analysis
           type: DSE/PEC
           credit: 6
+          faculty: [Sayani Maity Roy]
         - course_code: 5090012402
           course_name: Mentored Seminar II
           type: SEC/PSE/CLE
@@ -215,12 +255,17 @@ education:
           course_name: Introduction to Numerical Analysis
           type: GE/OE
           credit: 4
+          faculty:
+            name: Subhadeep Naskar
+            link: https://www.researchgate.net/profile/Subhadeep-Naskar
 
       semester_4:
         - course_code: [1090013107, 1090013207]
           course_name: Statistical Inference II (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty:
+            name: Biswajit Basak
         - course_code: [1090013108, 1090013208]
           course_name: Sample Survey & Indian Official Statistics (Theory + Lab)
           type: CC/PCC
@@ -251,10 +296,12 @@ education:
           course_name: Statistical Quality Control (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty: [Aniruddha Choudhuri]
         - course_code: [1090014103, 1090014204]
           course_name: Linear Model and Regression (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty: [Dr. Anindita Ghoshal]
         - course_code: [1090014105, 1090014206]
           course_name: Economic Statistics (Theory + Lab)
           type: CC/PCC
@@ -277,6 +324,8 @@ education:
           course_name: Design of Experiment (Theory + Lab)
           type: CC/PCC
           credit: 6
+          faculty:
+            name: Dr. Anindita Ghoshal
         - course_code: [1090015103, 1090015204]
           course_name: Numerical Computing (Theory + Lab)
           type: CC/PCC

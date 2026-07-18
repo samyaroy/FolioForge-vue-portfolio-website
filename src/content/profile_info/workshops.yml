@@ -116,18 +116,18 @@ attended_webinars_n_others:
   #   mode: "Online"
   #   link: https://www.youtube.com/live/7GNjUyAmmpI?si=Cs1mKCW9hf56pST7
     
-  # - title: "Towards Trustworthy Generative AI"
-  #   type: "seminar"
-  #   speaker: ["Prof Karthik Nandakumar"]
-  #   host:
-  #     - name: "Indian Institute of Science (IISc)"
-  #       department:
-  #         - "Dept. of Computational and Data Sciences"
-  #         - "Kotak IISc AI-ML Centre (KIAC)"
-  #       location: "Bengaluru, KA"
-  #   date: "6 July, 2026"
-  #   mode: "Online"
-  #   cred_link: ""
+  - title: "Towards Trustworthy Generative AI"
+    type: "seminar"
+    speaker: ["Prof Karthik Nandakumar"]
+    host:
+      - name: "Indian Institute of Science (IISc)"
+        department:
+          - "Dept. of Computational and Data Sciences"
+          - "Kotak IISc AI-ML Centre (KIAC)"
+        location: "Bengaluru, KA"
+    date: "6 July, 2026"
+    mode: "Online"
+    cred_link: ""
 
   # - title: "Wearable Computing, Long-Term Memory & AI Agents"
   #   type: "seminar"

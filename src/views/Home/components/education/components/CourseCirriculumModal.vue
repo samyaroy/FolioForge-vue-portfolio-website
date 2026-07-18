@@ -70,11 +70,13 @@ const isOpen = computed({
 
 const sections = computed(() => {
   if (Array.isArray(props.cirriculum)) {
-    return { curriculum: props.cirriculum }
+    return props.cirriculum.length ? { curriculum: props.cirriculum } : {}
   }
 
   return Object.fromEntries(
-    Object.entries(props.cirriculum || {}).filter(([key]) => key !== 'link')
+    Object.entries(props.cirriculum || {}).filter(
+      ([key, courses]) => key !== 'link' && Array.isArray(courses) && courses.length
+    )
   )
 })
 

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="flex h-full flex-col">
     <div
-      class="relative grid gap-3 px-3 py-2.5 rounded-md"
+      class="relative grid flex-1 gap-3 px-3 py-2.5 rounded-md"
       :class="[
         course.credit ? 'grid-cols-[85fr_15fr]' : 'grid-cols-1',
         section === 'transfered_credits' ? 'bg-white' : 'bg-[#f8fafc]',
@@ -25,6 +25,22 @@
           <span v-if="course.type">{{ course.type }}</span>
           <v-icon v-if="course.type && course.course_code" size="6" class="mx-1">mdi-circle</v-icon>
           <span v-if="course.course_code">{{ formatCourseCode(course.course_code) }}</span>
+        </p>
+        <p v-if="facultyList.length" class="text-[#4e7397] text-xs mt-0.5 flex items-start gap-1">
+          <v-icon size="12" class="mt-0.5 shrink-0">mdi-account-tie</v-icon>
+          <span class="min-w-0">
+            <template v-for="(member, fi) in facultyList" :key="fi">
+              <span class="whitespace-nowrap">
+                <SmartLink
+                  type="Person"
+                  :text="member.name"
+                  :href="member.link || null"
+                  prefer-href
+                />
+              </span>
+              <span v-if="fi < facultyList.length - 1">, </span>
+            </template>
+          </span>
         </p>
         <div
           v-if="course.logo"
@@ -63,6 +79,7 @@
 <script setup>
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import SmartLink from '@/components/SmartLink.vue'
 
 defineOptions({ name: 'CourseCard' })
 
@@ -91,6 +108,19 @@ const courseTags = computed(() => {
 const showRibbon = computed(() => sectionIsTransferCredits() && courseTags.value.length > 0)
 
 const ribbonLabel = computed(() => courseTags.value.join(' / '))
+
+const facultyList = computed(() => {
+  const faculty = props.course?.faculty
+  if (!faculty) return []
+  const entries = Array.isArray(faculty) ? faculty : [faculty]
+  return entries
+    .map(entry =>
+      entry && typeof entry === 'object'
+        ? { name: entry.name, link: entry.link }
+        : { name: String(entry) }
+    )
+    .filter(entry => entry.name)
+})
 
 function formatCourseCode(code) {
   if (Array.isArray(code)) return code.join(' / ')
