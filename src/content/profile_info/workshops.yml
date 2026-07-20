@@ -25,11 +25,12 @@ attended_fdps:
 
 attended_workshops:
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
-    instructor: "Prof. Indu Joshi"
+    instructor: "Dr.. Indu Joshi"
     institution:
       - name: "National Programme on Technology Enhanced Learning (NPTEL)"
     date: "June-July 2026"
     mode: "Online"
+    cred_link: "https://drive.google.com/file/d/1UgYPCm7I7Gxy8eYLRFLXHvMQHkVlp7zL/preview"
 
   - title: "Systems for LLMs"
     institution:
