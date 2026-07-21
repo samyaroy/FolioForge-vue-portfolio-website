@@ -16,6 +16,8 @@
         :time="String(edu.time_period)"
         :institution="edu.institution"
         :location="edu.location"
+        :campus="edu.campus"
+        :category="edu.category"
         :extra="edu.extra"
         :isFirst="index === 0"
         :isLast="index === education.length - 1"

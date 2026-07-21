@@ -1,4 +1,15 @@
 education:
+  # - type: University
+  #   degree: Masters of Science (MSc)
+  #   field: Statistics
+  #   category:
+  #   institution: University of Calcutta
+  #   campus: Taraknath Palit Siksha Prangan / Ballygunge Science College
+  #   location: Kolkata, WB
+  #   time_period: 2026 - Present
+  #   gpa:
+  #   cred_link:
+
   - type: University
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
@@ -7,6 +18,7 @@ education:
     time_period: 2022 - Present
     gpa: Current CGPA - 5.97/10
     cred_link: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
+    category: NEP 2020
     cirriculum:
       foundation:
         - course_code: BSHS1001
@@ -196,6 +208,7 @@ education:
     time_period: 2022 - 2025
     gpa: CGPA - 7.01/10
     cred_link: https://drive.google.com/file/d/1N5jnPq4nCegRzXy_h75CtfA725RJlskM/preview
+    category: Choice Based Credit System (CBCS)
     cirriculum:
       semester_1:
         - course_code: [1090010101, 1090010202]

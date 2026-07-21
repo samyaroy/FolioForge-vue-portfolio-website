@@ -54,8 +54,17 @@
         </p>
       </div>
 
-      <!-- Institution & Location -->
-      <div class="flex items-center gap-6 mt-1">
+      <!-- Campus, Institution & Location -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-1 mt-1">
+        <div v-if="campus" class="flex items-center gap-2">
+          <v-icon class="text-[#4e7397]" size="16">
+            mdi-office-building-marker
+          </v-icon>
+          <p class="text-[#4e7397] text-sm font-normal leading-normal">
+            {{ campus }}
+          </p>
+        </div>
+
         <div class="flex items-center gap-2">
           <v-icon class="text-[#4e7397]" size="16">
             mdi-domain
@@ -92,6 +101,7 @@
       v-model="showCurriculumModal"
       :cirriculum="cirriculum"
       :degree-name="subject ? `${title} in ${subject}` : title"
+      :category="category"
     />
   </div>
 </template>
@@ -109,6 +119,8 @@ const props = defineProps({
   time: { type: String, required: true },
   institution: { type: String, required: true },
   location: { type: String, required: true },
+  campus: { type: String, default: '' },
+  category: { type: String, default: '' },
   extra: { type: String, default: '' },
   icon: { type: String, default: 'mdi-school' },
   iconColor: { type: String, default: 'text-[#1980e6]' },
