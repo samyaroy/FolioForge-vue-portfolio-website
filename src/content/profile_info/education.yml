@@ -202,7 +202,7 @@ education:
           course_name: Descriptive Statistics and Probability I (Theory + Lab)
           type: CC/PCC
           credit: 6
-          faculty: [Prof. (Dr.) Pradip Dutta Gupta, Argha Bhattacharya]
+          faculty: [Prof. (Dr.) Pradip Dutta Gupta, Mr. Argha Bhattacharya]
         - course_code: 1090010103
           course_name: Mathematics I
           type: CC/PCC
@@ -222,13 +222,13 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            - name: Biswajit Basak
+            - name: Mr. Biswajit Basak
         - course_code: [1090011104, 1090011204]
           course_name: Sampling Distributions (Theory + Lab)            
           type: CC/PCC
           credit: 6
           faculty:
-            - name: Ardhendu Banerjee
+            - name: Mr. Ardhendu Banerjee
         - course_code: 
           course_name: Mathematics II
           type: DSE/PEC
@@ -255,13 +255,13 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            - name: Biswajit Basak
+            - name: Mr. Biswajit Basak
         - course_code: [1090012105, 1090012205]
           course_name: Population Statistics (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
-            - name: Ardhendu Banerjee
+            - name: Mr. Ardhendu Banerjee
         - course_code: 2090012102
           course_name: Mathematical Analysis
           type: DSE/PEC
@@ -294,7 +294,7 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            - name: Biswajit Basak
+            - name: Mr. Biswajit Basak
         - course_code: [1090013108, 1090013208]
           course_name: Sample Survey & Indian Official Statistics (Theory + Lab)
           type: CC/PCC
@@ -331,7 +331,7 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            - name: Aniruddha Choudhuri
+            - name: Prof. Aniruddha Choudhuri
         - course_code: [1090014103, 1090014204]
           course_name: Linear Model and Regression (Theory + Lab)
           type: CC/PCC
@@ -343,8 +343,8 @@ education:
           type: CC/PCC
           credit: 6
           faculty:
-            - name: Argha Bhattacharya
-            - name: Modhumita Das
+            - name: Mr. Argha Bhattacharya
+            - name: Mrs. Modhumita Das
         - course_code: 5090014404
           course_name: Mentored Seminar IV
           type: SEC/PSE/CLE
