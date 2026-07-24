@@ -102,7 +102,7 @@
             <li v-if="showCocurricularLink">
               <router-link to="/cocurricular"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Co-curricular Activities
+                Volunteering and Co-curricular Activities
               </router-link>
             </li>
             <li v-if="showResourcesLink">
