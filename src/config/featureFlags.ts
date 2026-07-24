@@ -90,7 +90,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   },
 
   // Controls the "Did you know?" facts page (/facts) and its nav link.
-  showFacts: true,
+  showFacts: false,
 
   // Controls the quote pane rendered between page content and the footer.
   showPageQuotePane: true,

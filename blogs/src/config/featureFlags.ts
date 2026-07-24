@@ -10,7 +10,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showHobbies: true,
   showGallery: true,
   // "Did you know?" nav link to the main site's /facts route.
-  showFactsLink: true,
+  showFactsLink: false,
   showPortfolioLink: true,
 
   // Controls the subtitle/description line under each page's title.
