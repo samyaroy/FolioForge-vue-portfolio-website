@@ -2,27 +2,35 @@ co_curriculars:
   - title: leadership_roles
     entries:
       - role: Founder, Club Administrator
-        organization:
-          name:  'Chi-Square: Statistics Club'
-          web_link: https://22f2001443.github.io/chi-square/
-        host:
-          name: Nilgiri House
-          web_link:
-        institute: Indian Institute of Technology Madras BS Degree
+        affiliation:
+          - organization:
+              name:  'Chi-Square: Statistics Interest Club'
+              web_link: https://www.rasor.in/
+            institute: Indian Institute of Technology Madras BS Degree
+            time_period: 2026 - Present
+          - organization:
+              name:  'Chi-Square: Statistics Club'
+              web_link: https://22f2001443.github.io/chi-square/
+            host:
+              name: Nilgiri House
+              web_link:
+            institute: Indian Institute of Technology Madras BS Degree
+            time_period: 2023 - 2026
         description: Created and led the statistics community of 500+ members over 2 years. Organized more than 20 workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
         time_period: 2023 - 2026
-        skills: Leadership, Event Management, Team Building
+        # skills: Leadership, Event Management, Team Building
 
-      - role: Event Head, Super Coordinator
-        event:
-          name: Probably Paradoxical
-        host:
-          name: Paradox 2026
-        institute: Indian Institute of Technology Madras BS Degree
+      - role: Event Head
+        affiliation:
+          - organization:
+              name: Probably Paradoxical
+            host:
+              name: Paradox 2026
+            institute: Indian Institute of Technology Madras BS Degree
+            time_period: June 2026
         description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe`.
         #  and `Dr. Naveen Sivadasan`.
-        time_period: June 2026
-        skills: Event Management, Team Coordination, Sponsor Management
+        # skills: Event Management, Team Coordination, Sponsor Management
         cred_link: https://drive.google.com/file/d/1sJ9ULNFWPlJUhdwTTsYMHC4tB10oopUO/preview      
       #Add more entries as needed
 
@@ -33,7 +41,7 @@ co_curriculars:
         field:
           - sub_field: 'Course: Statistics for Data Science I'
             time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)
-        skills: 25+ Students Taught
+        skills: Taught 25+ Students 
         cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
 
       # - role: Teaching Assistant (Project)

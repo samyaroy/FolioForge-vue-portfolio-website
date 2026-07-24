@@ -10,39 +10,47 @@
       <span v-if="leadership.time_period" class="text-sm text-gray-500">{{ leadership.time_period }}</span>
     </div>
 
-    <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-2">
-      <div v-if="primaryName" class="flex items-center space-x-1">
-        <v-icon small class="text-[#1980e6]">{{ primaryIcon }}</v-icon>
-        <span class="text-gray-600">{{ primaryName }}</span>
-        <a
-          v-if="primaryLink"
-          :href="primaryLink"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-[#1980e6] hover:underline text-sm"
-          :aria-label="`Open ${primaryName} website`"
-        >
-          <v-icon size="16" class="text-gray-500">mdi-open-in-new</v-icon>
-        </a>
-      </div>
-
-      <div v-if="leadership.host" class="flex items-center space-x-1">
-        <v-icon small class="text-[#1980e6]">mdi-domain </v-icon>
-        <span v-if="leadership.host.web_link" class="text-gray-700">
-          <a :href="leadership.host.web_link" target="_blank" rel="noopener" class="text-[#1980e6] hover:underline text-sm">
-            {{ leadership.host.name }}
+    <div class="flex flex-col gap-2 mb-2">
+      <div
+        v-for="(affiliation, index) in affiliations"
+        :key="index"
+        class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4"
+      >
+        <div v-if="affiliation.name" class="flex items-center space-x-1">
+          <v-icon small class="text-[#1980e6]">mdi-office-building</v-icon>
+          <span class="text-gray-600">{{ affiliation.name }}</span>
+          <a
+            v-if="affiliation.link"
+            :href="affiliation.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[#1980e6] hover:underline text-sm"
+            :aria-label="`Open ${affiliation.name} website`"
+          >
+            <v-icon size="16" class="text-gray-500">mdi-open-in-new</v-icon>
           </a>
-        </span>
-        <span v-else class="text-gray-700">
-            {{ leadership.host.name }}
-        </span>
-      </div>
+        </div>
 
-      <div v-if="instituteName" class="flex items-center space-x-1">
-        <v-icon small class="text-[#1980e6]">mdi-town-hall</v-icon>
-        <span class="text-gray-700">
-          <SmartLink type="Institution" :text="instituteName" />
-        </span>
+        <div v-if="affiliation.host" class="flex items-center space-x-1">
+          <v-icon small class="text-[#1980e6]">mdi-domain </v-icon>
+          <span v-if="affiliation.host.web_link" class="text-gray-700">
+            <a :href="affiliation.host.web_link" target="_blank" rel="noopener" class="text-[#1980e6] hover:underline text-sm">
+              {{ affiliation.host.name }}
+            </a>
+          </span>
+          <span v-else class="text-gray-700">
+              {{ affiliation.host.name }}
+          </span>
+        </div>
+
+        <div v-if="affiliation.institute" class="flex items-center space-x-1">
+          <v-icon small class="text-[#1980e6]">mdi-town-hall</v-icon>
+          <span class="text-gray-700">
+            <SmartLink type="Institution" :text="affiliation.institute" />
+          </span>
+        </div>
+
+        <span v-if="affiliation.time_period" class="text-sm text-gray-500">{{ affiliation.time_period }}</span>
       </div>
     </div>
 
@@ -77,36 +85,17 @@ const props = defineProps({
   }
 })
 
-const organization = computed(() => props.leadership.organization)
-const event = computed(() => props.leadership.event)
-
-const primaryName = computed(() => {
-  if (organization.value) {
-    return typeof organization.value === 'string' ? organization.value : organization.value.name
-  }
-
-  if (event.value) {
-    return typeof event.value === 'string' ? event.value : event.value.name
-  }
-
-  return ''
-})
-
-const primaryLink = computed(() => {
-  if (organization.value && typeof organization.value === 'object') {
-    return organization.value.web_link || ''
-  }
-
-  if (event.value && typeof event.value === 'object') {
-    return event.value.web_link || ''
-  }
-
-  return props.leadership.web_link || ''
-})
-
-const primaryIcon = computed(() => event.value && !organization.value ? 'mdi-seat' : 'mdi-office-building')
-
-const instituteName = computed(() => props.leadership.institute|| '')
+// One role can list multiple organizations via the `affiliation` array,
+// each with its own optional host, institute, and time period.
+const affiliations = computed(() =>
+  props.leadership.affiliation.map(affiliation => ({
+    name: affiliation.organization?.name || '',
+    link: affiliation.organization?.web_link || '',
+    host: affiliation.host || null,
+    institute: affiliation.institute || '',
+    time_period: affiliation.time_period || ''
+  }))
+)
 
 const skills = computed(() => {
   if (Array.isArray(props.leadership.skills)) {
