@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prepare": "git config core.hooksPath scripts/hooks || true",
     "dev": "vite",
     "lint": "eslint .",
     "sync:gallery-manifest": "node scripts/sync-gallery-image-manifest.js",
