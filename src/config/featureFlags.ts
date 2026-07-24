@@ -77,10 +77,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   },
 
   showProfessionalActivity: {
-    showInvitedTalks: true,
+    showInvitedTalks: false,
     showHostedEvents: {
-      main: true,
-      others: true,
+      main: false,
+      others: false,
     },
   },
 
