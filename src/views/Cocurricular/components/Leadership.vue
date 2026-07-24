@@ -7,7 +7,6 @@
           <DocumentViewer :src="leadership.cred_link" />
         </span>
       </h3>
-      <span v-if="leadership.time_period" class="text-sm text-gray-500">{{ leadership.time_period }}</span>
     </div>
 
     <div class="flex flex-col gap-2 mb-2">
@@ -50,7 +49,7 @@
           </span>
         </div>
 
-        <span v-if="affiliation.time_period" class="text-sm text-gray-500">{{ affiliation.time_period }}</span>
+        <span v-if="affiliation.time_period" class="text-sm text-gray-500 md:ml-auto">{{ affiliation.time_period }}</span>
       </div>
     </div>
 
