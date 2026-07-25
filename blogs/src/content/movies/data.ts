@@ -7,7 +7,7 @@ export type MovieItem = {
   director: string
   genre: string
   /** ISO date string for when it was watched, e.g. "2026-07-12". */
-  date: string
+  date?: string
   description: string
   /** Release year, shown in the card and modal meta line. */
   year?: number
@@ -29,11 +29,11 @@ function resolvePosterImage(entry?: string) {
   const trimmedEntry = entry.trim()
   if (!trimmedEntry) return undefined
 
-  if (/^https?:\/\//i.test(trimmedEntry)) return trimmedEntry
+  if (/^(?:https?:\/\/|\/)/i.test(trimmedEntry)) return trimmedEntry
 
   return `https://media.samyabrata.codeium.xyz/${encodeURIComponent(trimmedEntry)}.jpeg`
 }
 
 export const MOVIES: MovieItem[] = items
   .map((item) => ({ ...item, image: resolvePosterImage(item.image) }))
-  .sort((a, b) => b.date.localeCompare(a.date))
+  .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
