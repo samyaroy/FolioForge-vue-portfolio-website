@@ -1,13 +1,25 @@
 <template>
   <Transition name="info-ribbon" @after-leave="emitDismissed">
-    <section v-if="isVisible" class="info-ribbon-shell" aria-label="Announcement">
+    <section
+      v-if="isVisible && currentEntry"
+      class="info-ribbon-shell"
+      aria-label="Announcement"
+      @mouseenter="pauseRotation"
+      @mouseleave="resumeRotation"
+      @focusin="pauseRotation"
+      @focusout="resumeRotation"
+    >
       <div class="info-ribbon-panel">
         <div class="info-ribbon-content">
           <span class="info-ribbon-icon">
-            <v-icon color="#ffffff" size="14">{{ icon }}</v-icon>
+            <v-icon color="#ffffff" size="14">{{ currentEntry.icon }}</v-icon>
           </span>
           <span class="info-ribbon-message">
-            <CaptionContent :text="message" />
+            <Transition name="info-ribbon-swap" mode="out-in">
+              <span :key="activeIndex" class="info-ribbon-message-text">
+                <CaptionContent :text="currentEntry.message" />
+              </span>
+            </Transition>
           </span>
           <button class="info-ribbon-close" type="button" aria-label="Close announcement" @click="closeRibbon">
             <v-icon color="#ffffff" size="14">mdi-close</v-icon>
@@ -19,24 +31,83 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import CaptionContent from '@/components/CaptionContent.vue'
 
-defineProps({
-  message: {
-    type: String,
-    required: true,
+const DEFAULT_ICON = 'mdi-information'
+
+const props = defineProps({
+  // One entry per announcement — `{ message, icon }`, straight from
+  // content/profile_info/ribbon.yml. A lone object is accepted too, so the
+  // YAML can go back to a single mapping without touching this component.
+  entries: {
+    type: [Array, Object],
+    default: () => [],
   },
-  icon: {
-    type: String,
-    default: 'mdi-information',
+  // How long each message holds before the next one takes its place.
+  rotationMs: {
+    type: Number,
+    default: 5000,
   },
 })
 
 const isVisible = ref(true)
+const activeIndex = ref(0)
 const emit = defineEmits(['dismissed'])
 
+// Entries without a message would render an empty ribbon, so drop them here
+// rather than making every call site filter first.
+const ribbonEntries = computed(() => {
+  const list = Array.isArray(props.entries) ? props.entries : [props.entries]
+  return list
+    .filter(entry => typeof entry?.message === 'string' && entry.message.trim())
+    .map(entry => ({ message: entry.message, icon: entry.icon || DEFAULT_ICON }))
+})
+
+const currentEntry = computed(() => ribbonEntries.value[activeIndex.value] ?? null)
+
+let rotationTimer = null
+
+function stopRotation() {
+  if (rotationTimer === null) return
+  window.clearInterval(rotationTimer)
+  rotationTimer = null
+}
+
+function startRotation() {
+  stopRotation()
+  // A single announcement has nothing to rotate to.
+  if (ribbonEntries.value.length < 2) return
+
+  rotationTimer = window.setInterval(() => {
+    activeIndex.value = (activeIndex.value + 1) % ribbonEntries.value.length
+  }, props.rotationMs)
+}
+
+// Hovering or tabbing in holds the current message: these announcements carry
+// links, and rotating one away mid-read would pull the link out from under the
+// pointer.
+function pauseRotation() {
+  stopRotation()
+}
+
+function resumeRotation() {
+  startRotation()
+}
+
+watch(
+  ribbonEntries,
+  () => {
+    activeIndex.value = 0
+    startRotation()
+  },
+  { immediate: true },
+)
+
+onBeforeUnmount(stopRotation)
+
 function closeRibbon() {
+  stopRotation()
   isVisible.value = false
 }
 
@@ -116,6 +187,40 @@ function emitDismissed() {
   line-height: 1.3;
   letter-spacing: 0;
   text-wrap: balance;
+}
+
+.info-ribbon-message-text {
+  display: block;
+}
+
+/* Only the text swaps; the panel around it stays put between messages. */
+.info-ribbon-swap-enter-active,
+.info-ribbon-swap-leave-active {
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+
+.info-ribbon-swap-enter-from {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.info-ribbon-swap-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-ribbon-swap-enter-active,
+  .info-ribbon-swap-leave-active {
+    transition: none;
+  }
+
+  .info-ribbon-swap-enter-from,
+  .info-ribbon-swap-leave-to {
+    transform: none;
+  }
 }
 
 .info-ribbon-message :deep(a) {

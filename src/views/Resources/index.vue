@@ -1,14 +1,13 @@
 <template>
   <InfoRibbon
-    v-if="showRibbon && ribbonMessage && !isRibbonDismissed"
-    :icon="ribbonIcon"
-    :message="ribbonMessage"
+    v-if="showRibbon && hasRibbon && !isRibbonDismissed"
+    :entries="ribbonEntries"
     @dismissed="isRibbonDismissed = true"
   />
 
   <div class="relative min-h-screen bg-[#eef3f8] py-8">
     <RibbonToggle
-      v-if="showRibbon && ribbonMessage && isRibbonDismissed"
+      v-if="showRibbon && hasRibbon && isRibbonDismissed"
       :icon="ribbonIcon"
       @open="isRibbonDismissed = false"
     />
@@ -98,8 +97,11 @@ const pageDescription = descriptions.resources
 const showPageDescription = isPageDescriptionEnabled('resources')
 
 const showRibbon = isFeatureEnabled('showResources.showRibbon')
-const ribbonMessage = config.ribbon?.message
-const ribbonIcon = config.ribbon?.icon || 'mdi-information'
+// ribbon.yml holds a list of announcements; InfoRibbon cycles through them and
+// the toggle (shown once dismissed) keeps the first one's icon.
+const ribbonEntries = Array.isArray(config.ribbon) ? config.ribbon : [config.ribbon]
+const hasRibbon = ribbonEntries.some(entry => entry?.message)
+const ribbonIcon = ribbonEntries[0]?.icon || 'mdi-information'
 const isRibbonDismissed = ref(false)
 
 defineOptions({

@@ -19,9 +19,24 @@ function navLinkClass({ isActive }: { isActive: boolean }): string {
     : 'relative text-sm leading-normal font-medium text-ink transition-colors duration-200 hover:text-primary'
 }
 
+// The name plus the inline links need ~765px at six links and ~955px at seven
+// (feature flags decide how many), so the drawer has to take over at a
+// different width in each case — otherwise the trailing links are clipped.
+// Both class strings are spelled out in full so Tailwind's scanner sees them.
+function navBreakpoint(inlineLinkCount: number) {
+  return inlineLinkCount > 6
+    ? { nav: 'lg:flex', menuButton: 'lg:hidden' }
+    : { nav: 'md:flex', menuButton: 'md:hidden' }
+}
+
 export function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const enabledNavItems = NAV_ITEMS.filter((item) => isFeatureEnabled(item.flag))
+  const showFactsLink = isFeatureEnabled('showFactsLink')
+  const showPortfolioLink = isFeatureEnabled('showPortfolioLink')
+  const breakpoint = navBreakpoint(
+    enabledNavItems.length + (showFactsLink ? 1 : 0) + (showPortfolioLink ? 1 : 0),
+  )
 
   return (
     <>
@@ -37,10 +52,8 @@ export function Header() {
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-8">
-          {/* The inline links plus the name need ~955px; below `lg` the drawer
-              takes over, otherwise the trailing tabs are clipped off-screen. */}
           <nav
-            className="hidden items-center gap-9 lg:flex"
+            className={`hidden items-center gap-9 ${breakpoint.nav}`}
             aria-label="Primary navigation"
           >
             {enabledNavItems.map((item) => (
@@ -53,12 +66,12 @@ export function Header() {
                 {item.label}
               </NavLink>
             ))}
-            {isFeatureEnabled('showFactsLink') && (
+            {showFactsLink && (
               <a href={FACTS_URL} className={MUTED_LINK_CLASS}>
                 {FACTS_NAV_LABEL}
               </a>
             )}
-            {isFeatureEnabled('showPortfolioLink') && (
+            {showPortfolioLink && (
               <a href={MAIN_SITE_URL} className={MUTED_LINK_CLASS}>
                 {PORTFOLIO_NAV_LABEL}
               </a>
@@ -66,7 +79,7 @@ export function Header() {
           </nav>
 
           <button
-            className="flex size-10 cursor-pointer items-center justify-center border-0 bg-transparent p-0 text-black transition-colors duration-200 hover:text-primary lg:hidden"
+            className={`flex size-10 cursor-pointer items-center justify-center border-0 bg-transparent p-0 text-black transition-colors duration-200 hover:text-primary ${breakpoint.menuButton}`}
             type="button"
             aria-label="Open menu"
             aria-expanded={drawerOpen}
@@ -112,7 +125,7 @@ export function Header() {
                   {item.label}
                 </NavLink>
               ))}
-              {isFeatureEnabled('showFactsLink') && (
+              {showFactsLink && (
                 <a
                   href={FACTS_URL}
                   className={MUTED_LINK_CLASS}
@@ -121,7 +134,7 @@ export function Header() {
                   {FACTS_NAV_LABEL}
                 </a>
               )}
-              {isFeatureEnabled('showPortfolioLink') && (
+              {showPortfolioLink && (
                 <a
                   href={MAIN_SITE_URL}
                   className={MUTED_LINK_CLASS}
