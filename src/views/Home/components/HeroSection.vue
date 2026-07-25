@@ -15,8 +15,8 @@
               <h1
                 class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]" v-html="heading"></h1>
               <h2
-                class="content-justify text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
-                {{ about }}
+                class="hero-about content-justify text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
+                <SmartLink :text="about" :type="'Institute'" />
               </h2>
             </div>
 
@@ -66,6 +66,7 @@
 
 <script setup>
 import config from "@/content/profile_info"
+import SmartLink from "@/components/SmartLink.vue"
 
 const { profile, contacts, socials } = config
 
@@ -94,5 +95,24 @@ const openGmailDraft = () => {
 <style scoped>
 .get-in-touch-button {
   border: 2px solid #000000 !important;
+}
+
+.hero-about :deep(a) {
+  color: #1980e6;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.hero-about :deep(a:hover) {
+  color: #1565c0;
+  /* overrides SmartLink's own hover:underline utility class */
+  text-decoration: none;
+}
+
+.hero-about :deep(a:focus-visible) {
+  outline: 2px solid rgba(25, 128, 230, 0.9);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 </style>
