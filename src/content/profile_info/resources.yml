@@ -93,6 +93,12 @@ subjects:
         meta: "Book"
         instructor: "Geoge Casella and Roger L. Berger"
         distributor: "CENEGAGE Learning"
+      
+      - title: "Bayesian Statistics: From Concept to Data Analysis"
+        meta: "Course"
+        instructor: "Prof. Herbert Lee"
+        distributor: "University of California, Santa Cruz ; Coursera"
+        link: https://www.coursera.org/learn/bayesian-statistics
 
   - title: "Machine Learning"
     materials:

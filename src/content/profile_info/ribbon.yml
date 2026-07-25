@@ -11,5 +11,5 @@
 ribbon:
   - message: "Join [[Chi-Square: Statistics Interest Group|Chi-Square: Statistics Club | Institute]] for Statistics events and discussions (for IITM BS Degree students)"
     icon: mdi-information
-  - message: "Second announcement — uncomment or add entries to start the rotation."
-    icon: mdi-bullhorn-outline
+  # - message: "Second announcement — uncomment or add entries to start the rotation."
+  #   icon: mdi-bullhorn-outline
