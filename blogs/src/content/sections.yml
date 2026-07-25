@@ -19,6 +19,17 @@ readings:
   noteLabel: My note
   linkLabel: More about this book
 
+movies:
+  title: Movies
+  tag: movies
+  cardLabel: Movie
+  emptyLabel: Nothing worth binge-watching here yet.
+  reviewLabel: "Read review ->"
+  # Labels inside the review modal opened from a movie card.
+  watchedLabel: "watched"
+  noteLabel: My take
+  linkLabel: More about this film
+
 hobbies:
   title: Hobbies
   tag: hobbies

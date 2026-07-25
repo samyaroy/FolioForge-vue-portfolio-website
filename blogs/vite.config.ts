@@ -62,6 +62,7 @@ function tripRoutes(): string[] {
 
 const staticRoutes = [
   isFeatureEnabled('showReadings') ? '/readings' : null,
+  isFeatureEnabled('showMovies') ? '/movies' : null,
   isFeatureEnabled('showTravel') ? '/travel' : null,
   isFeatureEnabled('showHobbies') ? '/hobbies' : null,
   isFeatureEnabled('showGallery') ? '/gallery' : null,

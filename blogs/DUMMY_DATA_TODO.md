@@ -51,6 +51,15 @@ Replace with real posts, or set `draft: true` to unpublish.
 - [ ] `items: []` — Gallery page is empty and shows the "Coming soon…" state
   (`src/views/Gallery/components/GalleryGrid.tsx:21`)
 
+## Movies — `src/content/movies/data.yml`
+
+The file marks itself: `# Placeholder entries below — replace with real watch notes.`
+
+- [ ] `whiplash`, `arrival`, `spirited-away` — scaffold entries added with the Movies
+  page (2026-07-25); descriptions/notes/ratings are placeholders, not real watch notes
+- [ ] No `image:` set on any entry, so all three fall back to the clapperboard art —
+  add poster URLs or CDN keys once real entries land
+
 ## Readings — `src/content/readings/data.yml` (verify)
 
 - [ ] Possibly sample content: Deep Work, The Design of Everyday Things, Thinking in

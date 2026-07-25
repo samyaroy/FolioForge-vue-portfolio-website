@@ -5,6 +5,7 @@ import { BlogsPage } from './views/Blogs'
 import { PostPage } from './views/Post'
 import { NotFoundPage } from './views/NotFound'
 import { ReadingsPage } from './views/Readings'
+import { MoviesPage } from './views/Movies'
 import { HobbiesPage } from './views/Hobbies'
 import { GalleryPage } from './views/Gallery'
 import { isFeatureEnabled } from './config/featureFlags'
@@ -22,6 +23,12 @@ const optionalRoutes = [
     ? {
         path: '/readings',
         element: <ReadingsPage />,
+      }
+    : null,
+  isFeatureEnabled('showMovies')
+    ? {
+        path: '/movies',
+        element: <MoviesPage />,
       }
     : null,
   isFeatureEnabled('showTravel')

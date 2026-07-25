@@ -46,6 +46,7 @@ each paired with a small `.ts` module that applies the TypeScript types
 | `sections.yml`      | Per-page titles, description lines, labels        |
 | `navigation.yml`    | Header nav items, cross-links to the main site    |
 | `readings/data.yml` | Reading notes (sorted newest-first automatically) |
+| `movies/data.yml`   | Movie notes (sorted newest-first automatically)   |
 | `travel/data.yml`   | Travel-map state/city visit data, legend labels   |
 
 Keep dates quoted (`"2026-06-20"`) so they stay strings, and quote values

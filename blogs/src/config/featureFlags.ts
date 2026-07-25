@@ -6,6 +6,7 @@ type FeatureFlagNode = {
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showBlogHome: true,
   showReadings: true,
+  showMovies: true,
   showTravel: true,
   showHobbies: true,
   showGallery: true,
@@ -21,6 +22,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     enabled: true,
     blogs: true,
     readings: true,
+    movies: true,
     travel: true,
     hobbies: false,
     gallery: false,

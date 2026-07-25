@@ -37,8 +37,10 @@ export function Header() {
         </div>
 
         <div className="flex flex-1 items-center justify-end gap-8">
+          {/* The inline links plus the name need ~955px; below `lg` the drawer
+              takes over, otherwise the trailing tabs are clipped off-screen. */}
           <nav
-            className="hidden items-center gap-9 md:flex"
+            className="hidden items-center gap-9 lg:flex"
             aria-label="Primary navigation"
           >
             {enabledNavItems.map((item) => (
@@ -64,7 +66,7 @@ export function Header() {
           </nav>
 
           <button
-            className="flex size-10 cursor-pointer items-center justify-center border-0 bg-transparent p-0 text-black transition-colors duration-200 hover:text-primary md:hidden"
+            className="flex size-10 cursor-pointer items-center justify-center border-0 bg-transparent p-0 text-black transition-colors duration-200 hover:text-primary lg:hidden"
             type="button"
             aria-label="Open menu"
             aria-expanded={drawerOpen}
