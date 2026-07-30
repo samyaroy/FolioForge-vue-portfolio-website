@@ -20,8 +20,8 @@ courses_taught:
   #       students: 80
 
 projects_mentored:
-  # - semester: "Summer 2026"
-  #   projects:
+  - semester: "Summer 2026"
+    projects:
   #     - title: "Weather-Uncertainty-Aware Crop Yield Prediction Using Climatic Disturbance Indicators (based on Indian Datasets)"
   #       course: "Summer Internship Program on Data Science 2026"
   #       students:
@@ -38,19 +38,22 @@ projects_mentored:
   #         name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
   #         location: Kolkata, WB
       
-  #     - title: "An Open-Source Framework for Gamified Learning and Progress Tracking Using YouTube Playlists"
-  #       course: "Summer Internship Program on Data Science 2026"
-  #       students:
-  #         - name: "NIRNOY CHATTERJEE"
-  #           Linkedin: 
-  #         - name: "SHREYAN GHOSH"
-  #           Linkedin:
-  #         - name: "PRINCE KUMAR SINGH"
-  #           Linkedin:
-  #       registration_number: ""
-  #       affiliation:
-  #         name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-  #         location: Kolkata, WB
+      - title: "TrackTube: An Open-Source YouTube-based LMS Framework for Structured Learning, Roadmap Generation and Progress Tracking"
+        description:
+        course: "Summer Internship Program on Data Science 2026"
+        students:
+          - name: "NIRNOY CHATTERJEE"
+            Linkedin: 
+          - name: "SHREYAN GHOSH"
+            Linkedin:
+          - name: "PRINCE KUMAR SINGH"
+            Linkedin:
+        registration_number: ""
+        affiliation:
+          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+          location: Kolkata, WB
+        cred_link:
+          github: https://github.com/samyatih/summer_intern_group-a 
 
   #     - title: "Interpretable Machine Learning application in Bird Migration Trajectory Analysis Using GPS Data"
   #       course: "Summer Internship Program on Data Science 2026"
@@ -67,6 +70,7 @@ projects_mentored:
   - semester: "Spring 2026"
     projects:
       - title: "Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data"
+        description: "This study benchmarks machine learning models for liver cirrhosis classification on the cleaned Indian Liver Patient Dataset and re-evaluates them after introducing controlled Gaussian Mixture Model-based perturbations. The comparison across clean and noisy variants reveals that ensemble tree-based methods gain substantially in minority-class detection under noise, while linear and imbalance-focused models remain largely unchanged."
         course: "Spring Internship Program on Data Science 2026"
         students:
           - name: "SAPTARSHI DEY"

@@ -33,6 +33,17 @@
                 <div :class="isCollapsed(semesterBlock.semester) ? '' : 'mb-2'">
                   <h4 class="text-md font-semibold text-[#0e141b]">
                     {{ project.title }}
+                    <v-tooltip v-if="project.description" location="top">
+                      <template #activator="{ props }">
+                        <button v-bind="props" type="button"
+                          class="ml-1 inline-flex h-5 w-5 shrink-0 translate-y-[2px] items-center justify-center rounded-full text-[#1980e6] transition hover:bg-[#1980e6]/10 focus:outline-none"
+                          aria-label="Project description"
+                          @click="openDescription(project)">
+                          <v-icon size="16">mdi-information-outline</v-icon>
+                        </button>
+                      </template>
+                      <span>Project description</span>
+                    </v-tooltip>
                   </h4>
                 </div>
 
@@ -113,12 +124,19 @@
     <div v-else class="text-center text-gray-500 italic">
       No projects mentored
     </div>
+
+    <ProjectDescriptionModal
+      v-model="isDescriptionModalOpen"
+      :title="activeProject.title"
+      :description="activeProject.description"
+    />
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import ProjectDescriptionModal from './ProjectDescriptionModal.vue'
 
 defineProps({
   projects: {
@@ -126,6 +144,17 @@ defineProps({
     default: () => []
   }
 })
+
+const isDescriptionModalOpen = ref(false)
+const activeProject = ref({ title: '', description: '' })
+
+const openDescription = (project) => {
+  activeProject.value = {
+    title: project?.title || '',
+    description: project?.description || ''
+  }
+  isDescriptionModalOpen.value = true
+}
 
 const collapsedSemesters = reactive({})
 
