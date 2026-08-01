@@ -6,7 +6,7 @@
 
     <div v-if="projects && projects.length" class="space-y-10">
       <!-- Semester Loop -->
-      <div v-for="semesterBlock in projects" :key="semesterBlock.semester">
+      <div v-for="semesterBlock in visibleProjects" :key="semesterBlock.semester">
         <!-- Semester Heading -->
         <div class="mb-4 flex items-center justify-between border-b pb-2">
           <h3 class="text-lg font-semibold text-[#0e141b]">
@@ -119,6 +119,16 @@
           </div>
         </div>
       </div>
+
+      <div v-if="hasMoreProjects" class="flex justify-end">
+        <button
+          type="button"
+          class="text-sm font-semibold text-[#1980e6] transition hover:text-[#0e64b8] focus:outline-none"
+          @click="showMoreProjects"
+        >
+          See more
+        </button>
+      </div>
     </div>
 
     <div v-else class="text-center text-gray-500 italic">
@@ -134,19 +144,76 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import ProjectDescriptionModal from './ProjectDescriptionModal.vue'
 
-defineProps({
+const props = defineProps({
   projects: {
     type: Array,
     default: () => []
   }
 })
 
+const PROJECTS_PER_PAGE = 5
+const visibleProjectCount = ref(PROJECTS_PER_PAGE)
 const isDescriptionModalOpen = ref(false)
 const activeProject = ref({ title: '', description: '' })
+
+const flattenedProjects = computed(() => (
+  props.projects.flatMap((semesterBlock) => (
+    (semesterBlock.projects || []).map((project) => ({
+      semester: semesterBlock.semester,
+      project
+    }))
+  ))
+))
+
+const effectiveVisibleProjectCount = computed(() => {
+  const flattened = flattenedProjects.value
+
+  if (flattened.length <= visibleProjectCount.value) {
+    return flattened.length
+  }
+
+  let count = visibleProjectCount.value
+  const boundarySemester = flattened[count - 1]?.semester
+
+  while (count < flattened.length && flattened[count]?.semester === boundarySemester) {
+    count += 1
+  }
+
+  return count
+})
+
+const visibleProjects = computed(() => {
+  const visibleItems = flattenedProjects.value.slice(0, effectiveVisibleProjectCount.value)
+  const groupedProjects = []
+
+  visibleItems.forEach(({ semester, project }) => {
+    const currentBlock = groupedProjects[groupedProjects.length - 1]
+
+    if (currentBlock?.semester === semester) {
+      currentBlock.projects.push(project)
+      return
+    }
+
+    groupedProjects.push({
+      semester,
+      projects: [project]
+    })
+  })
+
+  return groupedProjects
+})
+
+const hasMoreProjects = computed(() => (
+  effectiveVisibleProjectCount.value < flattenedProjects.value.length
+))
+
+const showMoreProjects = () => {
+  visibleProjectCount.value = effectiveVisibleProjectCount.value + PROJECTS_PER_PAGE
+}
 
 const openDescription = (project) => {
   activeProject.value = {
