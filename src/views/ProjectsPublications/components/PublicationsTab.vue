@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8">
+  <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8">
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Research Publications</h2>
     <div v-if="publicationsByYear.length">
       <div v-for="yearGroup in publicationsByYear" :key="yearGroup.year" class="mb-12 last:mb-0">
@@ -12,7 +12,7 @@
           <div
             v-for="(publication, index) in yearGroup.items"
             :key="publication.id || publication.title || index"
-            class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50"
+            class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4 pr-4 rounded-md bg-slate-50"
           >
             <div class="flex flex-col gap-4 md:flex-row md:items-stretch md:gap-8">
               <div
