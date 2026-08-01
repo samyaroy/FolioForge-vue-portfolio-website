@@ -4,14 +4,20 @@
 # tiles entries:
 #   label — hobby name (tooltip + screen readers; tiles are icon-only)
 #   icon  — @mdi/font class, e.g. mdi-camera (https://pictogrammers.com/library/mdi/)
-#   imageId — optional media id; renders https://media.samyabrata.codeium.xyz/{imageId}.jpeg
-#   image — optional path to a picture (from public/); replaces the icon
+#   imageId — media id; renders https://media.samyabrata.codeium.xyz/{imageId}.jpeg
+#   image — path to a picture (from public/)
 #   tint  — true renders the tile with the soft blue accent background
+#
+# Give a tile both an icon and pictures and it turns over on a timer: icon,
+# first picture, icon, second picture, and round again. imageId and image both
+# take one value or a list:
+#   - { label: Hiking, icon: mdi-hiking, imageId: [hobby/hike1, hobby/hike2] }
+# A tile with pictures but no icon just shows the first picture, still.
 
 tiles:
   - { label: Book, icon: mdi-book-open-page-variant }
   - { label: Badminton, icon: mdi-badminton }
-  - { label: Hiking, icon: mdi-hiking, tint: true }
+  - { label: Hiking, icon: mdi-hiking, imageId: hobby/hike1, tint: true }
   - { label: Bike, icon: mdi-bike }
   - { label: Football, icon: mdi-soccer, tint: true }
   - { label: Code, icon: mdi-code-block-braces, tint: true }

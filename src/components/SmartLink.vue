@@ -5,7 +5,7 @@
             :href="segment.href"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-primary hover:text-blue-800"
+            class="hover:underline"
         >
             {{ segment.text }}
         </a>

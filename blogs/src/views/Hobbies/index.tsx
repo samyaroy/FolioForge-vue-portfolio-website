@@ -4,6 +4,7 @@ import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
 import { posts } from '../../lib/posts'
 import { PostCard } from '../Blogs/components/PostCard'
+import { HobbyTile } from './components/HobbyTile'
 import {
   INTRO_SECTION_CLASS,
   INTRO_TEXT_CLASS,
@@ -11,17 +12,6 @@ import {
   POST_LIST_CLASS,
 } from '../../lib/ui'
 import { usePageTitle } from '../../lib/usePageTitle'
-
-const TILE_CLASS =
-  'flex aspect-square w-[calc((100%-1.5rem)/3)] items-center justify-center rounded-2xl transition-transform duration-300 ease-[ease] hover:-translate-y-1 sm:w-[calc((100%-3rem)/4)] lg:w-[calc((100%-4rem)/5)]'
-
-function getTileImageSrc(tile: (typeof HOBBY_TILES)[number]) {
-  if (tile.imageId) {
-    return `https://media.samyabrata.codeium.xyz/${encodeURIComponent(tile.imageId)}.jpeg`
-  }
-
-  return tile.image
-}
 
 export function HobbiesPage() {
   usePageTitle(HOBBIES_SECTION.title)
@@ -45,34 +35,9 @@ export function HobbiesPage() {
         aria-label="Hobbies"
       >
         <ul className="flex flex-wrap justify-center gap-3 sm:gap-4">
-          {HOBBY_TILES.map((tile) => {
-            const imageSrc = getTileImageSrc(tile)
-
-            return (
-              <li
-                key={tile.label}
-                className={`${TILE_CLASS} ${tile.tint ? 'bg-[#dbeafe]' : 'bg-page'} ${
-                  imageSrc ? 'overflow-hidden' : ''
-                }`}
-                title={tile.label}
-              >
-                {imageSrc ? (
-                  <img
-                    className="size-full rounded-2xl object-cover"
-                    src={imageSrc}
-                    alt=""
-                    loading="lazy"
-                  />
-                ) : (
-                  <span
-                    className={`mdi ${tile.icon} text-4xl leading-none text-ink md:text-5xl`}
-                    aria-hidden="true"
-                  />
-                )}
-                <span className="sr-only">{tile.label}</span>
-              </li>
-            )
-          })}
+          {HOBBY_TILES.map((tile, index) => (
+            <HobbyTile key={tile.label} tile={tile} order={index} />
+          ))}
         </ul>
       </section>
 
