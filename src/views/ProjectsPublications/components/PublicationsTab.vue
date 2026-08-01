@@ -110,7 +110,9 @@ const getPublicationYear = (publication) => {
 const publicationsByYear = computed(() => {
   const grouped = {}
 
-  props.publications.forEach((publication) => {
+  const items = Array.isArray(props.publications) ? props.publications : []
+
+  items.forEach((publication) => {
     const year = getPublicationYear(publication)
     if (!grouped[year]) grouped[year] = []
     grouped[year].push(publication)
