@@ -69,33 +69,44 @@ function parseCaption(text) {
 }
 
 function parseLinkSegment(rawValue, fallbackText) {
-  const parts = rawValue.split('|').map(part => part.trim()).filter(Boolean)
+  const parts = rawValue.split('|').map(part => part.trim())
+  const filledParts = parts.filter(Boolean)
 
-  if (parts.length === 2) {
+  if (filledParts.length === 2 && isUrl(filledParts[1])) {
     return {
       kind: 'link',
-      text: parts[0],
-      lookupText: parts[0],
-      linkType: parts[1],
+      text: filledParts[0],
+      href: filledParts[1],
+      lookupText: '',
+      linkType: 'Link',
     }
   }
 
-  if (parts.length >= 3) {
-    if (parts[2].toLowerCase() === 'link') {
+  if (filledParts.length === 2) {
+    return {
+      kind: 'link',
+      text: filledParts[0],
+      lookupText: filledParts[0],
+      linkType: filledParts[1],
+    }
+  }
+
+  if (filledParts.length >= 3) {
+    if (filledParts[2].toLowerCase() === 'link' || isUrl(filledParts[1])) {
       return {
         kind: 'link',
-        text: parts[0],
-        href: parts[1],
+        text: filledParts[0],
+        href: filledParts[1],
         lookupText: '',
-        linkType: parts[2],
+        linkType: filledParts[2],
       }
     }
 
     return {
       kind: 'link',
-      text: parts[0],
-      lookupText: parts[1],
-      linkType: parts[2],
+      text: filledParts[0],
+      lookupText: filledParts[1],
+      linkType: filledParts[2],
     }
   }
 
@@ -104,5 +115,9 @@ function parseLinkSegment(rawValue, fallbackText) {
 
 function createTextSegment(kind, text) {
   return { kind, text }
+}
+
+function isUrl(value) {
+  return /^https?:\/\//i.test(value)
 }
 </script>

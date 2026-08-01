@@ -42,12 +42,20 @@ categories:
 
   - category: Mentoring
     images:
+      - id: intern-project-02
+        date: 2026-08-05
+        description: Mentored 9 amazing Summer Interns at IDEAS-TIH
+
       - id: intern-project-01
         date: 2026-03-31
         description: Spring interns mentoring at IDEAS-TIH
 
   - category: New Role and Internship
     images:
+      - id: new_role-101
+        date: 2026-08-15
+        description: New Transition, New Journey
+
       - id: new_people-02
         date: 2026-07-07
         description: An experiment so unique that gained people over certificates

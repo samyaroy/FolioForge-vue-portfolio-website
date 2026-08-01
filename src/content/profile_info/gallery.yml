@@ -21,20 +21,29 @@
 #     - https://example.com/extra.jpg  # or a full URL
 
 items:
-  # - id: intern-project-02
-  #   title: Mentored new groups of Summer Interns at IDEAS-TIH
-  #   event:
-  #   location:
-  #   images:
-  #     - intern-project-02
-  #     - intern-project-02-01
-  #     - intern-project-02-02
-  #     - intern-project-02-03
-  #   # caption: I had the opportunity to mentor a group of Summer Interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was very new experience to guide them through their projects **'Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data'** and see their growth over the course of the internship.
-  #   type: gallery
-  #   date: 2026-07-31
-  #   # featured: true
-  #   tags: [Mentoring]
+  - id: new_role-101
+    title: New Transition, New Journey
+    event:
+    location: Calcutta University
+    type: LinkedIn
+    date: 2026-08-15
+    caption:
+    tags: [New Role]
+    featured: true
+
+  - id: intern-project-02
+    title: Mentored 9 amazing Summer Interns at IDEAS-TIH
+    event:
+    location:
+    type: gallery
+    date: 2026-08-05
+    images:
+      - intern-project-02
+      - intern-project-02-01
+      - intern-project-02-02
+      - intern-project-02-03
+    caption: This Summer I got assigned with an amazing group of 9 interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]] to mentor them through their projects. We explored diverse topics starting from Gamified LMS Portal building to modelling El Niño/La Niña events and their impact on Indian Monsoon. It was a great experience to work with a talented group. Shoutout to [[Nirnoy|Person]], [[Dorothy|https://www.linkedin.com/in/dorothy-b-a8659a345?utm_source=share_via&utm_content=profile&utm_medium=member_android]], [[Sahithi|https://www.linkedin.com/in/sahithi-dharani]], [[Shreyan|Person]] for their hard work.
+    tags: [Mentoring]
 
   - id: workshop-07
     title: Took the first conventional step towards Theoretical Computer Science
@@ -44,6 +53,8 @@ items:
     tags: [Bootcamp, Workshop]
     event: FLSTCS 2026
     location: Alladi Ramakrishnan Hall, IMSc
+    images: 
+      - IMSc_Chennai
 
   - id: guest_event-10
     title: Hosted Stats based Technical Event at Paradox 2026, IIT Madras
@@ -60,7 +71,6 @@ items:
     # externalUrl:
 
   - id: new_people-02
-
     title: An experiment so unique that gained people over certificates
     event: "Vicharashala Summership 2026"
     location: VLED lab, IIT Roper

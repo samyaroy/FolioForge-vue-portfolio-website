@@ -22,24 +22,29 @@ courses_taught:
 projects_mentored:
   - semester: "Summer 2026"
     projects:
-  #     - title: "Weather-Uncertainty-Aware Crop Yield Prediction Using Climatic Disturbance Indicators (based on Indian Datasets)"
-  #       course: "Summer Internship Program on Data Science 2026"
-  #       students:
-  #         - name: "DOROTHY"
-  #           Linkedin: 
-  #         - name: "DHARANI KRISHNA SAHITHI"
-  #           Linkedin:
-  #         - name: "RAHUL KUMAR YADAV"
-  #           Linkedin:
-  #         - name: "SWAGATO LAHIRI"
-  #           Linkedin:
-  #       registration_number: ""
-  #       affiliation:
-  #         name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-  #         location: Kolkata, WB
+      - title: "Weather-Uncertainty-Aware Indian Crop Yield Prediction Using Climatic Disturbance Indicators"
+        course: "Summer Internship Program on Data Science 2026"
+        students:
+          - name: "DOROTHY"
+            Linkedin: https://www.linkedin.com/in/dorothy-b-a8659a345?utm_source=share_via&utm_content=profile&utm_medium=member_android
+          - name: "DHARANI KRISHNA SAHITHI"
+            Linkedin: https://www.linkedin.com/in/sahithi-dharani
+          - name: "RAHUL KUMAR YADAV"
+            Linkedin:
+          - name: "SWAGATO LAHIRI"
+            Linkedin:
+        registration_number: ""
+        affiliation:
+          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+          location: Kolkata, WB
+        cred_link:
+          report: https://drive.google.com/file/d/1XCIbN4zAeLYdO4WSAsZ21DImJj6aP8Bx/view?usp=drive_link
       
       - title: "TrackTube: An Open-Source YouTube-based LMS Framework for Structured Learning, Roadmap Generation and Progress Tracking"
-        description:
+        description: >-
+          TrackTube is a full-stack web app (React 19 + FastAPI + CockroachDB) that converts any public YouTube playlist into a structured course — pulling video metadata via the YouTube Data API v3 and enforcing sequential lesson unlocking with second-level progress tracking and an anti-cheat buffer to stop skipping ahead.
+           
+          It layers gamification on top (XP, levels, daily streaks), auto-generates MCQ comprehension quizzes from video transcripts using Groq Cloud AI (llama-3.1-8b-instant), and offers optional in-browser webcam proctoring via MediaPipe Face Landmarker that pauses playback if the learner looks away for 3+ seconds. Checkout the [report](https://drive.google.com/file/d/1snwSUO3xx3nqUuqR4utgu8PfhZ_6uJP0/view?usp=drive_link) for more information.
         course: "Summer Internship Program on Data Science 2026"
         students:
           - name: "NIRNOY CHATTERJEE"
@@ -48,24 +53,27 @@ projects_mentored:
             Linkedin:
           - name: "PRINCE KUMAR SINGH"
             Linkedin:
+        # registration_number: "Group-A"
+        affiliation:
+          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+          location: Kolkata, WB
+        cred_link:
+          github: https://github.com/Nirnoy12/summer_intern_group-a
+
+      - title: "Interpretable Machine Learning Application in Bird Migration Trajectory Analysis Using GPS Data"
+        description:
+        course: "Summer Internship Program on Data Science 2026"
+        students:
+          - name: "BADABALLA JASVANTH"
+            Linkedin: https://www.linkedin.com/in/jasvanth-badaballa-896032398/
+          - name: "JAYANT PANDEY"
+            Linkedin:
         registration_number: ""
         affiliation:
           name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
           location: Kolkata, WB
         cred_link:
-          github: https://github.com/samyatih/summer_intern_group-a 
-
-  #     - title: "Interpretable Machine Learning application in Bird Migration Trajectory Analysis Using GPS Data"
-  #       course: "Summer Internship Program on Data Science 2026"
-  #       students:
-  #         - name: "BADABALLA JASVANTH"
-  #           Linkedin: 
-  #         - name: "JAYANT PANDEY"
-  #           Linkedin:
-  #       registration_number: ""
-  #       affiliation:
-  #         name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-  #         location: Kolkata, WB
+          report: https://drive.google.com/file/d/1qKCTRzN0qwnXQmIxEqhgVvLb7dRKVUqM/view?usp=drive_link
 
   - semester: "Spring 2026"
     projects:
