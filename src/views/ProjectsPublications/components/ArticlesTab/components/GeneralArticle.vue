@@ -15,8 +15,14 @@
 
     <div v-if="articles.length" class="space-y-6 text-sm">
       <div v-for="(article, index) in articles" :key="article.title || index"
-        class="border-l-4 border-[#1980e6] pl-6 pr-4 pt-3 rounded-md bg-slate-50"
-        :class="isSectionCollapsed ? 'pb-2' : 'pb-4'">
+        class="border-l-4 border-[#1980e6] pl-6 pr-4 pt-3 rounded-md bg-slate-50 transition-colors"
+        :class="isSectionCollapsed ? 'pb-2 cursor-pointer hover:bg-slate-100' : 'pb-4'"
+        :role="isSectionCollapsed ? 'button' : undefined"
+        :tabindex="isSectionCollapsed ? 0 : undefined"
+        :aria-label="isSectionCollapsed ? 'Expand articles section' : undefined"
+        @click="expandSection"
+        @keydown.enter="expandSection"
+        @keydown.space.prevent="expandSection">
         <div class="mb-2 flex items-start justify-between gap-4">
           <h3 class="min-w-0 text-lg font-semibold text-[#0e141b]">
             {{ article.title }}
@@ -58,6 +64,7 @@
                 rel="noopener noreferrer"
                 class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#1980e6] text-[#1980e6] transition hover:bg-[#1980e6] hover:text-white"
                 aria-label="Open article link"
+                @click.stop
               >
                 <v-icon size="15">mdi-web</v-icon>
               </a>
@@ -130,6 +137,14 @@ defineProps({
 const isSectionCollapsed = ref(
   !isFeatureEnabled('showProjectsPublications.expandArticleSectionsByDefault.generalArticles')
 )
+
+// Clicking anywhere on a card while the section is collapsed opens the section.
+// Expanded cards stay inert so their inner links keep working.
+function expandSection() {
+  if (isSectionCollapsed.value) {
+    isSectionCollapsed.value = false
+  }
+}
 
 const getArticleDocumentLink = (article) => article?.link || article?.cred_link || ''
 

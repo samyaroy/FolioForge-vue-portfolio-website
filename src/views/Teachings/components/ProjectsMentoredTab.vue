@@ -26,7 +26,14 @@
         <!-- Projects -->
         <div class="space-y-6">
           <div v-for="project in semesterBlock.projects" :key="project.title"
-            class="border-l-4 border-slate-300 pl-5 py-3 pr-4 bg-slate-50 rounded-lg">
+            class="border-l-4 border-slate-300 pl-5 py-3 pr-4 bg-slate-50 rounded-lg transition-colors"
+            :class="isCollapsed(semesterBlock.semester) ? 'cursor-pointer hover:bg-slate-100' : ''"
+            :role="isCollapsed(semesterBlock.semester) ? 'button' : undefined"
+            :tabindex="isCollapsed(semesterBlock.semester) ? 0 : undefined"
+            :aria-label="isCollapsed(semesterBlock.semester) ? 'Expand semester' : undefined"
+            @click="expandSemester(semesterBlock.semester)"
+            @keydown.enter="expandSemester(semesterBlock.semester)"
+            @keydown.space.prevent="expandSemester(semesterBlock.semester)">
             <div class="flex flex-col gap-4 md:flex-row md:items-start">
               <div class="w-full md:w-[92%]">
                 <!-- Header -->
@@ -38,7 +45,7 @@
                         <button v-bind="props" type="button"
                           class="ml-1 inline-flex h-5 w-5 shrink-0 translate-y-[2px] items-center justify-center rounded-full text-[#1980e6] transition hover:bg-[#1980e6]/10 focus:outline-none"
                           aria-label="Project description"
-                          @click="openDescription(project)">
+                          @click.stop="openDescription(project)">
                           <v-icon size="16">mdi-information-outline</v-icon>
                         </button>
                       </template>
@@ -230,6 +237,14 @@ const isCollapsed = (semester) => collapsedSemesters[semester] !== false
 
 const toggleSemester = (semester) => {
   collapsedSemesters[semester] = !collapsedSemesters[semester]
+}
+
+// Clicking anywhere on a card while its semester is collapsed opens that semester.
+// Expanded cards stay inert so their inner links keep working.
+const expandSemester = (semester) => {
+  if (isCollapsed(semester)) {
+    collapsedSemesters[semester] = false
+  }
 }
 
 const normalizeLink = (link) => (
