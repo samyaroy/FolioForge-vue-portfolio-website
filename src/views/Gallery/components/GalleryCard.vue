@@ -114,7 +114,7 @@
           <a v-if="item.externalUrl" :href="item.externalUrl" target="_blank" rel="noopener noreferrer"
             class="inline-flex h-10 w-10 shrink-0 items-center justify-center text-blue-500 no-underline hover:text-blue-800"
             aria-label="Open milestone">
-            <v-icon size="18">mdi-open-in-new</v-icon>
+            <AnimatedIcon name="external-link" :size="18" />
           </a>
         </div>
       </div>
@@ -185,6 +185,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import CaptionContent from '@/components/CaptionContent.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import galleryFallbackSample from '../assets/gallery-fallback-sample.svg'
 
 const props = defineProps({

@@ -94,9 +94,10 @@
             </div>
 
             <a v-if="externalLink" :href="externalLink" target="_blank" rel="noopener noreferrer"
-              class="mt-1 inline-flex items-center justify-end gap-1 text-blue-600 hover:text-blue-700">
+              class="mt-1 inline-flex items-center justify-end gap-1 text-blue-600 hover:text-blue-700"
+              @mouseenter="linkIcon?.startAnimation()" @mouseleave="linkIcon?.stopAnimation()">
               <span>See Details</span>
-              <v-icon size="14">mdi-open-in-new</v-icon>
+              <AnimatedIcon name="external-link" ref="linkIcon" :size="14" />
             </a>
           </div>
         </div>
@@ -106,9 +107,12 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+
+const linkIcon = useTemplateRef('linkIcon')
 
 
 import inPersonIcon from '@/assets/icons/persons-in-a-class-by-flaticon.png'

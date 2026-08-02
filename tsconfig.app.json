@@ -13,7 +13,13 @@
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
+
+    /* Incremental migration: existing .js and JS-authored SFCs still compile,
+       they are just not typechecked. Move a file to `lang="ts"` (or .ts) when
+       you want it covered — no big-bang conversion needed. */
+    "allowJs": true,
+    "checkJs": false,
 
     /* Linting */
     "strict": true,
@@ -22,12 +28,9 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
-
-    /* Path alias used by shadcn registry components. */
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "src/**/*.vue"]
 }

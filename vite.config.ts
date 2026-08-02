@@ -5,15 +5,16 @@ import yaml from '@modyfi/vite-plugin-yaml'
 import ViteSitemap from 'vite-plugin-sitemap'
 import { parse as parseYaml } from 'yaml'
 import { fileURLToPath, URL } from 'url'
+import type { Plugin } from 'vite'
 import { isFeatureEnabled } from './src/config/featureFlags'
 
 const SITE_URL = 'https://samyabrata.codeium.xyz'
 
-// Mirrors the route table in src/router/index.js (path + flagPath + flagMode).
+// Mirrors the route table in src/router/index.ts (path + flagPath + flagMode).
 // Keep the two in sync when adding a page. Routes whose feature flag is off
 // redirect to Home at runtime, so they are left out of the sitemap too.
 // '/' is added by the sitemap plugin automatically.
-const routeFlags = [
+const routeFlags: Array<[string, string?, ('all' | 'any')?]> = [
   ['/projects-publications', 'showProjectsPublications', 'any'],
   ['/affiliation-memberships', 'showAffiliations', 'any'],
   ['/ongoing-projects', 'showOngoingProjects'],
@@ -55,7 +56,7 @@ function personJsonLd() {
   return JSON.stringify(person).replace(/</g, '\\u003c')
 }
 
-function jsonLdPlugin() {
+function jsonLdPlugin(): Plugin {
   return {
     name: 'person-json-ld',
     transformIndexHtml() {

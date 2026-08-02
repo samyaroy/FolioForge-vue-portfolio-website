@@ -20,7 +20,7 @@
               rel="noopener noreferrer"
               class="inline-block ml-1 align-middle text-slate-500 hover:text-slate-700"
             >
-              <v-icon size="16">mdi-open-in-new</v-icon>
+              <AnimatedIcon name="external-link" :size="16" />
             </a>
           </h3>
         </div>
@@ -88,6 +88,7 @@
 <script setup>
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 
 const props = defineProps({
   talk: {

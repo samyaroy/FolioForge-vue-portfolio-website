@@ -21,10 +21,12 @@ const { research_interests } = config
 
 const name_maker = (key) => key.replace(/_/g, ' ')
 
+// Values are mdi glyph names, or "anim:<name>" for one of the animated icons
+// in @/components/ui/AnimatedIcon.vue (Card.vue renders either).
 const iconMap = {
   // 🤖 AI & ML
   Artificial_Intelligence: "mdi-robot-industrial",
-  Machine_Learning: "mdi-brain",
+  Machine_Learning: "anim:brain-circuit",
   Deep_Learning: "mdi-brain",
   Neural_Networks: "mdi-brain",
   Reinforcement_Learning: "mdi-robot",
@@ -33,8 +35,8 @@ const iconMap = {
   Natural_Language_Processing: "mdi-text-box-multiple",
   Computer_Vision: "mdi-image-search",
   Time_Series_Analysis: "mdi-chart-line",
-  Statistical_Modeling: "mdi-chart-bar",
-  Bayesian_Statistics: "mdi-chart-bar",
+  Statistical_Modeling: "anim:chart-bar",
+  Bayesian_Statistics: "anim:chart-bar",
   Hypothesis_Testing: "mdi-check-circle",
 
   Data_Science: "mdi-database",

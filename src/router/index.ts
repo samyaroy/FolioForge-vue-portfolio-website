@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home/index.vue'
 import Gallery from '@/views/Gallery/index.vue'
 import ProjectPublications from '@/views/ProjectsPublications/index.vue'
@@ -16,7 +17,18 @@ import Facts from '@/views/Facts/index.vue'
 import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
-const routes = [
+// Every route below carries its page title and feature flag in `meta`;
+// declaring the shape here is what lets the beforeEach guard pass flagPath
+// straight to isFeatureEnabled without a cast.
+declare module 'vue-router' {
+  interface RouteMeta {
+    title?: string
+    flagPath?: string | string[]
+    flagMode?: 'all' | 'any'
+  }
+}
+
+const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Home',
@@ -149,7 +161,7 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(to, _from, savedPosition) {
     if (savedPosition) {
       return savedPosition
     }

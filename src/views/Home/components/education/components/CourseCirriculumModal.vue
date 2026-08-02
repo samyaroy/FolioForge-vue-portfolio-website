@@ -47,8 +47,10 @@
           target="_blank"
           rel="noopener noreferrer"
           style="text-transform: none;"
+          @mouseenter="linkIcon?.startAnimation()"
+          @mouseleave="linkIcon?.stopAnimation()"
         >
-          See in Details <v-icon size="14" class="ml-1">mdi-open-in-new</v-icon>
+          See in Details <AnimatedIcon name="external-link" ref="linkIcon" :size="14" class="ml-1 inline-block align-middle" />
         </v-btn>
       </div>
     </v-card>
@@ -56,8 +58,11 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 import CourseCard from './CourseCard.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+
+const linkIcon = useTemplateRef('linkIcon')
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },

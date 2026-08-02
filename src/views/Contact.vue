@@ -29,15 +29,18 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
+            <!-- Gmail: animated icon, hover driven from the whole tile. -->
+            <div
+              class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2"
+              @mouseenter="gmailIcon?.startAnimation()"
+              @mouseleave="gmailIcon?.stopAnimation()"
+            >
               <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
-                  <path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48Zm-96,85.15L52.57,64H203.43ZM98.71,128,40,181.81V74.19Zm11.84,10.85,12,11.05a8,8,0,0,0,10.82,0l12-11.05,58,53.15H52.57ZM157.29,128,216,74.18V181.82Z"></path>
-                </svg>
+                <AnimatedIcon ref="gmailIcon" name="gmail" :size="24" />
               </div>
               <div class="flex flex-col justify-center">
-                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Email</p>
-                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2"><a :href="email_link">{{email}}</a></p>
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Gmail</p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2"><a :href="gmail_link">{{gmail}}</a></p>
               </div>
             </div>
 
@@ -49,7 +52,7 @@
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">Student Email</p>
-                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2"><a :href="email2_link">{{email2}}</a></p>
+                <p class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2"><a :href="email_link">{{email}}</a></p>
               </div>
             </div>
 
@@ -144,19 +147,23 @@
 </template>
 
 <script setup>
+import { useTemplateRef } from 'vue'
 import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
 import { isPageDescriptionEnabled } from '@/config/featureFlags'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+
+const gmailIcon = useTemplateRef('gmailIcon')
 
 const pageDescription = descriptions.contact
 const showPageDescription = isPageDescriptionEnabled('contact')
 
 const {profile, contacts, socials} = config
 
+const gmail = contacts.gmail
+const gmail_link = "mailto:" + contacts.gmail
 const email = contacts.email
 const email_link = "mailto:" + contacts.email
-const email2 = contacts.email2
-const email2_link = "mailto:" + contacts.email2
 const phone = contacts.phone
 const location = contacts.location
 const kaggle = socials.kaggle

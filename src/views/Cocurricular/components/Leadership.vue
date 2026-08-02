@@ -26,7 +26,7 @@
             class="text-[#1980e6] hover:underline text-sm"
             :aria-label="`Open ${affiliation.name} website`"
           >
-            <v-icon size="16" class="text-gray-500">mdi-open-in-new</v-icon>
+            <AnimatedIcon name="external-link" :size="16" class="text-gray-500" />
           </a>
         </div>
 
@@ -72,6 +72,7 @@
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import SmartLink from '@/components/SmartLink.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 
 defineOptions({
   name: 'LeadershipRole'

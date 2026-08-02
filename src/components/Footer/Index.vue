@@ -38,7 +38,14 @@
             <!-- <v-btn icon variant="text" color="black" :href=twitter target="_blank">
               <v-icon>mdi-twitter</v-icon>
             </v-btn> -->
-            <v-btn v-if="email" icon variant="text" color="white" :href="'mailto:' + email">
+            <v-btn
+              v-if="email"
+              icon
+              variant="text"
+              color="black"
+              :href="'mailto:' + email"
+              aria-label="Email"
+            >
               <v-icon>mdi-email</v-icon>
             </v-btn>
           </div>
@@ -144,7 +151,18 @@
           <div>
             <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
             <div class="space-y-2 text-black-300">
-              <div class="flex items-center">
+              <!-- Gmail gets the animated icon; hover is driven from the whole
+                   row so the 18px glyph isn't the only target. -->
+              <div
+                v-if="gmail"
+                class="flex items-center"
+                @mouseenter="$refs.gmailIcon?.startAnimation()"
+                @mouseleave="$refs.gmailIcon?.stopAnimation()"
+              >
+                <AnimatedIcon name="gmail" ref="gmailIcon" :size="18" class="mr-2" />
+                <span>{{ gmail }}</span>
+              </div>
+              <div v-if="email" class="flex items-center">
                 <v-icon size="small" class="mr-2">mdi-email</v-icon>
                 <span>{{ email }}</span>
               </div>
@@ -217,11 +235,13 @@
 <script>
 import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
+import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 export default {
   components: {
     Logos,
+    AnimatedIcon,
   },
   data() {
     const { profile, contacts, socials, last_updated_on } = config;
@@ -237,6 +257,7 @@ export default {
 
     return {
       profile,
+      gmail: contacts.gmail,
       email: contacts.email,
       phone: contacts.phone,
       location: contacts.location,

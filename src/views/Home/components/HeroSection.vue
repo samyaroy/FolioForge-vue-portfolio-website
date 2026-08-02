@@ -52,7 +52,13 @@
                 class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
                 <v-icon>mdi-github</v-icon>
               </a>
-              <a :href=email_link class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
+              <!-- Still links to the gmail address; the icon is the plain
+                   mdi glyph, not the animated one. -->
+              <a
+                :href="gmail_link"
+                class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200"
+                aria-label="Email"
+              >
                 <v-icon>mdi-email</v-icon>
               </a>
             </div>
@@ -75,8 +81,8 @@ const about = profile.about
 const heading = profile.heading
 const cv_link = profile.cv
 
-const email = contacts.email
-const email_link = `mailto:${email}`
+const gmail = contacts.gmail
+const gmail_link = `mailto:${gmail}`
 
 const github_personal = socials.github
 const linkedin = socials.linkedin
@@ -87,7 +93,7 @@ const downloadCV = () => {
 
 const openGmailDraft = () => {
   const subject = encodeURIComponent('Collaboration Opportunity')
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}`
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${gmail}&su=${subject}`
   window.open(gmailUrl, '_blank')
 }
 </script>

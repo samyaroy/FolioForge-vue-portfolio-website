@@ -15,7 +15,7 @@
                 <div class="flex items-start justify-between gap-4">
                     <div>
                         <h3 class="text-lg font-semibold text-slate-900">
-                            <SmartLink :text="collaborator.name || 'Collaborator'" :type="'Person'" /><v-icon size="14" class="text-[#4e7397] ml-2">mdi-open-in-new</v-icon>
+                            <SmartLink :text="collaborator.name || 'Collaborator'" :type="'Person'" /><AnimatedIcon name="external-link" :size="14" class="text-[#4e7397] ml-2 inline-block align-middle" />
                         </h3>
 
                         <p v-if="collaborator.affiliation" class="text-sm text-gray-600">
@@ -49,6 +49,7 @@
 <script setup>
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import profileIcon from '@/metadata/people/profile-icon.png'
 
 // Eager-load all collaborator photos in src/metadata/people

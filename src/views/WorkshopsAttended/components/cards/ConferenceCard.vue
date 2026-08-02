@@ -19,9 +19,7 @@
     rel="noopener noreferrer"
     class="inline align-baseline ml-1 text-slate-500 hover:text-slate-700"
   >
-    <v-icon size="16" class="align-text-bottom">
-      mdi-open-in-new
-    </v-icon>
+    <AnimatedIcon name="external-link" :size="16" class="inline-block align-text-bottom" />
   </a>
 
   <DocumentViewer
@@ -92,6 +90,7 @@
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 
 
 const props = defineProps({
