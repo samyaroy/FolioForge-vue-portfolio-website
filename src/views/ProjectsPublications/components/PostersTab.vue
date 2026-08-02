@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8">
+  <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8">
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">Posters</h2>
 
     <div v-if="posters && posters.length > 0" class="space-y-6">
-      <div v-for="poster in posters" :key="poster.id" class="border-l-4 border-[#1980e6] pl-6 py-4">
+      <div v-for="poster in posters" :key="poster.id" class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4">
         <div class="flex items-start justify-between mb-3">
           <h3 class="text-lg font-semibold text-[#0e141b] hover:text-[#1980e6] cursor-pointer">
             {{ poster.title }}
