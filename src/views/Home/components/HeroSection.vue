@@ -76,7 +76,6 @@ import SmartLink from "@/components/SmartLink.vue"
 
 const { profile, contacts, socials } = config
 
-const name = profile.name
 const about = profile.about
 const heading = profile.heading
 const cv_link = profile.cv

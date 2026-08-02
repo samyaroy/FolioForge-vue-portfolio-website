@@ -24,6 +24,9 @@ import professionalActivity from './professional_activity.yml'
 import pageQuotes from './page_quotes.yml'
 import ribbon from './ribbon.yml'
 
+// Same reasoning as the `*.yml` shim in ./yml.d.ts — the merged config is
+// schemaless by design and is read with dotted property access everywhere.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const config: Record<string, any> = {
   ...meta,
   ...profile,

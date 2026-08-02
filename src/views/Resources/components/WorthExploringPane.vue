@@ -54,11 +54,15 @@
     v-else
     class="border border-dashed border-slate-300 px-4 py-10 text-center text-sm text-gray-500"
   >
-    Nothing here yet — links for this section are coming soon.
+    <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+      <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+      <span>Nothing here yet — links for this section are coming soon.</span>
+    </span>
   </div>
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import SmartLink from '@/components/SmartLink.vue'
 import LinkFavicon from './LinkFavicon.vue'
 

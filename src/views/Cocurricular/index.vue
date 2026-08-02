@@ -23,8 +23,12 @@
             </svg>
             Leadership & Organizations
           </h2>
-          <Leadership class="mb-4" v-if="showLeadershipSection" v-for="(leadership, index) in leadershipRoles" :key="index"
-            :leadership="leadership" />
+          <!-- v-if on the wrapper: in Vue 3 v-if outranks v-for, so keeping both
+               on <Leadership> re-tested the same section flag once per role. -->
+          <template v-if="showLeadershipSection">
+            <Leadership class="mb-4" v-for="(leadership, index) in leadershipRoles" :key="index"
+              :leadership="leadership" />
+          </template>
 
         </div>
         <div v-if="showVolunteeringSection" class="bg-white rounded-lg shadow-sm p-8">
@@ -38,7 +42,10 @@
           </h2>
           <div class="space-y-6">
             <div v-if="volunteeringRoles.length === 0" class="text-gray-500 italic text-center">
-              No volunteering roles to display.
+              <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+                <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+                <span>No volunteering roles to display.</span>
+              </span>
             </div>
             <!-- Volunteering Component -->
             <Volunteering v-else v-for="(volunteer, index) in volunteeringRoles" :key="index"
@@ -55,6 +62,7 @@
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import Leadership from './components/Leadership.vue'
 import Volunteering from './components/Volunteering.vue'
 

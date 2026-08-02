@@ -162,10 +162,10 @@
                 <AnimatedIcon name="gmail" ref="gmailIcon" :size="18" class="mr-2" />
                 <span>{{ gmail }}</span>
               </div>
-              <div v-if="email" class="flex items-center">
+              <!-- <div v-if="email" class="flex items-center">
                 <v-icon size="small" class="mr-2">mdi-email</v-icon>
                 <span>{{ email }}</span>
-              </div>
+              </div> -->
               <div class="flex items-center">
                 <v-icon size="small" class="mr-2">mdi-phone</v-icon>
                 <span>{{ phone }}</span>
@@ -244,7 +244,7 @@ export default {
     AnimatedIcon,
   },
   data() {
-    const { profile, contacts, socials, last_updated_on } = config;
+    const { profile, contacts, socials } = config;
     const showCocurricularLink = isFeatureEnabled('showCocurricular', { mode: 'any' })
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })

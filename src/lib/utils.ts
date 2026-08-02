@@ -1,6 +1,4 @@
-import type { Updater } from "@tanstack/vue-table"
 import type { ClassValue } from "clsx"
-import type { Ref } from "vue"
 import { clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -8,9 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function valueUpdater<T extends Updater<any>>(updaterOrValue: T, ref: Ref) {
-  ref.value
-    = typeof updaterOrValue === "function"
-      ? updaterOrValue(ref.value)
-      : updaterOrValue
-}
+// shadcn-vue's init also scaffolds a `valueUpdater` helper for its data-table
+// components. Nothing here uses a data table, and it was the only reason
+// @tanstack/vue-table was installed, so both are dropped. `shadcn-vue add table`
+// puts them back if a table is ever needed.

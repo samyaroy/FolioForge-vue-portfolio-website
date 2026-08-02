@@ -33,7 +33,12 @@
     </div>
     
     <div v-else-if="showMain" class="text-center py-12">
-      <p class="text-gray-500 text-lg">No hosted events yet</p>
+      <p class="text-gray-500 text-lg">
+        <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+          <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+          <span>No hosted events yet</span>
+        </span>
+      </p>
     </div>
 
     <div v-else-if="!showOtherHostedEventsLink" class="text-center py-12">
@@ -43,6 +48,7 @@
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, ref } from 'vue'
 import HostedEventCard from '../cards/HostedEventCard.vue'
 import OtherHostedEventsModal from '../modal/OtherHostedEventsModal.vue'

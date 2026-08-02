@@ -158,21 +158,19 @@ const gmailIcon = useTemplateRef('gmailIcon')
 const pageDescription = descriptions.contact
 const showPageDescription = isPageDescriptionEnabled('contact')
 
-const {profile, contacts, socials} = config
+const {contacts, socials} = config
 
 const gmail = contacts.gmail
 const gmail_link = "mailto:" + contacts.gmail
 const email = contacts.email
 const email_link = "mailto:" + contacts.email
 const phone = contacts.phone
-const location = contacts.location
 const kaggle = socials.kaggle
 const github = socials.github
 const github2 = socials.github2
 const githubUsername = github ? github.split('/').filter(Boolean).pop() : null
 const github2Username = github2 ? github2.split('/').filter(Boolean).pop() : null
 const linkedIn = socials.linkedin
-const twitter = socials.twitter
 const orcid_id = socials.orcid_id
 const researchgate = socials.researchgate
 const google_scholar = socials.google_scholar

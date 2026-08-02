@@ -87,12 +87,16 @@
       </div>
     </div>
     <div v-else class="text-center text-gray-500 italic space-y-6">
-      No Publications Yet
+      <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+        <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+        <span>No Publications Yet</span>
+      </span>
     </div>
   </div>
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed } from 'vue'
 
 const props = defineProps({
