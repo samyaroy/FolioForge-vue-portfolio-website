@@ -34,11 +34,11 @@
 // its own start/stop animation, so adding an icon is a registry entry rather
 // than a new file.
 //
-// The path data is NOT taken from @lucide/vue. Only `brain-circuit` matches
-// lucide byte-for-byte; the `gmail` and `external-link` shapes originate from
-// the itshover registry and are Tabler-derived, so pulling them from lucide
-// would visibly change those icons. The literals below preserve the exact
-// artwork that is on the site today.
+// The path data is NOT taken from @lucide/vue wholesale. `brain-circuit`,
+// `chart-spline` and `database-zap` match lucide byte-for-byte; the `gmail` and
+// `external-link` shapes originate from the itshover registry and are
+// Tabler-derived, so pulling them from lucide would visibly change those icons.
+// The literals below preserve the exact artwork that is on the site today.
 import { computed } from 'vue'
 import { motion, useAnimate } from 'motion-v'
 
@@ -276,6 +276,52 @@ const ICONS = {
                 { y: 0, x: 0, opacity: 1 },
                 { duration: 0.3, ease: 'easeInOut' },
             )
+        },
+    },
+
+    // Lucide-derived, so no SPACER: the axes hold still while the fitted curve
+    // traces itself in, the way a smoother is drawn through a scatter.
+    'chart-spline': {
+        nodes: [
+            { tag: 'path', class: 'spline-axis', attrs: { d: 'M3 3v16a2 2 0 0 0 2 2h16' } },
+            {
+                tag: 'path',
+                class: 'spline-curve',
+                initial: DRAWN,
+                attrs: { d: 'M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7' },
+            },
+        ],
+        start(animate) {
+            animate('.spline-curve', { pathLength: [0, 1], opacity: [0, 1] }, { duration: 0.7, ease: 'easeInOut' })
+        },
+        stop(animate) {
+            animate('.spline-curve', { pathLength: 1, opacity: 1 }, { duration: 0.25 })
+        },
+    },
+
+    // Lucide draws the top disc as <ellipse>; written as the equivalent path so
+    // it goes through the same `motion.path` the rest of the registry uses.
+    'database-zap': {
+        nodes: [
+            { tag: 'path', class: 'db-disc', style: CENTERED, attrs: { d: 'M12 5m-9 0a9 3 0 1 0 18 0a9 3 0 1 0 -18 0' } },
+            { tag: 'path', class: 'db-shell', attrs: { d: 'M3 5V19A9 3 0 0 0 15 21.84' } },
+            { tag: 'path', class: 'db-shell', attrs: { d: 'M21 5V8' } },
+            { tag: 'path', class: 'db-bolt', style: CENTERED, attrs: { d: 'M21 12L18 17H22L19 22' } },
+            { tag: 'path', class: 'db-shell', attrs: { d: 'M3 12A9 3 0 0 0 14.59 14.87' } },
+        ],
+        start(animate) {
+            // Bolt keeps firing while hovered (a pipeline moving data); the top
+            // disc squashes once so the whole glyph reads as switching on.
+            animate('.db-bolt', { opacity: [0.4, 1, 0.4], scale: [1, 1.15, 1] }, {
+                duration: 0.9,
+                repeat: Infinity,
+                ease: 'easeInOut',
+            })
+            animate('.db-disc', { scaleY: [1, 0.88, 1] }, { duration: 0.5, ease: 'easeOut' })
+        },
+        stop(animate) {
+            animate('.db-bolt', { opacity: 1, scale: 1 }, { duration: 0.25 })
+            animate('.db-disc', { scaleY: 1 }, { duration: 0.2 })
         },
     },
 }

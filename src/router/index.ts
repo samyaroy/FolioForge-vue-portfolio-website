@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { isFeatureEnabled } from '@/config/featureFlags'
+import { isBetaSite } from '@/config/siteEnvironment'
 import { BASE_TITLE, pageTitle, routeMetadata } from './routes'
 
 // Path, title, description, and feature flag for every page live in
@@ -13,6 +14,7 @@ declare module 'vue-router' {
     description?: string
     flagPath?: string | string[]
     flagMode?: 'all' | 'any'
+    betaOnly?: boolean
   }
 }
 
@@ -40,6 +42,7 @@ const views: Record<string, () => Promise<{ default: RouteComponent }>> = {
   PrivacyPolicy: () => import('@/views/PrivacyPolicy.vue'),
   Resources: () => import('@/views/Resources/index.vue'),
   Facts: () => import('@/views/Facts/index.vue'),
+  CredentialsDashboard: () => import('@/views/CredentialsDashboard/index.vue'),
 }
 
 const routes: RouteRecordRaw[] = [
@@ -52,6 +55,7 @@ const routes: RouteRecordRaw[] = [
       description: route.description,
       ...(route.flagPath ? { flagPath: route.flagPath } : {}),
       ...(route.flagMode ? { flagMode: route.flagMode } : {}),
+      ...(route.betaOnly ? { betaOnly: route.betaOnly } : {}),
     },
   })),
   // Catch-all so an unknown URL renders the 404 page rather than an empty
@@ -80,6 +84,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
+  if (to.meta?.betaOnly && !isBetaSite()) return { name: 'Home' }
+
   const flagPath = to.meta?.flagPath
   if (!flagPath) return true
 
