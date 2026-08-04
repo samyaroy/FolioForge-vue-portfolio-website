@@ -1,86 +1,164 @@
 import fs from 'node:fs'
-import { defineConfig } from 'vite'
+import path from 'node:path'
+import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import yaml from '@modyfi/vite-plugin-yaml'
-import ViteSitemap from 'vite-plugin-sitemap'
 import { parse as parseYaml } from 'yaml'
 import { fileURLToPath, URL } from 'url'
-import type { Plugin } from 'vite'
 import { isFeatureEnabled } from './src/config/featureFlags'
+import {
+  BLOG_URL,
+  OG_IMAGE_PATH,
+  SITE_NAME,
+  SITE_URL,
+  pageTitle,
+  routeMetadata,
+} from './src/router/routes'
+import {
+  absoluteUrl,
+  writeSeoOutput,
+  type SeoPage,
+  type SeoPrerenderOptions,
+} from './scripts/seo-build'
 
-const SITE_URL = 'https://samyabrata.codeium.xyz'
+// Routes whose feature flag is off redirect to Home at runtime, so they are
+// neither prerendered nor listed in the sitemap.
+const publicRoutes = routeMetadata.filter(
+  (route) =>
+    !route.flagPath ||
+    isFeatureEnabled(route.flagPath, { mode: route.flagMode }),
+)
 
-// Mirrors the route table in src/router/index.ts (path + flagPath + flagMode).
-// Keep the two in sync when adding a page. Routes whose feature flag is off
-// redirect to Home at runtime, so they are left out of the sitemap too.
-// '/' is added by the sitemap plugin automatically.
-const routeFlags: Array<[string, string?, ('all' | 'any')?]> = [
-  ['/projects-publications', 'showProjectsPublications', 'any'],
-  ['/affiliation-memberships', 'showAffiliations', 'any'],
-  ['/ongoing-projects', 'showOngoingProjects'],
-  ['/cocurricular', 'showCocurricular', 'any'],
-  ['/workshops-bootcamps-attended', 'showWorkshopsAttended', 'any'],
-  ['/teachings', 'showTeachings', 'any'],
-  ['/internships-certifications', 'showInternshipCertifications', 'any'],
-  ['/professional-activity', 'showProfessionalActivity', 'any'],
-  ['/gallery', 'showGallery'],
-  ['/contact'],
-  ['/privacy-policy'],
-  ['/resources', 'showResources.main'],
-  ['/facts', 'showFacts'],
-]
+interface Profile {
+  profile?: { name?: string; about?: string; footer?: string }
+  socials?: Record<string, string>
+}
 
-const publicRoutes = routeFlags
-  .filter(([, flagPath, flagMode]) => !flagPath || isFeatureEnabled(flagPath, { mode: flagMode }))
-  .map(([path]) => path)
-
-// schema.org Person built from profile.yml and injected into the page head,
-// so crawlers get it from the static HTML without executing the app. The
-// sameAs links let search engines tie the portfolio, blog, and social
-// profiles to one entity.
-function personJsonLd() {
+function readProfile(): Profile {
   const raw = fs.readFileSync(
     fileURLToPath(new URL('./src/content/profile_info/profile.yml', import.meta.url)),
     'utf8',
   )
-  const content = parseYaml(raw)
-  const person = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: content?.profile?.name,
-    url: `${SITE_URL}/`,
-    description: content?.profile?.about,
-    sameAs: Object.values(content?.socials ?? {}),
-  }
-  // "<" is escaped so the JSON can never close the inline script tag.
-  return JSON.stringify(person).replace(/</g, '\\u003c')
+  return (parseYaml(raw) ?? {}) as Profile
 }
 
-function jsonLdPlugin(): Plugin {
+const profile = readProfile()
+
+const PERSON_ID = `${SITE_URL}/#person`
+const WEBSITE_ID = `${SITE_URL}/#website`
+
+// The sameAs list is what ties this site, the blog, and every academic and
+// social profile to one entity — it is the single strongest signal available
+// for getting an author knowledge panel to resolve correctly.
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': PERSON_ID,
+  name: profile.profile?.name ?? SITE_NAME,
+  url: `${SITE_URL}/`,
+  description: profile.profile?.about,
+  jobTitle: profile.profile?.footer,
+  sameAs: Object.values(profile.socials ?? {}),
+}
+
+const website = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  url: `${SITE_URL}/`,
+  name: SITE_NAME,
+  inLanguage: 'en',
+  publisher: { '@id': PERSON_ID },
+}
+
+/** Home → the profile itself; every other page → a WebPage under it. */
+function jsonLdFor(route: (typeof routeMetadata)[number]): unknown[] {
+  if (route.path === '/') {
+    return [
+      person,
+      website,
+      {
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        url: `${SITE_URL}/`,
+        mainEntity: { '@id': PERSON_ID },
+        isPartOf: { '@id': WEBSITE_ID },
+      },
+    ]
+  }
+
+  const url = absoluteUrl(SITE_URL, route.path)
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      url,
+      name: route.title,
+      description: route.description,
+      isPartOf: { '@id': WEBSITE_ID },
+      about: { '@id': PERSON_ID },
+      inLanguage: 'en',
+    },
+    // Breadcrumbs are what let Google render "Home › Projects & Publications"
+    // in place of a bare URL in the result.
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: route.title, item: url },
+      ],
+    },
+  ]
+}
+
+const pages: SeoPage[] = publicRoutes.map((route) => ({
+  path: route.path,
+  title: pageTitle(route.title),
+  socialTitle: route.title ?? SITE_NAME,
+  description: route.description,
+  image: OG_IMAGE_PATH,
+  imageSize: { width: 1200, height: 630 },
+  imageAlt: `${SITE_NAME} — portfolio`,
+  jsonLd: jsonLdFor(route),
+}))
+
+// Thin wrapper so the shared implementation never has to import Vite's types;
+// see scripts/seo-build.ts.
+function seoPrerender(options: SeoPrerenderOptions): Plugin {
+  let outDir = 'dist'
   return {
-    name: 'person-json-ld',
-    transformIndexHtml() {
-      return [
-        {
-          tag: 'script',
-          attrs: { type: 'application/ld+json' },
-          children: personJsonLd(),
-          injectTo: 'head',
-        },
-      ]
+    name: 'seo-prerender',
+    apply: 'build',
+    configResolved(config) {
+      outDir = path.resolve(config.root, config.build.outDir)
+    },
+    closeBundle() {
+      writeSeoOutput(outDir, options)
     },
   }
 }
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [vue(), yaml(), ViteSitemap({
-      hostname: SITE_URL,
-      dynamicRoutes: publicRoutes,
-      exclude: ['/googlef62b25008a7b041d', '/googlef62b25008a7b041d.html'],
-      generateRobotsTxt: false,
+  plugins: [
+    vue(),
+    yaml(),
+    seoPrerender({
+      siteName: SITE_NAME,
+      siteUrl: SITE_URL,
+      pages,
+      sitemap: true,
+      // The portfolio has no dated content of its own; the feed lives on the blog.
+      rssUrl: `${BLOG_URL}/rss.xml`,
+      rssTitle: `${SITE_NAME} · Blog`,
+      notFound: {
+        path: '/404',
+        title: `Page Not Found · ${SITE_NAME}`,
+        description: 'This page does not exist.',
+        noindex: true,
+      },
     }),
-    jsonLdPlugin(),
   ],
   base: '/',
   resolve: {
