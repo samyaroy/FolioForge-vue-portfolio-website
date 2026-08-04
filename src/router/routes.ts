@@ -18,6 +18,8 @@ export interface RouteMetadata {
   description: string
   flagPath?: string | string[]
   flagMode?: 'all' | 'any'
+  /** Runtime/build guard for pages that should exist only on the beta deployment. */
+  betaOnly?: boolean
 }
 
 export const SITE_URL = 'https://samyabrata.codeium.xyz'
@@ -144,6 +146,14 @@ export const routeMetadata: RouteMetadata[] = [
     description:
       'A few quick things you might not know about Samyabrata Roy and how this site is put together.',
     flagPath: 'showFacts',
+  },
+  {
+    path: '/credentials-dashboard',
+    name: 'CredentialsDashboard',
+    title: 'Credentials Dashboard',
+    description:
+      'A beta-only dashboard listing credential entries and available links from the portfolio YAML content.',
+    betaOnly: true,
   },
 ]
 
