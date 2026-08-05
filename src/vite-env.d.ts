@@ -2,6 +2,21 @@
 
 // `.yml` imports are declared in src/content/profile_info/yml.d.ts.
 
+interface ImportMetaEnv {
+  /**
+   * Which deployment this build is for: 'beta' or 'stable'. Set per deployment
+   * in the host's build settings (Cloudflare), never committed, so it survives
+   * V1 -> main tree replacement the same way the hostname check does.
+   * Unset is normal and falls back to hostname detection.
+   * See src/config/siteEnvironment.ts.
+   */
+  readonly VITE_SITE_ENV?: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+
 // Vuetify's stylesheet entry is a bare specifier, not a .css path, so
 // vite/client's `*.css` declaration doesn't cover this side-effect import.
 declare module 'vuetify/styles'

@@ -21,6 +21,15 @@ import {
   type SeoPrerenderOptions,
 } from './scripts/seo-build'
 
+// Which deployment this build is for, declared by the host's build settings
+// rather than by anything in the tree -- so it survives V1 -> main tree
+// replacement, exactly like the hostname check in src/config/siteEnvironment.ts.
+//
+// Cloudflare: set VITE_SITE_ENV=beta on the V1 deployment's build variables.
+// The main deployment can set 'stable' or leave it unset; only 'beta' changes
+// what is emitted. The browser reads the same variable at runtime.
+const IS_BETA_BUILD = (process.env.VITE_SITE_ENV ?? '').trim().toLowerCase() === 'beta'
+
 // Routes whose feature flag is off redirect to Home at runtime, so they are
 // neither prerendered nor listed in the sitemap.
 const publicRoutes = routeMetadata.filter(
@@ -148,7 +157,12 @@ export default defineConfig({
       siteName: SITE_NAME,
       siteUrl: SITE_URL,
       pages,
-      sitemap: true,
+      sitemap: !IS_BETA_BUILD,
+      // The beta site is a byte-identical copy of production on another host,
+      // and the stable footer links to it, so it is both duplicate content and
+      // genuinely reachable. Runtime hostname checks cannot help here: this
+      // <head> is stamped at build time, when there is no hostname.
+      noindex: IS_BETA_BUILD,
       // The portfolio has no dated content of its own; the feed lives on the blog.
       rssUrl: `${BLOG_URL}/rss.xml`,
       rssTitle: `${SITE_NAME} · Blog`,

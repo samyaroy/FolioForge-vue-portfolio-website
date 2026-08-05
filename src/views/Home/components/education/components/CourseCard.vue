@@ -80,6 +80,7 @@
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import SmartLink from '@/components/SmartLink.vue'
+import { logoUrl } from '@/config/mediaAssets'
 
 defineOptions({ name: 'CourseCard' })
 
@@ -149,7 +150,7 @@ function normalizedLogos(logo) {
 }
 
 function getLogoPath(logo) {
-  return `/logo/${logo}.png`
+  return logoUrl(logo)
 }
 
 function handleLogoError(event) {

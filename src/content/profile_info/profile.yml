@@ -12,6 +12,15 @@ profile:
   heroImage: https://media.samyabrata.codeium.xyz/SamyabrataRoy2.jpg
   heroImageAlt: Samyabrata Roy
 
+# Where institute logos and service icons are served from. Both were shipped
+# out of public/ and are now hosted, so they no longer bloat every build.
+# Names stay bare in the YAML below ("IITM", "Credly"); src/config/mediaAssets.ts
+# joins them to these bases and appends .png. Clear a value to fall back to the
+# in-repo /logo and /icons paths.
+media:
+  logosBaseUrl: https://media.samyabrata.codeium.xyz/logo
+  iconsBaseUrl: https://media.samyabrata.codeium.xyz/icons
+
 contacts:
   gmail: samyaroy00@gmail.com
   email: 22f2001443@ds.study.iitm.ac.in

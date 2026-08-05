@@ -44,7 +44,7 @@
             <div class="bg-white rounded-lg shadow-md flex items-center overflow-hidden">
               <!-- Left 20%: Credly Logo -->
               <div class="w-[20%] flex items-start justify-center px-6 pt-3 pb-3 border-r border-[#166fd1]">
-                <img src="/icons/Credly.png" alt="Credly logo" class="w-full max-w-[160px] h-12" />
+                <img :src="credlyIcon" alt="Credly logo" class="w-full max-w-[160px] h-12" />
               </div>
               <!-- Right 80%: Text -->
               <div class="w-[80%] py-2 pl-6 pr-6">
@@ -76,6 +76,9 @@
 
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import { iconUrl } from '@/config/mediaAssets'
+
+const credlyIcon = iconUrl('Credly')
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'

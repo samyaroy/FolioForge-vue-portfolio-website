@@ -132,7 +132,7 @@
 
             <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2">
               <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
-                <img src="/icons/Orchid.png" alt="ORCID iD" class="w-6 h-6 object-contain" />
+                <img :src="orcidIcon" alt="ORCID iD" class="w-6 h-6 object-contain" />
               </div>
               <div class="flex flex-col justify-center">
                 <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">ORCID iD</p>
@@ -152,6 +152,9 @@ import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
 import { isPageDescriptionEnabled } from '@/config/featureFlags'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import { iconUrl } from '@/config/mediaAssets'
+
+const orcidIcon = iconUrl('Orchid')
 
 const gmailIcon = useTemplateRef('gmailIcon')
 

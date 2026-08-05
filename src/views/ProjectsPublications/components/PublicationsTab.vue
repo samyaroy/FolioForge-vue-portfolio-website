@@ -98,6 +98,7 @@
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed } from 'vue'
+import { logoUrl } from '@/config/mediaAssets'
 
 const props = defineProps({
   publications: {
@@ -143,7 +144,7 @@ const getLogos = (logo) => {
   return []
 }
 
-const getLogoPath = (logo) => `/logo/${logo}.png`
+const getLogoPath = (logo) => logoUrl(logo)
 
 const getPublicationInfo = (publication) => (
   [publication?.journal, publication?.year]

@@ -56,6 +56,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { logoUrl } from '@/config/mediaAssets'
 
 const props = defineProps({
   material: {
@@ -85,7 +86,8 @@ const metaIcon = computed(() => {
 })
 
 // Optional `logo` from content overrides the auto source icon. It accepts an
-// mdi-* token, a full URL, an absolute path, or a bare /logo/<name>.png name.
+// mdi-* token, a full URL, an absolute path, or a bare logo name ('NPTEL'),
+// which mediaAssets resolves against the hosted logo base.
 const overrideLogo = computed(() => String(props.material.logo || '').trim())
 const overrideIsMdi = computed(() => overrideLogo.value.startsWith('mdi-'))
 
@@ -107,7 +109,7 @@ const logoSrc = computed(() => {
   if (override) {
     if (overrideIsMdi.value) return ''
     if (/^https?:\/\//.test(override) || override.startsWith('/')) return override
-    return `/logo/${override}.png`
+    return logoUrl(override)
   }
 
   if (normalizedMeta.value === 'book') return ''

@@ -144,6 +144,7 @@ import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
+import { logoUrl } from '@/config/mediaAssets'
 
 defineProps({
   articles: {
@@ -167,7 +168,7 @@ function expandSection() {
 const getArticleDocumentLink = (article) => article?.link || article?.cred_link || ''
 
 function getLogoPath(logo) {
-  return `/logo/${logo}.png` // coming from public folder, so no need for import
+  return logoUrl(logo)
 }
 
 function getLogos(logo) {
