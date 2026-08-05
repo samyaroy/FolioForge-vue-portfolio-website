@@ -2,7 +2,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vuetify from 'vite-plugin-vuetify'
 import yaml from '@modyfi/vite-plugin-yaml'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { parse as parseYaml } from 'yaml'
 import { fileURLToPath, URL } from 'url'
 import { isFeatureEnabled } from './src/config/featureFlags'
@@ -152,7 +154,25 @@ function seoPrerender(options: SeoPrerenderOptions): Plugin {
 export default defineConfig({
   plugins: [
     vue(),
+    // Resolves each <v-*> component and its styles from the templates that use
+    // them, instead of main.ts registering the whole library.
+    vuetify({ autoImport: true }),
     yaml(),
+    // Opt-in, because the report costs build time and nobody needs it on a
+    // deploy: `npm run analyze`. Deliberately written outside dist/ -- a report
+    // emitted into dist/ would be published with the site and hand a reader a
+    // complete map of the bundle.
+    ...(process.env.ANALYZE
+      ? [
+          visualizer({
+            filename: 'bundle-report.html',
+            gzipSize: true,
+            brotliSize: true,
+            // `open: true` breaks any headless or CI build.
+            open: false,
+          }) as Plugin,
+        ]
+      : []),
     seoPrerender({
       siteName: SITE_NAME,
       siteUrl: SITE_URL,
