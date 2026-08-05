@@ -43,3 +43,5 @@ src/components/Footer/Index.vue
 */.idea
 */.DS_Store
 */.copilot
+# rollup-plugin-visualizer output (npm run analyze)
+bundle-report.html

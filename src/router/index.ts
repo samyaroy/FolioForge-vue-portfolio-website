@@ -1,22 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import type { Component } from 'vue'
-import type { RouteRecordRaw } from 'vue-router'
-import Home from '@/views/Home/index.vue'
-import Gallery from '@/views/Gallery/index.vue'
-import ProjectPublications from '@/views/ProjectsPublications/index.vue'
-import OngoingProjects from '@/views/OngoingProjects/index.vue'
-import Cocurricular from '@/views/Cocurricular/index.vue'
-import Affilications from '@/views/Affilications/index.vue'
-
-import WorkshopsAttended from '@/views/WorkshopsAttended/index.vue'
-import InternshipCertification from '@/views/InternshipCertification/index.vue'
-import Teachings from '@/views/Teachings/index.vue'
-import ProfessionalAcitivity from '@/views/ProfessionalAcitivity/index.vue'
-import Contact from '@/views/Contact.vue'
-import Resources from '@/views/Resources/index.vue'
-import Facts from '@/views/Facts/index.vue'
-import PrivacyPolicy from '@/views/PrivacyPolicy.vue'
-import NotFound from '@/views/NotFound.vue'
+import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import { BASE_TITLE, pageTitle, routeMetadata } from './routes'
 
@@ -33,21 +16,30 @@ declare module 'vue-router' {
   }
 }
 
-const views: Record<string, Component> = {
-  Home,
-  ProjectsPublications: ProjectPublications,
-  Affilications,
-  OngoingProjects,
-  Cocurricular,
-  Workshops: WorkshopsAttended,
-  Teachings,
-  InternshipCertification,
-  ProfessionalAcitivity,
-  Gallery,
-  Contact,
-  PrivacyPolicy,
-  Resources,
-  Facts,
+// Each view is a dynamic import, so Rollup emits it as its own chunk and a
+// visitor downloads only the route they actually opened. Static imports here
+// would pull all fourteen views into the entry bundle.
+//
+// This does not affect the prerender: scripts/seo-build.ts stamps <head> onto
+// the built shell and never renders a component, so route chunking is invisible
+// to it.
+// vue-router accepts a loader returning the module record; the .vue shim in
+// src/vite-env.d.ts types that default export as a component.
+const views: Record<string, () => Promise<{ default: RouteComponent }>> = {
+  Home: () => import('@/views/Home/index.vue'),
+  ProjectsPublications: () => import('@/views/ProjectsPublications/index.vue'),
+  Affilications: () => import('@/views/Affilications/index.vue'),
+  OngoingProjects: () => import('@/views/OngoingProjects/index.vue'),
+  Cocurricular: () => import('@/views/Cocurricular/index.vue'),
+  Workshops: () => import('@/views/WorkshopsAttended/index.vue'),
+  Teachings: () => import('@/views/Teachings/index.vue'),
+  InternshipCertification: () => import('@/views/InternshipCertification/index.vue'),
+  ProfessionalAcitivity: () => import('@/views/ProfessionalAcitivity/index.vue'),
+  Gallery: () => import('@/views/Gallery/index.vue'),
+  Contact: () => import('@/views/Contact.vue'),
+  PrivacyPolicy: () => import('@/views/PrivacyPolicy.vue'),
+  Resources: () => import('@/views/Resources/index.vue'),
+  Facts: () => import('@/views/Facts/index.vue'),
 }
 
 const routes: RouteRecordRaw[] = [
@@ -68,7 +60,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: NotFound,
+    component: () => import('@/views/NotFound.vue'),
     meta: { title: 'Page Not Found' },
   },
 ]
