@@ -192,7 +192,18 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="mt-2 md:mt-0">
+        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
+          <p v-if="showBetaVersionLink" class="text-gray-500 text-sm">
+            Looking for beta version?
+            <a
+              :href="betaVersionUrl"
+              class="footer-link text-sm"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              see here
+            </a>
+          </p>
           <router-link
             :to="{ name: 'PrivacyPolicy' }"
             class="footer-link text-sm"
@@ -237,6 +248,7 @@ import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
+import { isStableSite } from '@/config/siteEnvironment'
 
 export default {
   components: {
@@ -267,6 +279,10 @@ export default {
       kaggle: socials.kaggle,
       google_scholar: socials.google_scholar,
       researchgate: socials.researchgate,
+      betaVersionUrl: profile.betaVersionUrl,
+      // Only the stable site points at beta; on beta itself the header badge
+      // already points the other way, and on localhost neither applies.
+      showBetaVersionLink: Boolean(profile.betaVersionUrl) && isStableSite(),
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},   
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
       // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
