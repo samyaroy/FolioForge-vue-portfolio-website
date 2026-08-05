@@ -17,7 +17,7 @@ The site is designed to present an academic, research, data science, and web dev
 - Content format: YAML imported directly into Vue modules
 - YAML tooling: `@modyfi/vite-plugin-yaml`, `yaml`, and `yaml-loader`
 - Sitemap generation: `vite-plugin-sitemap`
-- Deployment helpers: `gh-pages` and Cloudflare `wrangler.jsonc`
+- Deployment: Cloudflare, configured in `wrangler.jsonc`
 
 ## Runtime Entry Points
 
@@ -202,7 +202,6 @@ Key scripts from [package.json](package.json):
 - `npm run sync:gallery-manifest`: regenerates gallery image manifest
 - `npm run build`: runs `prebuild`, then Vite build
 - `npm run preview`: previews built assets
-- `npm run deploy`: builds and publishes `dist/` through `gh-pages`
 
 [vite.config.js](vite.config.js) configures:
 

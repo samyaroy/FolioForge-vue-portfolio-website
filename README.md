@@ -56,7 +56,6 @@ npm run lint
 | `npm run sync:gallery-manifest` | Regenerate `src/content/galleryImageManifest.yml` from gallery content. |
 | `npm run build` | Sync the gallery manifest and build static assets into `dist/`. |
 | `npm run preview` | Preview the built `dist/` output locally. |
-| `npm run deploy` | Build and publish `dist/` with `gh-pages`. |
 
 ## Project Structure
 
