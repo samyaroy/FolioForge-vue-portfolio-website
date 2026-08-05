@@ -6,7 +6,9 @@
           <!-- Profile Image Section -->
           <div
             class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg md:h-auto md:min-w-[400px] lg:w-full flex items-center justify-center -mt-4"
-            style='background-image: url("/SamyabrataRoy2.jpg");'></div>
+            :style="heroImageStyle"
+            role="img"
+            :aria-label="heroImageAlt"></div>
 
           <!-- Content Section -->
           <div class="flex flex-col gap-6 md:min-w-[400px] md:gap-8 lg:justify-center">
@@ -79,6 +81,14 @@ const { profile, contacts, socials } = config
 const about = profile.about
 const heading = profile.heading
 const cv_link = profile.cv
+
+// Hero portrait, authored in profile.yml. Takes either a remote URL or a path
+// served from public/ -- CSS url() does not care which, so switching between a
+// bundled file and a hosted one is a content edit with no code change.
+const heroImageAlt = profile.heroImageAlt ?? profile.name
+const heroImageStyle = profile.heroImage
+  ? { backgroundImage: `url("${profile.heroImage}")` }
+  : {}
 
 const gmail = contacts.gmail
 const gmail_link = `mailto:${gmail}`
