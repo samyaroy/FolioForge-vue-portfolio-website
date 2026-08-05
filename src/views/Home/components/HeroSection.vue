@@ -15,8 +15,8 @@
               <h1
                 class="text-[#0e141b] !text-4xl font-black leading-tight tracking-[-0.033em] md:text-5xl md:font-black md:leading-tight md:tracking-[-0.033em]" v-html="heading"></h1>
               <h2
-                class="content-justify text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
-                {{ about }}
+                class="hero-about content-justify text-[#0e141b] text-sm font-normal leading-normal md:text-base md:font-normal md:leading-normal">
+                <SmartLink :text="about" :type="'Institute'" />
               </h2>
             </div>
 
@@ -52,7 +52,13 @@
                 class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
                 <v-icon>mdi-github</v-icon>
               </a>
-              <a :href=email_link class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200">
+              <!-- Still links to the gmail address; the icon is the plain
+                   mdi glyph, not the animated one. -->
+              <a
+                :href="gmail_link"
+                class="text-[#0e141b] hover:text-[#1980e6] transition-colors duration-200"
+                aria-label="Email"
+              >
                 <v-icon>mdi-email</v-icon>
               </a>
             </div>
@@ -66,16 +72,16 @@
 
 <script setup>
 import config from "@/content/profile_info"
+import SmartLink from "@/components/SmartLink.vue"
 
 const { profile, contacts, socials } = config
 
-const name = profile.name
 const about = profile.about
 const heading = profile.heading
 const cv_link = profile.cv
 
-const email = contacts.email
-const email_link = `mailto:${email}`
+const gmail = contacts.gmail
+const gmail_link = `mailto:${gmail}`
 
 const github_personal = socials.github
 const linkedin = socials.linkedin
@@ -86,7 +92,7 @@ const downloadCV = () => {
 
 const openGmailDraft = () => {
   const subject = encodeURIComponent('Collaboration Opportunity')
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}`
+  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${gmail}&su=${subject}`
   window.open(gmailUrl, '_blank')
 }
 </script>
@@ -94,5 +100,24 @@ const openGmailDraft = () => {
 <style scoped>
 .get-in-touch-button {
   border: 2px solid #000000 !important;
+}
+
+.hero-about :deep(a) {
+  color: #1980e6;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.hero-about :deep(a:hover) {
+  color: #1565c0;
+  /* overrides SmartLink's own hover:underline utility class */
+  text-decoration: none;
+}
+
+.hero-about :deep(a:focus-visible) {
+  outline: 2px solid rgba(25, 128, 230, 0.9);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 </style>

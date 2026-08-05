@@ -2,10 +2,34 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "folioforge-blog",
   "compatibility_date": "2026-03-21",
-  // SPA: serve index.html for unknown paths so client-side routes
-  // (e.g. /posts/:slug) work on refresh and direct links.
+  // The worker only backs /api/* (rail-route proxy for the travel map; needs
+  // the RAILRADAR_API_KEY secret: `npx wrangler secret put RAILRADAR_API_KEY`).
+  "main": "worker/index.js",
+  // Every real route — including each /posts/:slug and /travel/:tripId — is
+  // prerendered to its own dist/<route>/index.html (see
+  // ../scripts/seo-build.ts), so direct links and refreshes resolve from
+  // a static file. Genuinely unknown paths get dist/404.html with a real 404
+  // status instead of a 200 copy of the home page, which is what
+  // single-page-application handling served and what makes crawlers treat
+  // every mistyped URL as a valid page.
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "single-page-application"
-  }
+    "not_found_handling": "404-page",
+    // Serve /readings from /readings/index.html directly. The default
+    // (auto-trailing-slash) instead 307s /readings -> /readings/, which would
+    // put a redirect in front of every page and disagree with the canonical
+    // and sitemap URLs, both of which are written without a trailing slash.
+    "html_handling": "drop-trailing-slash",
+    "binding": "ASSETS",
+    // Without this, /api/* would fall through to the SPA's index.html
+    // instead of reaching the worker.
+    "run_worker_first": ["/api/*"]
+  },
+  // Rail-route geometry, precomputed at commit time (scripts/sync-rail.mjs) so
+  // every visitor is served from KV instead of RailRadar's 50-req/day quota.
+  // Create the namespace once, then paste its id below:
+  //   npx wrangler kv namespace create RAIL
+  "kv_namespaces": [
+    { "binding": "RAIL", "id": "14ac58126fab4c46aa2be6c5c37b836e" }
+  ]
 }

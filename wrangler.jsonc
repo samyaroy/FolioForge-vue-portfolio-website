@@ -4,8 +4,18 @@
   "compatibility_date": "2026-03-21",
   "assets": {
     "directory": "./dist",
-    // Serve index.html for any unmatched path so the SPA's history-mode routes
-    // (e.g. /facts, /contact) resolve on direct load or refresh instead of 404.
-    "not_found_handling": "single-page-application"
+    // Every real route is prerendered to its own dist/<route>/index.html (see
+    // scripts/seo-build.ts), so history-mode routes resolve on direct
+    // load from a static file and only genuinely unknown paths fall through.
+    // Those get dist/404.html with a real 404 status — the SPA still boots and
+    // renders the in-app NotFound view, but crawlers are no longer told that
+    // every misspelled URL is a valid page (the "soft 404" that
+    // single-page-application handling produces).
+    "not_found_handling": "404-page",
+    // Serve /contact from /contact/index.html directly. The default
+    // (auto-trailing-slash) instead 307s /contact -> /contact/, which would
+    // put a redirect in front of every page and disagree with the canonical
+    // and sitemap URLs, both of which are written without a trailing slash.
+    "html_handling": "drop-trailing-slash"
   }
 }

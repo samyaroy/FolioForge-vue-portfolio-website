@@ -37,7 +37,7 @@
               class="ml-1 inline-flex align-middle text-[#1980e6] transition-colors hover:text-[#0e141b]"
               :aria-label="`Open ${bootcamp.title} link in a new tab`"
             >
-              <v-icon size="16">mdi-open-in-new</v-icon>
+              <AnimatedIcon name="external-link" :size="16" />
             </a>
             <span v-if="bootcamp.cred_link" class="inline-block ml-1 align-middle">
               <DocumentViewer :src="bootcamp.cred_link" />
@@ -156,6 +156,7 @@
 import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import CourseCirriculumModal from '@/views/Home/components/education/components/CourseCirriculumModal.vue'
 
 const props = defineProps({

@@ -4,7 +4,10 @@
       v-if="!currentCollaborators.length && !pastCollaborators.length"
       class="border border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-500 bg-white"
     >
-      No collaborators listed yet
+      <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+        <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+        <span>No collaborators listed yet</span>
+      </span>
     </div>
 
     <div v-if="currentCollaborators.length" class="space-y-4">
@@ -34,6 +37,7 @@
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed } from 'vue'
 import CollaboratorCard from '../cards/CollaboratorCard.vue'
 

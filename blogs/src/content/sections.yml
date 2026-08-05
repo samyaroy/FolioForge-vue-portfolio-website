@@ -5,9 +5,9 @@
 blogs:
   title: Writing
   # Large heading shown above the hero image on the blog home page.
-  heroHeading: |-
-    The details are not the details.
-    They make the design
+  heroHeading: "Pound your thoughts and walk into the Auraverse..."
+  # Heading of the year-grouped post index beside the post list.
+  allPostsTitle: All posts
 
 readings:
   title: Readings
@@ -15,6 +15,20 @@ readings:
   cardLabel: Reading
   emptyLabel: No readings here yet.
   reviewLabel: "Read review ->"
+  # Labels inside the review modal opened from a reading card.
+  noteLabel: My note
+  linkLabel: More about this book
+
+movies:
+  title: Movies
+  tag: movies
+  cardLabel: Movie
+  emptyLabel: Nothing worth binge-watching here yet.
+  reviewLabel: "Read review ->"
+  # Labels inside the review modal opened from a movie card.
+  watchedLabel: "watched"
+  noteLabel: My take
+  linkLabel: More about this film
 
 hobbies:
   title: Hobbies
@@ -29,6 +43,10 @@ travel:
   tag: travel
   mapTitle: States & cities visited
   mapAttribution: "* Map boundaries use india-maps-data GeoJSON; city coordinates are resolved with the Open-Meteo Geocoding API and rendered with ECharts."
+  detailsLabel: "See details ->"
+  backToTravel: "← Back to TravelBook"
+  routeMapTitle: Travel route
+  routeMapAttribution: "* Map boundaries use india-maps-data GeoJSON; coordinates are resolved with the Open-Meteo Geocoding API; road and walking routes use OSRM; rail routes use RailRadar; rendered with ECharts."
 
 post:
   backToBlogs: Back to Writing

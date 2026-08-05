@@ -67,12 +67,16 @@
     </div>
 
     <div v-else class="text-center text-gray-500 italic">
-      No teaching experience listed
+      <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+        <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+        <span>No teaching experience listed</span>
+      </span>
     </div>
   </div>
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 // import SmartLink from '@/components/SmartLink.vue'
 
 defineProps({

@@ -9,6 +9,30 @@ Institute:
         - IISER Kolkata
       Website: https://www.iiserkol.ac.in/
 
+    - Name: Indian Institute of Science Education and Research, Mohali
+      Aliases:
+        - IISER Mohali
+      Website: https://www.iisermohali.ac.in/
+
+    - Name: Indian Institute of Science Education and Research, Bhopal
+      Aliases:
+        - IISER Bhopal
+      Website: https://www.iiserb.ac.in/
+
+    - Name: International Centre for Theoretical Sciences
+      Aliases:
+        - ICTS
+        - International Centre for Theoretical Sciences, Bangalore
+        - International Centre for Theoretical Sciences (ICTS)
+      Website: https://www.icts.res.in/
+
+    - Name: Tata Institute of Fundamental Research
+      Aliases:
+        - TIFR
+        - Tata Institute of Fundamental Research, Mumbai
+        - Tata Institute of Fundamental Research (TIFR)
+      Website: https://www.tifr.res.in/
+
     - Name: Indian Institute of Science
       Aliases:
         - IISc
@@ -84,6 +108,9 @@ Institute:
         - NISER
       Website: https://www.niser.ac.in/
 
+    - Name: University of Calcutta
+      Website: https://www.caluniv.ac.in/
+    
     - Name: Sister Nivedita University
       Website: https://snuniv.ac.in/
 
@@ -138,6 +165,7 @@ Institute:
         - Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
         - IDEAS-TIH
         - IDEAS - TIH
+        - IDEAS-TIH, ISI Kolkata
       Website: https://www.ideas-tih.org/
 
     - Name: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
@@ -165,6 +193,7 @@ Institute:
         - IHFC, IIT Delhi
         - IHFC - Technology Innovation Hub of IIT Delhi
         - IHFC - Technology Innovation Hub, IIT Delhi
+        - I-Hub Foundation for Cobotics (IHFC), the Technology Innovation Hub
       Website: https://www.ihfc.co.in/
 
     - Name: CUNY Graduate School of Public Health and Health Policy
@@ -211,6 +240,8 @@ Institute:
 Person:
 
     - Name: Prof. Sudarshan Iyengar
+      Aliases:
+        - Sudarshan Iyengar
       Link: https://www.linkedin.com/in/sudarshan-iyengar-3560b8145/
 
     - Name: Prof. Ponnurangam Kumaraguru
@@ -226,12 +257,16 @@ Person:
       Link: https://engineering.jhu.edu/faculty/michael-shields/
 
     - Name: Prof. Aniruddha Choudhuri
+      Aliases:
+        - Aniruddha Choudhuri
       Link: https://www.linkedin.com/in/aniruddha-choudhuri-9376b174/
 
     - Name: Mr. Debashis Ghosh
       Link: https://www.linkedin.com/in/debashis-ghosh-b5a756b/
     
     - Name: Prof. Andrew Thangaraj
+      Aliases:
+        - Andrew Thangaraj
       Link: https://www.ee.iitm.ac.in/andrew/
 
     - Name: prof. Sheweta Agarwal
@@ -250,6 +285,8 @@ Person:
       Link: https://www.linkedin.com/in/naveen-sivadasan-b71027b2/
 
     - Name: Dr. Partha Pratim Das
+      Aliases:
+        - Partha Pratim Das
       Link: https://www.ashoka.edu.in/profile/partha-pratim-das/
 
     - Name: Prof. Venkatesh Raman
@@ -258,7 +295,7 @@ Person:
     - Name: Prof. K muralidharan
       Link: https://www.linkedin.com/in/muralidharan-kunnummal/
 
-    - Name: Prof. Indu Joshi
+    - Name: Dr. Indu Joshi
       Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
 
     - Name: Prof. Balaraman Ravindran
@@ -266,3 +303,9 @@ Person:
 
     - Name: Prof. Chetan Kamath
       Link: https://www.cse.iitb.ac.in/~ckamath/
+
+    - Name: Prof. Monalisa Sarma
+      Link: https://sqr.iitkgp.ac.in/monalisa_sarma.html
+
+    - Name: Prof. Gaurangadeb Chattopadhyay
+      Lik: https://scholar.google.com/citations?user=wWMT7yMAAAAJ&hl=en

@@ -16,6 +16,9 @@ navItems:
   - to: /readings
     label: What I Read
     flag: showReadings
+  - to: /movies
+    label: Worth Binge-watching
+    flag: showMovies
   - to: /travel
     label: TravelBook
     flag: showTravel

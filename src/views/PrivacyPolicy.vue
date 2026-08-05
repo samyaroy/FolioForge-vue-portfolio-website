@@ -44,6 +44,8 @@
 <script setup>
 import config from '@/content/profile_info'
 
-const email = config.contacts.email
+// The policy's contact-of-record is the personal gmail address (it was
+// contacts.email before that key was renamed to contacts.gmail).
+const email = config.contacts.gmail
 const emailLink = `mailto:${email}`
 </script>

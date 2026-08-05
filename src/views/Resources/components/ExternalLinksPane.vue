@@ -85,12 +85,16 @@
     </div>
 
     <p v-else-if="!collapsed" class="text-sm text-gray-500">
-      No external links yet.
+      <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+        <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+        <span>No external links yet.</span>
+      </span>
     </p>
   </aside>
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 

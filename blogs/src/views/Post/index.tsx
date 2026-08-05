@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getPost } from '../../lib/posts'
 import { formatDate } from '../../lib/format'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { POST_COPY } from '../../content/sections'
 import { NotFoundPage } from '../NotFound'
 
@@ -23,9 +24,15 @@ const PROSE_CLASS = [
   '[&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-left',
 ].join(' ')
 
+// The BlogPosting structured data for this page is stamped into the head at
+// build time (vite.config.ts), where crawlers see it without running the app.
+// Emitting it here as well would put two conflicting copies on the page.
 export function PostPage() {
   const { slug } = useParams<{ slug: string }>()
   const post = slug ? getPost(slug) : undefined
+
+  // undefined while the post is missing: the NotFoundPage owns the title then.
+  usePageTitle(post?.title)
 
   if (!post) {
     return <NotFoundPage />
@@ -45,9 +52,13 @@ export function PostPage() {
         </h1>
         {post.date && (
           <time
-            className="text-xs leading-normal font-bold tracking-[0.16em] text-faint uppercase"
+            className="inline-flex items-center gap-1 text-xs leading-normal font-normal tracking-normal normal-case text-faint"
             dateTime={post.date}
           >
+            <span
+              className="mdi mdi-calendar-blank-outline leading-none"
+              aria-hidden="true"
+            />
             {formatDate(post.date)}
           </time>
         )}

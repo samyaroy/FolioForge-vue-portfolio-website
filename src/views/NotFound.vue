@@ -1,43 +1,26 @@
 <template>
-  <div class="relative flex size-full min-h-[70vh] flex-col bg-slate-50 overflow-x-hidden">
-    <div class="flex flex-1 items-center justify-center px-8 py-12">
-      <div class="w-full max-w-2xl rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm md:p-12">
-        <p class="text-sm font-semibold uppercase tracking-[0.35em] text-[#4e7397]">404 Error</p>
-        <h1 class="mt-4 text-4xl font-black tracking-[-0.033em] text-[#0e141b] md:text-5xl">
-          That page could not be found.
-        </h1>
-        <p class="mt-4 text-base text-slate-600 md:text-lg">
-          The route you requested does not exist or may have moved.
-        </p>
-        <p v-if="missingPath" class="mt-3 break-all text-sm text-slate-500">
-          Requested path: {{ missingPath }}
-        </p>
-
-        <div class="mt-8 flex justify-center">
+  <div class="relative flex size-full min-h-screen flex-col bg-slate-50 overflow-x-hidden">
+    <div class="layout-container flex h-full grow flex-col">
+      <div class="px-8 md:px-16 lg:px-20 flex flex-1 justify-center py-10">
+        <div class="layout-content-container flex flex-col w-full max-w-[960px] flex-1 items-center text-center">
+          <p class="text-sm font-semibold uppercase tracking-[0.3em] text-[#4e7397]">
+            Error 404
+          </p>
+          <h1 class="mt-3 text-4xl font-black tracking-[-0.033em] text-[#0e141b]">
+            This page doesn't exist.
+          </h1>
+          <p class="mt-4 max-w-[560px] text-slate-600">
+            The link may be out of date, or the page may have moved. Everything else is
+            still where you left it.
+          </p>
           <router-link
             to="/"
-            class="inline-flex items-center rounded-lg bg-primary px-5 py-3 text-sm font-bold text-white no-underline transition-colors duration-200 hover:bg-primary-700"
+            class="mt-8 inline-flex rounded-lg bg-[#1980e6] px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-[#0842a0]"
           >
-            Back to Home
+            Back to home
           </router-link>
         </div>
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-
-const route = useRoute()
-
-const missingPath = computed(() => {
-  const from = route.query.from
-  if (typeof from === 'string' && from.trim()) {
-    return from
-  }
-
-  return route.path === '/404' ? '' : route.fullPath
-})
-</script>

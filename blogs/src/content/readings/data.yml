@@ -1,6 +1,14 @@
 # Reading notes shown on the Readings page. Loaded through data.ts, which
 # applies the types and sorts newest-first, so order here doesn't matter.
 # Keep dates quoted so they stay strings ("YYYY-MM-DD").
+#
+# Optional per-item fields (all shown in the "Read review" modal):
+#   image:  cover picture; a full URL, or a bare CDN key resolved to
+#           https://media.samyabrata.codeium.xyz/<key>.jpeg (same as gallery)
+#   note:   longer personal note; use a block scalar (note: |) and blank
+#           lines to split paragraphs. Falls back to `description` if absent.
+#   rating: 1-5 stars
+#   link:   external page about the book (Wikipedia, Goodreads, ...)
 
 items:
   - id: deep-work
@@ -9,6 +17,18 @@ items:
     genre: Productivity
     date: "2026-06-20"
     description: "Notes on focus, context switching, and protecting long stretches of attention."
+    image: https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg
+    rating: 4
+    link: https://en.wikipedia.org/wiki/Deep_Work
+    note: |
+      The core argument stuck with me: the ability to focus without
+      distraction is becoming rarer exactly as it becomes more valuable.
+      Newport's split between deep and shallow work is a useful lens for
+      auditing where a week actually goes.
+
+      The scheduling rituals felt over-engineered at times, but the habit of
+      blocking long, protected stretches for a single hard problem has
+      genuinely changed how I plan my days.
 
   - id: design-of-everyday-things
     title: The Design of Everyday Things
@@ -16,6 +36,17 @@ items:
     genre: Design
     date: "2026-06-21"
     description: "A reminder that good interfaces make the next action feel visible, natural, and forgiving."
+    image: https://covers.openlibrary.org/b/isbn/9780465050659-L.jpg
+    rating: 5
+    link: https://en.wikipedia.org/wiki/The_Design_of_Everyday_Things
+    note: |
+      Norman's vocabulary — affordances, signifiers, mapping, feedback — is
+      the rare kind that keeps paying off long after the book is closed. Once
+      you see a "Norman door" you can't unsee bad design anywhere.
+
+      The biggest takeaway for building software: when people make mistakes
+      with your interface, treat it as a design failure to learn from, not a
+      user failure to correct.
 
   - id: thinking-in-systems
     title: Thinking in Systems
@@ -23,3 +54,14 @@ items:
     genre: Systems
     date: "2026-06-22"
     description: "Notes on feedback loops, delays, leverage points, and why simple causes rarely explain complex outcomes."
+    image: https://covers.openlibrary.org/b/isbn/9781603580557-L.jpg
+    rating: 5
+    link: https://en.wikipedia.org/wiki/Thinking_In_Systems:_A_Primer
+    note: |
+      Meadows makes stocks, flows, and feedback loops feel intuitive without
+      ever dumbing them down. The chapter on leverage points is worth the
+      whole book: the places where small changes move a system are almost
+      never where we instinctively push.
+
+      Also a quietly humbling read — most "obvious" fixes fail because they
+      fight the system's structure instead of changing it.

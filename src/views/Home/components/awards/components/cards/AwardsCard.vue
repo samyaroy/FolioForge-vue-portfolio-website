@@ -34,8 +34,10 @@
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex items-center gap-1 text-[#1980e6] text-sm hover:underline"
+          @mouseenter="linkIcon?.startAnimation()"
+          @mouseleave="linkIcon?.stopAnimation()"
         >
-          <v-icon size="14">mdi-open-in-new</v-icon>
+          <AnimatedIcon name="external-link" ref="linkIcon" :size="14" />
           View Credential
         </a>
       </div>
@@ -44,7 +46,11 @@
 </template>
 
 <script setup>
+import { useTemplateRef } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+
+const linkIcon = useTemplateRef('linkIcon')
 
 defineProps({
   title: String,

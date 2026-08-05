@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import { PostCard } from '../Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { TRAVEL_SECTION } from '../../content/sections'
 import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
@@ -12,6 +13,8 @@ import {
   TRAVEL_LEGEND_LABELS,
   type Purpose,
 } from '../../content/travel/data'
+import { TRIPS, type Trip } from '../../content/travel/trips'
+import { TripCard } from './components/TripCard'
 import {
   INTRO_SECTION_CLASS,
   INTRO_TEXT_CLASS,
@@ -19,16 +22,11 @@ import {
   POST_LIST_CLASS,
 } from '../../lib/ui'
 import { geocodeCities, type GeoCity } from './components/geocode'
+import { INDIA_MAP_NAME, loadIndiaMap } from './components/indiaMap'
 
 const LEGEND_ROW_CLASS = 'inline-flex items-center gap-[0.35rem]'
 const LEGEND_HATCH_CLASS =
   'inline-block size-3 rounded-[3px] border border-border bg-[#f1f5f9]'
-
-// India boundaries pulled from a maintained, post-2019 dataset (Ladakh & J&K
-// split, current names) served over a CDN — no GeoJSON is vendored in-repo.
-const INDIA_GEOJSON_URL =
-  'https://cdn.jsdelivr.net/gh/udit-001/india-maps-data@main/geojson/india.geojson'
-const INDIA_MAP_NAME = 'india'
 
 // States are shaded by how many cities I've visited there, using a fixed
 // diverging palette (brown → cream → teal) applied as discrete count buckets.
@@ -78,6 +76,27 @@ const PURPOSE_DECAL: Record<Purpose, object> = {
 // The home state is painted a distinct colour (deliberately outside the count
 // palette and the red city markers) so it stands apart at a glance.
 const HOME_COLOR = '#7c3aed'
+
+// Trip cards are sectioned under year dividers (mirroring the portfolio's
+// conferences tab). Input is already sorted newest-first, so consecutive
+// trips of the same year collapse into one group.
+function groupTripsByYear(trips: Trip[]): { year: string; trips: Trip[] }[] {
+  return trips.reduce<{ year: string; trips: Trip[] }[]>((groups, trip) => {
+    // The YAML loader hands dates over as Date objects at runtime (the Trip
+    // type says string), so go through the Date constructor for the year.
+    const year = String(new Date(trip.date).getFullYear())
+    const last = groups[groups.length - 1]
+    if (last?.year === year) {
+      last.trips.push(trip)
+    } else {
+      groups.push({ year, trips: [trip] })
+    }
+    return groups
+  }, [])
+}
+
+// How many trip cards are shown initially and added per "See more" click.
+const TRIPS_PAGE_SIZE = 7
 
 const byState = new Map(STATE_VISITS.map((s) => [s.state, s]))
 const homeState = STATE_VISITS.find((s) => s.home)?.state
@@ -132,6 +151,11 @@ function tooltipFormatter(params: unknown): string {
   return lines.join('<br/>')
 }
 
+// Shared placement for both geo layers (choropleth + border outline) so they
+// always overlap exactly. Slightly below center so the top isn't clipped.
+const MAP_LAYOUT_CENTER = ['50%', '52%']
+const MAP_LAYOUT_SIZE = '108%'
+
 function buildOption(
   cities: GeoCity[],
   allStates: string[],
@@ -155,8 +179,8 @@ function buildOption(
         z: 3,
         tooltip: { show: true, formatter: tooltipFormatter },
         // Zoom in to make better use of the (now taller) pane width.
-        layoutCenter: ['50%', '46%'],
-        layoutSize: '108%',
+        layoutCenter: MAP_LAYOUT_CENTER,
+        layoutSize: MAP_LAYOUT_SIZE,
         // Mild horizontal stretch (default 0.75 squeezes longitude; higher widens).
         aspectScale: 0.9,
         itemStyle: {
@@ -192,8 +216,8 @@ function buildOption(
         nameProperty: 'st_nm',
         z: 1,
         silent: true,
-        layoutCenter: ['50%', '46%'],
-        layoutSize: '108%',
+        layoutCenter: MAP_LAYOUT_CENTER,
+        layoutSize: MAP_LAYOUT_SIZE,
         aspectScale: 0.9,
         itemStyle: {
           areaColor: 'transparent',
@@ -238,17 +262,8 @@ function buildOption(
           shadowBlur: 4,
           shadowColor: 'rgba(0,0,0,0.25)',
         },
-        emphasis: {
-          scale: 1.4,
-          label: { show: true },
-        },
-        label: {
-          show: false,
-          formatter: '{b}',
-          position: 'right',
-          fontSize: 10,
-          color: '#0e141b',
-        },
+        // Hover feedback is the tooltip alone; no name label beside the dot.
+        emphasis: { scale: 1.4 },
         data: cities
           .filter((c) => !c.home && !c.stayed)
           .map((c) => ({
@@ -271,14 +286,7 @@ function buildOption(
           shadowBlur: 4,
           shadowColor: 'rgba(0,0,0,0.25)',
         },
-        emphasis: { scale: 1.4, label: { show: true } },
-        label: {
-          show: false,
-          formatter: '{b}',
-          position: 'right',
-          fontSize: 10,
-          color: '#0e141b',
-        },
+        emphasis: { scale: 1.4 },
         data: cities
           .filter((c) => c.stayed)
           .map((c) => ({
@@ -306,14 +314,7 @@ function buildOption(
           shadowBlur: 5,
           shadowColor: 'rgba(0,0,0,0.35)',
         },
-        emphasis: { scale: 1.3, label: { show: true } },
-        label: {
-          show: false,
-          formatter: '{b}',
-          position: 'right',
-          fontSize: 10,
-          color: '#0e141b',
-        },
+        emphasis: { scale: 1.3 },
         data: cities
           .filter((c) => c.home && !c.stayed)
           .map((c) => ({
@@ -349,10 +350,17 @@ function buildOption(
 }
 
 export function TravelPage() {
+  usePageTitle(TRAVEL_SECTION.title)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [visibleTrips, setVisibleTrips] = useState(TRIPS_PAGE_SIZE)
   const showPageDescription = isPageDescriptionEnabled('travel')
+
+  const tripGroups = useMemo(
+    () => groupTripsByYear(TRIPS.slice(0, visibleTrips)),
+    [visibleTrips],
+  )
 
   const travelPosts = useMemo(
     () =>
@@ -371,23 +379,19 @@ export function TravelPage() {
     const chart = echarts.init(el)
     chartRef.current = chart
 
-    const onResize = () => chart.resize()
-    window.addEventListener('resize', onResize)
+    // The pane is flex-sized on desktop, so watch the container itself
+    // (covers window resizes and the loading note appearing/disappearing).
+    const observer = new ResizeObserver(() => chart.resize())
+    observer.observe(el)
 
     async function load() {
       try {
         // Map geometry and city coordinates are fetched in parallel.
-        const [res, cities] = await Promise.all([
-          fetch(INDIA_GEOJSON_URL),
+        const [allStates, cities] = await Promise.all([
+          loadIndiaMap(),
           geocodeCities(CITY_VISITS),
         ])
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        const geojson = await res.json()
         if (cancelled) return
-        echarts.registerMap(INDIA_MAP_NAME, geojson)
-        const allStates: string[] = (geojson.features ?? [])
-          .map((f: { properties?: { st_nm?: string } }) => f.properties?.st_nm)
-          .filter((n: string | undefined): n is string => Boolean(n))
         chart.setOption(buildOption(cities, allStates))
         setStatus('ready')
       } catch (err) {
@@ -399,17 +403,19 @@ export function TravelPage() {
 
     return () => {
       cancelled = true
-      window.removeEventListener('resize', onResize)
+      observer.disconnect()
       chart.dispose()
       chartRef.current = null
     }
   }, [])
 
   return (
-    <div className="ml-[50%] grid w-[min(calc(100vw-2rem),78rem)] -translate-x-1/2 grid-cols-1 gap-6 min-[900px]:grid-cols-[55%_45%] min-[900px]:items-start">
+    <div className="ml-[50%] grid w-[85vw] -translate-x-1/2 grid-cols-1 gap-[clamp(0.75rem,2vw,2.5rem)] min-[900px]:grid-cols-[55fr_45fr] min-[900px]:items-start">
       <div className="min-w-0">
-        <section className={INTRO_SECTION_CLASS}>
-          <h1 className={INTRO_TITLE_CLASS}>{TRAVEL_SECTION.title}</h1>
+        <section className={`${INTRO_SECTION_CLASS} mb-4!`}>
+          <h1 className={`${INTRO_TITLE_CLASS} [view-transition-name:travel-title]`}>
+            {TRAVEL_SECTION.title}
+          </h1>
           {showPageDescription && (
             <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.travel}</p>
           )}
@@ -422,14 +428,44 @@ export function TravelPage() {
             ))}
           </div>
         )}
+
+        {TRIPS.length > 0 && (
+          <div className="mt-2 flex flex-col gap-10">
+            {tripGroups.map((group) => (
+              <div key={group.year}>
+                <div className="mb-5 flex items-center gap-4">
+                  <span className="text-lg font-semibold text-faint">
+                    {group.year}
+                  </span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <div className="flex flex-col gap-6">
+                  {group.trips.map((trip) => (
+                    <TripCard key={trip.id} trip={trip} />
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            {visibleTrips < TRIPS.length && (
+              <button
+                type="button"
+                onClick={() => setVisibleTrips((n) => n + TRIPS_PAGE_SIZE)}
+                className="self-end text-sm font-normal text-primary transition-colors duration-200 hover:text-ink"
+              >
+                See more →
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <section
-        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map] min-[900px]:sticky min-[900px]:top-19 min-[900px]:flex min-[900px]:h-[calc(110vh-4.4rem)] min-[900px]:flex-col min-[900px]:overflow-hidden"
         aria-label="Map of states visited in India"
       >
         <div className="mb-2">
-          <h2 className="text-[1.1rem] text-ink">{TRAVEL_SECTION.mapTitle}</h2>
+          <h2 className="text-lg font-bold text-ink">{TRAVEL_SECTION.mapTitle}</h2>
 
           <div className="absolute top-[0.85rem] right-4 z-2 flex flex-col items-end gap-[0.3rem] rounded-lg border border-border bg-[rgba(255,255,255,0.85)] px-[0.6rem] py-2 text-right text-[0.72rem] text-muted backdrop-blur-[2px]">
             <span className={LEGEND_ROW_CLASS}>
@@ -507,18 +543,21 @@ export function TravelPage() {
           </div>
         </div>
 
-        <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white">
-          <div className="h-[92vh] min-h-150 w-full bg-white" ref={containerRef} />
+        <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white min-[900px]:h-auto min-[900px]:min-h-0 min-[900px]:flex-1">
+          <div
+            className="h-[92vh] min-h-150 w-full bg-white min-[900px]:h-full min-[900px]:min-h-0"
+            ref={containerRef}
+          />
         </div>
         <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
           {TRAVEL_SECTION.mapAttribution}
         </p>
 
         {status === 'loading' && (
-          <p className="mt-2 text-[0.9rem] text-muted">Loading map…</p>
+          <p className="mt-2 text-sm text-muted">Loading map…</p>
         )}
         {status === 'error' && (
-          <p className="mt-2 text-[0.9rem] text-[#dc2626]">
+          <p className="mt-2 text-sm text-[#dc2626]">
             Could not load the map data. Please try again later.
           </p>
         )}

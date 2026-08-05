@@ -44,7 +44,12 @@
     </div>
     
     <div v-else-if="showMain" class="text-center py-12">
-      <p class="text-gray-500 text-lg">No workshops attended yet</p>
+      <p class="text-gray-500 text-lg">
+        <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+          <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+          <span>No workshops attended yet</span>
+        </span>
+      </p>
     </div>
 
     <div v-else-if="!showOtherLearningEngagements" class="text-center py-12">
@@ -54,6 +59,7 @@
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, ref } from 'vue'
 import WorkshopCard from '../cards/WorkshopCard.vue'
 import OtherLearningEngagementsModal from '../modal/OtherLearningEngagementsModal.vue'

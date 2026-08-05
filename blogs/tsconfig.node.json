@@ -21,5 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.ts"]
+  // ../scripts holds the SEO prerender plugin, shared with the portfolio build.
+  "include": ["vite.config.ts", "../scripts/**/*.ts"]
 }

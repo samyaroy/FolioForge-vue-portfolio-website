@@ -16,6 +16,10 @@ export type CityVisit = {
   visits?: number
   /** Filled in from the parent state entry; used to disambiguate geocoding. */
   state?: string
+  /** Explicit coordinates; when both are set, geocoding is skipped for this
+      city (use for small places the geocoder misses). */
+  lat?: number
+  lng?: number
   /** Places where you lived/stayed for college, work, or similar reasons. */
   stayed?: boolean
   stayReason?: string

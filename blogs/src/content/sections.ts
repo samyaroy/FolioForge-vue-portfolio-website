@@ -6,6 +6,7 @@ interface SectionsContent {
   blogs: {
     title: string
     heroHeading: string
+    allPostsTitle: string
   }
   readings: {
     title: string
@@ -13,6 +14,18 @@ interface SectionsContent {
     cardLabel: string
     emptyLabel: string
     reviewLabel: string
+    noteLabel: string
+    linkLabel: string
+  }
+  movies: {
+    title: string
+    tag: string
+    cardLabel: string
+    emptyLabel: string
+    reviewLabel: string
+    watchedLabel: string
+    noteLabel: string
+    linkLabel: string
   }
   hobbies: {
     title: string
@@ -27,6 +40,10 @@ interface SectionsContent {
     tag: string
     mapTitle: string
     mapAttribution: string
+    detailsLabel: string
+    backToTravel: string
+    routeMapTitle: string
+    routeMapAttribution: string
   }
   post: {
     backToBlogs: string
@@ -37,6 +54,7 @@ const sections = raw as SectionsContent
 
 export const BLOGS_SECTION = sections.blogs
 export const READINGS_SECTION = sections.readings
+export const MOVIES_SECTION = sections.movies
 export const HOBBIES_SECTION = sections.hobbies
 export const GALLERY_SECTION = sections.gallery
 export const TRAVEL_SECTION = sections.travel

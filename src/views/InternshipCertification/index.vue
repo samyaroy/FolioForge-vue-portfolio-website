@@ -33,7 +33,7 @@
         <!-- Internships Section -->
         <div v-if="showInternshipsTab && activeTab === 'internships'" class="mb-16">
           <div class="space-y-6 max-w-4xl mx-auto">
-            <InternshipCard v-for="(internship, index) in internships" :key="internship.index"
+            <InternshipCard v-for="(internship, index) in internships" :key="index"
               :internship="internship" />
           </div>
         </div>
@@ -63,7 +63,10 @@
           </div>
 
           <div v-else class="text-center text-gray-500 italic py-8">
-            No certificate available
+            <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+              <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+              <span>No certificate available</span>
+            </span>
           </div>
         </div>
       </div>
@@ -72,6 +75,7 @@
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'

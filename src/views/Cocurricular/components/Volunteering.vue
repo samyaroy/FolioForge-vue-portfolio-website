@@ -30,7 +30,7 @@
 
       <!-- Fields column -->
       <div class="flex-1">
-        <div v-for="(f, index) in volunteering.field" :key="index" class="flex items-start justify-between mb-2">
+        <div v-for="(f, index) in volunteering.field" :key="index" class="flex items-start justify-between mb-0.5">
           <p class="text-gray-600">
             {{ f.sub_field }}
           </p>
@@ -45,7 +45,7 @@
 
     </div>
     <!-- Skills (plain text, because that’s what it is) -->
-    <div class="mb-2">
+    <div v-if="volunteering.skills" class="mb-2">
       <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
         {{ volunteering.skills }}
       </span>

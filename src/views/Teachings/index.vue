@@ -82,8 +82,14 @@ const tabDefinitions = [
 const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))
 const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
 
+// Prefer the "Projects Mentored" tab as the landing tab when it is enabled,
+// otherwise fall back to the first available tab.
+const defaultTabId = computed(() =>
+  enabledTabIds.value.includes('projects') ? 'projects' : (tabs.value[0]?.id || null)
+)
+
 const route = useRoute()
-const activeTab = ref(tabs.value[0]?.id || null)
+const activeTab = ref(defaultTabId.value)
 
 // Data from config
 const {
@@ -94,7 +100,7 @@ const {
 
 watch(tabs, (nextTabs) => {
   if (!nextTabs.some(tab => tab.id === activeTab.value)) {
-    activeTab.value = nextTabs[0]?.id || null
+    activeTab.value = defaultTabId.value
   }
 }, { immediate: true })
 

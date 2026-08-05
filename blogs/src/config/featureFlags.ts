@@ -6,11 +6,12 @@ type FeatureFlagNode = {
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showBlogHome: true,
   showReadings: true,
+  showMovies: false,
   showTravel: true,
   showHobbies: true,
   showGallery: true,
   // "Did you know?" nav link to the main site's /facts route.
-  showFactsLink: true,
+  showFactsLink: false,
   showPortfolioLink: true,
 
   // Controls the subtitle/description line under each page's title.
@@ -20,7 +21,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showPageDescriptions: {
     enabled: true,
     blogs: true,
-    readings: false,
+    readings: true,
+    movies: true,
     travel: true,
     hobbies: false,
     gallery: false,

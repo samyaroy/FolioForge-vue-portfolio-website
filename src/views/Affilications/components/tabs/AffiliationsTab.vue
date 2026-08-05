@@ -4,7 +4,10 @@
       v-if="!affiliationItems.length"
       class="border border-dashed border-slate-300 rounded-lg p-4 text-center text-slate-500 bg-white"
     >
-      No affiliations listed yet
+      <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+        <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+        <span>No affiliations listed yet</span>
+      </span>
     </div>
 
     <AffiliationCard
@@ -16,6 +19,7 @@
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed } from 'vue'
 import AffiliationCard from '../cards/AffiliationCard.vue'
 

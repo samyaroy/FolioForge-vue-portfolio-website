@@ -25,11 +25,12 @@ attended_fdps:
 
 attended_workshops:
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
-    instructor: "Prof. Indu Joshi"
+    instructor: "Dr. Indu Joshi"
     institution:
       - name: "National Programme on Technology Enhanced Learning (NPTEL)"
     date: "June-July 2026"
     mode: "Online"
+    cred_link: "https://drive.google.com/file/d/1UgYPCm7I7Gxy8eYLRFLXHvMQHkVlp7zL/preview"
 
   - title: "Systems for LLMs"
     institution:
@@ -101,31 +102,46 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 attended_webinars_n_others:
-  # - title: "Towards Trustworthy Generative AI"
-  #   type: "seminar"
-  #   speaker: ["Prof Karthik Nandakumar"]
+  # - title: "Learning machines"
+  #   type: "lecture"
+  #   speaker: ["Prof. Piyush Srivastava, TIFR"]
   #   host:
-  #     - name: "Indian Institute of Science (IISc)"
+  #     - name: "Tata Institute of Fundamental Research"
   #       department:
-  #         - "Dept. of Computational and Data Sciences"
-  #         - "Kotak IISc AI-ML Centre (KIAC)"
-  #       location: "Bengaluru, KA"
-  #   date: "6 July, 2026"
+  #         name: "International Centre for Theoretical Sciences (ICTS)"
+  #         link: "https://www.icts.res.in"
+  #       sub_department:
+  #         name: "Maths Circle India"
+  #         link: "https://www.icts.res.in/outreach/maths-circle-india"
+  #   date: "17 July, 2026"
   #   mode: "Online"
-  #   cred_link: ""
+  #   link: https://www.youtube.com/live/7GNjUyAmmpI?si=Cs1mKCW9hf56pST7
+    
+  - title: "Towards Trustworthy Generative AI"
+    type: "seminar"
+    speaker: ["Prof Karthik Nandakumar"]
+    host:
+      - name: "Indian Institute of Science (IISc)"
+        department:
+          - "Dept. of Computational and Data Sciences"
+          - "Kotak IISc AI-ML Centre (KIAC)"
+        location: "Bengaluru, KA"
+    date: "6 July, 2026"
+    mode: "Online"
+    cred_link: ""
 
-  # - title: "Towards Trustworthy Generative AI"
+  # - title: "Wearable Computing, Long-Term Memory & AI Agents"
   #   type: "seminar"
-  #   speaker: ["Prof Karthik Nandakumar"]
+  #   speaker: ["Ashwani Yadav, Founder of NeuroDrishti"]
   #   host:
-  #     - name: "Indian Institute of Science (IISc)"
+  #     - name: "Indian Institute of Technology Delhi"
   #       department:
-  #         - "Dept. of Computational and Data Sciences"
-  #         - "Kotak IISc AI-ML Centre (KIAC)"
-  #       location: "Bengaluru, KA"
-  #   date: "6 July, 2026"
+  #         - "I-Hub Foundation for Cobotics (IHFC), the Technology Innovation Hub"
+  #       location: "New Delhi, DL"
+  #   date: "8 July, 2026"
   #   mode: "Online"
   #   cred_link: ""
+  #   link: https://www.ihfc.co.in/seminar-cobotalks/we-are-pleased-to-bring-to-you-the-64th-edition-of-cobotalks/
 
   - title: "Rao's Score Test and its Applications"
     type: lecture
@@ -136,6 +152,7 @@ attended_webinars_n_others:
     date: "29 June, 2026"
     mode: "Online"
     cred_link:  https://drive.google.com/file/d/1r0Oi_maOpuLbzfXDZm24XV3C4jWczuG7/preview
+    link: https://youtu.be/7oS2JPjuKjs?si=0XN2ur6MKKs_tt1a
 
   - title: "COPSS-NISS Leadership Webinar: The Role of Bayesian Statistics in an Age of AI"
     type: webiner
@@ -197,22 +214,22 @@ attended_webinars_n_others:
       - name: "The International Society for Bayesian Analysis"
         department:
         location: Rome, IT  
-    date: "14 May, 2026"
+    date: "28 May, 2026"
     mode: "Online"
 
 attended_other_workshops:
-  - title: "Measurements in AI"
-    instructor:
-      - name: "Prof. Partha Pratim Das"
-        position: Professor
-        department: Computer Science
-        institution: Asoka University
-    institution:
-      - name: "Indian Institute of Technology Madras"
-        department: "Paradox 2026, BS Degreee"
-    date: "June, 2026"
-    mode: "Offline"
-    cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
+  # - title: "Measurements in AI"
+  #   instructor:
+  #     - name: "Prof. Partha Pratim Das"
+  #       position: Professor
+  #       department: Computer Science
+  #       institution: Asoka University
+  #   institution:
+  #     - name: "Indian Institute of Technology Madras"
+  #       department: "Paradox 2026, BS Degreee"
+  #   date: "June, 2026"
+  #   mode: "Offline"
+  #   cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
 
   - title: "Testing and Automation of Web Apps using Playwright"
     institution:

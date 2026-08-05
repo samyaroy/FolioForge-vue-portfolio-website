@@ -38,7 +38,14 @@
             <!-- <v-btn icon variant="text" color="black" :href=twitter target="_blank">
               <v-icon>mdi-twitter</v-icon>
             </v-btn> -->
-            <v-btn v-if="email" icon variant="text" color="white" :href="'mailto:' + email">
+            <v-btn
+              v-if="email"
+              icon
+              variant="text"
+              color="black"
+              :href="'mailto:' + email"
+              aria-label="Email"
+            >
               <v-icon>mdi-email</v-icon>
             </v-btn>
           </div>
@@ -102,7 +109,7 @@
             <li v-if="showCocurricularLink">
               <router-link to="/cocurricular"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Co-curricular Activities
+                Volunteering and Co-curricular Activities
               </router-link>
             </li>
             <li v-if="showResourcesLink">
@@ -144,10 +151,21 @@
           <div>
             <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
             <div class="space-y-2 text-black-300">
-              <div class="flex items-center">
+              <!-- Gmail gets the animated icon; hover is driven from the whole
+                   row so the 18px glyph isn't the only target. -->
+              <div
+                v-if="gmail"
+                class="flex items-center"
+                @mouseenter="$refs.gmailIcon?.startAnimation()"
+                @mouseleave="$refs.gmailIcon?.stopAnimation()"
+              >
+                <AnimatedIcon name="gmail" ref="gmailIcon" :size="18" class="mr-2" />
+                <span>{{ gmail }}</span>
+              </div>
+              <!-- <div v-if="email" class="flex items-center">
                 <v-icon size="small" class="mr-2">mdi-email</v-icon>
                 <span>{{ email }}</span>
-              </div>
+              </div> -->
               <div class="flex items-center">
                 <v-icon size="small" class="mr-2">mdi-phone</v-icon>
                 <span>{{ phone }}</span>
@@ -174,18 +192,7 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <div class="mt-2 flex flex-col items-center gap-1 md:mt-0 md:items-end">
-          <p v-if="betaVersionUrl" class="text-gray-500 text-sm">
-            Looking for beta version?
-            <a
-              :href="betaVersionUrl"
-              class="footer-link text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              see here
-            </a>
-          </p>
+        <div class="mt-2 md:mt-0">
           <router-link
             :to="{ name: 'PrivacyPolicy' }"
             class="footer-link text-sm"
@@ -228,14 +235,16 @@
 <script>
 import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
+import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 export default {
   components: {
     Logos,
+    AnimatedIcon,
   },
   data() {
-    const { profile, contacts, socials, last_updated_on } = config;
+    const { profile, contacts, socials } = config;
     const showCocurricularLink = isFeatureEnabled('showCocurricular', { mode: 'any' })
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
@@ -248,6 +257,7 @@ export default {
 
     return {
       profile,
+      gmail: contacts.gmail,
       email: contacts.email,
       phone: contacts.phone,
       location: contacts.location,
@@ -257,11 +267,11 @@ export default {
       kaggle: socials.kaggle,
       google_scholar: socials.google_scholar,
       researchgate: socials.researchgate,
-      betaVersionUrl: profile.betaVersionUrl,
-      // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS'],
-      // logos: ['SNU', 'IITM', 'IDEAS-ISI','VLED-IITRPR2'],
-      logos: ['SNU', 'IITM', 'IDEAS-ISI'],   
-      // logos: ['SNU', 'IITM', 'IDEAS'],
+      // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},   
+      // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
+      // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
+      logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},  
+      // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute'},
 
       last_updated_on: config.last_updated_on,
       showCocurricularLink,

@@ -68,7 +68,15 @@ import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
-const { projects, publications, articles, posters } = config
+// A YAML section that exists but holds only comments parses to `null`, and a
+// prop `default: () => []` does not cover `null` — only `undefined`. Coerce here
+// so an emptied-out section renders the empty state instead of throwing.
+const toArray = (value) => (Array.isArray(value) ? value : [])
+
+const projects = toArray(config.projects)
+const publications = toArray(config.publications)
+const articles = toArray(config.articles)
+const posters = toArray(config.posters)
 const pageDescription = descriptions.projectsPublications
 
 const showProjectsTab = isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' })

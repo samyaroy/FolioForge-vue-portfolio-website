@@ -1,0 +1,55 @@
+#!/bin/sh
+#
+# pre-commit hook: keep the generated Cloudflare asset manifest in sync.
+#
+# src/content/galleryImageManifest.yml is fully generated from gallery.yml by
+# scripts/sync-gallery-image-manifest.js. When a commit touches gallery.yml,
+# this hook regenerates the manifest and stages it so the pair never drifts.
+#
+# The generator reads the WORKING TREE copy of gallery.yml, not the staged
+# copy, so if gallery.yml has unstaged edits the manifest may describe content
+# that is not part of this commit. The hook warns when that happens.
+#
+# This hook is tracked in the repo under scripts/hooks/. To activate it in a
+# clone, run once:  git config core.hooksPath scripts/hooks
+
+ROOT=$(git rev-parse --show-toplevel) || exit 0
+cd "$ROOT" || exit 0
+
+GALLERY="src/content/profile_info/gallery.yml"
+MANIFEST="src/content/galleryImageManifest.yml"
+
+# Nothing to do unless this commit touches the gallery source.
+git diff --cached --quiet -- "$GALLERY" && exit 0
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-commit: node not found; skipping gallery manifest sync." >&2
+  exit 0
+fi
+
+if [ ! -d node_modules/yaml ]; then
+  echo "pre-commit: dependencies missing (run 'npm install'); skipping gallery manifest sync." >&2
+  exit 0
+fi
+
+if ! git diff --quiet -- "$GALLERY"; then
+  echo "pre-commit: WARNING - $GALLERY has unstaged changes;" >&2
+  echo "            the manifest is generated from the working tree copy." >&2
+fi
+
+echo "pre-commit: syncing gallery manifest..."
+
+if ! node scripts/sync-gallery-image-manifest.js; then
+  echo "pre-commit: gallery manifest sync FAILED; commit aborted." >&2
+  echo "            fix $GALLERY (likely invalid YAML) and commit again." >&2
+  exit 1
+fi
+
+if git diff --quiet -- "$MANIFEST" && git diff --cached --quiet -- "$MANIFEST"; then
+  echo "pre-commit: gallery manifest already current."
+  exit 0
+fi
+
+git add -- "$MANIFEST"
+echo "pre-commit: $MANIFEST regenerated and staged."
+exit 0

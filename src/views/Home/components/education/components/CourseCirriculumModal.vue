@@ -6,7 +6,11 @@
         <div class="flex items-start justify-between gap-3">
           <div>
             <p class="text-[#0e141b] text-lg font-bold leading-tight">Course Curriculum</p>
-            <p v-if="degreeName" class="text-[#4e7397] text-sm mt-0.5">{{ degreeName }}</p>
+            <p v-if="degreeName || category" class="text-[#4e7397] text-sm mt-0.5">
+              <span v-if="category">{{ category }}</span>
+              <v-icon v-if="category && degreeName" size="6" class="mx-1.5">mdi-circle</v-icon>
+              <span v-if="degreeName">{{ degreeName }}</span>
+            </p>
           </div>
           <v-btn icon variant="text" density="compact" @click="isOpen = false">
             <v-icon size="20">mdi-close</v-icon>
@@ -43,8 +47,10 @@
           target="_blank"
           rel="noopener noreferrer"
           style="text-transform: none;"
+          @mouseenter="linkIcon?.startAnimation()"
+          @mouseleave="linkIcon?.stopAnimation()"
         >
-          See in Details <v-icon size="14" class="ml-1">mdi-open-in-new</v-icon>
+          See in Details <AnimatedIcon name="external-link" ref="linkIcon" :size="14" class="ml-1 inline-block align-middle" />
         </v-btn>
       </div>
     </v-card>
@@ -52,13 +58,17 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 import CourseCard from './CourseCard.vue'
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+
+const linkIcon = useTemplateRef('linkIcon')
 
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
   cirriculum: { type: Object, default: () => ({}) },
-  degreeName: { type: String, default: '' }
+  degreeName: { type: String, default: '' },
+  category: { type: String, default: '' }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -70,11 +80,13 @@ const isOpen = computed({
 
 const sections = computed(() => {
   if (Array.isArray(props.cirriculum)) {
-    return { curriculum: props.cirriculum }
+    return props.cirriculum.length ? { curriculum: props.cirriculum } : {}
   }
 
   return Object.fromEntries(
-    Object.entries(props.cirriculum || {}).filter(([key]) => key !== 'link')
+    Object.entries(props.cirriculum || {}).filter(
+      ([key, courses]) => key !== 'link' && Array.isArray(courses) && courses.length
+    )
   )
 })
 

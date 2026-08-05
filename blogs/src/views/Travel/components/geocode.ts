@@ -6,6 +6,15 @@ import type { CityVisit } from '../../../content/travel/data'
 
 export type GeoCity = CityVisit & { lat: number; lng: number }
 
+/** Minimal shape a geocoding query needs; CityVisit and TripStop both fit.
+    Entries carrying explicit lat/lng bypass the geocoder entirely. */
+export type GeocodeQuery = {
+  name: string
+  state?: string
+  lat?: number
+  lng?: number
+}
+
 const ENDPOINT = 'https://geocoding-api.open-meteo.com/v1/search'
 const CACHE_KEY = 'travel-geocode-v1'
 
@@ -35,11 +44,11 @@ function writeCache(cache: Cache): void {
   }
 }
 
-function keyFor(city: CityVisit): string {
+function keyFor(city: GeocodeQuery): string {
   return city.state ? `${city.name}|${city.state}` : city.name
 }
 
-async function lookup(city: CityVisit): Promise<Coord | null> {
+async function lookup(city: GeocodeQuery): Promise<Coord | null> {
   const url = `${ENDPOINT}?name=${encodeURIComponent(
     city.name,
   )}&count=10&language=en&format=json`
@@ -64,12 +73,21 @@ async function lookup(city: CityVisit): Promise<Coord | null> {
   return { lat: pick.latitude, lng: pick.longitude }
 }
 
-export async function geocodeCities(cities: CityVisit[]): Promise<GeoCity[]> {
+export async function geocodeCities<T extends GeocodeQuery>(
+  cities: T[],
+): Promise<(T & Coord)[]> {
   const cache = readCache()
   let dirty = false
 
-  const resolved = await Promise.all(
-    cities.map(async (city) => {
+  // The async pipeline stays non-generic (Coord | null): Promise.all over
+  // the generic T would produce Awaited<T & Coord>, which TypeScript cannot
+  // reduce for an unbound T. Coordinates are zipped with the typed cities
+  // synchronously afterwards.
+  const coords = await Promise.all(
+    cities.map(async (city): Promise<Coord | null> => {
+      if (city.lat != null && city.lng != null) {
+        return { lat: city.lat, lng: city.lng }
+      }
       const key = keyFor(city)
       let coord: Coord | undefined = cache[key]
       if (!coord) {
@@ -80,10 +98,16 @@ export async function geocodeCities(cities: CityVisit[]): Promise<GeoCity[]> {
           dirty = true
         }
       }
-      return coord ? { ...city, ...coord } : null
+      return coord ?? null
     }),
   )
 
   if (dirty) writeCache(cache)
-  return resolved.filter((c): c is GeoCity => c !== null)
+
+  const resolved: (T & Coord)[] = []
+  cities.forEach((city, i) => {
+    const coord = coords[i]
+    if (coord) resolved.push({ ...city, ...coord })
+  })
+  return resolved
 }

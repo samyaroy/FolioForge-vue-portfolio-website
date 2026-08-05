@@ -5,7 +5,7 @@ import {
   CARD_ART_BACKDROP_CLASS,
   CARD_EXCERPT_CLASS,
   CARD_META_CLASS,
-  CARD_SHELL_CLASS,
+  CARD_SHELL_STATIC_CLASS,
   CARD_TITLE_CLASS,
 } from '../../../../lib/ui'
 
@@ -16,7 +16,7 @@ type PostCardProps = {
 export function PostCard({ post }: PostCardProps) {
   return (
     <article
-      className={`grid grid-cols-1 items-stretch rounded-xl ${CARD_SHELL_CLASS} md:min-h-52 md:grid-cols-[40%_minmax(0,1fr)]`}
+      className={`grid grid-cols-1 items-stretch rounded-xl ${CARD_SHELL_STATIC_CLASS} md:min-h-52 md:grid-cols-[40%_minmax(0,1fr)]`}
     >
       <div
         className={`relative grid min-h-40 place-items-center overflow-hidden border-b border-[rgba(15,23,42,0.07)] ${CARD_ART_BACKDROP_CLASS} md:min-h-0 md:border-r md:border-b-0`}
@@ -33,7 +33,7 @@ export function PostCard({ post }: PostCardProps) {
           <span className="text-[2rem] text-primary opacity-55">✳</span>
         )}
       </div>
-      <div className="min-w-0 px-[1.6rem] py-6">
+      <div className="flex min-w-0 flex-col px-[1.6rem] py-6">
         <h2 className={CARD_TITLE_CLASS}>
           <Link
             className="text-ink transition-colors duration-200 hover:text-primary"
@@ -42,17 +42,27 @@ export function PostCard({ post }: PostCardProps) {
             {post.title}
           </Link>
         </h2>
-        <div className={CARD_META_CLASS}>
-          <span className="after:ml-2 after:inline-block after:size-1 after:rounded-full after:bg-primary after:align-middle after:content-['']">
-            Article
-          </span>
-          {post.date && <time dateTime={post.date}>{formatDate(post.date)}</time>}
-        </div>
+        {post.date && (
+          <div className={`${CARD_META_CLASS} mt-1.5!`}>
+            <time
+              dateTime={post.date}
+              className="inline-flex items-center gap-1 text-sm font-normal tracking-normal normal-case"
+            >
+              <span
+                className="mdi mdi-calendar-blank-outline leading-none"
+                aria-hidden="true"
+              />
+              {formatDate(post.date)}
+            </time>
+          </div>
+        )}
         {post.description && (
-          <p className={CARD_EXCERPT_CLASS}>{post.description}</p>
+          <p className={`${CARD_EXCERPT_CLASS} mt-2! leading-[1.55]!`}>
+            {post.description}
+          </p>
         )}
         {post.tags.length > 0 && (
-          <ul className="mt-4 flex flex-wrap gap-[0.4rem]">
+          <ul className="mt-auto flex flex-wrap gap-[0.4rem] pt-3">
             {post.tags.map((tag) => (
               <li
                 key={tag}

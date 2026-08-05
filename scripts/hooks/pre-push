@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# pre-push hook: keep the site footer's "last updated" month current.
+#
+# On push, this stamps the current month (e.g. "July 2026") into the two
+# YAML files that feed the footers:
+#   - src/content/profile_info/meta.yml   -> last_updated_on   (main site)
+#   - blogs/src/content/site.yml          -> footer.lastUpdated (blogs site)
+#
+# A pre-push hook cannot inject a commit into the push already in flight
+# (git has already resolved which commits to send), so when the month is
+# stale this hook updates the files, commits them, and ABORTS the push with
+# a warning. Just run `git push` again -- the new commit carries the fix.
+#
+# This hook is tracked in the repo under scripts/hooks/. To activate it in a
+# clone, run once:  git config core.hooksPath scripts/hooks
+
+ROOT=$(git rev-parse --show-toplevel) || exit 0
+cd "$ROOT" || exit 0
+
+MONTH=$(date +"%B %Y")
+
+MAIN="src/content/profile_info/meta.yml"
+BLOG="blogs/src/content/site.yml"
+
+changed_files=""
+
+# stamp <file> <yaml-key>
+stamp() {
+  file="$1"
+  key="$2"
+  [ -f "$file" ] || return 0
+
+  current=$(sed -n "s/^[[:space:]]*$key:[[:space:]]*//p" "$file" | head -n1)
+  if [ "$current" != "$MONTH" ]; then
+    perl -pi -e "s/^(\s*)\Q$key\E:.*/\${1}$key: $MONTH/" "$file"
+    changed_files="$changed_files $file"
+    echo "  $file: '$current' -> '$MONTH'"
+  fi
+}
+
+echo "pre-push: verifying footer last-updated month ($MONTH)..."
+stamp "$MAIN" "last_updated_on"
+stamp "$BLOG" "lastUpdated"
+
+if [ -n "$changed_files" ]; then
+  # --only commits just these paths, leaving any other staged changes alone.
+  git commit -q -o $changed_files \
+    -m "chore: stamp footer last-updated month to $MONTH"
+  echo ""
+  echo "WARNING: footer month was stale and has been updated + committed."
+  echo "         Push ABORTED so the correct month is included next time."
+  echo "         --> run 'git push' again to push with the new commit."
+  exit 1
+fi
+
+echo "pre-push: footer month already current; continuing push."
+exit 0

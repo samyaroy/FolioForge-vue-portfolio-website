@@ -3,16 +3,15 @@
     <div class="layout-container flex h-full grow flex-col">
       <!-- Info Ribbon -->
       <InfoRibbon
-        v-if="homeFlags.showRibbon && ribbonMessage && !isRibbonDismissed"
-        :icon="ribbonIcon"
-        :message="ribbonMessage"
+        v-if="homeFlags.showRibbon && hasRibbon && !isRibbonDismissed"
+        :entries="ribbonEntries"
         @dismissed="isRibbonDismissed = true"
       />
 
       <!-- Hero Section -->
       <div v-if="homeFlags.showHeroSection" class="relative">
         <RibbonToggle
-          v-if="homeFlags.showRibbon && ribbonMessage && isRibbonDismissed"
+          v-if="homeFlags.showRibbon && hasRibbon && isRibbonDismissed"
           :icon="ribbonIcon"
           @open="isRibbonDismissed = false"
         />
@@ -57,8 +56,11 @@ const homeFlags = {
   showAchivement: isFeatureEnabled('showHome.showAchivement'),
 }
 
-const ribbonMessage = config.ribbon?.message
-const ribbonIcon = config.ribbon?.icon || 'mdi-information'
+// ribbon.yml holds a list of announcements; InfoRibbon cycles through them and
+// the toggle (shown once dismissed) keeps the first one's icon.
+const ribbonEntries = Array.isArray(config.ribbon) ? config.ribbon : [config.ribbon]
+const hasRibbon = ribbonEntries.some(entry => entry?.message)
+const ribbonIcon = ribbonEntries[0]?.icon || 'mdi-information'
 const isRibbonDismissed = ref(false)
 </script>
 

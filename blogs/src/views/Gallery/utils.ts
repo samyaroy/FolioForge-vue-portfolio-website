@@ -1,30 +1,14 @@
 import type { GalleryItem } from '../../content/gallery/data'
 
-const formatter = new Intl.DateTimeFormat('en', {
-  month: 'short',
-  day: 'numeric',
-  year: 'numeric',
-})
+// Dates render through the site-wide formatter so every page shows the
+// same format.
+export { formatDate } from '../../lib/format'
 
 export function getTimestamp(value: string | undefined, fallbackIndex: number) {
   if (!value) return fallbackIndex
 
   const timestamp = Date.parse(value)
   return Number.isNaN(timestamp) ? fallbackIndex : timestamp
-}
-
-export function formatDate(value: string | undefined) {
-  if (!value) return ''
-
-  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
-    const [year, month, day] = value.split('-').map(Number)
-    return formatter.format(new Date(year, month - 1, day))
-  }
-
-  const parsedDate = new Date(value)
-  if (Number.isNaN(parsedDate.getTime())) return value
-
-  return formatter.format(parsedDate)
 }
 
 export function getPlatformKey(value: string | undefined) {

@@ -3,13 +3,17 @@ import { GalleryFilter } from './components/GalleryFilter'
 import { GalleryGrid } from './components/GalleryGrid'
 import { GalleryHero } from './components/GalleryHero'
 import { GALLERY_FILTER_OPTIONS, GALLERY_ITEMS } from '../../content/gallery/data'
+import { GALLERY_SECTION } from '../../content/sections'
+import { usePageTitle } from '../../lib/usePageTitle'
 import { getTimestamp } from './utils'
 
-const VISIBLE_BATCH_SIZE = 16
+const INITIAL_VISIBLE_COUNT = 15
+const LOAD_MORE_INCREMENT = 10
 
 export function GalleryPage() {
+  usePageTitle(GALLERY_SECTION.title)
   const [activeFilters, setActiveFilters] = useState<string[]>([])
-  const [visibleCount, setVisibleCount] = useState(VISIBLE_BATCH_SIZE)
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT)
 
   const sortedItems = useMemo(
     () =>
@@ -39,12 +43,12 @@ export function GalleryPage() {
 
   function updateActiveFilters(nextFilters: string[]) {
     setActiveFilters(nextFilters)
-    setVisibleCount(VISIBLE_BATCH_SIZE)
+    setVisibleCount(INITIAL_VISIBLE_COUNT)
   }
 
   return (
-    <section className="relative left-1/2 -mt-8 -mb-16 min-h-screen w-screen -translate-x-1/2 bg-slate-50 lg:-mt-10 lg:-mb-20">
-      <div className="mx-auto flex w-full max-w-[84rem] flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8">
+    <section className="ml-[50%] -mt-8 -mb-8 min-h-screen w-screen -translate-x-1/2 bg-slate-50 lg:-mt-10">
+      <div className="mx-auto flex w-[85%] flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8">
         <GalleryHero />
 
         <div className="relative z-30 -my-4 ml-auto flex w-full items-center">
@@ -55,7 +59,7 @@ export function GalleryPage() {
             <span className="whitespace-nowrap text-xs font-semibold tracking-[0.16em] text-slate-400 uppercase">
               {totalItemCount} {totalItemCount === 1 ? 'entry' : 'entries'}
             </span>
-            {GALLERY_FILTER_OPTIONS.length > 1 && (
+            {totalItemCount > 0 && GALLERY_FILTER_OPTIONS.length > 1 && (
               <GalleryFilter
                 options={GALLERY_FILTER_OPTIONS.slice(1)}
                 selectedFilters={activeFilters}
@@ -67,8 +71,9 @@ export function GalleryPage() {
 
         <GalleryGrid
           items={visibleItems}
+          hasEntries={totalItemCount > 0}
           canLoadMore={canLoadMore}
-          onLoadMore={() => setVisibleCount((count) => count + VISIBLE_BATCH_SIZE)}
+          onLoadMore={() => setVisibleCount((count) => count + LOAD_MORE_INCREMENT)}
         />
       </div>
     </section>

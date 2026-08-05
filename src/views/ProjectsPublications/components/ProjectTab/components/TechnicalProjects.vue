@@ -12,7 +12,14 @@
 
         <div v-if="projects && projects.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div v-for="project in projects" :key="project.id"
-                class="relative  border rounded-lg p-6 hover:shadow-md transition-shadow duration-200 text-sm">
+                class="relative  border rounded-lg p-6 hover:shadow-md transition-shadow duration-200 text-sm"
+                :class="isOpen ? '' : 'cursor-pointer'"
+                :role="isOpen ? undefined : 'button'"
+                :tabindex="isOpen ? undefined : 0"
+                :aria-label="isOpen ? undefined : 'Expand technical projects section'"
+                @click="expandSection"
+                @keydown.enter="expandSection"
+                @keydown.space.prevent="expandSection">
                 <div class="flex items-center justify-between" :class="isOpen ? 'mb-4' : ''">
                     <h3 class="text-lg font-semibold text-[#0e141b]">{{ project.title }}</h3>
                     <span class="text-sm text-gray-500">{{ project.time_period }}</span>
@@ -59,17 +66,29 @@
             </div>
         </div>
         <div v-else class="text-center text-gray-500 italic">
-            No Applied Projects Yet
+            <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+              <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+              <span>No Applied Projects Yet</span>
+            </span>
         </div>
     </div>
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 // Default expanded/collapsed state is controlled by a feature flag
 const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.technicalProjects'))
+
+// Clicking anywhere on a card while the section is collapsed opens the section.
+// Expanded cards stay inert so their inner links keep working.
+function expandSection() {
+    if (!isOpen.value) {
+        isOpen.value = true
+    }
+}
 
 defineProps({
     projects: {

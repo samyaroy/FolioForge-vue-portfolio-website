@@ -165,8 +165,8 @@ export function GalleryCard({ item }: GalleryCardProps) {
           )}
         </div>
 
-        <div className="border-t border-slate-100 px-3 py-2">
-          <div className="flex items-center justify-between gap-3">
+        <div className="flex h-14 items-center border-t border-slate-100 px-3 py-2">
+          <div className="flex w-full items-center justify-between gap-3">
             <div className="flex min-w-0 flex-col gap-0.5">
               {formattedDate && (
                 <span className="inline-flex max-w-full items-center rounded-[6px] text-[10px] font-medium leading-tight text-slate-600/80">

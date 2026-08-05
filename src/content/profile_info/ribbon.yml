@@ -1,3 +1,15 @@
+# Announcement ribbon shown at the top of Home and Resources.
+# Each list entry is one message: the ribbon itself stays put and the message
+# swaps to the next entry every 5s (InfoRibbon.vue's `rotationMs` prop),
+# pausing while the ribbon is hovered or focused so links stay clickable.
+# A single entry simply never rotates.
+#
+# `icon` is optional and defaults to mdi-information.
+# Message text supports the CaptionContent syntax: [[Label|Type]] links,
+# **bold**, and *italic*.
+
 ribbon:
-  message: "Join [[Chi-Square: Statistics Club | Institute]] — stats, discussions, and events for IITM BS students."
-  icon: mdi-information
+  - message: "Join [[Chi-Square: Statistics Interest Group|Chi-Square: Statistics Club | Institute]] for Statistics events and discussions (for IITM BS Degree students)"
+    icon: mdi-information
+  # - message: "Second announcement — uncomment or add entries to start the rotation."
+  #   icon: mdi-bullhorn-outline

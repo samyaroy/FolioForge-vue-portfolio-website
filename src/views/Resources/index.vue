@@ -1,58 +1,88 @@
 <template>
   <InfoRibbon
-    v-if="showRibbon && ribbonMessage && !isRibbonDismissed"
-    :icon="ribbonIcon"
-    :message="ribbonMessage"
+    v-if="showRibbon && hasRibbon && !isRibbonDismissed"
+    :entries="ribbonEntries"
     @dismissed="isRibbonDismissed = true"
   />
 
   <div class="relative min-h-screen bg-[#eef3f8] py-8">
     <RibbonToggle
-      v-if="showRibbon && ribbonMessage && isRibbonDismissed"
+      v-if="showRibbon && hasRibbon && isRibbonDismissed"
       :icon="ribbonIcon"
       @open="isRibbonDismissed = false"
     />
 
     <div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
-      <div class="mb-12">
+      <!-- Page Header -->
+      <div class="text-center mb-8">
         <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
           Resources
         </h1>
-        <p v-if="showPageDescription" class="text-lg text-gray-600 max-w-4xl">
+        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-4xl mx-auto">
           {{ pageDescription }}
         </p>
       </div>
 
-      <div
-        v-if="subjects.length"
-        class="grid grid-cols-1 gap-y-6 lg:grid-cols-[270px_minmax(0,1fr)_auto] lg:gap-x-0"
-      >
-        <SubjectTabs
-          :subjects="subjects"
-          :active-index="activeIndex"
-          :default-icon="DEFAULT_SUBJECT_ICON"
-          @select="activeIndex = $event"
-        />
-
-        <ResourceContentPane
-          class="lg:self-start"
-          :subject="activeSubject"
-          :materials="activeMaterials"
-          :active-index="activeIndex"
-        />
-
-        <ExternalLinksPane :groups="externalLinkGroups" />
+      <!-- Navigation Tabs -->
+      <div class="flex justify-center mb-8">
+        <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
+          <button
+            v-for="tab in topTabs"
+            :key="tab.id"
+            @click="activeTopTab = tab.id"
+            :class="[
+              'px-6 py-3 rounded-md text-sm font-medium transition-all duration-200',
+              activeTopTab === tab.id
+                ? 'bg-[#1980e6] text-white shadow-sm'
+                : 'text-gray-600 hover:text-[#1980e6] hover:bg-gray-50'
+            ]"
+          >
+            {{ tab.name }}
+          </button>
+        </div>
       </div>
 
-      <div v-else class="mx-auto max-w-2xl text-center text-gray-500">
-        No resources are available right now.
-      </div>
+      <template v-if="activeTopTab === 'study-material'">
+        <div
+          v-if="subjects.length"
+          class="grid grid-cols-1 gap-y-6 lg:grid-cols-[270px_minmax(0,1fr)_auto] lg:gap-x-0"
+        >
+          <SubjectTabs
+            :subjects="subjects"
+            :active-index="activeIndex"
+            :default-icon="DEFAULT_SUBJECT_ICON"
+            @select="activeIndex = $event"
+          />
+
+          <ResourceContentPane
+            class="lg:self-start"
+            :subject="activeSubject"
+            :materials="activeMaterials"
+            :active-index="activeIndex"
+          />
+
+          <ExternalLinksPane :groups="externalLinkGroups" />
+        </div>
+
+        <div v-else class="mx-auto max-w-2xl text-center text-gray-500">
+          <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+            <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+            <span>No resources are available right now.</span>
+          </span>
+        </div>
+      </template>
+
+      <WorthExploringPane
+        v-else
+        :groups="exploringGroups"
+      />
     </div>
   </div>
 </template>
 
 <script setup>
+import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import resourcesContent from '@/content/profile_info/resources.yml'
@@ -65,13 +95,17 @@ import RibbonToggle from '@/components/RibbonToggle.vue'
 import ExternalLinksPane from './components/ExternalLinksPane.vue'
 import ResourceContentPane from './components/ResourceContentPane.vue'
 import SubjectTabs from './components/SubjectTabs.vue'
+import WorthExploringPane from './components/WorthExploringPane.vue'
 
 const pageDescription = descriptions.resources
 const showPageDescription = isPageDescriptionEnabled('resources')
 
 const showRibbon = isFeatureEnabled('showResources.showRibbon')
-const ribbonMessage = config.ribbon?.message
-const ribbonIcon = config.ribbon?.icon || 'mdi-information'
+// ribbon.yml holds a list of announcements; InfoRibbon cycles through them and
+// the toggle (shown once dismissed) keeps the first one's icon.
+const ribbonEntries = Array.isArray(config.ribbon) ? config.ribbon : [config.ribbon]
+const hasRibbon = ribbonEntries.some(entry => entry?.message)
+const ribbonIcon = ribbonEntries[0]?.icon || 'mdi-information'
 const isRibbonDismissed = ref(false)
 
 defineOptions({
@@ -99,7 +133,13 @@ const subjects = computed(() => {
   }))
 })
 
+const topTabs = [
+  { id: 'study-material', name: 'Study Material' },
+  { id: 'worth-exploring', name: 'Worth Exploring' },
+]
+
 const route = useRoute()
+const activeTopTab = ref(topTabs[0].id)
 const activeIndex = ref(0)
 
 const activeSubject = computed(() => subjects.value[activeIndex.value] || null)
@@ -126,6 +166,22 @@ const externalLinkGroups = computed(() => {
     .filter(group => group.links.length)
 })
 
+const exploringGroups = computed(() => {
+  const rawGroups = Array.isArray(resourcesContent?.explore)
+    ? resourcesContent.explore
+    : []
+
+  return rawGroups
+    .filter(isObject)
+    .map(group => ({
+      title: group.group || group.title || '',
+      links: Array.isArray(group.links)
+        ? group.links.filter(isObject).map(normalizeExternalLink)
+        : [],
+    }))
+    .filter(group => group.links.length)
+})
+
 watch(subjects, (nextSubjects) => {
   if (activeIndex.value >= nextSubjects.length) {
     activeIndex.value = 0
@@ -133,11 +189,17 @@ watch(subjects, (nextSubjects) => {
 }, { immediate: true })
 
 onMounted(() => {
-  const requestedTab = route.query.tab
+  const requestedTab = String(route.query.tab || '')
   if (!requestedTab) return
 
-  const matchedIndex = subjects.value.findIndex(subject => subject.id === String(requestedTab))
+  if (topTabs.some(tab => tab.id === requestedTab)) {
+    activeTopTab.value = requestedTab
+    return
+  }
+
+  const matchedIndex = subjects.value.findIndex(subject => subject.id === requestedTab)
   if (matchedIndex >= 0) {
+    activeTopTab.value = 'study-material'
     activeIndex.value = matchedIndex
   }
 })
