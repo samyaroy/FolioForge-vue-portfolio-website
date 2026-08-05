@@ -3,7 +3,7 @@
     <div class="beta-ribbon__panel">
       <div class="beta-ribbon__content">
         <a :href="stableUrl" class="beta-ribbon__link" :title="title">
-          <span class="beta-ribbon__tag">Beta</span>
+          <span class="beta-ribbon__tag">Beta version</span>
           <span class="beta-ribbon__cta">
             Stable site<span aria-hidden="true">&nbsp;&rarr;</span>
           </span>
@@ -51,11 +51,11 @@ const title = 'You are viewing the beta build of this site. Go to the stable sit
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 2px 10px 2px 16px;
-  /* White, continuing the header's surface; the border is the header's own
-     divider colour, so the band reads as part of it rather than a stripe. */
-  background: #ffffff;
-  border-bottom: 1px solid #e7edf3;
+  padding: 2px 14px 2px 16px;
+  /* slate-50, the background the Home hero inherits from its page wrapper. No
+     border: the band is meant to disappear into the section beneath it and
+     leave only the marker visible, not to draw a line under the header. */
+  background: #f8fafc;
 }
 
 .beta-ribbon__content {
@@ -132,7 +132,7 @@ const title = 'You are viewing the beta build of this site. Go to the stable sit
 
 @media (max-width: 640px) {
   .beta-ribbon__panel {
-    padding: 2px 8px 2px 12px;
+    padding: 2px 12px 2px 12px;
   }
 }
 </style>
