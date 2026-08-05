@@ -31,7 +31,7 @@ const PORTFOLIO_URL = 'https://samyabrata.codeium.xyz'
 const PERSON_ID = `${PORTFOLIO_URL}/#person`
 const BLOG_ID = `${SITE_URL}/#blog`
 
-/** 1200x630 card; regenerate with ../scripts/generate-og-images.py. */
+/** 1200x630 social card, committed at public/og-image.jpg. Replace the file to change it. */
 const OG_IMAGE_PATH = '/og-image.jpg'
 const OG_IMAGE_SIZE = { width: 1200, height: 630 }
 

@@ -6,9 +6,8 @@ profile:
   footer: Rookie Statistician | Data Science Student | Full-Stack Developer
   cv: https://drive.google.com/uc?export=download&id=1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz # google drive link for direct download  #environment: development   # or staging / production
   betaVersionUrl: https://beta.samyabrata.codeium.xyz # beta deployment (V1 branch); drives the footer link on stable and the header badge on beta
-  # Home hero portrait. Accepts a full URL (hosted image) or a path served from
-  # public/. Replace with the hosted URL, then public/SamyabrataRoy2.jpg can go
-  # -- but see scripts/generate-og-images.py, which reads that file from disk.
+  # Home hero portrait. Accepts a full URL (hosted image) or a path served
+  # from public/.
   heroImage: https://media.samyabrata.codeium.xyz/SamyabrataRoy2.jpg
   heroImageAlt: Samyabrata Roy
 
