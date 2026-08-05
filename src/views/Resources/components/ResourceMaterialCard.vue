@@ -80,6 +80,7 @@ const metaIcon = computed(() => {
     tutorial: 'mdi-lightbulb-on-outline',
     video: 'mdi-play-circle-outline',
     'video series': 'mdi-play-box-multiple-outline',
+    'workshop playlist': 'mdi-play-box-multiple-outline',
   }
 
   return iconsByMeta[normalizedMeta.value] || 'mdi-file-document-outline'
@@ -102,8 +103,14 @@ const faviconSrc = computed(() => {
   }
 })
 
+// Metas whose mdi icon beats the link's favicon. A book has no meaningful
+// domain, and a workshop playlist should read as video whichever university
+// happens to host it -- otherwise the badge shows that host's favicon and the
+// card gives no hint that it is something to watch.
+const META_PREFERS_ICON = new Set(['book', 'workshop playlist'])
+
 // The image shown in the badge: an explicit logo wins; otherwise the favicon,
-// except for books which always fall back to their mdi icon.
+// except for the metas above, which always fall back to their mdi icon.
 const logoSrc = computed(() => {
   const override = overrideLogo.value
   if (override) {
@@ -112,7 +119,7 @@ const logoSrc = computed(() => {
     return logoUrl(override)
   }
 
-  if (normalizedMeta.value === 'book') return ''
+  if (META_PREFERS_ICON.has(normalizedMeta.value)) return ''
   return faviconSrc.value
 })
 

@@ -38,8 +38,9 @@
 # Material icon source (the round badge on each material):
 #   By default it's the favicon of the material's `link` domain
 #   (e.g. a youtube.com link shows the YouTube mark). It falls back to an
-#   mdi icon picked from `meta` when no favicon exists, and `meta: Book`
-#   always uses the mdi icon. Add an optional `logo:` to override it:
+#   mdi icon picked from `meta` when no favicon exists. `meta: Book` and
+#   `meta: Workshop Playlist` always use the mdi icon, ignoring the favicon.
+#   Add an optional `logo:` to override it:
 #     logo: NPTEL          -> /logo/NPTEL.png (a file in public/logo)
 #     logo: https://…/x.png-> a full image URL
 #     logo: mdi-youtube    -> an mdi icon token
@@ -115,7 +116,10 @@ subjects:
 
   - title: "Theoretical Computer Science"
     materials:
-      
+      - title: "Frontiers of Graph Algorithms"
+        meta: "Workshop Playlist"
+        distributor: "Walmart Center for Tech Excellence X almart Center for Tech Excellence"
+        link: "https://algo.csa.iisc.ac.in/graphworkshop/"
 
 # Right column: groups of links. Each `group` becomes a heading in the pane.
 external:
@@ -164,7 +168,7 @@ external:
 # anything else worth a detour. Same fields as `external` links above
 # (label, url/ref, description, speciality/specility, incharge).
 explore:
-  - group: "Webinars and Interviews Worth Watching"
+  - group: "Webinars, Workshops and Interviews Worth Watching"
     links:
       - label: "Bayesian Analysis discussion webinar"
         url: https://www.youtube.com/live/8A0bgU6ALf4?si=h5BoWyLFvIJ2rZ8O
