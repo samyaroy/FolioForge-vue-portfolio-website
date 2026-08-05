@@ -1,35 +1,37 @@
 <template>
-  <span v-if="isBeta" class="beta-badge" :title="title">Beta</span>
+  <a v-if="isBeta" :href="stableUrl" class="beta-badge" :title="title">
+    <span class="beta-badge__tag">Beta</span>
+    <span class="beta-badge__cta">
+      Stable site
+      <span aria-hidden="true">&rarr;</span>
+    </span>
+    <!-- The CTA text is hidden below `sm`, so carry the meaning for everyone
+         who is not reading the pixels. -->
+    <span class="beta-badge__sr">{{ title }}</span>
+  </a>
 </template>
 
 <script setup>
 // Marks the beta deployment (beta.samyabrata.codeium.xyz) so it is obvious at a
-// glance which build you are looking at.
+// glance which build you are looking at, and offers the way back to the stable
+// site.
 //
-// The check is on the hostname rather than a feature flag or any tracked config
-// file, and that is deliberate: V1 is merged into main by replacing main's tree
-// wholesale, so any branch-local marker would ride along into production on the
-// next merge. The host is the one thing that differs at runtime and that no
-// merge can carry over, which makes this safe to have on both branches.
-//
-// Local dev counts as beta too -- if you are on localhost you are by definition
-// not looking at the published site.
-const BETA_HOST_PREFIX = 'beta.'
-const LOCAL_HOSTS = ['localhost', '127.0.0.1', '[::1]']
+// The host check lives in @/config/siteEnvironment because the footer needs the
+// mirror image of it -- it points at the beta site, but only when served from
+// stable. See that file for why the check is on the hostname rather than a
+// feature flag or any tracked config.
+import { isBetaSite, STABLE_URL } from '@/config/siteEnvironment'
 
-// Guarded for the prerender pass, which runs in Node. scripts/seo-build.ts only
-// stamps <head> on the built shell today, so no component renders there, but the
-// guard keeps "Beta" out of the static HTML if that ever changes.
-const host = typeof window === 'undefined' ? '' : window.location.hostname
+const isBeta = isBetaSite()
+const stableUrl = STABLE_URL
 
-const isBeta = host.startsWith(BETA_HOST_PREFIX) || LOCAL_HOSTS.includes(host)
-
-const title = 'You are viewing the beta build of this site'
+const title = 'You are viewing the beta build of this site. Go to the stable site.'
 </script>
 
 <style scoped>
 .beta-badge {
-  @apply inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase leading-none tracking-wider;
+  @apply inline-flex items-center gap-1.5 rounded-full py-0.5 pl-0.5 pr-1 no-underline
+         transition-colors duration-200 sm:pr-2;
   /* Yellow with near-black text: ~11:1 contrast, readable against the white header. */
   background-color: #fde047;
   color: #0e141b;
@@ -37,5 +39,29 @@ const title = 'You are viewing the beta build of this site'
   /* Never let the badge stretch or wrap when the nav gets tight. */
   flex: none;
   white-space: nowrap;
+}
+
+.beta-badge:hover {
+  background-color: #facc15;
+  border-color: #ca8a04;
+}
+
+.beta-badge__tag {
+  @apply inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase
+         leading-none tracking-wider;
+  background-color: #0e141b;
+  color: #fde047;
+}
+
+.beta-badge__cta {
+  /* Hidden on phones, where the header only has room for the pill itself. */
+  @apply hidden text-[11px] font-semibold leading-none sm:inline;
+}
+
+.beta-badge__sr {
+  @apply absolute h-px w-px overflow-hidden whitespace-nowrap border-0 p-0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  margin: -1px;
 }
 </style>
