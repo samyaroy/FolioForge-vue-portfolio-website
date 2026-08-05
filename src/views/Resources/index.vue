@@ -5,6 +5,10 @@
     @dismissed="isRibbonDismissed = true"
   />
 
+  <!-- Below the announcement, not above it. App.vue places this for every
+       route that does not render its own ribbon. -->
+  <BetaRibbon />
+
   <div class="relative min-h-screen bg-[#eef3f8] py-8">
     <RibbonToggle
       v-if="showRibbon && hasRibbon && isRibbonDismissed"
@@ -92,6 +96,7 @@ import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlag
 import { resolveHyperlink } from '@/utils/resolveHyperlink'
 import InfoRibbon from '@/components/InfoRibbon.vue'
 import RibbonToggle from '@/components/RibbonToggle.vue'
+import BetaRibbon from '@/components/BetaRibbon.vue'
 import ExternalLinksPane from './components/ExternalLinksPane.vue'
 import ResourceContentPane from './components/ResourceContentPane.vue'
 import SubjectTabs from './components/SubjectTabs.vue'
