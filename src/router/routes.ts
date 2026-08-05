@@ -25,7 +25,7 @@ export const SITE_NAME = 'Samyabrata Roy'
 export const BASE_TITLE = 'Samyabrata Roy - Portfolio'
 export const BLOG_URL = 'https://blogs.samyabrata.codeium.xyz'
 
-/** 1200x630 card image; regenerate with scripts/generate-og-image.sh. */
+/** 1200x630 social card, committed at public/og-image.jpg. Replace the file to change it. */
 export const OG_IMAGE_PATH = '/og-image.jpg'
 
 export const routeMetadata: RouteMetadata[] = [
