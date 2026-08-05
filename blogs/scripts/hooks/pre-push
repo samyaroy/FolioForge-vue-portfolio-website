@@ -1,0 +1,87 @@
+#!/bin/sh
+#
+# pre-push hook (blogs): keep precomputed rail geometry in sync with trips.yml.
+#
+# Runs `npm run sync-rail` when the commits being pushed touch
+# blogs/src/content/travel/trips.yml. Any train whose route is not already
+# cached is fetched from RailRadar and uploaded to Workers KV, so visitors are
+# served from KV instead of burning the 50-request/day quota.
+#
+# This hook is NOT invoked by git directly. core.hooksPath can only name one
+# directory and it points at scripts/hooks/, so the root pre-push dispatches
+# here. It receives the same stdin git hands any pre-push hook:
+#   <local ref> <local sha> <remote ref> <remote sha>
+#
+# sync-rail.mjs never exits non-zero, so a missing RAILRADAR_API_KEY, a failed
+# fetch, or a logged-out wrangler just leaves that leg to the map's
+# straight-line fallback -- the push still goes through.
+#
+# Newly fetched routes are written to blogs/scripts/rail-cache/. A pre-push hook
+# cannot add them to the push already in flight, so (as with the footer stamp)
+# they are committed here and the push is ABORTED with a warning. Run
+# `git push` again and the new commit carries the cache.
+
+ROOT=$(git rev-parse --show-toplevel) || exit 0
+cd "$ROOT" || exit 0
+
+TRIPS="blogs/src/content/travel/trips.yml"
+CACHE="blogs/scripts/rail-cache"
+ZERO="0000000000000000000000000000000000000000"
+
+[ -f "$TRIPS" ] || exit 0
+
+# Decide whether anything being pushed touches the travel data. Reading stdin
+# is safe here: the root hook dispatches to us without consuming it.
+touched=0
+while read -r _local_ref local_sha _remote_ref remote_sha; do
+  # Deleting a remote branch pushes no content.
+  [ "$local_sha" = "$ZERO" ] && continue
+
+  if [ "$remote_sha" = "$ZERO" ]; then
+    # Brand-new remote branch: no base to diff against, so sync conservatively.
+    # This is cheap -- already-cached trains need no network and no upload.
+    touched=1
+    break
+  fi
+
+  if ! git diff --quiet "$remote_sha" "$local_sha" -- "$TRIPS" 2>/dev/null; then
+    touched=1
+    break
+  fi
+done
+
+if [ "$touched" -eq 0 ]; then
+  echo "pre-push: travel data unchanged; skipping rail sync."
+  exit 0
+fi
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-push: node not found; skipping rail sync." >&2
+  exit 0
+fi
+
+if [ ! -d blogs/node_modules ]; then
+  echo "pre-push: blogs dependencies missing (run 'npm install' in blogs/);" >&2
+  echo "          skipping rail sync." >&2
+  exit 0
+fi
+
+echo "pre-push: trips.yml changed — syncing train geometry to KV..."
+( cd blogs && npm run --silent sync-rail )
+
+# Nothing new cached: the routes were already on disk and in KV.
+if git diff --quiet -- "$CACHE" &&
+   [ -z "$(git ls-files --others --exclude-standard -- "$CACHE")" ]; then
+  echo "pre-push: rail cache already current; continuing push."
+  exit 0
+fi
+
+git add -- "$CACHE"
+# --only commits just the cache, leaving any other staged changes alone.
+git commit -q -o "$CACHE" -m "chore: cache rail route geometry for new train legs"
+
+echo ""
+echo "WARNING: new rail routes were cached and committed."
+echo "         Push ABORTED so the cache is included next time."
+echo "         --> run 'git push' again to push with the new commit."
+exit 1

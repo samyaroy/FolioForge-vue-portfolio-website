@@ -12,6 +12,11 @@
 # stale this hook updates the files, commits them, and ABORTS the push with
 # a warning. Just run `git push` again -- the new commit carries the fix.
 #
+# It then dispatches to blogs/scripts/hooks/pre-push, which syncs rail-route
+# geometry when the travel data changes. That indirection exists because
+# core.hooksPath names a single directory, so the blogs hooks cannot be
+# registered with git alongside these.
+#
 # This hook is tracked in the repo under scripts/hooks/. To activate it in a
 # clone, run once:  git config core.hooksPath scripts/hooks
 
@@ -54,5 +59,13 @@ if [ -n "$changed_files" ]; then
   exit 1
 fi
 
-echo "pre-push: footer month already current; continuing push."
+echo "pre-push: footer month already current."
+
+# core.hooksPath can only name one directory, so the blogs sub-app's hooks are
+# dispatched from here rather than run by git. stdin (the ref list git gave us)
+# has not been consumed above, so the child inherits it intact.
+if [ -x blogs/scripts/hooks/pre-push ]; then
+  blogs/scripts/hooks/pre-push "$@" || exit $?
+fi
+
 exit 0
