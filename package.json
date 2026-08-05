@@ -11,8 +11,7 @@
     "sync:gallery-manifest": "node scripts/sync-gallery-image-manifest.js",
     "prebuild": "npm run sync:gallery-manifest",
     "build": "vite build",
-    "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
@@ -39,7 +38,6 @@
     "autoprefixer": "^10.4.21",
     "eslint": "^9.39.2",
     "eslint-plugin-vue": "^10.7.0",
-    "gh-pages": "^6.3.0",
     "globals": "^17.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
