@@ -53,9 +53,6 @@
         </a>
       </div>
 
-      <!-- Beta build marker; renders only on the beta host and in local dev -->
-      <BetaBadge class="self-center" />
-
       <!-- Mobile Menu Button -->
       <button class="md:hidden flex items-center justify-center w-10 h-10 transition-colors duration-200"
         @click="drawer = !drawer">
@@ -139,7 +136,6 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import config from "@/content/profile_info"
 import { isFeatureEnabled } from '@/config/featureFlags'
-import BetaBadge from '@/components/BetaBadge.vue'
 
 const router = useRouter()
 const drawer = ref(false)
