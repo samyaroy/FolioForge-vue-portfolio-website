@@ -158,6 +158,7 @@
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import { logoUrl } from '@/config/mediaAssets'
 
 const props = defineProps({
     projects: {
@@ -175,7 +176,7 @@ const visibleProjects = computed(() => {
 })
 
 function getLogoPath(logo) {
-    return `/logo/${logo}.png`
+    return logoUrl(logo)
 }
 </script>
 

@@ -26,6 +26,25 @@ export const STABLE_URL: string = SITE_URL
  */
 export const BETA_URL: string | null = config.profile?.betaVersionUrl ?? null
 
+/**
+ * Explicit declaration from the deployment's build settings, and the first
+ * thing consulted. 'beta' or 'stable'; anything else (including unset, the
+ * normal case) falls through to the hostname.
+ *
+ * This is the second immune channel. It lives in the host's build environment
+ * rather than in a tracked file, so like the hostname it cannot be carried
+ * between branches by a tree-replacement merge. Use it when the hostname is
+ * unavailable or wrong -- a preview URL, a custom domain, a local build you
+ * want to smoke-test as production:
+ *
+ *   VITE_SITE_ENV=stable npm run build
+ *
+ * Cloudflare: set VITE_SITE_ENV on each deployment's build variables (beta on
+ * the V1 build, stable on the main build). The build reads the same value; see
+ * vite.config.ts, which uses it to noindex non-production output.
+ */
+const DECLARED_ENV = (import.meta.env?.VITE_SITE_ENV ?? '').trim().toLowerCase()
+
 // Guarded for the prerender pass, which runs in Node. scripts/seo-build.ts only
 // stamps <head> on the built shell today, so no component renders there, but the
 // guard keeps beta messaging out of the static HTML if that ever changes.
@@ -47,6 +66,7 @@ function hostnameOf(url: string | null): string | null {
  * localhost you are by definition not looking at the published site.
  */
 export function isBetaSite(): boolean {
+  if (DECLARED_ENV) return DECLARED_ENV === 'beta'
   return host.startsWith(BETA_HOST_PREFIX) || LOCAL_HOSTS.includes(host)
 }
 
@@ -56,6 +76,7 @@ export function isBetaSite(): boolean {
  * during local development.
  */
 export function isStableSite(): boolean {
+  if (DECLARED_ENV) return DECLARED_ENV === 'stable'
   const stable = hostnameOf(STABLE_URL)
   return Boolean(host && stable && host === stable)
 }

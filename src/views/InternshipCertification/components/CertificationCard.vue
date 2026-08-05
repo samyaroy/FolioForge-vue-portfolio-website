@@ -63,6 +63,7 @@
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import { logoUrl } from '@/config/mediaAssets'
 
 defineProps({
   certification: {
@@ -72,7 +73,7 @@ defineProps({
 })
 
 function getLogoPath(logo) {
-  return `/logo/${logo}.png`
+  return logoUrl(logo)
 }
 
 function handleLogoError(event) {

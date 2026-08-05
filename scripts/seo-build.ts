@@ -66,6 +66,15 @@ export interface SeoPrerenderOptions {
   rssTitle?: string
   /** Emits sitemap.xml alongside the pages. */
   sitemap?: boolean
+  /**
+   * Marks the whole deployment as non-production: every page gets
+   * `noindex`, no sitemap is written, and robots.txt stops advertising one.
+   *
+   * The beta site is a byte-identical copy of production on a different host,
+   * which is duplicate content. Canonicals alone do not stop it being crawled,
+   * and it is linked from the stable footer, so it is genuinely reachable.
+   */
+  noindex?: boolean
 }
 
 function escapeAttribute(value: string): string {
@@ -207,7 +216,20 @@ ${entries.join('\n')}
  * letting each vite.config wrap it in its own plugin object avoids importing
  * Vite's types across that boundary at all.
  */
-export function writeSeoOutput(outDir: string, options: SeoPrerenderOptions): void {
+export function writeSeoOutput(outDir: string, rawOptions: SeoPrerenderOptions): void {
+  // A non-production deployment is expressed by flipping every page to
+  // noindex. Everything downstream already honours that flag: headFor emits the
+  // robots meta and drops the canonical, and buildSitemap filters the page out
+  // -- so there is no second code path to keep in step.
+  const options: SeoPrerenderOptions = rawOptions.noindex
+    ? {
+        ...rawOptions,
+        pages: rawOptions.pages.map((page) => ({ ...page, noindex: true })),
+        notFound: rawOptions.notFound && { ...rawOptions.notFound, noindex: true },
+        sitemap: false,
+      }
+    : rawOptions
+
   const shellPath = path.join(outDir, 'index.html')
   if (!fs.existsSync(shellPath)) return
 
@@ -233,5 +255,18 @@ export function writeSeoOutput(outDir: string, options: SeoPrerenderOptions): vo
 
   if (options.sitemap) {
     fs.writeFileSync(path.join(outDir, 'sitemap.xml'), buildSitemap(options))
+  }
+
+  if (rawOptions.noindex) {
+    // public/robots.txt is copied in verbatim and advertises the production
+    // sitemap, which this build does not publish. Crawling stays allowed on
+    // purpose: a Disallow would stop crawlers fetching the pages, and a page
+    // never fetched is a page whose noindex is never read.
+    fs.writeFileSync(
+      path.join(outDir, 'robots.txt'),
+      'User-agent: *\nAllow: /\n\n' +
+        '# Non-production deployment. Every page carries\n' +
+        '# <meta name="robots" content="noindex">, and no sitemap is published.\n',
+    )
   }
 }

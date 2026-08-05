@@ -78,6 +78,7 @@
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
+import { logoUrl } from '@/config/mediaAssets'
 
 // Default expanded/collapsed state is controlled by a feature flag
 const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.technicalProjects'))
@@ -97,7 +98,7 @@ defineProps({
     }
 })
 function getLogoPath(logo) {
-    return `/logo/${logo}.png`;
+    return logoUrl(logo);
     // src/metadata/logo/institute
 }
 </script>

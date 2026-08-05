@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { logoUrl } from '@/config/mediaAssets'
 export default {
   name: "Logos",
   props: {
@@ -20,7 +21,7 @@ export default {
   },
   methods: {
     getLogoPath(logo) {
-      return `/logo/${logo}.png`;
+      return logoUrl(logo);
     },
   },
 };
