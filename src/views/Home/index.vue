@@ -8,6 +8,10 @@
         @dismissed="isRibbonDismissed = true"
       />
 
+      <!-- Below the announcement, not above it. App.vue places this for every
+           route that does not render its own ribbon. -->
+      <BetaRibbon />
+
       <!-- Hero Section -->
       <div v-if="homeFlags.showHeroSection" class="relative">
         <RibbonToggle
@@ -41,6 +45,7 @@ import config from '@/content/profile_info'
 import HeroSection from './components/HeroSection.vue'
 import InfoRibbon from '@/components/InfoRibbon.vue'
 import RibbonToggle from '@/components/RibbonToggle.vue'
+import BetaRibbon from '@/components/BetaRibbon.vue'
 import ResearchInterests from './components/researchInterests/index.vue'
 import Experience from './components/experience/index.vue'
 import Education from './components/education/index.vue'
