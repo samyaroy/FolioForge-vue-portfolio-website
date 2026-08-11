@@ -1,14 +1,48 @@
 education:
-  # - type: University
-  #   degree: Masters of Science (MSc)
-  #   field: Statistics
-  #   category:
-  #   institution: University of Calcutta
-  #   campus: Taraknath Palit Siksha Prangan / Ballygunge Science College
-  #   location: Kolkata, WB
-  #   time_period: 2026 - Present
-  #   gpa:
-  #   cred_link:
+  - type: University
+    degree: Masters of Science (MSc)
+    field: Statistics
+    institution: University of Calcutta
+    campus: Taraknath Palit Siksha Prangan (Ballygunge Science College)
+    location: Kolkata, WB
+    time_period: 2026 - Present
+    gpa:
+    cred_link:
+    category: CCF
+    cirriculum:
+      semester_1:
+        - course_code: STS411
+          course_name: Multivariate Calculus and Multivariate Statistical Analysis (theory + Practical)
+          type: CC/PCC
+          credit: 6
+          faculty:
+            - name: Prof. Arindam Sengupta
+        - course_code: STS412
+          course_name: Probability I (Theory + Tutorial)
+          type: CC/PCC
+          credit: 6
+          faculty:
+            - name: Prof. Gaurangadeb Chattopadhyay
+        - course_code: STS413
+          course_name: Statistical Inference I (Theory + Practical)
+          type: CC
+          credit: 6
+          faculty:
+            - name: Prof. Rahul Bhattacharya
+            - name: Prof. Manisha Pal
+              link: https://www.sxuk.edu.in/faculty_members/manisha-pal
+        - course_code: STS414
+          course_name: Linear Models and Regression Analysis (Theory + Practical)
+          type: CC/PCC
+          credit: 6
+          faculty:
+            - name: Prof. Bhaswati Ganguli
+              link: https://www.linkedin.com/in/bhaswati-ganguli-33081b77/
+        - course_code: STS415
+          course_name: Student Seminar I
+          type: SEC/PSE/CLE
+          credit: 2
+
 
   - type: University
     degree: Bachelor of Science (BS)
