@@ -47,10 +47,10 @@
             </div>
 
             <!-- Issuer logo(s) -->
-            <div class="shrink-0 flex items-center justify-end gap-1 w-20">
+            <div class="shrink-0 flex items-center justify-end gap-2 w-40">
               <img v-for="logo in row.logos" :key="logo" :src="logoUrl(logo)" :alt="logo" :title="logo"
-                class="h-7 w-auto max-w-[36px] object-contain" @error="handleLogoError">
-              <v-icon v-if="!row.logos.length" size="22" class="text-gray-300">
+                class="h-16 w-auto max-w-[76px] object-contain" @error="handleLogoError">
+              <v-icon v-if="!row.logos.length" size="40" class="text-gray-300">
                 mdi-certificate-outline
               </v-icon>
             </div>
