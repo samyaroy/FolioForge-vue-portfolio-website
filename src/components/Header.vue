@@ -138,7 +138,7 @@ const router = useRouter()
 const drawer = ref(false)
 const { profile, socials } = config
 
-const blogLink = socials.vlog
+const blogLink = socials.blog
 
 const showBlogNavLink = computed(() => (
   isFeatureEnabled('showBlog') && Boolean(blogLink)

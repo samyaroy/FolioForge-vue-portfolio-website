@@ -60,6 +60,15 @@
           <div v-if="certifications && certifications.length > 0" class="space-y-6 max-w-4xl mx-auto">
             <CertificationCard v-for="certification in certifications" :key="certification.id"
               :certification="certification" />
+
+            <!-- Secondary certificates live in `more_certifications`; the link
+                 stays hidden until that list has entries. -->
+            <div v-if="moreCertifications.length" class="flex justify-end">
+              <button type="button" class="more-certificates-button" @click="showMoreCertificates = true">
+                View more certificates
+                <v-icon size="16">mdi-arrow-right</v-icon>
+              </button>
+            </div>
           </div>
 
           <div v-else class="text-center text-gray-500 italic py-8">
@@ -70,6 +79,8 @@
           </div>
         </div>
       </div>
+
+      <MoreCertificatesModal v-model="showMoreCertificates" :certifications="moreCertifications" />
     </div>
   </div>
 </template>
@@ -83,11 +94,13 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
+import MoreCertificatesModal from './components/MoreCertificatesModal.vue'
 import config from "@/content/profile_info"
 import descriptions from '@/content/profile_info/description.yml'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
 const { certifications, internships } = config
+const moreCertifications = config.more_certifications || []
 const credly = config.socials.credly
 const pageDescription = descriptions.internshipCertifications
 
@@ -105,6 +118,7 @@ const enabledTabIds = computed(() => tabs.value.map(tab => tab.id))
 
 const route = useRoute()
 const activeTab = ref(tabs.value[0]?.id || null)
+const showMoreCertificates = ref(false)
 
 watch(tabs, (nextTabs) => {
   if (!nextTabs.some(tab => tab.id === activeTab.value)) {
@@ -122,5 +136,34 @@ onMounted(() => {
 </script>
 
 <style scoped>
-/* Optional styles */
+/* Same treatment as `.awards-text-button` on the home page: the global
+   `button` rule in style.css gives every bare button a background, padding
+   and a border, so a text link built from one has to opt out explicitly. */
+.more-certificates-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #1980e6;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  box-shadow: none;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.more-certificates-button:hover,
+.more-certificates-button:focus,
+.more-certificates-button:focus-visible {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #0e141b;
+  box-shadow: none;
+}
 </style>

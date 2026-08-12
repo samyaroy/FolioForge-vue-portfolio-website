@@ -1,8 +1,8 @@
 profile:
   name: Samyabrata Roy
-  about: "I am a statistics student currently pursing my masters in statistics from `University of Calcutta`, prior this I was working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata`. I'm also currently pursuing my second bachelor's degree in Data Science from `IIT Madras`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
-  # about: "I am a statistics student currently working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata` and also pursuing my second bachelor's degree in Data Science from `IIT Madras`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
-  heading: Web Developer<br>Data Science, Statistics Enthusiast #will be used in home page hero section
+  # about: "I am a statistics student currently pursing my masters in statistics from `University of Calcutta`, prior this I was working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata`. I'm also currently pursuing my second bachelor's degree in Data Science from `IIT Madras`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
+  about: "I am a statistics student currently pursing my masters in statistics from `University of Calcutta`, prior this I was working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata`. I'm also currently pursuing my second bachelor's degree in Data Science from `IIT Madras` and serving as the Website Officer for the `Researchers of Statistics Education (RoSE) Network`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
+  heading: Statistics and Data Science Student,<br>Techno-optimist #will be used in home page hero section
   footer: Rookie Statistician | Data Science Student | Full-Stack Developer
   cv: https://drive.google.com/uc?export=download&id=1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz # google drive link for direct download  #environment: development   # or staging / production
   betaVersionUrl: https://beta.samyabrata.codeium.xyz # beta deployment (V1 branch); drives the footer link on stable and the header badge on beta
@@ -36,4 +36,4 @@ socials:
   researchgate: https://www.researchgate.net/profile/Samyabrata-Roy
   orcid_id: https://orcid.org/0009-0000-5356-4684
   credly: https://www.credly.com/users/samyabrata-roy
-  vlog: https://blogs.samyabrata.codeium.xyz
+  blog: https://blogs.samyabrata.codeium.xyz

@@ -29,3 +29,36 @@ certifications:
     duration: 6 Months
     cred_link: 'https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview'
     tag: "Grade: A"
+
+# Secondary certificates, shown as compact rows behind the
+# "View more certificates →" link instead of as full cards.
+# The link only appears once this list has at least one entry.
+#
+# `title` is the only required field. `issuer` and both of its keys
+# (institution, platform) are optional: give either, both, or neither, and the
+# issuer line adapts — the separator appears only between two present values,
+# and the whole line is dropped when both are missing.
+more_certifications:
+  - title: "Responsible AI: Applying AI Principles with Google Cloud"
+    logo: ['SIMPLILEARN']
+    issuer:
+      platform: Simplilearn    # optional
+    date: 14th Apr 2024
+    cred_link: 'https://drive.google.com/file/d/1PgU-s02SKXJbGtqQMv3hO3xqsLmHOqnf/preview'   # optional
+
+
+  # # No duration, so the date line carries the date alone.
+  # - title: Third certificate title
+  #   logo: ['COURSERA']
+  #   issuer:
+  #     institution: Third issuing institution
+  #     platform: Coursera
+  #   date: Aug 2023
+
+  # No logo and no credential link: falls back to the certificate glyph and
+  # simply omits the document icon.
+  # - title: Fourth certificate title
+  #   issuer:
+  #     institution: Fourth issuing institution
+  #   date: Mar 2022
+  #   duration: 6 weeks
