@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
+  <div class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4 pr-4 rounded-md bg-slate-50">
     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-2">
       <h3 class="text-lg font-semibold text-[#0e141b]">
         {{ leadership.role }}

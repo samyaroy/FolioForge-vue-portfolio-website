@@ -1,11 +1,12 @@
 <template>
   <div class="border-l-4 border-indigo-600 pl-5 py-3 rounded-lg bg-white
            hover:shadow-md transition-all duration-200 text-sm">
-    <!-- PARENT: flex -->
-    <div class="flex gap-4">
+    <!-- PARENT: stacks on a phone, where the 20% meta column is too narrow to
+         hold a date on one line. -->
+    <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
 
       <!-- CHILD 1: 80% -->
-      <div class="w-[75%] space-y-3">
+      <div class="w-full sm:w-[75%] min-w-0 space-y-3">
 
         <!-- Header -->
         <div class="flex items-start">
@@ -37,8 +38,8 @@
           <div v-if="normalizedOrganizers.length" class="text-slate-600 flex items-start">
             <v-icon size="small" class="mr-2 mt-0.5">mdi-account-group</v-icon>
 
-            <div class="flex-1 flex">
-              <div class="font-medium mr-2">Organizer(s):</div>
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row">
+              <div class="font-medium mr-2 shrink-0">Organizer(s):</div>
 
               <div>
                 <div v-for="(org, index) in normalizedOrganizers" :key="index">
@@ -53,8 +54,8 @@
           <div v-if="conference.institution?.length" class="text-slate-600 flex items-start">
             <v-icon size="small" class="mr-2 mt-0.5">mdi-school</v-icon>
 
-            <div class="flex-1 flex">
-              <div class="font-medium mr-2">Institution:</div>
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row">
+              <div class="font-medium mr-2 shrink-0">Institution:</div>
 
               <div>
                 <div v-for="(inst, index) in conference.institution" :key="index">
@@ -68,14 +69,14 @@
       </div>
 
       <!-- CHILD 2: 20% -->
-      <div class="w-[20%] text-right text-sm text-gray-500 space-y-1">
+      <div class="w-full sm:w-[20%] shrink-0 text-left sm:text-right text-sm text-gray-500 space-y-1">
 
-        <div v-if="conference.date" class="flex items-center justify-end gap-1">
+        <div v-if="conference.date" class="flex items-center justify-start sm:justify-end gap-1">
           <v-icon size=14>mdi-calendar</v-icon>
           <span>{{ conference.date }}</span>
         </div>
 
-        <div v-if="conference.location" class="flex items-center justify-end gap-1">
+        <div v-if="conference.location" class="flex items-center justify-start sm:justify-end gap-1">
           <v-icon size=14>mdi-map-marker</v-icon>
           <span>{{ conference.location }}</span>
         </div>

@@ -2,7 +2,7 @@
   <div class="px-4 md:px-8 lg:px-20 py-4 bg-slate-50">
     <div class="max-w-[1200px] mx-auto">
       <div class="flex flex-wrap justify-between gap-3 p-4">
-        <h2 class="text-[#0e141b] tracking-light text-[32px] font-bold leading-tight min-w-72">
+        <h2 class="text-[#0e141b] tracking-light text-2xl sm:text-[32px] font-bold leading-tight min-w-0 sm:min-w-72">
           {{ currentTitle }}
         </h2>
       </div>

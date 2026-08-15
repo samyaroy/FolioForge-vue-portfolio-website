@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg shadow-sm p-8">
+    <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8">
         <div class="mb-6 flex items-center justify-between gap-4">
             <h2 class="text-2xl font-bold text-[#0e141b]">
                 Research & Academic Projects
@@ -8,7 +8,7 @@
 
         <div v-if="projects && projects.length" class="space-y-6">
             <div v-for="(project, index) in visibleProjects" :key="index" :id="`research-${index}`"
-                class="border-l-4 border-[#1980e6] pl-6 py-4 pr-4 rounded-md bg-slate-50">
+                class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4 pr-4 rounded-md bg-slate-50">
 
                 <!-- TITLE -->
                 <div class="flex items-start justify-between gap-4 mb-4">

@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-    <div class="flex items-start justify-between mb-2">
-      <div class="flex-1">
+  <div class="bg-white rounded-lg shadow-md p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300">
+    <div class="flex flex-wrap items-start justify-between gap-y-2 mb-2">
+      <div class="flex-1 min-w-0">
         <div class="flex items-center gap-4">
           <h3 class="text-xl font-bold text-[#0e141b] mb-2">
             {{ internship.role }}
@@ -22,7 +22,7 @@
           </h3>
         </div>
       </div>
-      <div class="ml-4 flex items-start gap-2">
+      <div class="ml-0 sm:ml-4 flex shrink-0 items-start gap-2">
         <span v-if="internship.type"
           class="inline-block px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
           {{ internship.type }}
@@ -61,11 +61,13 @@
       <span>{{ internship.time_period }}</span>
     </div>
 
+    <!-- The nowrap label plus a 1fr list squeezes project titles to a couple of
+         words on a phone, so the list drops beneath the label below `sm`. -->
     <div v-if="projectList.length"
-      class="grid grid-cols-[auto,auto,1fr] gap-x-2 text-[#4e7397] text-sm mb-3 items-start">
+      class="grid grid-cols-[auto_1fr] sm:grid-cols-[auto_auto_1fr] gap-x-2 text-[#4e7397] text-sm mb-3 items-start">
       <v-icon size="16" class="mt-[2px]">mdi-puzzle-outline</v-icon>
       <span class="font-medium whitespace-nowrap">Project(s):</span>
-      <ul class="grid">
+      <ul class="col-start-2 sm:col-start-3 grid">
         <li v-for="(project, index) in projectList" :key="index" class="leading-tight">
           <span v-if="projectList.length > 1">&bull; </span>
           <a v-if="project.cred_link" :href="project.cred_link" target="_blank" rel="noopener">{{ project.title

@@ -145,6 +145,29 @@ Tailwind defaults. `md` (768px) is the primary desktop/mobile switch (desktop na
 hamburger; single-column vs. multi-column). `lg` adds the third tier (e.g. hero goes
 `flex-col` → `lg:flex-row`, research cards `cols=6 md=4 lg=3`).
 
+`sm` (640px) is the **phone** switch, used for layout that is fine on a tablet but breaks
+on a handset. Conventions:
+
+- **Never author a bare percentage width on a flex child.** Detail cards split their
+  content and meta columns as `w-full sm:w-[85%]` / `w-full sm:w-[15%]` on a
+  `flex flex-col sm:flex-row` parent — a raw `w-[15%]` is ~40px on a phone and shreds a
+  date onto four lines. Same for `w-[80%]`/`w-[20%]` and friends.
+- **Right-aligned meta columns flip left when stacked:** `text-left sm:text-right`,
+  `justify-start sm:justify-end`, `items-start sm:items-end`.
+- **Inline `label: value` rows stack:** `flex flex-col sm:flex-row` with the label
+  `shrink-0` and the value `sm:ml-2` instead of an unconditional `ml-2`.
+- **Fixed pixel sizes beat proportional ones for small fixed elements** (logos, avatars,
+  badges): `w-12 sm:w-16`, not `w-[10%]`.
+- **Padding ramps:** cards `p-4 sm:p-8`, rails `pl-4 sm:pl-6`, header `px-4 sm:px-6
+  md:px-10`. Page titles ramp `text-3xl sm:text-4xl`, ledes `text-base sm:text-lg`.
+- **Tab pill groups wrap** — `flex flex-wrap justify-center gap-1` (`gap`, not
+  `space-x-*`, which mis-indents wrapped rows) with buttons at
+  `px-3 py-2 sm:px-6 sm:py-3`. Four tabs at the desktop size overflow a 320px viewport.
+- **`min-w-*` on a heading needs a mobile escape hatch:** `min-w-0 sm:min-w-72`.
+- **`content-justify` is ragged-right below `sm`** (see [src/style.css](src/style.css)) —
+  justification needs a wide measure or it opens rivers. Prefer the helper over a raw
+  `text-justify`, which is unguarded.
+
 ### Grids
 
 - Vuetify `v-row`/`v-col` for fluid card grids (e.g. research interests

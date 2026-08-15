@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-8 text-sm">
+  <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8 text-sm">
     <h2 class="text-2xl font-bold text-[#0e141b] mb-6">
       Projects Mentored
     </h2>

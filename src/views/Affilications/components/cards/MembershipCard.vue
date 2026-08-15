@@ -1,10 +1,11 @@
 <template>
     <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
         <div class="flex gap-4">
-            <!-- Left: logo / badge -->
-            <div class="w-[10%] flex items-start">
+            <!-- Left: logo / badge. A 10%-of-10% box collapsed to a ~17px badge
+                 on a phone, so the size is fixed rather than proportional. -->
+            <div class="w-12 sm:w-16 shrink-0 flex items-start">
                 <div
-                    class="w-[60%] aspect-square rounded-lg overflow-hidden bg-gray-100 border border-slate-200 flex items-center justify-center">
+                    class="w-full aspect-square rounded-lg overflow-hidden bg-gray-100 border border-slate-200 flex items-center justify-center">
                     <img v-if="logoSrc" :src="logoSrc" :alt="`${membership.organization || 'Membership'} logo`"
                         class="w-full h-full object-contain" />
                     <v-icon v-else size="22" class="text-slate-500">mdi-account-group</v-icon>
@@ -13,7 +14,7 @@
 
             <!-- Right: content (85%) -->
             <div class="flex-1">
-                <div class="flex items-start justify-between gap-1">
+                <div class="flex flex-wrap items-start justify-between gap-x-2 gap-y-1">
                     <div>
                         <h3 class="text-lg font-semibold text-slate-900">
                             {{ membership.organization }} <span v-if="membership.chapter" class="text-sm text-gray-500">
@@ -24,7 +25,7 @@
                         <v-icon size="14">mdi-map-marker</v-icon> {{ membership.location }}
                     </span>
                 </div>
-                <div class="flex items-start justify-between ">
+                <div class="flex flex-wrap items-start justify-between gap-x-2 gap-y-1">
                     <div v-if="membership.role" class="text-gray-700 pl-1">
                         {{ membership.role }} <span class="font-mono text-sm text-gray-600"> [Membership Id: {{
                             membership.membership_id }}] </span>

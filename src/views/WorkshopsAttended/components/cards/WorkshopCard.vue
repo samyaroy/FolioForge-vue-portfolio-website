@@ -1,9 +1,10 @@
 <template>
   <div class="border-l-4 border-[#1d67fd] pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white text-sm">
-    <!-- HEADER -->
-    <div class="flex pr-4">
+    <!-- HEADER. The 85/15 split leaves the meta column ~40px on a phone, so the
+         two stack there and only sit side by side from `sm` up. -->
+    <div class="flex flex-col sm:flex-row pr-4">
       <!-- LEFT (80%) -->
-      <div class="w-[85%]">
+      <div class="w-full sm:w-[85%] min-w-0">
         <div>
           <h3 class="text-md font-semibold text-[#0e141b]">
             {{ workshop.title }}
@@ -17,7 +18,7 @@
           <div v-if="instructors.length" class="text-gray-600 mb-1 mt-2 flex items-start">
             <v-icon size="16" class="mr-2 mt-0.5">mdi-account</v-icon>
 
-            <div class="flex-1 flex items-start">
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row items-start">
               <div class="font-medium mb-0.5 shrink-0">
                 <span>Instructor<span v-if="instructors.length > 1">s</span>:&nbsp;</span>
               </div>
@@ -39,12 +40,12 @@
               mdi-office-building
             </v-icon>
 
-            <div class="flex-1 flex items-start">
-              <div class="font-medium mb-0.5">
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row items-start">
+              <div class="font-medium mb-0.5 shrink-0">
                 <span>Institution(s):</span>
               </div>
 
-              <div class="ml-2">
+              <div class="sm:ml-2 min-w-0">
                 <div v-for="(inst, index) in institutions" :key="`${inst.name}-${index}`">
                   <span v-if="inst.department">
                     {{ inst.department }},
@@ -117,7 +118,7 @@ const props = defineProps({
 })
 
 const metaColumnClass = [
-  'w-[15%] text-gray-500 flex flex-col items-start',
+  'w-full sm:w-[15%] mt-2 sm:mt-0 shrink-0 text-gray-500 flex flex-col items-start',
   props.compactMetaText ? 'text-xs' : 'text-sm'
 ]
 

@@ -12,7 +12,8 @@
     "prebuild": "npm run sync:gallery-manifest",
     "build": "vite build",
     "preview": "vite preview",
-    "analyze": "ANALYZE=1 vite build"
+    "analyze": "ANALYZE=1 vite build",
+    "boneyard:build": "node scripts/build-boneyard.mjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",
@@ -21,6 +22,7 @@
     "@lucide/vue": "^1.28.0",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
+    "boneyard-js": "^1.6.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "motion-v": "^2.3.0",

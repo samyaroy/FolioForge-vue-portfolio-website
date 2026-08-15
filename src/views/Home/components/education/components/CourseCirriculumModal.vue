@@ -2,7 +2,7 @@
   <v-dialog v-model="isOpen" max-width="90vw" scrollable>
     <v-card>
       <!-- Header -->
-      <div class="px-6 pt-5 pb-4">
+      <div class="px-4 sm:px-6 pt-5 pb-4">
         <div class="flex items-start justify-between gap-3">
           <div>
             <p class="text-[#0e141b] text-lg font-bold leading-tight">Course Curriculum</p>
@@ -21,12 +21,14 @@
       <v-divider :style="{ borderColor: '#3b82f6' }" />
 
       <!-- Course sections -->
-      <v-card-text class="px-6 py-4 overflow-y-auto" style="max-height: 62vh;">
+      <v-card-text class="px-4 sm:px-6 py-4 overflow-y-auto" style="max-height: 62vh;">
         <div v-for="(courses, section) in sections" :key="section" class="mb-6 last:mb-0">
           <p class="text-[#4e7397] text-[11px] font-semibold uppercase tracking-widest mb-2">
             {{ formatSection(section) }}
           </p>
-          <div class="grid grid-cols-2 lg:grid-cols-3 gap-2">
+          <!-- Two columns inside a 90vw dialog gives each course ~140px on a
+               phone, which breaks the titles into one word per line. -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             <CourseCard
               v-for="(course, idx) in courses"
               :key="idx"

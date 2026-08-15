@@ -11,7 +11,7 @@
     />
     <div
       v-if="!showGeneralArticlesSection && !showJournalArticlesSection"
-      class="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500 italic"
+      class="bg-white rounded-lg shadow-sm p-4 sm:p-8 text-center text-gray-500 italic"
     >
       No article sections are enabled.
     </div>

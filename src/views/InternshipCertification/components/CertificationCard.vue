@@ -1,10 +1,12 @@
 <template>
-  <div class="relative bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+  <div class="relative bg-white rounded-lg shadow-md p-4 sm:p-6 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
     <div v-if="certification.tag" class="certification-tag">
       <span>{{ certification.tag }}</span>
     </div>
-    <div class="flex items-stretch gap-4 sm:gap-6">
-      <div class="w-[85%] min-w-0 ml-6">
+    <!-- The corner tag needs the left inset; below `sm` the meta column moves
+         under the content instead of taking a 15% slice of a phone screen. -->
+    <div class="flex flex-col sm:flex-row items-stretch gap-4 sm:gap-6">
+      <div class="w-full sm:w-[85%] min-w-0 ml-6">
         <h3 class="text-xl font-bold text-[#0e141b] mb-2">{{ certification.title }}</h3>
         <div class="flex items-center gap-2 text-[#4e7397] text-sm mb-1">
           <v-icon size="16">mdi-school</v-icon>
@@ -35,13 +37,13 @@
         </div>
       </div>
 
-      <div class="w-[15%] min-w-0 flex flex-col">
+      <div class="w-full sm:w-[15%] min-w-0 shrink-0 flex flex-col ml-6 sm:ml-0">
         <div class="w-full flex justify-end pr-4">
           <DocumentViewer :src="certification.cred_link" />
         </div>
 
         <div v-if="certification.issuer.location"
-          class="mt-4 flex w-full justify-end gap-1 text-[#4e7397] text-sm pr-4">
+          class="mt-2 sm:mt-4 flex w-full justify-end gap-1 text-[#4e7397] text-sm pr-4">
           <v-icon size="16">mdi-map-marker</v-icon>
           <span>{{ certification.issuer.location }}</span>
         </div>

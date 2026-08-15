@@ -3,24 +3,24 @@
     <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
       <div class="text-center mb-8">
-        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+        <h1 class="text-3xl sm:text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
           Conferences & Workshops
         </h1>
-        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-5xl mx-auto">
+        <p v-if="showPageDescription" class="content-justify text-base sm:text-lg text-gray-600 max-w-5xl mx-auto">
           {{ pageDescription }}
         </p>
       </div>
 
       <!-- Navigation Tabs -->
       <div v-if="tabs.length" class="flex justify-center mb-8">
-        <div class="flex space-x-1 bg-white rounded-lg p-1 shadow-sm">
+        <div class="flex flex-wrap justify-center gap-1 bg-white rounded-lg p-1 shadow-sm">
           <button
             v-for="tab in tabs"
             :key="tab.id"
             @click="activeTab = tab.id"
             :class="[
-              'px-6 py-3 rounded-md text-sm font-medium transition-all duration-200',
+              'px-3 py-2 sm:px-6 sm:py-3 rounded-md text-sm font-medium transition-all duration-200',
               activeTab === tab.id
                 ? 'bg-[#1980e6] text-white shadow-sm'
                 : 'text-gray-600 hover:text-[#1980e6] hover:bg-gray-50'

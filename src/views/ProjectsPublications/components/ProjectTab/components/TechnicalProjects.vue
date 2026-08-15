@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg shadow-sm p-8">
+    <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8">
         <button type="button"
             class="w-full flex items-center justify-between text-left focus:outline-none mb-6"
             :aria-expanded="isOpen"

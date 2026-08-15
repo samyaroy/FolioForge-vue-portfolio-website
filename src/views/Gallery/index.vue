@@ -37,6 +37,11 @@ defineOptions({
   name: 'GalleryPage',
 })
 
+// scripts/build-boneyard-gallery.mjs loads the page with this flag set so every
+// card renders at once and can have its bone captured; the "load more" paging
+// would otherwise hide most of them from the capture run.
+const shouldExposeAllItemsForCapture = typeof window !== 'undefined' && window.__BONEYARD_BUILD === true
+
 const rawItems = Array.isArray(galleryContent?.items) ? galleryContent.items : []
 const configuredTags = Array.isArray(galleryTagMetadata?.tags) ? galleryTagMetadata.tags : []
 const configuredTagIds = new Set(
@@ -95,8 +100,14 @@ const filteredItems = computed(() => {
   ))
 })
 
-const visibleItems = computed(() => filteredItems.value.slice(0, visibleCount.value))
-const canLoadMore = computed(() => filteredItems.value.length > visibleCount.value)
+const visibleItems = computed(() => (
+  shouldExposeAllItemsForCapture
+    ? filteredItems.value
+    : filteredItems.value.slice(0, visibleCount.value)
+))
+const canLoadMore = computed(() => (
+  !shouldExposeAllItemsForCapture && filteredItems.value.length > visibleCount.value
+))
 const totalItemCount = computed(() => sortedItems.value.length)
 
 watch(activeFilters, () => {

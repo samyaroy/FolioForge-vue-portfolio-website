@@ -6,7 +6,9 @@
 
     <div class="container mx-auto px-1 md:px-2">
       <!-- Footer content -->
-      <div class="grid grid-cols-1 gap-0 md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
+      <!-- Stacked on mobile the three blocks need vertical breathing room; side
+           by side on md they get it from the column gap instead. -->
+      <div class="grid grid-cols-1 gap-y-8 md:gap-y-0 md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
         <!-- Brand Section -->
         <div>
           <h3 class="text-xl font-bold mb-6">{{ profile.name }}</h3>
@@ -132,7 +134,7 @@
           </ul>
         </div>
 
-        <div class="grid grid-cols-1 gap-11 md:grid-cols-[max-content_max-content] md:justify-self-end pl-3">
+        <div class="grid grid-cols-1 gap-8 md:gap-11 md:grid-cols-[max-content_max-content] md:justify-self-end md:pl-3">
           <!-- Social Links -->
           <div>
             <h4 class="text-lg font-semibold mb-2">Social Links</h4>
@@ -214,8 +216,8 @@
       </div>
 
       <div class="flex flex-col md:flex-row justify-between items-center mt-0">
-        <div>
-          <p class="text-gray-500 text-sm ml-4">
+        <div class="text-center md:text-left">
+          <p class="text-gray-500 text-sm md:ml-4">
             Source code available at
             <a class="underline hover:text-white"
               href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template" target="_blank">
@@ -235,7 +237,7 @@
           </p>
         </div>
 
-        <p class="text-gray-500 text-sm mt-2 md:mt-0">
+        <p class="text-gray-500 text-sm mt-2 md:mt-0 shrink-0">
           &#10038; Last updated: {{ last_updated_on }}
         </p>
       </div>

@@ -1,11 +1,12 @@
 <template>
   <div class="border-l-4 border-[#32e4ff] pl-5 py-3 rounded-lg bg-white
            hover:bg-green-50 hover:shadow-lg transition-all duration-300 text-sm">
-    <!-- PARENT -->
-    <div class="flex gap-4">
+    <!-- PARENT: stacks on a phone, where the 20% meta column is too narrow to
+         hold a date on one line. -->
+    <div class="flex flex-col sm:flex-row gap-2 sm:gap-4">
 
       <!-- LEFT: 80% -->
-      <div class="w-[80%] space-y-2">
+      <div class="w-full sm:w-[80%] min-w-0 space-y-2">
 
         <!-- Header -->
         <div class="flex items-start gap-2">
@@ -51,7 +52,7 @@
           <div v-if="instructorInfo" class="text-gray-600 flex items-start">
             <v-icon size="small" class="mr-2 mt-0.5">mdi-account-tie</v-icon>
 
-            <div class="flex-1 flex items-start">
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row items-start">
               <div class="font-medium mr-2 shrink-0">
                 Instructor:
               </div>
@@ -70,7 +71,7 @@
             <div class="text-gray-600 flex items-start">
               <v-icon size="small" class="mr-2 mt-0.5">mdi-school</v-icon>
 
-              <div class="flex-1 flex items-start">
+              <div class="min-w-0 flex-1 flex flex-col sm:flex-row items-start">
                 <div class="font-medium mr-2 shrink-0">
                   Institution(s):
                 </div>
@@ -128,14 +129,14 @@
       </div>
 
       <!-- RIGHT: 15% -->
-      <div class="w-[20%] text-right text-sm text-gray-500 space-y-1 mr-4">
+      <div class="w-full sm:w-[20%] shrink-0 text-left sm:text-right text-sm text-gray-500 space-y-1 sm:mr-4">
 
-        <div v-if="bootcamp.date" class="flex items-center justify-end gap-1">
+        <div v-if="bootcamp.date" class="flex items-center justify-start sm:justify-end gap-1">
           <v-icon size="14">mdi-calendar</v-icon>
           <span>{{ bootcamp.date }}</span>
         </div>
 
-        <div v-if="bootcamp.location" class="flex items-center justify-end gap-1">
+        <div v-if="bootcamp.location" class="flex items-center justify-start sm:justify-end gap-1">
           <v-icon size="14">mdi-map-marker</v-icon>
           <span>{{ bootcamp.location }}</span>
         </div>

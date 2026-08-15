@@ -11,7 +11,7 @@
         <span class="vertical-type-label">{{ other.type }}</span>
       </div>
 
-      <div class="relative flex flex-1 min-w-0">
+      <div class="relative flex flex-col sm:flex-row flex-1 min-w-0">
         <div :class="mainColumnClass">
           <div>
             <h3 class="text-md font-semibold text-[#0e141b]">
@@ -75,8 +75,8 @@
         <div v-if="hasMetaColumn" :class="metaColumnClass">
           <span v-if="other.date"><v-icon size="14">mdi-calendar</v-icon> {{ other.date }}</span>
 
-          <div class="flex flex-col items-end mt-1">
-            <div v-if="other.mode || displayLocation" class="mt-1 flex items-center justify-end gap-1 min-w-0">
+          <div class="flex flex-col items-start sm:items-end mt-1">
+            <div v-if="other.mode || displayLocation" class="mt-1 flex items-center justify-start sm:justify-end gap-1 min-w-0">
               <v-icon v-if="other.mode === 'Online'" size="14">mdi-web</v-icon>
 
               <v-img v-else-if="other.mode === 'Offline'" :src="inPersonIcon" alt="In-Person Icon" width="14"
@@ -94,7 +94,7 @@
             </div>
 
             <a v-if="externalLink" :href="externalLink" target="_blank" rel="noopener noreferrer"
-              class="mt-1 inline-flex items-center justify-end gap-1 text-blue-600 hover:text-blue-700"
+              class="mt-1 inline-flex items-center justify-start sm:justify-end gap-1 text-blue-600 hover:text-blue-700"
               @mouseenter="linkIcon?.startAnimation()" @mouseleave="linkIcon?.stopAnimation()">
               <span>See Details</span>
               <AnimatedIcon name="external-link" ref="linkIcon" :size="14" />
@@ -268,15 +268,18 @@ const hasMetaColumn = computed(() => {
 })
 
 const mainColumnClass = computed(() => {
-  return externalLink.value ? 'w-[80%] min-w-0' : 'w-full min-w-0'
+  return externalLink.value ? 'w-full sm:w-[80%] min-w-0' : 'w-full min-w-0'
 })
 
+// A 20% meta column is unreadable on a phone, so below `sm` it becomes a plain
+// full-width block under the content -- including in the no-link case, where the
+// desktop layout floats it over the card's top-right corner.
 const metaColumnClass = computed(() => {
-  const baseClass = 'text-[12px] text-gray-500 flex flex-col items-end text-right'
+  const baseClass = 'text-[12px] text-gray-500 flex flex-col items-start sm:items-end text-left sm:text-right'
 
   return externalLink.value
-    ? `${baseClass} w-[20%]`
-    : `${baseClass} absolute right-0 top-0 w-[20%] pointer-events-none`
+    ? `${baseClass} w-full sm:w-[20%] shrink-0 mt-2 sm:mt-0`
+    : `${baseClass} w-full mt-2 sm:mt-0 sm:absolute sm:right-0 sm:top-0 sm:w-[20%] sm:pointer-events-none`
 })
 </script>
 

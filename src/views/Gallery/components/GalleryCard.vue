@@ -1,4 +1,52 @@
 <template>
+  <!-- The card holds a shimmer placeholder until its lead image resolves. The
+       fallback below mirrors the real card's proportions so the swap does not
+       shift the grid. Bones per card live in src/bones/. -->
+  <Skeleton
+    :name="skeletonName"
+    :loading="isCardLoading"
+    animate="shimmer"
+    class="gallery-card-shell h-full w-full"
+  >
+    <template #fallback>
+      <div class="gallery-card-frame">
+        <article class="flex h-full min-h-[30rem] flex-col overflow-hidden rounded-[12px] bg-white shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)] ring-1 ring-slate-900/5">
+          <div class="flex items-start justify-between gap-4 px-4 pt-4">
+            <div class="flex min-w-0 w-3/10 items-center gap-2">
+              <div class="h-7 w-7 rounded-[6px] bg-slate-200" />
+              <div class="flex min-w-0 flex-1 flex-col gap-2">
+                <div class="h-3 w-20 rounded-full bg-slate-200" />
+                <div class="h-3 w-16 rounded-full bg-slate-100" />
+              </div>
+            </div>
+            <div class="flex w-7/10 shrink-0 flex-col items-end gap-2">
+              <div class="h-3 w-24 rounded-full bg-slate-200" />
+              <div class="h-3 w-28 rounded-full bg-slate-100" />
+            </div>
+          </div>
+
+          <div class="mt-5 h-[240px] bg-slate-100 sm:h-[260px]" />
+
+          <div class="flex flex-1 flex-col gap-4 p-4 sm:p-6">
+            <div class="space-y-2">
+              <div class="h-5 w-4/5 rounded-full bg-slate-200" />
+              <div class="h-5 w-3/5 rounded-full bg-slate-100" />
+            </div>
+            <div class="space-y-2">
+              <div class="h-3 w-full rounded-full bg-slate-100" />
+              <div class="h-3 w-11/12 rounded-full bg-slate-100" />
+              <div class="h-3 w-3/4 rounded-full bg-slate-100" />
+            </div>
+            <div class="mt-auto flex gap-2">
+              <div class="h-6 w-16 rounded-[5px] bg-blue-100/60" />
+              <div class="h-6 w-20 rounded-[5px] bg-blue-100/40" />
+            </div>
+          </div>
+        </article>
+      </div>
+    </template>
+
+    <div class="gallery-card-frame">
   <article
     class="group relative flex h-full min-h-[30rem] flex-col overflow-hidden rounded-[12px] bg-white shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)] ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-10px_rgba(14,20,27,0.14)]"
     :class="{ 'ring-primary/20 shadow-[0_18px_42px_-12px_rgba(24,128,230,0.2)]': item.featured }">
@@ -49,6 +97,7 @@
         <div :key="currentIndex" class="absolute inset-0">
           <img :src="currentImage" :alt="resolvedAlt"
             class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy"
+            @load="handleImageLoad"
             @error="handleImageError">
         </div>
       </Transition>
@@ -92,16 +141,18 @@
       </template>
     </div>
 
-    <div class="relative flex flex-1 flex-col gap-4 p-6">
+    <div class="relative flex flex-1 flex-col gap-4 p-4 sm:p-6">
       <h2 class="min-h-[3.125rem] font-serif text-[1.25rem] font-semibold leading-tight tracking-[-0.02em] text-base_black">
         {{ item.title }}
       </h2>
 
-      <div class="min-h-[8.75rem] text-justify text-[0.90rem] leading-7 text-slate-500">
+      <div class="min-h-[8.75rem] text-left sm:text-justify text-[0.90rem] leading-7 text-slate-500">
         <CaptionContent v-if="hasCaption" :text="item.caption" />
       </div>
+      <!-- The link is a fixed 40px target, so the tag list takes the remaining
+           space rather than a 90/10 split that overflows on a narrow card. -->
       <div v-if="visibleTags.length || item.externalUrl" class="mt-auto flex w-full items-end gap-4">
-        <div class="w-[90%]">
+        <div class="min-w-0 flex-1">
           <ul v-if="visibleTags.length" class="flex flex-wrap gap-2" aria-label="Gallery item tags">
             <li v-for="tag in visibleTags" :key="tag"
               class="rounded-[5px] bg-blue-100/50 px-1.5 py-1 text-[10px] font-semibold uppercase tracking-[0.10em] text-slate-600">
@@ -110,7 +161,7 @@
           </ul>
         </div>
 
-        <div class="flex w-[10%] justify-end">
+        <div class="flex shrink-0 justify-end">
           <a v-if="item.externalUrl" :href="item.externalUrl" target="_blank" rel="noopener noreferrer"
             class="inline-flex h-10 w-10 shrink-0 items-center justify-center text-blue-500 no-underline hover:text-blue-800"
             aria-label="Open milestone">
@@ -120,6 +171,8 @@
       </div>
     </div>
   </article>
+    </div>
+  </Skeleton>
 
   <Teleport to="body">
     <Transition name="gallery-zoom-fade">
@@ -184,6 +237,7 @@
 
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import Skeleton from 'boneyard-js/vue'
 import CaptionContent from '@/components/CaptionContent.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import galleryFallbackSample from '../assets/gallery-fallback-sample.svg'
@@ -228,6 +282,17 @@ const images = computed(() => {
   return remoteImage ? [remoteImage] : []
 })
 const hasMultipleImages = computed(() => images.value.length > 1)
+
+// Each card looks up a bone by id (src/bones/gallery-card-*.bones.json) and
+// shows it until the lead image lands. A card with no image has nothing to wait
+// for, so it never enters the loading state.
+const imageLoaded = ref(false)
+const skeletonName = computed(() => `gallery-card-${props.item.id || 'default'}`)
+const isCardLoading = computed(() => Boolean(images.value.length) && !imageLoaded.value)
+
+function handleImageLoad() {
+  imageLoaded.value = true
+}
 const slideTransitionName = computed(() => `gallery-slide-${slideDirection.value}`)
 const dotProgressStyle = computed(() => ({
   animationDuration: `${AUTO_ROTATE_INTERVAL}ms`,
@@ -347,6 +412,10 @@ function getPlatformLabel(value) {
 }
 
 function handleImageError() {
+  // Release the skeleton on failure too, otherwise a dead image URL leaves the
+  // card shimmering forever instead of falling back to the sample artwork.
+  imageLoaded.value = true
+
   if (failedIndices.value.has(currentIndex.value)) return
 
   const nextFailedIndices = new Set(failedIndices.value)
@@ -458,5 +527,26 @@ function handleZoomKeydown(event) {
 .gallery-zoom-fade-enter-from,
 .gallery-zoom-fade-leave-to {
   opacity: 0;
+}
+
+/* boneyard-js wraps both the fallback and the real content in its own element.
+   Without these the wrapper collapses to content height and the card stops
+   filling its grid row, so cards in a row no longer match height. */
+.gallery-card-shell :deep([data-boneyard-content="true"]) {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.gallery-card-shell :deep(.gallery-card-frame) {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.gallery-card-shell :deep(.gallery-card-frame > article) {
+  flex: 1 1 auto;
 }
 </style>

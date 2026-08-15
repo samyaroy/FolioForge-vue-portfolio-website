@@ -3,18 +3,18 @@
     <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
       <!-- Page Header -->
       <div class="text-center mb-12">
-        <h1 class="text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
+        <h1 class="text-3xl sm:text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
           Co-curricular Activities
         </h1>
-        <p v-if="showPageDescription" class="content-justify text-lg text-gray-600 max-w-6xl mx-auto">
+        <p v-if="showPageDescription" class="content-justify text-base sm:text-lg text-gray-600 max-w-6xl mx-auto">
           {{ pageDescription }}
         </p>
       </div>
 
       <div class="max-w-[1280px] mx-auto space-y-8">
         <!-- Leadership Component -->
-        <div class="bg-white rounded-lg shadow-sm p-8 text-sm">
+        <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8 text-sm">
           <h2 class="text-2xl font-bold text-[#0e141b] mb-6 flex items-center">
             <svg class="w-6 h-6 mr-3 text-[#1980e6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -31,7 +31,7 @@
           </template>
 
         </div>
-        <div v-if="showVolunteeringSection" class="bg-white rounded-lg shadow-sm p-8">
+        <div v-if="showVolunteeringSection" class="bg-white rounded-lg shadow-sm p-4 sm:p-8">
           <h2 class="text-2xl font-bold text-[#0e141b] mb-6 flex items-center">
             <svg class="w-6 h-6 mr-3 text-[#1980e6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div v-if="!showLeadershipSection && !showVolunteeringSection"
-          class="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500 italic">
+          class="bg-white rounded-lg shadow-sm p-4 sm:p-8 text-center text-gray-500 italic">
           No co-curricular sections are enabled.
         </div>
       </div>

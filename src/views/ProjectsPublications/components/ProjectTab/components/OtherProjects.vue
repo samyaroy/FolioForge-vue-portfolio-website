@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-lg shadow-sm p-8">
+    <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8">
         <button type="button"
             class="w-full flex items-center justify-between text-left focus:outline-none mb-6"
             :aria-expanded="isOpen"
@@ -12,7 +12,7 @@
 
         <div v-if="projects && projects.length" class="space-y-6 text-sm">
             <div v-for="(project, index) in projects" :key="project.title || index" :id="`minor-${index}`"
-                class="border-l-4 border-[#1980e6] pl-6 pt-4 pb-2 pr-4 rounded-md bg-slate-50 transition-colors"
+                class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 pt-4 pb-2 pr-4 rounded-md bg-slate-50 transition-colors"
                 :class="isOpen ? '' : 'cursor-pointer hover:bg-slate-100'"
                 :role="isOpen ? undefined : 'button'"
                 :tabindex="isOpen ? undefined : 0"

@@ -1,8 +1,9 @@
 <template>
     <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
         <div class="flex gap-4">
-            <!-- Left: avatar/logo -->
-            <div class="w-[15%] flex items-start">
+            <!-- Left: avatar/logo, sized absolutely so it stays legible on a
+                 phone instead of shrinking to 15% of a narrow card. -->
+            <div class="w-14 sm:w-[15%] shrink-0 flex items-start">
                 <div
                     class="w-full h-full aspect-square rounded-lg overflow-hidden bg-gray-100 border border-slate-200 flex items-center justify-center">
                     <img :src="avatarSrc" :alt="`${collaborator?.name || 'Collaborator'} avatar`"
@@ -12,7 +13,7 @@
 
             <!-- Right: content (80%) -->
             <div class="flex-1 space-y-2">
-                <div class="flex items-start justify-between gap-4">
+                <div class="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
                     <div>
                         <h3 class="text-lg font-semibold text-slate-900">
                             <SmartLink :text="collaborator.name || 'Collaborator'" :type="'Person'" /><AnimatedIcon name="external-link" :size="14" class="text-[#4e7397] ml-2 inline-block align-middle" />
@@ -33,10 +34,10 @@
                         {{ collaborator.period }}
                     </span>
                 </div>
-                <div v-if="collaborator.projects && collaborator.projects.length" class="flex items-center gap-2">
-                    <div class="items-left text-md">Projects:</div>
-                    <div class="flex flex-col text-md">
-                    <p v-for="project in collaborator.projects" :key="project" class="text-gray-700 pl-7">
+                <div v-if="collaborator.projects && collaborator.projects.length" class="flex items-start gap-2">
+                    <div class="items-left text-md shrink-0">Projects:</div>
+                    <div class="flex min-w-0 flex-col text-md">
+                    <p v-for="project in collaborator.projects" :key="project" class="text-gray-700 pl-0 sm:pl-7">
                         {{ project }}
                     </p>
                 </div>

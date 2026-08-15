@@ -4,7 +4,7 @@
     :href="material.url || undefined"
     :target="material.url ? '_blank' : undefined"
     :rel="material.url ? 'noopener noreferrer' : undefined"
-    class="group flex items-stretch gap-4 border-b border-slate-200 pb-4 no-underline last:border-b-0"
+    class="group flex flex-wrap items-stretch gap-x-4 gap-y-2 border-b border-slate-200 pb-4 no-underline last:border-b-0"
   >
     <div class="flex w-12 shrink-0 justify-center pt-1">
       <div class="flex size-10 items-center justify-center overflow-hidden rounded-full bg-[#1980e6]/10 text-[#1980e6]">
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="min-w-0 flex-1">
+    <div class="min-w-0 flex-1 basis-40">
       <div class="flex items-start justify-between gap-3">
         <h3
           class="font-semibold text-[#0e141b]"
@@ -43,7 +43,9 @@
       </p>
     </div>
 
-    <div v-if="material.url" class="flex shrink-0 items-center">
+    <!-- Wraps under the text on a narrow pane instead of stealing ~60px from
+         the title, which is the wider column of the two. -->
+    <div v-if="material.url" class="flex shrink-0 items-center ml-16 sm:ml-0">
       <span class="inline-flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#1980e6]">
         Visit
         <v-icon size="16" class="arrow-jiggle">

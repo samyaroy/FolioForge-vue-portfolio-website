@@ -10,7 +10,7 @@
       <div
         v-for="item in items"
         :key="item.id"
-        class="h-full"
+        class="flex h-full"
       >
         <GalleryCard :item="item" />
       </div>
