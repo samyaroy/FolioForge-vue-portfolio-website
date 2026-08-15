@@ -46,7 +46,7 @@
     <div v-if="material.url" class="flex shrink-0 items-center">
       <span class="inline-flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#1980e6]">
         Visit
-        <v-icon size="16" class="transition-transform group-hover:translate-x-1">
+        <v-icon size="16" class="arrow-jiggle">
           mdi-arrow-right
         </v-icon>
       </span>

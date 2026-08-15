@@ -7,7 +7,7 @@
         @click.prevent="isOtherHostedEventsModalOpen = true"
       >
         <span>Other Hosted Events</span>
-        <v-icon size="14">mdi-arrow-right</v-icon>
+        <v-icon size="14" class="arrow-jiggle">mdi-arrow-right</v-icon>
       </a>
     </div>
 

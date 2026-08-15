@@ -21,7 +21,7 @@
         @click="$emit('show-achievements')"
       >
         See all achievements
-        <v-icon size="16">mdi-arrow-right</v-icon>
+        <v-icon size="16" class="arrow-jiggle">mdi-arrow-right</v-icon>
       </button>
     </div>
   </div>

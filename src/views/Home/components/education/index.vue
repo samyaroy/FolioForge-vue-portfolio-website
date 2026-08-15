@@ -32,7 +32,7 @@
           class="text-[#1980e6] hover:text-[#0e141b] text-sm font-medium transition-colors duration-200 flex items-center gap-1"
         >
           See other certifications
-          <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
+          <v-icon size="16" class="arrow-jiggle text-[#1980e6]">mdi-arrow-right</v-icon>
         </router-link>
       </div>
     </div>

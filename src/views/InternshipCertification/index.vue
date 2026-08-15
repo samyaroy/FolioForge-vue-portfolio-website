@@ -66,7 +66,7 @@
             <div v-if="moreCertifications.length" class="flex justify-end">
               <button type="button" class="more-certificates-button" @click="showMoreCertificates = true">
                 View more certificates
-                <v-icon size="16">mdi-arrow-right</v-icon>
+                <v-icon size="16" class="arrow-jiggle">mdi-arrow-right</v-icon>
               </button>
             </div>
           </div>

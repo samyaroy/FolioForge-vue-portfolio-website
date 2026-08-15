@@ -138,7 +138,9 @@
                     @click.prevent="showAllProjects = !showAllProjects"
                 >
                     {{ showAllProjects ? 'Hide all projects' : 'Load all projects' }}
-                    <v-icon size="16" class="text-[#1980e6]">
+                    <!-- Only the expand direction jiggles; the collapse state
+                         points up, which a sideways nudge would read oddly on. -->
+                    <v-icon size="16" class="text-[#1980e6]" :class="{ 'arrow-jiggle': !showAllProjects }">
                         {{ showAllProjects ? 'mdi-arrow-up' : 'mdi-arrow-right' }}
                     </v-icon>
                 </a>
