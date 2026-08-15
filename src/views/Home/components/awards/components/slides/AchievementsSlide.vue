@@ -19,7 +19,7 @@
         class="awards-text-button"
         @click="$emit('show-awards')"
       >
-        <v-icon size="16">mdi-arrow-left</v-icon>
+        <v-icon size="16" class="arrow-jiggle-back">mdi-arrow-left</v-icon>
         See awards and prizes
       </button>
     </div>

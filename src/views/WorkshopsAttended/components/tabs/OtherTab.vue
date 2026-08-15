@@ -23,7 +23,7 @@
           @click.prevent="loadMoreOthers"
         >
           Load more
-          <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
+          <v-icon size="16" class="arrow-jiggle text-[#1980e6]">mdi-arrow-right</v-icon>
         </a>
       </div>
     </div>

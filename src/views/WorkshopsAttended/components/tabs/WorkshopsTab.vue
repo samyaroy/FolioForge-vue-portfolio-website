@@ -7,7 +7,7 @@
         @click.prevent="isOtherLearningModalOpen = true"
       >
         <span>Other Learning Engagements</span>
-        <v-icon size="14">mdi-arrow-right</v-icon>
+        <v-icon size="14" class="arrow-jiggle">mdi-arrow-right</v-icon>
       </a>
     </div>
 
@@ -38,7 +38,7 @@
           @click.prevent="loadMoreWorkshops"
         >
           Load more
-          <v-icon size="16" class="text-[#1980e6]">mdi-arrow-right</v-icon>
+          <v-icon size="16" class="arrow-jiggle text-[#1980e6]">mdi-arrow-right</v-icon>
         </a>
       </div>
     </div>

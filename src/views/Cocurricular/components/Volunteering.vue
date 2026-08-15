@@ -2,7 +2,7 @@
   <div class="border-l-4 border-green-500 pl-6 py-4 pr-4 rounded-md bg-slate-50 text-sm">
 
     <!-- Role + Credential -->
-    <div class="flex items-center justify-between mb-2">
+    <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-2">
       <h3 class="text-lg font-semibold text-[#0e141b]">
         {{ volunteering.role }}
 
@@ -10,6 +10,12 @@
           <DocumentViewer :src="volunteering.cred_link" />
         </span>
       </h3>
+
+      <!-- Entry-level time period sits beside the role; per-field periods
+           are rendered next to their own sub_field instead. -->
+      <span v-if="volunteering.time_period" class="text-sm text-gray-500 sm:ml-auto">
+        {{ volunteering.time_period }}
+      </span>
     </div>
 
     <!-- Organization -->
@@ -18,8 +24,8 @@
       <SmartLink :type="'Institution'" :text="volunteering.organization" />
     </p>
 
-    <!-- Fields & Time Periods -->
-    <div class="flex mb-1">
+    <!-- Fields & Time Periods (only when the entry actually has fields) -->
+    <div v-if="fields.length" class="flex mb-1">
 
       <!-- Icon column -->
       <div class="w-5 flex justify-center pt-1 mr-1">
@@ -30,14 +36,14 @@
 
       <!-- Fields column -->
       <div class="flex-1">
-        <div v-for="(f, index) in volunteering.field" :key="index" class="flex items-start justify-between mb-0.5">
+        <div v-for="(f, index) in fields" :key="index" class="flex items-start justify-between gap-4 mb-0.5">
           <p class="text-gray-600">
             {{ f.sub_field }}
           </p>
 
-          <div class="text-sm text-gray-500 flex flex-col items-end">
-            <span v-for="(period, i) in f.time_period.split(';')" :key="i">
-              {{ period.trim() }}
+          <div v-if="f.periods.length" class="text-sm text-gray-500 flex flex-col items-end shrink-0">
+            <span v-for="(period, i) in f.periods" :key="i">
+              {{ period }}
             </span>
           </div>
         </div>
@@ -62,13 +68,25 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import SmartLink from '@/components/SmartLink.vue'
 
-defineProps({
+const props = defineProps({
   volunteering: {
     type: Object,
     required: true
   }
 })
+
+// `field` is optional, and a sub_field may list several periods separated by ';'.
+const fields = computed(() =>
+  (props.volunteering.field || []).map(f => ({
+    sub_field: f.sub_field || '',
+    periods: (f.time_period || '')
+      .split(';')
+      .map(period => period.trim())
+      .filter(Boolean)
+  }))
+)
 </script>

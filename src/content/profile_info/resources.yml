@@ -100,6 +100,18 @@ subjects:
         instructor: "Prof. Herbert Lee"
         distributor: "University of California, Santa Cruz ; Coursera"
         link: https://www.coursera.org/learn/bayesian-statistics
+      
+      - title: "Multiple Hypotheses Testing [Ep. 32]"
+        meta: "Lecture"
+        instructor: "Prof. Gourangadeb Chattopadhyay"
+        distributor: " NPTEL Swayam [ARPIT-2018] X University of Calcutta"
+        link: https://youtu.be/EDianzxuYkA?si=oMgtqj9lcW-bISHP
+
+      - title: "Robust Statistical Data Analysis [Ep. 16]"
+        meta: "Lecture"
+        instructor: "Prof Ayanendranath Basu, ISRU, ISI Kolkata"
+        distributor: " NPTEL Swayam [ARPIT-2018] X University of Calcutta"
+        link: https://youtu.be/EDianzxuYkA?si=oMgtqj9lcW-bISHP
 
   - title: "Machine Learning"
     materials:
@@ -118,7 +130,7 @@ subjects:
     materials:
       - title: "Frontiers of Graph Algorithms"
         meta: "Workshop Playlist"
-        distributor: "Walmart Center for Tech Excellence X almart Center for Tech Excellence"
+        distributor: "Indian Institute of Science (IISc), Bangalore X Walmart Center for Tech Excellence"
         link: "https://algo.csa.iisc.ac.in/graphworkshop/"
 
 # Right column: groups of links. Each `group` becomes a heading in the pane.
@@ -168,7 +180,7 @@ external:
 # anything else worth a detour. Same fields as `external` links above
 # (label, url/ref, description, speciality/specility, incharge).
 explore:
-  - group: "Webinars, Workshops and Interviews Worth Watching"
+  - group: "Webinars, Lectures, Workshops and Interviews Worth Watching"
     links:
       - label: "Bayesian Analysis discussion webinar"
         url: https://www.youtube.com/live/8A0bgU6ALf4?si=h5BoWyLFvIJ2rZ8O
