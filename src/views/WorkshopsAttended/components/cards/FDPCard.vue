@@ -1,9 +1,10 @@
 <template>
   <div class="border-l-4 border-[#a82eff] pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white text-sm">
-    <!-- HEADER -->
-    <div class="flex pr-4">
+    <!-- HEADER. The 85/15 split leaves the meta column ~40px on a phone, so the
+         two stack there and only sit side by side from `sm` up. -->
+    <div class="flex flex-col sm:flex-row pr-4">
       <!-- LEFT (80%) -->
-      <div class="w-[85%]">
+      <div class="w-full sm:w-[85%] min-w-0">
         <div>
           <h3 class="text-md font-semibold text-[#0e141b]">
             {{ fdp.title }}
@@ -26,12 +27,12 @@
               mdi-office-building
             </v-icon>
 
-            <div class="flex-1 flex items-start">
-              <div class="font-medium mb-0.5">
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row items-start">
+              <div class="font-medium mb-0.5 shrink-0">
                 <span>Institution(s):</span>
               </div>
 
-              <div class="ml-2">
+              <div class="sm:ml-2 min-w-0">
                 <div v-for="(inst, index) in fdp.institution" :key="index">
                   <span v-if="inst.department">
                     {{ inst.department }},
@@ -57,7 +58,7 @@
       </div>
 
       <!-- RIGHT (20%) -->
-      <div class="w-[15%] text-sm text-gray-500 flex flex-col items-start">
+      <div class="w-full sm:w-[15%] mt-2 sm:mt-0 shrink-0 text-sm text-gray-500 flex flex-col items-start">
         <!-- Date -->
         <span>{{ fdp.date }}</span>
 

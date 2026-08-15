@@ -1,9 +1,10 @@
 <template>
   <div :class="cardClass">
-    <!-- HEADER -->
-    <div class="flex pr-4">
+    <!-- HEADER. The 85/15 split leaves the meta column ~40px on a phone, so the
+         two stack there and only sit side by side from `sm` up. -->
+    <div class="flex flex-col sm:flex-row pr-4">
       <!-- LEFT (80%) -->
-      <div class="w-[85%]">
+      <div class="w-full sm:w-[85%] min-w-0">
         <div>
           <h3 class="text-md font-semibold text-[#0e141b]">
             {{ event.title }}
@@ -19,12 +20,12 @@
               mdi-office-building
             </v-icon>
 
-            <div class="flex-1 flex items-start">
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row items-start">
               <div class="shrink-0 whitespace-nowrap font-medium mb-0.5">
                 <span>{{ hasAffiliatedInstitution ? 'Organization:' : 'Institution:' }}</span>
               </div>
 
-              <div class="ml-2 min-w-0">
+              <div class="sm:ml-2 min-w-0">
                 <div v-for="(inst, index) in event.institution" :key="index">
                   <div v-if="inst.affiliation">
                     <SmartLink :text="inst.affiliation" type="Organization" />
@@ -52,12 +53,12 @@
               mdi-account-voice
             </v-icon>
 
-            <div class="flex-1 flex items-start">
+            <div class="min-w-0 flex-1 flex flex-col sm:flex-row items-start">
               <div class="shrink-0 whitespace-nowrap font-medium mb-0.5">
                 <span>Guest Speaker<span v-if="event.guest_speakers.length > 1">s</span>:</span>
               </div>
 
-              <div class="ml-2 min-w-0">
+              <div class="sm:ml-2 min-w-0">
                 <div v-for="(speaker, index) in event.guest_speakers" :key="index">
                   <SmartLink :text="speaker.name" type="Person" />
 
@@ -122,7 +123,7 @@ const props = defineProps({
 })
 
 const metaColumnClass = [
-  'w-[15%] text-gray-500 flex flex-col items-start',
+  'w-full sm:w-[15%] mt-2 sm:mt-0 shrink-0 text-gray-500 flex flex-col items-start',
   props.compactMetaText ? 'text-xs' : 'text-sm'
 ]
 

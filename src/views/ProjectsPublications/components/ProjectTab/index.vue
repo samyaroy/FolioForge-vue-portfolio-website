@@ -8,13 +8,17 @@
       v-if="showTechnicalProjectsSection"
       :projects="technicalProjects"
     />
-    <OtherProjects
-      v-if="showOtherProjectsSection"
+    <MinorProjects
+      v-if="showMinorProjectsSection"
       :projects="minorProjects"
     />
+    <OtherProjects
+      v-if="showOtherProjectsSection"
+      :projects="otherProjects"
+    />
     <div
-      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection && !showOtherProjectsSection"
-      class="bg-white rounded-lg shadow-sm p-8 text-center text-gray-500 italic"
+      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection && !showOtherProjectsSection && !showMinorProjectsSection"
+      class="bg-white rounded-lg shadow-sm p-4 sm:p-8 text-center text-gray-500 italic"
     >
       No project sections are enabled.
     </div>
@@ -26,6 +30,7 @@ import { computed } from 'vue'
 import TechnicalProjects from './components/TechnicalProjects.vue'
 import ResearchProjects from './components/ResearchProjects.vue'
 import OtherProjects from './components/OtherProjects.vue'
+import MinorProjects from './components/MinorProjects.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 defineOptions({
@@ -34,24 +39,40 @@ defineOptions({
 
 const props = defineProps({
   projects: {
-    type: Array,
+    type: [Array, Object],
     default: () => []
   }
 })
 
-// Split into categories dynamically
-const technicalProjects = computed(() =>
-  props.projects.filter(p => p.type === 'Technical Project')
-)
-const researchProjects = computed(() =>
-  props.projects.filter(p => p.type === 'Research Project')
-)
-const minorProjects = computed(() =>
-  props.projects.filter(p => p.type === 'Minor Project')
-)
+const toArray = (value) => (Array.isArray(value) ? value : [])
+const sectionArray = (...values) => values.find(Array.isArray) || []
+
+const projectSections = computed(() => {
+  if (Array.isArray(props.projects)) {
+    return {
+      research: props.projects.filter(p => p.type === 'Research Project'),
+      technical: props.projects.filter(p => p.type === 'Technical Project'),
+      other: props.projects.filter(p => p.type === 'Other Project'),
+      minor: props.projects.filter(p => p.type === 'Minor Project')
+    }
+  }
+
+  return {
+    research: sectionArray(props.projects?.research_projects, props.projects?.researchProjects),
+    technical: sectionArray(props.projects?.technical_projects, props.projects?.technicalProjects),
+    other: sectionArray(props.projects?.other_projects, props.projects?.otherProjects),
+    minor: sectionArray(props.projects?.minor_projects, props.projects?.minorProjects)
+  }
+})
+
+const technicalProjects = computed(() => toArray(projectSections.value.technical))
+const researchProjects = computed(() => toArray(projectSections.value.research))
+const otherProjects = computed(() => toArray(projectSections.value.other))
+const minorProjects = computed(() => toArray(projectSections.value.minor))
 
 const showResearchProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showResearchProjects')
 const showTechnicalProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showTechnicalProjects')
 const showOtherProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showOtherProjects')
+const showMinorProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showMinorProjects')
 
 </script>
