@@ -136,6 +136,95 @@ button:hover .arrow-jiggle-back,
   }
 }
 
+/* "See more" affordances that end in a right arrow -- usually bottom-right of a
+   card or section (see other certifications, load more, view more certificates,
+   Visit). The arrow sits still for most of the cycle and then double-nudges, so
+   it reads as a jiggle that draws the eye without becoming the constant motion
+   the rest of the site avoids.
+
+   Pair the class with the arrow itself, not the label. Hover hands over to a
+   steady offset: a hover transform and the animation would otherwise both drive
+   `transform` on one element, and the animation always wins. */
+@keyframes arrow-jiggle {
+  0%,
+  55%,
+  100% {
+    transform: translateX(0);
+  }
+
+  65% {
+    transform: translateX(3px);
+  }
+
+  75% {
+    transform: translateX(0);
+  }
+
+  85% {
+    transform: translateX(3px);
+  }
+}
+
+/* Mirrored for the paired "back" control, which points the other way. */
+@keyframes arrow-jiggle-back {
+  0%,
+  55%,
+  100% {
+    transform: translateX(0);
+  }
+
+  65% {
+    transform: translateX(-3px);
+  }
+
+  75% {
+    transform: translateX(0);
+  }
+
+  85% {
+    transform: translateX(-3px);
+  }
+}
+
+.arrow-jiggle {
+  animation: arrow-jiggle 2.4s ease-in-out infinite;
+}
+
+.arrow-jiggle-back {
+  animation: arrow-jiggle-back 2.4s ease-in-out infinite;
+}
+
+a:hover .arrow-jiggle,
+button:hover .arrow-jiggle,
+.group:hover .arrow-jiggle {
+  animation: none;
+  transform: translateX(3px);
+  transition: transform 200ms ease;
+}
+
+a:hover .arrow-jiggle-back,
+button:hover .arrow-jiggle-back,
+.group:hover .arrow-jiggle-back {
+  animation: none;
+  transform: translateX(-3px);
+  transition: transform 200ms ease;
+}
+
+/* Motion here is decorative -- the arrow glyph already carries the meaning. */
+@media (prefers-reduced-motion: reduce) {
+  .arrow-jiggle,
+  .arrow-jiggle-back,
+  a:hover .arrow-jiggle,
+  button:hover .arrow-jiggle,
+  .group:hover .arrow-jiggle,
+  a:hover .arrow-jiggle-back,
+  button:hover .arrow-jiggle-back,
+  .group:hover .arrow-jiggle-back {
+    animation: none;
+    transform: none;
+  }
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
