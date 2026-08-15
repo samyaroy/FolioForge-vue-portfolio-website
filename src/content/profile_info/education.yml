@@ -17,12 +17,14 @@ education:
           credit: 6
           faculty:
             - name: Prof. Arindam Sengupta
+              link: https://www.caluniv.ac.in/academic/Statistics/Arindam-Sengupta.pdf
         - course_code: STS412
           course_name: Probability I (Theory + Tutorial)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Prof. Gaurangadeb Chattopadhyay
+              link: https://caluniv.irins.org/profile/121938
         - course_code: STS413
           course_name: Statistical Inference I (Theory + Practical)
           type: CC
