@@ -29,8 +29,9 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@shared/*": ["./shared/*"]
     }
   },
-  "include": ["src", "src/**/*.vue"]
+  "include": ["src", "src/**/*.vue", "shared"]
 }

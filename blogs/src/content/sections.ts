@@ -47,6 +47,7 @@ interface SectionsContent {
   }
   post: {
     backToBlogs: string
+    share: string
   }
 }
 

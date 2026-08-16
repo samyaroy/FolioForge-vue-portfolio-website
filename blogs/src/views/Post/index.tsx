@@ -5,6 +5,8 @@ import { getPost } from '../../lib/posts'
 import { formatDate } from '../../lib/format'
 import { usePageTitle } from '../../lib/usePageTitle'
 import { POST_COPY } from '../../content/sections'
+import { ShareMenu } from '../../components/ShareMenu'
+import { postShareUrl } from '../../lib/share'
 import { NotFoundPage } from '../NotFound'
 
 // Markdown styling: react-markdown emits bare elements, so every rule targets
@@ -62,6 +64,22 @@ export function PostPage() {
             {formatDate(post.date)}
           </time>
         )}
+        {/* The preview a shared link produces comes from the <head> stamped at
+            build time (vite.config.ts), not from anything rendered here. */}
+        <div className="mt-6 flex justify-center">
+          <ShareMenu
+            content={{
+              url: postShareUrl(post.slug),
+              title: post.title,
+              text: post.description,
+              hashtags: post.tags,
+            }}
+            triggerClass="inline-flex items-center gap-2 rounded-[6px] border border-border bg-surface px-3 py-1.5 text-xs leading-normal font-bold tracking-[0.16em] text-muted uppercase transition-colors hover:border-primary hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none"
+            triggerLabel={`Share: ${post.title}`}
+            triggerText={POST_COPY.share}
+            heading="Share this post"
+          />
+        </div>
       </header>
       <div className={PROSE_CLASS}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>

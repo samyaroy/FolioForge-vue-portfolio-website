@@ -197,7 +197,9 @@ export default defineConfig({
   base: '/',
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // Framework-free modules this app shares with the blog under blogs/.
+      '@shared': fileURLToPath(new URL('./shared', import.meta.url))
     }
   }
 })

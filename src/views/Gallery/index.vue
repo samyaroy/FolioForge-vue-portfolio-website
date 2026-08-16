@@ -20,15 +20,22 @@
         </div>
       </div>
 
-      <GalleryGrid :items="visibleItems" :can-load-more="canLoadMore" @load-more="loadMore" />
+      <GalleryGrid
+        :items="visibleItems"
+        :can-load-more="canLoadMore"
+        :highlighted-id="highlightedId"
+        @load-more="loadMore"
+      />
     </div>
   </section>
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import galleryContent from '@/content/profile_info/gallery.yml'
 import galleryTagMetadata from '@/metadata/galleryTags.yml'
+import { GALLERY_ITEM_PARAM, galleryAnchorId } from '@/utils/shareLinks'
 import GalleryFilter from './components/GalleryFilter.vue'
 import GalleryGrid from './components/GalleryGrid.vue'
 import GalleryHero from './components/GalleryHero.vue'
@@ -68,9 +75,15 @@ const tagAliases = new Map([
   ['internships', 'internship'],
   ['meetups', 'meetup'],
 ])
+const route = useRoute()
 const activeFilters = ref([])
 const initialVisibleCount = 6
 const visibleCount = ref(initialVisibleCount)
+// Card a shared link pointed at. The ring is a temporary "here it is" marker,
+// not a selection, so it fades on its own.
+const highlightedId = ref('')
+const HIGHLIGHT_DURATION_MS = 4000
+let highlightTimer = null
 
 const normalizedItems = computed(() => normalizeGalleryItems(rawItems))
 
@@ -112,7 +125,16 @@ const totalItemCount = computed(() => sortedItems.value.length)
 
 watch(activeFilters, () => {
   visibleCount.value = initialVisibleCount
+  clearHighlight()
 }, { deep: true })
+
+// Covers a second shared link opened without a full page load, which leaves
+// this component mounted and only changes the query.
+watch(() => route.query[GALLERY_ITEM_PARAM], focusSharedItem)
+
+onMounted(focusSharedItem)
+
+onBeforeUnmount(clearHighlight)
 
 watch(filterOptions, (nextOptions) => {
   const allowedFilterIds = new Set(nextOptions.map(option => option.id))
@@ -125,6 +147,50 @@ watch(filterOptions, (nextOptions) => {
 
 function loadMore() {
   visibleCount.value += 6
+}
+
+/**
+ * Opens the card named by `?item=`, the link every card's share menu hands out.
+ * The card lives in the grid rather than on a page of its own, so "opening" it
+ * means making sure it is past the filter and past paging, then scrolling to it.
+ */
+async function focusSharedItem() {
+  const requestedId = route.query[GALLERY_ITEM_PARAM]
+  const itemId = Array.isArray(requestedId) ? requestedId[0] : requestedId
+  if (!itemId) return
+
+  const itemIndex = sortedItems.value.findIndex(item => item.id === itemId)
+  if (itemIndex === -1) return
+
+  // A shared link outranks whatever filter happens to be on: otherwise the card
+  // it names is simply not in the DOM to scroll to.
+  if (activeFilters.value.length) {
+    activeFilters.value = []
+    // The filter watcher resets paging; let it run before paging is widened.
+    await nextTick()
+  }
+
+  visibleCount.value = Math.max(visibleCount.value, itemIndex + 1)
+
+  await nextTick()
+
+  const cardElement = document.getElementById(galleryAnchorId(itemId))
+  if (!cardElement) return
+
+  cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+  clearHighlight()
+  highlightedId.value = itemId
+  highlightTimer = setTimeout(clearHighlight, HIGHLIGHT_DURATION_MS)
+}
+
+function clearHighlight() {
+  if (highlightTimer) {
+    clearTimeout(highlightTimer)
+    highlightTimer = null
+  }
+
+  highlightedId.value = ''
 }
 
 function normalizeGalleryItems(items) {

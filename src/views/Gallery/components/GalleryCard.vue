@@ -149,9 +149,11 @@
       <div class="min-h-[8.75rem] text-left sm:text-justify text-[0.90rem] leading-7 text-slate-500">
         <CaptionContent v-if="hasCaption" :text="item.caption" />
       </div>
-      <!-- The link is a fixed 40px target, so the tag list takes the remaining
-           space rather than a 90/10 split that overflows on a narrow card. -->
-      <div v-if="visibleTags.length || item.externalUrl" class="mt-auto flex w-full items-end gap-4">
+      <!-- Each action is a fixed 40px target, so the tag list takes the
+           remaining space rather than a 90/10 split that overflows on a narrow
+           card. The row always renders now: every card is shareable, even one
+           with no tags and no external link. -->
+      <div class="mt-auto flex w-full items-end gap-4">
         <div class="min-w-0 flex-1">
           <ul v-if="visibleTags.length" class="flex flex-wrap gap-2" aria-label="Gallery item tags">
             <li v-for="tag in visibleTags" :key="tag"
@@ -161,9 +163,16 @@
           </ul>
         </div>
 
-        <div class="flex shrink-0 justify-end">
+        <div class="flex shrink-0 items-center justify-end">
+          <ShareMenu
+            :content="shareContent"
+            :trigger-class="ACTION_BUTTON_CLASS"
+            :trigger-label="`Share: ${item.title || 'gallery item'}`"
+            heading="Share this moment"
+            :icon-size="18"
+          />
           <a v-if="item.externalUrl" :href="item.externalUrl" target="_blank" rel="noopener noreferrer"
-            class="inline-flex h-10 w-10 shrink-0 items-center justify-center text-blue-500 no-underline hover:text-blue-800"
+            :class="`${ACTION_BUTTON_CLASS} no-underline`"
             aria-label="Open milestone">
             <AnimatedIcon name="external-link" :size="18" />
           </a>
@@ -239,7 +248,10 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import Skeleton from 'boneyard-js/vue'
 import CaptionContent from '@/components/CaptionContent.vue'
+import ShareMenu from '@/components/ShareMenu.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import { captionPlainText } from '@/utils/captionText'
+import { galleryItemShareUrl } from '@/utils/shareLinks'
 import galleryFallbackSample from '../assets/gallery-fallback-sample.svg'
 
 const props = defineProps({
@@ -248,6 +260,10 @@ const props = defineProps({
     required: true,
   },
 })
+
+// The two card actions in the footer -- share, and the external link -- so the
+// pair keeps one hit area and one colour treatment.
+const ACTION_BUTTON_CLASS = 'inline-flex h-10 w-10 shrink-0 items-center justify-center bg-transparent p-0 text-blue-500 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
 
 const formatter = new Intl.DateTimeFormat('en', {
   month: 'short',
@@ -305,6 +321,24 @@ const currentImage = computed(() => {
     ? galleryFallbackSample
     : source
 })
+// The image on screen, but only when it is a real one — the fallback artwork is
+// a local placeholder, and there is nothing worth handing Instagram in it.
+const shareImageUrl = computed(() => {
+  const source = images.value[currentIndex.value]
+
+  return source && !failedIndices.value.has(currentIndex.value) ? source : ''
+})
+
+// Follows the visible image, so sharing a multi-image card offers whichever
+// photo the visitor is actually looking at.
+const shareContent = computed(() => ({
+  url: galleryItemShareUrl(props.item.id),
+  title: props.item.title || props.item.event || 'Gallery moment',
+  text: captionPlainText(props.item.caption),
+  hashtags: visibleTags.value,
+  imageUrl: shareImageUrl.value || undefined,
+}))
+
 const platformKey = computed(() => getPlatformKey(props.item.type))
 const platformLabel = computed(() => getPlatformLabel(platformKey.value))
 

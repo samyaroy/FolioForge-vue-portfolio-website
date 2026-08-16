@@ -2,6 +2,8 @@ import { createPortal } from 'react-dom'
 import { useEffect, useState } from 'react'
 import galleryFallbackSample from '../../../../../src/views/Gallery/assets/gallery-fallback-sample.svg'
 import type { GalleryItem } from '../../../content/gallery/data'
+import { ShareMenu } from '../../../components/ShareMenu'
+import { galleryItemShareUrl } from '../../../lib/share'
 import {
   formatDate,
   getPlatformBadgeClass,
@@ -31,6 +33,19 @@ export function GalleryCard({ item }: GalleryCardProps) {
   const zoomTitleId = getZoomTitleId(item)
   const shouldShowPlatformBadge =
     platformKey === 'linkedin' || platformKey === 'instagram'
+  // The image on screen, but only when it is a real one — the fallback artwork
+  // is a local placeholder, and there is nothing worth handing Instagram in it.
+  const shareImageUrl =
+    images[currentIndex] && !failedIndices.has(currentIndex) ? images[currentIndex] : ''
+  // These entries carry no title or caption of their own, so the share text is
+  // assembled from the fields they do have.
+  const shareContent = {
+    url: galleryItemShareUrl(item.id),
+    title: item.event || item.alt || 'Gallery moment',
+    text: [item.location, formattedDate].filter(Boolean).join(' · '),
+    hashtags: item.tags,
+    imageUrl: shareImageUrl || undefined,
+  }
 
   useEffect(() => {
     setCurrentIndex(0)
@@ -188,33 +203,42 @@ export function GalleryCard({ item }: GalleryCardProps) {
               )}
             </div>
 
-            {shouldShowPlatformBadge && item.externalUrl ? (
-              <a
-                href={item.externalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-white shadow-[0_10px_24px_-16px_rgba(14,20,27,0.75)] transition-transform hover:scale-105 ${getPlatformBadgeClass(
-                  platformKey,
-                )}`}
-                aria-label={`Open ${platformKey} post`}
-              >
-                <span
-                  className={`mdi ${getPlatformIcon(platformKey)} text-lg leading-none`}
-                  aria-hidden="true"
-                />
-              </a>
-            ) : shouldShowPlatformBadge ? (
-              <div
-                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-white shadow-[0_10px_24px_-16px_rgba(14,20,27,0.75)] ${getPlatformBadgeClass(
-                  platformKey,
-                )}`}
-              >
-                <span
-                  className={`mdi ${getPlatformIcon(platformKey)} text-lg leading-none`}
-                  aria-hidden="true"
-                />
-              </div>
-            ) : null}
+            <div className="flex shrink-0 items-center gap-1">
+              <ShareMenu
+                content={shareContent}
+                triggerClass="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] bg-transparent p-0 text-slate-500 transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none"
+                triggerLabel={`Share: ${item.event || item.id || 'gallery item'}`}
+                triggerIconClass="text-lg"
+                heading="Share this moment"
+              />
+              {shouldShowPlatformBadge && item.externalUrl ? (
+                <a
+                  href={item.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-white shadow-[0_10px_24px_-16px_rgba(14,20,27,0.75)] transition-transform hover:scale-105 ${getPlatformBadgeClass(
+                    platformKey,
+                  )}`}
+                  aria-label={`Open ${platformKey} post`}
+                >
+                  <span
+                    className={`mdi ${getPlatformIcon(platformKey)} text-lg leading-none`}
+                    aria-hidden="true"
+                  />
+                </a>
+              ) : shouldShowPlatformBadge ? (
+                <div
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] text-white shadow-[0_10px_24px_-16px_rgba(14,20,27,0.75)] ${getPlatformBadgeClass(
+                    platformKey,
+                  )}`}
+                >
+                  <span
+                    className={`mdi ${getPlatformIcon(platformKey)} text-lg leading-none`}
+                    aria-hidden="true"
+                  />
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       </article>
