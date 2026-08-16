@@ -29,7 +29,7 @@ function resolvePosterImage(entry?: string) {
   const trimmedEntry = entry.trim()
   if (!trimmedEntry) return undefined
 
-  if (/^https?:\/\//i.test(trimmedEntry)) return trimmedEntry
+  if (/^(?:https?:\/\/|\/)/i.test(trimmedEntry)) return trimmedEntry
 
   return `https://media.samyabrata.codeium.xyz/${encodeURIComponent(trimmedEntry)}.jpeg`
 }

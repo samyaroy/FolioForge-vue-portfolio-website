@@ -7,7 +7,7 @@
 # Optional per-item fields:
 #   year:   release year, shown in the card/modal meta line
 #   date:   when you watched it, as "YYYY-MM-DD"
-#   image:  poster picture; a full URL, or a bare CDN key resolved to
+#   image:  poster picture; a public path, full URL, or bare CDN key resolved to
 #           https://media.samyabrata.codeium.xyz/<key>.jpeg (same as gallery).
 #           When absent, the clapperboard illustration renders instead.
 #   note:   longer personal take; use a block scalar (note: |) and blank
@@ -22,4 +22,5 @@ items:
     genre: German Expressionist horror
     year: 1920
     description: "A landmark of silent cinema, with distorted sets and stark shadows turning a mystery about a hypnotist and a sleepwalker into a fever dream."
+    image: /posters/the-cabinet-of-dr-caligari.jpg
     link: https://youtu.be/zV00ylxcwXw?si=PYNzSWAipulmEI-6

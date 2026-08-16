@@ -19,7 +19,9 @@ type MovieCardProps = {
 
 export function MovieCard({ movie, illustrationSide = 'left' }: MovieCardProps) {
   const [isReviewOpen, setIsReviewOpen] = useState(false)
+  const [posterFailed, setPosterFailed] = useState(false)
   const artRight = illustrationSide === 'right'
+  const posterImage = posterFailed ? undefined : movie.image
 
   return (
     <article
@@ -35,7 +37,17 @@ export function MovieCard({ movie, illustrationSide = 'left' }: MovieCardProps) 
         }`}
         aria-hidden="true"
       >
-        <PosterArt className="w-[clamp(3.2rem,42%,5rem)]" />
+        {posterImage ? (
+          <img
+            src={posterImage}
+            alt=""
+            className="h-full max-h-52 w-full object-contain p-4"
+            loading="lazy"
+            onError={() => setPosterFailed(true)}
+          />
+        ) : (
+          <PosterArt className="w-[clamp(3.2rem,42%,5rem)]" />
+        )}
       </div>
 
       <div className="flex min-w-0 flex-col px-[1.6rem] py-6">
