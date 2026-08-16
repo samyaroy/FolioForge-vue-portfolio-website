@@ -53,6 +53,11 @@ interface SectionsContent {
     nextLabel: string
     previousLabel: string
   }
+  privacy: {
+    title: string
+    lastUpdatedLabel: string
+    lastUpdated: string
+  }
 }
 
 const sections = raw as SectionsContent
@@ -64,3 +69,4 @@ export const HOBBIES_SECTION = sections.hobbies
 export const GALLERY_SECTION = sections.gallery
 export const TRAVEL_SECTION = sections.travel
 export const POST_COPY = sections.post
+export const PRIVACY_SECTION = sections.privacy

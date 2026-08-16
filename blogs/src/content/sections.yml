@@ -59,3 +59,8 @@ post:
   # the newer one at the bottom of the archive.
   nextLabel: Next up
   previousLabel: Previously
+
+privacy:
+  title: Privacy Policy
+  lastUpdatedLabel: Last updated
+  lastUpdated: August 16, 2026

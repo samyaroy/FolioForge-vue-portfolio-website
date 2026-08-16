@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { MAIN_SITE_URL } from '../../content/navigation'
 import { FOOTER_CONTENT, SITE_PROFILE } from '../../content/site'
 
@@ -81,12 +82,12 @@ export function Footer() {
                   ✶ {FOOTER_CONTENT.lastUpdatedLabel}: {FOOTER_CONTENT.lastUpdated}
                 </p>
                 <p className="mt-1">
-                  <a
+                  <Link
                     className={`text-sm ${META_LINK_CLASS}`}
-                    href={`${MAIN_SITE_URL}${FOOTER_CONTENT.privacyPath}`}
+                    to={FOOTER_CONTENT.privacyPath}
                   >
                     {FOOTER_CONTENT.privacyLabel}
-                  </a>
+                  </Link>
                 </p>
               </div>
               <div className="flex min-w-0 justify-end">

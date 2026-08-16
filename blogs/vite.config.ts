@@ -97,11 +97,15 @@ function loadTrips(): Trip[] {
 
 const sections = readYaml<Record<string, { title?: string }>>('sections.yml')
 const descriptions = readYaml<Record<string, string>>('descriptions.yml')
-const site = readYaml<{ profile?: { name?: string } }>('site.yml')
+const site = readYaml<{
+  profile?: { name?: string }
+  footer?: { privacyPath?: string }
+}>('site.yml')
 
 const SITE_NAME = site.profile?.name ?? 'Samyabrata Roy'
 const BASE_TITLE = `${SITE_NAME} · Blog`
 const BLOG_DESCRIPTION = descriptions.blogs ?? `Blog by ${SITE_NAME}`
+const PRIVACY_PATH = site.footer?.privacyPath ?? '/privacy-policy'
 
 const posts = loadPosts()
 const trips = isFeatureEnabled('showTravel') ? loadTrips() : []
@@ -157,6 +161,42 @@ const homePage: SeoPage = {
         url: `${SITE_URL}/posts/${post.slug}`,
         name: post.title,
       })),
+    },
+  ],
+}
+
+const privacyTitle = sections.privacy?.title ?? 'Privacy Policy'
+const privacyDescription =
+  descriptions.privacy ??
+  `How the ${SITE_NAME} blog handles visitor data and external services.`
+const privacyUrl = `${SITE_URL}${PRIVACY_PATH}`
+
+const privacyPage: SeoPage = {
+  path: PRIVACY_PATH,
+  title: pageTitle(privacyTitle),
+  socialTitle: privacyTitle,
+  description: privacyDescription,
+  image: OG_IMAGE_PATH,
+  imageSize: OG_IMAGE_SIZE,
+  imageAlt: BASE_TITLE,
+  lastmod: '2026-08-16',
+  jsonLd: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      url: privacyUrl,
+      name: privacyTitle,
+      description: privacyDescription,
+      isPartOf: { '@id': BLOG_ID },
+      inLanguage: 'en',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Writing', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: privacyTitle, item: privacyUrl },
+      ],
     },
   ],
 }
@@ -312,6 +352,7 @@ const tripPages: SeoPage[] = trips.map((trip) => {
 // two pages overwrite each other on disk (e.g. two trips sharing an id).
 const pages: SeoPage[] = [
   ...(isFeatureEnabled('showBlogHome') ? [homePage] : []),
+  privacyPage,
   ...sectionPages,
   ...postPages,
   ...tripPages,

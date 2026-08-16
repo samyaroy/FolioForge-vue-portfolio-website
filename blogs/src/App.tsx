@@ -8,6 +8,8 @@ import { ReadingsPage } from './views/Readings'
 import { MoviesPage } from './views/Movies'
 import { HobbiesPage } from './views/Hobbies'
 import { GalleryPage } from './views/Gallery'
+import { PrivacyPolicyPage } from './views/PrivacyPolicy'
+import { FOOTER_CONTENT } from './content/site'
 import { isFeatureEnabled } from './config/featureFlags'
 import { EMPTY_TEXT_CLASS } from './lib/ui'
 // Trip details render plain markup (no ECharts), so a direct import is fine.
@@ -69,6 +71,10 @@ export const router = createBrowserRouter([
         ? [{ path: '/', element: <BlogsPage /> }]
         : []),
       ...optionalRoutes,
+      {
+        path: FOOTER_CONTENT.privacyPath,
+        element: <PrivacyPolicyPage />,
+      },
       { path: '/posts/:slug', element: <PostPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],

@@ -201,7 +201,7 @@ export function openShare(url: string): void {
     return
   }
 
-  window.open(url, '_blank', 'noopener,noreferrer,width=640,height=680')
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 
 /** True when the text reached the clipboard. The execCommand path is the
