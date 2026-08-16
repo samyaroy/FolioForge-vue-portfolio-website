@@ -1,0 +1,60 @@
+# Source of truth for both social cards — the images LinkedIn, X, WhatsApp and
+# Slack show when a link to either site is shared.
+#
+# Rendered by scripts/build-og-image.mjs:
+#
+#   npm run og:build
+#
+# The generated .jpg files are committed, so a normal build and deploy never
+# runs this script; re-run it and commit the result whenever this file changes.
+#
+# What lives here is content and colour. Where things sit on the card is in the
+# script, under LAYOUT — the card has one composition and only its wording,
+# palette and portrait are meant to vary.
+#
+# Paths below are relative to the repo root, not to this file.
+
+# Every network lays a shared link out against these dimensions. Changing them
+# means also changing `imageSize` in vite.config.ts and blogs/vite.config.ts,
+# which declares them to crawlers; scripts/seo-build.ts explains why a mismatch
+# is worse than omitting the size entirely.
+size:
+  width: 1200
+  height: 630
+
+# JPEG quality, 1-100. 80 keeps both cards near 50 KB, well under the 5 MB
+# ceiling LinkedIn and X impose and small enough not to delay a first scrape.
+quality: 80
+
+# Shared palette, so the two cards stay recognisably the same family. The values
+# mirror the site's own tokens in tailwind.config.js.
+theme:
+  background: '#0e141b' # base_black
+  accent: '#1980e6' # primary
+  heading: '#ffffff'
+  muted: '#94a3b8' # slate-400
+  eyebrow: '#5b7fa6'
+
+# One entry per card. `output` is relative to the repo root and must match the
+# `OG_IMAGE_PATH` its app serves: src/router/routes.ts for the portfolio,
+# blogs/vite.config.ts for the blog.
+cards:
+  - output: public/og-image.jpg
+    # Small tracked capitals above the heading. Rendered as authored.
+    eyebrow: samyabrata.codeium.xyz
+    heading: Samyabrata Roy
+    # Wrapped exactly as written — one line each, no reflow, so the break lands
+    # where it reads best rather than where a measurement happens to fall.
+    lines:
+      - Statistics, data science, and software.
+      - IDEAS-TIH, ISI Kolkata · IIT Madras
+    # Full URL or a path relative to the repo root. Cropped to a circle.
+    avatar: https://media.samyabrata.codeium.xyz/SamyabrataRoy2.jpg
+
+  - output: blogs/public/og-image.jpg
+    eyebrow: blogs.samyabrata.codeium.xyz
+    heading: Writing
+    lines:
+      - Notes on what I'm building, learning,
+      - and thinking about.
+    avatar: https://media.samyabrata.codeium.xyz/SamyabrataRoy2.jpg

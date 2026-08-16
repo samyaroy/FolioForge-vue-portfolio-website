@@ -13,7 +13,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "analyze": "ANALYZE=1 vite build",
-    "boneyard:build": "node scripts/build-boneyard.mjs"
+    "boneyard:build": "node scripts/build-boneyard.mjs",
+    "og:build": "node scripts/build-og-image.mjs"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.1.0",

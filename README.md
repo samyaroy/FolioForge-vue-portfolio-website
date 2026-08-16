@@ -54,6 +54,7 @@ npm run lint
 | `npm run dev` | Start the Vite development server. |
 | `npm run lint` | Run ESLint across the project. |
 | `npm run sync:gallery-manifest` | Regenerate `src/content/galleryImageManifest.yml` from gallery content. |
+| `npm run og:build` | Re-render both social cards from `config/og-card.yml`. |
 | `npm run build` | Sync the gallery manifest and build static assets into `dist/`. |
 | `npm run preview` | Preview the built `dist/` output locally. |
 
@@ -61,8 +62,10 @@ npm run lint
 
 ```text
 .
+├── config/                         Build-tool configuration (social card content)
 ├── public/                         Static files copied directly into the build
 ├── scripts/                        Maintenance scripts
+├── shared/                         Framework-free modules used by both this app and blogs/
 ├── src/
 │   ├── components/                 Shared layout and reusable UI components
 │   ├── config/                     Feature flags and runtime display settings
@@ -94,6 +97,34 @@ npm run sync:gallery-manifest
 ```
 
 The production build runs this automatically through the `prebuild` script.
+
+### Social cards
+
+The image LinkedIn, X, WhatsApp and Slack show for a shared link is generated,
+not hand-drawn. Edit the wording, palette or portrait in
+[config/og-card.yml](config/og-card.yml), then run:
+
+```bash
+npm run og:build
+```
+
+That re-renders both cards — `public/og-image.jpg` for the portfolio and
+`blogs/public/og-image.jpg` for the blog — and both are committed, so a build
+and deploy never runs the generator. It needs `rsvg-convert` (`brew install
+librsvg`) and macOS `sips`.
+
+Keep the output at 1200×630. The size is declared to crawlers in
+`vite.config.ts` and `blogs/vite.config.ts`, and a declared size that disagrees
+with the file is worse than declaring none — see the note in
+[scripts/seo-build.ts](scripts/seo-build.ts).
+
+A blog post can override the card with a `cover:` in its frontmatter. The
+portfolio has no per-route override: every page, including a shared gallery
+card, uses the one image.
+
+Social networks cache scrapes aggressively. After changing a card, force a
+re-scrape through LinkedIn's Post Inspector, X's Card Validator, or Facebook's
+Sharing Debugger.
 
 ## Routes
 
