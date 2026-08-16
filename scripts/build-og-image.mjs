@@ -7,22 +7,23 @@
 // stay visually related. Editing YAML keeps them in step and leaves a diff that
 // says what changed, which a re-exported binary never does.
 //
-// Pipeline: config -> SVG -> PNG (rsvg-convert) -> JPEG (sips). Both tools ship
-// with a normal macOS + Homebrew setup and neither needs a browser. Text is
+// Pipeline: config -> SVG -> JPEG, all inside sharp. sharp ships prebuilt
+// libvips binaries with librsvg and the JPEG encoder bundled, so this runs on
+// any platform with no browser and nothing to install by hand. Text is still
 // drawn by librsvg through fontconfig, so the FONT_STACK below has to name
-// fonts the machine actually has; the output is committed, so it is rendered
-// once on a developer machine rather than on every build.
+// fonts the machine actually has.
 //
 // The generated .jpg files are committed and the build does not depend on this
-// script — re-run it and commit when the config changes.
+// script. scripts/hooks/pre-commit re-runs it and stages the cards whenever a
+// commit touches the config or this file, so running it by hand is rarely
+// needed.
 
 import { Buffer } from 'node:buffer'
-import { execFileSync } from 'node:child_process'
 import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+import sharp from 'sharp'
 import { parse as parseYaml } from 'yaml'
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url))
@@ -62,45 +63,26 @@ async function main() {
     throw new Error('config/og-card.yml declares no cards')
   }
 
-  requireCommand('rsvg-convert', 'brew install librsvg')
-  requireCommand('sips', 'sips ships with macOS; on Linux use ImageMagick instead')
-
-  const workDir = fs.mkdtempSync(path.join(os.tmpdir(), 'og-card-'))
-
-  try {
-    for (const card of cards) {
-      await renderCard(card, config, workDir)
-    }
-  } finally {
-    fs.rmSync(workDir, { recursive: true, force: true })
+  for (const card of cards) {
+    await renderCard(card, config)
   }
 }
 
-async function renderCard(card, config, workDir) {
+async function renderCard(card, config) {
   const { size, theme, quality = 80 } = config
   const outputPath = path.join(repoRoot, card.output)
-  const stem = path.basename(card.output, path.extname(card.output))
-  const svgPath = path.join(workDir, `${stem}.svg`)
-  const pngPath = path.join(workDir, `${stem}.png`)
 
   const avatar = card.avatar ? await loadImageDataUri(card.avatar) : ''
-  fs.writeFileSync(svgPath, buildSvg(card, { size, theme, avatar }))
-
-  execFileSync('rsvg-convert', [
-    '--width', String(size.width),
-    '--height', String(size.height),
-    '--format', 'png',
-    '--output', pngPath,
-    svgPath,
-  ])
+  const svg = Buffer.from(buildSvg(card, { size, theme, avatar }))
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true })
-  execFileSync('sips', [
-    '--setProperty', 'format', 'jpeg',
-    '--setProperty', 'formatOptions', String(quality),
-    pngPath,
-    '--out', outputPath,
-  ], { stdio: 'ignore' })
+
+  // The SVG carries its own width/height, so libvips renders it at exactly the
+  // card size; resize() is only a guard against a config that says otherwise.
+  await sharp(svg)
+    .resize(size.width, size.height)
+    .jpeg({ quality, chromaSubsampling: '4:4:4' })
+    .toFile(outputPath)
 
   const { size: bytes } = fs.statSync(outputPath)
   console.log(`${card.output}  ${size.width}x${size.height}  ${(bytes / 1024).toFixed(0)} KB`)
@@ -187,15 +169,6 @@ function mimeTypeOf(source) {
   if (extension === '.svg') return 'image/svg+xml'
 
   return 'image/jpeg'
-}
-
-/** Fails with the install hint rather than a bare ENOENT from deep in the run. */
-function requireCommand(command, hint) {
-  try {
-    execFileSync('which', [command], { stdio: 'ignore' })
-  } catch {
-    throw new Error(`${command} not found — ${hint}`)
-  }
 }
 
 function escapeXml(value) {

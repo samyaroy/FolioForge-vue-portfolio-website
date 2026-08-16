@@ -1,14 +1,17 @@
 #!/bin/sh
 #
-# pre-commit hook: keep the generated Cloudflare asset manifest in sync.
+# pre-commit hook: keep generated files in sync with the sources they come from.
 #
-# src/content/galleryImageManifest.yml is fully generated from gallery.yml by
-# scripts/sync-gallery-image-manifest.js. When a commit touches gallery.yml,
-# this hook regenerates the manifest and stages it so the pair never drifts.
+#   src/content/galleryImageManifest.yml  <-  gallery.yml
+#   public/og-image.jpg + blogs/public/og-image.jpg  <-  config/og-card.yml
 #
-# The generator reads the WORKING TREE copy of gallery.yml, not the staged
-# copy, so if gallery.yml has unstaged edits the manifest may describe content
-# that is not part of this commit. The hook warns when that happens.
+# Both outputs are generated and committed, and neither is rebuilt by a normal
+# `npm run build`. When a commit touches one of the sources, this hook
+# regenerates the output and stages it so the pair never drifts.
+#
+# Each generator reads the WORKING TREE copy of its source, not the staged copy,
+# so if the source has unstaged edits the output may describe content that is
+# not part of this commit. The hook warns when that happens.
 #
 # This hook is tracked in the repo under scripts/hooks/. To activate it in a
 # clone, run once:  git config core.hooksPath scripts/hooks
@@ -19,37 +22,81 @@ cd "$ROOT" || exit 0
 GALLERY="src/content/profile_info/gallery.yml"
 MANIFEST="src/content/galleryImageManifest.yml"
 
-# Nothing to do unless this commit touches the gallery source.
-git diff --cached --quiet -- "$GALLERY" && exit 0
+OG_CONFIG="config/og-card.yml"
+OG_SCRIPT="scripts/build-og-image.mjs"
+OG_CARDS="public/og-image.jpg blogs/public/og-image.jpg"
+
+warn_if_unstaged() {
+  git diff --quiet -- "$1" && return 0
+  echo "pre-commit: WARNING - $1 has unstaged changes;" >&2
+  echo "            the output is generated from the working tree copy." >&2
+}
+
+sync_gallery_manifest() {
+  # Nothing to do unless this commit touches the gallery source.
+  git diff --cached --quiet -- "$GALLERY" && return 0
+
+  if [ ! -d node_modules/yaml ]; then
+    echo "pre-commit: dependencies missing (run 'npm install'); skipping gallery manifest sync." >&2
+    return 0
+  fi
+
+  warn_if_unstaged "$GALLERY"
+  echo "pre-commit: syncing gallery manifest..."
+
+  if ! node scripts/sync-gallery-image-manifest.js; then
+    echo "pre-commit: gallery manifest sync FAILED; commit aborted." >&2
+    echo "            fix $GALLERY (likely invalid YAML) and commit again." >&2
+    return 1
+  fi
+
+  if git diff --quiet -- "$MANIFEST" && git diff --cached --quiet -- "$MANIFEST"; then
+    echo "pre-commit: gallery manifest already current."
+    return 0
+  fi
+
+  git add -- "$MANIFEST"
+  echo "pre-commit: $MANIFEST regenerated and staged."
+}
+
+build_og_cards() {
+  # The card composition lives in the script (LAYOUT) and its wording in the
+  # config, so either one landing in a commit can change the rendered image.
+  if git diff --cached --quiet -- "$OG_CONFIG" "$OG_SCRIPT"; then
+    return 0
+  fi
+
+  if [ ! -d node_modules/sharp ]; then
+    echo "pre-commit: dependencies missing (run 'npm install'); skipping social card build." >&2
+    return 0
+  fi
+
+  warn_if_unstaged "$OG_CONFIG"
+  echo "pre-commit: rendering social cards..."
+
+  # A card whose avatar is a URL is fetched at render time, so this step needs
+  # the network; everything else about it is local.
+  if ! node "$OG_SCRIPT"; then
+    echo "pre-commit: social card build FAILED; commit aborted." >&2
+    echo "            check $OG_CONFIG, and that the avatar URL is reachable." >&2
+    return 1
+  fi
+
+  # Rendering is deterministic, so an unchanged config produces byte-identical
+  # cards and these adds are no-ops. Staging unconditionally keeps the branch
+  # simple and still covers a composition change made in the script alone.
+  for card in $OG_CARDS; do
+    git add -- "$card"
+  done
+  echo "pre-commit: social cards regenerated and staged."
+}
 
 if ! command -v node >/dev/null 2>&1; then
-  echo "pre-commit: node not found; skipping gallery manifest sync." >&2
+  echo "pre-commit: node not found; skipping generated-file sync." >&2
   exit 0
 fi
 
-if [ ! -d node_modules/yaml ]; then
-  echo "pre-commit: dependencies missing (run 'npm install'); skipping gallery manifest sync." >&2
-  exit 0
-fi
+sync_gallery_manifest || exit 1
+build_og_cards || exit 1
 
-if ! git diff --quiet -- "$GALLERY"; then
-  echo "pre-commit: WARNING - $GALLERY has unstaged changes;" >&2
-  echo "            the manifest is generated from the working tree copy." >&2
-fi
-
-echo "pre-commit: syncing gallery manifest..."
-
-if ! node scripts/sync-gallery-image-manifest.js; then
-  echo "pre-commit: gallery manifest sync FAILED; commit aborted." >&2
-  echo "            fix $GALLERY (likely invalid YAML) and commit again." >&2
-  exit 1
-fi
-
-if git diff --quiet -- "$MANIFEST" && git diff --cached --quiet -- "$MANIFEST"; then
-  echo "pre-commit: gallery manifest already current."
-  exit 0
-fi
-
-git add -- "$MANIFEST"
-echo "pre-commit: $MANIFEST regenerated and staged."
 exit 0

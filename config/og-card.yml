@@ -6,7 +6,8 @@
 #   npm run og:build
 #
 # The generated .jpg files are committed, so a normal build and deploy never
-# runs this script; re-run it and commit the result whenever this file changes.
+# runs this script. scripts/hooks/pre-commit re-runs it and stages the cards
+# whenever this file is part of a commit, so editing here is usually enough.
 #
 # What lives here is content and colour. Where things sit on the card is in the
 # script, under LAYOUT — the card has one composition and only its wording,

@@ -110,8 +110,16 @@ npm run og:build
 
 That re-renders both cards — `public/og-image.jpg` for the portfolio and
 `blogs/public/og-image.jpg` for the blog — and both are committed, so a build
-and deploy never runs the generator. It needs `rsvg-convert` (`brew install
-librsvg`) and macOS `sips`.
+and deploy never runs the generator. Rendering is `sharp` end to end, so there
+is nothing to install by hand and it works on any platform.
+
+Running it by hand is usually unnecessary: the pre-commit hook re-renders and
+stages the cards whenever a commit touches `config/og-card.yml` or the
+generator itself. Activate the hooks once per clone with:
+
+```bash
+git config core.hooksPath scripts/hooks
+```
 
 Keep the output at 1200×630. The size is declared to crawlers in
 `vite.config.ts` and `blogs/vite.config.ts`, and a declared size that disagrees
