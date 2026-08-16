@@ -163,7 +163,7 @@ Gallery components:
 - `GalleryGrid.vue`
 - `GalleryCard.vue`
 
-There is a fallback SVG at [src/views/Gallery/assets/gallery-fallback-sample.svg](src/views/Gallery/assets/gallery-fallback-sample.svg).
+There is a fallback SVG at [shared/assets/gallery-fallback-sample.svg](shared/assets/gallery-fallback-sample.svg), in `shared/` because the blog's gallery card renders the same placeholder.
 
 ### Other Route Areas
 

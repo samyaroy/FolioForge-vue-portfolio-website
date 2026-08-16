@@ -252,7 +252,7 @@ import ShareMenu from '@/components/ShareMenu.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { captionPlainText } from '@/utils/captionText'
 import { galleryItemShareUrl } from '@/utils/shareLinks'
-import galleryFallbackSample from '../assets/gallery-fallback-sample.svg'
+import galleryFallbackSample from '@shared/assets/gallery-fallback-sample.svg'
 
 const props = defineProps({
   item: {

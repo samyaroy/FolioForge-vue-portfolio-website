@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import { useEffect, useState } from 'react'
-import galleryFallbackSample from '../../../../../src/views/Gallery/assets/gallery-fallback-sample.svg'
+import galleryFallbackSample from '@shared/assets/gallery-fallback-sample.svg'
 import type { GalleryItem } from '../../../content/gallery/data'
 import { ShareMenu } from '../../../components/ShareMenu'
 import { galleryItemShareUrl } from '../../../lib/share'
