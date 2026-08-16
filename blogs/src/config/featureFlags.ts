@@ -7,7 +7,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showBlogHome: true,
   showRecommended: true,
   showReadings: true,
-  showMovies: false,
+  showMovies: true,
   showTravel: true,
   showHobbies: true,
   showGallery: true,
