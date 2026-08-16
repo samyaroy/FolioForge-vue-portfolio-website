@@ -7,7 +7,7 @@ export type MovieItem = {
   director: string
   genre: string
   /** ISO date string for when it was watched, e.g. "2026-07-12". */
-  date: string
+  date?: string
   description: string
   /** Release year, shown in the card and modal meta line. */
   year?: number
@@ -36,4 +36,4 @@ function resolvePosterImage(entry?: string) {
 
 export const MOVIES: MovieItem[] = items
   .map((item) => ({ ...item, image: resolvePosterImage(item.image) }))
-  .sort((a, b) => b.date.localeCompare(a.date))
+  .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))

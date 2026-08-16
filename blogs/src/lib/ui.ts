@@ -14,6 +14,15 @@ export const EMPTY_TEXT_CLASS = 'text-center text-muted'
 
 export const POST_LIST_CLASS = 'mx-auto grid max-w-6xl grid-cols-1 gap-6'
 
+// The blog section's two-column shell — the "All posts" rail on the left, the
+// page's own content on the right — shared by the post list and each post so
+// the rail lands in the same place throughout. Breaks out of the layout's
+// column to 90% of the viewport, like the travel pages do.
+export const RAIL_GRID_CLASS =
+  'ml-[50%] grid w-[90vw] -translate-x-1/2 grid-cols-1 gap-10 md:grid-cols-[18%_minmax(0,1fr)] md:items-stretch md:gap-0'
+
+export const RAIL_CONTENT_CLASS = 'min-w-0 md:border-l md:border-border md:pl-6'
+
 export const CARD_TITLE_CLASS =
   'text-xl leading-[1.35] font-bold tracking-[-0.02em]'
 

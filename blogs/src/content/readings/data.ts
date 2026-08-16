@@ -6,8 +6,8 @@ export type ReadingItem = {
   title: string
   author: string
   genre: string
-  /** ISO date string, e.g. "2026-06-20". */
-  date: string
+  /** ISO date string for when it was read, e.g. "2026-06-20". */
+  date?: string
   description: string
   /** Cover image: full URL or bare CDN key (resolved like gallery images). */
   image?: string
@@ -34,4 +34,4 @@ function resolveCoverImage(entry?: string) {
 
 export const READINGS: ReadingItem[] = items
   .map((item) => ({ ...item, image: resolveCoverImage(item.image) }))
-  .sort((a, b) => b.date.localeCompare(a.date))
+  .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))

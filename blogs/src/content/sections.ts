@@ -48,6 +48,10 @@ interface SectionsContent {
   post: {
     backToBlogs: string
     share: string
+    kicker: string
+    readingTime: string
+    nextLabel: string
+    previousLabel: string
   }
 }
 

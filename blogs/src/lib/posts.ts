@@ -1,4 +1,4 @@
-import type { Post } from '../types'
+import type { Post, PostMeta } from '../types'
 import { parseFrontmatter } from './frontmatter'
 
 // Load every markdown file under content/posts at build time as a raw string.
@@ -40,4 +40,19 @@ export const posts: Post[] = Object.entries(rawPosts)
 
 export function getPost(slug: string): Post | undefined {
   return posts.find((post) => post.slug === slug)
+}
+
+/**
+ * The posts either side of `slug` in listing order (newest first), so a post
+ * page can send the reader on to a neighbour. Both are optional: the newest
+ * post has nothing newer, the oldest nothing older.
+ */
+export function getAdjacentPosts(slug: string): {
+  newer?: PostMeta
+  older?: PostMeta
+} {
+  const index = posts.findIndex((post) => post.slug === slug)
+  if (index === -1) return {}
+
+  return { newer: posts[index - 1], older: posts[index + 1] }
 }

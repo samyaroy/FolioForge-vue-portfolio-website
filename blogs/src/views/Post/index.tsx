@@ -1,30 +1,22 @@
-import { useParams } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import { getPost } from '../../lib/posts'
+import { Link, useParams } from 'react-router-dom'
+import { getAdjacentPosts, getPost } from '../../lib/posts'
 import { formatDate } from '../../lib/format'
+import { readingTimeMinutes } from '../../lib/readingTime'
 import { usePageTitle } from '../../lib/usePageTitle'
+import { isFeatureEnabled } from '../../config/featureFlags'
 import { POST_COPY } from '../../content/sections'
+import { RAIL_CONTENT_CLASS, RAIL_GRID_CLASS } from '../../lib/ui'
+import { AllPostsIndex } from '../../components/AllPostsIndex'
+import { ReadingProgress } from '../../components/ReadingProgress'
 import { ShareMenu } from '../../components/ShareMenu'
 import { postShareUrl } from '../../lib/share'
 import { NotFoundPage } from '../NotFound'
+import { PostBody } from './components/PostBody'
 
-// Markdown styling: react-markdown emits bare elements, so every rule targets
-// descendants of the wrapper via arbitrary variants.
-const PROSE_CLASS = [
-  'text-justify text-base leading-[1.8] text-muted',
-  '[&>*:first-child]:mt-0',
-  '[&_h2]:mt-11 [&_h2]:text-[2rem] [&_h2]:leading-[1.2] [&_h2]:font-bold [&_h2]:tracking-[-0.02em] [&_h2]:text-ink',
-  '[&_h3]:mt-8 [&_h3]:text-xl [&_h3]:leading-[1.3] [&_h3]:font-bold [&_h3]:text-ink',
-  '[&_img]:max-w-full [&_img]:rounded-xl [&_img]:shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)]',
-  '[&_pre]:overflow-x-auto [&_pre]:rounded-xl [&_pre]:border [&_pre]:border-[rgba(15,23,42,0.08)] [&_pre]:bg-[#0e141b] [&_pre]:p-4 [&_pre]:text-left [&_pre]:text-[#e2e8f0]',
-  '[&_code]:font-[ui-monospace,SFMono-Regular,Menlo,Consolas,monospace] [&_code]:text-[0.9em]',
-  '[&_:not(pre)>code]:rounded-[0.3rem] [&_:not(pre)>code]:border [&_:not(pre)>code]:border-[#e2e8f0] [&_:not(pre)>code]:bg-[#f1f5f9] [&_:not(pre)>code]:px-[0.35rem] [&_:not(pre)>code]:py-[0.1rem] [&_:not(pre)>code]:text-ink',
-  '[&_blockquote]:my-6 [&_blockquote]:border-l-[3px] [&_blockquote]:border-l-primary [&_blockquote]:bg-[rgba(219,234,254,0.28)] [&_blockquote]:py-1 [&_blockquote]:pl-4 [&_blockquote]:text-muted',
-  '[&_table]:my-6 [&_table]:w-full [&_table]:border-collapse',
-  '[&_th]:border [&_th]:border-border [&_th]:bg-surface-soft [&_th]:px-3 [&_th]:py-2 [&_th]:text-left [&_th]:text-ink',
-  '[&_td]:border [&_td]:border-border [&_td]:px-3 [&_td]:py-2 [&_td]:text-left',
-].join(' ')
+const EYEBROW_CLASS = 'text-xs leading-normal font-bold tracking-[0.16em] uppercase'
+
+// The byline rule under the title, and the footer rule under the body.
+const RULE_TEXT_CLASS = 'text-sm leading-normal text-faint'
 
 // The BlogPosting structured data for this page is stamped into the head at
 // build time (vite.config.ts), where crawlers see it without running the app.
@@ -40,50 +32,138 @@ export function PostPage() {
     return <NotFoundPage />
   }
 
+  // One post reads on to the next one down the archive; the oldest post has
+  // nothing below it, so it points back up instead.
+  const { newer, older } = getAdjacentPosts(post.slug)
+  const onwards = older ?? newer
+  const onwardsLabel = older ? POST_COPY.nextLabel : POST_COPY.previousLabel
+
+  const kicker = post.tags.length > 0 ? post.tags.join(' · ') : POST_COPY.kicker
+
   return (
-    <article className="mx-auto max-w-4xl">
-      <header className="mb-10 text-center">
-        <a
-          className="mb-5 inline-flex text-xs leading-normal font-bold tracking-[0.16em] text-primary uppercase"
-          href="/"
-        >
-          {POST_COPY.backToBlogs}
-        </a>
-        <h1 className="mb-4 text-4xl leading-[1.1] font-black tracking-[-0.033em] text-ink">
-          {post.title}
-        </h1>
-        {post.date && (
-          <time
-            className="inline-flex items-center gap-1 text-xs leading-normal font-normal tracking-normal normal-case text-faint"
-            dateTime={post.date}
-          >
-            <span
-              className="mdi mdi-calendar-blank-outline leading-none"
-              aria-hidden="true"
-            />
-            {formatDate(post.date)}
-          </time>
-        )}
-        {/* The preview a shared link produces comes from the <head> stamped at
-            build time (vite.config.ts), not from anything rendered here. */}
-        <div className="mt-6 flex justify-center">
-          <ShareMenu
-            content={{
-              url: postShareUrl(post.slug),
-              title: post.title,
-              text: post.description,
-              hashtags: post.tags,
-            }}
-            triggerClass="inline-flex items-center gap-2 rounded-[6px] border border-border bg-surface px-3 py-1.5 text-xs leading-normal font-bold tracking-[0.16em] text-muted uppercase transition-colors hover:border-primary hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none"
-            triggerLabel={`Share: ${post.title}`}
-            triggerText={POST_COPY.share}
-            heading="Share this post"
-          />
+    <>
+      {isFeatureEnabled('showReadingProgress') && <ReadingProgress />}
+
+      <div className={RAIL_GRID_CLASS}>
+        {/* Below md the rail drops under the article: on a phone the post is
+            what the reader came for, and the index reads as an archive to move
+            on to once it ends. */}
+        <AllPostsIndex activeSlug={post.slug} className="order-last md:order-0" />
+
+        <div className={RAIL_CONTENT_CLASS}>
+          {/* Fills the pane rather than sitting in a narrow column inside it.
+              The cap only bites past ~1600px, where the pane would otherwise
+              push a line of body text beyond ~110 characters; the type scales
+              up with the measure so the longer lines stay readable. */}
+          <article className="mx-auto w-full max-w-6xl pb-8">
+            <header className="mb-12">
+              <p
+                className={`mb-6 flex items-center gap-2.5 text-primary ${EYEBROW_CLASS}`}
+              >
+                <span className="h-px w-5 shrink-0 bg-current" aria-hidden="true" />
+                <span>{kicker}</span>
+              </p>
+
+              <h1 className="mb-5 text-4xl leading-[1.08] font-black tracking-[-0.033em] text-balance text-ink sm:text-5xl lg:text-6xl">
+                {post.title}
+              </h1>
+
+              {/* The lede keeps its own measure: it is display type, and a
+                  three-word-deep line across the full pane reads as a caption
+                  rather than a standfirst. */}
+              {post.description && (
+                <p className="mb-8 max-w-4xl text-lg leading-[1.55] text-pretty text-[#4b5563] lg:text-xl">
+                  {post.description}
+                </p>
+              )}
+
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-3 border-y border-border py-3">
+                {post.date && (
+                  <time
+                    className={`inline-flex items-center gap-1.5 ${RULE_TEXT_CLASS}`}
+                    dateTime={post.date}
+                  >
+                    <span
+                      className="mdi mdi-calendar-blank-outline leading-none"
+                      aria-hidden="true"
+                    />
+                    {formatDate(post.date)}
+                  </time>
+                )}
+
+                {isFeatureEnabled('showReadingTime') && (
+                  <>
+                    {post.date && (
+                      <span className="text-[#cbd5e1]" aria-hidden="true">
+                        /
+                      </span>
+                    )}
+                    <span
+                      className={`inline-flex items-center gap-1.5 ${RULE_TEXT_CLASS}`}
+                    >
+                      <span
+                        className="mdi mdi-clock-outline leading-none"
+                        aria-hidden="true"
+                      />
+                      {readingTimeMinutes(post.body)} {POST_COPY.readingTime}
+                    </span>
+                  </>
+                )}
+
+                {/* The preview a shared link produces comes from the <head>
+                    stamped at build time (vite.config.ts), not from anything
+                    rendered here. */}
+                <ShareMenu
+                  content={{
+                    url: postShareUrl(post.slug),
+                    title: post.title,
+                    text: post.description,
+                    hashtags: post.tags,
+                  }}
+                  triggerClass={`ml-auto inline-flex cursor-pointer items-center gap-2 rounded-[6px] border border-border bg-surface px-2.5 py-1.5 text-muted transition-colors hover:border-primary hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none ${EYEBROW_CLASS}`}
+                  triggerLabel={`Share: ${post.title}`}
+                  triggerText={POST_COPY.share}
+                  triggerIconClass="text-sm"
+                  heading="Share this post"
+                />
+              </div>
+            </header>
+
+            <PostBody markdown={post.body} />
+
+            <footer className="mt-16 flex flex-wrap items-start justify-between gap-6 border-t border-border pt-7">
+              <Link
+                className={`group inline-flex items-center gap-2 text-primary no-underline hover:text-primary-hover ${EYEBROW_CLASS}`}
+                to="/"
+              >
+                <span
+                  className="mdi mdi-arrow-left arrow-jiggle-back leading-none"
+                  aria-hidden="true"
+                />
+                {POST_COPY.backToBlogs}
+              </Link>
+
+              {onwards && (
+                <Link
+                  className="group ml-auto flex max-w-full min-w-0 flex-col items-end gap-1 text-right no-underline"
+                  to={`/posts/${onwards.slug}`}
+                >
+                  <span className={`text-faint ${EYEBROW_CLASS}`}>
+                    {onwardsLabel}
+                  </span>
+                  <span className="inline-flex min-w-0 items-center gap-2 text-sm leading-normal font-bold tracking-[-0.01em] text-ink transition-colors duration-200 group-hover:text-primary">
+                    <span className="truncate">{onwards.title}</span>
+                    <span
+                      className="mdi mdi-arrow-right arrow-jiggle shrink-0 leading-none"
+                      aria-hidden="true"
+                    />
+                  </span>
+                </Link>
+              )}
+            </footer>
+          </article>
         </div>
-      </header>
-      <div className={PROSE_CLASS}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.body}</ReactMarkdown>
       </div>
-    </article>
+    </>
   )
 }

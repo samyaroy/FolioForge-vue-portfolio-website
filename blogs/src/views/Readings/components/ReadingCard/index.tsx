@@ -22,7 +22,9 @@ export function ReadingCard({
   illustrationSide = 'left',
 }: ReadingCardProps) {
   const [isReviewOpen, setIsReviewOpen] = useState(false)
+  const [coverFailed, setCoverFailed] = useState(false)
   const artRight = illustrationSide === 'right'
+  const coverImage = coverFailed ? undefined : reading.image
 
   return (
     <article
@@ -38,7 +40,17 @@ export function ReadingCard({
         }`}
         aria-hidden="true"
       >
-        <BookArt className="w-[clamp(3.2rem,42%,5rem)]" />
+        {coverImage ? (
+          <img
+            src={coverImage}
+            alt=""
+            className="h-full max-h-52 w-full object-contain p-4"
+            loading="lazy"
+            onError={() => setCoverFailed(true)}
+          />
+        ) : (
+          <BookArt className="w-[clamp(3.2rem,42%,5rem)]" />
+        )}
       </div>
 
       <div className="flex min-w-0 flex-col px-[1.6rem] py-6">

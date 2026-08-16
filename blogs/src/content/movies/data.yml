@@ -2,10 +2,11 @@
 # types and sorts newest-first (by `date`), so order here doesn't matter.
 # Keep dates quoted so they stay strings ("YYYY-MM-DD").
 #
-# Required per item: id, title, director, genre, date (when you watched it)
+# Required per item: id, title, director, genre, description
 #
 # Optional per-item fields:
 #   year:   release year, shown in the card/modal meta line
+#   date:   when you watched it, as "YYYY-MM-DD"
 #   image:  poster picture; a full URL, or a bare CDN key resolved to
 #           https://media.samyabrata.codeium.xyz/<key>.jpeg (same as gallery).
 #           When absent, the clapperboard illustration renders instead.
@@ -14,55 +15,11 @@
 #   rating: 1-5 stars
 #   link:   external page about the film (Wikipedia, IMDb, Letterboxd, ...)
 
-# Placeholder entries below — replace with real watch notes.
 items:
-  - id: whiplash
-    title: Whiplash
-    director: Damien Chazelle
-    genre: Drama
-    year: 2014
-    date: "2026-07-12"
-    description: "Notes on obsession, the cost of mastery, and where mentorship turns into abuse."
-    rating: 5
-    link: https://en.wikipedia.org/wiki/Whiplash_(2014_film)
-    note: |
-      The film cuts like a drum solo — the editing keeps time with the
-      practice-room panic, and the tension comes almost entirely from rhythm
-      rather than plot.
-
-      What lingers is how carefully it refuses to settle the argument it
-      raises: greatness is real, the price is real, and the film leaves the
-      accounting to you.
-
-  - id: arrival
-    title: Arrival
-    director: Denis Villeneuve
-    genre: Science fiction
-    year: 2016
-    date: "2026-06-28"
-    description: "First contact as a translation problem, and what changes when time stops being a line."
-    rating: 4
-    link: https://en.wikipedia.org/wiki/Arrival_(film)
-    note: |
-      A rare science-fiction film where the breakthrough is linguistic rather
-      than military — the tension sits in whether two species can agree on
-      what a question even is.
-
-      The structural twist reframes every earlier scene on a second viewing,
-      which is the mark of a script that was built rather than assembled.
-
-  - id: spirited-away
-    title: Spirited Away
-    director: Hayao Miyazaki
-    genre: Animation
-    year: 2001
-    date: "2026-06-15"
-    description: "A bathhouse for spirits, and a child who works her way through it without being rescued."
-    rating: 5
-    link: https://en.wikipedia.org/wiki/Spirited_Away
-    note: |
-      Miyazaki lets scenes breathe — the quiet train ride across the water does
-      more character work than most third acts.
-
-      The world is never explained, only inhabited, and that restraint is
-      exactly why it holds up on every rewatch.
+  - id: the-cabinet-of-dr-caligari
+    title: The Cabinet of Dr. Caligari
+    director: Robert Wiene
+    genre: German Expressionist horror
+    year: 1920
+    description: "A landmark of silent cinema, with distorted sets and stark shadows turning a mystery about a hypnotist and a sleepwalker into a fever dream."
+    link: https://youtu.be/zV00ylxcwXw?si=PYNzSWAipulmEI-6

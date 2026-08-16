@@ -6,13 +6,18 @@ type FeatureFlagNode = {
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showBlogHome: true,
   showReadings: true,
-  showMovies: false,
+  showMovies: true,
   showTravel: true,
   showHobbies: true,
   showGallery: true,
   // "Did you know?" nav link to the main site's /facts route.
   showFactsLink: false,
   showPortfolioLink: true,
+
+  // Post page: the scroll-position bar pinned to the top of the viewport, and
+  // the estimated reading time in the byline.
+  showReadingProgress: true,
+  showReadingTime: true,
 
   // Controls the subtitle/description line under each page's title.
   // Text for each page lives in blogs/src/content/sections.yml.
