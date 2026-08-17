@@ -38,6 +38,7 @@ const iconMap = {
   Statistical_Modeling: "anim:chart-bar",
   Bayesian_Statistics: "anim:chart-bar",
   Hypothesis_Testing: "mdi-check-circle",
+  Nonparametric_Inference: "anim:chart-spline",
 
   Data_Science: "mdi-database",
   Data_Visualization: "mdi-chart-pie",
@@ -47,7 +48,7 @@ const iconMap = {
   Data_Mining: "mdi-database-search",
   Data_Cleaning: "mdi-broom",
   Data_Wrangling: "mdi-database-edit",
-  Data_Engineering: "mdi-database-cog",
+  Data_Engineering: "anim:database-zap",
 
   // 🌐 Web & Systems
   Web_Development: "mdi-web",
