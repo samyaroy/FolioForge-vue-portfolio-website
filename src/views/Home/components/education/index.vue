@@ -17,6 +17,7 @@
         :institution="edu.institution"
         :location="edu.location"
         :campus="edu.campus"
+        :currentLevel="edu.current_level"
         :category="edu.category"
         :extra="edu.extra"
         :isFirst="index === 0"

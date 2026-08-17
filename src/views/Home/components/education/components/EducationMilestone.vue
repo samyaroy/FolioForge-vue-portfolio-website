@@ -44,14 +44,29 @@
         </p>
       </div>
 
-      <!-- Time -->
-      <div class="flex items-center gap-2 mt-1">
-        <v-icon class="text-[#4e7397]" size="16">
-          mdi-calendar
-        </v-icon>
-        <p class="text-[#4e7397] text-base font-normal leading-normal">
-          {{ time }}
-        </p>
+      <!-- Time, plus how far along the programme is when it's still running -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-1 mt-1">
+        <div class="flex items-center gap-2">
+          <v-icon class="text-[#4e7397]" size="16">
+            mdi-calendar
+          </v-icon>
+          <!-- 15px: a step down from the title's text-base, still a step above
+               the text-sm institution/location row below. -->
+          <p class="text-[#4e7397] text-[15px] font-normal leading-normal">
+            {{ time }}
+          </p>
+        </div>
+
+        <div v-if="currentLevel" class="flex items-center gap-2">
+          <v-icon class="text-[#4e7397]" size="16">
+            mdi-progress-clock
+          </v-icon>
+          <!-- 15px: a step down from the title's text-base, still a step above
+               the text-sm institution/location row below. -->
+          <p class="text-[#4e7397] text-[15px] font-normal leading-normal">
+            {{ currentLevel }}
+          </p>
+        </div>
       </div>
 
       <!-- Campus, Institution & Location -->
@@ -120,6 +135,7 @@ const props = defineProps({
   institution: { type: String, required: true },
   location: { type: String, required: true },
   campus: { type: String, default: '' },
+  currentLevel: { type: String, default: '' },
   category: { type: String, default: '' },
   extra: { type: String, default: '' },
   icon: { type: String, default: 'mdi-school' },
