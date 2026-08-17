@@ -298,7 +298,7 @@ export default {
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},   
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
       // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
-      logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},  
+      logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'University of Calcutta'},  
       // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute'},
 
       last_updated_on: config.last_updated_on,
