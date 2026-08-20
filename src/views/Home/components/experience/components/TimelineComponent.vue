@@ -68,7 +68,16 @@
         <!-- Project list -->
         <ul class="col-start-2 sm:col-start-3 grid gap-1 text-[#4e7397] text-sm">
           <li v-for="(project, index) in projects" :key="index" class="leading-tight">
-           <span> &bull; </span><SmartLink :text="project" />
+            <div>
+              <span> &bull; </span><SmartLink :text="projectTitle(project)" />
+            </div>
+            <div v-if="projectPrincipalInvestigator(project)" class="ml-4 mt-0.5 flex items-start gap-1 text-xs text-[#5f7f9d]">
+              <v-icon class="text-[#5f7f9d] mt-[1px] shrink-0" size="14">mdi-account-school</v-icon>
+              <span>
+                PI:
+                <SmartLink :text="projectPrincipalInvestigator(project)" />
+              </span>
+            </div>
           </li>
         </ul>
       </div>
@@ -95,6 +104,24 @@
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+
+const projectTitle = (project) => {
+  return typeof project === 'string' ? project : project?.title
+}
+
+const projectPrincipalInvestigator = (project) => {
+  const pi = typeof project === 'string' ? null : project?.principal_investigator
+
+  if (!pi) {
+    return null
+  }
+
+  if (typeof pi === 'string') {
+    return pi
+  }
+
+  return [pi.name, pi.title, pi.department, pi.institution].filter(Boolean).join(', ')
+}
 
 defineProps({
   isfirst: { type: Boolean, default: false },

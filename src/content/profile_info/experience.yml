@@ -3,7 +3,15 @@ experience:
     type: Employment
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     location: Kolkata, WB
-    projects: ["National Platform for Crop Yield Forecasting (NPCYF) - part of the FASAL 2.0 initiative by `Mahalanobis National Crop Forecast Centre (MNCFC)`, `MoAFW, GoI`" , "[Upatto](https://www.ideas-tih.org/capabilities) - a end-to-end data curation and model-building platform" ]
+    projects:
+      - title: "National Platform for Crop Yield Forecasting (NPCYF) - part of the FASAL 2.0 initiative by `Mahalanobis National Crop Forecast Centre (MNCFC)`, `MoAFW, GoI`"
+        # principal_investigator:
+        #   name: "Prof. [Name]"
+        #   institution: Indian Statistical Institute
+      - title: "[Upatto](https://www.ideas-tih.org/capabilities) - an end-to-end data curation and model-building platform"
+        # principal_investigator:
+        #   name: "Prof. [Name]"
+        #   institution: Indian Statistical Institute
     time_period: Oct 2025 - Aug 2026
     description: [  "Contributed to the NPCYF platform by implementing TabPFN, Panel OLS and Random Forest-based forecasting workflows, integrating hyperparameter tuning into the platform pipeline, optimizing frontend performance through caching, developing backend APIs, enabling feature-flag-driven releases, and automating data ingestion into a MinIO-based data lake"]
   
