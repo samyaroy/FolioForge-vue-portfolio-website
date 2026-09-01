@@ -74,8 +74,9 @@
             <div v-if="projectPrincipalInvestigator(project)" class="ml-4 mt-0.5 flex items-start gap-1 text-xs text-[#5f7f9d]">
               <v-icon class="text-[#5f7f9d] mt-[1px] shrink-0" size="14">mdi-account-school</v-icon>
               <span>
-                PI:
-                <SmartLink :text="projectPrincipalInvestigator(project)" />
+                PI: 
+                <SmartLink :type="'Person'" :text="projectPrincipalInvestigator(project)[0]"/>, 
+                <SmartLink :type="'Person'" :text="projectPrincipalInvestigator(project)[1]"/>
               </span>
             </div>
           </li>
@@ -120,7 +121,7 @@ const projectPrincipalInvestigator = (project) => {
     return pi
   }
 
-  return [pi.name, pi.title, pi.department, pi.institution].filter(Boolean).join(', ')
+  return [pi.name, [ pi.title, pi.department, pi.institution].filter(Boolean).join(', ')]
 }
 
 defineProps({

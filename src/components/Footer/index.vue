@@ -155,6 +155,10 @@
             <div class="space-y-2 text-black-300">
               <!-- Gmail gets the animated icon; hover is driven from the whole
                    row so the 18px glyph isn't the only target. -->
+              <div v-if="address" class="flex items-center">
+                <v-icon size="small" class="mr-2">mdi-location</v-icon>
+                <span>{{ address }}</span>
+              </div>
               <div
                 v-if="gmail"
                 class="flex items-center"
@@ -281,6 +285,7 @@ export default {
 
     return {
       profile,
+      address: contacts.address,
       gmail: contacts.gmail,
       email: contacts.email,
       phone: contacts.phone,
