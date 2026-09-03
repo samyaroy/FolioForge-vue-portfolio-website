@@ -4,6 +4,7 @@ import { Layout } from './components/Layout'
 import { BlogsPage } from './views/Blogs'
 import { PostPage } from './views/Post'
 import { NotFoundPage } from './views/NotFound'
+import { RecommendedPage } from './views/Recommended'
 import { ReadingsPage } from './views/Readings'
 import { MoviesPage } from './views/Movies'
 import { HobbiesPage } from './views/Hobbies'
@@ -21,6 +22,12 @@ const TravelPage = lazy(() =>
 )
 
 const optionalRoutes = [
+  isFeatureEnabled('showRecommended')
+    ? {
+        path: '/recommended',
+        element: <RecommendedPage />,
+      }
+    : null,
   isFeatureEnabled('showReadings')
     ? {
         path: '/readings',

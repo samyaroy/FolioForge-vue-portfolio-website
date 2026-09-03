@@ -9,6 +9,20 @@ blogs:
   # Heading of the year-grouped post index beside the post list.
   allPostsTitle: All posts
 
+recommended:
+  title: Recommended reads
+  # Small kicker above the heading, on the home teaser and the page itself.
+  kicker: Not mine
+  emptyLabel: Nothing recommended here yet.
+  # Home teaser link through to the full page; {count} becomes the number
+  # of recommendations.
+  allLabel: "All {count} recommendations"
+  # Card links. The full page names the destination, the teaser stays short.
+  readLabel: Read on
+  readShortLabel: Read it
+  # Closing line under the full list.
+  disclaimer: Every link here leaves this site. None of it is my writing.
+
 readings:
   title: Readings
   tag: readings

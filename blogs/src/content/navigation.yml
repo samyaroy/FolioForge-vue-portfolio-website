@@ -13,6 +13,9 @@ navItems:
   - to: /
     label: Blog
     flag: showBlogHome
+  - to: /recommended
+    label: Worth Your Time
+    flag: showRecommended
   - to: /readings
     label: What I Read
     flag: showReadings

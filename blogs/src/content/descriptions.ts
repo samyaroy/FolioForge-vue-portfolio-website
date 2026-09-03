@@ -4,6 +4,7 @@ import raw from './descriptions.yml'
 
 export type PageKey =
   | 'blogs'
+  | 'recommended'
   | 'readings'
   | 'movies'
   | 'travel'

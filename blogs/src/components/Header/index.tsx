@@ -19,11 +19,16 @@ function navLinkClass({ isActive }: { isActive: boolean }): string {
     : 'relative text-sm leading-normal font-medium text-ink transition-colors duration-200 hover:text-primary'
 }
 
-// The name plus the inline links need ~765px at six links and ~955px at seven
-// (feature flags decide how many), so the drawer has to take over at a
-// different width in each case — otherwise the trailing links are clipped.
-// Both class strings are spelled out in full so Tailwind's scanner sees them.
+// The name plus the inline links need ~765px at six links, ~955px at seven
+// and ~1140px at eight (feature flags decide how many), so the drawer has to
+// take over at a different width in each case — otherwise the trailing links
+// are clipped. Every class string is spelled out in full so Tailwind's
+// scanner sees them.
 function navBreakpoint(inlineLinkCount: number) {
+  if (inlineLinkCount > 7) {
+    return { nav: 'xl:flex', menuButton: 'xl:hidden' }
+  }
+
   return inlineLinkCount > 6
     ? { nav: 'lg:flex', menuButton: 'lg:hidden' }
     : { nav: 'md:flex', menuButton: 'md:hidden' }

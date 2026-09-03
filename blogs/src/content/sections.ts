@@ -8,6 +8,15 @@ interface SectionsContent {
     heroHeading: string
     allPostsTitle: string
   }
+  recommended: {
+    title: string
+    kicker: string
+    emptyLabel: string
+    allLabel: string
+    readLabel: string
+    readShortLabel: string
+    disclaimer: string
+  }
   readings: {
     title: string
     tag: string
@@ -63,6 +72,7 @@ interface SectionsContent {
 const sections = raw as SectionsContent
 
 export const BLOGS_SECTION = sections.blogs
+export const RECOMMENDED_SECTION = sections.recommended
 export const READINGS_SECTION = sections.readings
 export const MOVIES_SECTION = sections.movies
 export const HOBBIES_SECTION = sections.hobbies
