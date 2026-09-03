@@ -11,6 +11,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showTravel: true,
   showHobbies: true,
   showGallery: true,
+  // "Worth Your Time" nav link to /recommended. Separate from showRecommended
+  // so the page and the blog home teaser can stay on while the header link is
+  // off -- the teaser's "All N recommendations" link is then the way in.
+  showRecommendedNavLink: false,
   // "Did you know?" nav link to the main site's /facts route.
   showFactsLink: false,
   showPortfolioLink: true,
