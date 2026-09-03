@@ -34,7 +34,7 @@ export function RecommendedPage() {
         <p className={EMPTY_TEXT_CLASS}>{RECOMMENDED_SECTION.emptyLabel}</p>
       ) : (
         <>
-          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {RECOMMENDED.map((item) => (
               <RecommendedCard key={item.id} item={item} />
             ))}
