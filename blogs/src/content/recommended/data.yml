@@ -1,0 +1,81 @@
+# Blog posts by OTHER PEOPLE, recommended here. Loaded through data.ts, which
+# keeps this file's order: the first three entries are the ones shown on the
+# blog home page, the whole list appears on /recommended. Reorder here to
+# change what gets featured.
+#
+# Fields:
+#   id:     unique slug, used as the React key
+#   title:  the post's own title, as its author wrote it
+#   author: who wrote it — always shown, so nobody mistakes it for yours
+#   source: the domain it lives on, shown as the card kicker
+#   url:    the full external URL
+#   year:   optional, the year it was published
+#   note:   optional, one or two sentences in your own voice on why it is
+#           here. Shown after a ✳ on the full page; hidden on the home
+#           teaser. This is the part that makes it a recommendation rather
+#           than a bookmark, so it is worth writing.
+#
+# NOTE: the six entries below are placeholders — real, well-known posts put
+# here so the page renders with something in it. Check every `url` and
+# rewrite every `note` in your own words before publishing.
+
+items:
+  - id: unreasonable-effectiveness-rnn
+    title: The Unreasonable Effectiveness of Recurrent Neural Networks
+    author: Andrej Karpathy
+    source: karpathy.github.io
+    year: 2015
+    url: https://karpathy.github.io/2015/05/21/rnn-effectiveness/
+    note: >
+      Still the clearest thing written about why sequence models work at all.
+      The character-level samples teach more than a chapter of theory would.
+
+  - id: the-bitter-lesson
+    title: The Bitter Lesson
+    author: Rich Sutton
+    source: incompleteideas.net
+    year: 2019
+    url: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
+    note: >
+      Two pages that reframe most arguments about model design. I disagree
+      with parts of it, which is exactly why I keep re-reading it.
+
+  - id: understanding-lstm-networks
+    title: Understanding LSTM Networks
+    author: Christopher Olah
+    source: colah.github.io
+    year: 2015
+    url: https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+    note: >
+      The diagrams are the explanation. This is what I send every student who
+      asks where to start with recurrent nets.
+
+  - id: more-to-mathematics-than-rigour
+    title: There's More to Mathematics than Rigour and Proofs
+    author: Terence Tao
+    source: terrytao.wordpress.com
+    year: 2009
+    url: https://terrytao.wordpress.com/career-advice/theres-more-to-mathematics-than-rigour-and-proofs/
+    note: >
+      Names the three stages of mathematical maturity. It gave words to
+      something I had felt for years and could not articulate.
+
+  - id: attention-attention
+    title: Attention? Attention!
+    author: Lilian Weng
+    source: lilianweng.github.io
+    year: 2018
+    url: https://lilianweng.github.io/posts/2018-06-24-attention/
+    note: >
+      The bridge between the recurrent world and everything that came after
+      it. Dense, but it earns every equation on the page.
+
+  - id: how-to-do-great-work
+    title: How to Do Great Work
+    author: Paul Graham
+    source: paulgraham.com
+    year: 2023
+    url: https://paulgraham.com/greatwork.html
+    note: >
+      Less about work than about choosing problems. Worth the hour if you are
+      deciding what to spend the next few years on.
