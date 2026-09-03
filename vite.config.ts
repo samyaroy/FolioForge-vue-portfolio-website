@@ -36,8 +36,9 @@ const IS_BETA_BUILD = (process.env.VITE_SITE_ENV ?? '').trim().toLowerCase() ===
 // neither prerendered nor listed in the sitemap.
 const publicRoutes = routeMetadata.filter(
   (route) =>
-    !route.flagPath ||
-    isFeatureEnabled(route.flagPath, { mode: route.flagMode }),
+    (!route.betaOnly || IS_BETA_BUILD) &&
+    (!route.flagPath ||
+      isFeatureEnabled(route.flagPath, { mode: route.flagMode })),
 )
 
 interface Profile {
