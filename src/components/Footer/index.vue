@@ -212,6 +212,15 @@
             see here
           </a>
         </p>
+
+        <!-- The beta-side counterpart of the pointer above: the dashboard is a
+             beta-only route, so the link is shown exactly where it resolves.
+             The two are mutually exclusive, which keeps this bar at two items. -->
+        <p v-else-if="showCredentialsDashboardLink" class="mt-2 text-sm md:mt-0">
+          <router-link to="/credentials-dashboard" class="footer-link text-sm">
+            Credentials dashboard
+          </router-link>
+        </p>
       </div>
 
       <!-- Same column template as the blocks above so the privacy link lines up
@@ -264,7 +273,7 @@ import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
-import { isStableSite } from '@/config/siteEnvironment'
+import { isBetaSite, isStableSite } from '@/config/siteEnvironment'
 
 export default {
   components: {
@@ -300,6 +309,9 @@ export default {
       // Only the stable site points at beta; on beta itself the header badge
       // already points the other way, and on localhost neither applies.
       showBetaVersionLink: Boolean(profile.betaVersionUrl) && isStableSite(),
+      // Mirrors the router's betaOnly guard, so the link is only ever offered
+      // where /credentials-dashboard actually resolves instead of redirecting.
+      showCredentialsDashboardLink: isBetaSite(),
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},   
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
       // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
