@@ -1,4 +1,5 @@
 import { profileInfoSources } from '@/content/profile_info'
+import { smartLinkPlainText } from '@/utils/smartLinkText'
 
 const CREDENTIAL_KEYS = new Set([
   'cred_link',
@@ -117,10 +118,12 @@ function humanize(value: string): string {
     .replace(/\b\w/g, (letter) => letter.toUpperCase())
 }
 
+// Every displayed string funnels through here, so this is the one place the
+// authored link markup has to be reduced to its visible text.
 function stringify(value: unknown): string {
   if (value === null || value === undefined) return ''
   if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-    return String(value).trim()
+    return smartLinkPlainText(String(value))
   }
   return ''
 }
@@ -166,17 +169,55 @@ function displayName(node: UnknownRecord, ancestry: UnknownRecord[]): string {
   return 'Untitled credential'
 }
 
-function displayDetail(node: UnknownRecord): string {
-  if (Array.isArray(node.institution)) {
-    const institutions = node.institution
-      .map((entry) => (isPlainObject(entry) ? stringify(entry.name) : stringify(entry)))
+/**
+ * Renders whatever sits at a dotted path as text. An array maps the rest of the
+ * path over its entries, an object carrying a `name` reduces to that name, and
+ * any other object joins its own scalars -- so one path covers a plain string,
+ * an object, or a list of either, which is how the same idea is spelled
+ * differently across the YAML files.
+ */
+function textAt(value: unknown, segments: string[]): string {
+  if (value === null || value === undefined) return ''
+
+  if (Array.isArray(value)) {
+    return value
+      .map((entry) => textAt(entry, segments))
       .filter(Boolean)
       .join(', ')
-    if (institutions) return institutions
   }
 
-  if (isPlainObject(node.issuer)) {
-    return compact([node.issuer.institution, node.issuer.platform])
+  if (segments.length) {
+    return isPlainObject(value) ? textAt(value[segments[0]], segments.slice(1)) : ''
+  }
+
+  if (isPlainObject(value)) {
+    return stringify(value.name) || compact(Object.values(value))
+  }
+
+  return stringify(value)
+}
+
+/**
+ * Where an entry's owning organisation lives, best first: `institution` on
+ * education and workshops, `issuer` on certifications, `affiliation` on
+ * leadership roles, a plain `organization` string on volunteering roles.
+ */
+const DETAIL_PATHS = [
+  'institution',
+  'issuer',
+  'affiliation.organization',
+  'organization',
+]
+
+/**
+ * The organisation behind an entry. `name` is what the Credential column
+ * already shows, so a path that only repeats it is skipped -- an education
+ * entry named by its institution falls through to its type instead.
+ */
+function displayDetail(node: UnknownRecord, name: string): string {
+  for (const path of DETAIL_PATHS) {
+    const text = textAt(node, path.split('.'))
+    if (text && text !== name) return text
   }
 
   return compact([node.company, node.host, node.type, node.mode])
@@ -251,6 +292,8 @@ function collectFromNode(
     // The card reads its keys in order and shows the first one that resolves,
     // so stop at the first key that yields a link. DocumentViewer renders
     // nothing for a blank value or "#", which is what leaves a row unlinked.
+    const item = displayName(node, ancestry)
+
     let links: CredentialLink[] = []
     for (const key of slot.keys) {
       links = credentialLinksFrom(node[key], key).filter((link) => link.url !== '#')
@@ -261,8 +304,8 @@ function collectFromNode(
       id: `${source}:${path.join('.')}`,
       page: pageFromSource(source),
       section: slot.section ?? sectionFromContext(path, ancestry),
-      item: displayName(node, ancestry),
-      detail: displayDetail(node),
+      item,
+      detail: displayDetail(node, item),
       source,
       configPath: path.join('.'),
       links,

@@ -141,12 +141,15 @@ const PAGE_SIZE = 20
 // YAML file name still finds its rows.
 const SEARCH_FIELDS = ['page', 'section', 'item', 'detail', 'source'] as const
 
+// Percentage widths, with `table-layout: fixed` in the stylesheet, so a column
+// is the same width under All, Linked and Empty. Left to itself the table sizes
+// columns from whatever rows are on screen, and the layout jumps as you switch.
 const headers = [
-  { title: 'Page - Section', key: 'page', width: 220 },
-  { title: 'Credential', key: 'item', minWidth: '260' },
-  { title: 'Detail', key: 'detail', minWidth: '220' },
+  { title: 'Page - Section', key: 'page', width: '20%' },
+  { title: 'Credential', key: 'item', width: '37%' },
+  { title: 'Detail', key: 'detail', width: '37%' },
   // Icon-only column: the glyph says what it is, so the header stays blank.
-  { title: '', key: 'links', sortable: false, width: 72, align: 'center' as const },
+  { title: '', key: 'links', sortable: false, width: '6%', align: 'center' as const },
 ]
 
 const rows = getCredentialDashboardRows()
@@ -217,6 +220,12 @@ watch([query, filter], () => {
 /* Vuetify's table chrome, restyled to the slate/#1980e6 palette the rest of
    this page uses. Rows size to their content -- the page height is held steady
    by the blank rows in `body.append`, not by pinning pixels. */
+/* Widths come from the `headers` percentages rather than from the rows, so
+   they hold steady across the All/Linked/Empty scopes. */
+.credentials-table :deep(table) {
+  table-layout: fixed;
+}
+
 .credentials-table :deep(thead th) {
   height: 44px;
   background: #f1f5f9 !important;
@@ -234,6 +243,7 @@ watch([query, filter], () => {
   padding-bottom: 0.5rem !important;
   font-size: 0.875rem;
   color: #0f172a;
+  overflow-wrap: anywhere;
 }
 
 .credentials-table :deep(tbody tr:hover) {
