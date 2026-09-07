@@ -13,6 +13,8 @@
         :icon="iconMap[edu.type]"
         :title="edu.degree"
         :subject="edu.field"
+        :sub-field="edu.sub_field"
+        :sub-field-cred-link="edu.sub_field_cred_link || edu.minor_cred_link"
         :time="String(edu.time_period)"
         :institution="edu.institution"
         :location="edu.location"
@@ -53,4 +55,3 @@ const iconMap = {
   University: "mdi-school"
 }
 </script>
-

@@ -42,7 +42,7 @@
           :items-per-page="PAGE_SIZE"
           :sort-by="[
             { key: 'pageRank', order: 'asc' },
-            { key: 'page', order: 'asc' },
+            { key: 'sourceOrder', order: 'asc' },
           ]"
           item-value="id"
           density="compact"

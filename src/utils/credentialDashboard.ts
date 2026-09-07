@@ -29,6 +29,8 @@ const PAGE_ORDER = [
   'Home',
   'Internships & Certifications',
   'Co-curricular',
+  'Workshops & Bootcamps',
+  'Professional Activity',
 ]
 
 // YAML section keys whose humanized form reads badly, or where the page shows
@@ -51,6 +53,8 @@ interface CredentialSlot {
   keys: string[]
   /** Overrides the section label derived from the path. */
   section?: string
+  /** Dashboard group order for page/section clusters. */
+  order: number
 }
 
 /**
@@ -64,33 +68,58 @@ interface CredentialSlot {
  * purpose — they never produce a document viewer.
  */
 const CREDENTIAL_SLOTS: readonly CredentialSlot[] = [
-  { file: 'education.yml', path: 'education.*', keys: ['cred_link'] },
-  // Curriculum courses are left out on purpose: CourseCard has a slot, but a
-  // per-course credential is the rare exception (1 of 70) and the rows swamp
-  // the audit. Add a slot here with section 'Curriculum' to bring them back.
-  { file: 'experience.yml', path: 'experience.*', keys: ['cred_link'] },
-  { file: 'cocurricular.yml', path: 'co_curriculars.*.entries.*', keys: ['cred_link'] },
-  { file: 'internships.yml', path: 'internships.*', keys: ['cred_link'] },
-  { file: 'certifications.yml', path: 'certifications.*', keys: ['cred_link'] },
-  { file: 'certifications.yml', path: 'more_certifications.*', keys: ['cred_link'] },
+  { file: 'experience.yml', path: 'experience.*', keys: ['cred_link'], order: 10 },
+  { file: 'education.yml', path: 'education.*', keys: ['cred_link'], order: 20 },
+  {
+    file: 'education.yml',
+    path: 'education.*.sub_field.*',
+    keys: ['cred_link'],
+    section: 'Minor',
+    order: 21,
+  },
+  {
+    file: 'education.yml',
+    path: 'education.*.cirriculum.transfered_credits.*',
+    keys: ['cred_link'],
+    section: 'Transferred Credits',
+    order: 22,
+  },
+  {
+    file: 'education.yml',
+    path: 'education.*.cirriculum.transferred_credits.*',
+    keys: ['cred_link'],
+    section: 'Transferred Credits',
+    order: 22,
+  },
+  { file: 'internships.yml', path: 'internships.*', keys: ['cred_link'], order: 30 },
+  { file: 'certifications.yml', path: 'certifications.*', keys: ['cred_link'], order: 40 },
+  { file: 'certifications.yml', path: 'more_certifications.*', keys: ['cred_link'], order: 41 },
+  { file: 'cocurricular.yml', path: 'co_curriculars.*.entries.*', keys: ['cred_link'], order: 50 },
   // WorkshopCard falls back cred_link -> details_cred -> link. ConferenceCard
   // renders `link` as a plain anchor instead, so conferences list cred_link only.
+  { file: 'workshops.yml', path: 'attended_conferences.*', keys: ['cred_link'], order: 60 },
+  { file: 'workshops.yml', path: 'attended_fdps.*', keys: ['cred_link'], order: 70 },
+  { file: 'workshops.yml', path: 'attended_bootcamps.*', keys: ['cred_link'], order: 75 },
   {
     file: 'workshops.yml',
     path: 'attended_workshops.*',
     keys: ['cred_link', 'details_cred', 'link'],
+    order: 80,
   },
+  { file: 'workshops.yml', path: 'attended_webinars_n_others.*', keys: ['cred_link'], order: 90 },
   {
     file: 'workshops.yml',
     path: 'attended_other_workshops.*',
     keys: ['cred_link', 'details_cred', 'link'],
+    order: 100,
   },
-  { file: 'workshops.yml', path: 'attended_webinars_n_others.*', keys: ['cred_link'] },
-  { file: 'workshops.yml', path: 'attended_bootcamps.*', keys: ['cred_link'] },
-  { file: 'workshops.yml', path: 'attended_conferences.*', keys: ['cred_link'] },
-  { file: 'workshops.yml', path: 'attended_fdps.*', keys: ['cred_link'] },
-  { file: 'professional_activity.yml', path: 'hosted_events.*', keys: ['cred_link'] },
-  { file: 'professional_activity.yml', path: 'other_hosted_events.*', keys: ['cred_link'] },
+  { file: 'professional_activity.yml', path: 'hosted_events.*', keys: ['cred_link'], order: 120 },
+  {
+    file: 'professional_activity.yml',
+    path: 'other_hosted_events.*',
+    keys: ['cred_link'],
+    order: 121,
+  },
 ]
 
 type UnknownRecord = Record<string, unknown>
@@ -111,6 +140,7 @@ export interface CredentialDashboardRow {
   configPath: string
   links: CredentialLink[]
   hasLink: boolean
+  sourceOrder: number
 }
 
 function isPlainObject(value: unknown): value is UnknownRecord {
@@ -212,6 +242,8 @@ function textAt(value: unknown, segments: string[]): string {
 const DETAIL_PATHS = [
   'institution',
   'issuer',
+  'host',
+  'logo',
   'affiliation.organization',
   'organization',
 ]
@@ -238,6 +270,10 @@ function pageFromSource(source: string): string {
 function pageRank(page: string): number {
   const index = PAGE_ORDER.indexOf(page)
   return index === -1 ? PAGE_ORDER.length : index
+}
+
+function fallbackSlotOrder(page: string): number {
+  return (pageRank(page) + 1) * 1000
 }
 
 function sectionFromContext(path: string[], ancestry: UnknownRecord[]): string {
@@ -341,7 +377,7 @@ function collectFromNode(
 
     rows.push({
       id: `${source}:${path.join('.')}`,
-      pageRank: pageRank(page),
+      pageRank: slot.order ?? fallbackSlotOrder(page),
       page,
       section: slot.section ?? sectionFromContext(path, ancestry),
       item,
@@ -350,6 +386,7 @@ function collectFromNode(
       configPath: path.join('.'),
       links,
       hasLink: links.length > 0,
+      sourceOrder: rows.length,
     })
   }
 
@@ -369,8 +406,7 @@ export function getCredentialDashboardRows(): CredentialDashboardRow[] {
 
   return rows.sort((a, b) =>
     a.pageRank - b.pageRank ||
-    a.page.localeCompare(b.page) ||
-    a.section.localeCompare(b.section) ||
+    a.sourceOrder - b.sourceOrder ||
     a.item.localeCompare(b.item) ||
     a.source.localeCompare(b.source),
   )

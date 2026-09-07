@@ -42,6 +42,23 @@
             <DocumentViewer :src="cred_link" />
           </span>
         </p>
+        <div v-if="subFields.length" class="mt-0.5 space-y-0.5">
+          <div
+            v-for="minor in subFields"
+            :key="minor.name"
+            class="flex items-center gap-2"
+          >
+            <v-icon class="text-[#4e7397]" size="15">
+              mdi-certificate-outline
+            </v-icon>
+            <p class="text-slate-700 text-[15px] font-medium leading-normal">
+              Minor in {{ minor.name }}
+            </p>
+            <span v-if="minor.credLink" class="inline-block align-middle">
+              <DocumentViewer :src="minor.credLink" :size="15" />
+            </span>
+          </div>
+        </div>
       </div>
 
       <!-- Time, plus how far along the programme is when it's still running -->
@@ -131,6 +148,8 @@ import CourseCirriculumModal from './CourseCirriculumModal.vue'
 const props = defineProps({
   title: { type: String, required: true },
   subject: { type: String, default: '' },
+  subField: { type: [String, Array, Object], default: '' },
+  subFieldCredLink: { type: String, default: '' },
   time: { type: String, required: true },
   institution: { type: String, required: true },
   location: { type: String, required: true },
@@ -147,6 +166,35 @@ const props = defineProps({
 })
 
 const showCurriculumModal = ref(false)
+
+function normalizeSubField(value) {
+  if (!value) return null
+
+  if (typeof value === 'string') {
+    return {
+      name: value,
+      credLink: props.subFieldCredLink || '',
+    }
+  }
+
+  const name = value.name || value.title || value.value || ''
+  if (!name) return null
+
+  return {
+    name,
+    credLink:
+      value.cred_link ||
+      value.credential_link ||
+      value.credentialLink ||
+      props.subFieldCredLink ||
+      '',
+  }
+}
+
+const subFields = computed(() => {
+  const entries = Array.isArray(props.subField) ? props.subField : [props.subField]
+  return entries.map(normalizeSubField).filter(Boolean)
+})
 
 const hasCurriculum = computed(() =>
   props.cirriculum && Object.keys(props.cirriculum).some(k => k !== 'link')
