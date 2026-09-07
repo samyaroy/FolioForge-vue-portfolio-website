@@ -34,21 +34,33 @@ defineOptions({
 
 const props = defineProps({
   projects: {
-    type: Array,
+    type: [Array, Object],
     default: () => []
   }
 })
 
-// Split into categories dynamically
-const technicalProjects = computed(() =>
-  props.projects.filter(p => p.type === 'Technical Project')
-)
-const researchProjects = computed(() =>
-  props.projects.filter(p => p.type === 'Research Project')
-)
-const minorProjects = computed(() =>
-  props.projects.filter(p => p.type === 'Minor Project')
-)
+const toArray = (value) => (Array.isArray(value) ? value : [])
+const sectionArray = (...values) => values.find(Array.isArray) || []
+
+const projectSections = computed(() => {
+  if (Array.isArray(props.projects)) {
+    return {
+      research: props.projects.filter(p => p.type === 'Research Project'),
+      technical: props.projects.filter(p => p.type === 'Technical Project'),
+      other: props.projects.filter(p => p.type === 'Minor Project')
+    }
+  }
+
+  return {
+    research: sectionArray(props.projects?.research_projects, props.projects?.researchProjects),
+    technical: sectionArray(props.projects?.technical_projects, props.projects?.technicalProjects),
+    other: sectionArray(props.projects?.other_projects, props.projects?.otherProjects, props.projects?.minor_projects, props.projects?.minorProjects)
+  }
+})
+
+const technicalProjects = computed(() => toArray(projectSections.value.technical))
+const researchProjects = computed(() => toArray(projectSections.value.research))
+const minorProjects = computed(() => toArray(projectSections.value.other))
 
 const showResearchProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showResearchProjects')
 const showTechnicalProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showTechnicalProjects')

@@ -73,7 +73,7 @@ import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlag
 // so an emptied-out section renders the empty state instead of throwing.
 const toArray = (value) => (Array.isArray(value) ? value : [])
 
-const projects = toArray(config.projects)
+const projects = config.projects || []
 const publications = toArray(config.publications)
 const articles = toArray(config.articles)
 const posters = toArray(config.posters)
