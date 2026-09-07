@@ -40,7 +40,10 @@
           :headers="headers"
           :items="filteredRows"
           :items-per-page="PAGE_SIZE"
-          :sort-by="[{ key: 'page', order: 'asc' }]"
+          :sort-by="[
+            { key: 'pageRank', order: 'asc' },
+            { key: 'page', order: 'asc' },
+          ]"
           item-value="id"
           density="compact"
           hover
@@ -95,7 +98,8 @@
                 :href="link.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                :aria-label="`Open the credential document for ${item.item}`"
+                :title="link.label"
+                :aria-label="`Open ${link.label} for ${item.item}`"
                 class="inline-flex size-6 shrink-0 items-center justify-center rounded-md border border-[#1980e6]/20 bg-[#1980e6]/5 text-[#126ab5] transition hover:border-[#1980e6]/40 hover:bg-[#1980e6]/10 hover:text-[#0e141b]"
               >
                 <v-icon size="14">mdi-open-in-new</v-icon>

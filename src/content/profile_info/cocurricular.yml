@@ -18,11 +18,11 @@ co_curriculars:
             time_period: 2023 - 2026
         description: Created and led the statistics community of 700+ members over 2 years. Organized 20+ workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
         cred_link:
-          - label: Certificate 2023-2024
-            url: https://drive.google.com/file/d/1DgDJXTVzKSZIzrJhvsVp8mc0qEZVptu2/preview
           - label: Certificate 2024-2025
             url: https://drive.google.com/file/d/1oVT6q9AyRm0qfffNGatqN1MPvr6-bsyY/preview
-        # skills: Leadership, Event Management, Team Building
+          - label: Certificate 2023-2024
+            url: https://drive.google.com/file/d/1DgDJXTVzKSZIzrJhvsVp8mc0qEZVptu2/preview
+       # skills: Leadership, Event Management, Team Building
 
       - role: Event Head
         affiliation:
