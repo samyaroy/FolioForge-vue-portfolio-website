@@ -8,12 +8,16 @@
       v-if="showTechnicalProjectsSection"
       :projects="technicalProjects"
     />
-    <OtherProjects
-      v-if="showOtherProjectsSection"
+    <MinorProjects
+      v-if="showMinorProjectsSection"
       :projects="minorProjects"
     />
+    <OtherProjects
+      v-if="showOtherProjectsSection"
+      :projects="otherProjects"
+    />
     <div
-      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection && !showOtherProjectsSection"
+      v-if="!showResearchProjectsSection && !showTechnicalProjectsSection && !showOtherProjectsSection && !showMinorProjectsSection"
       class="bg-white rounded-lg shadow-sm p-4 sm:p-8 text-center text-gray-500 italic"
     >
       No project sections are enabled.
@@ -26,6 +30,7 @@ import { computed } from 'vue'
 import TechnicalProjects from './components/TechnicalProjects.vue'
 import ResearchProjects from './components/ResearchProjects.vue'
 import OtherProjects from './components/OtherProjects.vue'
+import MinorProjects from './components/MinorProjects.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 defineOptions({
@@ -47,23 +52,27 @@ const projectSections = computed(() => {
     return {
       research: props.projects.filter(p => p.type === 'Research Project'),
       technical: props.projects.filter(p => p.type === 'Technical Project'),
-      other: props.projects.filter(p => p.type === 'Minor Project')
+      other: props.projects.filter(p => p.type === 'Other Project'),
+      minor: props.projects.filter(p => p.type === 'Minor Project')
     }
   }
 
   return {
     research: sectionArray(props.projects?.research_projects, props.projects?.researchProjects),
     technical: sectionArray(props.projects?.technical_projects, props.projects?.technicalProjects),
-    other: sectionArray(props.projects?.other_projects, props.projects?.otherProjects, props.projects?.minor_projects, props.projects?.minorProjects)
+    other: sectionArray(props.projects?.other_projects, props.projects?.otherProjects),
+    minor: sectionArray(props.projects?.minor_projects, props.projects?.minorProjects)
   }
 })
 
 const technicalProjects = computed(() => toArray(projectSections.value.technical))
 const researchProjects = computed(() => toArray(projectSections.value.research))
-const minorProjects = computed(() => toArray(projectSections.value.other))
+const otherProjects = computed(() => toArray(projectSections.value.other))
+const minorProjects = computed(() => toArray(projectSections.value.minor))
 
 const showResearchProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showResearchProjects')
 const showTechnicalProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showTechnicalProjects')
 const showOtherProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showOtherProjects')
+const showMinorProjectsSection = isFeatureEnabled('showProjectsPublications.showProjects.showMinorProjects')
 
 </script>

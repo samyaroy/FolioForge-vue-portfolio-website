@@ -65,7 +65,8 @@ projects:
       type: "Technical Project"
       affiliation: Freelance Project
       tech_stack: Laravel, MySQL, Bootstrap
-      guide:
+      cred_link:
+        website: "https://doctorvahaan.com/"
       time_period: "Nov 2024 - Dec 2024"
 
     # - title: FolioForge Portfolio Website
@@ -95,7 +96,7 @@ projects:
     #   time_period:
     #   cred_link:
 
-  other_projects:
+  minor_projects:
     - title: "Crowd-sourced FAQ Solution & Discussion Portal for VINS 2026 - VLED IIT Ropar"
       description: ""
       type: "Minor Project"
@@ -142,4 +143,28 @@ projects:
       time_period: "Jan 2025 - Aug 2025"
       cred_link:
         github: "https://github.com/samyaroy/quiz_pilot_master_repo"
+
+  other_projects:
+    - title: "FolioForge - Portfolio Website"
+      description: Personal portfolio website featuring dynamic content control and responsive design.
+      tech_stack: Vue.js, Tailwind CSS, JavaScript
+      cred_link:
+        github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
+    - title: "Chi-Square: Statistics Club - Website"
+      description: Responsive website for the Statistics Club of IITM BS Degree.
+      tech_stack: Typescript, React.js, Tailwind CSS, Headless UI
+      cred_link:
+        github: "https://github.com/22f2001443/chi-square"
+        website: ""
+    - title: "Codeium Classes - Website"
+      description: Responsive website for Codeium Classes, a coding education platform.
+      tech_stack: Typescript, React.js, Shadcn
+      cred_link:
+        github: ""
+        website: "https://codeium.xyz/"
+    - title: "MoneyMe - Finance Management Web App"
+      description: Full-stack finance management web application with user authentication, expense tracking, and data visualization.
+      tech_stack: FastAPI, PostgreSQL, React.js, Typescript
+      cred_link:
+        github: ""
       
