@@ -25,6 +25,12 @@ const PAGE_NAMES: Record<string, string> = {
   'professional_activity.yml': 'Professional Activity',
 }
 
+const PAGE_ORDER = [
+  'Home',
+  'Internships & Certifications',
+  'Co-curricular',
+]
+
 // YAML section keys whose humanized form reads badly, or where the page shows
 // the section under a different name. Everything else humanizes cleanly.
 const SECTION_NAMES: Record<string, string> = {
@@ -96,6 +102,7 @@ export interface CredentialLink {
 
 export interface CredentialDashboardRow {
   id: string
+  pageRank: number
   page: string
   section: string
   item: string
@@ -228,6 +235,11 @@ function pageFromSource(source: string): string {
   return PAGE_NAMES[fileName] ?? humanize(fileName.replace(/\.ya?ml$/i, ''))
 }
 
+function pageRank(page: string): number {
+  const index = PAGE_ORDER.indexOf(page)
+  return index === -1 ? PAGE_ORDER.length : index
+}
+
 function sectionFromContext(path: string[], ancestry: UnknownRecord[]): string {
   for (const ancestor of [...ancestry].reverse()) {
     if (Array.isArray(ancestor.entries)) {
@@ -254,18 +266,43 @@ function slotFor(source: string, path: string[]): CredentialSlot | undefined {
   )
 }
 
+function defaultCredentialLabel(key: string): string {
+  return key === 'cred_link' || key === 'credential_link' || key === 'certificate_link'
+    ? 'Certificate'
+    : humanize(key)
+}
+
+function createCredentialLink(url: string, label: string): CredentialLink | null {
+  const trimmedUrl = url.trim()
+  if (!trimmedUrl) return null
+
+  return {
+    label: label || 'Certificate',
+    url: trimmedUrl,
+  }
+}
+
 function credentialLinksFrom(value: unknown, fallbackLabel: string): CredentialLink[] {
   if (typeof value === 'string') {
-    const url = value.trim()
-    return url ? [{ label: humanize(fallbackLabel), url }] : []
+    const link = createCredentialLink(value, fallbackLabel || 'Certificate')
+    return link ? [link] : []
   }
 
   if (isPlainObject(value)) {
+    const directUrl = firstOf([value.url, value.href, value.link, value.src])
+    if (directUrl) {
+      const link = createCredentialLink(
+        directUrl,
+        stringify(value.label) || stringify(value.title) || stringify(value.name) || 'Certificate',
+      )
+      return link ? [link] : []
+    }
+
     return Object.entries(value).flatMap(([label, nested]) => credentialLinksFrom(nested, label))
   }
 
   if (Array.isArray(value)) {
-    return value.flatMap((nested, index) => credentialLinksFrom(nested, `${fallbackLabel} ${index + 1}`))
+    return value.flatMap((nested) => credentialLinksFrom(nested, 'Certificate'))
   }
 
   return []
@@ -296,13 +333,16 @@ function collectFromNode(
 
     let links: CredentialLink[] = []
     for (const key of slot.keys) {
-      links = credentialLinksFrom(node[key], key).filter((link) => link.url !== '#')
+      links = credentialLinksFrom(node[key], defaultCredentialLabel(key)).filter((link) => link.url !== '#')
       if (links.length) break
     }
 
+    const page = pageFromSource(source)
+
     rows.push({
       id: `${source}:${path.join('.')}`,
-      page: pageFromSource(source),
+      pageRank: pageRank(page),
+      page,
       section: slot.section ?? sectionFromContext(path, ancestry),
       item,
       detail: displayDetail(node, item),
@@ -328,6 +368,7 @@ export function getCredentialDashboardRows(): CredentialDashboardRow[] {
   }
 
   return rows.sort((a, b) =>
+    a.pageRank - b.pageRank ||
     a.page.localeCompare(b.page) ||
     a.section.localeCompare(b.section) ||
     a.item.localeCompare(b.item) ||
