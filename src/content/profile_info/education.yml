@@ -54,7 +54,8 @@ education:
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
     sub_field:
-      - name: Algorithmic Decision Making
+      - label: Minor
+        name: Algorithmic Decision Making
         cred_link: ""
     institution: Indian Institute of Technology Madras
     location: Chennai, TN

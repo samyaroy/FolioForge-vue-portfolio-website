@@ -44,18 +44,18 @@
         </p>
         <div v-if="subFields.length" class="mt-0.5 space-y-0.5">
           <div
-            v-for="minor in subFields"
-            :key="minor.name"
+            v-for="subFieldEntry in subFields"
+            :key="`${subFieldEntry.label}:${subFieldEntry.name}`"
             class="flex items-center gap-2"
           >
             <v-icon class="text-[#4e7397]" size="15">
               mdi-certificate-outline
             </v-icon>
             <p class="text-slate-700 text-[15px] font-medium leading-normal">
-              Minor in {{ minor.name }}
+              {{ subFieldEntry.text }}
             </p>
-            <span v-if="minor.credLink" class="inline-block align-middle">
-              <DocumentViewer :src="minor.credLink" :size="15" />
+            <span v-if="subFieldEntry.credLink" class="inline-block align-middle">
+              <DocumentViewer :src="subFieldEntry.credLink" :size="15" />
             </span>
           </div>
         </div>
@@ -167,21 +167,38 @@ const props = defineProps({
 
 const showCurriculumModal = ref(false)
 
+function formatSubFieldText(label, name) {
+  const normalizedLabel = String(label || '').trim()
+  if (!normalizedLabel) return name
+
+  if (normalizedLabel.toLowerCase() === 'minor') {
+    return `Minor in ${name}`
+  }
+
+  return `${normalizedLabel} in ${name}`
+}
+
 function normalizeSubField(value) {
   if (!value) return null
 
   if (typeof value === 'string') {
+    const label = 'Minor'
     return {
       name: value,
+      label,
+      text: formatSubFieldText(label, value),
       credLink: props.subFieldCredLink || '',
     }
   }
 
   const name = value.name || value.title || value.value || ''
   if (!name) return null
+  const label = value.label || 'Minor'
 
   return {
     name,
+    label,
+    text: formatSubFieldText(label, name),
     credLink:
       value.cred_link ||
       value.credential_link ||
