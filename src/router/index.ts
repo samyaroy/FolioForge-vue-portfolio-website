@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { isFeatureEnabled } from '@/config/featureFlags'
-import { isBetaSite } from '@/config/siteEnvironment'
+import { areBetaRoutesEnabled } from '@/config/siteEnvironment'
 import { BASE_TITLE, pageTitle, routeMetadata } from './routes'
 
 // Path, title, description, and feature flag for every page live in
@@ -42,7 +42,10 @@ const views: Record<string, () => Promise<{ default: RouteComponent }>> = {
   PrivacyPolicy: () => import('@/views/PrivacyPolicy.vue'),
   Resources: () => import('@/views/Resources/index.vue'),
   Facts: () => import('@/views/Facts/index.vue'),
-  CredentialsDashboard: () => import('@/views/CredentialsDashboard/index.vue'),
+  // Vite removes this import from builds that cannot expose beta routes.
+  ...(import.meta.env.VITE_ENABLE_BETA_ROUTES ? {
+    CredentialsDashboard: () => import('@/views/CredentialsDashboard/index.vue'),
+  } : {}),
 }
 
 const routes: RouteRecordRaw[] = [
@@ -84,7 +87,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  if (to.meta?.betaOnly && !isBetaSite()) return { name: 'Home' }
+  if (to.meta?.betaOnly && !areBetaRoutesEnabled()) return { name: 'Home' }
 
   const flagPath = to.meta?.flagPath
   if (!flagPath) return true

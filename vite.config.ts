@@ -43,12 +43,13 @@ function siteBranch(): string {
 const SITE_BRANCH = siteBranch()
 const IS_BETA_BUILD = (process.env.VITE_SITE_ENV ??
   (SITE_BRANCH === 'V1' ? 'beta' : 'stable')).trim().toLowerCase() === 'beta'
+const INCLUDE_BETA_ROUTES = SITE_BRANCH === 'V1' && IS_BETA_BUILD
 
 // Routes whose feature flag is off redirect to Home at runtime, so they are
 // neither prerendered nor listed in the sitemap.
 const publicRoutes = routeMetadata.filter(
   (route) =>
-    (!route.betaOnly || IS_BETA_BUILD) &&
+    (!route.betaOnly || INCLUDE_BETA_ROUTES) &&
     (!route.flagPath ||
       isFeatureEnabled(route.flagPath, { mode: route.flagMode })),
 )
@@ -167,6 +168,7 @@ function seoPrerender(options: SeoPrerenderOptions): Plugin {
 export default defineConfig({
   define: {
     'import.meta.env.VITE_SITE_BRANCH': JSON.stringify(SITE_BRANCH),
+    'import.meta.env.VITE_ENABLE_BETA_ROUTES': JSON.stringify(INCLUDE_BETA_ROUTES),
   },
   plugins: [
     vue(),

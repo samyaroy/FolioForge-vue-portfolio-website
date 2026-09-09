@@ -65,3 +65,7 @@ export function isBetaSite(): boolean {
 export function isStableSite(): boolean {
   return siteEnvironment() === 'stable'
 }
+
+export function areBetaRoutesEnabled(): boolean {
+  return import.meta.env.VITE_ENABLE_BETA_ROUTES && isBetaSite()
+}

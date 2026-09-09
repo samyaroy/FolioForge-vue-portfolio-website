@@ -29,6 +29,7 @@ for (const [name, host, branch, declared, expected] of cases) {
         'import.meta.env': JSON.stringify({
           VITE_SITE_ENV: declared,
           VITE_SITE_BRANCH: branch,
+          VITE_ENABLE_BETA_ROUTES: branch === 'V1' && declared !== 'stable',
         }),
       },
       plugins: [{
@@ -45,8 +46,9 @@ for (const [name, host, branch, declared, expected] of cases) {
     })
     const context = { module: { exports: {} }, window: { location: { hostname: host } }, URL }
     runInNewContext(outputFiles[0].text, context)
-    const { isBetaSite, isStableSite } = context.module.exports
+    const { isBetaSite, isStableSite, areBetaRoutesEnabled } = context.module.exports
     assert.equal(isBetaSite(), expected === 'beta')
     assert.equal(isStableSite(), expected === 'stable')
+    assert.equal(areBetaRoutesEnabled(), branch === 'V1' && expected === 'beta')
   })
 }

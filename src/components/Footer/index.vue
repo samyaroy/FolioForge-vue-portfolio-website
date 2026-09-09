@@ -269,7 +269,7 @@ import config from "@/content/profile_info"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
-import { isBetaSite, isStableSite } from '@/config/siteEnvironment'
+import { areBetaRoutesEnabled, isStableSite } from '@/config/siteEnvironment'
 
 export default {
   components: {
@@ -306,7 +306,7 @@ export default {
       showBetaVersionLink: Boolean(profile.betaVersionUrl) && isStableSite(),
       // Mirrors the router's betaOnly guard, so the link is only ever offered
       // where /credentials-dashboard actually resolves instead of redirecting.
-      showCredentialsDashboardLink: isBetaSite(),
+      showCredentialsDashboardLink: areBetaRoutesEnabled(),
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},   
       // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
       // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   

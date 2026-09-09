@@ -12,6 +12,8 @@ interface ImportMetaEnv {
   readonly VITE_SITE_ENV?: string
   /** Checkout/deployment branch injected by Vite for local and preview builds. */
   readonly VITE_SITE_BRANCH?: string
+  /** True only for beta builds from V1; controls beta-only route bundling. */
+  readonly VITE_ENABLE_BETA_ROUTES: boolean
 }
 
 interface ImportMeta {
