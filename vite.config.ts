@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { execFileSync } from 'node:child_process'
 import { defineConfig, type Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
@@ -23,14 +24,25 @@ import {
   type SeoPrerenderOptions,
 } from './scripts/seo-build'
 
-// Which deployment this build is for, declared by the host's build settings
-// rather than by anything in the tree -- so it survives V1 -> main tree
-// replacement, exactly like the hostname check in src/config/siteEnvironment.ts.
-//
-// Cloudflare: set VITE_SITE_ENV=beta on the V1 deployment's build variables.
-// The main deployment can set 'stable' or leave it unset; only 'beta' changes
-// what is emitted. The browser reads the same variable at runtime.
-const IS_BETA_BUILD = (process.env.VITE_SITE_ENV ?? '').trim().toLowerCase() === 'beta'
+// Derive the preview identity from checkout metadata so merges cannot copy a
+// branch-specific marker into main. Deployment settings can still override it.
+function siteBranch(): string {
+  const deployedBranch = process.env.CF_PAGES_BRANCH || process.env.WORKERS_CI_BRANCH
+  if (deployedBranch) return deployedBranch
+  try {
+    return execFileSync('git', ['branch', '--show-current'], {
+      cwd: fileURLToPath(new URL('.', import.meta.url)),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim()
+  } catch {
+    return ''
+  }
+}
+
+const SITE_BRANCH = siteBranch()
+const IS_BETA_BUILD = (process.env.VITE_SITE_ENV ??
+  (SITE_BRANCH === 'V1' ? 'beta' : 'stable')).trim().toLowerCase() === 'beta'
 
 // Routes whose feature flag is off redirect to Home at runtime, so they are
 // neither prerendered nor listed in the sitemap.
@@ -153,6 +165,9 @@ function seoPrerender(options: SeoPrerenderOptions): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    'import.meta.env.VITE_SITE_BRANCH': JSON.stringify(SITE_BRANCH),
+  },
   plugins: [
     vue(),
     // Resolves each <v-*> component and its styles from the templates that use

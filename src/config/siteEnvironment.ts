@@ -1,15 +1,5 @@
-// Which deployment is the visitor actually on?
-//
-// The check is on the hostname rather than a feature flag or any tracked config
-// file, and that is deliberate: V1 is merged into main by replacing main's tree
-// wholesale, so any branch-local marker would ride along into production on the
-// next merge. The host is the one thing that differs at runtime and that no
-// merge can carry over, which makes this safe to have on both branches. (It is
-// also how the footer's beta link was lost from main in the first place.)
-//
-// Consumers:
-//   - BetaBadge.vue    links to the stable site, but only on the beta host
-//   - Footer/index.vue links to the beta site, but only on the stable host
+// Deployment settings and public hostnames identify published sites. Checkout
+// metadata identifies local/preview builds without a mergeable branch marker.
 
 import config from '@/content/profile_info'
 import { SITE_URL } from '@/router/routes'
@@ -31,11 +21,8 @@ export const BETA_URL: string | null = config.profile?.betaVersionUrl ?? null
  * thing consulted. 'beta' or 'stable'; anything else (including unset, the
  * normal case) falls through to the hostname.
  *
- * This is the second immune channel. It lives in the host's build environment
- * rather than in a tracked file, so like the hostname it cannot be carried
- * between branches by a tree-replacement merge. Use it when the hostname is
- * unavailable or wrong -- a preview URL, a custom domain, a local build you
- * want to smoke-test as production:
+ * Use a deployment setting to override hostname and branch detection, for
+ * example to smoke-test another environment locally:
  *
  *   VITE_SITE_ENV=stable npm run build
  *
@@ -44,6 +31,7 @@ export const BETA_URL: string | null = config.profile?.betaVersionUrl ?? null
  * vite.config.ts, which uses it to noindex non-production output.
  */
 const DECLARED_ENV = (import.meta.env?.VITE_SITE_ENV ?? '').trim().toLowerCase()
+const SITE_BRANCH = import.meta.env.VITE_SITE_BRANCH ?? ''
 
 // Guarded for the prerender pass, which runs in Node. scripts/seo-build.ts only
 // stamps <head> on the built shell today, so no component renders there, but the
@@ -61,22 +49,19 @@ function hostnameOf(url: string | null): string | null {
   }
 }
 
-/**
- * True on the beta host. Local dev counts as beta too -- if you are on
- * localhost you are by definition not looking at the published site.
- */
-export function isBetaSite(): boolean {
-  if (DECLARED_ENV) return DECLARED_ENV === 'beta'
-  return host.startsWith(BETA_HOST_PREFIX) || LOCAL_HOSTS.includes(host)
+function siteEnvironment(): 'beta' | 'stable' | null {
+  if (DECLARED_ENV === 'beta' || DECLARED_ENV === 'stable') return DECLARED_ENV
+  if (host && host === hostnameOf(STABLE_URL)) return 'stable'
+  if (host.startsWith(BETA_HOST_PREFIX)) return 'beta'
+  if (SITE_BRANCH === 'main') return 'stable'
+  if (SITE_BRANCH === 'V1' || LOCAL_HOSTS.includes(host)) return 'beta'
+  return null
 }
 
-/**
- * True only on the stable host. Deliberately not the inverse of isBetaSite():
- * localhost is neither, so the "looking for beta?" pointer stays out of the way
- * during local development.
- */
+export function isBetaSite(): boolean {
+  return siteEnvironment() === 'beta'
+}
+
 export function isStableSite(): boolean {
-  if (DECLARED_ENV) return DECLARED_ENV === 'stable'
-  const stable = hostnameOf(STABLE_URL)
-  return Boolean(host && stable && host === stable)
+  return siteEnvironment() === 'stable'
 }

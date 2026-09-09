@@ -5,12 +5,13 @@
 interface ImportMetaEnv {
   /**
    * Which deployment this build is for: 'beta' or 'stable'. Set per deployment
-   * in the host's build settings (Cloudflare), never committed, so it survives
-   * V1 -> main tree replacement the same way the hostname check does.
-   * Unset is normal and falls back to hostname detection.
+   * in the host's build settings (Cloudflare). Unset falls back to hostname
+   * detection, then checkout branch for local and preview builds.
    * See src/config/siteEnvironment.ts.
    */
   readonly VITE_SITE_ENV?: string
+  /** Checkout/deployment branch injected by Vite for local and preview builds. */
+  readonly VITE_SITE_BRANCH?: string
 }
 
 interface ImportMeta {

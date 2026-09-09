@@ -189,6 +189,17 @@
                   src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
                   alt="Flag Counter" border="0"></a>
             </div>
+            <p v-if="showBetaVersionLink" class="mt-2 text-gray-500 text-sm">
+              Looking for beta version?
+              <a
+                :href="betaVersionUrl"
+                class="footer-link text-sm"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                see here
+              </a>
+            </p>
           </div>
         </div>
       </div>
@@ -201,22 +212,7 @@
           &#169; {{ new Date().getFullYear() }} Samyabrata Roy. Rights Reserved
         </p>
 
-        <p v-if="showBetaVersionLink" class="mt-2 text-gray-500 text-sm md:mt-0">
-          Looking for beta version?
-          <a
-            :href="betaVersionUrl"
-            class="footer-link text-sm"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            see here
-          </a>
-        </p>
-
-        <!-- The beta-side counterpart of the pointer above: the dashboard is a
-             beta-only route, so the link is shown exactly where it resolves.
-             The two are mutually exclusive, which keeps this bar at two items. -->
-        <p v-else-if="showCredentialsDashboardLink" class="mt-2 text-sm md:mt-0">
+        <p v-if="showCredentialsDashboardLink" class="mt-2 text-sm md:mt-0">
           <router-link to="/credentials-dashboard" class="footer-link text-sm">
             Credentials dashboard
           </router-link>
@@ -306,8 +302,7 @@ export default {
       google_scholar: socials.google_scholar,
       researchgate: socials.researchgate,
       betaVersionUrl: profile.betaVersionUrl,
-      // Only the stable site points at beta; on beta itself the header badge
-      // already points the other way, and on localhost neither applies.
+      // Stable deployments and main previews point at beta below the flags.
       showBetaVersionLink: Boolean(profile.betaVersionUrl) && isStableSite(),
       // Mirrors the router's betaOnly guard, so the link is only ever offered
       // where /credentials-dashboard actually resolves instead of redirecting.
