@@ -164,7 +164,12 @@ education:
           course_name: Business Data Management
           type: CC
           credit: 4
-          faculty: [Prof. Ashwin J. Baliga, Prof. Siddharth Arora, Prof. Aaditya Chandel]
+          faculty:
+            - name: Prof. Ashwin J. Baliga
+            - name: Prof. Siddharth Arora
+            - name: Prof. Aaditya Chandel
+            - name: Prof. Chavi (Chi Yun) CHEN]
+              link: https://www.ieseg.fr/en/faculty-and-research/professor/?id=1638
         - course_code: BSSE2002
           course_name: Tools in Data Science
           type: CC
