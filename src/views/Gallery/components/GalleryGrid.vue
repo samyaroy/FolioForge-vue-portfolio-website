@@ -3,7 +3,8 @@
     <TransitionGroup
       tag="div"
       name="gallery-cards"
-      class="relative grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 xl:grid-cols-3"
+      class="gallery-card-grid relative grid items-stretch gap-6"
+      :style="gridStyle"
       aria-live="polite"
       @before-leave="pinLeavingCard"
     >
@@ -17,7 +18,10 @@
           ? 'ring-2 ring-primary ring-offset-4 ring-offset-slate-50'
           : ''"
       >
-        <GalleryCard :item="item" />
+        <GalleryCard
+          :item="item"
+          :compact-layout="normalizedCardsPerRow === 4"
+        />
       </div>
     </TransitionGroup>
 
@@ -41,10 +45,11 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import GalleryCard from './GalleryCard.vue'
 import { galleryAnchorId } from '@/utils/shareLinks'
 
-defineProps({
+const props = defineProps({
   items: {
     type: Array,
     default: () => [],
@@ -58,9 +63,19 @@ defineProps({
     type: String,
     default: '',
   },
+  cardsPerRow: {
+    type: Number,
+    default: 3,
+  },
 })
 
 defineEmits(['loadMore'])
+
+const normalizedCardsPerRow = computed(() => normalizeCardCount(props.cardsPerRow))
+const gridStyle = computed(() => ({
+  '--gallery-cards-per-row': String(normalizedCardsPerRow.value),
+  '--gallery-cards-per-row-md': String(Math.min(normalizedCardsPerRow.value, 2)),
+}))
 
 // Grid items lose their slot once `position: absolute` kicks in on leave, so
 // freeze the card at its current spot before the leave transition starts.
@@ -70,9 +85,31 @@ function pinLeavingCard(el) {
   el.style.width = `${el.offsetWidth}px`
   el.style.height = `${el.offsetHeight}px`
 }
+
+function normalizeCardCount(value) {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return 3
+
+  return Math.abs(value - 3) <= Math.abs(value - 4) ? 3 : 4
+}
 </script>
 
 <style scoped>
+.gallery-card-grid {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .gallery-card-grid {
+    grid-template-columns: repeat(var(--gallery-cards-per-row-md), minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .gallery-card-grid {
+    grid-template-columns: repeat(var(--gallery-cards-per-row), minmax(0, 1fr));
+  }
+}
+
 .gallery-cards-enter-active,
 .gallery-cards-leave-active {
   transition: opacity 300ms ease, transform 300ms ease;

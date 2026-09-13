@@ -4,6 +4,17 @@ type FeatureFlagNode = {
   [key: string]: FeatureFlagLeaf | FeatureFlagNode
 }
 
+type FeatureFlagSettings = {
+  showGallery: {
+    /**
+     * Desktop card count for each row on the Career Unlocks (/gallery) page.
+     * Supported values are 3 and 4. Invalid values snap to the nearest option.
+     * Tablet layout caps this at 2; phone layout stays at 1.
+     */
+    cardsPerRow: number
+  }
+}
+
 const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showHome: {
     showRibbon: true,
@@ -122,6 +133,12 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   },
 }) satisfies FeatureFlagNode
 
+const DEFAULT_FEATURE_FLAG_SETTINGS = Object.freeze({
+  showGallery: {
+    cardsPerRow: 3,
+  },
+}) satisfies FeatureFlagSettings
+
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
 }
@@ -171,6 +188,11 @@ function evaluateAny(node: FeatureFlagLeaf | FeatureFlagNode | undefined): boole
 }
 
 export const featureFlags: FeatureFlagNode = DEFAULT_FEATURE_FLAGS
+export const featureFlagSettings: FeatureFlagSettings = DEFAULT_FEATURE_FLAG_SETTINGS
+
+export const galleryCardsPerRow = normalizeCardCount(
+  featureFlagSettings.showGallery.cardsPerRow,
+)
 
 type FeatureCheckOptions = {
   mode?: 'all' | 'any'
@@ -192,5 +214,26 @@ export function isPageDescriptionEnabled(page: string): boolean {
   return (
     isFeatureEnabled('showPageDescriptions.enabled') &&
     isFeatureEnabled(`showPageDescriptions.${page}`)
+  )
+}
+
+function normalizeCardCount(value: unknown): number {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    warnInvalidGalleryCardCount(value, 3)
+    return 3
+  }
+
+  const nearestValidValue = Math.abs(value - 3) <= Math.abs(value - 4) ? 3 : 4
+
+  if (value !== nearestValidValue) {
+    warnInvalidGalleryCardCount(value, nearestValidValue)
+  }
+
+  return nearestValidValue
+}
+
+function warnInvalidGalleryCardCount(value: unknown, fallback: number) {
+  console.warn(
+    `[featureFlags] showGallery.cardsPerRow only supports 3 or 4. Received ${String(value)}; using ${fallback}.`,
   )
 }

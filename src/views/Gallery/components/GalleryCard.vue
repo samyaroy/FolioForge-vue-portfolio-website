@@ -48,8 +48,11 @@
 
     <div class="gallery-card-frame">
   <article
-    class="group relative flex h-full min-h-[30rem] flex-col overflow-hidden rounded-[12px] bg-white shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)] ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-10px_rgba(14,20,27,0.14)]"
-    :class="{ 'ring-primary/20 shadow-[0_18px_42px_-12px_rgba(24,128,230,0.2)]': item.featured }">
+    class="group relative flex h-full flex-col overflow-hidden rounded-[12px] bg-white shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)] ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-10px_rgba(14,20,27,0.14)]"
+    :class="[
+      compactLayout ? 'min-h-[28rem]' : 'min-h-[30rem]',
+      { 'ring-primary/20 shadow-[0_18px_42px_-12px_rgba(24,128,230,0.2)]': item.featured },
+    ]">
     <div class="flex items-start justify-between gap-4 px-4 pt-4">
       <div class="flex min-w-0 w-3/10 items-center gap-2">
         <div v-if="platformIcon"
@@ -141,12 +144,21 @@
       </template>
     </div>
 
-    <div class="relative flex flex-1 flex-col gap-4 p-4 sm:p-6">
-      <h2 class="min-h-[3.125rem] font-serif text-[1.25rem] font-semibold leading-tight tracking-[-0.02em] text-base_black">
+    <div
+      class="relative flex flex-1 flex-col p-4 sm:p-6"
+      :class="compactLayout ? 'gap-3' : 'gap-4'"
+    >
+      <h2
+        class="font-serif font-semibold leading-tight tracking-[-0.02em] text-base_black"
+        :class="compactLayout ? 'min-h-[2.65rem] text-[1.05rem]' : 'min-h-[3.125rem] text-[1.25rem]'"
+      >
         {{ item.title }}
       </h2>
 
-      <div class="min-h-[8.75rem] text-left sm:text-justify text-[0.90rem] leading-7 text-slate-500">
+      <div
+        class="text-left text-slate-500 sm:text-justify"
+        :class="compactLayout ? 'min-h-[7.5rem] text-[0.82rem] leading-6' : 'min-h-[8.75rem] text-[0.90rem] leading-7'"
+      >
         <CaptionContent v-if="hasCaption" :text="item.caption" />
       </div>
       <!-- Each action is a fixed 40px target, so the tag list takes the
@@ -258,6 +270,10 @@ const props = defineProps({
   item: {
     type: Object,
     required: true,
+  },
+  compactLayout: {
+    type: Boolean,
+    default: false,
   },
 })
 

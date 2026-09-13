@@ -23,6 +23,7 @@
       <GalleryGrid
         :items="visibleItems"
         :can-load-more="canLoadMore"
+        :cards-per-row="galleryCardsPerRow"
         :highlighted-id="highlightedId"
         @load-more="loadMore"
       />
@@ -33,6 +34,7 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { galleryCardsPerRow } from '@/config/featureFlags'
 import galleryContent from '@/content/profile_info/gallery.yml'
 import galleryTagMetadata from '@/metadata/galleryTags.yml'
 import { GALLERY_ITEM_PARAM, galleryAnchorId } from '@/utils/shareLinks'
@@ -77,7 +79,9 @@ const tagAliases = new Map([
 ])
 const route = useRoute()
 const activeFilters = ref([])
-const initialVisibleCount = 6
+const visibleRowsPerPage = 2
+const visibleCardsPerPage = galleryCardsPerRow * visibleRowsPerPage
+const initialVisibleCount = visibleCardsPerPage
 const visibleCount = ref(initialVisibleCount)
 // Card a shared link pointed at. The ring is a temporary "here it is" marker,
 // not a selection, so it fades on its own.
@@ -146,7 +150,7 @@ watch(filterOptions, (nextOptions) => {
 }, { immediate: true })
 
 function loadMore() {
-  visibleCount.value += 6
+  visibleCount.value += visibleCardsPerPage
 }
 
 /**
