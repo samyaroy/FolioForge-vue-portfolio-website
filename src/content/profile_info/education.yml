@@ -4,15 +4,15 @@ education:
     field: Statistics
     institution: University of Calcutta
     campus: Taraknath Palit Siksha Prangan (Ballygunge Science College)
+    # sub_field:
+    #   - label: Specialization
+    #     name: Bayesian Statistics
+    #     cred_link: ""
     location: Kolkata, WB
     time_period: 2026 - Present
-    # Where the programme currently stands. Free text so it can hold a semester
-    # ("Semester I") or a programme stage ("Degree Level"); omit it once the
-    # programme is finished and only `time_period` needs to carry the dates.
-    current_level: Semester I
     gpa:
     cred_link:
-    category: CCF
+    category: Curriculum and Credit Framework (CCF) under NEP 2020
     cirriculum:
       semester_1:
         - course_code: STS411
@@ -168,7 +168,7 @@ education:
             - name: Prof. Ashwin J. Baliga
             - name: Prof. Siddharth Arora
             - name: Prof. Aaditya Chandel
-            - name: Prof. Chavi (Chi Yun) CHEN]
+            - name: Prof. Chavi (Chi Yun) CHEN
               link: https://www.ieseg.fr/en/faculty-and-research/professor/?id=1638
         - course_code: BSSE2002
           course_name: Tools in Data Science
