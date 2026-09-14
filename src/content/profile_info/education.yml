@@ -62,7 +62,12 @@ education:
     time_period: 2022 - Present
     current_level: Degree Level
     gpa: Current CGPA - 5.97/10
-    cred_link: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
+    cred_link:
+      - label: Diploma certificate (Prog)
+        url: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
+      - label: Foundation Certificate
+        url: https://drive.google.com/file/d/1T8tyIiua8CU0Wf6-R0Nbo5k0Cwc12Zba/preview
+
     category: NEP 2020
     cirriculum:
       foundation:
@@ -242,9 +247,30 @@ education:
           - name: Prof. Dootika Vats
             link: https://dvats.github.io/
       transfered_credits:
-        # - course_code: "Google"
-        #   course_name: Data Analysis with R Programming
-        #   type: Coursera
+        # - course_code: NOC26CS154
+        #   course_name: Statistical Learning for Reliability Analysis
+        #   time_period: Jul 2026 - Oct 2026
+        #   type: Elective
+        #   faculty:
+        #     - name: Prof. Monalisa Sharma
+        #       link: https://www.iitkgp.ac.in/department/RE/faculty/re-monalisa/
+        #   logo: [IITKGP, NPTEL]
+        #   # cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
+        #   # tag: 'Elite'
+        #   credit: 2
+        # - course_code: NOC23CS113
+        #   course_name: Introduction to Programming in C
+        #   time_period: Feb 2023 - Mar 2023
+        #   type: Elective
+        #   faculty: Prof. Satyadev Nandakumar
+        #   logo: [IITK, NPTEL]
+        #   cred_link: https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview
+        #   tag: 'Elite'
+        #   credit: 2
+        #   issuer:
+        #     institution: Indian Institute of Technology Kanpur
+        #     platform: NPTEL
+        #   duration: 8 weeks
 
 
       link: https://study.iitm.ac.in/ds/academics.html
@@ -447,8 +473,13 @@ education:
       
       transfered_credits:
         - course_name: Data Analysis with R Programming
+          time_period: Jan 2025 - Mar 2025
+          faculty:
           logo: [GOOGLE, COURSERA]
           cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
+          issuer:
+            institution: Google
+            platform: Coursera
           # tag: 'Elite'
           # credit: 1 
 

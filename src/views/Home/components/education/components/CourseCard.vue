@@ -17,14 +17,29 @@
       </span>
 
       <div class="min-w-0">
-        <div class="flex items-start gap-1.5">
-          <p class="text-[#0e141b] text-sm font-medium leading-snug min-w-0">{{ course.course_name }}</p>
-          <DocumentViewer v-if="course.cred_link" :src="course.cred_link" :size="14" class="shrink-0" />
+        <div class="flex min-w-0 items-center gap-1.5">
+          <p class="min-w-0 text-[#0e141b] text-sm font-medium leading-snug">{{ course.course_name }}</p>
+          <v-tooltip v-if="issuerLabel" :text="issuerLabel" location="top">
+            <template #activator="{ props: tooltipProps }">
+              <v-icon
+                v-bind="tooltipProps"
+                size="14"
+                class="inline-flex shrink-0 cursor-help items-center self-center text-[#4e7397] transition-colors hover:text-[#1980e6]"
+              >
+                mdi-office-building
+              </v-icon>
+            </template>
+          </v-tooltip>
+          <DocumentViewer v-if="course.cred_link" :src="course.cred_link" :size="14" class="inline-flex shrink-0 items-center self-center" />
         </div>
         <p v-if="hasCourseMeta(course)" class="text-[#4e7397] text-xs mt-0.5 font-mono">
           <span v-if="course.type">{{ course.type }}</span>
           <v-icon v-if="course.type && course.course_code" size="6" class="mx-1">mdi-circle</v-icon>
           <span v-if="course.course_code">{{ formatCourseCode(course.course_code) }}</span>
+        </p>
+        <p v-if="courseTimePeriodLabel" class="text-[#4e7397] text-xs mt-0.5 flex items-center gap-1">
+          <v-icon size="12" class="shrink-0">mdi-calendar</v-icon>
+          <span>{{ courseTimePeriodLabel }}</span>
         </p>
         <p v-if="facultyList.length" class="text-[#4e7397] text-xs mt-0.5 flex items-start gap-1">
           <v-icon size="12" class="mt-0.5 shrink-0">mdi-account-tie</v-icon>
@@ -109,6 +124,47 @@ const courseTags = computed(() => {
 const showRibbon = computed(() => sectionIsTransferCredits() && courseTags.value.length > 0)
 
 const ribbonLabel = computed(() => courseTags.value.join(' / '))
+
+const courseTimePeriod = computed(() => {
+  const timePeriod = props.course?.time_period
+  if (timePeriod == null) return ''
+  return String(timePeriod).trim()
+})
+
+const courseDuration = computed(() => {
+  const duration = props.course?.duration
+  if (duration == null) return ''
+  return String(duration).trim()
+})
+
+const courseTimePeriodLabel = computed(() => {
+  if (!courseTimePeriod.value) {
+    return courseDuration.value ? `(${courseDuration.value})` : ''
+  }
+
+  return courseDuration.value
+    ? `${courseTimePeriod.value} (${courseDuration.value})`
+    : courseTimePeriod.value
+})
+
+const issuerLabel = computed(() => {
+  const issuer = props.course?.issuer
+  if (!issuer) return ''
+
+  if (typeof issuer === 'string') {
+    return issuer.trim()
+  }
+
+  const details = [
+    issuer.institution,
+    issuer.platform,
+    issuer.location
+  ]
+    .map(value => value == null ? '' : String(value).trim())
+    .filter(Boolean)
+
+  return details.join(' - ')
+})
 
 const facultyList = computed(() => {
   const faculty = props.course?.faculty
