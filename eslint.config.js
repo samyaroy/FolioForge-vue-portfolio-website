@@ -6,9 +6,9 @@ import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,mts,cts,vue}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.browser } },{
-    // blogs/ has its own flat config; .copilot and .codex hold vendored bundles
+    // blogs/ and admin/ have their own flat configs; .copilot and .codex hold vendored bundles
     // and session logs that are megabytes of generated JS (they OOM the linter).
-    ignores: ['dist/**', 'node_modules/**', 'blogs/**', '.copilot/**', '.codex/**'],
+    ignores: ['dist/**', 'node_modules/**', 'blogs/**', 'admin/**', '.copilot/**', '.codex/**'],
   },
   tseslint.configs.recommended,
   pluginVue.configs["flat/essential"],

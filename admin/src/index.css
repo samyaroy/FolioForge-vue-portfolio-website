@@ -1,0 +1,61 @@
+@import 'tailwindcss' source('./');
+@import 'tw-animate-css';
+
+@theme inline {
+  --font-sans: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --color-page: var(--page);
+  --color-header-border: #e7edf3;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-700: #0d47a1;
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--foreground);
+  --color-destructive: #b42318;
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+  --color-card: var(--background);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--background);
+  --color-popover-foreground: var(--foreground);
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+
+:root {
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  color-scheme: light;
+  /* Match the public blog's theme and the portfolio's brand palette. */
+  --page: #f8fafc;
+  --background: #ffffff;
+  --foreground: #0e141b;
+  --primary: #1980e6;
+  --primary-foreground: #ffffff;
+  --secondary: #0e141b;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #eff6ff;
+  --border: #e2e8f0;
+}
+
+@layer base {
+  * { @apply border-border; letter-spacing: 0; }
+  body { @apply m-0 min-w-80 bg-page text-foreground antialiased; }
+  button, a { -webkit-tap-highlight-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
