@@ -1,0 +1,38 @@
+import { sectionVisibility } from '@/config/visibility'
+import type { VisibilityFlag } from '@/config/visibility'
+import { useVisibilityDraft } from '@/hooks/visibilityContext'
+
+export function VisibilitySwitches({ controls }: { controls: VisibilityFlag[] }) {
+  const { flags, originalFlags, setFlag } = useVisibilityDraft()
+  return (
+    <div className="toggle-list">
+      {controls.map(control => {
+        const isKnown = typeof flags[control.path] === 'boolean'
+        const isEnabled = flags[control.path] === true
+        const isChanged = flags[control.path] !== originalFlags[control.path]
+        return (
+          <label key={control.path}>
+            <span><strong>{control.label}</strong><small>{!isKnown ? 'Flag unavailable' : `${isEnabled ? 'Enabled' : 'Disabled'}${isChanged ? ' · Local change' : ''}`}</small><code className="visibility-flag-path">{control.path}</code></span>
+            <input type="checkbox" role="switch" aria-label={control.label} disabled={!isKnown} checked={isEnabled} onChange={event => setFlag(control.path, event.target.checked)} />
+          </label>
+        )
+      })}
+    </div>
+  )
+}
+
+export function VisibilityPane({ pageId, sectionId }: { pageId: string; sectionId: string }) {
+  const controls = sectionVisibility[`${pageId}/${sectionId}`] ?? []
+  const { flags } = useVisibilityDraft()
+  const controllingFlags = pageId === 'home' && sectionId === 'education' ? controls.slice(0, 1) : controls
+  const isEnabled = controllingFlags.some(control => flags[control.path] === true)
+  return (
+    <section className="form-panel">
+      <div className="panel-heading"><div><span>Display</span><h2>Section visibility</h2></div></div>
+      {controls.length ? <>
+        <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>
+        <VisibilitySwitches controls={controls} />
+      </> : <p className="visibility-fixed">Always available. This page has no visibility feature flag.</p>}
+    </section>
+  )
+}

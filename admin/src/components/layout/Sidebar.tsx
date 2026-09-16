@@ -1,0 +1,109 @@
+import { useState } from 'react'
+import { ChevronRight, Cloud, X } from 'lucide-react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { navigation } from '@/config/navigation'
+import { cn } from '@/lib/utils'
+
+type SidebarProps = {
+  isOpen: boolean
+  onClose: () => void
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({ Home: true })
+
+  const toggleParent = (label: string, path: string, isExpanded: boolean) => {
+    setExpandedItems(current => ({ ...current, [label]: !isExpanded }))
+    if (!isExpanded) navigate(path)
+  }
+
+  return (
+    <>
+      {isOpen && <button className="sidebar-backdrop" aria-label="Close navigation" onClick={onClose} />}
+      <aside className={cn('sidebar', isOpen && 'sidebar-open')}>
+        <div className="sidebar-brand">
+          <NavLink to="/" className="brand-link" aria-label="Samyabrata Roy admin home" onClick={onClose}>
+            <img src="/profile-icon.png" alt="" className="brand-avatar" />
+            <span className="min-w-0">
+              <strong>Portfolio CMS</strong>
+              <small>Local workspace</small>
+            </span>
+          </NavLink>
+          <button className="icon-button" type="button" aria-label="Close navigation" onClick={onClose}>
+            <X aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="workspace-status">
+          <span className="status-dot" aria-hidden="true" />
+          <span>Repository content</span>
+          <span className="workspace-label">LOCAL</span>
+        </div>
+
+        <nav className="sidebar-nav" aria-label="Admin sections">
+          {navigation.map(group => (
+            <div className="nav-group" key={group.label}>
+              <p>{group.label}</p>
+              {group.items.map(item => {
+                const Icon = item.icon
+                if (item.children?.length) {
+                  const isActive = item.children.some(child => child.path === location.pathname)
+                  const isExpanded = expandedItems[item.label] ?? isActive
+                  return (
+                    <div className="nav-tree" key={item.path}>
+                      <button
+                        className={cn('nav-item nav-parent', isActive && 'nav-item-active')}
+                        type="button"
+                        title={item.label}
+                        aria-expanded={isExpanded}
+                        onClick={() => toggleParent(item.label, item.path, isExpanded)}
+                      >
+                        <Icon aria-hidden="true" />
+                        <span>{item.label}</span>
+                        <ChevronRight className={cn('nav-chevron', isExpanded && 'nav-chevron-open')} aria-hidden="true" />
+                      </button>
+                      {isExpanded && (
+                        <div className="nav-children">
+                          {item.children.map(child => (
+                            <NavLink className={({ isActive: childActive }) => cn('nav-child', childActive && 'nav-child-active')} key={child.path} to={child.path} title={child.label} onClick={onClose}>
+                              {child.label}
+                            </NavLink>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )
+                }
+                return (
+                  <NavLink
+                    className={({ isActive }) => cn('nav-item', isActive && 'nav-item-active')}
+                    end
+                    key={item.path}
+                    title={item.label}
+                    to={item.path}
+                    onClick={onClose}
+                  >
+                    <Icon aria-hidden="true" />
+                    <span>{item.label}</span>
+                    {item.count !== undefined && <span className="nav-count">{item.count}</span>}
+                  </NavLink>
+                )
+              })}
+            </div>
+          ))}
+        </nav>
+
+        <div className="storage-status">
+          <Cloud aria-hidden="true" />
+          <span>
+            <strong>Cloudflare R2</strong>
+            <small>Connection pending</small>
+          </span>
+          <span className="storage-dot" aria-hidden="true" />
+        </div>
+      </aside>
+    </>
+  )
+}
