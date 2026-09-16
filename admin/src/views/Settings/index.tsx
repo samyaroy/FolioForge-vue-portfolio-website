@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { ExternalLink, Save } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -16,9 +17,19 @@ export function SettingsPage() {
 
   const changedCount = Object.keys(flags).filter(path => flags[path] !== originalFlags[path]).length
 
+  const saveLocalSettings = () => {
+    if (!siteName.trim()) {
+      toast.error('Enter a site name before saving.')
+      return
+    }
+    setSaved(true)
+    toast.info('Settings remain in this session. Nothing has been published.')
+    window.setTimeout(() => setSaved(false), 1600)
+  }
+
   return (
     <>
-      <PageHeader title="Settings" description="Preview global identity and visibility values planned for validated content files." actions={<Button variant="outline" onClick={() => { setSaved(true); window.setTimeout(() => setSaved(false), 1600) }}><Save aria-hidden="true" />{saved ? 'Saved locally' : 'Save locally'}</Button>} />
+      <PageHeader title="Settings" description="Preview global identity and visibility values planned for validated content files." actions={<Button variant="outline" onClick={saveLocalSettings}><Save aria-hidden="true" />{saved ? 'Saved locally' : 'Save locally'}</Button>} />
       <LocalNotice>Visibility is initialized from the Vue feature flags. {changedCount} local changes; nothing is published until the V1 Worker integration is connected.</LocalNotice>
       <div className="settings-layout">
         <section className="form-panel">
@@ -28,7 +39,7 @@ export function SettingsPage() {
         <section className="form-panel">
           <div className="panel-heading"><div><span>Visibility</span><h2>Published sections</h2></div></div>
           <VisibilitySwitches controls={visibilityControls} />
-          <div className="aside-form-body"><Button variant="outline" onClick={resetFlags} disabled={!changedCount}>Discard visibility changes</Button></div>
+          <div className="aside-form-body"><Button variant="outline" onClick={() => { resetFlags(); toast.success('Visibility changes discarded.') }} disabled={!changedCount}>Discard visibility changes</Button></div>
         </section>
       </div>
     </>

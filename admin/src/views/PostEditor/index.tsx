@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { Eye, ImagePlus, Save } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -19,13 +20,23 @@ export function PostEditorPage() {
   }, [coverUrl])
 
   const saveDraft = () => {
+    if (!title.trim()) {
+      toast.error('Enter a post title before saving.')
+      return
+    }
+    toast.info('Draft remains in this session. Nothing has been published.')
     setSaved(true)
     window.setTimeout(() => setSaved(false), 1800)
   }
 
   const changeCover = (file?: File) => {
+    if (file && !['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      toast.error('Choose a JPEG, PNG, or WebP image.')
+      return
+    }
     if (coverUrl) URL.revokeObjectURL(coverUrl)
     setCoverUrl(file ? URL.createObjectURL(file) : '')
+    if (file) toast.success('Cover preview updated locally.')
   }
 
   return (

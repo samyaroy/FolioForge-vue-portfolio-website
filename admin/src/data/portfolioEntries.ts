@@ -17,6 +17,8 @@ import ribbonYaml from '../../../src/content/profile_info/ribbon.yml'
 import teachingYaml from '../../../src/content/profile_info/teaching.yml'
 import workshopsYaml from '../../../src/content/profile_info/workshops.yml'
 
+import type { EntryPresentation } from '@/lib/entryPresentation'
+
 type UnknownRecord = Record<string, unknown>
 
 export type PortfolioEntry = {
@@ -24,6 +26,8 @@ export type PortfolioEntry = {
   title: string
   subtitle: string
   raw: UnknownRecord
+  presentation?: EntryPresentation
+  readOnlyFields?: string[]
 }
 
 const documents = {
@@ -86,7 +90,7 @@ function toEntries(records: UnknownRecord[], titlePaths: string[], subtitlePaths
     const title = firstText(raw, titlePaths) || `Untitled entry ${index + 1}`
     const subtitle = subtitlePaths.map(path => displayText(readPath(raw, path))).filter(Boolean).slice(0, 2).join(' · ')
     const sourceId = firstText(raw, ['id', 'key', 'membership_id'])
-    return { id: sourceId || `${slugify(title)}-${index}`, title, subtitle, raw }
+    return { id: sourceId || `${slugify(title)}-${index}`, title, subtitle, raw, presentation: { titlePaths, subtitlePaths, fallbackTitle: title } }
   })
 }
 
@@ -107,12 +111,17 @@ function mentoredProjects() {
 }
 
 const entryRegistry: Record<string, () => PortfolioEntry[]> = {
-  'home/profile': () => toEntries([
-    { ...asRecord(documents.profile.profile), entryType: 'Profile and hero' },
-    { title: 'Contact details', ...asRecord(documents.profile.contacts) },
-    { title: 'Social profiles', ...asRecord(documents.profile.socials) },
-    { title: 'Media settings', ...asRecord(documents.profile.media) },
-  ], ['name', 'title', 'entryType'], ['entryType', 'location']),
+  'home/profile': () => [
+    ['profile', 'Profile and hero', ['name']],
+    ['contacts', 'Contact details', []],
+    ['socials', 'Social profiles', []],
+    ['media', 'Media settings', []],
+  ].map(([source, label, paths]) => {
+    const raw = asRecord(documents.profile[String(source)])
+    const titlePaths = paths as string[]
+    const title = firstText(raw, titlePaths) || String(label)
+    return { id: String(source), title, subtitle: firstText(raw, ['location']), raw, presentation: { titlePaths, subtitlePaths: ['location'], fallbackTitle: String(label) } }
+  }),
   'home/research-interests': () => toEntries(arrayAt(documents.researchInterests, 'research_interests'), ['title', 'name', 'key']),
   'home/experience': () => toEntries(arrayAt(documents.experience, 'experience'), ['job_role', 'title'], ['company', 'time_period']),
   'home/education': () => toEntries(arrayAt(documents.education, 'education'), ['degree', 'title'], ['institution', 'time_period']),
@@ -130,7 +139,7 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'projects-publications/posters': () => toEntries(arrayAt(documents.publications, 'posters'), ['title'], ['event', 'date']),
 
   'teaching/courses': () => toEntries(arrayAt(documents.teaching, 'courses_taught'), ['title', 'course'], ['institution', 'term']),
-  'teaching/projects': () => toEntries(mentoredProjects(), ['title'], ['course', 'semester']),
+  'teaching/projects': () => toEntries(mentoredProjects(), ['title'], ['course', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
   'teaching/others': () => toEntries(arrayAt(documents.teaching, 'other_teachings'), ['title'], ['role', 'duration']),
   'ongoing-projects/projects': () => toEntries(arrayAt(documents.ongoingProjects, 'ongoing_projects'), ['title'], ['status', 'type']),
 
@@ -164,7 +173,7 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'gallery/career-unlocks': () => toEntries(arrayAt(documents.gallery, 'items'), ['title'], ['date', 'type']),
   'resources/study-material': () => toEntries(arrayAt(documents.resources, 'subjects'), ['title'], [],),
   'resources/worth-exploring': () => toEntries(arrayAt(documents.resources, 'explore'), ['group', 'title']),
-  'contact/details': () => toEntries([{ title: 'Contact details', ...asRecord(documents.profile.contacts), socials: documents.profile.socials }], ['title'], ['location']),
+  'contact/details': () => [{ id: 'contacts', title: 'Contact details', subtitle: firstText(asRecord(documents.profile.contacts), ['location']), raw: { ...asRecord(documents.profile.contacts), socials: documents.profile.socials }, presentation: { titlePaths: [], subtitlePaths: ['location'], fallbackTitle: 'Contact details' } }],
   'facts/facts': () => toEntries(arrayAt(documents.facts, 'facts'), ['title'], ['icon']),
   'privacy/policy': () => [],
 }

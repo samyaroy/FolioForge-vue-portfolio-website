@@ -325,6 +325,7 @@ tbody tr:hover { background: #f9fbfd; }
 .section-tabs .section-tab-active::after { position: absolute; right: 8px; bottom: -1px; left: 8px; height: 2px; background: #1980e6; content: ''; }
 .mapped-editor-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(270px, .65fr); align-items: start; gap: 18px; }
 .mapped-editor-aside { display: grid; gap: 18px; }
+.admin-toast { border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--foreground); font-family: inherit; font-size: 12px; line-height: 18px; }
 .mapped-state { display: inline-flex; align-items: center; gap: 4px; color: #27805a !important; font-size: 10px; line-height: 16px; }
 .mapped-state svg { width: 12px; }
 .source-strip { display: grid; grid-template-columns: 26px minmax(0, 1fr); align-items: center; gap: 10px; border-bottom: 1px solid var(--border); background: #f7fafc; padding: 10px 14px; }
@@ -357,7 +358,8 @@ tbody tr:hover { background: #f9fbfd; }
 .aside-form-body textarea { min-height: 92px; }
 
 .entry-dialog-backdrop { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; background: rgb(7 18 28 / 52%); padding: 5vh 16px; }
-.entry-dialog { width: min(720px, 100%); overflow: hidden; border: 1px solid #b9cad8; border-radius: 7px; background: #fff; box-shadow: 0 22px 70px rgb(11 30 45 / 30%); }
+.entry-dialog { display: flex; flex-direction: column; width: min(720px, 100%); max-height: 90svh; overflow: hidden; border: 1px solid #b9cad8; border-radius: 7px; background: #fff; box-shadow: 0 22px 70px rgb(11 30 45 / 30%); }
+.entry-dialog > header, .entry-dialog > footer, .education-editor-tabs { flex-shrink: 0; }
 .entry-dialog > header { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--border); padding: 11px 16px; }
 .entry-dialog > header > div { min-width: 0; }
 .entry-dialog > header span { color: #718396; font-size: 9px; font-weight: 750; text-transform: uppercase; }
@@ -365,8 +367,33 @@ tbody tr:hover { background: #f9fbfd; }
 .entry-dialog > header button { display: grid; width: 32px; height: 32px; flex: none; place-items: center; border: 0; border-radius: 5px; background: transparent; color: #657d90; cursor: pointer; }
 .entry-dialog > header button:hover { background: #edf3f7; }
 .entry-dialog > header button svg { width: 16px; }
-.entry-dialog-body { display: grid; max-height: 70vh; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; overflow-y: auto; padding: 16px; }
+.entry-dialog-body { display: grid; min-height: 0; max-height: 70vh; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; overflow-y: auto; padding: 16px; }
 .entry-dialog-body .field:has(textarea), .entry-field-divider { grid-column: 1 / -1; }
+.entry-dialog-body[hidden] { display: none; }
+.education-editor-tabs { border-bottom: 1px solid var(--border); padding: 10px 16px; }
+.education-editor-tabs [data-slot='tabs-trigger'] { font-size: 11px; }
+.curriculum-editor { grid-column: 1 / -1; min-width: 0; }
+.curriculum-add-group { display: flex; align-items: end; gap: 12px; }
+.curriculum-add-group .field { min-width: 0; flex: 1; }
+.curriculum-group { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 12px; }
+.curriculum-group > header, .curriculum-course > header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.curriculum-group > header > div { display: flex; align-items: center; gap: 4px; }
+.curriculum-group h3, .curriculum-course h4 { margin: 0; color: #294258; font-size: 12px; text-transform: capitalize; }
+.curriculum-course { border-top: 1px solid #edf2f6; margin-top: 12px; padding-top: 10px; }
+.curriculum-course h4 { font-size: 11px; }
+.curriculum-course-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.experience-projects-editor, .description-lines-editor { grid-column: 1 / -1; min-width: 0; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
+.experience-section-divider { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
+.description-line { display: grid; grid-template-columns: minmax(0, 1fr) 32px; align-items: start; gap: 8px; margin-top: 12px; }
+.description-line > button { margin-top: 20px; }
+.entry-dialog-body .description-line textarea { min-height: 80px; font-family: inherit; font-size: 12px; }
+.experience-projects-heading, .experience-project-section > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.experience-projects-heading h3, .experience-project-section h4 { margin: 0; color: #294258; font-size: 11px; font-weight: 700; }
+.experience-projects-heading h3 span { margin-left: 5px; color: #718396; font-size: 10px; }
+.experience-project-section { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 10px; }
+.experience-project-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.experience-project-title { grid-column: 1 / -1; }
+.entry-dialog-body .experience-project-title textarea { min-height: 72px; font-family: inherit; font-size: 12px; }
 .entry-dialog-body textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; line-height: 1.5; }
 .entry-field-divider { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--border); padding: 5px 0 7px; color: #526a7d; font-size: 9px; font-weight: 750; text-transform: uppercase; }
 .entry-field-divider small { display: grid; min-width: 20px; height: 20px; place-items: center; border: 1px solid var(--border); border-radius: 4px; color: #718396; font-size: 8px; }
@@ -576,8 +603,11 @@ tbody tr:hover { background: #f9fbfd; }
   .repository-entry-list article button svg { margin: 0; }
   .repository-entry-list article button { font-size: 0; }
   .entry-dialog-backdrop { padding: 0; }
-  .entry-dialog { min-height: 100svh; border: 0; border-radius: 0; }
+  .entry-dialog { min-height: 100svh; max-height: 100svh; border: 0; border-radius: 0; }
   .entry-dialog-body { max-height: calc(100svh - 126px); grid-template-columns: 1fr; }
+  .experience-project-fields { grid-template-columns: 1fr; }
+  .curriculum-course-fields { grid-template-columns: 1fr; }
+  .curriculum-add-group { align-items: stretch; flex-direction: column; }
   .entry-dialog-body .field:has(textarea), .entry-field-divider { grid-column: auto; }
 }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Save } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { LocalNotice } from '@/components/admin/LocalNotice'
@@ -36,6 +37,7 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
   const visibleEntries = entries.filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
 
   const saveLocalPreview = () => {
+    toast.info('Preview remains in this session. Nothing has been published.')
     setSaved(true)
     window.setTimeout(() => setSaved(false), 1600)
   }
@@ -45,6 +47,7 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
       ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry)
       : [nextEntry, ...current])
     setEditor(null)
+    toast.success(editor?.mode === 'edit' ? 'Entry updated locally.' : 'Entry added locally.')
   }
 
   return (
@@ -116,6 +119,8 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
           key={editor.mode === 'edit' ? editor.entry.id : 'new'}
           entry={editor.mode === 'edit' ? editor.entry : undefined}
           fieldGroups={section.fields}
+          isExperience={page.id === 'home' && section.id === 'experience'}
+          isEducation={page.id === 'home' && section.id === 'education'}
           onClose={() => setEditor(null)}
           onSave={saveEntry}
         />
