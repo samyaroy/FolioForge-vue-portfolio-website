@@ -3,12 +3,13 @@ import { Outlet } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 import { VisibilityProvider } from '@/components/admin/VisibilityProvider'
+import { LogoProvider } from '@/components/admin/LogoProvider'
 
 export function AdminLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   return (
-    <VisibilityProvider><div className="admin-shell">
+    <VisibilityProvider><LogoProvider><div className="admin-shell">
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <div className="workspace">
         <Topbar onOpenNavigation={() => setIsSidebarOpen(true)} />
@@ -16,6 +17,6 @@ export function AdminLayout() {
           <Outlet />
         </main>
       </div>
-    </div></VisibilityProvider>
+    </div></LogoProvider></VisibilityProvider>
   )
 }

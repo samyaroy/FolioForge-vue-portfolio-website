@@ -8,8 +8,10 @@ import { entryPresentation } from '@/lib/entryPresentation'
 import { ExperienceProjectsEditor } from '@/components/editor/ExperienceProjectsEditor'
 import { DescriptionLinesEditor } from '@/components/editor/DescriptionLinesEditor'
 import { CurriculumEditor } from '@/components/editor/CurriculumEditor'
+import { EducationSubFieldsEditor } from '@/components/editor/EducationSubFieldsEditor'
 import { curriculumDraft, serializeCurriculum } from '@/lib/curriculum'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { LogoSelector } from '@/components/editor/LogoSelector'
 
 type EntryEditorDialogProps = {
   entry?: PortfolioEntry
@@ -33,11 +35,11 @@ function fieldKey(label: string) {
 export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
   const initialFields = useMemo(() => {
     if (entry) {
-      const raw = isExperience ? { ...entry.raw, projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : entry.raw
+      const raw = isExperience ? { ...entry.raw, projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
       return Object.fromEntries(Object.entries(raw).filter(([key]) => !entry.readOnlyFields?.includes(key) && !(isEducation && key === 'cirriculum')).map(([key, value]) => [key, editableValue(toDriveEditorValue(value))]))
     }
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '', projects: '[]' }
-    if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '' }
+    if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
   }, [entry, fieldGroups, isExperience, isEducation])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
@@ -61,8 +63,9 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
       const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(fields).map(([key, value]) => {
         const original = entry?.raw[key]
         if (value === initialFields[key] && original !== undefined) return [key, original]
-        const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description'))
+        const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('['))
         const parsed: unknown = structured ? JSON.parse(value) : value
+        if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || typeof item.name !== 'string' || !item.name.trim())) throw new Error('Enter a label and name for each sub-field before saving.')
         if (isExperience && key === 'description' && Array.isArray(parsed) && parsed.some(line => typeof line !== 'string' || !line.trim())) throw new Error('Enter text for each description line before saving.')
         if (isExperience && key === 'projects' && Array.isArray(parsed) && parsed.some(project => !project || typeof project !== 'object' || typeof project.title !== 'string' || !project.title.trim())) throw new Error('Enter a title for each project before saving.')
         return [key, fromDriveEditorValue(parsed, original, key)]
@@ -92,6 +95,8 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
         <div className="entry-dialog-body" hidden={isEducation && educationTab !== 'details'}>
           <div className="entry-field-divider"><span>{isExperience ? 'Role details' : 'Entry fields'}</span>{!isExperience && <small>{Object.keys(fields).length}</small>}</div>
           {orderedFields.map(([key, value], index) => {
+            if (key === 'logo') return <LogoSelector key={key} multiple={typeof entry?.raw.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => setFields(current => ({ ...current, logo: typeof entry?.raw.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) }))} />
+            if (isEducation && key === 'sub_field') return <EducationSubFieldsEditor key={key} subFields={JSON.parse(value)} onChange={subFields => setFields(current => ({ ...current, sub_field: JSON.stringify(subFields) }))} />
             if (isExperience && key === 'projects') return <ExperienceProjectsEditor key={key} projects={JSON.parse(value)} onChange={projects => setFields(current => ({ ...current, projects: JSON.stringify(projects) }))} />
             if (isExperience && key === 'description') return <DescriptionLinesEditor key={key} lines={JSON.parse(value)} onChange={lines => setFields(current => ({ ...current, description: JSON.stringify(lines) }))} />
             const isStructured = value.includes('\n') || value.startsWith('{') || value.startsWith('[')

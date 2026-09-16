@@ -1,6 +1,6 @@
 # Blog and Complete Portfolio Admin Plan
 
-Status: React + Vite + TypeScript + shadcn/ui foundation initialized in `admin/`. Authentication, editing, storage, and publishing below are planned, not implemented. No infrastructure has been deployed.
+Status: React + Vite + TypeScript + shadcn/ui frontend and a separate fail-closed Cloudflare Worker security foundation are implemented locally in `admin/`. Wrangler targets `admin.samyabrata.codeium.xyz`; Access JWT verification, owner authorization, asset protection, session-bound CSRF, and beta-only policy have local security tests. The live Access policy and account setup still require verification. Persisted editing, R2, GitHub, and publishing remain planned. No infrastructure has been deployed. See `admin/worker/README.md` for the setup and live security gate.
 
 ## Outcome
 
@@ -100,6 +100,16 @@ Owner browser
 Use one admin Worker deployment, a private draft bucket, and isolated published media storage if the existing media service cannot provide suitable isolation. Separate blog and portfolio object namespaces. Prefer explicit full URLs for new assets when using a separate media hostname; verify support in each collection renderer. Do not migrate historical images as part of this feature.
 
 ### R2 storage decision
+
+#### Logo catalog and management
+
+The admin uses a shared searchable logo selector for array-valued logo fields, including course logos. Legacy scalar logo fields remain single-valued until their public renderer supports multiple logos. A shared catalog powers the selector and Media Library. Existing references absent from the catalog stay visible and are never silently removed.
+
+`GET /api/media/logos` must be authenticated and list the configured `logo/` R2 prefix through the Worker binding, never through browser-held R2 credentials. The browser accepts `{ items: [{ value, name, url }], cursor?: string }` and follows opaque pagination cursors. The Worker owns the prefix, validates cursors, filters supported image formats, and returns values compatible with the existing logo URL resolver. Do not accept bucket or prefix selection from the browser.
+
+Logo uploads and replacements require the same authenticated, CSRF-protected image pipeline as other media. Keep new bytes private until explicit publication, generate immutable final keys, and include reviewed reference changes in the V1 candidate commit. Replacement must not overwrite a live key or change main through shared mutable media. Reject deletion of referenced logos and retain old objects for rollback.
+
+Current UI status: the selector calls the read endpoint, falls back explicitly to repository logo assets when the Worker is unavailable, and lets the owner stage local previews or replacements in Media Library. Staging does not upload bytes to R2 or persist across reloads. Protected R2 handlers and publishing remain unimplemented; the local draft must not be represented as a successful R2 update.
 
 The existing `photo-dump` R2 bucket can back the image workflow through a normal Worker R2 binding. The enabled R2 Data Catalog is not part of this architecture: it is an Apache Iceberg catalog for analytical tables queried by engines such as Spark and PyIceberg, while this application stores and retrieves ordinary image objects. Do not add the catalog URI, warehouse name, or Iceberg credentials to the admin frontend or GitHub repository.
 

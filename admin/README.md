@@ -31,6 +31,7 @@ they do not modify repository content or persist after a reload.
 ```sh
 npm run lint
 npm run typecheck
+npm run test:worker
 npm run build
 npm run preview
 ```
@@ -85,10 +86,47 @@ quotes, and descriptive names. Keep provider credentials and future Worker code
 out of browser imports. Add components as needed rather than preinstalling the
 whole registry.
 
+## Protected Worker foundation
+
+`worker/` is the separate Cloudflare backend. `wrangler.jsonc` targets
+`admin.samyabrata.codeium.xyz`, runs the Worker before every asset, and disables
+`workers.dev` and preview URLs. Every request validates a Cloudflare Access JWT
+signature, issuer, audience, expiry, optional `nbf`, and the permitted owner
+identity. Missing configuration fails closed with HTTP 503. No development
+authentication bypass is included.
+
+Mutations require the exact configured Origin and a CSRF token bound to the
+verified Access session. `GET /api/session` returns the CSRF token and verified
+identity; it never returns the Access JWT. Responses are non-cacheable and carry
+CSP, framing, content-type, and referrer protections. CSP permits the existing
+Google Fonts stylesheet/font origins and inline styles required by the current
+UI, but does not permit inline scripts.
+
+`GET /api/status` reports the fixed server-owned `refs/heads/V1` policy and
+disabled integrations. R2, GitHub, drafts, uploads, and publication are not wired
+yet. The logo API returns 503 rather than pretending to list a bucket.
+
+Use Node 24 for the Worker tests (native TypeScript stripping). From `admin/`:
+
+```sh
+npm run typecheck
+npm run test:worker
+npm run build
+npm run worker:check
+```
+
+The final command bundles the Worker with Wrangler's `--dry-run`; it does not
+deploy. `npm run worker:dev` starts a local Worker on port 8788. Without real
+security configuration it intentionally serves 503, including for static assets.
+Continue using Vite for local UI work. See [Cloudflare setup](./worker/README.md)
+for the account and Access prerequisites before any deployment.
+
 ## Planned integration
 
-See [the implementation plan](../docs/admin-plan.md). Delivery order: blog posts
-and images, blog gallery, other blog pages, then portfolio Career Unlocks.
+See [the implementation plan](../docs/admin-plan.md). Delivery order: verify the
+Access boundary, read-only V1 loading, Education drafts and visibility, checked
+beta publication, Career Unlocks media, remaining portfolio sections, then blog
+content and images.
 The Vue preview will use a separate protected build; the React admin edits both
 sites through collection-specific Markdown/YAML operations.
 
@@ -99,10 +137,11 @@ quotes, navigation copy, visibility, SEO, privacy, branding, and managed media.
 The plan requires a source registry and CI coverage check so future content
 cannot be added without an admin editor or an explicit developer-only decision.
 
-This is a local frontend foundation, not a protected admin deployment. Wrangler,
-Access, storage, and publishing are not configured yet. There is deliberately no
-deployment script until the planned authentication boundary exists. `noindex`
-is a crawler preference, not access control. Never put secrets in `VITE_*` values.
+The protected Worker foundation exists locally, but has not been deployed.
+Cloudflare Access policy, account authentication, storage, and publishing still
+need setup. There is deliberately no one-click deployment script before the
+live authentication gate is verified. `noindex` is a crawler preference, not
+access control. Never put secrets in `VITE_*` values.
 
 ## Publishing target
 

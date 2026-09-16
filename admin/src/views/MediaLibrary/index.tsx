@@ -3,6 +3,7 @@ import { ImagePlus, Trash2, UploadCloud } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { Button } from '@/components/ui/button'
+import { LogoLibrary } from '@/components/admin/LogoLibrary'
 
 type PreviewFile = { name: string; size: string; url: string }
 
@@ -28,6 +29,7 @@ export function MediaLibraryPage() {
     <>
       <PageHeader title="Media & Gallery" description="Stage image previews and inspect their final upload metadata." actions={<Button variant="outline"><UploadCloud aria-hidden="true" /> Upload queue ({files.length})</Button>} />
       <LocalNotice>Selected files stay in your browser. No image reaches R2 until the protected Worker is implemented.</LocalNotice>
+      <LogoLibrary />
       <label className="media-dropzone">
         <ImagePlus aria-hidden="true" /><strong>Add portfolio images</strong><span>Choose JPEG, PNG, or WebP files for a local preview.</span><Button asChild variant="outline"><span>Choose files</span></Button>
         <input data-page-search type="file" multiple accept="image/jpeg,image/png,image/webp" onChange={event => addFiles(event.target.files)} />

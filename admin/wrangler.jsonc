@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "folioforge-admin-beta",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-16",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "admin.samyabrata.codeium.xyz", "custom_domain": true }],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": true
+  },
+  "vars": {
+    "ADMIN_ORIGIN": "https://admin.samyabrata.codeium.xyz",
+    "ACCESS_ISSUER": "",
+    "ACCESS_AUDIENCE": "",
+    "ACCESS_OWNER_EMAIL": ""
+  }
+}
