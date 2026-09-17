@@ -20,7 +20,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         // Chrome comes from the surrounding app CSS (nav items, toolbars, row
         // actions): keep only the behaviour, add no colours or padding.
-        bare: 'rounded-none bg-transparent',
+        bare: 'rounded-none bg-transparent whitespace-normal',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

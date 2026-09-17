@@ -23,6 +23,7 @@ import { computed } from 'vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import GeneralArticle from './components/GeneralArticle.vue'
 import JournalArticle from './components/JournalArticle.vue'
+import { journalArticleType } from '@/config/articleTypes'
 
 const props = defineProps({
   articles: {
@@ -36,7 +37,7 @@ function isJournalArticle(article) {
     .trim()
     .toLowerCase()
 
-  return normalizedType === 'journal'
+  return normalizedType === journalArticleType
 }
 
 const generalArticles = computed(() =>

@@ -13,9 +13,11 @@ import { CredentialLinksEditor } from '@/components/editor/CredentialLinksEditor
 import { curriculumDraft, serializeCurriculum } from '@/lib/curriculum'
 import { credentialLinksDraft, serializeCredentialLinks } from '@/lib/credentialLinks'
 import { projectLinksDraft, serializeProjectLinks } from '@/lib/projectLinks'
-import { guideDraft, serializeGuide } from '@/lib/guide'
+import { objectFieldsDraft, serializeObjectFields } from '@/lib/objectFields'
+import { listFieldsDraft, serializeListFields } from '@/lib/listFields'
 import { ProjectLinksEditor } from '@/components/editor/ProjectLinksEditor'
-import { GuideEditor } from '@/components/editor/GuideEditor'
+import { ObjectFieldsEditor } from '@/components/editor/ObjectFieldsEditor'
+import { ListFieldsEditor } from '@/components/editor/ListFieldsEditor'
 import { fieldCaption } from '@/lib/fieldNames'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
@@ -29,6 +31,10 @@ type EntryEditorDialogProps = {
   typeOptions?: readonly string[]
   /** Shape of the entry's `cred_link`; see PortfolioSection. */
   credentialStyle?: 'documents' | 'categories'
+  /** Entry keys edited as their own sub-fields; see PortfolioSection. */
+  objectFields?: Record<string, readonly string[]>
+  /** Entry keys edited as rows of columns; see PortfolioSection. */
+  listFields?: Record<string, readonly string[]>
   isExperience?: boolean
   isEducation?: boolean
   onClose: () => void
@@ -45,7 +51,7 @@ function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], credentialStyle, isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], credentialStyle, objectFields = {}, listFields = {}, isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
   const initialFields = useMemo(() => {
     if (entry) {
       const base = isExperience ? { ...entry.raw, projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
@@ -53,7 +59,10 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
       const drafts: Record<string, unknown> = {
         ...(credentialStyle === 'documents' ? { cred_link: credentialLinksDraft(base.cred_link) } : {}),
         ...(credentialStyle === 'categories' && 'cred_link' in base ? { cred_link: projectLinksDraft(base.cred_link) } : {}),
-        ...('guide' in base ? { guide: guideDraft(base.guide) } : {}),
+        // Declared object keys are drafted even when the entry lacks them, so
+        // one can be filled in; an untouched blank group writes no key.
+        ...Object.fromEntries(Object.entries(objectFields).map(([key, fields]) => [key, objectFieldsDraft(base[key], fields)])),
+        ...Object.fromEntries(Object.entries(listFields).map(([key, fields]) => [key, listFieldsDraft(base[key], fields)])),
       }
       const raw = { ...base, ...drafts }
       // Values drafted above already hold what their editor should show, so the
@@ -64,7 +73,7 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
     if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
-  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle])
+  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, objectFields, listFields])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
   const [educationTab, setEducationTab] = useState('details')
   const [curriculum, setCurriculum] = useState(() => curriculumDraft(entry?.raw.cirriculum))
@@ -97,7 +106,8 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
         if (value === initialFields[key] && original !== undefined) return [key, original]
         if (credentialStyle === 'documents' && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
         if (credentialStyle === 'categories' && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
-        if (key === 'guide') return [key, serializeGuide(JSON.parse(value), original)]
+        if (objectFields[key]) return [key, serializeObjectFields(JSON.parse(value), original, objectFields[key], key)]
+        if (listFields[key]) return [key, serializeListFields(JSON.parse(value), original, listFields[key], fieldCaption(key).toLowerCase())]
         const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('['))
         const parsed: unknown = structured ? JSON.parse(value) : value
         if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || typeof item.name !== 'string' || !item.name.trim())) throw new Error('Enter a label and name for each sub-field before saving.')
@@ -105,8 +115,8 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
         if (isExperience && key === 'projects' && Array.isArray(parsed) && parsed.some(project => !project || typeof project !== 'object' || typeof project.title !== 'string' || !project.title.trim())) throw new Error('Enter a title for each project before saving.')
         return [key, fromDriveEditorValue(parsed, original, key)]
       })) }
-      // An entry that never had a credential and still has none keeps no key.
-      if (raw.cred_link === undefined) delete raw.cred_link
+      // A group left empty on an entry that never had it keeps no key.
+      for (const key of Object.keys(raw)) if (raw[key] === undefined) delete raw[key]
       if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum)
       const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(fields)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
       onSave({
@@ -138,11 +148,12 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
             if (isExperience && key === 'description') return <DescriptionLinesEditor key={key} lines={JSON.parse(value)} onChange={lines => setFields(current => ({ ...current, description: JSON.stringify(lines) }))} />
             if (credentialStyle === 'documents' && key === 'cred_link') return <CredentialLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
             if (credentialStyle === 'categories' && key === 'cred_link') return <ProjectLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
-            if (key === 'guide') return <GuideEditor key={key} guide={JSON.parse(value)} onChange={guide => setFields(current => ({ ...current, guide: JSON.stringify(guide) }))} />
+            if (objectFields[key]) return <ObjectFieldsEditor key={key} name={key} draft={JSON.parse(value)} onChange={draft => setFields(current => ({ ...current, [key]: JSON.stringify(draft) }))} />
+            if (listFields[key]) return <ListFieldsEditor key={key} name={key} fields={listFields[key]} rows={JSON.parse(value)} onChange={rows => setFields(current => ({ ...current, [key]: JSON.stringify(rows) }))} />
             if (key === 'type' && typeOptions.length) {
               // Only types the site recognises; an unrecognised value from the
               // YAML stays listed so opening the entry does not drop it.
-              const types = typeOptions.map(type => ({ value: type, label: type }))
+              const types = typeOptions.map(type => ({ value: type, label: fieldCaption(type) }))
               const options = value && !types.some(type => type.value === value) ? [{ value, label: `${value} (unsupported)` }, ...types] : types
               return <SelectField key={key} label={fieldCaption(key)} placeholder="Select type" required={isRequired(key)} value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
             }

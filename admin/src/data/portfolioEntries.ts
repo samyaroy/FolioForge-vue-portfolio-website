@@ -175,7 +175,6 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'resources/worth-exploring': () => toEntries(arrayAt(documents.resources, 'explore'), ['group', 'title']),
   'contact/details': () => [{ id: 'contacts', title: 'Contact details', subtitle: firstText(asRecord(documents.profile.contacts), ['location']), raw: { ...asRecord(documents.profile.contacts), socials: documents.profile.socials }, presentation: { titlePaths: [], subtitlePaths: ['location'], fallbackTitle: 'Contact details' } }],
   'facts/facts': () => toEntries(arrayAt(documents.facts, 'facts'), ['title'], ['icon']),
-  'privacy/policy': () => [],
 }
 
 export function getPortfolioEntries(pageId: string, sectionId: string): PortfolioEntry[] {

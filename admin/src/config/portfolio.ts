@@ -8,7 +8,6 @@ import {
   GraduationCap,
   HandHeart,
   House,
-  Landmark,
   Lightbulb,
   LibraryBig,
   Network,
@@ -18,6 +17,7 @@ import type { LucideIcon } from 'lucide-react'
 import { educationTypeIcons } from '../../../src/config/educationTypes.ts'
 import { experienceTypeIcons } from '../../../src/config/experienceTypes.ts'
 import { projectTypes } from '../../../src/config/projectTypes.ts'
+import { articleTypes } from '../../../src/config/articleTypes.ts'
 
 export type PortfolioSection = {
   id: string
@@ -43,6 +43,18 @@ export type PortfolioSection = {
    * Without it the field is edited as plain text.
    */
   credentialStyle?: 'documents' | 'categories'
+  /**
+   * Entry keys that hold a small object, mapped to the sub-fields to edit them
+   * by, in the order the card prints them. The first is the head: the others
+   * mean nothing without it. Without this the value is edited as raw JSON.
+   */
+  objectFields?: Record<string, readonly string[]>
+  /**
+   * Entry keys holding a list of small objects, mapped to the columns each row
+   * is edited by. Same head rule as objectFields: the first column carries the
+   * row.
+   */
+  listFields?: Record<string, readonly string[]>
 }
 
 export type PortfolioPage = {
@@ -71,8 +83,8 @@ export const portfolioPages: PortfolioPage[] = [
     id: 'projects-publications', title: 'Projects & Publications', publicPath: '/projects-publications', icon: LibraryBig,
     description: 'Projects, articles, formal publications, and poster records.',
     sections: [
-      { id: 'projects', title: 'Projects', sources: ['projects.yml'], fields: ['Research projects', 'Technical projects', 'Minor projects', 'Other projects'], requiredFields: ['title'], typeOptions: projectTypes, credentialStyle: 'categories' },
-      { id: 'articles', title: 'Articles', sources: ['publications.yml'], fields: ['Journal articles', 'General articles and blog posts', 'Authors and links'], requiredFields: ['title'] },
+      { id: 'projects', title: 'Projects', sources: ['projects.yml'], fields: ['Research projects', 'Technical projects', 'Minor projects', 'Other projects'], requiredFields: ['title'], typeOptions: projectTypes, credentialStyle: 'categories', objectFields: { guide: ['name', 'title', 'department', 'institution'] } },
+      { id: 'articles', title: 'Articles', sources: ['publications.yml'], fields: ['Journal articles', 'General articles and blog posts', 'Authors and links'], requiredFields: ['title'], typeOptions: articleTypes, objectFields: { publication: ['name', 'host'] } },
       { id: 'publications', title: 'Publications', sources: ['publications.yml'], fields: ['Research publications', 'Authors and venues', 'DOI and credentials'], requiredFields: ['title'] },
       { id: 'posters', title: 'Posters', sources: ['publications.yml'], fields: ['Poster title', 'Event and date', 'Poster image and link'], requiredFields: ['title'] },
     ],
@@ -82,7 +94,7 @@ export const portfolioPages: PortfolioPage[] = [
     description: 'Courses taught, mentored projects, and other teaching contributions.',
     sections: [
       { id: 'courses', title: 'Courses Taught', sources: ['teaching.yml'], fields: ['Course and institution', 'Term and registration', 'Description and links'], requiredFields: ['title'] },
-      { id: 'projects', title: 'Projects Mentored', sources: ['teaching.yml'], fields: ['Semester groups', 'Projects and students', 'Descriptions and project links'], requiredFields: ['title'] },
+      { id: 'projects', title: 'Projects Mentored', sources: ['teaching.yml'], fields: ['Semester groups', 'Projects and students', 'Descriptions and project links'], requiredFields: ['title'], listFields: { students: ['name', 'email', 'Linkedin'] } },
       { id: 'others', title: 'Other Teaching', sources: ['teaching.yml'], fields: ['Activity title', 'Affiliation and date', 'Description and credential'], requiredFields: ['title'] },
     ],
   },
@@ -157,11 +169,6 @@ export const portfolioPages: PortfolioPage[] = [
     id: 'facts', title: 'Did You Know?', publicPath: '/facts', icon: Lightbulb,
     description: 'Short facts and explanatory details about the portfolio.',
     sections: [{ id: 'facts', title: 'Facts', sources: ['facts.yml'], fields: ['Fact title', 'Description', 'MDI icon', 'Display order'], requiredFields: ['title'] }],
-  },
-  {
-    id: 'privacy', title: 'Privacy Policy', publicPath: '/privacy-policy', icon: Landmark,
-    description: 'Visitor-data, analytics, and third-party-content policy copy.',
-    sections: [{ id: 'policy', title: 'Policy Content', sources: ['privacy.yml (planned)'], fields: ['Heading and introduction', 'Ordered clauses', 'Labels and contact reference'] }],
   },
 ]
 
