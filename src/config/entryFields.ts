@@ -51,7 +51,7 @@ export const entryFields = {
 
   facts: ['title', 'description', 'icon'],
   galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', 'images', 'manifestDescription', 'externalUrl'],
-  studyMaterial: ['title', 'materials'],
+  studyMaterial: ['title', { key: 'materials', list: ['title', 'meta', 'instructor', 'distributor', 'logo', 'link'] }],
   worthExploring: ['group', 'links'],
 
   // Blog collections.

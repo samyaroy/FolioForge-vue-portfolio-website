@@ -415,6 +415,10 @@ tbody tr:hover { background: #f9fbfd; }
 .list-fields-editor { grid-column: 1 / -1; min-width: 0; border-top: 1px solid #edf2f6; padding-top: 8px; }
 .list-fields-row { display: grid; grid-template-columns: repeat(var(--list-columns, 2), minmax(0, 1fr)) 28px; align-items: center; gap: 8px; margin-top: 7px; }
 .list-fields-captions { margin-top: 8px; color: #718396; font-size: 9px; font-weight: 700; text-transform: uppercase; }
+.list-fields-card { margin-top: 12px; border-top: 1px solid #edf2f6; padding-top: 10px; }
+.list-fields-card > header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.list-fields-card h4 { margin: 0; color: #294258; font-size: 11px; }
+.list-fields-card-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
 .experience-projects-editor, .description-lines-editor, .credential-links-editor { grid-column: 1 / -1; min-width: 0; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
 .education-subfields-editor { grid-column: 1 / -1; min-width: 0; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
 .education-subfield { margin-top: 12px; border-top: 1px solid #edf2f6; padding-top: 10px; }
@@ -677,6 +681,7 @@ tbody tr:hover { background: #f9fbfd; }
   .faculty-member-captions > :nth-child(2) { display: none; }
   .education-subfield-inputs, .object-fields-grid { grid-template-columns: 1fr; }
   .list-fields-row { grid-template-columns: minmax(0, 1fr) 28px; }
+  .list-fields-card-fields { grid-template-columns: 1fr; }
   .list-fields-captions > :not(:first-child) { display: none; }
   .credential-link { grid-template-columns: minmax(0, 1fr) 32px; }
   .credential-link > label:nth-of-type(2) { grid-row: 2; }
