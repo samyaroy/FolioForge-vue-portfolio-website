@@ -380,7 +380,8 @@ tbody tr:hover { background: #f9fbfd; }
 .curriculum-course { border-top: 1px solid #edf2f6; margin-top: 12px; padding-top: 10px; }
 .curriculum-course h4 { font-size: 11px; }
 .curriculum-course-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
-.faculty-editor { grid-column: 1 / -1; min-width: 0; border-top: 1px solid #edf2f6; padding-top: 8px; }
+.faculty-editor, .guide-editor { grid-column: 1 / -1; min-width: 0; border-top: 1px solid #edf2f6; padding-top: 8px; }
+.guide-editor-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
 .faculty-editor-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #536b7f; font-size: 10px; font-weight: 700; }
 .faculty-editor-heading small { margin-left: 3px; color: #718396; font-size: 10px; }
 .faculty-member { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 28px; align-items: center; gap: 8px; margin-top: 7px; }
@@ -638,7 +639,7 @@ tbody tr:hover { background: #f9fbfd; }
   .faculty-member { grid-template-columns: minmax(0, 1fr) 28px; }
   .faculty-member > :nth-child(2) { grid-row: 2; }
   .faculty-member-captions > :nth-child(2) { display: none; }
-  .education-subfield-inputs { grid-template-columns: 1fr; }
+  .education-subfield-inputs, .guide-editor-fields { grid-template-columns: 1fr; }
   .credential-link { grid-template-columns: minmax(0, 1fr) 32px; }
   .credential-link > label:nth-of-type(2) { grid-row: 2; }
   .curriculum-add-group { align-items: stretch; flex-direction: column; }

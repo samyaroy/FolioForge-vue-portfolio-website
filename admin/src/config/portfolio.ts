@@ -15,6 +15,9 @@ import {
   Presentation,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { educationTypeIcons } from '../../../src/config/educationTypes.ts'
+import { experienceTypeIcons } from '../../../src/config/experienceTypes.ts'
+import { projectTypes } from '../../../src/config/projectTypes.ts'
 
 export type PortfolioSection = {
   id: string
@@ -28,6 +31,18 @@ export type PortfolioSection = {
    * make a field mandatory; leave the list off for sections with none.
    */
   requiredFields?: string[]
+  /**
+   * Values offered for the entry's `type` field, which the editor shows as a
+   * dropdown instead of a text box. Each list comes from the site, where an
+   * unrecognised type changes how the entry renders or hides it altogether.
+   */
+  typeOptions?: readonly string[]
+  /**
+   * Shape of the entry's `cred_link`: 'documents' is a list of labelled files
+   * shown as viewer tabs, 'categories' is one link per project link category.
+   * Without it the field is edited as plain text.
+   */
+  credentialStyle?: 'documents' | 'categories'
 }
 
 export type PortfolioPage = {
@@ -46,8 +61,8 @@ export const portfolioPages: PortfolioPage[] = [
     sections: [
       { id: 'profile', title: 'Profile & Hero', sources: ['profile.yml', 'meta.yml'], fields: ['Name and biography', 'Hero heading and portrait', 'Contact and social links', 'CV and footer copy'], requiredFields: ['name', 'heading', 'about', 'gmail'] },
       { id: 'research-interests', title: 'Research Interests', sources: ['research_interests.yml'], fields: ['Interest title', 'Stable key', 'Display order'], requiredFields: ['title'] },
-      { id: 'experience', title: 'Experience', sources: ['experience.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and links', 'Logo'], requiredFields: ['job_role', 'company', 'location', 'time_period'] },
-      { id: 'education', title: 'Education', sources: ['education.yml'], fields: ['Institution and programme', 'Dates and grades', 'Coursework and details', 'Links and logos'], requiredFields: ['degree', 'institution', 'location', 'time_period'] },
+      { id: 'experience', title: 'Experience', sources: ['experience.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and links', 'Logo'], requiredFields: ['job_role', 'company', 'location', 'time_period'], typeOptions: Object.keys(experienceTypeIcons), credentialStyle: 'documents' },
+      { id: 'education', title: 'Education', sources: ['education.yml'], fields: ['Institution and programme', 'Dates and grades', 'Coursework and details', 'Links and logos'], requiredFields: ['degree', 'institution', 'location', 'time_period'], typeOptions: Object.keys(educationTypeIcons) },
       { id: 'awards', title: 'Awards & Achievements', sources: ['awards.yml (planned)'], fields: ['Awards', 'Achievements', 'Images and credentials', 'Display order'] },
       { id: 'announcements', title: 'Announcements', sources: ['ribbon.yml'], fields: ['Ribbon messages', 'Icons', 'Caption markup', 'Message order'], requiredFields: ['message'] },
     ],
@@ -56,7 +71,7 @@ export const portfolioPages: PortfolioPage[] = [
     id: 'projects-publications', title: 'Projects & Publications', publicPath: '/projects-publications', icon: LibraryBig,
     description: 'Projects, articles, formal publications, and poster records.',
     sections: [
-      { id: 'projects', title: 'Projects', sources: ['projects.yml'], fields: ['Research projects', 'Technical projects', 'Minor projects', 'Other projects'], requiredFields: ['title'] },
+      { id: 'projects', title: 'Projects', sources: ['projects.yml'], fields: ['Research projects', 'Technical projects', 'Minor projects', 'Other projects'], requiredFields: ['title'], typeOptions: projectTypes, credentialStyle: 'categories' },
       { id: 'articles', title: 'Articles', sources: ['publications.yml'], fields: ['Journal articles', 'General articles and blog posts', 'Authors and links'], requiredFields: ['title'] },
       { id: 'publications', title: 'Publications', sources: ['publications.yml'], fields: ['Research publications', 'Authors and venues', 'DOI and credentials'], requiredFields: ['title'] },
       { id: 'posters', title: 'Posters', sources: ['publications.yml'], fields: ['Poster title', 'Event and date', 'Poster image and link'], requiredFields: ['title'] },

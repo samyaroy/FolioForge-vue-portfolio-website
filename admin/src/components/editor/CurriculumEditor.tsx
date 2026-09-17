@@ -3,6 +3,7 @@ import { Plus, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { Button, IconButton, TextareaField, TextField } from '@/components/form'
 import type { CourseDraft, CurriculumDraft } from '@/lib/curriculum'
+import { fieldCaption } from '@/lib/fieldNames'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 import { FacultyEditor } from '@/components/editor/FacultyEditor'
 
@@ -39,7 +40,7 @@ export function CurriculumEditor({ curriculum, onChange }: CurriculumEditorProps
                   if (key === 'logo') return <LogoSelector key={key} multiple={typeof course.original.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, logo: typeof course.original.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) } } : item))} />
                   const structured = value.includes('\n') || value.startsWith('[') || value.startsWith('{')
                   const change = (value: string) => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, [key]: value } } : item))
-                  const label = key.replaceAll('_', ' ')
+                  const label = fieldCaption(key)
                   // serializeCurriculum refuses to save a course without a name.
                   const required = key === 'course_name'
                   return structured

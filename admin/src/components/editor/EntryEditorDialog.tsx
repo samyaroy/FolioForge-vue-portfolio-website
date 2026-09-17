@@ -12,8 +12,11 @@ import { EducationSubFieldsEditor } from '@/components/editor/EducationSubFields
 import { CredentialLinksEditor } from '@/components/editor/CredentialLinksEditor'
 import { curriculumDraft, serializeCurriculum } from '@/lib/curriculum'
 import { credentialLinksDraft, serializeCredentialLinks } from '@/lib/credentialLinks'
-import { educationTypeIcons } from '../../../../src/config/educationTypes.ts'
-import { experienceTypeIcons } from '../../../../src/config/experienceTypes.ts'
+import { projectLinksDraft, serializeProjectLinks } from '@/lib/projectLinks'
+import { guideDraft, serializeGuide } from '@/lib/guide'
+import { ProjectLinksEditor } from '@/components/editor/ProjectLinksEditor'
+import { GuideEditor } from '@/components/editor/GuideEditor'
+import { fieldCaption } from '@/lib/fieldNames'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 
@@ -22,6 +25,10 @@ type EntryEditorDialogProps = {
   fieldGroups: string[]
   /** Entry keys this section cannot be saved without; see PortfolioSection. */
   requiredFields?: string[]
+  /** Values offered for the entry's `type` field; see PortfolioSection. */
+  typeOptions?: readonly string[]
+  /** Shape of the entry's `cred_link`; see PortfolioSection. */
+  credentialStyle?: 'documents' | 'categories'
   isExperience?: boolean
   isEducation?: boolean
   onClose: () => void
@@ -38,16 +45,26 @@ function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], credentialStyle, isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
   const initialFields = useMemo(() => {
     if (entry) {
-      const raw = isExperience ? { ...entry.raw, cred_link: credentialLinksDraft(entry.raw.cred_link), projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
-      return Object.fromEntries(Object.entries(raw).filter(([key]) => !entry.readOnlyFields?.includes(key) && !(isEducation && key === 'cirriculum')).map(([key, value]) => [key, editableValue(toDriveEditorValue(value))]))
+      const base = isExperience ? { ...entry.raw, projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
+      // Nested values the dialog edits as their own controls rather than JSON.
+      const drafts: Record<string, unknown> = {
+        ...(credentialStyle === 'documents' ? { cred_link: credentialLinksDraft(base.cred_link) } : {}),
+        ...(credentialStyle === 'categories' && 'cred_link' in base ? { cred_link: projectLinksDraft(base.cred_link) } : {}),
+        ...('guide' in base ? { guide: guideDraft(base.guide) } : {}),
+      }
+      const raw = { ...base, ...drafts }
+      // Values drafted above already hold what their editor should show, so the
+      // Drive pass must skip them: a project link is a plain URL, not a file ID.
+      const drafted = new Set(Object.keys(drafts))
+      return Object.fromEntries(Object.entries(raw).filter(([key]) => !entry.readOnlyFields?.includes(key) && !(isEducation && key === 'cirriculum')).map(([key, value]) => [key, editableValue(drafted.has(key) ? value : toDriveEditorValue(value))]))
     }
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
     if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
-  }, [entry, fieldGroups, isExperience, isEducation])
+  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
   const [educationTab, setEducationTab] = useState('details')
   const [curriculum, setCurriculum] = useState(() => curriculumDraft(entry?.raw.cirriculum))
@@ -78,7 +95,9 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], isE
       const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(fields).map(([key, value]) => {
         const original = entry?.raw[key]
         if (value === initialFields[key] && original !== undefined) return [key, original]
-        if (isExperience && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
+        if (credentialStyle === 'documents' && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
+        if (credentialStyle === 'categories' && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
+        if (key === 'guide') return [key, serializeGuide(JSON.parse(value), original)]
         const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('['))
         const parsed: unknown = structured ? JSON.parse(value) : value
         if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || typeof item.name !== 'string' || !item.name.trim())) throw new Error('Enter a label and name for each sub-field before saving.')
@@ -117,16 +136,18 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], isE
             if (isEducation && key === 'sub_field') return <EducationSubFieldsEditor key={key} subFields={JSON.parse(value)} onChange={subFields => setFields(current => ({ ...current, sub_field: JSON.stringify(subFields) }))} />
             if (isExperience && key === 'projects') return <ExperienceProjectsEditor key={key} projects={JSON.parse(value)} onChange={projects => setFields(current => ({ ...current, projects: JSON.stringify(projects) }))} />
             if (isExperience && key === 'description') return <DescriptionLinesEditor key={key} lines={JSON.parse(value)} onChange={lines => setFields(current => ({ ...current, description: JSON.stringify(lines) }))} />
-            if (isExperience && key === 'cred_link') return <CredentialLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
-            if ((isEducation || isExperience) && key === 'type') {
-              // Only types the site's timeline renders; an unrecognised value
-              // from the YAML stays listed so opening the entry does not drop it.
-              const types = Object.keys(isEducation ? educationTypeIcons : experienceTypeIcons).map(type => ({ value: type, label: type }))
+            if (credentialStyle === 'documents' && key === 'cred_link') return <CredentialLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
+            if (credentialStyle === 'categories' && key === 'cred_link') return <ProjectLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
+            if (key === 'guide') return <GuideEditor key={key} guide={JSON.parse(value)} onChange={guide => setFields(current => ({ ...current, guide: JSON.stringify(guide) }))} />
+            if (key === 'type' && typeOptions.length) {
+              // Only types the site recognises; an unrecognised value from the
+              // YAML stays listed so opening the entry does not drop it.
+              const types = typeOptions.map(type => ({ value: type, label: type }))
               const options = value && !types.some(type => type.value === value) ? [{ value, label: `${value} (unsupported)` }, ...types] : types
-              return <SelectField key={key} label="type" placeholder="Select type" required={isRequired(key)} value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
+              return <SelectField key={key} label={fieldCaption(key)} placeholder="Select type" required={isRequired(key)} value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
             }
             const isStructured = value.includes('\n') || value.startsWith('{') || value.startsWith('[')
-            const label = `${key.replaceAll('_', ' ')}${!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}`
+            const label = `${fieldCaption(key)}${!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}`
             const change = (next: string) => setFields(current => ({ ...current, [key]: next }))
             return isStructured
               ? <TextareaField key={key} label={label} required={isRequired(key)} value={value} onChange={change} />
