@@ -24,7 +24,11 @@ import professionalActivity from './professional_activity.yml'
 import pageQuotes from './page_quotes.yml'
 import ribbon from './ribbon.yml'
 
-export const profileInfoSources = [
+import { withoutDisabledEntries } from '../../config/entryStatus'
+
+// Entries switched off in the content are dropped here, so every page and the
+// credentials dashboard see the same published set.
+export const profileInfoSources = ([
   { source: 'src/content/profile_info/meta.yml', data: meta },
   { source: 'src/content/profile_info/profile.yml', data: profile },
   { source: 'src/content/profile_info/research_interests.yml', data: researchInterests },
@@ -42,12 +46,12 @@ export const profileInfoSources = [
   { source: 'src/content/profile_info/professional_activity.yml', data: professionalActivity },
   { source: 'src/content/profile_info/page_quotes.yml', data: pageQuotes },
   { source: 'src/content/profile_info/ribbon.yml', data: ribbon },
-] as const
+] as const).map(entry => ({ ...entry, data: withoutDisabledEntries(entry.data) }))
 
 // Same reasoning as the `*.yml` shim in ./yml.d.ts — the merged config is
 // schemaless by design and is read with dotted property access everywhere.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const config: Record<string, any> = {
+const config: Record<string, any> = withoutDisabledEntries({
   ...meta,
   ...profile,
   ...researchInterests,
@@ -65,6 +69,6 @@ const config: Record<string, any> = {
   ...professionalActivity,
   ...pageQuotes,
   ...ribbon,
-}
+})
 
 export default config

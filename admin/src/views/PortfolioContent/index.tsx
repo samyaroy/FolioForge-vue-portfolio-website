@@ -7,11 +7,12 @@ import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
 import { VisibilityPane } from '@/components/admin/VisibilityPane'
 import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
-import { Button } from '@/components/form'
+import { Button, SwitchField } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
 import { getPortfolioEntries } from '@/data/portfolioEntries'
+import { ENTRY_ENABLED_KEY, isEntryEnabled } from '../../../../src/config/entryStatus.ts'
 import type { PortfolioEntry } from '@/data/portfolioEntries'
 
 type EditorState = { mode: 'new' } | { mode: 'edit'; entry: PortfolioEntry }
@@ -33,6 +34,15 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
   const [editor, setEditor] = useState<EditorState | null>(null)
 
   const visibleEntries = entries.filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
+
+  // Switching an entry off writes `enabled: false`, which the site filters out,
+  // in place of commenting the block out of the YAML.
+  const toggleEntry = (entry: PortfolioEntry, enabled: boolean) => {
+    setEntries(current => current.map(item => item.id === entry.id
+      ? { ...item, enabled, raw: { ...item.raw, [ENTRY_ENABLED_KEY]: enabled } }
+      : item))
+    toast.info(enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`)
+  }
 
   const saveEntry = (nextEntry: PortfolioEntry) => {
     setEntries(current => editor?.mode === 'edit'
@@ -80,10 +90,15 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
           </div>
           <div className="repository-entry-list">
             {visibleEntries.map((entry, index) => (
-              <article key={entry.id}>
+              <article key={entry.id} className={isEntryEnabled(entry.raw) ? undefined : 'entry-disabled'}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <div><strong>{entry.title}</strong>{entry.subtitle && <small>{entry.subtitle}</small>}</div>
                 <span className="mapped-state"><Check aria-hidden="true" /> Mapped</span>
+                <SwitchField
+                  aria-label={`Show ${entry.title} on the site`}
+                  checked={isEntryEnabled(entry.raw)}
+                  onChange={enabled => toggleEntry(entry, enabled)}
+                />
                 <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
               </article>
             ))}

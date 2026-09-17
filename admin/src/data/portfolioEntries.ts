@@ -30,6 +30,8 @@ export type PortfolioEntry = {
   id: string
   title: string
   subtitle: string
+  /** False only when the entry is switched off in the content. */
+  enabled?: boolean
   raw: UnknownRecord
   presentation?: EntryPresentation
   readOnlyFields?: string[]

@@ -356,7 +356,9 @@ tbody tr:hover { background: #f9fbfd; }
 .entry-list-toolbar .search-field { width: min(420px, 100%); }
 .entry-list-toolbar > span { color: #718396; font-size: 9px; white-space: nowrap; }
 .repository-entry-list { display: flex; flex-direction: column; }
-.repository-entry-list article { display: grid; min-height: 68px; grid-template-columns: 28px minmax(0, 1fr) auto auto; align-items: center; gap: 11px; border-top: 1px solid var(--border); padding: 10px 14px; }
+.repository-entry-list article { display: grid; min-height: 68px; grid-template-columns: 28px minmax(0, 1fr) auto auto auto; align-items: center; gap: 11px; border-top: 1px solid var(--border); padding: 10px 14px; }
+/* A switched-off entry stays listed and editable, but reads as unpublished. */
+.entry-disabled > span:first-child, .entry-disabled > div, .entry-disabled .mapped-state { opacity: .5; }
 .repository-entry-list article:first-child { border-top: 0; }
 .repository-entry-list article:hover { background: #f9fbfd; }
 .repository-entry-list article > span:first-child { color: #8ca0b0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; }
