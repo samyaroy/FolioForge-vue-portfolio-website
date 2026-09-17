@@ -16,6 +16,11 @@ import resourcesYaml from '../../../src/content/profile_info/resources.yml'
 import ribbonYaml from '../../../src/content/profile_info/ribbon.yml'
 import teachingYaml from '../../../src/content/profile_info/teaching.yml'
 import workshopsYaml from '../../../src/content/profile_info/workshops.yml'
+import blogRecommendedYaml from '../../../blogs/src/content/recommended/data.yml'
+import blogReadingsYaml from '../../../blogs/src/content/readings/data.yml'
+import blogMoviesYaml from '../../../blogs/src/content/movies/data.yml'
+import blogTravelYaml from '../../../blogs/src/content/travel/data.yml'
+import blogHobbiesYaml from '../../../blogs/src/content/hobbies/data.yml'
 
 import type { EntryPresentation } from '@/lib/entryPresentation'
 
@@ -49,6 +54,11 @@ const documents = {
   ribbon: ribbonYaml as UnknownRecord,
   teaching: teachingYaml as UnknownRecord,
   workshops: workshopsYaml as UnknownRecord,
+  blogRecommended: blogRecommendedYaml as UnknownRecord,
+  blogReadings: blogReadingsYaml as UnknownRecord,
+  blogMovies: blogMoviesYaml as UnknownRecord,
+  blogTravel: blogTravelYaml as UnknownRecord,
+  blogHobbies: blogHobbiesYaml as UnknownRecord,
 }
 
 function asRecord(value: unknown): UnknownRecord {
@@ -175,6 +185,12 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'resources/worth-exploring': () => toEntries(arrayAt(documents.resources, 'explore'), ['group', 'title']),
   'contact/details': () => [{ id: 'contacts', title: 'Contact details', subtitle: firstText(asRecord(documents.profile.contacts), ['location']), raw: { ...asRecord(documents.profile.contacts), socials: documents.profile.socials }, presentation: { titlePaths: [], subtitlePaths: ['location'], fallbackTitle: 'Contact details' } }],
   'facts/facts': () => toEntries(arrayAt(documents.facts, 'facts'), ['title'], ['icon']),
+
+  'blog/recommended': () => toEntries(arrayAt(documents.blogRecommended, 'items'), ['title'], ['author', 'source']),
+  'blog/readings': () => toEntries(arrayAt(documents.blogReadings, 'items'), ['title'], ['author', 'genre']),
+  'blog/movies': () => toEntries(arrayAt(documents.blogMovies, 'items'), ['title'], ['director', 'year']),
+  'blog/travel': () => toEntries(arrayAt(documents.blogTravel, 'states'), ['state'], ['purpose']),
+  'blog/hobbies': () => toEntries(arrayAt(documents.blogHobbies, 'tiles'), ['label'], ['icon']),
 }
 
 export function getPortfolioEntries(pageId: string, sectionId: string): PortfolioEntry[] {

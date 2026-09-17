@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   Link2,
 } from 'lucide-react'
-import { portfolioAdminPath, portfolioPages } from '@/config/portfolio'
+import { blogPages, portfolioAdminPath, portfolioPages } from '@/config/portfolio'
 import type { NavigationGroup } from '@/types/navigation'
 
 export const navigation: NavigationGroup[] = [
@@ -41,6 +41,10 @@ export const navigation: NavigationGroup[] = [
           { label: 'New Post', path: '/blog/posts/new' },
           { label: 'Gallery', path: '/blog/gallery' },
           { label: 'Pages', path: '/blog/pages' },
+          ...blogPages.flatMap(page => page.sections.map(section => ({
+            label: section.title,
+            path: portfolioAdminPath(page, section),
+          }))),
         ],
       },
     ],

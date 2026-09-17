@@ -64,6 +64,10 @@ export type PortfolioPage = {
   icon: LucideIcon
   description: string
   sections: PortfolioSection[]
+  /** Which site the page belongs to; decides where "View beta page" points. */
+  site?: 'portfolio' | 'blog'
+  /** Admin URL prefix, so blog collections live under /blog rather than /portfolio. */
+  basePath?: string
 }
 
 export const portfolioPages: PortfolioPage[] = [
@@ -172,10 +176,28 @@ export const portfolioPages: PortfolioPage[] = [
   },
 ]
 
+// The blog app keeps its own content collections; they are edited here the
+// same way, under the Blog section of the navigation.
+export const blogPages: PortfolioPage[] = [
+  {
+    id: 'blog', title: 'Blog Collections', publicPath: '/', icon: BookOpenCheck, site: 'blog', basePath: '/blog/pages',
+    description: 'Reading, watching and travel collections behind the blog site.',
+    sections: [
+      { id: 'recommended', title: 'Worth Your Time', sources: ['recommended/data.yml'], fields: ['Title and author', 'Source and year', 'Link and note'], requiredFields: ['title', 'url'] },
+      { id: 'readings', title: 'What I Read', sources: ['readings/data.yml'], fields: ['Title and author', 'Genre and description', 'Cover image and link'], requiredFields: ['title'] },
+      { id: 'movies', title: 'Worth Binge-watching', sources: ['movies/data.yml'], fields: ['Title and director', 'Genre and year', 'Poster image and link'], requiredFields: ['title'] },
+      { id: 'travel', title: 'TravelBook', sources: ['travel/data.yml'], fields: ['State and purpose', 'Cities and visits'], requiredFields: ['state'] },
+      { id: 'hobbies', title: 'Hobby Lobby', sources: ['hobbies/data.yml'], fields: ['Tile label', 'MDI icon'], requiredFields: ['label'] },
+    ],
+  },
+]
+
+export const contentPages = [...portfolioPages, ...blogPages]
+
 export function portfolioAdminPath(page: PortfolioPage, section: PortfolioSection = page.sections[0]) {
-  return `/portfolio/pages/${page.id}/${section.id}`
+  return `${page.basePath ?? '/portfolio/pages'}/${page.id}/${section.id}`
 }
 
 export function findPortfolioPage(pageId?: string) {
-  return portfolioPages.find(page => page.id === pageId)
+  return contentPages.find(page => page.id === pageId)
 }

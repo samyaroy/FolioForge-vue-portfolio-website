@@ -49,7 +49,7 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
         description={page.description}
         actions={
           <Button variant="outline" asChild>
-            <a href={`${publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View beta page <ArrowUpRight aria-hidden="true" /></a>
+            <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
           </Button>
         }
       />

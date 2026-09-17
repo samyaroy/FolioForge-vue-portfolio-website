@@ -32,6 +32,7 @@ export const router = createBrowserRouter([
       { path: '/blog/posts/new', element: <PostEditorPage /> },
       { path: '/blog/gallery', element: <BlogGalleryPage /> },
       { path: '/blog/pages', element: <BlogPagesPage /> },
+      { path: '/blog/pages/:pageId/:sectionId', element: <PortfolioContentPage /> },
       { path: '/workspace/publishing', element: <PublishingPage /> },
       { path: '/workspace/storage', element: <StoragePage /> },
       { path: '/workspace/settings', element: <SettingsPage /> },
