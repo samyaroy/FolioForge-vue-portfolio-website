@@ -40,7 +40,7 @@
             </svg>
             Volunteering
           </h2>
-          <div class="space-y-6">
+          <div class="space-y-4">
             <div v-if="volunteeringRoles.length === 0" class="text-gray-500 italic text-center">
               <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
                 <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />

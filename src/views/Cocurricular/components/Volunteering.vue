@@ -1,8 +1,8 @@
 <template>
-  <div class="border-l-4 border-green-500 pl-6 py-4 pr-4 rounded-md bg-slate-50 text-sm">
+  <div class="border-l-4 border-green-500 pl-4 sm:pl-5 py-2.5 pr-4 rounded-md bg-slate-50 text-sm">
 
     <!-- Role + Credential -->
-    <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-2">
+    <div class="flex flex-col gap-0.5 sm:flex-row sm:items-center sm:justify-between mb-1">
       <h3 class="text-lg font-semibold text-[#0e141b]">
         {{ volunteering.role }}
 
@@ -19,13 +19,13 @@
     </div>
 
     <!-- Organization -->
-    <p class="text-gray-700 mb-3 flex items-start gap-2">
+    <p class="text-gray-700 mb-1 flex items-start gap-2">
       <v-icon size="16" class="mt-1">mdi-domain</v-icon>
       <SmartLink :type="'Institution'" :text="volunteering.organization" />
     </p>
 
     <!-- Fields & Time Periods (only when the entry actually has fields) -->
-    <div v-if="fields.length" class="flex mb-1">
+    <div v-if="fields.length" class="flex">
 
       <!-- Icon column -->
       <div class="w-5 flex justify-center pt-1 mr-1">
@@ -51,7 +51,7 @@
 
     </div>
     <!-- Skills (plain text, because that’s what it is) -->
-    <div v-if="volunteering.skills" class="mb-2">
+    <div v-if="volunteering.skills" class="mt-1.5">
       <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
         {{ volunteering.skills }}
       </span>
