@@ -275,6 +275,8 @@ tbody tr:hover { background: #f9fbfd; }
 .credential-link-cell a:hover { border-color: rgb(25 128 230 / 40%); background: rgb(25 128 230 / 10%); color: var(--foreground); }
 .credential-link-cell svg { width: 13px; height: 13px; }
 .credential-link-empty { color: #94a7b6; }
+.hyperlink-search { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.hyperlink-search .search-field { width: min(460px, 100%); }
 .hyperlink-issue { display: inline-flex; align-items: center; gap: 4px; color: #b42318; font-size: 9px; }
 .hyperlink-issue svg { width: 11px; height: 11px; }
 .hyperlink-aliases { display: block; color: #5c7285; font-size: 10px; overflow-wrap: anywhere; }

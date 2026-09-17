@@ -65,18 +65,14 @@ function EntryDialog({ entry, onClose, onSave }: { entry: HyperlinkEntry; onClos
 export function HyperlinkMetadataPage() {
   const [entries, setEntries] = useState(hyperlinkEntries)
   const [query, setQuery] = useState('')
-  const [group, setGroup] = useState<HyperlinkGroup | 'All'>('All')
   const [editing, setEditing] = useState<HyperlinkEntry | null>(null)
 
   const brokenCount = entries.filter(entry => entry.issues.length).length
   const visibleEntries = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
-    return entries.filter(entry => {
-      if (group !== 'All' && entry.group !== group) return false
-      if (!normalizedQuery) return true
-      return [entry.name, entry.url, ...entry.aliases].join(' ').toLowerCase().includes(normalizedQuery)
-    })
-  }, [entries, query, group])
+    if (!normalizedQuery) return entries
+    return entries.filter(entry => [entry.name, entry.url, ...entry.aliases].join(' ').toLowerCase().includes(normalizedQuery))
+  }, [entries, query])
 
   const saveEntry = (next: HyperlinkEntry) => {
     setEntries(current => current.some(entry => entry.id === next.id)
@@ -101,45 +97,50 @@ export function HyperlinkMetadataPage() {
       ]} />
       <LocalNotice>Edits stay in this session until the collection adapter can write YAML.</LocalNotice>
 
-      <section className="posts-panel" aria-labelledby="hyperlinks-heading">
-        <div className="panel-toolbar">
-          <SearchField value={query} onChange={setQuery} placeholder="Search names, aliases, or URLs" label="Search hyperlink metadata" />
-          <div className="filter-actions">
-            {(['All', ...groups] as const).map(option => (
-              <Button key={option} variant={group === option ? 'default' : 'outline'} size="sm" onClick={() => setGroup(option)}>{option}</Button>
-            ))}
-          </div>
-        </div>
-        <div className="table-wrap">
-          <table className="credentials-table">
-            <thead><tr>
-              <th id="hyperlinks-heading">Name</th><th>Type</th><th>Aliases</th><th>Link</th><th><span className="sr-only">Edit</span></th>
-            </tr></thead>
-            <tbody>
-              {visibleEntries.map(entry => (
-                <tr key={entry.id}>
-                  <td>
-                    <div className="post-title-cell">
-                      <strong>{entry.name || 'Unnamed entry'}</strong>
-                      {entry.issues.length > 0 && <span className="hyperlink-issue"><AlertTriangle aria-hidden="true" /> {entry.issues.join(' · ')}</span>}
-                    </div>
-                  </td>
-                  <td><span className="status-badge">{entry.group}</span></td>
-                  <td>{entry.aliases.length ? <span className="hyperlink-aliases">{entry.aliases.join(', ')}</span> : <span className="credential-link-empty">-</span>}</td>
-                  <td>
-                    {entry.url
-                      ? <div className="credential-link-cell"><a href={entry.url} target="_blank" rel="noopener noreferrer" title={entry.url} aria-label={`Open ${entry.name}`}><ExternalLink aria-hidden="true" /></a></div>
-                      : <span className="credential-link-empty">-</span>}
-                  </td>
-                  <td><IconButton variant="outline" title="Edit link" label={`Edit ${entry.name || 'entry'}`} onClick={() => setEditing(entry)}><Pencil aria-hidden="true" /></IconButton></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {!visibleEntries.length && <div className="empty-state"><strong>No links match the current filters</strong><span>Try a different search or type.</span></div>}
-        </div>
-        <footer className="table-footer"><span>Showing {visibleEntries.length} of {entries.length} links</span><span>{brokenCount ? `${brokenCount} need a look` : 'All entries resolve'}</span></footer>
-      </section>
+      <div className="hyperlink-search">
+        <SearchField value={query} onChange={setQuery} placeholder="Search names, aliases, or URLs" label="Search hyperlink metadata" />
+        <span className="result-count">{visibleEntries.length} of {entries.length} links</span>
+      </div>
+
+      {groups.map(group => {
+        const groupEntries = visibleEntries.filter(entry => entry.group === group)
+        const urlLabel = group === 'Person' ? 'Link' : 'Website'
+        return (
+          <section className="posts-panel" key={group} aria-labelledby={`hyperlinks-${group}`}>
+            <div className="panel-heading">
+              <div><span>{group === 'Person' ? 'People' : 'Institutes'}</span><h2 id={`hyperlinks-${group}`}>{group === 'Person' ? 'People and profiles' : 'Institutes and organisations'}</h2></div>
+              <span>{groupEntries.length} of {entries.filter(entry => entry.group === group).length}</span>
+            </div>
+            <div className="table-wrap">
+              <table className="credentials-table">
+                <thead><tr>
+                  <th>Name</th><th>Aliases</th><th>{urlLabel}</th><th><span className="sr-only">Edit</span></th>
+                </tr></thead>
+                <tbody>
+                  {groupEntries.map(entry => (
+                    <tr key={entry.id}>
+                      <td>
+                        <div className="post-title-cell">
+                          <strong>{entry.name || 'Unnamed entry'}</strong>
+                          {entry.issues.length > 0 && <span className="hyperlink-issue"><AlertTriangle aria-hidden="true" /> {entry.issues.join(' · ')}</span>}
+                        </div>
+                      </td>
+                      <td>{entry.aliases.length ? <span className="hyperlink-aliases">{entry.aliases.join(', ')}</span> : <span className="credential-link-empty">-</span>}</td>
+                      <td>
+                        {entry.url
+                          ? <div className="credential-link-cell"><a href={entry.url} target="_blank" rel="noopener noreferrer" title={entry.url} aria-label={`Open ${entry.name}`}><ExternalLink aria-hidden="true" /></a></div>
+                          : <span className="credential-link-empty">-</span>}
+                      </td>
+                      <td><IconButton variant="outline" title="Edit link" label={`Edit ${entry.name || 'entry'}`} onClick={() => setEditing(entry)}><Pencil aria-hidden="true" /></IconButton></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {!groupEntries.length && <div className="empty-state"><strong>No {group === 'Person' ? 'people' : 'institutes'} match this search</strong><span>Try different wording.</span></div>}
+            </div>
+          </section>
+        )
+      })}
       {editing && <EntryDialog key={editing.id} entry={editing} onClose={() => setEditing(null)} onSave={saveEntry} />}
     </>
   )
