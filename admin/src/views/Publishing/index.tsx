@@ -1,6 +1,6 @@
 import { Check, CircleDashed, GitBranch, GitPullRequest, LockKeyhole, Rocket } from 'lucide-react'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/form'
 import { publishingTarget } from '@/config/publishing'
 
 const steps = [

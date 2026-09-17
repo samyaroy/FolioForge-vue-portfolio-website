@@ -1,3 +1,4 @@
+import { SwitchField } from '@/components/form'
 import { sectionVisibility } from '@/config/visibility'
 import type { VisibilityFlag } from '@/config/visibility'
 import { useVisibilityDraft } from '@/hooks/visibilityContext'
@@ -11,10 +12,14 @@ export function VisibilitySwitches({ controls }: { controls: VisibilityFlag[] })
         const isEnabled = flags[control.path] === true
         const isChanged = flags[control.path] !== originalFlags[control.path]
         return (
-          <label key={control.path}>
-            <span><strong>{control.label}</strong><small>{!isKnown ? 'Flag unavailable' : `${isEnabled ? 'Enabled' : 'Disabled'}${isChanged ? ' · Local change' : ''}`}</small><code className="visibility-flag-path">{control.path}</code></span>
-            <input type="checkbox" role="switch" aria-label={control.label} disabled={!isKnown} checked={isEnabled} onChange={event => setFlag(control.path, event.target.checked)} />
-          </label>
+          <SwitchField
+            key={control.path}
+            aria-label={control.label}
+            disabled={!isKnown}
+            checked={isEnabled}
+            onChange={checked => setFlag(control.path, checked)}
+            label={<span><strong>{control.label}</strong><small>{!isKnown ? 'Flag unavailable' : `${isEnabled ? 'Enabled' : 'Disabled'}${isChanged ? ' · Local change' : ''}`}</small><code className="visibility-flag-path">{control.path}</code></span>}
+          />
         )
       })}
     </div>

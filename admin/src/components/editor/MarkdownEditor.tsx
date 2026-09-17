@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { Bold, Code, Heading2, Italic, Link as LinkIcon, List } from 'lucide-react'
+import { IconButton, TextareaField } from '@/components/form'
 
 type MarkdownEditorProps = {
   value: string
@@ -36,10 +37,10 @@ export function MarkdownEditor({ value, onChange }: MarkdownEditorProps) {
       <div className="editor-toolbar" aria-label="Markdown formatting">
         {controls.map(control => {
           const Icon = control.icon
-          return <button key={control.label} type="button" title={control.label} aria-label={control.label} onClick={() => wrapSelection(control.before, control.after)}><Icon aria-hidden="true" /></button>
+          return <IconButton key={control.label} variant="bare" size="none" label={control.label} onClick={() => wrapSelection(control.before, control.after)}><Icon aria-hidden="true" /></IconButton>
         })}
       </div>
-      <textarea ref={textareaRef} value={value} onChange={event => onChange(event.target.value)} aria-label="Post body" placeholder="Start writing in Markdown..." />
+      <TextareaField ref={textareaRef} value={value} onChange={onChange} aria-label="Post body" placeholder="Start writing in Markdown..." />
     </div>
   )
 }

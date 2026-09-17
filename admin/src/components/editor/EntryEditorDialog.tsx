@@ -1,7 +1,7 @@
-import { Fragment, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Save, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button, IconButton, SelectField, TextareaField, TextField } from '@/components/form'
 import type { PortfolioEntry } from '@/data/portfolioEntries'
 import { driveFieldMode, fromDriveEditorValue, toDriveEditorValue } from '@/lib/driveLinks'
 import { entryPresentation } from '@/lib/entryPresentation'
@@ -95,7 +95,7 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
       <section className="entry-dialog" role="dialog" aria-modal="true" aria-label={entry ? `Edit ${entry.title}` : 'Add entry'} onMouseDown={event => event.stopPropagation()}>
         <header>
           <div><span>{entry ? 'Edit entry' : 'New entry'}</span><h2>{entry?.title ?? 'Add collection entry'}</h2></div>
-          <button type="button" aria-label="Close editor" onClick={onClose}><X aria-hidden="true" /></button>
+          <IconButton variant="bare" size="none" label="Close editor" onClick={onClose}><X aria-hidden="true" /></IconButton>
         </header>
         {isEducation && <Tabs value={educationTab} onValueChange={setEducationTab} className="education-editor-tabs"><TabsList><TabsTrigger value="details">Education details</TabsTrigger><TabsTrigger value="curriculum">Curriculum</TabsTrigger></TabsList></Tabs>}
         <div className="entry-dialog-body" hidden={isEducation && educationTab !== 'details'}>
@@ -109,29 +109,16 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
             if (isEducation && key === 'type') {
               // Only types the site's education timeline renders; an unrecognised
               // value from the YAML stays listed so opening the entry does not drop it.
-              const types = Object.keys(educationTypeIcons)
-              return (
-                <label className="field" key={key}>
-                  <span>type</span>
-                  <select value={value} onChange={event => setFields(current => ({ ...current, type: event.target.value }))}>
-                    {!value && <option value="">Select type</option>}
-                    {value && !types.includes(value) && <option value={value}>{value} (unsupported)</option>}
-                    {types.map(type => <option key={type} value={type}>{type}</option>)}
-                  </select>
-                </label>
-              )
+              const types = Object.keys(educationTypeIcons).map(type => ({ value: type, label: type }))
+              const options = value && !types.some(type => type.value === value) ? [{ value, label: `${value} (unsupported)` }, ...types] : types
+              return <SelectField key={key} label="type" placeholder="Select type" value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
             }
             const isStructured = value.includes('\n') || value.startsWith('{') || value.startsWith('[')
-            return (
-              <Fragment key={key}>
-                <label className="field">
-                  <span>{key.replaceAll('_', ' ')}{!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}</span>
-                  {isStructured
-                    ? <textarea value={value} onChange={event => setFields(current => ({ ...current, [key]: event.target.value }))} />
-                    : <input autoFocus={index === 0} value={value} onChange={event => setFields(current => ({ ...current, [key]: event.target.value }))} />}
-                </label>
-              </Fragment>
-            )
+            const label = `${key.replaceAll('_', ' ')}${!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}`
+            const change = (next: string) => setFields(current => ({ ...current, [key]: next }))
+            return isStructured
+              ? <TextareaField key={key} label={label} value={value} onChange={change} />
+              : <TextField key={key} label={label} value={value} onChange={change} autoFocus={index === 0} />
           })}
         </div>
         {isEducation && <div className="entry-dialog-body curriculum-tab-body" hidden={educationTab !== 'curriculum'}><CurriculumEditor curriculum={curriculum} onChange={setCurriculum} /></div>}

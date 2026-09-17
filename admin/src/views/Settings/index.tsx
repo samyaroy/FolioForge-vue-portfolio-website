@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { ExternalLink, Save } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { Button } from '@/components/ui/button'
+import { Button, TextField } from '@/components/form'
 import { VisibilitySwitches } from '@/components/admin/VisibilityPane'
 import { globalVisibility, sectionVisibility } from '@/config/visibility'
 import { useVisibilityDraft } from '@/hooks/visibilityContext'
@@ -34,7 +34,7 @@ export function SettingsPage() {
       <div className="settings-layout">
         <section className="form-panel">
           <div className="panel-heading"><div><span>Identity</span><h2>Site branding</h2></div></div>
-          <div className="form-grid"><label className="field field-wide"><span>Site name</span><input data-page-search value={siteName} onChange={event => setSiteName(event.target.value)} /></label><label className="field field-wide"><span>Portfolio URL</span><div className="input-with-icon"><input value="https://samyabrata.codeium.xyz" readOnly /><ExternalLink aria-hidden="true" /></div></label></div>
+          <div className="form-grid"><TextField label="Site name" fieldClassName="field-wide" data-page-search value={siteName} onChange={setSiteName} /><label className="field field-wide"><span>Portfolio URL</span><div className="input-with-icon"><TextField value="https://samyabrata.codeium.xyz" onChange={() => {}} readOnly /><ExternalLink aria-hidden="true" /></div></label></div>
         </section>
         <section className="form-panel">
           <div className="panel-heading"><div><span>Visibility</span><h2>Published sections</h2></div></div>

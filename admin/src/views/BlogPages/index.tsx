@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { FilePenLine } from 'lucide-react'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/form'
 import { blogPages } from '@/data/content'
 
 export function BlogPagesPage() {

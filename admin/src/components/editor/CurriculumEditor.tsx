@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Plus, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
-import { Button } from '@/components/ui/button'
+import { Button, IconButton, TextareaField, TextField } from '@/components/form'
 import type { CourseDraft, CurriculumDraft } from '@/lib/curriculum'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 import { FacultyEditor } from '@/components/editor/FacultyEditor'
@@ -26,20 +26,23 @@ export function CurriculumEditor({ curriculum, onChange }: CurriculumEditorProps
 
   return (
     <div className="curriculum-editor">
-      <div className="curriculum-add-group"><label className="field"><span>Semester or level</span><input value={groupName} onChange={event => setGroupName(event.target.value)} placeholder="Semester 2 or Foundation" /></label><Button variant="outline" size="sm" onClick={addGroup}><Plus aria-hidden="true" /> Add group</Button></div>
+      <div className="curriculum-add-group"><TextField label="Semester or level" value={groupName} onChange={setGroupName} placeholder="Semester 2 or Foundation" /><Button variant="outline" size="sm" onClick={addGroup}><Plus aria-hidden="true" /> Add group</Button></div>
       {Object.entries(curriculum).map(([group, courses]) => (
         <section className="curriculum-group" key={group} aria-label={group.replaceAll('_', ' ')}>
-          <header><h3>{group.replaceAll('_', ' ')}</h3><div><Button variant="outline" size="sm" onClick={() => updateGroup(group, [...courses, { original: {}, fields: { course_name: '', course_code: '', type: '', credit: '', faculty: '[]' } }])}><Plus aria-hidden="true" /> Add course</Button><Button variant="ghost" size="icon-sm" title="Remove group" aria-label={`Remove ${group.replaceAll('_', ' ')}`} onClick={() => { const next = { ...curriculum }; delete next[group]; onChange(next) }}><Trash2 aria-hidden="true" /></Button></div></header>
+          <header><h3>{group.replaceAll('_', ' ')}</h3><div><Button variant="outline" size="sm" onClick={() => updateGroup(group, [...courses, { original: {}, fields: { course_name: '', course_code: '', type: '', credit: '', faculty: '[]' } }])}><Plus aria-hidden="true" /> Add course</Button><IconButton label={`Remove ${group.replaceAll('_', ' ')}`} title="Remove group" onClick={() => { const next = { ...curriculum }; delete next[group]; onChange(next) }}><Trash2 aria-hidden="true" /></IconButton></div></header>
           {courses.map((course, index) => (
             <section className="curriculum-course" key={index} aria-label={`Course ${index + 1}`}>
-              <header><h4>Course {index + 1}</h4><Button variant="ghost" size="icon-sm" title="Remove course" aria-label={`Remove course ${index + 1}`} onClick={() => updateGroup(group, courses.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></Button></header>
+              <header><h4>Course {index + 1}</h4><IconButton label={`Remove course ${index + 1}`} title="Remove course" onClick={() => updateGroup(group, courses.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton></header>
               <div className="curriculum-course-fields">
                 {Object.entries(course.fields).map(([key, value]) => {
                   if (key === 'faculty') return null
                   if (key === 'logo') return <LogoSelector key={key} multiple={typeof course.original.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, logo: typeof course.original.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) } } : item))} />
                   const structured = value.includes('\n') || value.startsWith('[') || value.startsWith('{')
                   const change = (value: string) => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, [key]: value } } : item))
-                  return <label className="field" key={key}><span>{key.replaceAll('_', ' ')}</span>{structured ? <textarea value={value} onChange={event => change(event.target.value)} /> : <input type={key === 'credit' ? 'number' : 'text'} min={key === 'credit' ? 0 : undefined} step={key === 'credit' ? 'any' : undefined} value={value} onChange={event => change(event.target.value)} />}</label>
+                  const label = key.replaceAll('_', ' ')
+                  return structured
+                    ? <TextareaField key={key} label={label} value={value} onChange={change} />
+                    : <TextField key={key} label={label} value={value} onChange={change} type={key === 'credit' ? 'number' : 'text'} min={key === 'credit' ? 0 : undefined} step={key === 'credit' ? 'any' : undefined} />
                 })}
                 {/* Shown on every course so faculty can be added where none is listed;
                     the key is only written once this editor is used. */}

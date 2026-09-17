@@ -2,11 +2,12 @@ import { useState } from 'react'
 import { ImagePlus, Plus, X } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { Button } from '@/components/ui/button'
+import { Button, FileField, IconButton, TextField } from '@/components/form'
 
 export function BlogGalleryPage() {
   const [title, setTitle] = useState('')
   const [tag, setTag] = useState('gallery')
+  const [date, setDate] = useState('')
   const [entries, setEntries] = useState<string[]>([])
 
   const addEntry = () => {
@@ -24,15 +25,15 @@ export function BlogGalleryPage() {
         <section className="form-panel">
           <div className="panel-heading"><div><span>Entry</span><h2>Gallery details</h2></div></div>
           <div className="form-grid">
-            <label className="field field-wide"><span>Title</span><input data-page-search value={title} onChange={event => setTitle(event.target.value)} placeholder="Gallery entry title" /></label>
-            <label className="field"><span>Tag</span><input value={tag} onChange={event => setTag(event.target.value)} /></label>
-            <label className="field"><span>Date</span><input type="date" /></label>
-            <label className="media-dropzone compact-dropzone field-wide"><ImagePlus aria-hidden="true" /><strong>Choose gallery images</strong><span>Local preview only</span><input type="file" multiple accept="image/jpeg,image/png,image/webp" /></label>
+            <TextField label="Title" fieldClassName="field-wide" data-page-search value={title} onChange={setTitle} placeholder="Gallery entry title" />
+            <TextField label="Tag" value={tag} onChange={setTag} />
+            <TextField label="Date" type="date" value={date} onChange={setDate} />
+            <FileField fieldClassName="media-dropzone compact-dropzone field-wide" aria-label="Gallery images" multiple accept="image/jpeg,image/png,image/webp" onSelect={() => {}}><ImagePlus aria-hidden="true" /><strong>Choose gallery images</strong><span>Local preview only</span></FileField>
           </div>
         </section>
         <aside className="form-panel">
           <div className="panel-heading"><div><span>Session</span><h2>Pending entries</h2></div><span>{entries.length}</span></div>
-          {entries.length ? <div className="pending-list">{entries.map((entry, index) => <div key={`${entry}-${index}`}><span><strong>{entry}</strong><small>{tag}</small></span><button type="button" aria-label={`Remove ${entry}`} onClick={() => setEntries(current => current.filter((_, itemIndex) => index !== itemIndex))}><X aria-hidden="true" /></button></div>)}</div> : <div className="simple-empty">No entries added.</div>}
+          {entries.length ? <div className="pending-list">{entries.map((entry, index) => <div key={`${entry}-${index}`}><span><strong>{entry}</strong><small>{tag}</small></span><IconButton variant="bare" size="none" label={`Remove ${entry}`} onClick={() => setEntries(current => current.filter((_, itemIndex) => index !== itemIndex))}><X aria-hidden="true" /></IconButton></div>)}</div> : <div className="simple-empty">No entries added.</div>}
         </aside>
       </div>
     </>

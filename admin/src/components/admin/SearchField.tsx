@@ -1,4 +1,5 @@
 import { Search, X } from 'lucide-react'
+import { IconButton, TextField } from '@/components/form'
 
 type SearchFieldProps = {
   value: string
@@ -11,17 +12,18 @@ export function SearchField({ value, onChange, placeholder, label = placeholder 
   return (
     <div className="search-field">
       <Search aria-hidden="true" />
-      <input
+      <TextField
         data-page-search
+        className="h-auto flex-1 border-0 bg-transparent px-0"
         value={value}
-        onChange={event => onChange(event.target.value)}
+        onChange={onChange}
         placeholder={placeholder}
         aria-label={label}
       />
       {value && (
-        <button type="button" aria-label="Clear search" onClick={() => onChange('')}>
+        <IconButton variant="bare" size="none" label="Clear search" onClick={() => onChange('')}>
           <X aria-hidden="true" />
-        </button>
+        </IconButton>
       )}
     </div>
   )

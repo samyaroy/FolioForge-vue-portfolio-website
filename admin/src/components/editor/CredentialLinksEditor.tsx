@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button, IconButton, TextField } from '@/components/form'
 import type { CredentialLinkDraft } from '@/lib/credentialLinks'
 
 type CredentialLinksEditorProps = {
@@ -20,9 +20,9 @@ export function CredentialLinksEditor({ links, onChange }: CredentialLinksEditor
       </div>
       {links.map((link, index) => (
         <div className="credential-link" key={index}>
-          <label className="field"><span>Label{links.length > 1 ? '' : ' (optional)'}</span><input value={link.label} placeholder="Offer letter" onChange={event => update(index, 'label', event.target.value)} /></label>
-          <label className="field"><span>Drive file ID / URL</span><input value={link.url} onChange={event => update(index, 'url', event.target.value)} /></label>
-          <Button variant="ghost" size="icon-sm" title="Remove credential" aria-label={`Remove credential ${index + 1}`} onClick={() => onChange(links.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></Button>
+          <TextField label={`Label${links.length > 1 ? '' : ' (optional)'}`} value={link.label} placeholder="Offer letter" onChange={value => update(index, 'label', value)} />
+          <TextField label="Drive file ID / URL" value={link.url} onChange={value => update(index, 'url', value)} />
+          <IconButton label={`Remove credential ${index + 1}`} title="Remove credential" onClick={() => onChange(links.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton>
         </div>
       ))}
     </div>

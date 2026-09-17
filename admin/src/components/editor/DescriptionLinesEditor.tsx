@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button, IconButton, TextareaField } from '@/components/form'
 
 type DescriptionLinesEditorProps = {
   lines: string[]
@@ -15,8 +15,8 @@ export function DescriptionLinesEditor({ lines, onChange }: DescriptionLinesEdit
       </div>
       {lines.map((line, index) => (
         <div className="description-line" key={index}>
-          <label className="field"><span>Line {index + 1}</span><textarea value={line} onChange={event => onChange(lines.map((value, position) => position === index ? event.target.value : value))} /></label>
-          <Button variant="ghost" size="icon-sm" title="Remove line" aria-label={`Remove description line ${index + 1}`} onClick={() => onChange(lines.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></Button>
+          <TextareaField label={`Line ${index + 1}`} value={line} onChange={value => onChange(lines.map((current, position) => position === index ? value : current))} />
+          <IconButton label={`Remove description line ${index + 1}`} title="Remove line" onClick={() => onChange(lines.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton>
         </div>
       ))}
     </div>

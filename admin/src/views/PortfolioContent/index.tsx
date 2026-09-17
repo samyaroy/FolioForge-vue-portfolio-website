@@ -7,7 +7,7 @@ import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
 import { VisibilityPane } from '@/components/admin/VisibilityPane'
 import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
-import { Button } from '@/components/ui/button'
+import { Button, TextareaField } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
@@ -108,7 +108,7 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
           <section className="form-panel">
             <div className="panel-heading"><div><span>Draft</span><h2>Editor notes</h2></div></div>
             <div className="aside-form-body">
-              <label className="field"><span>Notes for this change</span><textarea data-page-search value={notes} onChange={event => setNotes(event.target.value)} placeholder="Optional review context" /></label>
+              <TextareaField label="Notes for this change" data-page-search value={notes} onChange={setNotes} placeholder="Optional review context" />
               <Button variant="outline" onClick={saveLocalPreview}><Save aria-hidden="true" />{saved ? 'Saved locally' : 'Save local preview'}</Button>
             </div>
           </section>

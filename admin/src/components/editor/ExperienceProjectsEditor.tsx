@@ -1,5 +1,5 @@
 import { Plus, Trash2 } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button, IconButton, TextareaField, TextField } from '@/components/form'
 
 type Project = Record<string, unknown>
 type ExperienceProjectsEditorProps = {
@@ -35,11 +35,11 @@ export function ExperienceProjectsEditor({ projects, onChange }: ExperienceProje
         const investigator = project.principal_investigator && typeof project.principal_investigator === 'object' ? project.principal_investigator as Project : {}
         return (
           <section className="experience-project-section" key={index} aria-label={`Project ${index + 1}`}>
-            <header><h4>Project {index + 1}</h4><Button variant="ghost" size="icon-sm" title="Remove project" aria-label={`Remove project ${index + 1}`} onClick={() => onChange(projects.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></Button></header>
+            <header><h4>Project {index + 1}</h4><IconButton label={`Remove project ${index + 1}`} title="Remove project" onClick={() => onChange(projects.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton></header>
             <div className="experience-project-fields">
-              <label className="field experience-project-title"><span>Project title</span><textarea value={String(project.title ?? '')} onChange={event => updateProject(index, 'title', event.target.value)} /></label>
-              <label className="field"><span>Principal investigator</span><input value={String(investigator.name ?? '')} onChange={event => updateInvestigator(index, 'name', event.target.value)} /></label>
-              <label className="field"><span>Investigator institution</span><input value={String(investigator.institution ?? '')} onChange={event => updateInvestigator(index, 'institution', event.target.value)} /></label>
+              <TextareaField label="Project title" fieldClassName="experience-project-title" value={String(project.title ?? '')} onChange={value => updateProject(index, 'title', value)} />
+              <TextField label="Principal investigator" value={String(investigator.name ?? '')} onChange={value => updateInvestigator(index, 'name', value)} />
+              <TextField label="Investigator institution" value={String(investigator.institution ?? '')} onChange={value => updateInvestigator(index, 'institution', value)} />
             </div>
           </section>
         )

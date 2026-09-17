@@ -1,6 +1,6 @@
 import { ArrowUpRight, Rocket } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/form'
 import { publishingTarget } from '@/config/publishing'
 
 export function ConnectionBanner() {

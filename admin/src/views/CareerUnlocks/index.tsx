@@ -3,7 +3,7 @@ import { Pencil, Plus, Star } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
-import { Button } from '@/components/ui/button'
+import { Button, IconButton } from '@/components/form'
 import { VisibilityPane } from '@/components/admin/VisibilityPane'
 import { careerUnlocks } from '@/data/content'
 
@@ -30,10 +30,10 @@ export function CareerUnlocksPage() {
         <div className="item-list">
           {visibleItems.map(item => (
             <article className="content-row" key={item.id}>
-              <button className={`feature-button ${featured.has(item.id) ? 'feature-button-active' : ''}`} type="button" aria-label={`${featured.has(item.id) ? 'Unfeature' : 'Feature'} ${item.title}`} onClick={() => toggleFeatured(item.id)}><Star aria-hidden="true" /></button>
+              <IconButton variant="bare" size="none" className={`feature-button ${featured.has(item.id) ? 'feature-button-active' : ''}`} label={`${featured.has(item.id) ? 'Unfeature' : 'Feature'} ${item.title}`} onClick={() => toggleFeatured(item.id)}><Star aria-hidden="true" /></IconButton>
               <div className="content-row-main"><strong>{item.title}</strong><code>{item.id}</code></div>
               <span className="type-badge">{item.type}</span><time>{item.date}</time>
-              <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${item.title}`}><Pencil aria-hidden="true" /></Button>
+              <IconButton variant="outline" title="Edit entry" label={`Edit ${item.title}`}><Pencil aria-hidden="true" /></IconButton>
             </article>
           ))}
         </div>

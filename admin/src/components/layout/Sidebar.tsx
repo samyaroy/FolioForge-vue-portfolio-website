@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { ChevronRight, Cloud, X } from 'lucide-react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Button, IconButton } from '@/components/form'
 import { navigation } from '@/config/navigation'
 import { cn } from '@/lib/utils'
 
@@ -21,7 +22,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
   return (
     <>
-      {isOpen && <button className="sidebar-backdrop" aria-label="Close navigation" onClick={onClose} />}
+      {isOpen && <IconButton variant="bare" size="none" className="sidebar-backdrop" label="Close navigation" onClick={onClose} />}
       <aside className={cn('sidebar', isOpen && 'sidebar-open')}>
         <div className="sidebar-brand">
           <NavLink to="/" className="brand-link" aria-label="Samyabrata Roy admin home" onClick={onClose}>
@@ -31,9 +32,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               <small>Local workspace</small>
             </span>
           </NavLink>
-          <button className="icon-button" type="button" aria-label="Close navigation" onClick={onClose}>
+          <IconButton variant="bare" size="none" className="icon-button" label="Close navigation" onClick={onClose}>
             <X aria-hidden="true" />
-          </button>
+          </IconButton>
         </div>
 
         <div className="workspace-status">
@@ -53,9 +54,10 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                   const isExpanded = expandedItems[item.label] ?? isActive
                   return (
                     <div className="nav-tree" key={item.path}>
-                      <button
+                      <Button
+                        variant="bare"
+                        size="none"
                         className={cn('nav-item nav-parent', isActive && 'nav-item-active')}
-                        type="button"
                         title={item.label}
                         aria-expanded={isExpanded}
                         onClick={() => toggleParent(item.label, item.path, isExpanded)}
@@ -63,7 +65,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                         <Icon aria-hidden="true" />
                         <span>{item.label}</span>
                         <ChevronRight className={cn('nav-chevron', isExpanded && 'nav-chevron-open')} aria-hidden="true" />
-                      </button>
+                      </Button>
                       {isExpanded && (
                         <div className="nav-children">
                           {item.children.map(child => (

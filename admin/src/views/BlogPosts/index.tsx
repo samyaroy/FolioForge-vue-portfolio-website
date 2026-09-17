@@ -5,7 +5,7 @@ import { ConnectionBanner } from '@/components/admin/ConnectionBanner'
 import { MetricGrid } from '@/components/admin/MetricGrid'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
-import { Button } from '@/components/ui/button'
+import { Button, CheckboxField } from '@/components/form'
 import { posts } from '@/data/content'
 
 export function BlogPostsPage() {
@@ -56,21 +56,21 @@ export function BlogPostsPage() {
         </div>
         <div className="quick-filters">
           <span>Quick filters</span>
-          <button className="quick-filter-active" type="button">All posts</button>
-          <button type="button">Published</button>
-          <button type="button">Drafts</button>
-          <button type="button">With cover</button>
+          <Button variant="bare" size="none" className="quick-filter-active">All posts</Button>
+          <Button variant="bare" size="none">Published</Button>
+          <Button variant="bare" size="none">Drafts</Button>
+          <Button variant="bare" size="none">With cover</Button>
         </div>
         <div className="table-wrap">
           <table>
             <thead><tr>
-              <th className="checkbox-cell"><input type="checkbox" aria-label="Select all visible posts" checked={allVisibleSelected} onChange={toggleAll} /></th>
+              <th className="checkbox-cell"><CheckboxField aria-label="Select all visible posts" checked={allVisibleSelected} onChange={toggleAll} /></th>
               <th id="posts-heading">Post title & excerpt</th><th>File</th><th>Status</th><th>Updated</th><th><span className="sr-only">Open</span></th>
             </tr></thead>
             <tbody>
               {filteredPosts.map(post => (
                 <tr key={post.file}>
-                  <td className="checkbox-cell"><input type="checkbox" aria-label={`Select ${post.title}`} checked={selectedPosts.includes(post.file)} onChange={() => togglePost(post.file)} /></td>
+                  <td className="checkbox-cell"><CheckboxField aria-label={`Select ${post.title}`} checked={selectedPosts.includes(post.file)} onChange={() => togglePost(post.file)} /></td>
                   <td><div className="post-title-cell"><strong>{post.title}</strong><span>{post.description}</span><div className="mobile-post-meta"><span className="status-badge">{post.status}</span><span>{post.date}</span></div></div></td>
                   <td><code className="file-name">{post.file}</code></td>
                   <td><span className="status-badge"><span className="status-dot" />{post.status}</span></td>
