@@ -13,6 +13,7 @@ import { CredentialLinksEditor } from '@/components/editor/CredentialLinksEditor
 import { curriculumDraft, serializeCurriculum } from '@/lib/curriculum'
 import { credentialLinksDraft, serializeCredentialLinks } from '@/lib/credentialLinks'
 import { educationTypeIcons } from '../../../../src/config/educationTypes.ts'
+import { experienceTypeIcons } from '../../../../src/config/experienceTypes.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 
@@ -117,10 +118,10 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], isE
             if (isExperience && key === 'projects') return <ExperienceProjectsEditor key={key} projects={JSON.parse(value)} onChange={projects => setFields(current => ({ ...current, projects: JSON.stringify(projects) }))} />
             if (isExperience && key === 'description') return <DescriptionLinesEditor key={key} lines={JSON.parse(value)} onChange={lines => setFields(current => ({ ...current, description: JSON.stringify(lines) }))} />
             if (isExperience && key === 'cred_link') return <CredentialLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
-            if (isEducation && key === 'type') {
-              // Only types the site's education timeline renders; an unrecognised
-              // value from the YAML stays listed so opening the entry does not drop it.
-              const types = Object.keys(educationTypeIcons).map(type => ({ value: type, label: type }))
+            if ((isEducation || isExperience) && key === 'type') {
+              // Only types the site's timeline renders; an unrecognised value
+              // from the YAML stays listed so opening the entry does not drop it.
+              const types = Object.keys(isEducation ? educationTypeIcons : experienceTypeIcons).map(type => ({ value: type, label: type }))
               const options = value && !types.some(type => type.value === value) ? [{ value, label: `${value} (unsupported)` }, ...types] : types
               return <SelectField key={key} label="type" placeholder="Select type" required={isRequired(key)} value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
             }

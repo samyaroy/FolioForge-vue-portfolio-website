@@ -9,7 +9,7 @@
       <TimelineComponent v-for="(exp, index) in experience" :key="index" :isfirst="index === 0"
         :islast="index === experience.length - 1" :title="exp.job_role" :time="exp.time_period"
         :organization="exp.company" :supervisor="exp.supervisor" :location="exp.location" :description="exp.description"
-        :icon="exp.type === 'Internship' ? 'mdi-laptop' : exp.type === 'Employment' && exp.job_role.includes('Developer') ? 'mdi-briefcase' : exp.type === 'Employment' && exp.job_role.includes('Research') ? 'mdi-chart-scatter-plot-hexbin' : exp.type === 'Employment' ? 'mdi-chair-rolling' : 'mdi-laptop-account'"
+        :icon="experienceIcon(exp.type, exp.job_role)"
         :department="exp.department" :projects="exp.projects" :cred_link="exp.cred_link" />
 
       <!-- See other Internships link -->
@@ -27,6 +27,7 @@
 <script setup>
 import TimelineComponent from './components/TimelineComponent.vue'
 import config from "@/content/profile_info"
+import { experienceIcon } from "@/config/experienceTypes"
 
 const { experience, internships } = config
 
