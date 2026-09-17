@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { FieldLabel } from './FieldLabel'
 import { cn } from '@/lib/utils'
 
 export type SelectOption = { value: string; label: string }
@@ -12,15 +13,17 @@ export type SelectFieldProps = {
   options: SelectOption[]
   placeholder?: string
   disabled?: boolean
+  /** Marks the field mandatory: red asterisk on the label, aria-required on the control. */
+  required?: boolean
   className?: string
   fieldClassName?: string
   'aria-label'?: string
 }
 
-export function SelectField({ label, value, onChange, options, placeholder = 'Select', disabled, className, fieldClassName, ...props }: SelectFieldProps) {
+export function SelectField({ label, value, onChange, options, placeholder = 'Select', disabled, required, className, fieldClassName, ...props }: SelectFieldProps) {
   const select = (
     <Select value={value || undefined} onValueChange={onChange} disabled={disabled}>
-      <SelectTrigger className={className} aria-label={props['aria-label']}>
+      <SelectTrigger className={className} aria-label={props['aria-label']} aria-required={required || undefined}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
@@ -32,7 +35,7 @@ export function SelectField({ label, value, onChange, options, placeholder = 'Se
   // A select is not a labelable element, so this stays a plain wrapper.
   return (
     <div className={cn('field', fieldClassName)}>
-      <span>{label}</span>
+      <FieldLabel label={label} required={required} />
       {select}
     </div>
   )

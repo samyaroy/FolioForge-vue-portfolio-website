@@ -34,7 +34,7 @@ export function SettingsPage() {
       <div className="settings-layout">
         <section className="form-panel">
           <div className="panel-heading"><div><span>Identity</span><h2>Site branding</h2></div></div>
-          <div className="form-grid"><TextField label="Site name" fieldClassName="field-wide" data-page-search value={siteName} onChange={setSiteName} /><label className="field field-wide"><span>Portfolio URL</span><div className="input-with-icon"><TextField value="https://samyabrata.codeium.xyz" onChange={() => {}} readOnly /><ExternalLink aria-hidden="true" /></div></label></div>
+          <div className="form-grid"><TextField label="Site name" required fieldClassName="field-wide" data-page-search value={siteName} onChange={setSiteName} /><label className="field field-wide"><span>Portfolio URL</span><div className="input-with-icon"><TextField value="https://samyabrata.codeium.xyz" onChange={() => {}} readOnly /><ExternalLink aria-hidden="true" /></div></label></div>
         </section>
         <section className="form-panel">
           <div className="panel-heading"><div><span>Visibility</span><h2>Published sections</h2></div></div>

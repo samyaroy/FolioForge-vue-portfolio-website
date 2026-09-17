@@ -26,7 +26,7 @@ export function CurriculumEditor({ curriculum, onChange }: CurriculumEditorProps
 
   return (
     <div className="curriculum-editor">
-      <div className="curriculum-add-group"><TextField label="Semester or level" value={groupName} onChange={setGroupName} placeholder="Semester 2 or Foundation" /><Button variant="outline" size="sm" onClick={addGroup}><Plus aria-hidden="true" /> Add group</Button></div>
+      <div className="curriculum-add-group"><TextField label="Semester or level" required value={groupName} onChange={setGroupName} placeholder="Semester 2 or Foundation" /><Button variant="outline" size="sm" onClick={addGroup}><Plus aria-hidden="true" /> Add group</Button></div>
       {Object.entries(curriculum).map(([group, courses]) => (
         <section className="curriculum-group" key={group} aria-label={group.replaceAll('_', ' ')}>
           <header><h3>{group.replaceAll('_', ' ')}</h3><div><Button variant="outline" size="sm" onClick={() => updateGroup(group, [...courses, { original: {}, fields: { course_name: '', course_code: '', type: '', credit: '', faculty: '[]' } }])}><Plus aria-hidden="true" /> Add course</Button><IconButton label={`Remove ${group.replaceAll('_', ' ')}`} title="Remove group" onClick={() => { const next = { ...curriculum }; delete next[group]; onChange(next) }}><Trash2 aria-hidden="true" /></IconButton></div></header>
@@ -40,9 +40,11 @@ export function CurriculumEditor({ curriculum, onChange }: CurriculumEditorProps
                   const structured = value.includes('\n') || value.startsWith('[') || value.startsWith('{')
                   const change = (value: string) => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, [key]: value } } : item))
                   const label = key.replaceAll('_', ' ')
+                  // serializeCurriculum refuses to save a course without a name.
+                  const required = key === 'course_name'
                   return structured
-                    ? <TextareaField key={key} label={label} value={value} onChange={change} />
-                    : <TextField key={key} label={label} value={value} onChange={change} type={key === 'credit' ? 'number' : 'text'} min={key === 'credit' ? 0 : undefined} step={key === 'credit' ? 'any' : undefined} />
+                    ? <TextareaField key={key} label={label} required={required} value={value} onChange={change} />
+                    : <TextField key={key} label={label} required={required} value={value} onChange={change} type={key === 'credit' ? 'number' : 'text'} min={key === 'credit' ? 0 : undefined} step={key === 'credit' ? 'any' : undefined} />
                 })}
                 {/* Shown on every course so faculty can be added where none is listed;
                     the key is only written once this editor is used. */}

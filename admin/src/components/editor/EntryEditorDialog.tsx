@@ -19,6 +19,8 @@ import { LogoSelector } from '@/components/editor/LogoSelector'
 type EntryEditorDialogProps = {
   entry?: PortfolioEntry
   fieldGroups: string[]
+  /** Entry keys this section cannot be saved without; see PortfolioSection. */
+  requiredFields?: string[]
   isExperience?: boolean
   isEducation?: boolean
   onClose: () => void
@@ -35,7 +37,7 @@ function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
   const initialFields = useMemo(() => {
     if (entry) {
       const raw = isExperience ? { ...entry.raw, cred_link: credentialLinksDraft(entry.raw.cred_link), projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
@@ -57,9 +59,18 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
     ].map(key => [key, fields[key]] as const)
     : Object.entries(fields)
 
+  // Only fields the dialog actually shows are enforced, so an older entry that
+  // never carried one of these keys stays editable.
+  const isRequired = (key: string) => requiredFields.includes(key) && key in fields
+
   const saveEntry = () => {
     if (!Object.values(fields).some(value => value.trim())) {
       toast.error('Enter content before saving.')
+      return
+    }
+    const blank = Object.keys(fields).find(key => isRequired(key) && !fields[key].trim())
+    if (blank) {
+      toast.error(`Enter ${blank.replaceAll('_', ' ')} before saving.`)
       return
     }
     try {
@@ -111,14 +122,14 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
               // value from the YAML stays listed so opening the entry does not drop it.
               const types = Object.keys(educationTypeIcons).map(type => ({ value: type, label: type }))
               const options = value && !types.some(type => type.value === value) ? [{ value, label: `${value} (unsupported)` }, ...types] : types
-              return <SelectField key={key} label="type" placeholder="Select type" value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
+              return <SelectField key={key} label="type" placeholder="Select type" required={isRequired(key)} value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
             }
             const isStructured = value.includes('\n') || value.startsWith('{') || value.startsWith('[')
             const label = `${key.replaceAll('_', ' ')}${!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}`
             const change = (next: string) => setFields(current => ({ ...current, [key]: next }))
             return isStructured
-              ? <TextareaField key={key} label={label} value={value} onChange={change} />
-              : <TextField key={key} label={label} value={value} onChange={change} autoFocus={index === 0} />
+              ? <TextareaField key={key} label={label} required={isRequired(key)} value={value} onChange={change} />
+              : <TextField key={key} label={label} required={isRequired(key)} value={value} onChange={change} autoFocus={index === 0} />
           })}
         </div>
         {isEducation && <div className="entry-dialog-body curriculum-tab-body" hidden={educationTab !== 'curriculum'}><CurriculumEditor curriculum={curriculum} onChange={setCurriculum} /></div>}

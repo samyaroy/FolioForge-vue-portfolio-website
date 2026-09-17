@@ -51,7 +51,7 @@ export function PostEditorPage() {
         <section className="form-panel" aria-labelledby="post-content-heading">
           <div className="panel-heading"><div><span>Article</span><h2 id="post-content-heading">Post content</h2></div></div>
           <div className="form-grid">
-            <TextField label="Title" fieldClassName="field-wide" data-page-search value={title} onChange={setTitle} placeholder="A clear post title" />
+            <TextField label="Title" required fieldClassName="field-wide" data-page-search value={title} onChange={setTitle} placeholder="A clear post title" />
             <TextareaField label="Description" fieldClassName="field-wide" className="short-textarea" value={description} onChange={setDescription} placeholder="Summary used on listings and social previews" />
             <TextField label="Publish date" type="date" value={date} onChange={setDate} />
             <TextField label="Tags" value={tags} onChange={setTags} placeholder="research, notes" />

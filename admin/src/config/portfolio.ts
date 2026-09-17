@@ -21,6 +21,13 @@ export type PortfolioSection = {
   title: string
   sources: string[]
   fields: string[]
+  /**
+   * Entry keys the section cannot be published without, because the Vue
+   * component that renders them declares the prop as required. The editor
+   * stars these and refuses to save while one is blank. Add a key here to
+   * make a field mandatory; leave the list off for sections with none.
+   */
+  requiredFields?: string[]
 }
 
 export type PortfolioPage = {
@@ -39,8 +46,8 @@ export const portfolioPages: PortfolioPage[] = [
     sections: [
       { id: 'profile', title: 'Profile & Hero', sources: ['profile.yml', 'meta.yml'], fields: ['Name and biography', 'Hero heading and portrait', 'Contact and social links', 'CV and footer copy'] },
       { id: 'research-interests', title: 'Research Interests', sources: ['research_interests.yml'], fields: ['Interest title', 'Stable key', 'Display order'] },
-      { id: 'experience', title: 'Experience', sources: ['experience.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and links', 'Logo'] },
-      { id: 'education', title: 'Education', sources: ['education.yml'], fields: ['Institution and programme', 'Dates and grades', 'Coursework and details', 'Links and logos'] },
+      { id: 'experience', title: 'Experience', sources: ['experience.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and links', 'Logo'], requiredFields: ['job_role', 'company', 'location', 'time_period'] },
+      { id: 'education', title: 'Education', sources: ['education.yml'], fields: ['Institution and programme', 'Dates and grades', 'Coursework and details', 'Links and logos'], requiredFields: ['degree', 'institution', 'location', 'time_period'] },
       { id: 'awards', title: 'Awards & Achievements', sources: ['awards.yml (planned)'], fields: ['Awards', 'Achievements', 'Images and credentials', 'Display order'] },
       { id: 'announcements', title: 'Announcements', sources: ['ribbon.yml'], fields: ['Ribbon messages', 'Icons', 'Caption markup', 'Message order'] },
     ],

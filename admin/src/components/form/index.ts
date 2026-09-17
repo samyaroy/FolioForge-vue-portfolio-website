@@ -2,6 +2,7 @@
 // for `components/ui/*` or a raw <input>, so control behaviour, sizing and
 // accessibility are defined in one place.
 export { Button, type ButtonProps } from './Button'
+export { FieldLabel } from './FieldLabel'
 export { IconButton, type IconButtonProps } from './IconButton'
 export { TextField, type TextFieldProps } from './TextField'
 export { TextareaField, type TextareaFieldProps } from './TextareaField'

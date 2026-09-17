@@ -366,7 +366,7 @@ tbody tr:hover { background: #f9fbfd; }
 .entry-dialog-body .field:has(textarea), .entry-field-divider { grid-column: 1 / -1; }
 /* Inside a description row the field is already in its own grid, so the
    full-width rule above must not push the remove button onto a second line. */
-.description-line .field { grid-column: auto; }
+.entry-dialog-body .description-line .field { grid-column: auto; }
 .entry-dialog-body[hidden] { display: none; }
 .education-editor-tabs { border-bottom: 1px solid var(--border); padding: 10px 16px; }
 .education-editor-tabs [data-slot='tabs-trigger'] { font-size: 11px; }
@@ -456,6 +456,7 @@ tbody tr:hover { background: #f9fbfd; }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 16px; }
 .field { display: flex; min-width: 0; flex-direction: column; gap: 6px; color: #536b7f; font-size: 10px; font-weight: 700; }
 .field-wide { grid-column: 1 / -1; }
+.field-required { margin-left: 2px; color: var(--color-destructive); font-weight: 700; }
 .field .short-textarea { min-height: 68px; }
 .input-with-icon { position: relative; }
 .input-with-icon input { padding-right: 32px; }

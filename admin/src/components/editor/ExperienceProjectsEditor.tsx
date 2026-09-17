@@ -37,7 +37,7 @@ export function ExperienceProjectsEditor({ projects, onChange }: ExperienceProje
           <section className="experience-project-section" key={index} aria-label={`Project ${index + 1}`}>
             <header><h4>Project {index + 1}</h4><IconButton label={`Remove project ${index + 1}`} title="Remove project" onClick={() => onChange(projects.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton></header>
             <div className="experience-project-fields">
-              <TextareaField label="Project title" fieldClassName="experience-project-title" value={String(project.title ?? '')} onChange={value => updateProject(index, 'title', value)} />
+              <TextareaField label="Project title" required fieldClassName="experience-project-title" value={String(project.title ?? '')} onChange={value => updateProject(index, 'title', value)} />
               <TextField label="Principal investigator" value={String(investigator.name ?? '')} onChange={value => updateInvestigator(index, 'name', value)} />
               <TextField label="Investigator institution" value={String(investigator.institution ?? '')} onChange={value => updateInvestigator(index, 'institution', value)} />
             </div>

@@ -20,8 +20,8 @@ export function CredentialLinksEditor({ links, onChange }: CredentialLinksEditor
       </div>
       {links.map((link, index) => (
         <div className="credential-link" key={index}>
-          <TextField label={`Label${links.length > 1 ? '' : ' (optional)'}`} value={link.label} placeholder="Offer letter" onChange={value => update(index, 'label', value)} />
-          <TextField label="Drive file ID / URL" value={link.url} onChange={value => update(index, 'url', value)} />
+          <TextField label="Label" required={links.length > 1} value={link.label} placeholder="Offer letter" onChange={value => update(index, 'label', value)} />
+          <TextField label="Drive file ID / URL" required value={link.url} onChange={value => update(index, 'url', value)} />
           <IconButton label={`Remove credential ${index + 1}`} title="Remove credential" onClick={() => onChange(links.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton>
         </div>
       ))}

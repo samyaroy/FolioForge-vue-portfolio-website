@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { Plus, X } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -12,7 +13,14 @@ export function MetadataPage() {
 
   const addTag = () => {
     const value = newTag.trim()
-    if (!value || tags.some(tag => tag.toLowerCase() === value.toLowerCase())) return
+    if (!value) {
+      toast.error('Enter a tag name before adding.')
+      return
+    }
+    if (tags.some(tag => tag.toLowerCase() === value.toLowerCase())) {
+      toast.error('That tag already exists.')
+      return
+    }
     setTags(current => [...current, value])
     setNewTag('')
   }
@@ -24,7 +32,7 @@ export function MetadataPage() {
       <section className="form-panel narrow-panel">
         <div className="panel-heading"><div><span>Taxonomy</span><h2>Career Unlock tags</h2></div><span>{tags.length} tags</span></div>
         <form className="inline-form" onSubmit={event => { event.preventDefault(); addTag() }}>
-          <TextField label="New tag" data-page-search value={newTag} onChange={setNewTag} placeholder="Add a unique label" />
+          <TextField label="New tag" required data-page-search value={newTag} onChange={setNewTag} placeholder="Add a unique label" />
           <Button type="submit"><Plus aria-hidden="true" /> Add tag</Button>
         </form>
         <div className="tag-editor-list">

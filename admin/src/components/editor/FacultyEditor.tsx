@@ -23,7 +23,7 @@ export function FacultyEditor({ members, onChange }: FacultyEditorProps) {
       )}
       {members.map((member, index) => (
         <div className="faculty-member" key={index}>
-          <TextField aria-label={`Faculty ${index + 1} name`} placeholder="Prof. Name" value={member.name} onChange={value => update(index, 'name', value)} />
+          <TextField aria-label={`Faculty ${index + 1} name`} required placeholder="Prof. Name" value={member.name} onChange={value => update(index, 'name', value)} />
           <TextField aria-label={`Faculty ${index + 1} link`} placeholder="https://" type="url" value={member.link} onChange={value => update(index, 'link', value)} />
           <IconButton label={`Remove faculty ${index + 1}`} title="Remove faculty" onClick={() => onChange(members.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton>
         </div>

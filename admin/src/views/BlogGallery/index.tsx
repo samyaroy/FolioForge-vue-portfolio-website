@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { ImagePlus, Plus, X } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -12,7 +13,10 @@ export function BlogGalleryPage() {
 
   const addEntry = () => {
     const value = title.trim()
-    if (!value) return
+    if (!value) {
+      toast.error('Enter a title before adding an entry.')
+      return
+    }
     setEntries(current => [...current, value])
     setTitle('')
   }
@@ -25,7 +29,7 @@ export function BlogGalleryPage() {
         <section className="form-panel">
           <div className="panel-heading"><div><span>Entry</span><h2>Gallery details</h2></div></div>
           <div className="form-grid">
-            <TextField label="Title" fieldClassName="field-wide" data-page-search value={title} onChange={setTitle} placeholder="Gallery entry title" />
+            <TextField label="Title" required fieldClassName="field-wide" data-page-search value={title} onChange={setTitle} placeholder="Gallery entry title" />
             <TextField label="Tag" value={tag} onChange={setTag} />
             <TextField label="Date" type="date" value={date} onChange={setDate} />
             <FileField fieldClassName="media-dropzone compact-dropzone field-wide" aria-label="Gallery images" multiple accept="image/jpeg,image/png,image/webp" onSelect={() => {}}><ImagePlus aria-hidden="true" /><strong>Choose gallery images</strong><span>Local preview only</span></FileField>

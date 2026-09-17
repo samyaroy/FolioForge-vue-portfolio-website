@@ -119,6 +119,7 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
           key={editor.mode === 'edit' ? editor.entry.id : 'new'}
           entry={editor.mode === 'edit' ? editor.entry : undefined}
           fieldGroups={section.fields}
+          requiredFields={section.requiredFields}
           isExperience={page.id === 'home' && section.id === 'experience'}
           isEducation={page.id === 'home' && section.id === 'education'}
           onClose={() => setEditor(null)}

@@ -15,7 +15,7 @@ export function DescriptionLinesEditor({ lines, onChange }: DescriptionLinesEdit
       </div>
       {lines.map((line, index) => (
         <div className="description-line" key={index}>
-          <TextareaField label={`Line ${index + 1}`} value={line} onChange={value => onChange(lines.map((current, position) => position === index ? value : current))} />
+          <TextareaField label={`Line ${index + 1}`} required value={line} onChange={value => onChange(lines.map((current, position) => position === index ? value : current))} />
           <IconButton label={`Remove description line ${index + 1}`} title="Remove line" onClick={() => onChange(lines.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton>
         </div>
       ))}
