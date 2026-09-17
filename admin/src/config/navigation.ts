@@ -12,22 +12,27 @@ import {
   Link2,
 } from 'lucide-react'
 import { blogPages, portfolioAdminPath, portfolioPages } from '@/config/portfolio'
+import type { PortfolioPage } from '@/config/portfolio'
 import type { NavigationGroup } from '@/types/navigation'
+
+// A page with a single section is its own destination, so it lists no child.
+function sectionNavItem(page: PortfolioPage) {
+  return {
+    label: page.title,
+    path: portfolioAdminPath(page),
+    icon: page.icon,
+    ...(page.sections.length > 1
+      ? { children: page.sections.map(section => ({ label: section.title, path: portfolioAdminPath(page, section) })) }
+      : {}),
+  }
+}
 
 export const navigation: NavigationGroup[] = [
   {
     label: 'Portfolio',
     items: [
       { label: 'Overview', path: '/', icon: LayoutDashboard },
-      ...portfolioPages.map(page => ({
-        label: page.title,
-        path: portfolioAdminPath(page),
-        icon: page.icon,
-        children: page.sections.map(section => ({
-          label: section.title,
-          path: portfolioAdminPath(page, section),
-        })),
-      })),
+      ...portfolioPages.map(sectionNavItem),
     ],
   },
   {
@@ -45,15 +50,7 @@ export const navigation: NavigationGroup[] = [
       },
       { label: 'Blog Gallery', path: '/blog/gallery', icon: GalleryHorizontalEnd },
       { label: 'Blog Pages', path: '/blog/pages', icon: Files },
-      ...blogPages.map(page => ({
-        label: page.title,
-        path: portfolioAdminPath(page),
-        icon: page.icon,
-        children: page.sections.map(section => ({
-          label: section.title,
-          path: portfolioAdminPath(page, section),
-        })),
-      })),
+      ...blogPages.map(sectionNavItem),
     ],
   },
   {

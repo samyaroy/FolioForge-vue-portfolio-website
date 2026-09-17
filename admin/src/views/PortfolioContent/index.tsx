@@ -54,11 +54,13 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
         }
       />
 
-      <nav className="section-tabs" aria-label={`${page.title} sections`}>
-        {page.sections.map(item => (
-          <Link className={item.id === section.id ? 'section-tab-active' : ''} key={item.id} to={portfolioAdminPath(page, item)}>{item.title}</Link>
-        ))}
-      </nav>
+      {page.sections.length > 1 && (
+        <nav className="section-tabs" aria-label={`${page.title} sections`}>
+          {page.sections.map(item => (
+            <Link className={item.id === section.id ? 'section-tab-active' : ''} key={item.id} to={portfolioAdminPath(page, item)}>{item.title}</Link>
+          ))}
+        </nav>
+      )}
 
       <LocalNotice>Entries below are loaded from the repository YAML. Edits and additions remain local until the collection adapter is connected.</LocalNotice>
 
