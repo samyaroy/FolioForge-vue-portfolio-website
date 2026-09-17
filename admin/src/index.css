@@ -267,9 +267,16 @@ tbody tr:hover { background: #f9fbfd; }
 .empty-state { display: flex; min-height: 190px; align-items: center; justify-content: center; flex-direction: column; gap: 5px; color: #718396; font-size: 11px; }
 .empty-state svg { width: 22px; margin-bottom: 4px; }
 .empty-state strong { color: #283d50; font-size: 13px; }
-.credentials-table td { height: auto; }
+.credentials-table td, .data-table td { height: auto; }
+.data-table { table-layout: auto; }
+.data-table th { padding: 0 12px; }
+.column-sort { display: inline-flex; align-items: center; justify-content: flex-start; gap: 5px; width: 100%; height: 100%; padding: 0; color: inherit; font: inherit; font-size: 9px; font-weight: 750; text-transform: uppercase; cursor: pointer; }
+.column-sort svg { width: 11px; height: 11px; flex: none; }
+.column-sort-idle { opacity: 0; }
+.data-table th:hover .column-sort-idle, .column-sort:focus-visible .column-sort-idle { opacity: .55; }
+.table-pager { display: flex; align-items: center; gap: 8px; }
 /* These tables carry long institute names, so they wrap instead of truncating. */
-.credentials-table .post-title-cell strong { overflow: visible; white-space: normal; overflow-wrap: anywhere; }
+.credentials-table .post-title-cell strong, .data-table .post-title-cell strong { overflow: visible; white-space: normal; overflow-wrap: anywhere; }
 .credential-link-cell { display: flex; flex-wrap: wrap; gap: 5px; }
 .credential-link-cell a { display: grid; width: 24px; height: 24px; place-items: center; border: 1px solid rgb(25 128 230 / 20%); border-radius: 5px; background: rgb(25 128 230 / 5%); color: #126ab5; }
 .credential-link-cell a:hover { border-color: rgb(25 128 230 / 40%); background: rgb(25 128 230 / 10%); color: var(--foreground); }

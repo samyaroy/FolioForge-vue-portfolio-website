@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
 import { ExternalLink } from 'lucide-react'
+import { DataTable } from '@/components/admin/DataTable'
+import { columnsFor, type DataTableColumns } from '@/lib/dataTable'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { MetricGrid } from '@/components/admin/MetricGrid'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
 import { Button } from '@/components/form'
-import { getCredentialDashboardRows } from '../../../../src/utils/credentialDashboard.ts'
+import { getCredentialDashboardRows, type CredentialDashboardRow } from '../../../../src/utils/credentialDashboard.ts'
 
 // The same rows the site's Credentials Dashboard renders, from the same
 // collector, so the two cannot drift.
@@ -20,6 +22,38 @@ const scopes = [
   { id: 'linked', label: 'Linked' },
   { id: 'empty', label: 'Empty' },
 ] as const
+
+const column = columnsFor<CredentialDashboardRow>()
+
+const columns: DataTableColumns<CredentialDashboardRow> = [
+  column.accessor('page', {
+    header: 'Page - Section',
+    cell: ({ row }) => <div className="post-title-cell"><strong>{row.original.page}</strong><span>{row.original.section}</span></div>,
+  }),
+  column.accessor('item', { header: 'Credential' }),
+  column.accessor('detail', { header: 'Detail' }),
+  column.accessor('hasLink', {
+    header: 'Links',
+    cell: ({ row }) => row.original.links.length
+      ? (
+        <div className="credential-link-cell">
+          {row.original.links.map(link => (
+            <a
+              key={`${row.original.id}:${link.label}:${link.url}`}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={link.label}
+              aria-label={`Open ${link.label} for ${row.original.item}`}
+            >
+              <ExternalLink aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+      )
+      : <span className="credential-link-empty">-</span>,
+  }),
+]
 
 export function CredentialsPage() {
   const [query, setQuery] = useState('')
@@ -58,42 +92,15 @@ export function CredentialsPage() {
             ))}
           </div>
         </div>
-        <div className="table-wrap">
-          <table className="credentials-table">
-            <thead><tr>
-              <th id="credentials-heading">Page - Section</th><th>Credential</th><th>Detail</th><th>Links</th>
-            </tr></thead>
-            <tbody>
-              {visibleRows.map(row => (
-                <tr key={row.id}>
-                  <td><div className="post-title-cell"><strong>{row.page}</strong><span>{row.section}</span></div></td>
-                  <td>{row.item}</td>
-                  <td>{row.detail}</td>
-                  <td>
-                    {row.links.length ? (
-                      <div className="credential-link-cell">
-                        {row.links.map(link => (
-                          <a
-                            key={`${row.id}:${link.label}:${link.url}`}
-                            href={link.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            title={link.label}
-                            aria-label={`Open ${link.label} for ${row.item}`}
-                          >
-                            <ExternalLink aria-hidden="true" />
-                          </a>
-                        ))}
-                      </div>
-                    ) : <span className="credential-link-empty">-</span>}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {!visibleRows.length && <div className="empty-state"><strong>No credential rows match the current filters</strong><span>Try a different search or scope.</span></div>}
-        </div>
-        <footer className="table-footer"><span>Showing {visibleRows.length} of {rows.length} credentials</span><span>{rows.length - linkedCount} still without a document</span></footer>
+        <DataTable
+          columns={columns}
+          data={visibleRows}
+          pageSize={20}
+          labelledBy="credentials-heading"
+          caption="Credential entries found in the portfolio content"
+          emptyTitle="No credential rows match the current filters"
+          emptyDetail="Try a different search or scope."
+        />
       </section>
     </>
   )

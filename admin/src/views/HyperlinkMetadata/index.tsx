@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import { AlertTriangle, ExternalLink, Pencil, Plus, Save, Trash2, X } from 'lucide-react'
+import { DataTable } from '@/components/admin/DataTable'
+import { columnsFor, type DataTableColumns } from '@/lib/dataTable'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { MetricGrid } from '@/components/admin/MetricGrid'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -9,6 +11,38 @@ import { Button, IconButton, SelectField, TextField } from '@/components/form'
 import { hyperlinkEntries, type HyperlinkEntry, type HyperlinkGroup } from '@/lib/hyperlinkMetadata'
 
 const groups = ['Institute', 'Person'] as const
+
+const column = columnsFor<HyperlinkEntry>()
+
+const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void): DataTableColumns<HyperlinkEntry> => [
+  column.accessor('name', {
+    header: 'Name',
+    cell: ({ row }) => (
+      <div className="post-title-cell">
+        <strong>{row.original.name || 'Unnamed entry'}</strong>
+        {row.original.issues.length > 0 && <span className="hyperlink-issue"><AlertTriangle aria-hidden="true" /> {row.original.issues.join(' · ')}</span>}
+      </div>
+    ),
+  }),
+  column.accessor(entry => entry.aliases.join(', '), {
+    id: 'aliases',
+    header: 'Aliases',
+    cell: ({ row }) => row.original.aliases.length
+      ? <span className="hyperlink-aliases">{row.original.aliases.join(', ')}</span>
+      : <span className="credential-link-empty">-</span>,
+  }),
+  column.accessor('url', {
+    header: urlLabel,
+    cell: ({ row }) => row.original.url
+      ? <div className="credential-link-cell"><a href={row.original.url} target="_blank" rel="noopener noreferrer" title={row.original.url} aria-label={`Open ${row.original.name}`}><ExternalLink aria-hidden="true" /></a></div>
+      : <span className="credential-link-empty">-</span>,
+  }),
+  column.display({
+    id: 'actions',
+    header: () => <span className="sr-only">Edit</span>,
+    cell: ({ row }) => <IconButton variant="outline" title="Edit link" label={`Edit ${row.original.name || 'entry'}`} onClick={() => onEdit(row.original)}><Pencil aria-hidden="true" /></IconButton>,
+  }),
+]
 const groupOptions = groups.map(group => ({ value: group, label: group }))
 
 function EntryDialog({ entry, onClose, onSave }: { entry: HyperlinkEntry; onClose: () => void; onSave: (entry: HyperlinkEntry) => void }) {
@@ -111,33 +145,15 @@ export function HyperlinkMetadataPage() {
               <div><span>{group === 'Person' ? 'People' : 'Institutes'}</span><h2 id={`hyperlinks-${group}`}>{group === 'Person' ? 'People and profiles' : 'Institutes and organisations'}</h2></div>
               <span>{groupEntries.length} of {entries.filter(entry => entry.group === group).length}</span>
             </div>
-            <div className="table-wrap">
-              <table className="credentials-table">
-                <thead><tr>
-                  <th>Name</th><th>Aliases</th><th>{urlLabel}</th><th><span className="sr-only">Edit</span></th>
-                </tr></thead>
-                <tbody>
-                  {groupEntries.map(entry => (
-                    <tr key={entry.id}>
-                      <td>
-                        <div className="post-title-cell">
-                          <strong>{entry.name || 'Unnamed entry'}</strong>
-                          {entry.issues.length > 0 && <span className="hyperlink-issue"><AlertTriangle aria-hidden="true" /> {entry.issues.join(' · ')}</span>}
-                        </div>
-                      </td>
-                      <td>{entry.aliases.length ? <span className="hyperlink-aliases">{entry.aliases.join(', ')}</span> : <span className="credential-link-empty">-</span>}</td>
-                      <td>
-                        {entry.url
-                          ? <div className="credential-link-cell"><a href={entry.url} target="_blank" rel="noopener noreferrer" title={entry.url} aria-label={`Open ${entry.name}`}><ExternalLink aria-hidden="true" /></a></div>
-                          : <span className="credential-link-empty">-</span>}
-                      </td>
-                      <td><IconButton variant="outline" title="Edit link" label={`Edit ${entry.name || 'entry'}`} onClick={() => setEditing(entry)}><Pencil aria-hidden="true" /></IconButton></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {!groupEntries.length && <div className="empty-state"><strong>No {group === 'Person' ? 'people' : 'institutes'} match this search</strong><span>Try different wording.</span></div>}
-            </div>
+            <DataTable
+              columns={columnsFor_(urlLabel, setEditing)}
+              data={groupEntries}
+              pageSize={25}
+              labelledBy={`hyperlinks-${group}`}
+              caption={`${group === 'Person' ? 'People' : 'Institutes'} SmartLink can resolve`}
+              emptyTitle={`No ${group === 'Person' ? 'people' : 'institutes'} match this search`}
+              emptyDetail="Try different wording."
+            />
           </section>
         )
       })}
