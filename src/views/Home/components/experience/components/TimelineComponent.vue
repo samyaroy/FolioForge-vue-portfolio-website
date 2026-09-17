@@ -137,6 +137,7 @@ defineProps({
   description: { type: Array, default: null },
   icon: { type: String, default: 'mdi-school' },
   iconColor: { type: String, default: 'text-[#1980e6]' },
-  cred_link: { type: String, default: '#' }
+  // One URL, or a list of { label, url } documents shown as tabs in DocumentViewer.
+  cred_link: { type: [String, Array, Object], default: '#' }
 })
 </script>

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { Button } from '@/components/ui/button'
 import type { CourseDraft, CurriculumDraft } from '@/lib/curriculum'
 import { LogoSelector } from '@/components/editor/LogoSelector'
+import { FacultyEditor } from '@/components/editor/FacultyEditor'
 
 type CurriculumEditorProps = {
   curriculum: CurriculumDraft
@@ -34,11 +35,15 @@ export function CurriculumEditor({ curriculum, onChange }: CurriculumEditorProps
               <header><h4>Course {index + 1}</h4><Button variant="ghost" size="icon-sm" title="Remove course" aria-label={`Remove course ${index + 1}`} onClick={() => updateGroup(group, courses.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></Button></header>
               <div className="curriculum-course-fields">
                 {Object.entries(course.fields).map(([key, value]) => {
+                  if (key === 'faculty') return null
                   if (key === 'logo') return <LogoSelector key={key} multiple={typeof course.original.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, logo: typeof course.original.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) } } : item))} />
                   const structured = value.includes('\n') || value.startsWith('[') || value.startsWith('{')
                   const change = (value: string) => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, [key]: value } } : item))
                   return <label className="field" key={key}><span>{key.replaceAll('_', ' ')}</span>{structured ? <textarea value={value} onChange={event => change(event.target.value)} /> : <input type={key === 'credit' ? 'number' : 'text'} min={key === 'credit' ? 0 : undefined} step={key === 'credit' ? 'any' : undefined} value={value} onChange={event => change(event.target.value)} />}</label>
                 })}
+                {/* Shown on every course so faculty can be added where none is listed;
+                    the key is only written once this editor is used. */}
+                <FacultyEditor members={JSON.parse(course.fields.faculty ?? '[]')} onChange={members => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, faculty: JSON.stringify(members) } } : item))} />
               </div>
             </section>
           ))}

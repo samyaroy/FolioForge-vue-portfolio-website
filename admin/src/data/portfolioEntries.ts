@@ -112,7 +112,7 @@ function mentoredProjects() {
 
 const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'home/profile': () => [
-    ['profile', 'Profile and hero', ['name']],
+    ['profile', 'Profile info', []],
     ['contacts', 'Contact details', []],
     ['socials', 'Social profiles', []],
     ['media', 'Media settings', []],

@@ -10,7 +10,7 @@
       <!-- Education timeline -->
 
       <EducationMilestone v-for="(edu, index) in education" :key="index"
-        :icon="iconMap[edu.type]"
+        :icon="educationTypeIcons[edu.type]"
         :title="edu.degree"
         :subject="edu.field"
         :sub-field="edu.sub_field"
@@ -45,13 +45,7 @@
 <script setup>
 import EducationMilestone from "./components/EducationMilestone.vue";
 import config from "@/content/profile_info"
+import { educationTypeIcons } from "@/config/educationTypes"
 
 const { education, certifications } = config
-
-const iconMap = {
-  School: "mdi-town-hall",
-  Diploma: "mdi-certificate",
-  College: "mdi-school",
-  University: "mdi-school"
-}
 </script>

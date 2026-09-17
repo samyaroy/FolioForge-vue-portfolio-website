@@ -9,7 +9,10 @@ import { ExperienceProjectsEditor } from '@/components/editor/ExperienceProjects
 import { DescriptionLinesEditor } from '@/components/editor/DescriptionLinesEditor'
 import { CurriculumEditor } from '@/components/editor/CurriculumEditor'
 import { EducationSubFieldsEditor } from '@/components/editor/EducationSubFieldsEditor'
+import { CredentialLinksEditor } from '@/components/editor/CredentialLinksEditor'
 import { curriculumDraft, serializeCurriculum } from '@/lib/curriculum'
+import { credentialLinksDraft, serializeCredentialLinks } from '@/lib/credentialLinks'
+import { educationTypeIcons } from '../../../../src/config/educationTypes.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 
@@ -35,10 +38,10 @@ function fieldKey(label: string) {
 export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
   const initialFields = useMemo(() => {
     if (entry) {
-      const raw = isExperience ? { ...entry.raw, projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
+      const raw = isExperience ? { ...entry.raw, cred_link: credentialLinksDraft(entry.raw.cred_link), projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
       return Object.fromEntries(Object.entries(raw).filter(([key]) => !entry.readOnlyFields?.includes(key) && !(isEducation && key === 'cirriculum')).map(([key, value]) => [key, editableValue(toDriveEditorValue(value))]))
     }
-    if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '', projects: '[]' }
+    if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
     if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
   }, [entry, fieldGroups, isExperience, isEducation])
@@ -63,6 +66,7 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
       const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(fields).map(([key, value]) => {
         const original = entry?.raw[key]
         if (value === initialFields[key] && original !== undefined) return [key, original]
+        if (isExperience && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
         const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('['))
         const parsed: unknown = structured ? JSON.parse(value) : value
         if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || typeof item.name !== 'string' || !item.name.trim())) throw new Error('Enter a label and name for each sub-field before saving.')
@@ -70,6 +74,8 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
         if (isExperience && key === 'projects' && Array.isArray(parsed) && parsed.some(project => !project || typeof project !== 'object' || typeof project.title !== 'string' || !project.title.trim())) throw new Error('Enter a title for each project before saving.')
         return [key, fromDriveEditorValue(parsed, original, key)]
       })) }
+      // An entry that never had a credential and still has none keeps no key.
+      if (raw.cred_link === undefined) delete raw.cred_link
       if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum)
       const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(fields)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
       onSave({
@@ -99,10 +105,25 @@ export function EntryEditorDialog({ entry, fieldGroups, isExperience = false, is
             if (isEducation && key === 'sub_field') return <EducationSubFieldsEditor key={key} subFields={JSON.parse(value)} onChange={subFields => setFields(current => ({ ...current, sub_field: JSON.stringify(subFields) }))} />
             if (isExperience && key === 'projects') return <ExperienceProjectsEditor key={key} projects={JSON.parse(value)} onChange={projects => setFields(current => ({ ...current, projects: JSON.stringify(projects) }))} />
             if (isExperience && key === 'description') return <DescriptionLinesEditor key={key} lines={JSON.parse(value)} onChange={lines => setFields(current => ({ ...current, description: JSON.stringify(lines) }))} />
+            if (isExperience && key === 'cred_link') return <CredentialLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
+            if (isEducation && key === 'type') {
+              // Only types the site's education timeline renders; an unrecognised
+              // value from the YAML stays listed so opening the entry does not drop it.
+              const types = Object.keys(educationTypeIcons)
+              return (
+                <label className="field" key={key}>
+                  <span>type</span>
+                  <select value={value} onChange={event => setFields(current => ({ ...current, type: event.target.value }))}>
+                    {!value && <option value="">Select type</option>}
+                    {value && !types.includes(value) && <option value={value}>{value} (unsupported)</option>}
+                    {types.map(type => <option key={type} value={type}>{type}</option>)}
+                  </select>
+                </label>
+              )
+            }
             const isStructured = value.includes('\n') || value.startsWith('{') || value.startsWith('[')
             return (
               <Fragment key={key}>
-                {isExperience && key === 'cred_link' && <div className="entry-field-divider experience-section-divider"><span>Credential</span></div>}
                 <label className="field">
                   <span>{key.replaceAll('_', ' ')}{!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}</span>
                   {isStructured
