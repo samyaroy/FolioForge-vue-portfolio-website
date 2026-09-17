@@ -18,7 +18,7 @@ export function VisibilitySwitches({ controls }: { controls: VisibilityFlag[] })
             disabled={!isKnown}
             checked={isEnabled}
             onChange={checked => setFlag(control.path, checked)}
-            label={<span><strong>{control.label}</strong><small>{!isKnown ? 'Flag unavailable' : `${isEnabled ? 'Enabled' : 'Disabled'}${isChanged ? ' · Local change' : ''}`}</small><code className="visibility-flag-path">{control.path}</code></span>}
+            label={<span><strong>{control.label}</strong><span className="visibility-meta"><small>{!isKnown ? 'Flag unavailable' : `${isEnabled ? 'Enabled' : 'Disabled'}${isChanged ? ' · Local change' : ''}`}</small><code className="visibility-flag-path">{control.path}</code></span></span>}
           />
         )
       })}
@@ -32,10 +32,10 @@ export function VisibilityPane({ pageId, sectionId }: { pageId: string; sectionI
   const controllingFlags = pageId === 'home' && sectionId === 'education' ? controls.slice(0, 1) : controls
   const isEnabled = controllingFlags.some(control => flags[control.path] === true)
   return (
-    <section className="form-panel">
+    <section className="form-panel visibility-panel">
       <div className="panel-heading"><div><span>Display</span><h2>Section visibility</h2></div></div>
       {controls.length ? <>
-        <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>
+        {controls.length > 1 && <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>}
         <VisibilitySwitches controls={controls} />
       </> : <p className="visibility-fixed">Always available. This page has no visibility feature flag.</p>}
     </section>

@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Save } from 'lucide-react'
+import { ArrowUpRight, Check, FileCode2, Pencil, Plus } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
 import { VisibilityPane } from '@/components/admin/VisibilityPane'
 import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
-import { Button, TextareaField } from '@/components/form'
+import { Button } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
@@ -28,19 +28,11 @@ export function PortfolioContentPage() {
 }
 
 function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; section: PortfolioSection }) {
-  const [notes, setNotes] = useState('')
-  const [saved, setSaved] = useState(false)
   const [query, setQuery] = useState('')
   const [entries, setEntries] = useState(() => getPortfolioEntries(page.id, section.id))
   const [editor, setEditor] = useState<EditorState | null>(null)
 
   const visibleEntries = entries.filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
-
-  const saveLocalPreview = () => {
-    toast.info('Preview remains in this session. Nothing has been published.')
-    setSaved(true)
-    window.setTimeout(() => setSaved(false), 1600)
-  }
 
   const saveEntry = (nextEntry: PortfolioEntry) => {
     setEntries(current => editor?.mode === 'edit'
@@ -105,13 +97,6 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
 
         <aside className="mapped-editor-aside">
           <VisibilityPane pageId={page.id} sectionId={section.id} />
-          <section className="form-panel">
-            <div className="panel-heading"><div><span>Draft</span><h2>Editor notes</h2></div></div>
-            <div className="aside-form-body">
-              <TextareaField label="Notes for this change" data-page-search value={notes} onChange={setNotes} placeholder="Optional review context" />
-              <Button variant="outline" onClick={saveLocalPreview}><Save aria-hidden="true" />{saved ? 'Saved locally' : 'Save local preview'}</Button>
-            </div>
-          </section>
         </aside>
       </div>
       {editor && (
