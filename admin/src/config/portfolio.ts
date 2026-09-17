@@ -1,6 +1,8 @@
 import {
   BadgeCheck,
+  BookMarked,
   BookOpenCheck,
+  Clapperboard,
   BriefcaseBusiness,
   Contact,
   FolderKanban,
@@ -11,7 +13,10 @@ import {
   Lightbulb,
   LibraryBig,
   Network,
+  MapPinned,
+  Palette,
   Presentation,
+  Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { educationTypeIcons } from '../../../src/config/educationTypes.ts'
@@ -176,19 +181,33 @@ export const portfolioPages: PortfolioPage[] = [
   },
 ]
 
-// The blog app keeps its own content collections; they are edited here the
-// same way, under the Blog section of the navigation.
+// The blog app keeps its own content collections. Each blog page is its own
+// entry here, as portfolio pages are, so the navigation mirrors the site.
 export const blogPages: PortfolioPage[] = [
   {
-    id: 'blog', title: 'Blog Collections', publicPath: '/', icon: BookOpenCheck, site: 'blog', basePath: '/blog/pages',
-    description: 'Reading, watching and travel collections behind the blog site.',
-    sections: [
-      { id: 'recommended', title: 'Worth Your Time', sources: ['recommended/data.yml'], fields: ['Title and author', 'Source and year', 'Link and note'], requiredFields: ['title', 'url'] },
-      { id: 'readings', title: 'What I Read', sources: ['readings/data.yml'], fields: ['Title and author', 'Genre and description', 'Cover image and link'], requiredFields: ['title'] },
-      { id: 'movies', title: 'Worth Binge-watching', sources: ['movies/data.yml'], fields: ['Title and director', 'Genre and year', 'Poster image and link'], requiredFields: ['title'] },
-      { id: 'travel', title: 'TravelBook', sources: ['travel/data.yml'], fields: ['State and purpose', 'Cities and visits'], requiredFields: ['state'] },
-      { id: 'hobbies', title: 'Hobby Lobby', sources: ['hobbies/data.yml'], fields: ['Tile label', 'MDI icon'], requiredFields: ['label'] },
-    ],
+    id: 'recommended', title: 'Worth Your Time', publicPath: '/recommended', icon: Sparkles, site: 'blog', basePath: '/blog/pages',
+    description: 'Articles and talks worth someone else\u2019s time.',
+    sections: [{ id: 'items', title: 'Recommendations', sources: ['recommended/data.yml'], fields: ['Title and author', 'Source and year', 'Link and note'], requiredFields: ['title', 'url'] }],
+  },
+  {
+    id: 'readings', title: 'What I Read', publicPath: '/readings', icon: BookMarked, site: 'blog', basePath: '/blog/pages',
+    description: 'Books and long reads with covers and notes.',
+    sections: [{ id: 'items', title: 'Readings', sources: ['readings/data.yml'], fields: ['Title and author', 'Genre and description', 'Cover image and link'], requiredFields: ['title'] }],
+  },
+  {
+    id: 'movies', title: 'Worth Binge-watching', publicPath: '/movies', icon: Clapperboard, site: 'blog', basePath: '/blog/pages',
+    description: 'Films and series with directors, genres and posters.',
+    sections: [{ id: 'items', title: 'Watchlist', sources: ['movies/data.yml'], fields: ['Title and director', 'Genre and year', 'Poster image and link'], requiredFields: ['title'] }],
+  },
+  {
+    id: 'travel', title: 'TravelBook', publicPath: '/travel', icon: MapPinned, site: 'blog', basePath: '/blog/pages',
+    description: 'States visited, why, and the cities within them.',
+    sections: [{ id: 'states', title: 'States', sources: ['travel/data.yml'], fields: ['State and purpose', 'Cities and visits'], requiredFields: ['state'] }],
+  },
+  {
+    id: 'hobbies', title: 'Hobby Lobby', publicPath: '/hobbies', icon: Palette, site: 'blog', basePath: '/blog/pages',
+    description: 'Hobby tiles and the icons that represent them.',
+    sections: [{ id: 'tiles', title: 'Tiles', sources: ['hobbies/data.yml'], fields: ['Tile label', 'MDI icon'], requiredFields: ['label'] }],
   },
 ]
 

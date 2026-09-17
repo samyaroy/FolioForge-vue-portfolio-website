@@ -186,11 +186,11 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'contact/details': () => [{ id: 'contacts', title: 'Contact details', subtitle: firstText(asRecord(documents.profile.contacts), ['location']), raw: { ...asRecord(documents.profile.contacts), socials: documents.profile.socials }, presentation: { titlePaths: [], subtitlePaths: ['location'], fallbackTitle: 'Contact details' } }],
   'facts/facts': () => toEntries(arrayAt(documents.facts, 'facts'), ['title'], ['icon']),
 
-  'blog/recommended': () => toEntries(arrayAt(documents.blogRecommended, 'items'), ['title'], ['author', 'source']),
-  'blog/readings': () => toEntries(arrayAt(documents.blogReadings, 'items'), ['title'], ['author', 'genre']),
-  'blog/movies': () => toEntries(arrayAt(documents.blogMovies, 'items'), ['title'], ['director', 'year']),
-  'blog/travel': () => toEntries(arrayAt(documents.blogTravel, 'states'), ['state'], ['purpose']),
-  'blog/hobbies': () => toEntries(arrayAt(documents.blogHobbies, 'tiles'), ['label'], ['icon']),
+  'recommended/items': () => toEntries(arrayAt(documents.blogRecommended, 'items'), ['title'], ['author', 'source']),
+  'readings/items': () => toEntries(arrayAt(documents.blogReadings, 'items'), ['title'], ['author', 'genre']),
+  'movies/items': () => toEntries(arrayAt(documents.blogMovies, 'items'), ['title'], ['director', 'year']),
+  'travel/states': () => toEntries(arrayAt(documents.blogTravel, 'states'), ['state'], ['purpose']),
+  'hobbies/tiles': () => toEntries(arrayAt(documents.blogHobbies, 'tiles'), ['label'], ['icon']),
 }
 
 export function getPortfolioEntries(pageId: string, sectionId: string): PortfolioEntry[] {

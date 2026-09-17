@@ -11,6 +11,9 @@ import {
   type RowData,
 } from '@tanstack/react-table'
 
+/** Per-column extras: `width` is a CSS width for the fixed table layout. */
+export type DataTableColumnMeta = { width?: string }
+
 // Sorting and pagination only: the pages filter their own rows, so the table
 // takes what it is given.
 export const dataTableFeatures = tableFeatures({
@@ -20,6 +23,7 @@ export const dataTableFeatures = tableFeatures({
   sortedRowModel: createSortedRowModel(),
   paginatedRowModel: createPaginatedRowModel(),
   sortFns: { alphanumeric: sortFn_alphanumeric },
+  columnMeta: {} as DataTableColumnMeta,
 })
 
 /** Column builder bound to this table's features: `columnsFor<Row>()`. */

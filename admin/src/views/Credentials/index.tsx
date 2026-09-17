@@ -28,12 +28,14 @@ const column = columnsFor<CredentialDashboardRow>()
 const columns: DataTableColumns<CredentialDashboardRow> = [
   column.accessor('page', {
     header: 'Page - Section',
+    meta: { width: '15%' },
     cell: ({ row }) => <div className="post-title-cell"><strong>{row.original.page}</strong><span>{row.original.section}</span></div>,
   }),
-  column.accessor('item', { header: 'Credential' }),
-  column.accessor('detail', { header: 'Detail' }),
+  column.accessor('item', { header: 'Credential', meta: { width: '24%' } }),
+  column.accessor('detail', { header: 'Detail', meta: { width: '54%' } }),
   column.accessor('hasLink', {
     header: 'Links',
+    meta: { width: '7%' },
     cell: ({ row }) => row.original.links.length
       ? (
         <div className="credential-link-cell">

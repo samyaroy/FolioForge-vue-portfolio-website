@@ -17,6 +17,7 @@ const column = columnsFor<HyperlinkEntry>()
 const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void): DataTableColumns<HyperlinkEntry> => [
   column.accessor('name', {
     header: 'Name',
+    meta: { width: '30%' },
     cell: ({ row }) => (
       <div className="post-title-cell">
         <strong>{row.original.name || 'Unnamed entry'}</strong>
@@ -27,18 +28,21 @@ const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void):
   column.accessor(entry => entry.aliases.join(', '), {
     id: 'aliases',
     header: 'Aliases',
+    meta: { width: '57%' },
     cell: ({ row }) => row.original.aliases.length
       ? <span className="hyperlink-aliases">{row.original.aliases.join(', ')}</span>
       : <span className="credential-link-empty">-</span>,
   }),
   column.accessor('url', {
     header: urlLabel,
+    meta: { width: '7%' },
     cell: ({ row }) => row.original.url
       ? <div className="credential-link-cell"><a href={row.original.url} target="_blank" rel="noopener noreferrer" title={row.original.url} aria-label={`Open ${row.original.name}`}><ExternalLink aria-hidden="true" /></a></div>
       : <span className="credential-link-empty">-</span>,
   }),
   column.display({
     id: 'actions',
+    meta: { width: '6%' },
     header: () => <span className="sr-only">Edit</span>,
     cell: ({ row }) => <IconButton variant="outline" title="Edit link" label={`Edit ${row.original.name || 'entry'}`} onClick={() => onEdit(row.original)}><Pencil aria-hidden="true" /></IconButton>,
   }),

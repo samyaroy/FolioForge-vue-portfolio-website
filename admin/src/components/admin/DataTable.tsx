@@ -47,6 +47,7 @@ export function DataTable<TData extends RowData>({ columns, data, pageSize = 25,
                       key={header.id}
                       id={header.index === 0 ? labelledBy : undefined}
                       aria-sort={sorted === 'asc' ? 'ascending' : sorted === 'desc' ? 'descending' : undefined}
+                      style={header.column.columnDef.meta?.width ? { width: header.column.columnDef.meta.width } : undefined}
                     >
                       {header.isPlaceholder ? null : sortable ? (
                         <Button variant="bare" size="none" className="column-sort" onClick={header.column.getToggleSortingHandler()}>

@@ -1,6 +1,8 @@
 import {
   BookOpenText,
   Cloud,
+  Files,
+  GalleryHorizontalEnd,
   Image,
   LayoutDashboard,
   Rocket,
@@ -32,21 +34,26 @@ export const navigation: NavigationGroup[] = [
     label: 'Editorial',
     items: [
       {
-        label: 'Blog',
+        label: 'Blog Posts',
         path: '/blog/posts',
         icon: BookOpenText,
         count: 2,
         children: [
-          { label: 'Posts', path: '/blog/posts' },
-          { label: 'New Post', path: '/blog/posts/new' },
-          { label: 'Gallery', path: '/blog/gallery' },
-          { label: 'Pages', path: '/blog/pages' },
-          ...blogPages.flatMap(page => page.sections.map(section => ({
-            label: section.title,
-            path: portfolioAdminPath(page, section),
-          }))),
+          { label: 'All posts', path: '/blog/posts' },
+          { label: 'New post', path: '/blog/posts/new' },
         ],
       },
+      { label: 'Blog Gallery', path: '/blog/gallery', icon: GalleryHorizontalEnd },
+      { label: 'Blog Pages', path: '/blog/pages', icon: Files },
+      ...blogPages.map(page => ({
+        label: page.title,
+        path: portfolioAdminPath(page),
+        icon: page.icon,
+        children: page.sections.map(section => ({
+          label: section.title,
+          path: portfolioAdminPath(page, section),
+        })),
+      })),
     ],
   },
   {
