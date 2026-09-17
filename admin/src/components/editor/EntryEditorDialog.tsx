@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Save, X } from 'lucide-react'
 import { Button, IconButton, SelectField, TextareaField, TextField } from '@/components/form'
@@ -19,6 +19,7 @@ import { ProjectLinksEditor } from '@/components/editor/ProjectLinksEditor'
 import { ObjectFieldsEditor } from '@/components/editor/ObjectFieldsEditor'
 import { ListFieldsEditor } from '@/components/editor/ListFieldsEditor'
 import { fieldCaption } from '@/lib/fieldNames'
+import { credentialStyleOf, fieldKeys, listFieldsOf, objectFieldsOf, type EntryField } from '../../../../src/config/entryFields.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 
@@ -29,12 +30,8 @@ type EntryEditorDialogProps = {
   requiredFields?: string[]
   /** Values offered for the entry's `type` field; see PortfolioSection. */
   typeOptions?: readonly string[]
-  /** Shape of the entry's `cred_link`; see PortfolioSection. */
-  credentialStyle?: 'documents' | 'categories'
-  /** Entry keys edited as their own sub-fields; see PortfolioSection. */
-  objectFields?: Record<string, readonly string[]>
-  /** Entry keys edited as rows of columns; see PortfolioSection. */
-  listFields?: Record<string, readonly string[]>
+  /** Every field an entry carries, with nested shapes; see PortfolioSection. */
+  entryFields?: readonly EntryField[]
   isExperience?: boolean
   isEducation?: boolean
   onClose: () => void
@@ -51,14 +48,32 @@ function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], credentialStyle, objectFields = {}, listFields = {}, isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
+  // Nesting is read off the schema, so a collection declares its shape once.
+  const entryFields = useMemo(() => fieldKeys(schema), [schema])
+  const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
+  const listFields = useMemo(() => listFieldsOf(schema), [schema])
+  const credentialStyle = useMemo(() => credentialStyleOf(schema), [schema])
+  // What an untouched field holds before anything is typed into it.
+  const blankValue = useCallback((key: string) => {
+    if (objectFields[key]) return JSON.stringify(objectFieldsDraft(undefined, objectFields[key]))
+    if (listFields[key]) return '[]'
+    if (key === 'cred_link' && credentialStyle) return '[]'
+    if (isExperience && (key === 'projects' || key === 'description')) return '[]'
+    if (isEducation && key === 'sub_field') return '[]'
+    return ''
+  }, [objectFields, listFields, credentialStyle, isExperience, isEducation])
+
   const initialFields = useMemo(() => {
     if (entry) {
-      const base = isExperience ? { ...entry.raw, projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...entry.raw, sub_field: entry.raw.sub_field ?? [] } : entry.raw
+      // The schema decides which fields exist; the entry only fills them in.
+      // Keys outside it stay, after the declared ones, so nothing is lost.
+      const withSchema = { ...Object.fromEntries(entryFields.map(key => [key, entry.raw[key] ?? ''])), ...entry.raw }
+      const base = isExperience ? { ...withSchema, projects: entry.raw.projects ?? [], description: Array.isArray(entry.raw.description) ? entry.raw.description : entry.raw.description ? [entry.raw.description] : [] } : isEducation ? { ...withSchema, sub_field: entry.raw.sub_field ?? [] } : withSchema
       // Nested values the dialog edits as their own controls rather than JSON.
       const drafts: Record<string, unknown> = {
         ...(credentialStyle === 'documents' ? { cred_link: credentialLinksDraft(base.cred_link) } : {}),
-        ...(credentialStyle === 'categories' && 'cred_link' in base ? { cred_link: projectLinksDraft(base.cred_link) } : {}),
+        ...(credentialStyle === 'categories' ? { cred_link: projectLinksDraft(base.cred_link) } : {}),
         // Declared object keys are drafted even when the entry lacks them, so
         // one can be filled in; an untouched blank group writes no key.
         ...Object.fromEntries(Object.entries(objectFields).map(([key, fields]) => [key, objectFieldsDraft(base[key], fields)])),
@@ -70,10 +85,11 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
       const drafted = new Set(Object.keys(drafts))
       return Object.fromEntries(Object.entries(raw).filter(([key]) => !entry.readOnlyFields?.includes(key) && !(isEducation && key === 'cirriculum')).map(([key, value]) => [key, editableValue(drafted.has(key) ? value : toDriveEditorValue(value))]))
     }
+    if (entryFields.length) return Object.fromEntries(entryFields.map(key => [key, blankValue(key)]))
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
     if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
-  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, objectFields, listFields])
+  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, objectFields, listFields, entryFields, blankValue])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
   const [educationTab, setEducationTab] = useState('details')
   const [curriculum, setCurriculum] = useState(() => curriculumDraft(entry?.raw.cirriculum))
@@ -115,8 +131,14 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
         if (isExperience && key === 'projects' && Array.isArray(parsed) && parsed.some(project => !project || typeof project !== 'object' || typeof project.title !== 'string' || !project.title.trim())) throw new Error('Enter a title for each project before saving.')
         return [key, fromDriveEditorValue(parsed, original, key)]
       })) }
-      // A group left empty on an entry that never had it keeps no key.
-      for (const key of Object.keys(raw)) if (raw[key] === undefined) delete raw[key]
+      // A declared field is always written, blank if empty, so every entry in
+      // the collection keeps the same shape. Undeclared ones vanish as before.
+      for (const key of Object.keys(raw)) {
+        if (raw[key] !== undefined) continue
+        if (entryFields.includes(key)) raw[key] = null
+        else delete raw[key]
+      }
+      for (const key of entryFields) if (!(key in raw)) raw[key] = ''
       if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum)
       const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(fields)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
       onSave({

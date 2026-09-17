@@ -108,9 +108,7 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
           fieldGroups={section.fields}
           requiredFields={section.requiredFields}
           typeOptions={section.typeOptions}
-          credentialStyle={section.credentialStyle}
-          objectFields={section.objectFields}
-          listFields={section.listFields}
+          entryFields={section.entryFields}
           isExperience={page.id === 'home' && section.id === 'experience'}
           isEducation={page.id === 'home' && section.id === 'education'}
           onClose={() => setEditor(null)}
