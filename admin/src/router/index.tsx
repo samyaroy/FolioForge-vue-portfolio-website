@@ -6,6 +6,8 @@ import { BlogPostsPage } from '@/views/BlogPosts'
 import { CareerUnlocksPage } from '@/views/CareerUnlocks'
 import { MediaLibraryPage } from '@/views/MediaLibrary'
 import { MetadataPage } from '@/views/Metadata'
+import { CredentialsPage } from '@/views/Credentials'
+import { HyperlinkMetadataPage } from '@/views/HyperlinkMetadata'
 import { NotFoundPage } from '@/views/NotFound'
 import { PortfolioOverviewPage } from '@/views/PortfolioOverview'
 import { PortfolioContentPage } from '@/views/PortfolioContent'
@@ -24,6 +26,8 @@ export const router = createBrowserRouter([
       { path: '/portfolio/pages/:pageId/:sectionId', element: <PortfolioContentPage /> },
       { path: '/portfolio/media', element: <MediaLibraryPage /> },
       { path: '/portfolio/metadata', element: <MetadataPage /> },
+      { path: '/portfolio/credentials', element: <CredentialsPage /> },
+      { path: '/workspace/hyperlinks', element: <HyperlinkMetadataPage /> },
       { path: '/blog/posts', element: <BlogPostsPage /> },
       { path: '/blog/posts/new', element: <PostEditorPage /> },
       { path: '/blog/gallery', element: <BlogGalleryPage /> },

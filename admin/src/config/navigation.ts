@@ -1,14 +1,13 @@
 import {
   BookOpenText,
   Cloud,
-  FilePenLine,
-  Files,
-  GalleryHorizontalEnd,
   Image,
   LayoutDashboard,
   Rocket,
   Settings,
   Tags,
+  ShieldCheck,
+  Link2,
 } from 'lucide-react'
 import { portfolioAdminPath, portfolioPages } from '@/config/portfolio'
 import type { NavigationGroup } from '@/types/navigation'
@@ -32,10 +31,18 @@ export const navigation: NavigationGroup[] = [
   {
     label: 'Editorial',
     items: [
-      { label: 'Blog Posts', path: '/blog/posts', icon: BookOpenText, count: 2 },
-      { label: 'New Post', path: '/blog/posts/new', icon: FilePenLine },
-      { label: 'Blog Gallery', path: '/blog/gallery', icon: GalleryHorizontalEnd },
-      { label: 'Blog Pages', path: '/blog/pages', icon: Files },
+      {
+        label: 'Blog',
+        path: '/blog/posts',
+        icon: BookOpenText,
+        count: 2,
+        children: [
+          { label: 'Posts', path: '/blog/posts' },
+          { label: 'New Post', path: '/blog/posts/new' },
+          { label: 'Gallery', path: '/blog/gallery' },
+          { label: 'Pages', path: '/blog/pages' },
+        ],
+      },
     ],
   },
   {
@@ -43,6 +50,8 @@ export const navigation: NavigationGroup[] = [
     items: [
       { label: 'Media Library', path: '/portfolio/media', icon: Image },
       { label: 'Taxonomy & Links', path: '/portfolio/metadata', icon: Tags },
+      { label: 'Credentials', path: '/portfolio/credentials', icon: ShieldCheck },
+      { label: 'Hyperlink Metadata', path: '/workspace/hyperlinks', icon: Link2 },
       { label: 'Publishing', path: '/workspace/publishing', icon: Rocket },
       { label: 'Media Storage', path: '/workspace/storage', icon: Cloud },
       { label: 'Settings', path: '/workspace/settings', icon: Settings },
