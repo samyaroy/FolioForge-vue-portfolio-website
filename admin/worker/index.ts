@@ -35,7 +35,7 @@ export function createAdminWorker(keys?: JWTVerifyGetKey) {
         const identity = await authenticate(request, config, keys)
         if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method)) await protectMutation(request, identity, config.origin, config.csrfSecret)
         if (!['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'].includes(request.method)) throw new HttpError(405, 'method_not_allowed')
-        if (url.pathname === '/api' || url.pathname.startsWith('/api/')) return secureResponse(await apiResponse(request, config, identity))
+        if (url.pathname === '/api' || url.pathname.startsWith('/api/')) return secureResponse(await apiResponse(request, env, config, identity))
         if (request.method !== 'GET' && request.method !== 'HEAD') throw new HttpError(405, 'method_not_allowed')
         return secureResponse(await env.ASSETS.fetch(request))
       } catch (error) {

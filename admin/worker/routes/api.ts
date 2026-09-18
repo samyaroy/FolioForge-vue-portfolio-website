@@ -1,15 +1,27 @@
-import type { AccessIdentity } from '../types.ts'
+import type { AccessIdentity, WorkerEnv } from '../types.ts'
 import { issueCsrfToken } from '../auth/csrf.ts'
 import { publishingPolicy, type SecurityConfig } from '../config.ts'
+import { githubConfig, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
 import { json } from '../http.ts'
 
-export async function apiResponse(request: Request, config: SecurityConfig, identity: AccessIdentity) {
+export async function apiResponse(request: Request, env: WorkerEnv, config: SecurityConfig, identity: AccessIdentity) {
   const path = new URL(request.url).pathname
   if (path === '/api/session' && request.method === 'GET') {
     return json({ email: identity.email, expiresAt: identity.expiresAt, csrfToken: await issueCsrfToken(identity, config.origin, config.csrfSecret) })
   }
   if (path === '/api/status' && request.method === 'GET') {
-    return json({ authenticated: true, publishingTarget: publishingPolicy, mode: 'read-only', integrations: { github: false, r2: false, publishing: false } })
+    return json({
+      authenticated: true,
+      publishingTarget: publishingPolicy,
+      mode: 'read-only',
+      integrations: { github: Boolean(githubConfig(env)), r2: false, publishing: false },
+    })
+  }
+  if (path === '/api/repository/head' && request.method === 'GET') {
+    // Reads only, and only the ref the policy names. Nothing in the request
+    // selects the repository, the branch or the revision.
+    const head = await resolveHead(requireGithub(env))
+    return json({ ...head, capability: 'read-only', scope: `${repositoryPolicy.owner}/${repositoryPolicy.repo}` })
   }
   if (path === '/api/media/logos' && request.method === 'GET') return json({ error: 'r2_not_connected' }, 503)
   return json({ error: 'not_found' }, 404)

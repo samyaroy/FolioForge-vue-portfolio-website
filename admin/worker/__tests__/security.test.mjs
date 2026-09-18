@@ -52,7 +52,7 @@ for (const [name, broken] of [
   })
 }
 
-for (const path of ['/', '/assets/app.js', '/assets/app.css', '/profile-icon.png', '/portfolio/pages/home/education', '/api/session', '/api/media/logos']) {
+for (const path of ['/', '/assets/app.js', '/assets/app.css', '/profile-icon.png', '/portfolio/pages/home/education', '/api/session', '/api/media/logos', '/api/repository/head']) {
   test(`unauthenticated ${path} is denied`, async () => {
     const response = await worker.fetch(request(path), env)
     assert.equal(response.status, 401)
@@ -136,6 +136,25 @@ test('unimplemented storage and generic file APIs do not expose data', async () 
   const token = await accessToken()
   assert.equal((await worker.fetch(request('/api/media/logos', token), env)).status, 503)
   assert.equal((await worker.fetch(request('/api/file?path=.env', token), env)).status, 404)
+})
+
+test('an unconnected GitHub reports itself and reaches no provider', async () => {
+  const token = await accessToken()
+  const status = await (await worker.fetch(request('/api/status', token), env)).json()
+  assert.equal(status.integrations.github, false)
+  const head = await worker.fetch(request('/api/repository/head', token), env)
+  assert.equal(head.status, 503)
+  assert.deepEqual(await head.json(), { error: 'github_not_connected' })
+})
+
+test('the browser cannot name a repository, branch or revision to read', async () => {
+  const token = await accessToken()
+  // With credentials installed these would be the levers worth pulling; without
+  // them the route still refuses, and no query string is ever read.
+  for (const query of ['?repo=attacker/evil', '?ref=refs/heads/main', '?branch=main', '?owner=attacker']) {
+    const response = await worker.fetch(request(`/api/repository/head${query}`, token), env)
+    assert.equal(response.status, 503)
+  }
 })
 
 test('security configuration rejects unsafe issuers and origins', () => {

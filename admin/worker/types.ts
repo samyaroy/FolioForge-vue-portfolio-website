@@ -9,6 +9,12 @@ export type WorkerEnv = {
   ACCESS_AUDIENCE?: string
   ACCESS_OWNER_EMAIL?: string
   CSRF_SECRET?: string
+  // GitHub App credentials. Absent means "not connected", which the admin
+  // reports and carries on without; the private key is a credential and never
+  // leaves the Worker.
+  GITHUB_APP_ID?: string
+  GITHUB_INSTALLATION_ID?: string
+  GITHUB_PRIVATE_KEY?: string
 }
 
 export type AccessIdentity = {

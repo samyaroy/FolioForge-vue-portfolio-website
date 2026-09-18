@@ -3,6 +3,7 @@ import { ChevronRight, Cloud, X } from 'lucide-react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Button, IconButton } from '@/components/form'
 import { navigation } from '@/config/navigation'
+import { useRepositoryHead } from '@/hooks/useRepositoryHead'
 import { cn } from '@/lib/utils'
 
 type SidebarProps = {
@@ -14,6 +15,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation()
   const navigate = useNavigate()
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({ Home: true })
+  const repository = useRepositoryHead()
 
   const toggleParent = (label: string, path: string, isExpanded: boolean) => {
     setExpandedItems(current => ({ ...current, [label]: !isExpanded }))
@@ -38,9 +40,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         <div className="workspace-status">
-          <span className="status-dot" aria-hidden="true" />
-          <span>Repository content</span>
-          <span className="workspace-label">LOCAL</span>
+          <span className={cn('status-dot', repository.connected === false && 'status-dot-local')} aria-hidden="true" />
+          <span>{repository.head ? `${repository.head.branch} @ ${repository.head.sha.slice(0, 7)}` : 'Repository content'}</span>
+          <span className="workspace-label">{repository.connected === undefined ? '...' : repository.connected ? 'GITHUB' : 'LOCAL'}</span>
         </div>
 
         <nav className="sidebar-nav" aria-label="Admin sections">
