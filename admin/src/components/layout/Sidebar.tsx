@@ -3,6 +3,7 @@ import { ChevronRight, Cloud, X } from 'lucide-react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Button, IconButton } from '@/components/form'
 import { navigation } from '@/config/navigation'
+import { useIntegrations } from '@/hooks/useIntegrations'
 import { useRepositoryHead } from '@/hooks/useRepositoryHead'
 import { cn } from '@/lib/utils'
 
@@ -16,6 +17,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const navigate = useNavigate()
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({ Home: true })
   const repository = useRepositoryHead()
+  const integrations = useIntegrations()
 
   const toggleParent = (label: string, path: string, isExpanded: boolean) => {
     setExpandedItems(current => ({ ...current, [label]: !isExpanded }))
@@ -103,9 +105,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <Cloud aria-hidden="true" />
           <span>
             <strong>Cloudflare R2</strong>
-            <small>Connection pending</small>
+            <small>{integrations.r2 ? 'Logo catalogue readable' : 'Connection pending'}</small>
           </span>
-          <span className="storage-dot" aria-hidden="true" />
+          <span className={cn('storage-dot', integrations.r2 && 'storage-dot-ready')} aria-hidden="true" />
         </div>
       </aside>
     </>
