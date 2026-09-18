@@ -97,6 +97,13 @@ Follow them live with `npx wrangler tail --format pretty` while working through
 the list above: a repeated run of them is the signal worth alerting on, and the
 `reason` field is how an unexplained 401 gets diagnosed without a debug mode.
 
+Cloudflare records its own invocation metadata beside that record, and it is
+wider than the record is. Verified on 2026-09-18 against the deployed Worker:
+the payload carries the full request URL, query string included, and replaces
+`cf-access-jwt-assertion` with `REDACTED`. The Access token is therefore logged
+by neither side, but a secret placed in a query string would be. Keep secrets
+out of URLs; API input belongs in the path and the body.
+
 Access JWTs remain bearer credentials: protect sessions and keep expiry short.
 CSRF is bound to the JWT but does not make a stolen valid JWT unreplayable.
 Logout/revocation behavior must be checked against the actual Access policy;
