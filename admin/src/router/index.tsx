@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 import { BlogGalleryPage } from '@/views/BlogGallery'
+import { BlogOverviewPage } from '@/views/BlogOverview'
 import { BlogPagesPage } from '@/views/BlogPages'
 import { BlogPostsPage } from '@/views/BlogPosts'
 import { CareerUnlocksPage } from '@/views/CareerUnlocks'
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
       { path: '/portfolio/metadata', element: <MetadataPage /> },
       { path: '/portfolio/credentials', element: <CredentialsPage /> },
       { path: '/workspace/hyperlinks', element: <HyperlinkMetadataPage /> },
+      { path: '/blog', element: <BlogOverviewPage /> },
       { path: '/blog/posts', element: <BlogPostsPage /> },
       { path: '/blog/posts/new', element: <PostEditorPage /> },
       { path: '/blog/gallery', element: <BlogGalleryPage /> },

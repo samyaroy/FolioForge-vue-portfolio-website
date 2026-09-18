@@ -38,6 +38,7 @@ export const navigation: NavigationGroup[] = [
   {
     label: 'Editorial',
     items: [
+      { label: 'Overview', path: '/blog', icon: LayoutDashboard },
       {
         label: 'Blog Posts',
         path: '/blog/posts',

@@ -556,6 +556,11 @@ tbody tr:hover { background: #f9fbfd; }
 .settings-card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
 .settings-card { display: grid; min-height: 130px; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: start; gap: 11px; border-top: 1px solid var(--border); padding: 15px; }
 .settings-card:nth-child(odd) { border-right: 1px solid var(--border); }
+/* Three destinations fit one row, so the column rule follows thirds rather than
+   the two-column default, which would strand the last card beside a gap. */
+.settings-card-grid.three-up { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.settings-card-grid.three-up .settings-card:nth-child(odd) { border-right: 0; }
+.settings-card-grid.three-up .settings-card:not(:nth-child(3n)) { border-right: 1px solid var(--border); }
 .settings-card h2 { margin: 0 0 4px; font-size: 13px; }
 .settings-card code { color: #567086; font-size: 9px; }
 .settings-card p { margin: 7px 0 0; color: #718396; font-size: 10px; line-height: 1.5; }
@@ -655,8 +660,8 @@ tbody tr:hover { background: #f9fbfd; }
   .page-heading { flex-wrap: wrap; }
   .page-actions { width: 100%; }
   .page-actions > * { width: 100%; }
-  .collection-grid, .storage-grid, .settings-card-grid { grid-template-columns: 1fr; }
-  .collection-card, .storage-grid article, .settings-card { border-right: 1px solid var(--border); }
+  .collection-grid, .storage-grid, .settings-card-grid, .settings-card-grid.three-up { grid-template-columns: 1fr; }
+  .collection-card, .storage-grid article, .settings-card, .settings-card-grid.three-up .settings-card { border-right: 1px solid var(--border); }
   .content-row { grid-template-columns: 30px minmax(0, 1fr) auto; gap: 8px; }
   .content-row .type-badge, .content-row time { display: none; }
   .form-grid { grid-template-columns: 1fr; }
