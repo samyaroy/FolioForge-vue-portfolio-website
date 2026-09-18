@@ -3,6 +3,7 @@ import { ArrowRight, CircleUserRound, GitBranch, Menu, Rocket, Search, X } from 
 import { useNavigate } from 'react-router-dom'
 import { Button, IconButton, TextField } from '@/components/form'
 import { searchableNavigationItems } from '@/config/navigation'
+import { owner } from '@/config/owner'
 import { publishingBranchLabel } from '@/config/publishing'
 
 type TopbarProps = {
@@ -13,6 +14,8 @@ export function Topbar({ onOpenNavigation }: TopbarProps) {
   const navigate = useNavigate()
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
+  // A hosted portrait can be unreachable; the icon is the honest fallback.
+  const [portraitFailed, setPortraitFailed] = useState(false)
   const results = useMemo(() => searchableNavigationItems.filter(item => item.label.toLowerCase().includes(query.trim().toLowerCase())), [query])
 
   useEffect(() => {
@@ -54,8 +57,10 @@ export function Topbar({ onOpenNavigation }: TopbarProps) {
         <Button variant="outline" size="sm" disabled>
           <Rocket aria-hidden="true" /> Publish changes
         </Button>
-        <IconButton variant="bare" size="none" className="profile-button" label="Account settings">
-          <CircleUserRound aria-hidden="true" />
+        <IconButton variant="bare" size="none" className="profile-button" label={`Account settings for ${owner.name}`} title={owner.name}>
+          {owner.image && !portraitFailed
+            ? <img src={owner.image} alt="" decoding="async" onError={() => setPortraitFailed(true)} />
+            : <CircleUserRound aria-hidden="true" />}
         </IconButton>
       </div>
       {isSearchOpen && (
