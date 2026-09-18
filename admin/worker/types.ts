@@ -4,14 +4,29 @@ export type R2Listing = {
   cursor?: string
 }
 
+export type R2Body = { body: ReadableStream | null; httpMetadata?: { contentType?: string }; size?: number }
+
 /**
  * An R2 binding carries full read and write authority — the platform has no
- * read-only mode for one. Declaring it with only `list` is what holds the line:
- * the Worker cannot express a put or a delete, because no such method exists on
- * the type it is handed.
+ * read-only mode for one — so the narrowest type a handler can be given is the
+ * thing that limits it. `ReadOnlyBucket` cannot express a write at all.
  */
 export type ReadOnlyBucket = {
   list: (options: { prefix: string; limit: number; cursor?: string }) => Promise<R2Listing>
+}
+
+/**
+ * The published media bucket when a handler must change it. Archiving moves an
+ * object and uploading adds one, so this needs get, put and delete — which is
+ * real authority over live media, and why every caller checks references first
+ * and why an archive is a move rather than a destruction.
+ */
+export type MediaBucket = ReadOnlyBucket & {
+  get: (key: string) => Promise<R2Body | null>
+  put: (key: string, value: ArrayBuffer, options?: {
+    httpMetadata?: { contentType?: string; cacheControl?: string }
+  }) => Promise<unknown>
+  delete: (key: string) => Promise<void>
 }
 
 export type R2StoredObject = {
@@ -21,8 +36,6 @@ export type R2StoredObject = {
   httpMetadata?: { contentType?: string }
   customMetadata?: Record<string, string>
 }
-
-export type R2Body = { body: ReadableStream | null; httpMetadata?: { contentType?: string }; size?: number }
 
 /**
  * The drafts bucket. It can be written and read but not emptied: no `delete`
@@ -40,8 +53,8 @@ export type DraftBucket = {
 
 export type WorkerEnv = {
   ASSETS: { fetch: (request: Request) => Promise<Response> }
-  /** The published media bucket, read-only by type. */
-  MEDIA?: ReadOnlyBucket
+  /** The published media bucket. */
+  MEDIA?: MediaBucket
   /** Private staging. Has no public domain, so nothing here is reachable. */
   DRAFTS?: DraftBucket
   // `ADMIN_ORIGIN` is a tracked variable; the rest are Worker secrets, kept out

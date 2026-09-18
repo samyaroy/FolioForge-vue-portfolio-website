@@ -719,3 +719,9 @@ tbody tr:hover { background: #f9fbfd; }
 .media-card-failed { border-color: #f0c2bd; }
 .media-spin { animation: media-spin 900ms linear infinite; }
 @keyframes media-spin { to { transform: rotate(360deg); } }
+
+/* Archiving is confirmed on the card, so the choice sits beside the thing it
+   affects rather than in a dialog that hides it. */
+.logo-card-actions, .logo-confirm { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; }
+.logo-library-actions .field-wrapper { margin: 0; }
+.logo-library-actions input { width: 150px; }

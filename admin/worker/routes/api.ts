@@ -3,11 +3,12 @@ import { issueCsrfToken } from '../auth/csrf.ts'
 import { publishingPolicy, type SecurityConfig } from '../config.ts'
 import { githubConfig, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
 import { json } from '../http.ts'
-import { listLogos } from '../media.ts'
+import { archiveLogo, listLogos, storeLogo } from '../media.ts'
 import { listDrafts, readDraft, storeDraft } from '../drafts.ts'
 import { imagePolicy } from '../images.ts'
 
 const DRAFT_ROUTE = '/api/media/drafts/'
+const LOGO_ROUTE = '/api/media/logos/'
 
 export async function apiResponse(request: Request, env: WorkerEnv, config: SecurityConfig, identity: AccessIdentity) {
   const path = new URL(request.url).pathname
@@ -46,6 +47,20 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     // here and exist at no public URL anywhere.
     const object = await readDraft(env.DRAFTS, path.slice(DRAFT_ROUTE.length))
     return new Response(object.body, { headers: { 'content-type': object.httpMetadata?.contentType ?? 'application/octet-stream' } })
+  }
+  if (path === '/api/media/logos' && request.method === 'POST') {
+    if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)
+    if (Number(request.headers.get('content-length') ?? 0) > imagePolicy.maxBytes) return json({ error: 'image_too_large' }, 413)
+    const params = new URL(request.url).searchParams
+    // The name is checked against the shape a YAML value may take before it can
+    // become any part of a key.
+    const stored = await storeLogo(env.MEDIA, params.get('name') ?? '', await request.arrayBuffer(), request.headers.get('content-type'), params.get('replace') === 'true')
+    return json(stored, 201)
+  }
+  if (path.startsWith(LOGO_ROUTE) && path.endsWith('/archive') && request.method === 'POST') {
+    if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)
+    const name = decodeURIComponent(path.slice(LOGO_ROUTE.length, -'/archive'.length))
+    return json(await archiveLogo(env.MEDIA, name))
   }
   if (path === '/api/media/logos' && request.method === 'GET') {
     if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)

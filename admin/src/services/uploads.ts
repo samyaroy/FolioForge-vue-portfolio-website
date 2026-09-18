@@ -63,3 +63,39 @@ export async function uploadImage(file: File, signal: AbortSignal): Promise<Stor
 export function draftPreviewUrl(name: string): string {
   return `/api/media/drafts/${encodeURIComponent(name)}`
 }
+
+async function mutate(url: string, init: RequestInit, failures: Record<string, string>) {
+  const response = await fetch(url, {
+    ...init,
+    credentials: 'same-origin',
+    headers: { ...init.headers, 'X-CSRF-Token': await csrfToken(), Accept: 'application/json' },
+  })
+  if (!response.ok) {
+    const failure: unknown = await response.json().catch(() => null)
+    const code = failure && typeof failure === 'object' ? String((failure as { error?: unknown }).error ?? '') : ''
+    if (code === 'invalid_csrf_token') pendingToken = undefined
+    throw new Error(failures[code] ?? MESSAGES[code] ?? `Request failed (${response.status}).`)
+  }
+  return response.json() as Promise<unknown>
+}
+
+/** Move a logo out of the catalogue. The bytes stay, under logo/archived/. */
+export async function archiveLogo(value: string): Promise<string> {
+  const body = await mutate(`/api/media/logos/${encodeURIComponent(value)}/archive`, { method: 'POST' }, {
+    invalid_logo_name: 'That logo name cannot be used.',
+    not_found: 'That logo is no longer in the catalogue.',
+  })
+  const archivedAs = body && typeof body === 'object' ? (body as { archivedAs?: unknown }).archivedAs : undefined
+  return typeof archivedAs === 'string' ? archivedAs : ''
+}
+
+export async function uploadLogo(name: string, file: File, replace: boolean): Promise<void> {
+  await mutate(`/api/media/logos?name=${encodeURIComponent(name)}${replace ? '&replace=true' : ''}`, {
+    method: 'POST',
+    headers: { 'Content-Type': file.type },
+    body: file,
+  }, {
+    invalid_logo_name: 'Use letters, digits, spaces, dots, hyphens or underscores.',
+    logo_exists: 'A logo already uses that name. Choose Replace to archive the old one.',
+  })
+}
