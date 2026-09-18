@@ -247,30 +247,32 @@ education:
           - name: Prof. Dootika Vats
             link: https://dvats.github.io/
       transfered_credits:
-        # - course_code: NOC26CS154
-        #   course_name: Statistical Learning for Reliability Analysis
-        #   time_period: Jul 2026 - Oct 2026
-        #   type: Elective
-        #   faculty:
-        #     - name: Prof. Monalisa Sharma
-        #       link: https://www.iitkgp.ac.in/department/RE/faculty/re-monalisa/
-        #   logo: [IITKGP, NPTEL]
-        #   # cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
-        #   # tag: 'Elite'
-        #   credit: 2
-        # - course_code: NOC23CS113
-        #   course_name: Introduction to Programming in C
-        #   time_period: Feb 2023 - Mar 2023
-        #   type: Elective
-        #   faculty: Prof. Satyadev Nandakumar
-        #   logo: [IITK, NPTEL]
-        #   cred_link: https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview
-        #   tag: 'Elite'
-        #   credit: 2
-        #   issuer:
-        #     institution: Indian Institute of Technology Kanpur
-        #     platform: NPTEL
-        #   duration: 8 weeks
+        - course_code: NOC26CS154
+          enabled: false
+          course_name: Statistical Learning for Reliability Analysis
+          time_period: Jul 2026 - Oct 2026
+          type: Elective
+          faculty:
+            - name: Prof. Monalisa Sharma
+              link: https://www.iitkgp.ac.in/department/RE/faculty/re-monalisa/
+          logo: [IITKGP, NPTEL]
+          # cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
+          # tag: 'Elite'
+          credit: 2
+        - course_code: NOC23CS113
+          enabled: false
+          course_name: Introduction to Programming in C
+          time_period: Feb 2023 - Mar 2023
+          type: Elective
+          faculty: Prof. Satyadev Nandakumar
+          logo: [IITK, NPTEL]
+          cred_link: https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview
+          tag: 'Elite'
+          credit: 2
+          issuer:
+            institution: Indian Institute of Technology Kanpur
+            platform: NPTEL
+          duration: 8 weeks
 
 
       link: https://study.iitm.ac.in/ds/academics.html
@@ -485,31 +487,34 @@ education:
 
       link:
 
-  # - type: Diploma
-  #   degree: Diploma
-  #   field: Web Designing (DWD)
-  #   institution: Chandigarh Institute of Technology and Consultancy
-  #   location: Mohali, PB
-  #   time_period: 2020
-  #   marks: 84.5%
-  #   cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview
+  - type: Diploma
+    enabled: false
+    degree: Diploma
+    field: Web Designing (DWD)
+    institution: Chandigarh Institute of Technology and Consultancy
+    location: Mohali, PB
+    time_period: 2020
+    marks: 84.5%
+    cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview
 
-  # - type: School
-  #   degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
-  #   field:
-  #   institution: Nava Nalanda High School
-  #   location: Kolkata, WB
-  #   time_period: 2020 - 2022
-  #   marks: 83.8%
-  #   cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
+  - type: School
+    enabled: false
+    degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
+    field:
+    institution: Nava Nalanda High School
+    location: Kolkata, WB
+    time_period: 2020 - 2022
+    marks: 83.8%
+    cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
 
-  # - type: School
-  #   degree: X - West Bengal Board of Secondary Education (WBBSE)
-  #   field:
-  #   institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
-  #   location: Rishra, WB
-  #   time_period: 2010 - 2020
-  #   marks: 85.71%
-  #   cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
+  - type: School
+    enabled: false
+    degree: X - West Bengal Board of Secondary Education (WBBSE)
+    field:
+    institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
+    location: Rishra, WB
+    time_period: 2010 - 2020
+    marks: 85.71%
+    cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
 
   # Add more fields as needed

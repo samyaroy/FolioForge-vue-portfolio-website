@@ -102,20 +102,21 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
 
 attended_webinars_n_others:
-  # - title: "Learning machines"
-  #   type: "lecture"
-  #   speaker: ["Prof. Piyush Srivastava, TIFR"]
-  #   host:
-  #     - name: "Tata Institute of Fundamental Research"
-  #       department:
-  #         name: "International Centre for Theoretical Sciences (ICTS)"
-  #         link: "https://www.icts.res.in"
-  #       sub_department:
-  #         name: "Maths Circle India"
-  #         link: "https://www.icts.res.in/outreach/maths-circle-india"
-  #   date: "17 July, 2026"
-  #   mode: "Online"
-  #   link: https://www.youtube.com/live/7GNjUyAmmpI?si=Cs1mKCW9hf56pST7
+  - title: "Learning machines"
+    enabled: false
+    type: "lecture"
+    speaker: ["Prof. Piyush Srivastava, TIFR"]
+    host:
+      - name: "Tata Institute of Fundamental Research"
+        department:
+          name: "International Centre for Theoretical Sciences (ICTS)"
+          link: "https://www.icts.res.in"
+        sub_department:
+          name: "Maths Circle India"
+          link: "https://www.icts.res.in/outreach/maths-circle-india"
+    date: "17 July, 2026"
+    mode: "Online"
+    link: https://www.youtube.com/live/7GNjUyAmmpI?si=Cs1mKCW9hf56pST7
     
   - title: "Towards Trustworthy Generative AI"
     type: "seminar"
@@ -130,18 +131,19 @@ attended_webinars_n_others:
     mode: "Online"
     cred_link: ""
 
-  # - title: "Wearable Computing, Long-Term Memory & AI Agents"
-  #   type: "seminar"
-  #   speaker: ["Ashwani Yadav, Founder of NeuroDrishti"]
-  #   host:
-  #     - name: "Indian Institute of Technology Delhi"
-  #       department:
-  #         - "I-Hub Foundation for Cobotics (IHFC), the Technology Innovation Hub"
-  #       location: "New Delhi, DL"
-  #   date: "8 July, 2026"
-  #   mode: "Online"
-  #   cred_link: ""
-  #   link: https://www.ihfc.co.in/seminar-cobotalks/we-are-pleased-to-bring-to-you-the-64th-edition-of-cobotalks/
+  - title: "Wearable Computing, Long-Term Memory & AI Agents"
+    enabled: false
+    type: "seminar"
+    speaker: ["Ashwani Yadav, Founder of NeuroDrishti"]
+    host:
+      - name: "Indian Institute of Technology Delhi"
+        department:
+          - "I-Hub Foundation for Cobotics (IHFC), the Technology Innovation Hub"
+        location: "New Delhi, DL"
+    date: "8 July, 2026"
+    mode: "Online"
+    cred_link: ""
+    link: https://www.ihfc.co.in/seminar-cobotalks/we-are-pleased-to-bring-to-you-the-64th-edition-of-cobotalks/
 
   - title: "Rao's Score Test and its Applications"
     type: lecture
@@ -178,12 +180,13 @@ attended_webinars_n_others:
     mode: "Online"
     link: https://rss.org.uk/training-events/events/events-2025/section-groups/statistical-methods-in-cybersecurity/
 
-  # - title: "Responsible AI Use for Journal Publishing"
-  #   type: webiner
-  #   host:
-  #     - name: "Wiley"
-  #   date: "7 May, 2026"
-  #   mode: "Online"
+  - title: "Responsible AI Use for Journal Publishing"
+    enabled: false
+    type: webiner
+    host:
+      - name: "Wiley"
+    date: "7 May, 2026"
+    mode: "Online"
 
   - title: "IASS - Seminal Ideas and Controversies in Statistics"
     type: webiner
@@ -218,18 +221,19 @@ attended_webinars_n_others:
     mode: "Online"
 
 attended_other_workshops:
-  # - title: "Measurements in AI"
-  #   instructor:
-  #     - name: "Prof. Partha Pratim Das"
-  #       position: Professor
-  #       department: Computer Science
-  #       institution: Asoka University
-  #   institution:
-  #     - name: "Indian Institute of Technology Madras"
-  #       department: "Paradox 2026, BS Degreee"
-  #   date: "June, 2026"
-  #   mode: "Offline"
-  #   cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
+  - title: "Measurements in AI"
+    enabled: false
+    instructor:
+      - name: "Prof. Partha Pratim Das"
+        position: Professor
+        department: Computer Science
+        institution: Asoka University
+    institution:
+      - name: "Indian Institute of Technology Madras"
+        department: "Paradox 2026, BS Degreee"
+    date: "June, 2026"
+    mode: "Offline"
+    cred_link: https://drive.google.com/file/d/12IT1l4b4FOOy8vzZO8JsgqVHyNsPLD7s/preview
 
   - title: "Testing and Automation of Web Apps using Playwright"
     institution:
@@ -336,15 +340,16 @@ attended_bootcamps:
         - course_name: How to Guard A Museum?
         - course_name: Polynomial Identity Testing
 
-  # - title: "Summer Outreach Programme in Computing (SOPC)"
-  #   instructor:
-  #   institution:
-  #     - name: "National Institute of Science Education and Research"
-  #       department: "School of Computer Sciences"
-  #   date: "June 2026"
-  #   duration: "2 Weeks"
-  #   location: "Bhubaneswar, OD"
-  #   # cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
+  - title: "Summer Outreach Programme in Computing (SOPC)"
+    enabled: false
+    instructor:
+    institution:
+      - name: "National Institute of Science Education and Research"
+        department: "School of Computer Sciences"
+    date: "June 2026"
+    duration: "2 Weeks"
+    location: "Bhubaneswar, OD"
+    # cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
 
 attended_conferences:
   - title: "Fifth International Conference on Security and Privacy (ISEA-ISAP 2026)"

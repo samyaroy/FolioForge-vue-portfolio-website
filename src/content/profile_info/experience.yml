@@ -16,14 +16,15 @@ experience:
     description: [  "Contributed to the NPCYF platform by implementing TabPFN, Panel OLS, ARIMAX and Random Forest-based forecasting workflows, integrating hyperparameter tuning into the platform pipeline, optimizing frontend performance through caching, developing backend APIs, enabling feature-flag-driven releases, and automating data ingestion into a MinIO-based data lake"]
     cred_link: 'https://drive.google.com/file/d/1ELcq4N0K-Ql1i39egP4P6ZCee1GkZjtg/preview'
   
-  # - job_role: Freelance Web Developer
-  #   type: Freelance
-  #   company: Upwork
-  #   department: Web Development
-  #   location: Remote
-  #   time_period: Jan 2024 - Present
-  #   description: Successfully completed multiple freelance web development projects on Upwork, delivering high-quality websites and applications that meet client specifications. Utilized skills in front-end and back-end development to create dynamic and user-friendly solutions.
-  #   cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
+  - job_role: Freelance Web Developer
+    enabled: false
+    type: Freelance
+    company: Upwork
+    department: Web Development
+    location: Remote
+    time_period: Jan 2024 - Present
+    description: Successfully completed multiple freelance web development projects on Upwork, delivering high-quality websites and applications that meet client specifications. Utilized skills in front-end and back-end development to create dynamic and user-friendly solutions.
+    cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
 
   - job_role: Student Intern
     type: Internship
