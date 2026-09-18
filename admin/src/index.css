@@ -1,5 +1,11 @@
 @import 'tailwindcss' source('./');
 @import 'tw-animate-css';
+/* Inter ships with the admin rather than loading from Google, so a protected
+   page makes no third-party request and the CSP needs no host but 'self'. */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
 
 @theme inline {
   --font-sans: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

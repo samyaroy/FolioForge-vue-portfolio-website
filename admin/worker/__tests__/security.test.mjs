@@ -12,11 +12,16 @@ const issuer = 'https://test-team.cloudflareaccess.com'
 const env = {
   ADMIN_ORIGIN: origin,
   ACCESS_ISSUER: issuer,
-  ACCESS_AUDIENCE: 'test-audience',
+  ACCESS_AUDIENCE: 'a'.repeat(64),
   ACCESS_OWNER_EMAIL: 'owner@example.com',
   CSRF_SECRET: 'test-only-secret-with-at-least-32-characters',
   ASSETS: { fetch: async () => new Response('protected asset') },
 }
+
+// Denials are logged, so collect them here instead of over the test output, and
+// let the log-contract test read what the Worker actually wrote.
+const denials = []
+console.warn = entry => denials.push(JSON.parse(entry))
 
 async function accessToken(overrides = {}, key = privateKey) {
   const now = Math.floor(Date.now() / 1000)
@@ -29,12 +34,23 @@ function request(path = '/', token, options = {}) {
   return new Request(`${origin}${path}`, { ...options, headers })
 }
 
-test('missing configuration fails closed before touching assets', async () => {
-  let calls = 0
-  const response = await worker.fetch(request('/'), { ...env, ACCESS_AUDIENCE: '', ASSETS: { fetch: async () => { calls++; return new Response('unsafe') } } })
-  assert.equal(response.status, 503)
-  assert.equal(calls, 0)
-})
+// A fresh deployment has no secrets installed at all, so absent must fail the
+// same way blank does, and neither may reach an asset.
+for (const [name, broken] of [
+  ['blank audience', { ACCESS_AUDIENCE: '' }],
+  ['absent audience', { ACCESS_AUDIENCE: undefined }],
+  ['absent issuer', { ACCESS_ISSUER: undefined }],
+  ['absent owner', { ACCESS_OWNER_EMAIL: undefined }],
+  ['absent CSRF secret', { CSRF_SECRET: undefined }],
+  ['short CSRF secret', { CSRF_SECRET: 'too-short' }],
+]) {
+  test(`${name} fails closed before touching assets`, async () => {
+    let calls = 0
+    const response = await worker.fetch(request('/'), { ...env, ...broken, ASSETS: { fetch: async () => { calls++; return new Response('unsafe') } } })
+    assert.equal(response.status, 503)
+    assert.equal(calls, 0)
+  })
+}
 
 for (const path of ['/', '/assets/app.js', '/assets/app.css', '/profile-icon.png', '/portfolio/pages/home/education', '/api/session', '/api/media/logos']) {
   test(`unauthenticated ${path} is denied`, async () => {
@@ -127,6 +143,45 @@ test('security configuration rejects unsafe issuers and origins', () => {
   assert.throws(() => securityConfig({ ...env, ADMIN_ORIGIN: `${origin}/path` }))
 })
 
+test('a protected page may load nothing from a third party', async () => {
+  const response = await worker.fetch(request('/', await accessToken()), env)
+  const policy = response.headers.get('content-security-policy')
+  // `img-src https:` is a scheme, not a host; no directive may name an origin.
+  assert.equal(/https?:\/\//.test(policy), false, `external host in ${policy}`)
+  for (const directive of ["script-src 'self'", "font-src 'self'", "style-src 'self' 'unsafe-inline'", "connect-src 'self'", "frame-ancestors 'none'"]) {
+    assert.ok(policy.includes(directive), `missing ${directive}`)
+  }
+})
+
+test('audience must be an Access AUD tag, not an account ID or a label', () => {
+  // The account ID is 32 hex characters and is the value most easily pasted by
+  // mistake; it must not be mistaken for an application audience.
+  for (const ACCESS_AUDIENCE of ['686674671d835060178a08196eb2f59e', 'test-audience', `${'a'.repeat(63)}z`, 'A'.repeat(64), ` ${'a'.repeat(64)}`]) {
+    assert.throws(() => securityConfig({ ...env, ACCESS_AUDIENCE }), `expected ${ACCESS_AUDIENCE} to be rejected`)
+  }
+  assert.equal(securityConfig(env).audience, env.ACCESS_AUDIENCE)
+})
+
+test('the session response hands out no long-lived secret', async () => {
+  const body = await (await worker.fetch(request('/api/session', await accessToken()), env)).text()
+  assert.equal(body.includes(env.CSRF_SECRET), false)
+  assert.equal(body.includes('cloudflareaccess.com'), false)
+})
+
+test('a denial is logged without the token that was presented', async () => {
+  const token = await accessToken({ exp: 1 })
+  denials.length = 0
+  await worker.fetch(request('/api/session?cursor=secret-value', token), env)
+  const [entry] = denials
+  assert.equal(entry.event, 'admin_request_denied')
+  assert.equal(entry.status, 401)
+  assert.equal(entry.code, 'invalid_access_token')
+  assert.equal(entry.reason, 'JWTExpired')
+  assert.equal(entry.path, '/api/session')
+  const written = JSON.stringify(entry)
+  for (const secret of [token, env.CSRF_SECRET, env.ACCESS_OWNER_EMAIL, 'secret-value']) assert.equal(written.includes(secret), false)
+})
+
 test('Wrangler protects assets and disables public alternative entry points', async () => {
   const { readFile } = await import('node:fs/promises')
   const config = JSON.parse(await readFile(new URL('../../wrangler.jsonc', import.meta.url), 'utf8'))
@@ -134,4 +189,9 @@ test('Wrangler protects assets and disables public alternative entry points', as
   assert.equal(config.workers_dev, false)
   assert.equal(config.preview_urls, false)
   assert.equal(config.routes[0].pattern, 'admin.samyabrata.codeium.xyz')
+  assert.equal(config.observability.enabled, true)
+  // This repository is public. The owner's identity and the Access application's
+  // audience are Worker secrets, so nothing here may name them.
+  assert.deepEqual(Object.keys(config.vars), ['ADMIN_ORIGIN'])
+  assert.equal(JSON.stringify(config).includes('@'), false)
 })

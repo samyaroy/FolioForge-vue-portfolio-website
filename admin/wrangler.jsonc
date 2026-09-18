@@ -6,6 +6,7 @@
   "workers_dev": false,
   "preview_urls": false,
   "routes": [{ "pattern": "admin.samyabrata.codeium.xyz", "custom_domain": true }],
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
@@ -13,9 +14,6 @@
     "run_worker_first": true
   },
   "vars": {
-    "ADMIN_ORIGIN": "https://admin.samyabrata.codeium.xyz",
-    "ACCESS_ISSUER": "",
-    "ACCESS_AUDIENCE": "",
-    "ACCESS_OWNER_EMAIL": ""
+    "ADMIN_ORIGIN": "https://admin.samyabrata.codeium.xyz"
   }
 }

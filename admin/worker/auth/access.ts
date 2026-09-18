@@ -17,7 +17,8 @@ function accessKeys(issuer: string) {
 
 export async function authenticate(request: Request, config: SecurityConfig, keys?: JWTVerifyGetKey): Promise<AccessIdentity> {
   const token = request.headers.get('Cf-Access-Jwt-Assertion')
-  if (!token || token.length > 16384) throw new HttpError(401, 'authentication_required')
+  if (!token) throw new HttpError(401, 'authentication_required', 'missing_assertion')
+  if (token.length > 16384) throw new HttpError(401, 'authentication_required', 'assertion_too_large')
   try {
     const { payload } = await jwtVerify(token, keys ?? accessKeys(config.issuer), {
       issuer: config.issuer,
@@ -29,6 +30,8 @@ export async function authenticate(request: Request, config: SecurityConfig, key
     return { subject: payload.sub, email: payload.email.toLowerCase(), expiresAt: payload.exp!, token }
   } catch (error) {
     if (error instanceof HttpError) throw error
-    throw new HttpError(401, 'invalid_access_token')
+    // The library's error name says which check failed — expiry, signature,
+    // issuer, audience — and carries none of the token itself.
+    throw new HttpError(401, 'invalid_access_token', error instanceof Error ? error.name : undefined)
   }
 }

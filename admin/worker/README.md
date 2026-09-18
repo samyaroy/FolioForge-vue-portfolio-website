@@ -1,7 +1,15 @@
 # Cloudflare Admin Setup
 
-Status: local security boundary implemented and tested. No Worker deployment,
-Access application, DNS change, or bucket mutation has been performed.
+Status: local security boundary implemented and tested, and cleared for the
+deployment sequence below. No Worker deployment, Access application, DNS change,
+or bucket mutation has been performed.
+
+Confirmed by inspection on 2026-09-18: `wrangler whoami` reaches the intended
+account; `samyabrata.codeium.xyz` is served by Cloudflare nameservers;
+`admin.samyabrata.codeium.xyz` does not resolve, so no application is displaced;
+and no Worker named `folioforge-admin-beta` exists, so the first deploy replaces
+nothing. Still unverified from here: the Access application and its policy,
+which the Wrangler OAuth token has no scope to read or create.
 
 ## Account and Access prerequisites
 
@@ -15,10 +23,13 @@ Access application, DNS change, or bucket mutation has been performed.
    hostname, including assets and `/api/*`, with no bypass policies. Restrict
    Allow to the owner identity and require MFA through the identity provider.
    Set a short application session duration, initially one hour.
-4. Set `ACCESS_ISSUER`, `ACCESS_AUDIENCE`, and `ACCESS_OWNER_EMAIL` in the Worker
-   Wrangler variables. Issuer is exactly `https://<team>.cloudflareaccess.com`
-   without a trailing slash. Audience is this application's AUD tag, not the
-   account ID. These settings are not credentials, but stay server-side.
+4. Install `ACCESS_ISSUER`, `ACCESS_AUDIENCE`, and `ACCESS_OWNER_EMAIL` with
+   `npx wrangler secret put <NAME>`. They are identifiers rather than
+   credentials, but this repository is public and the owner's address and the
+   application's audience do not belong in it, so `wrangler.jsonc` names none of
+   them. Issuer is exactly `https://<team>.cloudflareaccess.com` with no
+   trailing slash. Audience is this application's AUD tag: 64 hexadecimal
+   characters, not the 32-character account ID, which the Worker rejects.
 5. Generate a cryptographically random secret of at least 32 bytes using a
    password manager or `openssl rand -hex 32`. Store it with
    `npx wrangler secret put CSRF_SECRET`. Never commit it or use `VITE_*`.
@@ -30,6 +41,27 @@ and correct account ownership before manually deploying this read-only Worker.
 The Worker independently validates Access tokens and fails closed if required
 settings or the CSRF secret are absent. Keep R2 and GitHub disconnected until
 the live verification below passes.
+
+## Deployment order
+
+The Worker is closed at every stage of this sequence, so no step opens the
+hostname before the one that protects it.
+
+1. `npm run build` then `npx wrangler deploy`. This creates the Worker and the
+   `admin.samyabrata.codeium.xyz` custom domain, which is what puts the hostname
+   into DNS. No secret is installed yet, so every request — the owner's
+   included — is answered with `503 security_not_configured` and nothing is
+   served from `dist/`.
+2. Create the Access application for that hostname now that it resolves. Cover
+   the whole host, including `/api/*`, with no bypass policy.
+3. Install the four secrets from the prerequisites above. The Worker begins
+   accepting the owner's Access token on the next request; there is no restart
+   and no window in which it accepts anything less.
+4. Work through the live verification below before connecting any integration.
+
+Deploying before the Access application exists is deliberate: the hostname must
+resolve before Access can be attached to it, and the missing secrets keep the
+admin shut for the minutes in between. Do not install secrets first.
 
 ## Local checks
 
@@ -57,6 +89,13 @@ Wrangler dry-run validates the actual deployment bundle, not account policy.
 - Direct `workers.dev`, preview, and alternate hostname access is unavailable.
 - `/api/status` reports `refs/heads/V1` and all integrations disabled.
 - The browser shows no CSP errors or font/asset failures.
+
+Each denial is written to Workers Logs as one `admin_request_denied` record
+naming the status, the code, the reason the check failed, the method, the path,
+and the Cloudflare ray. It carries no token, header, query string or identity.
+Follow them live with `npx wrangler tail --format pretty` while working through
+the list above: a repeated run of them is the signal worth alerting on, and the
+`reason` field is how an unexplained 401 gets diagnosed without a debug mode.
 
 Access JWTs remain bearer credentials: protect sessions and keep expiry short.
 CSRF is bound to the JWT but does not make a stolen valid JWT unreplayable.
