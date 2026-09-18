@@ -38,16 +38,35 @@ if ! grep -q 'BEGIN PRIVATE KEY' "$pkcs8"; then
 fi
 echo "Converted to PKCS#8."
 
-read -r -p 'GitHub App ID: ' app_id
-read -r -p 'Installation ID: ' installation_id
-for value in "$app_id" "$installation_id"; do
-  if ! [[ $value =~ ^[0-9]+$ ]]; then
-    echo "App ID and Installation ID are numeric; got '$value'." >&2
-    echo "The Installation ID is the number at the end of the URL when you open" >&2
-    echo "the installation: github.com/settings/installations/<THIS>" >&2
-    exit 65
-  fi
+read -r -p 'GitHub App ID (the numeric one, not the Client ID): ' app_id
+if ! [[ $app_id =~ ^[0-9]+$ ]]; then
+  echo "The App ID is numeric; got '$app_id'. The Client ID (Iv23...) is a different value." >&2
+  exit 65
+fi
+
+# The installation id is the value most easily read off the wrong page, so ask
+# GitHub for it rather than the operator.
+echo "Asking GitHub which installations this app has."
+if ! installations=$(node scripts/github-installations.mjs "$app_id" "$pkcs8"); then
+  echo "Could not list installations. Install the app on the repository first." >&2
+  exit 65
+fi
+printf '%s\n' "$installations" | while IFS=$'\t' read -r id account selection; do
+  echo "  $id  $account  ($selection)"
 done
+
+installation_count=$(printf '%s\n' "$installations" | grep -c .)
+if [ "$installation_count" -eq 1 ]; then
+  installation_id=$(printf '%s' "$installations" | cut -f1)
+  echo "Using installation $installation_id."
+else
+  read -r -p 'Installation ID (from the list above): ' installation_id
+fi
+
+if ! [[ $installation_id =~ ^[0-9]+$ ]]; then
+  echo "The Installation ID is numeric; got '$installation_id'." >&2
+  exit 65
+fi
 
 printf '%s' "$app_id" | npx wrangler secret put GITHUB_APP_ID
 printf '%s' "$installation_id" | npx wrangler secret put GITHUB_INSTALLATION_ID
