@@ -1,15 +1,29 @@
 # Cloudflare Admin Setup
 
-Status: local security boundary implemented and tested, and cleared for the
-deployment sequence below. No Worker deployment, Access application, DNS change,
-or bucket mutation has been performed.
+Status: deployed and closed. The Worker runs at
+`admin.samyabrata.codeium.xyz` behind a Cloudflare Access application on the
+`samyaroy00` team, with all four secrets installed. It remains read-only: no
+R2 binding, no GitHub App, no publishing.
 
-Confirmed by inspection on 2026-09-18: `wrangler whoami` reaches the intended
-account; `samyabrata.codeium.xyz` is served by Cloudflare nameservers;
-`admin.samyabrata.codeium.xyz` does not resolve, so no application is displaced;
-and no Worker named `folioforge-admin-beta` exists, so the first deploy replaces
-nothing. Still unverified from here: the Access application and its policy,
-which the Wrangler OAuth token has no scope to read or create.
+Verified against the live deployment on 2026-09-18:
+
+- Access intercepts every path — `/`, SPA routes, all of `/api/*`, images and
+  hashed JS assets each answer `302` to the team login page. No path reaches the
+  Worker unauthenticated, and no bypass policy exists.
+- Before the secrets were installed, every one of those paths answered `503`
+  with no body from `dist/`, so the deployment was closed from its first second.
+- The owner signs in and the admin loads, which exercises the whole chain: the
+  Worker's own check of signature, issuer, audience, expiry and owner address
+  runs on that request and passes.
+- Cloudflare redacts `cf-access-jwt-assertion` in its logs; denial records carry
+  no token (see Live verification below).
+
+Still to verify, because each needs something this terminal does not have: a
+second identity being refused, the browser console being free of CSP errors, and
+`workers.dev` serving nothing. `workers_dev` and `preview_urls` are `false` in
+`wrangler.jsonc`, asserted by a test, and the deploy output lists the custom
+domain as the only trigger — but that is configuration evidence, not a request
+to an alternate hostname.
 
 ## Account and Access prerequisites
 
