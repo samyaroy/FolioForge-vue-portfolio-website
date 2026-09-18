@@ -1,6 +1,7 @@
 export type Integrations = {
   github: boolean
   r2: boolean
+  uploads: boolean
   publishing: boolean
 }
 
@@ -20,6 +21,6 @@ export async function fetchIntegrations(signal: AbortSignal): Promise<Integratio
   if (!body || typeof body !== 'object') throw new Error('Invalid status response.')
   const integrations = (body as { integrations?: unknown }).integrations
   if (!integrations || typeof integrations !== 'object') throw new Error('Invalid status response.')
-  const { github, r2, publishing } = integrations as Record<string, unknown>
-  return { github: asBoolean(github), r2: asBoolean(r2), publishing: asBoolean(publishing) }
+  const { github, r2, uploads, publishing } = integrations as Record<string, unknown>
+  return { github: asBoolean(github), r2: asBoolean(r2), uploads: asBoolean(uploads), publishing: asBoolean(publishing) }
 }

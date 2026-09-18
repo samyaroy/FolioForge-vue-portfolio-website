@@ -709,3 +709,13 @@ tbody tr:hover { background: #f9fbfd; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Upload state on a staged card: the server's verdict, not the browser's. */
+.media-card > div span { display: inline-flex; align-items: center; gap: 5px; }
+.media-card > div span svg { width: 12px; height: 12px; flex: none; }
+.media-card > div code { display: block; overflow: hidden; margin-top: 3px; color: #8ca0b0; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+.media-card-stored > div span { color: #1a7f4b; }
+.media-card-failed > div span { color: #b42318; }
+.media-card-failed { border-color: #f0c2bd; }
+.media-spin { animation: media-spin 900ms linear infinite; }
+@keyframes media-spin { to { transform: rotate(360deg); } }

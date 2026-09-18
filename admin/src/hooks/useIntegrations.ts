@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { fetchIntegrations, type Integrations } from '@/services/status'
 
-const DISCONNECTED: Integrations = { github: false, r2: false, publishing: false }
+const DISCONNECTED: Integrations = { github: false, r2: false, uploads: false, publishing: false }
 
 /**
  * Which integrations the Worker reports. Until it answers, and if it never

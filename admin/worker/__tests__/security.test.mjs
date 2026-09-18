@@ -129,13 +129,31 @@ test('status is fixed to V1 and integrations remain disabled', async () => {
   const response = await worker.fetch(request('/api/status?branch=main', await accessToken()), env)
   const status = await response.json()
   assert.equal(status.publishingTarget.ref, 'refs/heads/V1')
-  assert.deepEqual(status.integrations, { github: false, r2: false, publishing: false })
+  assert.deepEqual(status.integrations, { github: false, r2: false, uploads: false, publishing: false })
 })
 
 test('unimplemented storage and generic file APIs do not expose data', async () => {
   const token = await accessToken()
   assert.equal((await worker.fetch(request('/api/media/logos', token), env)).status, 503)
   assert.equal((await worker.fetch(request('/api/file?path=.env', token), env)).status, 404)
+})
+
+test('an upload cannot be stored while no drafts bucket is bound', async () => {
+  const token = await accessToken()
+  const { csrfToken } = await (await worker.fetch(request('/api/session', token), env)).json()
+  const response = await worker.fetch(request('/api/media/uploads', token, {
+    method: 'POST',
+    headers: { Origin: origin, 'X-CSRF-Token': csrfToken, 'Content-Type': 'image/png' },
+    body: new Uint8Array([0x89, 0x50, 0x4e, 0x47]),
+  }), env)
+  assert.equal(response.status, 503)
+  assert.deepEqual(await response.json(), { error: 'uploads_not_connected' })
+})
+
+test('an upload without Origin and CSRF is refused before any body is read', async () => {
+  const token = await accessToken()
+  const response = await worker.fetch(request('/api/media/uploads', token, { method: 'POST', body: new Uint8Array([1, 2, 3]) }), env)
+  assert.equal(response.status, 403)
 })
 
 test('an unconnected GitHub reports itself and reaches no provider', async () => {

@@ -4,6 +4,10 @@ import { publishingPolicy, type SecurityConfig } from '../config.ts'
 import { githubConfig, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
 import { json } from '../http.ts'
 import { listLogos } from '../media.ts'
+import { listDrafts, readDraft, storeDraft } from '../drafts.ts'
+import { imagePolicy } from '../images.ts'
+
+const DRAFT_ROUTE = '/api/media/drafts/'
 
 export async function apiResponse(request: Request, env: WorkerEnv, config: SecurityConfig, identity: AccessIdentity) {
   const path = new URL(request.url).pathname
@@ -14,8 +18,9 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     return json({
       authenticated: true,
       publishingTarget: publishingPolicy,
-      mode: 'read-only',
-      integrations: { github: Boolean(githubConfig(env)), r2: Boolean(env.MEDIA), publishing: false },
+      mode: env.DRAFTS ? 'staging' : 'read-only',
+      integrations: { github: Boolean(githubConfig(env)), r2: Boolean(env.MEDIA), uploads: Boolean(env.DRAFTS), publishing: false },
+      limits: { maxBytes: imagePolicy.maxBytes, maxPixels: imagePolicy.maxPixels, accepts: ['image/jpeg', 'image/png', 'image/webp'] },
     })
   }
   if (path === '/api/repository/head' && request.method === 'GET') {
@@ -23,6 +28,24 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     // selects the repository, the branch or the revision.
     const head = await resolveHead(requireGithub(env))
     return json({ ...head, capability: 'read-only', scope: `${repositoryPolicy.owner}/${repositoryPolicy.repo}` })
+  }
+  // Origin and a session-bound CSRF token were already required for this method
+  // before the request reached here.
+  if (path === '/api/media/uploads' && request.method === 'POST') {
+    if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
+    if (Number(request.headers.get('content-length') ?? 0) > imagePolicy.maxBytes) return json({ error: 'image_too_large' }, 413)
+    return json(await storeDraft(env.DRAFTS, await request.arrayBuffer(), request.headers.get('content-type')), 201)
+  }
+  if (path === '/api/media/drafts' && request.method === 'GET') {
+    if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
+    return json(await listDrafts(env.DRAFTS, new URL(request.url).searchParams.get('cursor') ?? undefined))
+  }
+  if (path.startsWith(DRAFT_ROUTE) && request.method === 'GET') {
+    if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
+    // Staged bytes are private: they are streamed to an authenticated caller
+    // here and exist at no public URL anywhere.
+    const object = await readDraft(env.DRAFTS, path.slice(DRAFT_ROUTE.length))
+    return new Response(object.body, { headers: { 'content-type': object.httpMetadata?.contentType ?? 'application/octet-stream' } })
   }
   if (path === '/api/media/logos' && request.method === 'GET') {
     if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)
