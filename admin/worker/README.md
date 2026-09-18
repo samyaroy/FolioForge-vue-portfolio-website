@@ -123,6 +123,41 @@ CSRF is bound to the JWT but does not make a stolen valid JWT unreplayable.
 Logout/revocation behavior must be checked against the actual Access policy;
 local signature validation alone does not guarantee immediate revocation.
 
+Login currently uses Cloudflare's One-time PIN, so the admin's security is the
+security of the owner's mailbox. That is an accepted position for a read-only
+admin and a reason to keep GitHub's Contents permission at read: write access
+behind a single factor is the combination to avoid. Independent MFA (TOTP) was
+attempted and did not complete; revisit it before any write permission is
+granted.
+
+## GitHub App
+
+Reads only. The Worker resolves the head of `refs/heads/V1` and nothing else;
+there is no code that writes, opens a pull request, or merges.
+
+Create the App at `github.com/settings/apps`, installed on this repository
+alone, with **Contents: Read-only** and **Metadata: Read-only** and no others.
+Leave webhooks inactive — the design polls, and a webhook would be inbound
+surface with nothing to receive. Widen permissions only when the publication
+path is built and reviewed.
+
+Then install the credentials:
+
+```sh
+./scripts/install-github-secrets.sh ~/Downloads/<app>.private-key.pem
+```
+
+The script converts the key, because GitHub issues PKCS#1 and WebCrypto imports
+only PKCS#8, and it keeps the usable copy in a temporary directory it shreds on
+exit. The Worker names the mistake (`private_key_is_pkcs1`) rather than failing
+as a signature error if an unconverted key is installed by hand.
+
+The owner, the repository and the ref are compiled into `worker/github.ts`. No
+request names them, and a ref response answering for any other branch is refused
+rather than believed — the base check the plan requires before a candidate is
+built on a revision. The installation token is cached for its life, never
+logged, and never sent to the browser.
+
 ## Next integration
 
 After the live gate passes, add repository-scoped GitHub App reads from the
