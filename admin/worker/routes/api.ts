@@ -3,6 +3,7 @@ import { issueCsrfToken } from '../auth/csrf.ts'
 import { publishingPolicy, type SecurityConfig } from '../config.ts'
 import { githubConfig, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
 import { json } from '../http.ts'
+import { listLogos } from '../media.ts'
 
 export async function apiResponse(request: Request, env: WorkerEnv, config: SecurityConfig, identity: AccessIdentity) {
   const path = new URL(request.url).pathname
@@ -14,7 +15,7 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
       authenticated: true,
       publishingTarget: publishingPolicy,
       mode: 'read-only',
-      integrations: { github: Boolean(githubConfig(env)), r2: false, publishing: false },
+      integrations: { github: Boolean(githubConfig(env)), r2: Boolean(env.MEDIA), publishing: false },
     })
   }
   if (path === '/api/repository/head' && request.method === 'GET') {
@@ -23,6 +24,11 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     const head = await resolveHead(requireGithub(env))
     return json({ ...head, capability: 'read-only', scope: `${repositoryPolicy.owner}/${repositoryPolicy.repo}` })
   }
-  if (path === '/api/media/logos' && request.method === 'GET') return json({ error: 'r2_not_connected' }, 503)
+  if (path === '/api/media/logos' && request.method === 'GET') {
+    if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)
+    // The cursor is the only thing the browser contributes, and it is checked
+    // before it reaches storage.
+    return json(await listLogos(env.MEDIA, new URL(request.url).searchParams.get('cursor') ?? undefined))
+  }
   return json({ error: 'not_found' }, 404)
 }
