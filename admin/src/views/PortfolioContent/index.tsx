@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { createEntry as createCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
-import { ArrowUpRight, Check, FileCode2, Pencil, Plus } from 'lucide-react'
+import { createEntry as createCollectionEntry, deleteEntry as deleteCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
+import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Trash2 } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -39,23 +39,64 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
   // that moved on becomes a conflict instead of an overwrite.
   const [baseSha, setBaseSha] = useState('')
 
+  const [reason, setReason] = useState('Checking whether this collection can be saved...')
+
   useEffect(() => {
     const controller = new AbortController()
     fetchCollection(collection, controller.signal)
-      .then(state => setBaseSha(state.baseSha))
-      .catch(() => setBaseSha(''))
+      .then(state => { setBaseSha(state.baseSha); setReason('') })
+      .catch((error: unknown) => {
+        if (error instanceof Error && error.name === 'AbortError') return
+        setBaseSha('')
+        setReason(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
+      })
     return () => controller.abort()
   }, [collection])
+
+  /** Re-read the revision a save must quote next time. */
+  const refreshBase = async () => {
+    const next = await fetchCollection(collection, new AbortController().signal).catch(() => null)
+    if (next) setBaseSha(next.baseSha)
+  }
 
   const visibleEntries = entries.filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
 
   // Switching an entry off writes `enabled: false`, which the site filters out,
   // in place of commenting the block out of the YAML.
-  const toggleEntry = (entry: PortfolioEntry, enabled: boolean) => {
-    setEntries(current => current.map(item => item.id === entry.id
-      ? { ...item, enabled, raw: { ...item.raw, [ENTRY_ENABLED_KEY]: enabled } }
-      : item))
-    toast.info(enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`)
+  const toggleEntry = async (entry: PortfolioEntry, enabled: boolean) => {
+    const raw = { ...entry.raw, [ENTRY_ENABLED_KEY]: enabled }
+    const previous = entries
+    setEntries(current => current.map(item => item.id === entry.id ? { ...item, enabled, raw } : item))
+    if (!baseSha) {
+      toast.info(`${entry.title} ${enabled ? 'shown' : 'hidden'} in this session only.`)
+      return
+    }
+    try {
+      await saveCollectionEntry(collection, entries.findIndex(item => item.id === entry.id), raw, baseSha)
+      await refreshBase()
+      toast.success(enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`)
+    } catch (error) {
+      // The switch already moved, so put it back rather than leaving the UI
+      // claiming something the file does not say.
+      setEntries(previous)
+      toast.error(error instanceof Error ? error.message : 'Could not change that entry.')
+    }
+  }
+
+  const removeEntry = async (entry: PortfolioEntry) => {
+    if (!baseSha) { toast.error('This collection cannot be saved yet.'); return }
+    if (!window.confirm(`Delete "${entry.title}" from ${section.title}? This commits to V1.`)) return
+    const previous = entries
+    const index = entries.findIndex(item => item.id === entry.id)
+    setEntries(current => current.filter(item => item.id !== entry.id))
+    try {
+      const commit = await deleteCollectionEntry(collection, index, baseSha)
+      await refreshBase()
+      toast.success(`Deleted${commit ? ` (${commit.slice(0, 7)})` : ''}.`)
+    } catch (error) {
+      setEntries(previous)
+      toast.error(error instanceof Error ? error.message : 'Could not delete that entry.')
+    }
   }
 
   const saveEntry = async (nextEntry: PortfolioEntry) => {
@@ -107,7 +148,11 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
         </nav>
       )}
 
-      <LocalNotice>Entries below are loaded from the repository YAML. Edits and additions remain local until the collection adapter is connected.</LocalNotice>
+      <LocalNotice>
+        {baseSha
+          ? <>Edits commit straight to <code>{publishingTarget.branch}</code>. The beta site rebuilds from that branch.</>
+          : reason}
+      </LocalNotice>
 
       <div className="mapped-editor-layout">
         <section className="form-panel">
@@ -132,9 +177,10 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
                 <SwitchField
                   aria-label={`Show ${entry.title} on the site`}
                   checked={isEntryEnabled(entry.raw)}
-                  onChange={enabled => toggleEntry(entry, enabled)}
+                  onChange={enabled => void toggleEntry(entry, enabled)}
                 />
                 <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
+                <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={!baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
               </article>
             ))}
             {!visibleEntries.length && (

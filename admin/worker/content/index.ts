@@ -2,7 +2,7 @@ import { HttpError } from '../http.ts'
 import type { GithubConfig } from '../github.ts'
 import { readFile, writeFile } from './files.ts'
 import { contentSource } from './registry.ts'
-import { appendLocation, insertEntry, locateEntry, parseContent, readEntry, removeEntry, replaceEntry } from './entries.ts'
+import { appendLocation, insertEntry, locateEntry, parseContent, readEntry, removeEntry, replaceEntry, sequencePath } from './entries.ts'
 
 export type EntryWrite = {
   collection: string
@@ -22,10 +22,13 @@ export async function readCollection(config: GithubConfig, collection: string) {
   const source = sourceOf(collection)
   const file = await readFile(config, source.path)
   const document = parseContent(file.text)
+  // `getIn` hands back YAML nodes; the caller wants plain data, so the whole
+  // document is converted once and read from that.
+  const data = document.toJS() as Record<string, unknown>
   const entries: unknown[] = []
   for (const arrayKey of source.arrayKeys) {
-    const sequence = document.get(arrayKey)
-    if (Array.isArray(sequence)) entries.push(...(document.toJS() as Record<string, unknown[]>)[arrayKey] ?? [])
+    const sequence = sequencePath(arrayKey).reduce<unknown>((value, key) => (value && typeof value === 'object' ? (value as Record<string, unknown>)[key] : undefined), data)
+    if (Array.isArray(sequence)) entries.push(...sequence)
   }
   return { path: source.path, baseSha: file.sha, entries }
 }

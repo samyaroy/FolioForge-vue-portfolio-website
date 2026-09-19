@@ -5,10 +5,11 @@
  * named here — and Contents write is repository-wide, so this table is the
  * thing standing between the admin and every other file in the repository.
  *
- * `arrayKeys` lists the top-level sequences a collection is drawn from, in the
- * order the editor concatenates them. An index counts across them in that same
- * order, so entry 5 of a two-array collection lands in whichever array really
- * holds it.
+ * `arrayKeys` lists the sequences a collection is drawn from, in the order the
+ * editor concatenates them, each as a dotted path — projects.yml keeps all four
+ * of its sequences under one `projects:` key. An index counts across them in
+ * that same order, so entry 5 of a two-array collection lands in whichever array
+ * really holds it rather than being moved into the first.
  */
 export type ContentSource = { path: string; arrayKeys: readonly string[] }
 
@@ -19,9 +20,9 @@ export const contentSources = {
   'home/education': { path: `${PORTFOLIO}/education.yml`, arrayKeys: ['education'] },
   'home/experience': { path: `${PORTFOLIO}/experience.yml`, arrayKeys: ['experience'] },
   'home/research-interests': { path: `${PORTFOLIO}/research_interests.yml`, arrayKeys: ['research_interests'] },
-  'home/announcements': { path: `${PORTFOLIO}/ribbon.yml`, arrayKeys: ['messages'] },
+  'home/announcements': { path: `${PORTFOLIO}/ribbon.yml`, arrayKeys: ['ribbon'] },
 
-  'projects-publications/projects': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['research_projects', 'technical_projects', 'minor_projects', 'other_projects'] },
+  'projects-publications/projects': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['projects.research_projects', 'projects.technical_projects', 'projects.minor_projects', 'projects.other_projects'] },
   'projects-publications/articles': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['articles'] },
   'projects-publications/publications': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['publications'] },
   'projects-publications/posters': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['posters'] },
