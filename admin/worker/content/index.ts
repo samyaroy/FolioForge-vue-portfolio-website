@@ -1,6 +1,8 @@
 import { HttpError } from '../http.ts'
 import type { GithubConfig } from '../github.ts'
-import { readFile, writeFile } from './files.ts'
+import { commitFiles, readFile, writeFile } from './files.ts'
+import { derivedFiles, generatedPaths } from './derived.ts'
+import { isWritablePath } from './registry.ts'
 import { contentSource } from './registry.ts'
 import { appendLocation, insertEntry, locateEntry, parseContent, readEntry, removeEntry, replaceEntry, sequencePath } from './entries.ts'
 
@@ -70,6 +72,16 @@ export async function applyEntryChange(
   }
 
   if (text === file.text) return { commit: '', baseSha: file.sha }
+
+  // A source with generated files cannot be committed on its own: the two would
+  // disagree in the repository until something rebuilt them.
+  const derived = derivedFiles(source.path, parseContent(text).toJS())
+  if (derived.length) {
+    const allowed = (path: string) => isWritablePath(path) || generatedPaths.includes(path)
+    const { commit } = await commitFiles(config, [{ path: source.path, text }, ...derived], `content(admin): ${summary}`, allowed)
+    return { commit, baseSha: file.sha }
+  }
+
   const { commit } = await writeFile(config, { ...file, text }, `content(admin): ${summary}`)
   return { commit, baseSha: file.sha }
 }

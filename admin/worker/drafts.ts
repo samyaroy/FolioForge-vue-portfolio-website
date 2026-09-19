@@ -52,6 +52,18 @@ export async function readDraft(bucket: DraftBucket, name: string) {
   return object
 }
 
+/** Discard one staged upload. Nothing published references a draft. */
+export async function discardDraft(bucket: DraftBucket, name: string): Promise<void> {
+  if (!STORED_NAME.test(name)) throw new HttpError(404, 'not_found', 'bad_draft_name')
+  const key = `${draftPolicy.prefix}${name}`
+  if (!await bucket.get(key)) throw new HttpError(404, 'not_found', 'draft_missing')
+  try {
+    await bucket.delete(key)
+  } catch {
+    throw new HttpError(502, 'storage_unavailable', 'delete_failed')
+  }
+}
+
 export async function listDrafts(bucket: DraftBucket, cursor?: string): Promise<{ items: StoredDraft[]; cursor?: string }> {
   if (cursor !== undefined && !/^[A-Za-z0-9+/=_-]{1,1024}$/.test(cursor)) throw new HttpError(400, 'invalid_cursor')
   let listing

@@ -102,16 +102,10 @@ async function findLogoKey(bucket: MediaBucket, name: string) {
 }
 
 /**
- * Move a logo out of the catalogue. The object is copied to the archive prefix
- * before the original is removed, so a failure part-way leaves the archive copy
- * rather than nothing at all.
+ * Move any published object to an archive prefix: copy first, then remove, so a
+ * failure part-way leaves the archive copy rather than nothing at all.
  */
-export async function archiveLogo(bucket: MediaBucket, rawName: string): Promise<{ archivedAs: string }> {
-  const name = assertLogoName(rawName)
-  const key = await findLogoKey(bucket, name)
-  if (!key) throw new HttpError(404, 'not_found', 'logo_missing')
-  const file = key.slice(logoPolicy.prefix.length)
-  const destination = `${logoPolicy.archivePrefix}${file}`
+async function archiveObject(bucket: MediaBucket, key: string, destination: string) {
   try {
     const object = await bucket.get(key)
     if (!object?.body) throw new HttpError(502, 'storage_unavailable', 'archive_source_unreadable')
@@ -122,6 +116,34 @@ export async function archiveLogo(bucket: MediaBucket, rawName: string): Promise
     if (error instanceof HttpError) throw error
     throw new HttpError(502, 'storage_unavailable', 'archive_failed')
   }
+}
+
+/**
+ * Take a published media file out of service. The bytes move to `archived/`,
+ * so anything in the content still pointing at it breaks visibly rather than
+ * the file being gone for good.
+ */
+export async function archiveMedia(bucket: MediaBucket, rawName: string): Promise<{ archivedAs: string }> {
+  const name = assertMediaName(rawName)
+  const key = SUPPORTED.test(name) ? name : `${name}.png`
+  if (!await bucket.get(key)) throw new HttpError(404, 'not_found', 'media_missing')
+  const destination = `${mediaPolicy.archivePrefix}${key}`
+  await archiveObject(bucket, key, destination)
+  return { archivedAs: destination }
+}
+
+/**
+ * Move a logo out of the catalogue. The object is copied to the archive prefix
+ * before the original is removed, so a failure part-way leaves the archive copy
+ * rather than nothing at all.
+ */
+export async function archiveLogo(bucket: MediaBucket, rawName: string): Promise<{ archivedAs: string }> {
+  const name = assertLogoName(rawName)
+  const key = await findLogoKey(bucket, name)
+  if (!key) throw new HttpError(404, 'not_found', 'logo_missing')
+  const file = key.slice(logoPolicy.prefix.length)
+  const destination = `${logoPolicy.archivePrefix}${file}`
+  await archiveObject(bucket, key, destination)
   return { archivedAs: destination }
 }
 

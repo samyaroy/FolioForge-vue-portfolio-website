@@ -5,13 +5,14 @@ import { githubConfig, installationAccess, repositoryPolicy, requireGithub, reso
 import { applyEntryChange, readCollection } from '../content/index.ts'
 import { contentSources } from '../content/registry.ts'
 import { HttpError, json } from '../http.ts'
-import { archiveLogo, listLogos, publishDraft, storeLogo } from '../media.ts'
-import { listDrafts, readDraft, storeDraft } from '../drafts.ts'
+import { archiveLogo, archiveMedia, listLogos, publishDraft, storeLogo } from '../media.ts'
+import { discardDraft, listDrafts, readDraft, storeDraft } from '../drafts.ts'
 import { imagePolicy } from '../images.ts'
 
 const DRAFT_ROUTE = '/api/media/drafts/'
 const LOGO_ROUTE = '/api/media/logos/'
 const COLLECTION_ROUTE = '/api/content/'
+const MEDIA_ROUTE = '/api/media/files/'
 
 async function jsonBody(request: Request): Promise<Record<string, unknown>> {
   if (Number(request.headers.get('content-length') ?? 0) > 512 * 1024) throw new HttpError(413, 'body_too_large')
@@ -71,6 +72,16 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
   if (path === '/api/media/drafts' && request.method === 'GET') {
     if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
     return json(await listDrafts(env.DRAFTS, new URL(request.url).searchParams.get('cursor') ?? undefined))
+  }
+  if (path.startsWith(DRAFT_ROUTE) && request.method === 'DELETE') {
+    if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
+    await discardDraft(env.DRAFTS, path.slice(DRAFT_ROUTE.length))
+    return json({ discarded: true })
+  }
+  if (path.startsWith(MEDIA_ROUTE) && path.endsWith('/archive') && request.method === 'POST') {
+    if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)
+    const name = decodeURIComponent(path.slice(MEDIA_ROUTE.length, -'/archive'.length))
+    return json(await archiveMedia(env.MEDIA, name))
   }
   if (path.startsWith(DRAFT_ROUTE) && request.method === 'GET') {
     if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)

@@ -175,3 +175,83 @@ test('a nested collection edits the nested array, not a new top-level one', () =
   assert.equal(/^research_projects:/m.test(text), false, 'a stray top-level sequence was created')
   assert.ok(/^projects:/m.test(text))
 })
+
+/* ------------------------- deleting, on real files ------------------------ */
+
+test('deleting takes exactly one entry out of every real collection', () => {
+  for (const [id, source] of Object.entries(contentSources)) {
+    const document = parseContent(readFileSync(REPO + source.path, 'utf8'))
+    const total = countEntries(document, source)
+    if (!total) continue
+    const text = removeEntry(document, locateEntry(document, source, 0))
+    assert.equal(countEntries(parseContent(text), source), total - 1, `${id}: delete changed the count by more than one`)
+  }
+})
+
+test('deleting an entry does not take the comments around it', () => {
+  for (const [id, source] of Object.entries(contentSources)) {
+    const original = readFileSync(REPO + source.path, 'utf8')
+    const document = parseContent(original)
+    if (!countEntries(document, source)) continue
+    const text = removeEntry(document, locateEntry(document, source, 0))
+    const before = (original.match(/#/g) ?? []).length
+    const after = (text.match(/#/g) ?? []).length
+    // The deleted entry may legitimately carry its own comments; the rest of
+    // the file must not lose any.
+    assert.ok(after >= before - 6, `${id}: ${before} comments became ${after}`)
+  }
+})
+
+test('deleting the last entry leaves an empty collection, not a broken file', () => {
+  const document = parseContent('items:\n  - one\n')
+  const source = { path: 'x', arrayKeys: ['items'] }
+  const text = removeEntry(document, locateEntry(document, source, 0))
+  const reopened = parseContent(text)
+  assert.equal(countEntries(reopened, source), 0)
+  assert.ok(hasSequenceKey(reopened, 'items'), 'the key must remain so the next entry can be added')
+})
+
+/* ---------------------- nested and named group paths ---------------------- */
+
+test('a collection grouped by an outer list is reached as one flat list', () => {
+  // teaching.yml groups mentored projects by semester; the editor shows one list.
+  const source = contentSources['teaching/projects']
+  const document = parseContent(readFileSync(REPO + source.path, 'utf8'))
+  const total = countEntries(document, source)
+  assert.ok(total > 1, 'the fixture should span more than one semester')
+  const paths = new Set()
+  for (let index = 0; index < total; index++) {
+    const location = locateEntry(document, source, index)
+    assert.notEqual(readEntry(document, location), undefined, `entry ${index} must resolve`)
+    paths.add(location.path.join('.'))
+  }
+  assert.ok(paths.size > 1, 'entries should come from more than one group')
+})
+
+test('a named group is addressed by its name, not its position', () => {
+  const source = contentSources['cocurricular/leadership']
+  const original = readFileSync(REPO + source.path, 'utf8')
+  const document = parseContent(original)
+  const location = locateEntry(document, source, 0)
+  // The selector resolved to the leadership group, whichever index it sits at.
+  const groupTitle = document.getIn([...location.path.slice(0, 2), 'title'])
+  assert.equal(String(groupTitle), 'leadership_roles')
+
+  // Volunteering must resolve somewhere else entirely.
+  const other = contentSources['cocurricular/volunteering']
+  const otherLocation = locateEntry(parseContent(original), other, 0)
+  assert.notDeepEqual(otherLocation.path, location.path, 'the two groups must not share a path')
+})
+
+test('deleting from one named group leaves the other untouched', () => {
+  const leadership = contentSources['cocurricular/leadership']
+  const volunteering = contentSources['cocurricular/volunteering']
+  const original = readFileSync(REPO + leadership.path, 'utf8')
+  const document = parseContent(original)
+  const volunteersBefore = countEntries(document, volunteering)
+
+  const text = removeEntry(document, locateEntry(document, leadership, 0))
+  const after = parseContent(text)
+  assert.equal(countEntries(after, leadership), countEntries(parseContent(original), leadership) - 1)
+  assert.equal(countEntries(after, volunteering), volunteersBefore, 'the other group must be untouched')
+})

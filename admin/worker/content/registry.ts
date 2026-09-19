@@ -29,6 +29,8 @@ export const contentSources = {
   'projects-publications/posters': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['posters'] },
 
   'teaching/courses': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['courses_taught'] },
+  // Mentored projects are grouped by semester and shown as one list.
+  'teaching/projects': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['projects_mentored.*.projects'] },
   'teaching/others': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['other_teachings'] },
   'ongoing-projects/projects': { path: `${PORTFOLIO}/ongoing_projects.yml`, arrayKeys: ['ongoing_projects'] },
 
@@ -44,6 +46,11 @@ export const contentSources = {
   'workshops/workshops': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_workshops', 'attended_other_workshops'] },
   'workshops/bootcamps': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_bootcamps'] },
   'workshops/other': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_webinars_n_others'] },
+
+  // Co-curricular groups are named rather than positional, so reordering them
+  // in the file does not change which list an edit reaches.
+  'cocurricular/leadership': { path: `${PORTFOLIO}/cocurricular.yml`, arrayKeys: ['co_curriculars[title=leadership_roles].entries'] },
+  'cocurricular/volunteering': { path: `${PORTFOLIO}/cocurricular.yml`, arrayKeys: ['co_curriculars[title=volunteering_roles].entries'] },
 
   'professional-activity/invited-talks': { path: `${PORTFOLIO}/professional_activity.yml`, arrayKeys: ['invited_talks'] },
   'professional-activity/hosted-events': { path: `${PORTFOLIO}/professional_activity.yml`, arrayKeys: ['hosted_events', 'other_hosted_events'] },

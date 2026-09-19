@@ -209,3 +209,37 @@ test('a cursor the browser invented never reaches storage', async () => {
   const bucket = draftBucket()
   await assert.rejects(listDrafts(bucket.binding, '../../etc'), error => error.code === 'invalid_cursor')
 })
+
+/* ------------------------------ discarding ------------------------------ */
+
+import { discardDraft } from '../drafts.ts'
+
+function deletableBucket() {
+  const base = draftBucket()
+  const removed = []
+  return { ...base, removed, binding: { ...base.binding, delete: async key => { base.written.delete(key); removed.push(key) } } }
+}
+
+test('a staged upload can be discarded, and only by its real name', async () => {
+  const bucket = deletableBucket()
+  const stored = await storeDraft(bucket.binding, buffer(png()), 'image/png')
+  await discardDraft(bucket.binding, stored.name)
+  assert.deepEqual(bucket.removed, [`${draftPolicy.prefix}${stored.name}`])
+  assert.equal(bucket.written.size, 0)
+})
+
+test('discarding something that is not staged removes nothing', async () => {
+  const bucket = deletableBucket()
+  await storeDraft(bucket.binding, buffer(png()), 'image/png')
+  await assert.rejects(discardDraft(bucket.binding, `${'b'.repeat(64)}.png`), error => error.reason === 'draft_missing')
+  assert.deepEqual(bucket.removed, [])
+  assert.equal(bucket.written.size, 1, 'the real draft must survive')
+})
+
+test('a discard name the caller invented never reaches storage', async () => {
+  const bucket = deletableBucket()
+  for (const name of ['../../secret.png', 'drafts/x.png', 'not-a-digest.png']) {
+    await assert.rejects(discardDraft(bucket.binding, name), error => error.reason === 'bad_draft_name')
+  }
+  assert.deepEqual(bucket.removed, [])
+})

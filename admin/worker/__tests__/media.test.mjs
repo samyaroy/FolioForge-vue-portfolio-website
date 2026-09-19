@@ -251,3 +251,22 @@ test('publishing a draft that is not staged changes nothing', async () => {
   await assert.rejects(publishDraft(media.binding, draftStore([]).binding, DRAFT, 'ok', false), error => error.reason === 'draft_missing')
   assert.equal(media.store.size, 0)
 })
+
+import { archiveMedia } from '../media.ts'
+
+test('a published file is archived rather than destroyed', async () => {
+  const bucket = mediaBucket(['hero.png'])
+  const { archivedAs } = await archiveMedia(bucket.binding, 'hero')
+  assert.equal(archivedAs, 'archived/hero.png')
+  assert.equal(bucket.store.has('archived/hero.png'), true, 'the bytes must survive')
+  assert.equal(bucket.store.has('hero.png'), false)
+})
+
+test('archiving media refuses a name that is not there or not a name', async () => {
+  const bucket = mediaBucket(['hero.png'])
+  await assert.rejects(archiveMedia(bucket.binding, 'missing'), error => error.reason === 'media_missing')
+  for (const bad of ['../../etc/passwd', 'a/b', 'logo']) {
+    await assert.rejects(archiveMedia(bucket.binding, bad), error => error.code === 'invalid_media_name')
+  }
+  assert.deepEqual(bucket.deleted, [], 'nothing was removed')
+})

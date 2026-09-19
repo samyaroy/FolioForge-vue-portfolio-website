@@ -117,3 +117,35 @@ export async function publishDraft(draft: string, name: string, replace: boolean
   if (typeof key !== 'string' || typeof url !== 'string') throw new Error('Publish response was not usable.')
   return { key, url, ...(typeof replaced === 'string' ? { replaced } : {}) }
 }
+
+/** Every upload still sitting in staging, including from earlier sessions. */
+export async function listDrafts(signal: AbortSignal): Promise<StoredDraft[]> {
+  const response = await fetch('/api/media/drafts', { signal, credentials: 'same-origin', headers: { Accept: 'application/json' } })
+  if (!response.ok) throw new Error('Staged uploads are unavailable.')
+  const body: unknown = await response.json()
+  const items = body && typeof body === 'object' ? (body as { items?: unknown }).items : undefined
+  if (!Array.isArray(items)) throw new Error('Unreadable staging response.')
+  return items.flatMap(item => {
+    if (!item || typeof item !== 'object') return []
+    const { name, contentType, width, height, size } = item as Record<string, unknown>
+    if (typeof name !== 'string' || !/^[a-f0-9]{64}\.(jpg|png|webp)$/.test(name)) return []
+    return [{ name, contentType: String(contentType ?? ''), width: Number(width ?? 0), height: Number(height ?? 0), size: Number(size ?? 0) }]
+  })
+}
+
+/** Discard a staged upload for good. Nothing published references a draft. */
+export async function discardDraft(name: string): Promise<void> {
+  await mutate(`/api/media/drafts/${encodeURIComponent(name)}`, { method: 'DELETE' }, {
+    not_found: 'That upload is no longer staged.',
+  })
+}
+
+/** Take a published file out of service; the bytes move to archived/. */
+export async function archiveMedia(name: string): Promise<string> {
+  const body = await mutate(`/api/media/files/${encodeURIComponent(name)}/archive`, { method: 'POST' }, {
+    not_found: 'That file is not on the media host.',
+    invalid_media_name: 'That name cannot be used.',
+  })
+  const archivedAs = body && typeof body === 'object' ? (body as { archivedAs?: unknown }).archivedAs : ''
+  return typeof archivedAs === 'string' ? archivedAs : ''
+}

@@ -38,11 +38,12 @@ export type R2StoredObject = {
 }
 
 /**
- * The drafts bucket. It can be written and read but not emptied: no `delete`
- * exists on this type, so nothing in the Worker can remove a staged object,
- * and expiry belongs to a bucket lifecycle rule rather than to a request.
+ * The drafts bucket. Staging is private and nothing here is referenced by the
+ * site, so the owner can discard an upload they no longer want — that is a
+ * different thing from expiry, which stays a bucket lifecycle rule.
  */
 export type DraftBucket = {
+  delete: (key: string) => Promise<void>
   put: (key: string, value: ArrayBuffer, options?: {
     httpMetadata?: { contentType?: string; cacheControl?: string }
     customMetadata?: Record<string, string>

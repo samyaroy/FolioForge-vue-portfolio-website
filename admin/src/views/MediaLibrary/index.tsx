@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
-import { AlertCircle, CheckCircle2, CloudUpload, ImagePlus, Loader2, Trash2 } from 'lucide-react'
+import { AlertCircle, Archive, CheckCircle2, CloudUpload, ImagePlus, Loader2, Trash2 } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { Button, FileField, IconButton, TextField } from '@/components/form'
 import { LogoLibrary } from '@/components/admin/LogoLibrary'
 import { useIntegrations } from '@/hooks/useIntegrations'
-import { draftPreviewUrl, publishDraft, uploadImage, type StoredDraft } from '@/services/uploads'
+import { archiveMedia, discardDraft, draftPreviewUrl, listDrafts, publishDraft, uploadImage, type StoredDraft } from '@/services/uploads'
 
 type Staged = {
   id: string
@@ -31,6 +31,21 @@ export function MediaLibraryPage() {
   const controllers = useRef(new Set<AbortController>())
 
   useEffect(() => { stagedRef.current = staged }, [staged])
+
+  // Uploads survive a reload; showing only this session's made older ones
+  // invisible and impossible to clear.
+  useEffect(() => {
+    const controller = new AbortController()
+    listDrafts(controller.signal)
+      .then(items => setStaged(current => [
+        ...items
+          .filter(item => !current.some(entry => entry.stored?.name === item.name))
+          .map(item => ({ id: item.name, name: item.name, size: megabytes(item.size), previewUrl: draftPreviewUrl(item.name), state: 'stored' as const, stored: item })),
+        ...current,
+      ]))
+      .catch(() => undefined)
+    return () => controller.abort()
+  }, [])
   useEffect(() => () => {
     stagedRef.current.forEach(item => URL.revokeObjectURL(item.previewUrl))
     controllers.current.forEach(controller => controller.abort())
@@ -57,10 +72,34 @@ export function MediaLibraryPage() {
     }
   }
 
-  const remove = (id: string) => {
+  const remove = async (id: string) => {
     const item = stagedRef.current.find(entry => entry.id === id)
-    if (item) URL.revokeObjectURL(item.previewUrl)
+    if (!item) return
+    if (item.stored && !window.confirm(`Discard "${item.name}" from staging? The upload is deleted.`)) return
+    if (item.stored) {
+      try {
+        await discardDraft(item.stored.name)
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Could not discard that upload.')
+        return
+      }
+    }
+    if (item.previewUrl.startsWith('blob:')) URL.revokeObjectURL(item.previewUrl)
     setStaged(current => current.filter(entry => entry.id !== id))
+    if (item.stored) toast.success('Upload discarded.')
+  }
+
+  const unpublish = async (item: Staged) => {
+    const name = item.publishedUrl?.split('/').pop()
+    if (!name) return
+    if (!window.confirm(`Take ${name} off the media host? The file moves to archived/, so anything still pointing at it will break.`)) return
+    try {
+      const archivedAs = await archiveMedia(name)
+      update(item.id, { publishedUrl: undefined })
+      toast.success(`Archived to ${archivedAs}.`)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not archive that file.')
+    }
   }
 
   const storedCount = staged.filter(item => item.state === 'stored').length
@@ -127,7 +166,12 @@ export function MediaLibraryPage() {
                   )}
                   {item.publishedUrl && <code><a href={item.publishedUrl} target="_blank" rel="noreferrer">{item.publishedUrl.replace('https://', '')}</a></code>}
                 </div>
-                <IconButton variant="bare" size="none" label={`Remove ${item.name}`} onClick={() => remove(item.id)}><Trash2 aria-hidden="true" /></IconButton>
+                <span className="media-card-actions">
+                  {item.publishedUrl && (
+                    <IconButton variant="bare" size="none" title="Take off the media host" label={`Archive ${item.name}`} onClick={() => void unpublish(item)}><Archive aria-hidden="true" /></IconButton>
+                  )}
+                  <IconButton variant="bare" size="none" title={item.stored ? 'Discard this upload' : 'Remove from this list'} label={`Remove ${item.name}`} onClick={() => void remove(item.id)}><Trash2 aria-hidden="true" /></IconButton>
+                </span>
               </article>
             ))}
           </div>

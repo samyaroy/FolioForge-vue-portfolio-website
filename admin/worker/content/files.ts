@@ -50,3 +50,56 @@ export async function writeFile(config: GithubConfig, file: RepositoryFile, mess
   if (typeof commit !== 'string') throw new HttpError(502, 'github_unavailable', 'no_commit_sha')
   return { commit }
 }
+
+/**
+ * Commit several files as one revision, using the Git data API rather than the
+ * per-file contents endpoint. A generated file and the source it came from have
+ * to land together, and the ref update is non-forced, so a branch that moved
+ * underneath the edit fails rather than losing the other commit.
+ */
+export async function commitFiles(
+  config: GithubConfig,
+  files: { path: string; text: string }[],
+  message: string,
+  allowed: (path: string) => boolean,
+): Promise<{ commit: string }> {
+  for (const file of files) {
+    if (!allowed(file.path)) throw new HttpError(403, 'path_not_allowed', file.path)
+  }
+  const { owner, repo, branch, ref } = repositoryPolicy
+  const base = `/repos/${owner}/${repo}`
+
+  const head = await githubRequest(config, `${base}/git/ref/heads/${branch}`)
+  const headSha = (head as { object?: { sha?: unknown } })?.object?.sha
+  const answeredRef = (head as { ref?: unknown })?.ref
+  if (answeredRef !== ref) throw new HttpError(502, 'github_ref_mismatch', 'unexpected_ref')
+  if (typeof headSha !== 'string') throw new HttpError(502, 'github_unavailable', 'unreadable_head')
+
+  const commitBody = await githubRequest(config, `${base}/git/commits/${headSha}`)
+  const baseTree = (commitBody as { tree?: { sha?: unknown } })?.tree?.sha
+  if (typeof baseTree !== 'string') throw new HttpError(502, 'github_unavailable', 'unreadable_tree')
+
+  const treeBody = await githubRequest(config, `${base}/git/trees`, {
+    method: 'POST',
+    body: JSON.stringify({
+      base_tree: baseTree,
+      tree: files.map(file => ({ path: file.path, mode: '100644', type: 'blob', content: file.text })),
+    }),
+  })
+  const treeSha = (treeBody as { sha?: unknown })?.sha
+  if (typeof treeSha !== 'string') throw new HttpError(502, 'github_unavailable', 'no_tree_sha')
+
+  const newCommit = await githubRequest(config, `${base}/git/commits`, {
+    method: 'POST',
+    body: JSON.stringify({ message, tree: treeSha, parents: [headSha] }),
+  })
+  const commit = (newCommit as { sha?: unknown })?.sha
+  if (typeof commit !== 'string') throw new HttpError(502, 'github_unavailable', 'no_commit_sha')
+
+  await githubRequest(config, `${base}/git/refs/heads/${branch}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ sha: commit, force: false }),
+  }, { 422: new HttpError(409, 'content_conflict', 'branch_moved') })
+
+  return { commit }
+}

@@ -27,17 +27,53 @@ type Commented = { comment?: string; commentBefore?: string }
 export type EntryLocation = { path: (string | number)[]; index: number }
 
 /**
- * A collection's arrays are not always at the top level — projects.yml keeps
- * all four of its sequences under a single `projects:` key — so a registry key
- * is a dotted path rather than a plain name.
+ * A registry key is a path to a sequence, and content nests sequences in three
+ * shapes this has to reach:
+ *
+ *   projects.research_projects          a sequence under a plain key
+ *   projects_mentored.*.projects        one per item of an outer sequence
+ *   co_curriculars[title=x].entries     the item of an outer sequence named x
+ *
+ * `*` expands to every item in order, so a collection presented as one list is
+ * addressed as one list. `[field=value]` picks a named group, which survives the
+ * groups being reordered in the file — a positional index would not.
  */
 export function sequencePath(key: string): string[] {
   return key.split('.')
 }
 
-function sequenceAt(document: Document, key: string) {
-  const node = document.getIn(sequencePath(key), true) as { items?: unknown[] } | undefined
-  return node && Array.isArray(node.items) ? node : undefined
+/** Every concrete path a registry key resolves to, in order. */
+export function resolvePaths(document: Document, key: string): (string | number)[][] {
+  let paths: (string | number)[][] = [[]]
+  for (const segment of sequencePath(key)) {
+    const next: (string | number)[][] = []
+    for (const base of paths) {
+      if (segment === '*') {
+        const node = document.getIn(base, true) as { items?: unknown[] } | undefined
+        const length = Array.isArray(node?.items) ? node.items.length : 0
+        for (let index = 0; index < length; index++) next.push([...base, index])
+        continue
+      }
+      const selector = /^([^[]+)\[([^=]+)=(.+)\]$/.exec(segment)
+      if (selector) {
+        const [, outerKey, field, value] = selector
+        const node = document.getIn([...base, outerKey], true) as { items?: unknown[] } | undefined
+        const items = Array.isArray(node?.items) ? node.items : []
+        const index = items.findIndex(item => String((item as { get?: (k: string) => unknown })?.get?.(field) ?? '') === value)
+        if (index >= 0) next.push([...base, outerKey, index])
+        continue
+      }
+      next.push([...base, segment])
+    }
+    paths = next
+  }
+  return paths
+}
+
+function sequencesFor(document: Document, key: string) {
+  return resolvePaths(document, key)
+    .map(path => ({ path, node: document.getIn(path, true) as { items?: unknown[] } | undefined }))
+    .filter((entry): entry is { path: (string | number)[]; node: { items: unknown[] } } => Array.isArray(entry.node?.items))
 }
 
 /**
@@ -46,12 +82,13 @@ function sequenceAt(document: Document, key: string) {
  * mistake; a key that is simply absent is a registry error.
  */
 export function hasSequenceKey(document: Document, key: string): boolean {
-  return document.hasIn(sequencePath(key))
+  const paths = resolvePaths(document, key)
+  return paths.length > 0 && paths.some(path => document.hasIn(path))
 }
 
 /** How many entries a collection holds, across every sequence it draws from. */
 export function countEntries(document: Document, source: ContentSource): number {
-  return source.arrayKeys.reduce((total, key) => total + (sequenceAt(document, key)?.items?.length ?? 0), 0)
+  return source.arrayKeys.reduce((total, key) => total + sequencesFor(document, key).reduce((sum, entry) => sum + entry.node.items.length, 0), 0)
 }
 
 /**
@@ -63,10 +100,10 @@ export function locateEntry(document: Document, source: ContentSource, index: nu
   if (!Number.isInteger(index) || index < 0) throw new HttpError(400, 'invalid_index')
   let remaining = index
   for (const arrayKey of source.arrayKeys) {
-    const sequence = sequenceAt(document, arrayKey)
-    const length = sequence?.items?.length ?? 0
-    if (remaining < length) return { path: sequencePath(arrayKey), index: remaining }
-    remaining -= length
+    for (const sequence of sequencesFor(document, arrayKey)) {
+      if (remaining < sequence.node.items.length) return { path: sequence.path, index: remaining }
+      remaining -= sequence.node.items.length
+    }
   }
   throw new HttpError(404, 'entry_not_found')
 }
@@ -74,9 +111,13 @@ export function locateEntry(document: Document, source: ContentSource, index: nu
 /** Where a new entry goes: the end of the collection's last sequence. */
 export function appendLocation(document: Document, source: ContentSource): EntryLocation {
   const arrayKey = source.arrayKeys[source.arrayKeys.length - 1]
-  if (!hasSequenceKey(document, arrayKey)) throw new HttpError(404, 'collection_not_found')
-  const sequence = sequenceAt(document, arrayKey)
-  return { path: sequencePath(arrayKey), index: sequence?.items?.length ?? 0 }
+  const sequences = sequencesFor(document, arrayKey)
+  // A new entry joins the last sequence the collection draws from.
+  const last = sequences[sequences.length - 1]
+  if (last) return { path: last.path, index: last.node.items.length }
+  const paths = resolvePaths(document, arrayKey)
+  if (!paths.length || !document.hasIn(paths[0])) throw new HttpError(404, 'collection_not_found')
+  return { path: paths[0], index: 0 }
 }
 
 export function parseContent(text: string): Document {
