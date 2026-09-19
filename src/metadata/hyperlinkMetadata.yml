@@ -1,322 +1,321 @@
 Institute:
-    - Name: Indian Institute of Science Education and Research, Pune
-      Aliases:
-        - IISER Pune
-      Website: https://www.iiserpune.ac.in/
+  - Name: Indian Institute of Science Education and Research, Pune
+    Aliases:
+      - IISER Pune
+    Website: https://www.iiserpune.ac.in/
 
-    - Name: Indian Institute of Science Education and Research, Kolkata
-      Aliases:
-        - IISER Kolkata
-      Website: https://www.iiserkol.ac.in/
+  - Name: Indian Institute of Science Education and Research, Kolkata
+    Aliases:
+      - IISER Kolkata
+    Website: https://www.iiserkol.ac.in/
 
-    - Name: Indian Institute of Science Education and Research, Mohali
-      Aliases:
-        - IISER Mohali
-      Website: https://www.iisermohali.ac.in/
+  - Name: Indian Institute of Science Education and Research, Mohali
+    Aliases:
+      - IISER Mohali
+    Website: https://www.iisermohali.ac.in/
 
-    - Name: Indian Institute of Science Education and Research, Bhopal
-      Aliases:
-        - IISER Bhopal
-      Website: https://www.iiserb.ac.in/
+  - Name: Indian Institute of Science Education and Research, Bhopal
+    Aliases:
+      - IISER Bhopal
+    Website: https://www.iiserb.ac.in/
 
-    - Name: International Centre for Theoretical Sciences
-      Aliases:
-        - ICTS
-        - International Centre for Theoretical Sciences, Bangalore
-        - International Centre for Theoretical Sciences (ICTS)
-      Website: https://www.icts.res.in/
+  - Name: International Centre for Theoretical Sciences
+    Aliases:
+      - ICTS
+      - International Centre for Theoretical Sciences, Bangalore
+      - International Centre for Theoretical Sciences (ICTS)
+    Website: https://www.icts.res.in/
 
-    - Name: Tata Institute of Fundamental Research
-      Aliases:
-        - TIFR
-        - Tata Institute of Fundamental Research, Mumbai
-        - Tata Institute of Fundamental Research (TIFR)
-      Website: https://www.tifr.res.in/
+  - Name: Tata Institute of Fundamental Research
+    Aliases:
+      - TIFR
+      - Tata Institute of Fundamental Research, Mumbai
+      - Tata Institute of Fundamental Research (TIFR)
+    Website: https://www.tifr.res.in/
 
-    - Name: Indian Institute of Science
-      Aliases:
-        - IISc
-        - Indian Institute of Science, Bangalore
-        - Indian Institute of Science (IISc)
-      Website: https://www.iisc.ac.in/
+  - Name: Indian Institute of Science
+    Aliases:
+      - IISc
+      - Indian Institute of Science, Bangalore
+      - Indian Institute of Science (IISc)
+    Website: https://www.iisc.ac.in/
 
-    - Name: Homi Bhabha National Institute
-      Website: https://www.hbni.ac.in/
+  - Name: Homi Bhabha National Institute
+    Website: https://www.hbni.ac.in/
 
-    - Name: Indian Institute of Technology Bombay
-      Website: https://www.iitb.ac.in/
+  - Name: Indian Institute of Technology Bombay
+    Website: https://www.iitb.ac.in/
 
-    - Name: Indian Institute of Technology Gandhinagar
-      Website: https://iitgn.ac.in/
+  - Name: Indian Institute of Technology Gandhinagar
+    Website: https://iitgn.ac.in/
 
-    - Name: Indian Institute of Technology Hyderabad
-      Website: https://www.iith.ac.in/
+  - Name: Indian Institute of Technology Hyderabad
+    Website: https://www.iith.ac.in/
 
-    - Name: Indian Institute of Technology Kanpur
-      Website: https://www.iitk.ac.in/
+  - Name: Indian Institute of Technology Kanpur
+    Website: https://www.iitk.ac.in/
 
-    - Name: Indian Institute of Technology Kharagpur
-      Website: https://www.iitkgp.ac.in/
+  - Name: Indian Institute of Technology Kharagpur
+    Website: https://www.iitkgp.ac.in/
 
-    - Name: Indian Institute of Technology Madras
-      Aliases:
-        - IIT Madras
-        - Indian Institute of Technology Madras
-      Website: https://www.iitm.ac.in/
+  - Name: Indian Institute of Technology Madras
+    Aliases:
+      - IIT Madras
+      - Indian Institute of Technology Madras
+    Website: https://www.iitm.ac.in/
 
-    - Name: Indian Institute of Technology Ropar
-      Aliases:
-        - IIT Ropar
-      Website: https://www.iitrpr.ac.in/
+  - Name: Indian Institute of Technology Ropar
+    Aliases:
+      - IIT Ropar
+    Website: https://www.iitrpr.ac.in/
 
-    - Name: Indian Institute of Technology Roorkee
-      Website: https://www.iitr.ac.in/
+  - Name: Indian Institute of Technology Roorkee
+    Website: https://www.iitr.ac.in/
 
-    - Name: Malaviya National Institute of Technology Jaipur
-      Website: https://www.mnit.ac.in/
+  - Name: Malaviya National Institute of Technology Jaipur
+    Website: https://www.mnit.ac.in/
 
-    - Name: Indian Statistical Institute
-      Aliases:
-        - Indian Statistical Institute, Kolkata
-        - ISI Kolkata
-      Website: https://www.isical.ac.in/
+  - Name: Indian Statistical Institute
+    Aliases:
+      - Indian Statistical Institute, Kolkata
+      - ISI Kolkata
+    Website: https://www.isical.ac.in/
 
-    - Name: National Institute of Technology Patna
-      Website: https://www.nitp.ac.in/
+  - Name: National Institute of Technology Patna
+    Website: https://www.nitp.ac.in/
 
-    - Name: Institute of Mathematical Sciences
-      Aliases:
-        - Institute of Mathematical Sciences, Chennai
-        - IMSc
-        - The Institute of Mathematical Sciences
-      Website: https://www.imsc.res.in/
+  - Name: Institute of Mathematical Sciences
+    Aliases:
+      - Institute of Mathematical Sciences, Chennai
+      - IMSc
+      - The Institute of Mathematical Sciences
+    Website: https://www.imsc.res.in/
 
-    - Name: International Institute of Technology (IIIT) Hyderabad
-      Aliases:
-        - IIIT Hyderabad
-        - International Institute of Information Technology Hyderabad
-      Website: https://www.iiit.ac.in/
+  - Name: International Institute of Technology (IIIT) Hyderabad
+    Aliases:
+      - IIIT Hyderabad
+      - International Institute of Information Technology Hyderabad
+    Website: https://www.iiit.ac.in/
 
-    - Name: Isaac Newton Institute for Mathematical Sciences
-      Website: https://www.newton.ac.uk/
+  - Name: Isaac Newton Institute for Mathematical Sciences
+    Website: https://www.newton.ac.uk/
 
-    - Name: Johns Hopkins University
-      Website: https://www.jhu.edu/
+  - Name: Johns Hopkins University
+    Website: https://www.jhu.edu/
 
-    - Name: National Institute of Science Education and Research
-      Aliases:
-        - NISER
-      Website: https://www.niser.ac.in/
+  - Name: National Institute of Science Education and Research
+    Aliases:
+      - NISER
+    Website: https://www.niser.ac.in/
 
-    - Name: University of Calcutta
-      Website: https://www.caluniv.ac.in/
-    
-    - Name: Sister Nivedita University
-      Website: https://snuniv.ac.in/
+  - Name: University of Calcutta
+    Website: https://www.caluniv.ac.in/
 
-    - Name: St. Xavier’s College (Autonomous), Kolkata
-      Aliases:
-        - St. Xavier's College (Autonomous), Kolkata
-      Website: https://www.sxccal.edu/
+  - Name: Sister Nivedita University
+    Website: https://snuniv.ac.in/
 
-    - Name: University of Engineering and Management
-      Website: https://uem.edu.in/
+  - Name: St. Xavier’s College (Autonomous), Kolkata
+    Aliases:
+      - St. Xavier's College (Autonomous), Kolkata
+    Website: https://www.sxccal.edu/
 
-    - Name: Whiting School of Engineering, Johns Hopkins University
-      Website: https://engineering.jhu.edu/
+  - Name: University of Engineering and Management
+    Website: https://uem.edu.in/
 
-    - Name: IIT Madras BS
-      Aliases:
-        - BS in Data Science and Applications, Indian Institute of Technology Madras
-        - IITM BS
-        - Indian Institute of Technology Madras BS Degree
-        - BS Degree (Data Science and Applications), Indian Institute of Technology Madras
-      Website: https://study.iitm.ac.in/ds/
+  - Name: Whiting School of Engineering, Johns Hopkins University
+    Website: https://engineering.jhu.edu/
 
-    - Name: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
-      Aliases:
-        - Postgraduate Department of Data Science, St. Xavier's College (Autonomous), Kolkata
-      Website: https://sxccal.edu/postgraduate-department-of-data-science
+  - Name: IIT Madras BS
+    Aliases:
+      - BS in Data Science and Applications, Indian Institute of Technology Madras
+      - IITM BS
+      - Indian Institute of Technology Madras BS Degree
+      - BS Degree (Data Science and Applications), Indian Institute of Technology Madras
+    Website: https://study.iitm.ac.in/ds/
 
-    - Name: Information Security Education and Awareness
-      Aliases:
-        - Information Security Education and Awareness (ISEA)
-        - ISEA
-      Website: https://isea.gov.in/
+  - Name: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
+    Aliases:
+      - Postgraduate Department of Data Science, St. Xavier's College (Autonomous), Kolkata
+    Website: https://sxccal.edu/postgraduate-department-of-data-science
 
-    - Name: Mahalanobis National Crop Forecast Centre (MNCFC)
-      Aliases:
-        - Mahalanobis National Crop Forecast Centre
-        - MNCFC
-      Website: https://www.ncfc.gov.in/
+  - Name: Information Security Education and Awareness
+    Aliases:
+      - Information Security Education and Awareness (ISEA)
+      - ISEA
+    Website: https://isea.gov.in/
 
-    - Name: MoAFW, GoI
-      Aliases:
-        - MoAFW
-        - Ministry of Agriculture and Farmers Welfare
-        - Ministry of Agriculture & Farmers Welfare
-        - Ministry of Agriculture and Farmers Welfare, Government of India
-        - Ministry of Agriculture & Farmers Welfare, Government of India
-      Website: https://agriwelfare.gov.in/
+  - Name: Mahalanobis National Crop Forecast Centre (MNCFC)
+    Aliases:
+      - Mahalanobis National Crop Forecast Centre
+      - MNCFC
+    Website: https://www.ncfc.gov.in/
 
-    - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-      Aliases:
-        - Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
-        - Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
-        - IDEAS-TIH
-        - IDEAS - TIH
-        - IDEAS-TIH, ISI Kolkata
-      Website: https://www.ideas-tih.org/
+  - Name: MoAFW, GoI
+    Aliases:
+      - MoAFW
+      - Ministry of Agriculture and Farmers Welfare
+      - Ministry of Agriculture & Farmers Welfare
+      - Ministry of Agriculture and Farmers Welfare, Government of India
+      - Ministry of Agriculture & Farmers Welfare, Government of India
+    Website: https://agriwelfare.gov.in/
 
-    - Name: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
-      Aliases:
-        - Vicharanashala Lab for Education of Design, Indian Institute of Technology Ropar
-        - VLED, Indian Institute of Technology Ropar
-        - Vicharanashala Lab for Education Design
-        - VLED
-      Website: https://vicharanashala.ai/
+  - Name: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+    Aliases:
+      - Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata
+      - Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)
+      - IDEAS-TIH
+      - IDEAS - TIH
+      - IDEAS-TIH, ISI Kolkata
+    Website: https://www.ideas-tih.org/
 
-    - Name: Annam.ai
-      Website: https://annam.ai/
+  - Name: Vicharanashala Lab for Education of Design (VLED), Indian Institute of Technology Ropar
+    Aliases:
+      - Vicharanashala Lab for Education of Design, Indian Institute of Technology Ropar
+      - VLED, Indian Institute of Technology Ropar
+      - Vicharanashala Lab for Education Design
+      - VLED
+    Website: https://vicharanashala.ai/
 
-    - Name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
-      Aliases:
-        - "iHub – AWaDH - Technology Innovation Hub, IIT Ropar"
-        - "iHub – AWaDH"
-      Website: https://ihub-awadh.in/
+  - Name: Annam.ai
+    Website: https://annam.ai/
 
-    - Name: I-Hub Foundation for Cobotics
-      Aliases:
-        - I-Hub Foundation for Cobotics, IIT Delhi
-        - I-Hub Foundation for Cobotics, Indian Institute of Technology Delhi
-        - IHFC
-        - IHFC, IIT Delhi
-        - IHFC - Technology Innovation Hub of IIT Delhi
-        - IHFC - Technology Innovation Hub, IIT Delhi
-        - I-Hub Foundation for Cobotics (IHFC), the Technology Innovation Hub
-      Website: https://www.ihfc.co.in/
+  - Name: "iHub – AWaDH - Technology Innovation Hub, Indian Institute of Technology Ropar"
+    Aliases:
+      - "iHub – AWaDH - Technology Innovation Hub, IIT Ropar"
+      - "iHub – AWaDH"
+    Website: https://ihub-awadh.in/
 
-    - Name: CUNY Graduate School of Public Health and Health Policy
-      Aliases:
-        - CUNY SPH
-      Website: https://sph.cuny.edu/
+  - Name: I-Hub Foundation for Cobotics
+    Aliases:
+      - I-Hub Foundation for Cobotics, IIT Delhi
+      - I-Hub Foundation for Cobotics, Indian Institute of Technology Delhi
+      - IHFC
+      - IHFC, IIT Delhi
+      - IHFC - Technology Innovation Hub of IIT Delhi
+      - IHFC - Technology Innovation Hub, IIT Delhi
+      - I-Hub Foundation for Cobotics (IHFC), the Technology Innovation Hub
+    Website: https://www.ihfc.co.in/
 
-    - Name: International Statistical Institute
-      Website: https://isi-web.org/
+  - Name: CUNY Graduate School of Public Health and Health Policy
+    Aliases:
+      - CUNY SPH
+    Website: https://sph.cuny.edu/
 
-    - Name: National Institute of Statistical Sciences
-      Website: https://www.niss.org/
+  - Name: International Statistical Institute
+    Website: https://isi-web.org/
 
-    - Name: Royal Statistical Society
-      Website: https://www.rss.org.uk/
+  - Name: National Institute of Statistical Sciences
+    Website: https://www.niss.org/
 
-    - Name: "Chi-Square: Statistics Club"
-      Aliases:
-        - Chi-Square
-        - Chi-Square Statistics Club
-      Website: https://22f2001443.github.io/chi-square/
+  - Name: Royal Statistical Society
+    Website: https://www.rss.org.uk/
 
-    - Name: The International Society for Bayesian Analysis
-      Aliases:
-        - ISBA
-      Website: https://bayesian.org/
+  - Name: "Chi-Square: Statistics Club"
+    Aliases:
+      - Chi-Square
+      - Chi-Square Statistics Club
+    Website: https://22f2001443.github.io/chi-square/
 
-    - Name: Coursera
-      Website: https://www.coursera.org/
+  - Name: The International Society for Bayesian Analysis
+    Aliases:
+      - ISBA
+    Website: https://bayesian.org/
 
-    - Name: NPTEL
-      Aliases:
-        - National Programme on Technology Enhanced Learning
-        - National Programme on Technology Enhanced Learning (NPTEL)
-      Website: https://nptel.ac.in/
+  - Name: Coursera
+    Website: https://www.coursera.org/
 
+  - Name: NPTEL
+    Aliases:
+      - National Programme on Technology Enhanced Learning
+      - National Programme on Technology Enhanced Learning (NPTEL)
+    Website: https://nptel.ac.in/
 
-    - Name: Chandigarh Institute of Technology and Consultancy
-      Website: https://citcchandigarh.com/
+  - Name: Chandigarh Institute of Technology and Consultancy
+    Website: https://citcchandigarh.com/
 
-    - Name: Nava Nalanda High School
-      Website: https://navanalanda.org.in/
+  - Name: Nava Nalanda High School
+    Website: https://navanalanda.org.in/
 
-    - Name: Researchers of Statistics Education (RoSE) Network
-      Aliases:
-        - RoSE Network
-      Website: https://www.rose-network.org/home/
+  - Name: Researchers of Statistics Education (RoSE) Network
+    Aliases:
+      - RoSE Network
+    Website: https://www.rose-network.org/home/
 
 Person:
 
-    - Name: Prof. Sudarshan Iyengar
-      Aliases:
-        - Sudarshan Iyengar
-      Link: https://www.linkedin.com/in/sudarshan-iyengar-3560b8145/
+  - Name: Prof. Sudarshan Iyengar
+    Aliases:
+      - Sudarshan Iyengar
+    Link: https://www.linkedin.com/in/sudarshan-iyengar-3560b8145/
 
-    - Name: Prof. Ponnurangam Kumaraguru
-      Link: https://www.linkedin.com/in/ponguru/
+  - Name: Prof. Ponnurangam Kumaraguru
+    Link: https://www.linkedin.com/in/ponguru/
 
-    - Name: Prof. Manisha Padala
-      Link: https://iitgn.ac.in/faculty/cse/fac-manisha
-      
-    - Name: Mr. Diptendu Dutta
-      Link: https://www.researchgate.net/profile/Diptendu-Dutta
+  - Name: Prof. Manisha Padala
+    Link: https://iitgn.ac.in/faculty/cse/fac-manisha
 
-    - Name: Prof. Michael Shields
-      Link: https://engineering.jhu.edu/faculty/michael-shields/
+  - Name: Mr. Diptendu Dutta
+    Link: https://www.researchgate.net/profile/Diptendu-Dutta
 
-    - Name: Prof. Aniruddha Choudhuri
-      Aliases:
-        - Aniruddha Choudhuri
-      Link: https://www.linkedin.com/in/aniruddha-choudhuri-9376b174/
+  - Name: Prof. Michael Shields
+    Link: https://engineering.jhu.edu/faculty/michael-shields/
 
-    - Name: Mr. Debashis Ghosh
-      Link: https://www.linkedin.com/in/debashis-ghosh-b5a756b/
-    
-    - Name: Prof. Andrew Thangaraj
-      Aliases:
-        - Andrew Thangaraj
-      Link: https://www.ee.iitm.ac.in/andrew/
+  - Name: Prof. Aniruddha Choudhuri
+    Aliases:
+      - Aniruddha Choudhuri
+    Link: https://www.linkedin.com/in/aniruddha-choudhuri-9376b174/
 
-    - Name: prof. Sheweta Agarwal
-      Link: https://www.cse.iitm.ac.in/~shwetaag/
-    
-    - Name: Prof. David Dunson
-      Link: https://scholars.duke.edu/person/dunson
-    
-    - Name: Dr. Linda Valeri
-      Link: https://www.publichealth.columbia.edu/profile/linda-valeri-phd
+  - Name: Mr. Debashis Ghosh
+    Link: https://www.linkedin.com/in/debashis-ghosh-b5a756b/
 
-    - Name: Prof. Rahul R Marathe
-      Link: https://doms.iitm.ac.in/index.php/people/faculty/rahulrm/
+  - Name: Prof. Andrew Thangaraj
+    Aliases:
+      - Andrew Thangaraj
+    Link: https://www.ee.iitm.ac.in/andrew/
 
-    - Name: Dr. Naveen Sivadasan
-      Link: https://www.linkedin.com/in/naveen-sivadasan-b71027b2/
+  - Name: prof. Sheweta Agarwal
+    Link: https://www.cse.iitm.ac.in/~shwetaag/
 
-    - Name: Dr. Partha Pratim Das
-      Aliases:
-        - Partha Pratim Das
-      Link: https://www.ashoka.edu.in/profile/partha-pratim-das/
+  - Name: Prof. David Dunson
+    Link: https://scholars.duke.edu/person/dunson
 
-    - Name: Prof. Venkatesh Raman
-      Link: https://www.imsc.res.in/venkatesh_raman
+  - Name: Dr. Linda Valeri
+    Link: https://www.publichealth.columbia.edu/profile/linda-valeri-phd
 
-    - Name: Prof. K muralidharan
-      Link: https://www.linkedin.com/in/muralidharan-kunnummal/
+  - Name: Prof. Rahul R Marathe
+    Link: https://doms.iitm.ac.in/index.php/people/faculty/rahulrm/
 
-    - Name: Dr. Indu Joshi
-      Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
+  - Name: Dr. Naveen Sivadasan
+    Link: https://www.linkedin.com/in/naveen-sivadasan-b71027b2/
 
-    - Name: Prof. Balaraman Ravindran
-      Link: https://wsai.iitm.ac.in/~ravi/
+  - Name: Dr. Partha Pratim Das
+    Aliases:
+      - Partha Pratim Das
+    Link: https://www.ashoka.edu.in/profile/partha-pratim-das/
 
-    - Name: Prof. Chetan Kamath
-      Link: https://www.cse.iitb.ac.in/~ckamath/
+  - Name: Prof. Venkatesh Raman
+    Link: https://www.imsc.res.in/venkatesh_raman
 
-    - Name: Prof. Monalisa Sarma
-      Link: https://sqr.iitkgp.ac.in/monalisa_sarma.html
+  - Name: Prof. K muralidharan
+    Link: https://www.linkedin.com/in/muralidharan-kunnummal/
 
-    - Name: Prof. Gaurangadeb Chattopadhyay
-      Link: https://scholar.google.com/citations?user=wWMT7yMAAAAJ&hl=en
+  - Name: Dr. Indu Joshi
+    Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
 
-    - Name: Prof. Siddharth Arora
-      Link: https://www.cw.edu/staff/siddharth-arora/
+  - Name: Prof. Balaraman Ravindran
+    Link: https://wsai.iitm.ac.in/~ravi/
 
-    - Name: Prof. Satyadev Nandakumar
-      Link: https://www.cse.iitk.ac.in/users/satyadev/
+  - Name: Prof. Chetan Kamath
+    Link: https://www.cse.iitb.ac.in/~ckamath/
+
+  - Name: Prof. Monalisa Sarma
+    Link: https://sqr.iitkgp.ac.in/monalisa_sarma.html
+
+  - Name: Prof. Gaurangadeb Chattopadhyay
+    Link: https://scholar.google.com/citations?user=wWMT7yMAAAAJ&hl=en
+
+  - Name: Prof. Siddharth Arora
+    Link: https://www.cw.edu/staff/siddharth-arora/
+
+  - Name: Prof. Satyadev Nandakumar
+    Link: https://www.cse.iitk.ac.in/users/satyadev/
