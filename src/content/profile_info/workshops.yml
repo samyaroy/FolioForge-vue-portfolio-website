@@ -1,16 +1,16 @@
 attended_fdps:
   - title: "StatTech Fusion: Online FDP on Cutting – Edge Statistical Analysis, Research and AI techniques"
-    institution: 
+    institution:
       - name: "Sister Nivedita University"
         department: "Dept. of Statistics"
         location: "Kolkata, WB"
-    date: "September 2024"  
+    date: "September 2024"
     duration: "7 Days"
     mode: "Online"
     cred_link: "https://drive.google.com/file/d/1tlUYsg8pOxQDus62edIodeXb_2IZSrBn/preview"
 
   - title: "Joint online Faculty Development Programme on CLASSICAL ML"
-    institution: 
+    institution:
       - name: "Indian Institute of Technology Gandhinagar"
         department: "Electronics & ICT Academic"
       - name: "National Institute of Technology Patna"
@@ -18,7 +18,7 @@ attended_fdps:
       - name: "Indian Institute of Technology Kanpur"
       # - name: "Malaviya National Institute of Technology Jaipur"
       # - name: "Indian Institute of Technology Roorkee"
-    date: "18 -29 May 2026"  
+    date: "18 -29 May 2026"
     duration: "10 Days"
     mode: "Online"
     cred_link: "https://drive.google.com/file/d/1V9mDic5EwtYRJNOQNbhTxuAstktAuAyN/preview"
@@ -76,7 +76,7 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/10csQcRLN1Iiec9gsSOLxX8DCcOf3_Trq/preview"
 
   - title: "Democratizing Data Science: Exploring Open Source Statistical Software"
-    institution: 
+    institution:
       - name: "Sister Nivedita University"
         department: "Dept. of Statistics"
         location: "Kolkata, WB"
@@ -105,7 +105,7 @@ attended_webinars_n_others:
   - title: "Learning machines"
     enabled: false
     type: "lecture"
-    speaker: ["Prof. Piyush Srivastava, TIFR"]
+    speaker: [ "Prof. Piyush Srivastava, TIFR" ]
     host:
       - name: "Tata Institute of Fundamental Research"
         department:
@@ -117,10 +117,10 @@ attended_webinars_n_others:
     date: "17 July, 2026"
     mode: "Online"
     link: https://www.youtube.com/live/7GNjUyAmmpI?si=Cs1mKCW9hf56pST7
-    
+
   - title: "Towards Trustworthy Generative AI"
     type: "seminar"
-    speaker: ["Prof Karthik Nandakumar"]
+    speaker: [ "Prof Karthik Nandakumar" ]
     host:
       - name: "Indian Institute of Science (IISc)"
         department:
@@ -134,7 +134,7 @@ attended_webinars_n_others:
   - title: "Wearable Computing, Long-Term Memory & AI Agents"
     enabled: false
     type: "seminar"
-    speaker: ["Ashwani Yadav, Founder of NeuroDrishti"]
+    speaker: [ "Ashwani Yadav, Founder of NeuroDrishti" ]
     host:
       - name: "Indian Institute of Technology Delhi"
         department:
@@ -147,18 +147,18 @@ attended_webinars_n_others:
 
   - title: "Rao's Score Test and its Applications"
     type: lecture
-    speaker: ["Prof. K Muralidharan"]
+    speaker: [ "Prof. K Muralidharan" ]
     host:
       - name: "Sardar Patel University"
         department: "Department of Statistics"
     date: "29 June, 2026"
     mode: "Online"
-    cred_link:  https://drive.google.com/file/d/1r0Oi_maOpuLbzfXDZm24XV3C4jWczuG7/preview
+    cred_link: https://drive.google.com/file/d/1r0Oi_maOpuLbzfXDZm24XV3C4jWczuG7/preview
     link: https://youtu.be/7oS2JPjuKjs?si=0XN2ur6MKKs_tt1a
 
   - title: "COPSS-NISS Leadership Webinar: The Role of Bayesian Statistics in an Age of AI"
     type: webiner
-    speaker: ["Prof. David Dunson", "Prof. Xuming He", "Prof. (Dr.) Nadja Klein"]
+    speaker: [ "Prof. David Dunson", "Prof. Xuming He", "Prof. (Dr.) Nadja Klein" ]
     host:
       - name: "National Institute of Statistical Sciences"
         department: "Committee of the Presidents of Statistical Societies"
@@ -190,33 +190,33 @@ attended_webinars_n_others:
 
   - title: "IASS - Seminal Ideas and Controversies in Statistics"
     type: webiner
-    speaker: ["Prof. Rod Little"]
+    speaker: [ "Prof. Rod Little" ]
     host:
       - name: "International Statistical Association"
         department: "International Association of Survey Statisticaian"
-        location: 
+        location:
     date: "23 March, 2026"
     mode: "Online"
     link: https://isi-web.org/webinar/iass-seminal-ideas-and-controversies-statistics
     cred_link: https://drive.google.com/file/d/1IavCi-jSf5otKqv0yF80ftE8Yk1LpTSO/preview
-  
+
   - title: "Causal Learning for Individual and Population Health in the Era of AI"
     type: webiner
-    speaker: ["Dr. Linda Valeri"]
+    speaker: [ "Dr. Linda Valeri" ]
     host:
       - name: "CUNY Graduate School of Public Health and Health Policy"
         department:
-        location: New York, US  
+        location: New York, US
     date: "14 May, 2026"
     mode: "Online"
 
   - title: "Discussion on Bayesian Analysis"
     type: webiner
-    speaker: 
+    speaker:
     host:
       - name: "The International Society for Bayesian Analysis"
         department:
-        location: Rome, IT  
+        location: Rome, IT
     date: "28 May, 2026"
     mode: "Online"
 
@@ -250,7 +250,7 @@ attended_other_workshops:
     date: "May, 2026"
     mode: "Online"
     cred_link: https://drive.google.com/file/d/1ircG4cbkRxTr7ur6-bnmVjnmlyeIfBOz/preview
-    
+
   - title: "Audio & Image Analysis Using Python"
     instructor:
       - name: "Prof. Vikranth Racherla"
@@ -282,7 +282,6 @@ attended_other_workshops:
     mode: "Online"
     cred_link: https://drive.google.com/file/d/14daqILuPpEPdDhKmm02byokI4rKJ3sbp/preview
 
-  
 attended_bootcamps:
   - title: "AI Vicharana Shala Bootcamp"
     instructor:
@@ -353,16 +352,16 @@ attended_bootcamps:
 
 attended_conferences:
   - title: "Fifth International Conference on Security and Privacy (ISEA-ISAP 2026)"
-  #  link: "https://isea-isap2026.iitm.ac.in/"
+    #  link: "https://isea-isap2026.iitm.ac.in/"
     organizer:
       - name: "Indian Institute of Technology Madras"
         department: "CyStar"
-      - name: "MeitY, GoI" 
+      - name: "MeitY, GoI"
         department: "Information Security Education and Awareness (ISEA)"
-    location: "Chennai, TN"  
+    location: "Chennai, TN"
     institution:
       - name: "Indian Institute of Technology Madras"
-    date: "January 16-18, 2026" 
+    date: "January 16-18, 2026"
     cred_link: "https://drive.google.com/file/d/11f1dKYe_2jSlnKWkZRHlzh90j9r6GJHb/preview"
 
   - title: "Cryptology Conclave 2026"
@@ -373,5 +372,5 @@ attended_conferences:
     location: "Hyderabad, TS"
     institution:
       - name: "Indian Institute of Technology Hyderabad"
-    date: "January 22-23, 2026" 
+    date: "January 22-23, 2026"
     cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"

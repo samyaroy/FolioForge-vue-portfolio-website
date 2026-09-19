@@ -1,6 +1,6 @@
 certifications:
   - title: Introduction to Uncertainty Quantification
-    logo: ['JHU','COURSERA']
+    logo: [ 'JHU', 'COURSERA' ]
     issuer:
       institution: Whiting School of Engineering, Johns Hopkins University
       platform: Coursera
@@ -8,9 +8,9 @@ certifications:
     date: 29 Nov 2025
     duration: 3 Weeks (Approx. 29 hours)
     cred_link: 'https://drive.google.com/file/d/1U5q6y3fE0FY2tQSfJ1XBk_LEYWaQ_UBO/preview'
-  
+
   - title: Introduction to Programming in C
-    logo: ['IITK','NPTEL']
+    logo: [ 'IITK', 'NPTEL' ]
     issuer:
       institution: Indian Institute of Technology Kanpur
       platform: NPTEL
@@ -21,7 +21,7 @@ certifications:
     tag: 'Elite'
 
   - title: Diploma in Web Designing (DWD)
-    logo: ['CITC']
+    logo: [ 'CITC' ]
     issuer:
       institution: Chandigarh Institute of Technology and Consultancy
       location: Mohali, PB
@@ -40,13 +40,11 @@ certifications:
 # and the whole line is dropped when both are missing.
 more_certifications:
   - title: "Responsible AI: Applying AI Principles with Google Cloud"
-    logo: ['SIMPLILEARN']
+    logo: [ 'SIMPLILEARN' ]
     issuer:
-      platform: Simplilearn    # optional
+      platform: Simplilearn # optional
     date: 14th Apr 2024
-    cred_link: 'https://drive.google.com/file/d/1PgU-s02SKXJbGtqQMv3hO3xqsLmHOqnf/preview'   # optional
-
-
+    cred_link: 'https://drive.google.com/file/d/1PgU-s02SKXJbGtqQMv3hO3xqsLmHOqnf/preview' # optional
   # # No duration, so the date line carries the date alone.
   # - title: Third certificate title
   #   logo: ['COURSERA']

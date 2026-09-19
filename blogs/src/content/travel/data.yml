@@ -98,7 +98,6 @@ states:
       - { name: Digha, visits: 2 }
       - { name: Mandarmani, visits: 1 }
       - { name: Krishnagar, visits: 1 }
-  
   # - state: Meghalaya
   #   purpose: travel
   #   cities:

@@ -5,7 +5,7 @@ internships:
     guide: Prof. Sudarshan Iyengar
     location: Virtual
     time_period: Feb 2026 - Present
-    description: 
+    description:
     type: Virtual Internship
     cred_link:
 
@@ -19,17 +19,16 @@ internships:
     guide:
       name: Prof. Sudarshan Iyengar
       designation: Principal Investigator, Vicharanashala Lab for Education Design, IIT Ropar
-    description: 
+    description:
     cred_link:
     project:
     cirriculum:
       - course_code: AI-101
         course_name: Fundamentals of AI using Agriculture Dataset
         credit: 1
-      - course_code: 
+      - course_code:
         course_name: MERN Stack Development
-        credit: 
-    
+        credit:
 
   - role: Data Science Intern (Autumn 2024)
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
@@ -41,7 +40,7 @@ internships:
     description: Completed 120+ hours of UGC-guideline training on Python, Research Methodology and Aptitude Testing
     type: Training Internship
     cred_link: https://drive.google.com/file/d/1mTATc-tbkC9iIoL0vHuNeJWgaRCJtFOE/preview
-    project: 
+    project:
       title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
       cred_link:
 
@@ -50,5 +49,5 @@ internships:
     location: Remote
     time_period: Nov 2023 - Jan 2024
     department: UnacademyX
-    description: 
+    description:
     cred_link: https://drive.google.com/file/d/19hI0Z39UDh6Rn0z4lijbEirIgZHZeU4q/preview

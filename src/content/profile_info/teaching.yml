@@ -39,7 +39,7 @@ projects_mentored:
           location: Kolkata, WB
         cred_link:
           report: https://drive.google.com/file/d/1XCIbN4zAeLYdO4WSAsZ21DImJj6aP8Bx/view?usp=drive_link
-      
+
       - title: "TrackTube: An Open-Source YouTube-based LMS Framework for Structured Learning, Roadmap Generation and Progress Tracking"
         description: >-
           TrackTube is a full-stack web app (React 19 + FastAPI + CockroachDB) that converts any public YouTube playlist into a structured course — pulling video metadata via the YouTube Data API v3 and enforcing sequential lesson unlocking with second-level progress tracking and an anti-cheat buffer to stop skipping ahead.
@@ -48,12 +48,11 @@ projects_mentored:
         course: "Summer Internship Program on Data Science 2026"
         students:
           - name: "NIRNOY CHATTERJEE"
-            Linkedin: 
+            Linkedin:
           - name: "SHREYAN GHOSH"
             Linkedin:
           - name: "PRINCE KUMAR SINGH"
-            Linkedin:
-        # registration_number: "Group-A"
+            Linkedin: # registration_number: "Group-A"
         affiliation:
           name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
           location: Kolkata, WB
@@ -96,7 +95,7 @@ projects_mentored:
         cred_link:
           report: https://drive.google.com/file/d/1i-835QLggY2OWbRxr_RAw1i1wsRBDKCD/view
           github: https://github.com/samyaroy/IDEAS_Spring_Internship_Contribution_2026
-      
+
 other_teachings:
   - title: "Private Tutor"
     institution:

@@ -4,7 +4,7 @@ projects:
       type: Research Project
       description: Built a deep learning pipeline for robust music genre classification under noisy mashup conditions, simulating distribution shift beyond clean training data and achieving 87% accuracy. Generated on-the-fly same-genre mashups from multi-stem audio, engineered Mel-spectrogram/MFCC representations with environmental noise augmentation, and trained CNN classifiers using both from-scratch and pretrained backbones.
       affiliation: Diploma Project (DLGenAI), BS in Data Science and Applications, `Indian Institute of Technology Madras`
-      logo: ['IITM']
+      logo: [ 'IITM' ]
       tech_stack: Data Augmentation, Audio Classification, CNN, CRNN,  ResNet18, EfficientNet B0
       time_period: Jan 2026 - Apr 2026
       cred_link:
@@ -16,7 +16,7 @@ projects:
       type: Research Project
       description: Built a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
       affiliation: Diploma Project (MLP), BS in Data Science and Applications, `Indian Institute of Technology Madras`
-      logo: ['IITM']
+      logo: [ 'IITM' ]
       tech_stack: NLP, Logistic Regression, Random Forest, XGBoost, Naive Bayes, Python
       guide:
       time_period: Jan 2026 - Apr 2026
@@ -27,8 +27,8 @@ projects:
       description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
       type: Research Project
       doi: 10.13140/RG.2.2.16657.13926
-      affiliation:  Degree Project, BSc. (Hons.) in Statistics , `Sister Nivedita University`
-      logo: ['SNU']
+      affiliation: Degree Project, BSc. (Hons.) in Statistics , `Sister Nivedita University`
+      logo: [ 'SNU' ]
       tech_stack: Wine Quality Rating, Exploratory Data Analysis, Ordinary Least Squares, Stepwise Regression, Robust Regression, R
       guide:
         name: Prof. Aniruddha Choudhuri
@@ -47,7 +47,7 @@ projects:
       type: Research Project
       doi:
       affiliation: Internship Project (Data Science Intern), `Institute of Data Engineering, Analytics and Science Foundation (IDEAS-TIH)`, `Indian Statistical Institute, Kolkata`
-      logo: ['IDEAS']
+      logo: [ 'IDEAS' ]
       tech_stack: Nonparametric Inference, Data Visualization, Survey Design, Python
       guide:
         name: Mr. Debashis Ghosh
@@ -125,13 +125,13 @@ projects:
       cred_link:
         report: https://drive.google.com/file/d/1HZ2ZXDpfW3abasiGvcABKqvP03hpM9PO/view?usp=drive_link
         github: "https://github.com/vicharanashala/cs9"
-      logo: ['VLED-IITRPR3']
+      logo: [ 'VLED-IITRPR3' ]
 
     - title: Quiz Pilot (V1 & V2)
       description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
       type: "Minor Project"
       affiliation: Diploma Projects (MAD I, MAD II), `BS in Data Science and Applications, Indian Institute of Technology Madras`
-      logo: ['IITM']
+      logo: [ 'IITM' ]
       tech_stack: Flask, Vue.js, SQLite, Redis, Celery, Bootstrap
       guide:
       time_period: "Jan 2025 - Aug 2025"
@@ -161,4 +161,3 @@ projects:
       tech_stack: FastAPI, PostgreSQL, React.js, Typescript
       cred_link:
         github: ""
-      

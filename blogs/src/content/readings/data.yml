@@ -26,7 +26,6 @@ items:
     genre: Education
     description: "A foundational work of critical pedagogy that examines education, dialogue, and the struggle for liberation from oppression."
     link: https://en.wikipedia.org/wiki/Pedagogy_of_the_Oppressed
-
   # Dummy entries retained for reference; uncomment only after replacing the
   # scaffold descriptions, dates, ratings, and notes with real reading data.
   # - id: deep-work
