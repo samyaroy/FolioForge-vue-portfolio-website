@@ -5,7 +5,7 @@ import { githubConfig, installationAccess, repositoryPolicy, requireGithub, reso
 import { applyEntryChange, readCollection } from '../content/index.ts'
 import { contentSources } from '../content/registry.ts'
 import { HttpError, json } from '../http.ts'
-import { archiveLogo, listLogos, storeLogo } from '../media.ts'
+import { archiveLogo, listLogos, publishDraft, storeLogo } from '../media.ts'
 import { listDrafts, readDraft, storeDraft } from '../drafts.ts'
 import { imagePolicy } from '../images.ts'
 
@@ -61,6 +61,12 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
     if (Number(request.headers.get('content-length') ?? 0) > imagePolicy.maxBytes) return json({ error: 'image_too_large' }, 413)
     return json(await storeDraft(env.DRAFTS, await request.arrayBuffer(), request.headers.get('content-type')), 201)
+  }
+  if (path === '/api/media/publish' && request.method === 'POST') {
+    if (!env.MEDIA || !env.DRAFTS) return json({ error: 'r2_not_connected' }, 503)
+    const body = await jsonBody(request)
+    const published = await publishDraft(env.MEDIA, env.DRAFTS, String(body.draft ?? ''), String(body.name ?? ''), body.replace === true)
+    return json(published, 201)
   }
   if (path === '/api/media/drafts' && request.method === 'GET') {
     if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)

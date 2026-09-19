@@ -99,3 +99,21 @@ export async function uploadLogo(name: string, file: File, replace: boolean): Pr
     logo_exists: 'A logo already uses that name. Choose Replace to archive the old one.',
   })
 }
+
+export type PublishedMedia = { key: string; url: string; replaced?: string }
+
+/** Move a staged upload into the published media bucket under a content name. */
+export async function publishDraft(draft: string, name: string, replace: boolean): Promise<PublishedMedia> {
+  const body = await mutate('/api/media/publish', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ draft, name, replace }),
+  }, {
+    invalid_media_name: 'Use letters, digits, spaces, dots, hyphens or underscores — and not a name starting with logo, icons or archived.',
+    media_exists: 'A file already uses that name. Choose Replace to archive the old one.',
+    not_found: 'That upload is no longer staged. Upload it again.',
+  })
+  const { key, url, replaced } = (body ?? {}) as Record<string, unknown>
+  if (typeof key !== 'string' || typeof url !== 'string') throw new Error('Publish response was not usable.')
+  return { key, url, ...(typeof replaced === 'string' ? { replaced } : {}) }
+}

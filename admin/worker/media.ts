@@ -1,6 +1,6 @@
 import { HttpError } from './http.ts'
 import { contentDigest, inspectImage } from './images.ts'
-import type { MediaBucket, R2Listing, ReadOnlyBucket } from './types.ts'
+import type { DraftBucket, MediaBucket, R2Listing, ReadOnlyBucket } from './types.ts'
 
 /**
  * The one prefix this admin may list and the host its objects are served from.
@@ -29,6 +29,21 @@ const LOGO_NAME = /^[A-Za-z0-9][A-Za-z0-9 ._-]{0,63}$/
 export function assertLogoName(name: string): string {
   const trimmed = name.trim()
   if (!LOGO_NAME.test(trimmed) || trimmed.includes('..') || trimmed.endsWith('.')) throw new HttpError(400, 'invalid_logo_name')
+  return trimmed
+}
+
+/**
+ * General media sits at the root of the bucket, because that is where the
+ * content already points: `heroImage` and every gallery key resolve to
+ * `<media host>/<name>`. Same rules as a logo name — it ends up in a URL and in
+ * a YAML value, so it may not carry a path.
+ */
+export const mediaPolicy = { archivePrefix: 'archived/' } as const
+
+export function assertMediaName(name: string): string {
+  const trimmed = name.trim()
+  if (!LOGO_NAME.test(trimmed) || trimmed.includes('..') || trimmed.endsWith('.')) throw new HttpError(400, 'invalid_media_name')
+  if (trimmed.startsWith('logo') || trimmed.startsWith('icons') || trimmed.startsWith('archived')) throw new HttpError(400, 'invalid_media_name', 'reserved_prefix')
   return trimmed
 }
 
@@ -128,4 +143,48 @@ export async function storeLogo(bucket: MediaBucket, rawName: string, body: Arra
     throw new HttpError(502, 'storage_unavailable', 'put_failed')
   }
   return { ...toLogoItem(key), digest: await contentDigest(image.bytes) }
+}
+
+/* --------------------------- publishing a draft -------------------------- */
+
+export type PublishedMedia = { key: string; url: string; replaced?: string }
+
+/**
+ * Move a staged upload into the published bucket under a name the content can
+ * reference. The bytes have already been validated and stripped of metadata on
+ * the way into staging, so this copies rather than re-inspects — and it refuses
+ * to stand on an existing file unless replacing was asked for, archiving the
+ * old one when it is.
+ */
+export async function publishDraft(
+  media: MediaBucket,
+  drafts: DraftBucket,
+  draftName: string,
+  rawName: string,
+  replace: boolean,
+): Promise<PublishedMedia> {
+  const name = assertMediaName(rawName)
+  if (!/^[a-f0-9]{64}\.(jpg|png|webp)$/.test(draftName)) throw new HttpError(404, 'not_found', 'bad_draft_name')
+  const staged = await drafts.get(`drafts/${draftName}`)
+  if (!staged?.body) throw new HttpError(404, 'not_found', 'draft_missing')
+
+  const extension = draftName.slice(draftName.lastIndexOf('.') + 1)
+  const key = /\.[a-z0-9]+$/i.test(name) ? name : `${name}.${extension}`
+  const existing = await media.get(key)
+  if (existing && !replace) throw new HttpError(409, 'media_exists', 'name_taken')
+
+  let replaced: string | undefined
+  if (existing?.body) {
+    replaced = `${mediaPolicy.archivePrefix}${key}`
+    const previous = await new Response(existing.body).arrayBuffer()
+    await media.put(replaced, previous, { httpMetadata: { contentType: existing.httpMetadata?.contentType ?? 'application/octet-stream' } })
+  }
+
+  const bytes = await new Response(staged.body).arrayBuffer()
+  try {
+    await media.put(key, bytes, { httpMetadata: { contentType: staged.httpMetadata?.contentType ?? 'application/octet-stream' } })
+  } catch {
+    throw new HttpError(502, 'storage_unavailable', 'publish_failed')
+  }
+  return { key, url: new URL(key, `${logoPolicy.publicBase}/`).href, ...(replaced ? { replaced } : {}) }
 }

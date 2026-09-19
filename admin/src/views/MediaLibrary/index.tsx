@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { AlertCircle, CheckCircle2, ImagePlus, Loader2, Trash2 } from 'lucide-react'
+import { toast } from 'react-toastify'
+import { AlertCircle, CheckCircle2, CloudUpload, ImagePlus, Loader2, Trash2 } from 'lucide-react'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { Button, FileField, IconButton } from '@/components/form'
+import { Button, FileField, IconButton, TextField } from '@/components/form'
 import { LogoLibrary } from '@/components/admin/LogoLibrary'
 import { useIntegrations } from '@/hooks/useIntegrations'
-import { draftPreviewUrl, uploadImage, type StoredDraft } from '@/services/uploads'
+import { draftPreviewUrl, publishDraft, uploadImage, type StoredDraft } from '@/services/uploads'
 
 type Staged = {
   id: string
@@ -15,6 +16,10 @@ type Staged = {
   state: 'uploading' | 'stored' | 'failed'
   stored?: StoredDraft
   error?: string
+  /** The name this image will carry once published, and where it landed. */
+  publishAs?: string
+  publishedUrl?: string
+  publishing?: boolean
 }
 
 const megabytes = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(2)} MB`
@@ -60,6 +65,21 @@ export function MediaLibraryPage() {
 
   const storedCount = staged.filter(item => item.state === 'stored').length
 
+  const publish = async (item: Staged) => {
+    const name = (item.publishAs ?? '').trim()
+    if (!item.stored || !name) { toast.error('Name the image before publishing it.'); return }
+    const replace = window.confirm(`Publish as "${name}"?\n\nOK to replace an existing file of that name (the old one is archived), or Cancel to refuse if the name is taken.`)
+    update(item.id, { publishing: true })
+    try {
+      const published = await publishDraft(item.stored.name, name, replace)
+      update(item.id, { publishedUrl: published.url, publishing: false })
+      toast.success(published.replaced ? `Published. The previous file is in ${published.replaced}.` : 'Published to the media host.')
+    } catch (error) {
+      update(item.id, { publishing: false })
+      toast.error(error instanceof Error ? error.message : 'Could not publish that image.')
+    }
+  }
+
   return (
     <>
       <PageHeader
@@ -69,7 +89,7 @@ export function MediaLibraryPage() {
       />
       <LocalNotice>
         {integrations.uploads
-          ? 'Uploads are stored in a private bucket with no public address. Location metadata is stripped before anything is written, and nothing here is published until a reviewed publish step exists.'
+          ? 'Uploads land in a private bucket with no public address, and location metadata is stripped before anything is written. Publishing copies one to the media host under the name your content will reference.'
           : 'Upload storage is not connected, so files stay in your browser and reach nothing.'}
       </LocalNotice>
       <LogoLibrary />
@@ -92,7 +112,20 @@ export function MediaLibraryPage() {
                     {item.state === 'stored' && item.stored && <><CheckCircle2 aria-hidden="true" /> {item.stored.width}x{item.stored.height} - {megabytes(item.stored.size)} stored</>}
                     {item.state === 'failed' && <><AlertCircle aria-hidden="true" /> {item.error}</>}
                   </span>
-                  {item.stored && <code>{item.stored.name}</code>}
+                  {item.stored && !item.publishedUrl && (
+                    <span className="media-publish">
+                      <TextField
+                        aria-label={`Publish ${item.name} as`}
+                        value={item.publishAs ?? ''}
+                        onChange={value => update(item.id, { publishAs: value })}
+                        placeholder="Name on the media host"
+                      />
+                      <Button size="sm" variant="outline" disabled={item.publishing} onClick={() => void publish(item)}>
+                        <CloudUpload aria-hidden="true" /> {item.publishing ? 'Publishing...' : 'Publish'}
+                      </Button>
+                    </span>
+                  )}
+                  {item.publishedUrl && <code><a href={item.publishedUrl} target="_blank" rel="noreferrer">{item.publishedUrl.replace('https://', '')}</a></code>}
                 </div>
                 <IconButton variant="bare" size="none" label={`Remove ${item.name}`} onClick={() => remove(item.id)}><Trash2 aria-hidden="true" /></IconButton>
               </article>

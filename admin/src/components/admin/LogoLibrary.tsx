@@ -7,7 +7,7 @@ import { isLogoReferenced } from '@/lib/logoReferences'
 import { archiveLogo, uploadLogo } from '@/services/uploads'
 
 export function LogoLibrary() {
-  const { logos, loading, error, refresh, stage } = useLogoCatalog()
+  const { logos, loading, error, refresh } = useLogoCatalog()
   const [name, setName] = useState('')
   const [busy, setBusy] = useState('')
   // Archiving is reversible but still changes the live site, so it is confirmed
@@ -25,8 +25,23 @@ export function LogoLibrary() {
       setName('')
       refresh()
     } catch (uploadError) {
+      // A failed upload is a failure, not a phantom local entry that looks like
+      // it worked.
       toast.error(uploadError instanceof Error ? uploadError.message : 'Upload failed.')
-      stage(file, chosen)
+    } finally {
+      setBusy('')
+    }
+  }
+
+  const replaceLogo = async (value: string, file: File) => {
+    if (!window.confirm(`Replace ${value}? The current file is archived to logo/archived/ and the site picks up the new one.`)) return
+    setBusy(value)
+    try {
+      await uploadLogo(value, file, true)
+      toast.success(`${value} replaced. The old file is in logo/archived/.`)
+      refresh()
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not replace that logo.')
     } finally {
       setBusy('')
     }
@@ -79,8 +94,8 @@ export function LogoLibrary() {
                   )
                   : (
                     <span className="logo-card-actions">
-                      <FileField fieldClassName="logo-upload" aria-label={`Replace logo ${logo.name}`} accept="image/png,image/jpeg,image/webp" onSelect={files => { const file = files?.[0]; if (file) stage(file, logo.value) }}>
-                        <Upload aria-hidden="true" /><span>Replace</span>
+                      <FileField fieldClassName="logo-upload" aria-label={`Replace logo ${logo.name}`} accept="image/png,image/jpeg,image/webp" onSelect={files => { const file = files?.[0]; if (file) void replaceLogo(logo.value, file) }}>
+                        <Upload aria-hidden="true" /><span>{busy === logo.value ? 'Uploading...' : 'Replace'}</span>
                       </FileField>
                       <IconButton
                         variant="bare"

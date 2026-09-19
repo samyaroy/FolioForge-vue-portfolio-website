@@ -184,3 +184,70 @@ test('a name cannot smuggle a path into a key', async () => {
   }
   assert.deepEqual(bucket.deleted, [])
 })
+
+/* --------------------------- publishing a draft -------------------------- */
+
+import { assertMediaName, publishDraft } from '../media.ts'
+
+function draftStore(names = ['a'.repeat(64) + '.png']) {
+  const store = new Map(names.map(n => [`drafts/${n}`, pngBytes()]))
+  return {
+    store,
+    binding: {
+      get: async key => store.has(key) ? { body: new Response(store.get(key)).body, httpMetadata: { contentType: 'image/png' } } : null,
+      put: async () => ({}),
+      list: async () => ({ objects: [], truncated: false }),
+    },
+  }
+}
+
+const DRAFT = 'a'.repeat(64) + '.png'
+
+test('a media name may not carry a path or squat on a managed prefix', () => {
+  for (const good of ['SamyabrataRoy3', 'hero-2026', 'photo_01.jpg']) assert.equal(assertMediaName(good), good)
+  for (const bad of ['../escape', 'a/b', '', '..', 'name.']) {
+    assert.throws(() => assertMediaName(bad), error => error.code === 'invalid_media_name', `${JSON.stringify(bad)} should be refused`)
+  }
+  // The logo and icon prefixes are managed by their own flows; general media
+  // must not be able to write into them by choosing a clever name.
+  for (const reserved of ['logo', 'logoX', 'icons', 'archived']) {
+    assert.throws(() => assertMediaName(reserved), error => error.reason === 'reserved_prefix', `${reserved} should be reserved`)
+  }
+})
+
+test('publishing moves a staged draft to the public bucket under its content name', async () => {
+  const media = mediaBucket([])
+  const drafts = draftStore()
+  const published = await publishDraft(media.binding, drafts.binding, DRAFT, 'SamyabrataRoy3', false)
+  assert.equal(published.key, 'SamyabrataRoy3.png')
+  assert.equal(published.url, 'https://media.samyabrata.codeium.xyz/SamyabrataRoy3.png')
+  assert.equal(media.store.has('SamyabrataRoy3.png'), true)
+  assert.equal('replaced' in published, false)
+})
+
+test('publishing over an existing file needs saying so, and archives what was there', async () => {
+  const media = mediaBucket(['hero.png'])
+  const drafts = draftStore()
+  await assert.rejects(publishDraft(media.binding, drafts.binding, DRAFT, 'hero', false), error => error.status === 409 && error.code === 'media_exists')
+  assert.equal(media.store.size, 1, 'a refused publish must leave the bucket alone')
+
+  const published = await publishDraft(media.binding, drafts.binding, DRAFT, 'hero', true)
+  assert.equal(published.replaced, 'archived/hero.png')
+  assert.equal(media.store.has('archived/hero.png'), true, 'the previous file is recoverable')
+  assert.equal(media.store.has('hero.png'), true)
+})
+
+test('a draft name the caller invented never reaches storage', async () => {
+  const media = mediaBucket([])
+  const drafts = draftStore()
+  for (const name of ['../../secret.png', 'drafts/x.png', 'not-a-digest.png']) {
+    await assert.rejects(publishDraft(media.binding, drafts.binding, name, 'ok', false), error => error.status === 404)
+  }
+  assert.equal(media.store.size, 0)
+})
+
+test('publishing a draft that is not staged changes nothing', async () => {
+  const media = mediaBucket([])
+  await assert.rejects(publishDraft(media.binding, draftStore([]).binding, DRAFT, 'ok', false), error => error.reason === 'draft_missing')
+  assert.equal(media.store.size, 0)
+})

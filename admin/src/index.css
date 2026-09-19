@@ -729,3 +729,9 @@ tbody tr:hover { background: #f9fbfd; }
 /* A connected repository the admin cannot write to is worth seeing before a
    save fails, not after. */
 .workspace-label-warn { color: #f0a23a; }
+
+/* Naming an upload and publishing it sit together on the card, because the name
+   is what the content will reference and is worth choosing deliberately. */
+.media-publish { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+.media-publish .field-wrapper { margin: 0; flex: 1; min-width: 0; }
+.media-publish input { width: 100%; }

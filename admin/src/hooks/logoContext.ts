@@ -6,7 +6,6 @@ export type LogoCatalog = {
   loading: boolean
   error: string | null
   refresh: () => void
-  stage: (file: File, replacement?: string) => void
 }
 
 export const LogoContext = createContext<LogoCatalog | null>(null)
