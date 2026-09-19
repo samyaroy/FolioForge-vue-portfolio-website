@@ -13,6 +13,11 @@ import { createEntry, deleteEntry, fetchCollection, saveEntry } from '@/services
 
 const groups = ['Institute', 'Person'] as const
 
+// Aliases are listed with a semicolon rather than a comma because several of
+// them contain commas of their own — "International Centre for Theoretical
+// Sciences, Bangalore" is one alias, not two.
+const ALIAS_SEPARATOR = '; '
+
 /**
  * Both groups are sequences in one file, so a single read gives the revision
  * and the contents of both. Returns data rather than setting state, so the
@@ -42,12 +47,12 @@ const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void, 
       </div>
     ),
   }),
-  column.accessor(entry => entry.aliases.join(', '), {
+  column.accessor(entry => entry.aliases.join(ALIAS_SEPARATOR), {
     id: 'aliases',
     header: 'Aliases',
     meta: { width: '54%' },
     cell: ({ row }) => row.original.aliases.length
-      ? <span className="hyperlink-aliases">{row.original.aliases.join(', ')}</span>
+      ? <span className="hyperlink-aliases">{row.original.aliases.join(ALIAS_SEPARATOR)}</span>
       : <span className="credential-link-empty">-</span>,
   }),
   column.accessor('url', {
