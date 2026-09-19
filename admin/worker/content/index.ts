@@ -1,10 +1,12 @@
 import { HttpError } from '../http.ts'
 import type { GithubConfig } from '../github.ts'
-import { commitFiles, readFile, writeFile } from './files.ts'
+import { commitFiles, readFile } from './files.ts'
 import { derivedFiles, generatedPaths } from './derived.ts'
 import { isWritablePath } from './registry.ts'
 import { contentSource } from './registry.ts'
 import { appendLocation, insertEntry, locateEntry, parseContent, readEntry, removeEntry, replaceEntry, sequencePath } from './entries.ts'
+import { discardPending, listPending, readPending, writePending, type PendingFile } from './pending.ts'
+import type { DraftBucket } from '../types.ts'
 
 export type EntryWrite = {
   collection: string
@@ -20,9 +22,18 @@ function sourceOf(collection: string) {
   return source
 }
 
-export async function readCollection(config: GithubConfig, collection: string) {
+/** The file as it stands for editing: the pending version if one exists. */
+async function currentFile(config: GithubConfig, drafts: DraftBucket | undefined, path: string) {
+  const published = await readFile(config, path)
+  const pending = drafts ? await readPending(drafts, path) : undefined
+  return pending
+    ? { path, text: pending.text, sha: published.sha, baseSha: pending.baseSha, summaries: pending.summaries, pending: true }
+    : { path, text: published.text, sha: published.sha, baseSha: published.sha, summaries: [], pending: false }
+}
+
+export async function readCollection(config: GithubConfig, collection: string, drafts?: DraftBucket) {
   const source = sourceOf(collection)
-  const file = await readFile(config, source.path)
+  const file = await currentFile(config, drafts, source.path)
   const document = parseContent(file.text)
   // `getIn` hands back YAML nodes; the caller wants plain data, so the whole
   // document is converted once and read from that.
@@ -32,7 +43,7 @@ export async function readCollection(config: GithubConfig, collection: string) {
     const sequence = sequencePath(arrayKey).reduce<unknown>((value, key) => (value && typeof value === 'object' ? (value as Record<string, unknown>)[key] : undefined), data)
     if (Array.isArray(sequence)) entries.push(...sequence)
   }
-  return { path: source.path, baseSha: file.sha, entries }
+  return { path: source.path, baseSha: file.baseSha, entries, pending: file.pending }
 }
 
 /**
@@ -45,10 +56,12 @@ export async function applyEntryChange(
   config: GithubConfig,
   action: 'update' | 'create' | 'delete',
   request: EntryWrite,
-): Promise<{ commit: string; baseSha: string }> {
+  drafts?: DraftBucket,
+): Promise<{ baseSha: string; pending: number }> {
+  if (!drafts) throw new HttpError(503, 'uploads_not_connected', 'pending_store_missing')
   const source = sourceOf(request.collection)
-  const file = await readFile(config, source.path)
-  if (file.sha !== request.baseSha) throw new HttpError(409, 'content_conflict', 'stale_base')
+  const file = await currentFile(config, drafts, source.path)
+  if (file.baseSha !== request.baseSha) throw new HttpError(409, 'content_conflict', 'stale_base')
 
   const document = parseContent(file.text)
   let text: string
@@ -71,17 +84,48 @@ export async function applyEntryChange(
     }
   }
 
-  if (text === file.text) return { commit: '', baseSha: file.sha }
+  if (text === file.text) return { baseSha: file.baseSha, pending: (await listPending(drafts)).length }
 
-  // A source with generated files cannot be committed on its own: the two would
-  // disagree in the repository until something rebuilt them.
-  const derived = derivedFiles(source.path, parseContent(text).toJS())
-  if (derived.length) {
-    const allowed = (path: string) => isWritablePath(path) || generatedPaths.includes(path)
-    const { commit } = await commitFiles(config, [{ path: source.path, text }, ...derived], `content(admin): ${summary}`, allowed)
-    return { commit, baseSha: file.sha }
+  // The edit waits here. Nothing reaches the branch until it is published.
+  await writePending(drafts, { path: source.path, text, baseSha: file.baseSha, summaries: [...file.summaries, summary] })
+  return { baseSha: file.baseSha, pending: (await listPending(drafts)).length }
+}
+
+/** What is waiting, with the generated files each change will bring with it. */
+export async function pendingChanges(drafts: DraftBucket): Promise<PendingFile[]> {
+  return listPending(drafts)
+}
+
+export async function discardChanges(drafts: DraftBucket, path?: string) {
+  return { discarded: await discardPending(drafts, path) }
+}
+
+/**
+ * Commit everything waiting as one revision. Generated files are rendered from
+ * the pending content at this moment, so they describe what is actually being
+ * published rather than what was true when the edit was made.
+ */
+export async function publishChanges(config: GithubConfig, drafts: DraftBucket, message?: string): Promise<{ commit: string; files: string[] }> {
+  const pending = await listPending(drafts)
+  if (!pending.length) throw new HttpError(409, 'nothing_to_publish')
+
+  // Each file was edited from a revision; if the branch has moved on since,
+  // publishing would overwrite whatever moved it.
+  for (const file of pending) {
+    const published = await readFile(config, file.path)
+    if (published.sha !== file.baseSha) throw new HttpError(409, 'content_conflict', `stale:${file.path}`)
   }
 
-  const { commit } = await writeFile(config, { ...file, text }, `content(admin): ${summary}`)
-  return { commit, baseSha: file.sha }
+  const files = pending.flatMap(file => [
+    { path: file.path, text: file.text },
+    ...derivedFiles(file.path, parseContent(file.text).toJS()),
+  ])
+  const summaries = pending.flatMap(file => file.summaries)
+  const title = message?.trim() || `content(admin): ${summaries.length} change${summaries.length === 1 ? '' : 's'}`
+  const body = summaries.map(line => `- ${line}`).join('\n')
+
+  const allowed = (path: string) => isWritablePath(path) || generatedPaths.includes(path)
+  const { commit } = await commitFiles(config, files, `${title}\n\n${body}`, allowed)
+  await discardPending(drafts)
+  return { commit, files: files.map(file => file.path) }
 }

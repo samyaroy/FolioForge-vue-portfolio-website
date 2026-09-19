@@ -255,3 +255,62 @@ test('deleting from one named group leaves the other untouched', () => {
   assert.equal(countEntries(after, leadership), countEntries(parseContent(original), leadership) - 1)
   assert.equal(countEntries(after, volunteering), volunteersBefore, 'the other group must be untouched')
 })
+
+/* --------------------------- waiting to publish --------------------------- */
+
+import { discardPending, listPending, readPending, writePending } from '../content/pending.ts'
+
+function pendingBucket() {
+  const store = new Map()
+  return {
+    store,
+    binding: {
+      get: async key => store.has(key) ? { body: new Response(store.get(key).bytes).body, customMetadata: store.get(key).meta } : null,
+      put: async (key, value, options) => { store.set(key, { bytes: new Uint8Array(value), meta: options?.customMetadata }) },
+      delete: async key => { store.delete(key) },
+      list: async ({ prefix }) => ({ objects: [...store.keys()].filter(k => k.startsWith(prefix)).map(key => ({ key })), truncated: false }),
+    },
+  }
+}
+
+test('an edit waits in the store instead of reaching the branch', async () => {
+  const bucket = pendingBucket()
+  await writePending(bucket.binding, { path: 'src/content/profile_info/education.yml', text: 'education:\n  - degree: MSc\n', baseSha: 'a'.repeat(40), summaries: ['update an entry'] })
+  const file = await readPending(bucket.binding, 'src/content/profile_info/education.yml')
+  assert.equal(file.text, 'education:\n  - degree: MSc\n')
+  assert.equal(file.baseSha, 'a'.repeat(40))
+  assert.deepEqual(file.summaries, ['update an entry'])
+})
+
+test('a path with slashes round-trips as one key', async () => {
+  const bucket = pendingBucket()
+  const path = 'blogs/src/content/travel/data.yml'
+  await writePending(bucket.binding, { path, text: 'states: []\n', baseSha: 'b'.repeat(40), summaries: [] })
+  const [listed] = await listPending(bucket.binding)
+  assert.equal(listed.path, path, 'the path must survive being used as a key')
+  assert.equal(bucket.store.size, 1)
+})
+
+test('several edits to one file collapse into one pending change', async () => {
+  const bucket = pendingBucket()
+  const path = 'src/content/profile_info/education.yml'
+  for (const summary of ['first', 'second', 'third']) {
+    const existing = await readPending(bucket.binding, path)
+    await writePending(bucket.binding, { path, text: `# ${summary}\n`, baseSha: 'c'.repeat(40), summaries: [...(existing?.summaries ?? []), summary] })
+  }
+  const files = await listPending(bucket.binding)
+  // One file waiting, carrying the history of what was done to it.
+  assert.equal(files.length, 1)
+  assert.deepEqual(files[0].summaries, ['first', 'second', 'third'])
+  assert.equal(files[0].text, '# third\n')
+})
+
+test('discarding clears what was waiting', async () => {
+  const bucket = pendingBucket()
+  await writePending(bucket.binding, { path: 'a.yml', text: 'x', baseSha: 'd'.repeat(40), summaries: [] })
+  await writePending(bucket.binding, { path: 'b.yml', text: 'y', baseSha: 'd'.repeat(40), summaries: [] })
+  assert.equal(await discardPending(bucket.binding, 'a.yml'), 1)
+  assert.equal((await listPending(bucket.binding)).length, 1)
+  assert.equal(await discardPending(bucket.binding), 1)
+  assert.equal((await listPending(bucket.binding)).length, 0)
+})

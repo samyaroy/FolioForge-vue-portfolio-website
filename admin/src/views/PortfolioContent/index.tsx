@@ -149,9 +149,9 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     const index = entries.findIndex(item => item.id === entry.id)
     setEntries(current => current.filter(item => item.id !== entry.id))
     try {
-      const commit = await deleteCollectionEntry(collection, index, baseSha)
+      const pending = await deleteCollectionEntry(collection, index, baseSha)
       await refreshBase()
-      toast.success(`Deleted${commit ? ` (${commit.slice(0, 7)})` : ''}.`)
+      toast.success(`Deleted. ${pending} file${pending === 1 ? '' : 's'} waiting to publish.`)
     } catch (error) {
       setEntries(previous)
       toast.error(error instanceof Error ? error.message : 'Could not delete that entry.')
@@ -169,7 +169,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     setSaving(true)
     try {
       const index = entries.findIndex(entry => entry.id === nextEntry.id)
-      const commit = editing
+      const pending = editing
         ? await saveCollectionEntry(collection, index, nextEntry.raw, baseSha)
         : await createCollectionEntry(collection, nextEntry.raw, baseSha)
       setEntries(current => editing
@@ -179,7 +179,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
       // The file has a new revision now, so the next save must quote that one.
       const refreshed = await fetchCollection(collection, new AbortController().signal).catch(() => null)
       if (refreshed) setBaseSha(refreshed.baseSha)
-      toast.success(`Committed to V1${commit ? ` (${commit.slice(0, 7)})` : ''}.`)
+      toast.success(`Saved. ${pending} file${pending === 1 ? '' : 's'} waiting to publish.`)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not save this entry.')
     } finally {
@@ -209,7 +209,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
 
       <LocalNotice>
         {baseSha
-          ? <>Edits commit straight to <code>{publishingTarget.branch}</code>. The beta site rebuilds from that branch.</>
+          ? <>Edits wait here until you publish. Publishing writes every change as one commit on <code>{publishingTarget.branch}</code>.</>
           : reason}
       </LocalNotice>
 

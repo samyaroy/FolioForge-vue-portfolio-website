@@ -195,7 +195,7 @@ export function HyperlinkMetadataPage() {
       }
       await reload()
       setEditing(null)
-      toast.success(existing ? 'Link updated on V1.' : 'Link added to V1.')
+      toast.success(existing ? 'Link updated — waiting to publish.' : 'Link added — waiting to publish.')
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not save that link.')
     } finally {
@@ -210,7 +210,7 @@ export function HyperlinkMetadataPage() {
     try {
       await deleteEntry(HYPERLINK_COLLECTIONS[entry.group], hyperlinkIndex(entry), baseSha)
       await reload()
-      toast.success('Link deleted from V1.')
+      toast.success('Link deleted — waiting to publish.')
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not delete that link.')
     } finally {
@@ -233,7 +233,7 @@ export function HyperlinkMetadataPage() {
       ]} />
       <LocalNotice>
         {baseSha
-          ? <>Edits commit straight to <code>hyperlinkMetadata.yml</code> on <code>V1</code>. SmartLink resolves names and aliases through this file, so a deleted entry stops resolving wherever the content uses it.</>
+          ? <>Edits wait until you publish. SmartLink resolves names and aliases through this file, so a deleted entry stops resolving wherever the content uses it.</>
           : reason}
       </LocalNotice>
 

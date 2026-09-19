@@ -72,14 +72,14 @@ export function CareerUnlocksPage() {
   const indexOf = (entry: PortfolioEntry) => entries.findIndex(item => item.id === entry.id)
 
   /** Every write goes through here so the manifest stays in step with the file. */
-  const write = async (run: () => Promise<string>, success: string) => {
+  const write = async (run: () => Promise<number>, success: string) => {
     if (!baseSha) { toast.error('This collection cannot be saved yet.'); return }
     setSaving(true)
     try {
-      const commit = await run()
+      const pending = await run()
       await reload()
       setEditor(null)
-      toast.success(`${success}${commit ? ` (${commit.slice(0, 7)})` : ''}`)
+      toast.success(`${success} ${pending} file${pending === 1 ? '' : 's'} waiting to publish.`)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not save that change.')
     } finally {
@@ -96,7 +96,7 @@ export function CareerUnlocksPage() {
     const editing = editor?.mode === 'edit'
     void write(
       () => editing ? saveEntry(COLLECTION, indexOf(next), next.raw, baseSha) : createEntry(COLLECTION, next.raw, baseSha),
-      editing ? 'Updated on V1.' : 'Added to V1.',
+      editing ? 'Updated.' : 'Added.',
     )
   }
 

@@ -5,6 +5,8 @@ import { Button, IconButton, TextField } from '@/components/form'
 import { searchableNavigationItems } from '@/config/navigation'
 import { owner } from '@/config/owner'
 import { publishingBranchLabel } from '@/config/publishing'
+import { usePending } from '@/hooks/usePending'
+import { cn } from '@/lib/utils'
 
 type TopbarProps = {
   onOpenNavigation: () => void
@@ -16,6 +18,7 @@ export function Topbar({ onOpenNavigation }: TopbarProps) {
   const [query, setQuery] = useState('')
   // A hosted portrait can be unreachable; the icon is the honest fallback.
   const [portraitFailed, setPortraitFailed] = useState(false)
+  const pending = usePending()
   const results = useMemo(() => searchableNavigationItems.filter(item => item.label.toLowerCase().includes(query.trim().toLowerCase())), [query])
 
   useEffect(() => {
@@ -53,9 +56,9 @@ export function Topbar({ onOpenNavigation }: TopbarProps) {
         </div>
       </div>
       <div className="topbar-actions">
-        <span className="sync-state"><span className="status-dot" />Local</span>
-        <Button variant="outline" size="sm" disabled>
-          <Rocket aria-hidden="true" /> Publish changes
+        <span className="sync-state"><span className={cn('status-dot', pending.files.length && 'status-dot-pending')} />{pending.files.length ? `${pending.files.length} waiting` : 'Published'}</span>
+        <Button variant={pending.files.length ? 'default' : 'outline'} size="sm" disabled={!pending.files.length} onClick={() => navigate('/workspace/publishing')}>
+          <Rocket aria-hidden="true" /> Publish changes{pending.files.length ? ` (${pending.files.length})` : ''}
         </Button>
         <IconButton variant="bare" size="none" className="profile-button" label={`Account settings for ${owner.name}`} title={owner.name}>
           {owner.image && !portraitFailed

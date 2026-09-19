@@ -2,7 +2,7 @@ import type { AccessIdentity, WorkerEnv } from '../types.ts'
 import { issueCsrfToken } from '../auth/csrf.ts'
 import { publishingPolicy, type SecurityConfig } from '../config.ts'
 import { githubConfig, installationAccess, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
-import { applyEntryChange, readCollection } from '../content/index.ts'
+import { applyEntryChange, discardChanges, pendingChanges, publishChanges, readCollection } from '../content/index.ts'
 import { contentSources } from '../content/registry.ts'
 import { HttpError, json } from '../http.ts'
 import { archiveLogo, archiveMedia, listLogos, publishDraft, storeLogo } from '../media.ts'
@@ -43,7 +43,22 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     return json({ ...head, contents: access.contents, canWrite: access.canWrite, collections: Object.keys(contentSources), scope: `${repositoryPolicy.owner}/${repositoryPolicy.repo}` })
   }
   if (path.startsWith(COLLECTION_ROUTE) && request.method === 'GET') {
-    return json(await readCollection(requireGithub(env), decodeURIComponent(path.slice(COLLECTION_ROUTE.length))))
+    return json(await readCollection(requireGithub(env), decodeURIComponent(path.slice(COLLECTION_ROUTE.length)), env.DRAFTS))
+  }
+  // Everything waiting to be published, and the one action that publishes it.
+  if (path === '/api/pending' && request.method === 'GET') {
+    if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
+    return json({ files: (await pendingChanges(env.DRAFTS)).map(file => ({ path: file.path, summaries: file.summaries, updatedAt: file.updatedAt })) })
+  }
+  if (path === '/api/pending' && request.method === 'DELETE') {
+    if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
+    const target = new URL(request.url).searchParams.get('path') ?? undefined
+    return json(await discardChanges(env.DRAFTS, target))
+  }
+  if (path === '/api/pending/publish' && request.method === 'POST') {
+    if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
+    const body: Record<string, unknown> = await jsonBody(request).catch(() => ({}))
+    return json(await publishChanges(requireGithub(env), env.DRAFTS, typeof body.message === 'string' ? body.message : undefined))
   }
   // Writes name a collection, never a path: the Worker's registry decides which
   // file that is, so no request can reach a file outside the allowlist.
@@ -54,7 +69,7 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     if (!/^[a-f0-9]{40}$/.test(baseSha)) throw new HttpError(400, 'base_revision_required')
     const action = request.method === 'POST' ? 'create' : request.method === 'PUT' ? 'update' : 'delete'
     const index = typeof body.index === 'number' ? body.index : undefined
-    return json(await applyEntryChange(requireGithub(env), action, { collection, index, entry: body.entry, baseSha }))
+    return json(await applyEntryChange(requireGithub(env), action, { collection, index, entry: body.entry, baseSha }, env.DRAFTS))
   }
   // Origin and a session-bound CSRF token were already required for this method
   // before the request reached here.

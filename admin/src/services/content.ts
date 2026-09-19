@@ -21,21 +21,25 @@ const FAILURES: Record<string, string> = {
   base_revision_required: 'The editor lost track of which revision it was editing. Reload the page.',
 }
 
+/**
+ * An edit does not commit. It joins the batch waiting to be published, and the
+ * answer is how many files are now waiting.
+ */
 async function change(collection: string, method: string, body: Record<string, unknown>) {
   const result = await mutate(`/api/content/${encodeURIComponent(collection)}`, {
     method,
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   }, FAILURES)
-  const commit = result && typeof result === 'object' ? (result as { commit?: unknown }).commit : ''
-  return typeof commit === 'string' ? commit : ''
+  const pending = result && typeof result === 'object' ? (result as { pending?: unknown }).pending : 0
+  return typeof pending === 'number' ? pending : 0
 }
 
-export const saveEntry = (collection: string, index: number, entry: unknown, baseSha: string) =>
+export const saveEntry = (collection: string, index: number, entry: unknown, baseSha: string): Promise<number> =>
   change(collection, 'PUT', { index, entry, baseSha })
 
-export const createEntry = (collection: string, entry: unknown, baseSha: string) =>
+export const createEntry = (collection: string, entry: unknown, baseSha: string): Promise<number> =>
   change(collection, 'POST', { entry, baseSha })
 
-export const deleteEntry = (collection: string, index: number, baseSha: string) =>
+export const deleteEntry = (collection: string, index: number, baseSha: string): Promise<number> =>
   change(collection, 'DELETE', { index, baseSha })
