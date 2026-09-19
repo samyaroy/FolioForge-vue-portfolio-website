@@ -18,12 +18,19 @@ export type SelectFieldProps = {
   className?: string
   fieldClassName?: string
   'aria-label'?: string
+  /**
+   * A fixed caption shown inside the trigger, before the chosen value. For a
+   * control that sits in a toolbar rather than a form, where a label above it
+   * would cost a line and read as a heading.
+   */
+  prefix?: string
 }
 
-export function SelectField({ label, value, onChange, options, placeholder = 'Select', disabled, required, className, fieldClassName, ...props }: SelectFieldProps) {
+export function SelectField({ label, value, onChange, options, placeholder = 'Select', disabled, required, className, fieldClassName, prefix, ...props }: SelectFieldProps) {
   const select = (
     <Select value={value || undefined} onValueChange={onChange} disabled={disabled}>
-      <SelectTrigger className={className} aria-label={props['aria-label']} aria-required={required || undefined}>
+      <SelectTrigger className={className} aria-label={props['aria-label'] ?? prefix} aria-required={required || undefined}>
+        {prefix && <span className="select-prefix">{prefix}</span>}
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>

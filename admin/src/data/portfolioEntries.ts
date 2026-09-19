@@ -146,6 +146,10 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
     ...arrayAt(documents.projects, 'projects.minor_projects'),
     ...arrayAt(documents.projects, 'projects.other_projects'),
   ], ['title'], ['type', 'time_period']),
+  'projects-publications/research': () => toEntries(arrayAt(documents.projects, 'projects.research_projects'), ['title'], ['type', 'time_period']),
+  'projects-publications/technical': () => toEntries(arrayAt(documents.projects, 'projects.technical_projects'), ['title'], ['type', 'time_period']),
+  'projects-publications/minor': () => toEntries(arrayAt(documents.projects, 'projects.minor_projects'), ['title'], ['type', 'time_period']),
+  'projects-publications/other': () => toEntries(arrayAt(documents.projects, 'projects.other_projects'), ['title'], ['type', 'time_period']),
   'projects-publications/articles': () => toEntries(arrayAt(documents.publications, 'articles'), ['title'], ['article_type', 'date']),
   'projects-publications/publications': () => toEntries(arrayAt(documents.publications, 'publications'), ['title'], ['publication', 'date']),
   'projects-publications/posters': () => toEntries(arrayAt(documents.publications, 'posters'), ['title'], ['event', 'date']),
@@ -167,10 +171,8 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
 
   'workshops/conferences': () => toEntries(arrayAt(documents.workshops, 'attended_conferences'), ['title'], ['location', 'date']),
   'workshops/fdps': () => toEntries(arrayAt(documents.workshops, 'attended_fdps'), ['title'], ['institution', 'date']),
-  'workshops/workshops': () => toEntries([
-    ...arrayAt(documents.workshops, 'attended_workshops'),
-    ...arrayAt(documents.workshops, 'attended_other_workshops'),
-  ], ['title'], ['institution', 'date']),
+  'workshops/main': () => toEntries(arrayAt(documents.workshops, 'attended_workshops'), ['title'], ['institution', 'date']),
+  'workshops/additional': () => toEntries(arrayAt(documents.workshops, 'attended_other_workshops'), ['title'], ['institution', 'date']),
   'workshops/bootcamps': () => toEntries(arrayAt(documents.workshops, 'attended_bootcamps'), ['title'], ['institution', 'date']),
   'workshops/other': () => toEntries(arrayAt(documents.workshops, 'attended_webinars_n_others'), ['title'], ['type', 'date']),
 

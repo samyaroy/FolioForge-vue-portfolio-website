@@ -368,7 +368,7 @@ tbody tr:hover { background: #f9fbfd; }
 .entry-list-toolbar .search-field { width: min(420px, 100%); }
 .entry-list-toolbar > span { color: #718396; font-size: 9px; white-space: nowrap; }
 .repository-entry-list { display: flex; flex-direction: column; }
-.repository-entry-list article { display: grid; min-height: 68px; grid-template-columns: 28px minmax(0, 1fr) auto auto auto; align-items: center; gap: 11px; border-top: 1px solid var(--border); padding: 10px 14px; }
+.repository-entry-list article { display: grid; min-height: 68px; grid-template-columns: 28px minmax(0, 1fr) auto auto auto auto; align-items: center; gap: 11px; border-top: 1px solid var(--border); padding: 10px 14px; }
 /* A switched-off entry stays listed and editable, but reads as unpublished. */
 .entry-disabled > span:first-child, .entry-disabled > div, .entry-disabled .mapped-state { opacity: .5; }
 .repository-entry-list article:first-child { border-top: 0; }
@@ -683,7 +683,7 @@ tbody tr:hover { background: #f9fbfd; }
   .page-section-links { padding-left: 14px; }
   .entry-list-toolbar { align-items: stretch; flex-direction: column; }
   .entry-list-toolbar > span { text-align: right; }
-  .repository-entry-list article { grid-template-columns: 22px minmax(0, 1fr) auto; gap: 8px; }
+  .repository-entry-list article { grid-template-columns: 22px minmax(0, 1fr) auto auto auto; gap: 8px; }
   .repository-entry-list article .mapped-state { display: none; }
   .repository-entry-list article button { width: 32px; padding: 0; }
   .repository-entry-list article button svg { margin: 0; }
@@ -739,3 +739,21 @@ tbody tr:hover { background: #f9fbfd; }
 .hyperlink-row-actions { display: inline-flex; gap: 5px; }
 
 .media-card-actions { display: inline-flex; flex-direction: column; gap: 3px; }
+
+/* Facts an entry fills in, shown on the row so the common ones do not need the
+   editor opened. Wraps rather than truncates: a detailed entry is the case
+   worth reading. */
+.entry-facts { display: flex; flex-wrap: wrap; gap: 2px 14px; margin-top: 3px; }
+.entry-facts > span { display: inline-flex; min-width: 0; align-items: center; gap: 5px; color: #4e7397; font-size: 10px; line-height: 16px; }
+.entry-facts > span > svg { width: 12px; height: 12px; flex: none; }
+
+/* Which group of a grouped collection is being edited. It sits beside the
+   source it writes to, because the two together are the answer to "where does
+   this entry go". */
+/* The group sits with the action it governs: a new entry joins the group shown
+   here, so the two belong together. */
+.panel-heading-actions { display: flex; align-items: center; gap: 8px; }
+.group-select { min-width: 150px; background: #fff; }
+/* The caption lives in the trigger, so the control reads as one phrase
+   ("Group  Research") instead of a labelled field stacked over a line. */
+.select-prefix { color: #8ca0b0; font-size: 8px; font-weight: 750; letter-spacing: 0.02em; text-transform: uppercase; }

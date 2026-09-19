@@ -162,7 +162,7 @@ test('every entry of every collection is reachable by its flat index', () => {
 })
 
 test('a nested collection edits the nested array, not a new top-level one', () => {
-  const source = contentSources['projects-publications/projects']
+  const source = contentSources['projects-publications/research']
   const original = readFileSync(REPO + source.path, 'utf8')
   const document = parseContent(original)
   const location = locateEntry(document, source, 0)

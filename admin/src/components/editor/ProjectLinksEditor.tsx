@@ -3,26 +3,34 @@ import { Button, IconButton, SelectField, TextField } from '@/components/form'
 import type { ProjectLinkDraft } from '@/lib/projectLinks'
 import { projectLinkCategories } from '../../../../src/config/projectLinkCategories.ts'
 
+type CategorySet = Readonly<Record<string, string>>
+
 type ProjectLinksEditorProps = {
   links: ProjectLinkDraft[]
   onChange: (links: ProjectLinkDraft[]) => void
+  /**
+   * Which categories this card actually renders. A mentored project draws only
+   * a report and a repository, so offering the rest would promise links that
+   * never appear on the site.
+   */
+  categories?: CategorySet
 }
 
-const categoryLabel = (category: string) =>
-  projectLinkCategories[category as keyof typeof projectLinkCategories] ?? `${category} (not shown on the site)`
+export function ProjectLinksEditor({ links, onChange, categories = projectLinkCategories }: ProjectLinksEditorProps) {
+  const categoryLabel = (category: string) =>
+    categories[category] ?? `${category} (not shown on the site)`
 
-export function ProjectLinksEditor({ links, onChange }: ProjectLinksEditorProps) {
   const update = (index: number, key: keyof ProjectLinkDraft, value: string) => {
     onChange(links.map((link, position) => position === index ? { ...link, [key]: value } : link))
   }
 
   // One link per category, so a category another row already uses is not offered.
   const taken = new Set(links.map(link => link.category))
-  const optionsFor = (category: string) => Object.keys(projectLinkCategories)
-    .concat(category && !(category in projectLinkCategories) ? [category] : [])
+  const optionsFor = (category: string) => Object.keys(categories)
+    .concat(category && !(category in categories) ? [category] : [])
     .filter(option => option === category || !taken.has(option))
     .map(option => ({ value: option, label: categoryLabel(option) }))
-  const nextCategory = Object.keys(projectLinkCategories).find(option => !taken.has(option))
+  const nextCategory = Object.keys(categories).find(option => !taken.has(option))
 
   return (
     <div className="credential-links-editor">

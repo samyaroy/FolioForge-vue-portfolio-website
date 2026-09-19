@@ -21,7 +21,7 @@ export type EntryField =
   | string
   | { key: string; object: readonly string[] }
   | { key: string; list: readonly string[] }
-  | { key: string; credentials: 'documents' | 'categories' }
+  | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' }
 
 export const entryFields = {
   experience: ['job_role', 'type', 'company', 'department', 'location', 'time_period', 'supervisor', 'projects', 'description', { key: 'cred_link', credentials: 'documents' }],
@@ -32,8 +32,8 @@ export const entryFields = {
   projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, 'collaborators', 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
   articles: ['title', { key: 'publication', object: ['name', 'host'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
 
-  otherTeaching: ['title', 'role', 'institution', 'duration', 'audience', 'students', 'description', 'link'],
-  mentoredProjects: ['title', 'course', { key: 'students', list: ['name', 'email', 'Linkedin'] }, 'registration_number', 'affiliation', 'description', 'cred_link'],
+  otherTeaching: ['title', 'role', { key: 'institution', object: ['name', 'location'] }, 'duration', 'audience', 'students', 'description', 'link'],
+  mentoredProjects: ['title', 'course', { key: 'students', list: ['name', 'email', 'Linkedin'] }, 'registration_number', { key: 'affiliation', object: ['name', 'location'] }, 'description', { key: 'cred_link', credentials: 'mentoredCategories' }],
 
   memberships: ['organization', 'chapter', 'role', 'membership_id', 'period', 'location', 'cred_link'],
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
@@ -78,7 +78,7 @@ export function listFieldsOf(fields: readonly EntryField[]): Record<string, read
 }
 
 /** How this collection's `cred_link` is shaped, if it holds credentials. */
-export function credentialStyleOf(fields: readonly EntryField[]): 'documents' | 'categories' | undefined {
+export function credentialStyleOf(fields: readonly EntryField[]): 'documents' | 'categories' | 'mentoredCategories' | undefined {
   const field = fields.find(item => typeof item !== 'string' && 'credentials' in item)
   return field && typeof field !== 'string' && 'credentials' in field ? field.credentials : undefined
 }

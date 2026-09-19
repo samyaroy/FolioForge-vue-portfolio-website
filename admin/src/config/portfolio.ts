@@ -24,9 +24,39 @@ import { experienceTypeIcons } from '../../../src/config/experienceTypes.ts'
 import { projectTypes } from '../../../src/config/projectTypes.ts'
 import { entryFields } from '../../../src/config/entryFields.ts'
 import type { EntryField } from '../../../src/config/entryFields.ts'
-import { articleTypes } from '../../../src/config/articleTypes.ts'
+import { articleTypeLabels, articleTypes } from '../../../src/config/articleTypes.ts'
 
 export type PortfolioSection = {
+  /**
+   * Extra fields worth seeing without opening an entry. The row shows the ones
+   * an entry actually fills in, so a sparse entry stays compact and a detailed
+   * one is readable at a glance.
+   */
+  previewFields?: readonly string[]
+  /**
+   * Sub-lists the collection is drawn from, when the file groups its entries.
+   * The editor shows one list and asks which group an entry belongs to; each
+   * group is its own adapter, so a write reaches the right sequence.
+   */
+  groups?: readonly { id: string; label: string }[]
+  /**
+   * A field whose value splits one sequence into the lists the site renders.
+   * Unlike `groups`, every entry lives in the same array — the value decides
+   * where it appears — so the dropdown filters and a new entry takes the value
+   * currently shown.
+   */
+  filterBy?: {
+    field: string
+    fallback: string
+    /** Fixed choices, when the field has a known set of values. */
+    options?: readonly { id: string; label: string }[]
+    /**
+     * Take the choices from the values the entries actually carry. For a field
+     * whose values are content rather than configuration — semesters keep being
+     * added — a fixed list would go stale the moment one is.
+     */
+    fromEntries?: boolean
+  }
   id: string
   title: string
   sources: string[]
@@ -73,8 +103,8 @@ export const portfolioPages: PortfolioPage[] = [
     sections: [
       { id: 'profile', title: 'Profile & Hero', sources: ['profile.yml', 'meta.yml'], fields: ['Name and biography', 'Hero heading and portrait', 'Contact and social links', 'CV and footer copy'], requiredFields: ['name', 'heading', 'about', 'gmail'] },
       { id: 'research-interests', title: 'Research Interests', sources: ['research_interests.yml'], fields: ['Interest title', 'Stable key', 'Display order'], requiredFields: ['title'], entryFields: entryFields.researchInterests },
-      { id: 'experience', title: 'Experience', sources: ['experience.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and links', 'Logo'], requiredFields: ['job_role', 'company', 'location', 'time_period'], typeOptions: Object.keys(experienceTypeIcons), entryFields: entryFields.experience },
-      { id: 'education', title: 'Education', sources: ['education.yml'], fields: ['Institution and programme', 'Dates and grades', 'Coursework and details', 'Links and logos'], requiredFields: ['degree', 'institution', 'location', 'time_period'], typeOptions: Object.keys(educationTypeIcons), entryFields: entryFields.education },
+      { previewFields: ['type', 'department', 'location', 'supervisor'], id: 'experience', title: 'Experience', sources: ['experience.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and links', 'Logo'], requiredFields: ['job_role', 'company', 'location', 'time_period'], typeOptions: Object.keys(experienceTypeIcons), entryFields: entryFields.experience },
+      { previewFields: ['type', 'field', 'sub_field', 'campus', 'location', 'current_level', 'gpa'], id: 'education', title: 'Education', sources: ['education.yml'], fields: ['Institution and programme', 'Dates and grades', 'Coursework and details', 'Links and logos'], requiredFields: ['degree', 'institution', 'location', 'time_period'], typeOptions: Object.keys(educationTypeIcons), entryFields: entryFields.education },
       { id: 'awards', title: 'Awards & Achievements', sources: ['awards.yml (planned)'], fields: ['Awards', 'Achievements', 'Images and credentials', 'Display order'] },
       { id: 'announcements', title: 'Announcements', sources: ['ribbon.yml'], fields: ['Ribbon messages', 'Icons', 'Caption markup', 'Message order'], requiredFields: ['message'], entryFields: entryFields.announcements },
     ],
@@ -83,8 +113,29 @@ export const portfolioPages: PortfolioPage[] = [
     id: 'projects-publications', title: 'Projects & Publications', publicPath: '/projects-publications', icon: LibraryBig,
     description: 'Projects, articles, formal publications, and poster records.',
     sections: [
-      { id: 'projects', title: 'Projects', sources: ['projects.yml'], fields: ['Research projects', 'Technical projects', 'Minor projects', 'Other projects'], requiredFields: ['title'], typeOptions: projectTypes, entryFields: entryFields.projects },
-      { id: 'articles', title: 'Articles', sources: ['publications.yml'], fields: ['Journal articles', 'General articles and blog posts', 'Authors and links'], requiredFields: ['title'], typeOptions: articleTypes, entryFields: entryFields.articles },
+      // projects.yml keeps four groups. They are one list here, with the group
+      // chosen per entry: flattened without that choice, a new entry could only
+      // be appended to the last group, filing every new research project under
+      // "other".
+      {
+        id: 'projects', title: 'Projects', sources: ['projects.yml'],
+        groups: [
+          { id: 'research', label: 'Research' },
+          { id: 'technical', label: 'Technical' },
+          { id: 'minor', label: 'Minor' },
+          { id: 'other', label: 'Other' },
+        ],
+        fields: ['Title and description', 'Affiliation and guide', 'Collaborators and DOI', 'Links and logo'],
+        requiredFields: ['title'], typeOptions: projectTypes, entryFields: entryFields.projects,
+      },
+      // The site places an article by its `type`: only 'journal' reaches the
+      // Journal Articles section, everything else is general.
+      {
+        id: 'articles', title: 'Articles', sources: ['publications.yml'],
+        filterBy: { field: 'type', fallback: 'general', options: Object.entries(articleTypeLabels).map(([id, label]) => ({ id, label })) },
+        fields: ['Journal articles', 'General articles and blog posts', 'Authors and links'],
+        requiredFields: ['title'], typeOptions: articleTypes, entryFields: entryFields.articles,
+      },
       { id: 'publications', title: 'Publications', sources: ['publications.yml'], fields: ['Research publications', 'Authors and venues', 'DOI and credentials'], requiredFields: ['title'] },
       { id: 'posters', title: 'Posters', sources: ['publications.yml'], fields: ['Poster title', 'Event and date', 'Poster image and link'], requiredFields: ['title'] },
     ],
@@ -94,7 +145,7 @@ export const portfolioPages: PortfolioPage[] = [
     description: 'Courses taught, mentored projects, and other teaching contributions.',
     sections: [
       { id: 'courses', title: 'Courses Taught', sources: ['teaching.yml'], fields: ['Course and institution', 'Term and registration', 'Description and links'], requiredFields: ['title'] },
-      { id: 'projects', title: 'Projects Mentored', sources: ['teaching.yml'], fields: ['Semester groups', 'Projects and students', 'Descriptions and project links'], requiredFields: ['title'], entryFields: entryFields.mentoredProjects },
+      { id: 'projects', title: 'Projects Mentored', filterBy: { field: 'semester', fallback: '', fromEntries: true }, sources: ['teaching.yml'], fields: ['Semester groups', 'Projects and students', 'Descriptions and project links'], requiredFields: ['title'], entryFields: entryFields.mentoredProjects },
       { id: 'others', title: 'Other Teaching', sources: ['teaching.yml'], fields: ['Activity title', 'Affiliation and date', 'Description and credential'], requiredFields: ['title'], entryFields: entryFields.otherTeaching },
     ],
   },
@@ -126,7 +177,7 @@ export const portfolioPages: PortfolioPage[] = [
     sections: [
       { id: 'conferences', title: 'Conferences', sources: ['workshops.yml'], fields: ['Conference title', 'Institution and date', 'Mode, location, and credential'], requiredFields: ['title'], entryFields: entryFields.conferences },
       { id: 'fdps', title: 'FDPs', sources: ['workshops.yml'], fields: ['Programme title', 'Institution and duration', 'Credential'], requiredFields: ['title'], entryFields: entryFields.fdps },
-      { id: 'workshops', title: 'Workshops', sources: ['workshops.yml'], fields: ['Workshop title', 'Institution and date', 'Mode and credential'], requiredFields: ['title'], entryFields: entryFields.workshops },
+      { id: 'workshops', title: 'Workshops', groups: [{ id: 'main', label: 'Main' }, { id: 'additional', label: 'Other' }], sources: ['workshops.yml'], fields: ['Workshop title', 'Institution and date', 'Mode and credential'], requiredFields: ['title'], entryFields: entryFields.workshops },
       { id: 'bootcamps', title: 'Bootcamps', sources: ['workshops.yml'], fields: ['Bootcamp title', 'Curriculum', 'Grade and credential'], requiredFields: ['title'], entryFields: entryFields.bootcamps },
       { id: 'other', title: 'Other Learning', sources: ['workshops.yml'], fields: ['Engagement title', 'Type and year', 'Institution and credential'], requiredFields: ['title'], entryFields: entryFields.otherLearning },
     ],

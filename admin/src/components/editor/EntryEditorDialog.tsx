@@ -20,6 +20,7 @@ import { ObjectFieldsEditor } from '@/components/editor/ObjectFieldsEditor'
 import { ListFieldsEditor } from '@/components/editor/ListFieldsEditor'
 import { fieldCaption } from '@/lib/fieldNames'
 import { credentialStyleOf, fieldKeys, listFieldsOf, objectFieldsOf, type EntryField } from '../../../../src/config/entryFields.ts'
+import { mentoredProjectLinkCategories, projectLinkCategories } from '../../../../src/config/projectLinkCategories.ts'
 import { ENTRY_ENABLED_KEY } from '../../../../src/config/entryStatus.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
@@ -57,6 +58,10 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
   const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
   const listFields = useMemo(() => listFieldsOf(schema), [schema])
   const credentialStyle = useMemo(() => credentialStyleOf(schema), [schema])
+  // Both category styles are edited the same way; they differ only in which
+  // categories the card behind them renders.
+  const isCategoryStyle = credentialStyle === 'categories' || credentialStyle === 'mentoredCategories'
+  const linkCategories = credentialStyle === 'mentoredCategories' ? mentoredProjectLinkCategories : projectLinkCategories
   // What an untouched field holds before anything is typed into it.
   const blankValue = useCallback((key: string) => {
     if (objectFields[key]) return JSON.stringify(objectFieldsDraft(undefined, objectFields[key]))
@@ -76,7 +81,7 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
       // Nested values the dialog edits as their own controls rather than JSON.
       const drafts: Record<string, unknown> = {
         ...(credentialStyle === 'documents' ? { cred_link: credentialLinksDraft(base.cred_link) } : {}),
-        ...(credentialStyle === 'categories' ? { cred_link: projectLinksDraft(base.cred_link) } : {}),
+        ...(isCategoryStyle ? { cred_link: projectLinksDraft(base.cred_link) } : {}),
         // Declared object keys are drafted even when the entry lacks them, so
         // one can be filled in; an untouched blank group writes no key.
         ...Object.fromEntries(Object.entries(objectFields).map(([key, fields]) => [key, objectFieldsDraft(base[key], fields)])),
@@ -92,7 +97,7 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
     if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
-  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, objectFields, listFields, entryFields, blankValue])
+  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, isCategoryStyle, objectFields, listFields, entryFields, blankValue])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
   const [educationTab, setEducationTab] = useState('details')
   const [curriculum, setCurriculum] = useState(() => curriculumDraft(entry?.raw.cirriculum))
@@ -124,7 +129,7 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
         const original = entry?.raw[key]
         if (value === initialFields[key] && original !== undefined) return [key, original]
         if (credentialStyle === 'documents' && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
-        if (credentialStyle === 'categories' && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
+        if (isCategoryStyle && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
         if (objectFields[key]) return [key, serializeObjectFields(JSON.parse(value), original, objectFields[key], key)]
         if (listFields[key]) return [key, serializeListFields(JSON.parse(value), original, listFields[key], fieldCaption(key).toLowerCase())]
         const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('['))
@@ -172,7 +177,7 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
             if (isExperience && key === 'projects') return <ExperienceProjectsEditor key={key} projects={JSON.parse(value)} onChange={projects => setFields(current => ({ ...current, projects: JSON.stringify(projects) }))} />
             if (isExperience && key === 'description') return <DescriptionLinesEditor key={key} lines={JSON.parse(value)} onChange={lines => setFields(current => ({ ...current, description: JSON.stringify(lines) }))} />
             if (credentialStyle === 'documents' && key === 'cred_link') return <CredentialLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
-            if (credentialStyle === 'categories' && key === 'cred_link') return <ProjectLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
+            if (isCategoryStyle && key === 'cred_link') return <ProjectLinksEditor key={key} categories={linkCategories} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
             if (objectFields[key]) return <ObjectFieldsEditor key={key} name={key} draft={JSON.parse(value)} onChange={draft => setFields(current => ({ ...current, [key]: JSON.stringify(draft) }))} />
             if (listFields[key]) return <ListFieldsEditor key={key} name={key} fields={listFields[key]} rows={JSON.parse(value)} onChange={rows => setFields(current => ({ ...current, [key]: JSON.stringify(rows) }))} />
             if (key === 'type' && typeOptions.length) {

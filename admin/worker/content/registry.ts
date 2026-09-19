@@ -23,7 +23,11 @@ export const contentSources = {
   'home/research-interests': { path: `${PORTFOLIO}/research_interests.yml`, arrayKeys: ['research_interests'] },
   'home/announcements': { path: `${PORTFOLIO}/ribbon.yml`, arrayKeys: ['ribbon'] },
 
-  'projects-publications/projects': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['projects.research_projects', 'projects.technical_projects', 'projects.minor_projects', 'projects.other_projects'] },
+  // One adapter per group, so a new entry joins the group being edited.
+  'projects-publications/research': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['projects.research_projects'] },
+  'projects-publications/technical': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['projects.technical_projects'] },
+  'projects-publications/minor': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['projects.minor_projects'] },
+  'projects-publications/other': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['projects.other_projects'] },
   'projects-publications/articles': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['articles'] },
   'projects-publications/publications': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['publications'] },
   'projects-publications/posters': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['posters'] },
@@ -43,7 +47,10 @@ export const contentSources = {
 
   'workshops/conferences': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_conferences'] },
   'workshops/fdps': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_fdps'] },
-  'workshops/workshops': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_workshops', 'attended_other_workshops'] },
+  // Two sequences, so which one an entry joins is a choice rather than a
+  // consequence of being last in the file.
+  'workshops/main': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_workshops'] },
+  'workshops/additional': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_other_workshops'] },
   'workshops/bootcamps': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_bootcamps'] },
   'workshops/other': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_webinars_n_others'] },
 

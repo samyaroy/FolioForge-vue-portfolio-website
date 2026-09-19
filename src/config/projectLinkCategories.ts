@@ -12,3 +12,17 @@ export const projectLinkCategories = {
 } as const
 
 export type ProjectLinkCategory = keyof typeof projectLinkCategories
+
+/**
+ * The categories a mentored-project card renders. Fewer than a project's: the
+ * card in Teachings draws a report and a repository and nothing else, so
+ * offering the rest would promise links that never appear.
+ * Mirrors `getProjectActionLinks` in
+ * views/Teachings/components/ProjectsMentoredTab.vue.
+ */
+export const mentoredProjectLinkCategories = {
+  report: 'Project Report',
+  github: 'GitHub Repository',
+} as const
+
+export type MentoredProjectLinkCategory = keyof typeof mentoredProjectLinkCategories
