@@ -6,7 +6,9 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist', 'node_modules']),
+  // `.wrangler` holds the bundled Worker, which carries its dependencies'
+  // eslint directives for rules this project does not configure.
+  globalIgnores(['dist', 'node_modules', '.wrangler']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

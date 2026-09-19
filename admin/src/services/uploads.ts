@@ -64,7 +64,7 @@ export function draftPreviewUrl(name: string): string {
   return `/api/media/drafts/${encodeURIComponent(name)}`
 }
 
-async function mutate(url: string, init: RequestInit, failures: Record<string, string>) {
+export async function mutate(url: string, init: RequestInit, failures: Record<string, string>) {
   const response = await fetch(url, {
     ...init,
     credentials: 'same-origin',

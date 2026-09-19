@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { createEntry as createCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
 import { ArrowUpRight, Check, FileCode2, Pencil, Plus } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { LocalNotice } from '@/components/admin/LocalNotice'
@@ -29,9 +30,22 @@ export function PortfolioContentPage() {
 }
 
 function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; section: PortfolioSection }) {
+  const collection = `${page.id}/${section.id}`
   const [query, setQuery] = useState('')
   const [entries, setEntries] = useState(() => getPortfolioEntries(page.id, section.id))
   const [editor, setEditor] = useState<EditorState | null>(null)
+  const [saving, setSaving] = useState(false)
+  // The revision this editor is working against. A save carries it so a file
+  // that moved on becomes a conflict instead of an overwrite.
+  const [baseSha, setBaseSha] = useState('')
+
+  useEffect(() => {
+    const controller = new AbortController()
+    fetchCollection(collection, controller.signal)
+      .then(state => setBaseSha(state.baseSha))
+      .catch(() => setBaseSha(''))
+    return () => controller.abort()
+  }, [collection])
 
   const visibleEntries = entries.filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
 
@@ -44,12 +58,33 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
     toast.info(enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`)
   }
 
-  const saveEntry = (nextEntry: PortfolioEntry) => {
-    setEntries(current => editor?.mode === 'edit'
-      ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry)
-      : [nextEntry, ...current])
-    setEditor(null)
-    toast.success(editor?.mode === 'edit' ? 'Entry updated locally.' : 'Entry added locally.')
+  const saveEntry = async (nextEntry: PortfolioEntry) => {
+    const editing = editor?.mode === 'edit'
+    if (!baseSha) {
+      setEntries(current => editing ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry) : [nextEntry, ...current])
+      setEditor(null)
+      toast.info('Saved in this session only — GitHub is not connected.')
+      return
+    }
+    setSaving(true)
+    try {
+      const index = entries.findIndex(entry => entry.id === nextEntry.id)
+      const commit = editing
+        ? await saveCollectionEntry(collection, index, nextEntry.raw, baseSha)
+        : await createCollectionEntry(collection, nextEntry.raw, baseSha)
+      setEntries(current => editing
+        ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry)
+        : [...current, nextEntry])
+      setEditor(null)
+      // The file has a new revision now, so the next save must quote that one.
+      const refreshed = await fetchCollection(collection, new AbortController().signal).catch(() => null)
+      if (refreshed) setBaseSha(refreshed.baseSha)
+      toast.success(`Committed to V1${commit ? ` (${commit.slice(0, 7)})` : ''}.`)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not save this entry.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -127,7 +162,8 @@ function PortfolioSectionEditor({ page, section }: { page: PortfolioPage; sectio
           isExperience={page.id === 'home' && section.id === 'experience'}
           isEducation={page.id === 'home' && section.id === 'education'}
           onClose={() => setEditor(null)}
-          onSave={saveEntry}
+          onSave={entry => void saveEntry(entry)}
+          saving={saving}
         />
       )}
     </>

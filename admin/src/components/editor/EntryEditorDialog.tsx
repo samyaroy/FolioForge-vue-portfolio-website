@@ -37,6 +37,8 @@ type EntryEditorDialogProps = {
   isEducation?: boolean
   onClose: () => void
   onSave: (entry: PortfolioEntry) => void
+  /** A save in flight, so the dialog cannot be submitted twice. */
+  saving?: boolean
 }
 
 function editableValue(value: unknown): string {
@@ -49,7 +51,7 @@ function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], isExperience = false, isEducation = false, onClose, onSave }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
   // Nesting is read off the schema, so a collection declares its shape once.
   const entryFields = useMemo(() => fieldKeys(schema), [schema])
   const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
@@ -189,7 +191,7 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
           })}
         </div>
         {isEducation && <div className="entry-dialog-body curriculum-tab-body" hidden={educationTab !== 'curriculum'}><CurriculumEditor curriculum={curriculum} onChange={setCurriculum} /></div>}
-        <footer><Button variant="outline" onClick={onClose}>Cancel</Button><Button onClick={saveEntry}><Save aria-hidden="true" /> Save local change</Button></footer>
+        <footer><Button variant="outline" onClick={onClose} disabled={saving}>Cancel</Button><Button onClick={saveEntry} disabled={saving}><Save aria-hidden="true" /> {saving ? 'Committing...' : 'Save to V1'}</Button></footer>
       </section>
     </div>
   )

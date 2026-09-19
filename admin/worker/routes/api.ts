@@ -1,14 +1,24 @@
 import type { AccessIdentity, WorkerEnv } from '../types.ts'
 import { issueCsrfToken } from '../auth/csrf.ts'
 import { publishingPolicy, type SecurityConfig } from '../config.ts'
-import { githubConfig, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
-import { json } from '../http.ts'
+import { githubConfig, installationAccess, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
+import { applyEntryChange, readCollection } from '../content/index.ts'
+import { contentSources } from '../content/registry.ts'
+import { HttpError, json } from '../http.ts'
 import { archiveLogo, listLogos, storeLogo } from '../media.ts'
 import { listDrafts, readDraft, storeDraft } from '../drafts.ts'
 import { imagePolicy } from '../images.ts'
 
 const DRAFT_ROUTE = '/api/media/drafts/'
 const LOGO_ROUTE = '/api/media/logos/'
+const COLLECTION_ROUTE = '/api/content/'
+
+async function jsonBody(request: Request): Promise<Record<string, unknown>> {
+  if (Number(request.headers.get('content-length') ?? 0) > 512 * 1024) throw new HttpError(413, 'body_too_large')
+  const body: unknown = await request.json().catch(() => undefined)
+  if (!body || typeof body !== 'object' || Array.isArray(body)) throw new HttpError(400, 'invalid_body')
+  return body as Record<string, unknown>
+}
 
 export async function apiResponse(request: Request, env: WorkerEnv, config: SecurityConfig, identity: AccessIdentity) {
   const path = new URL(request.url).pathname
@@ -25,10 +35,25 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     })
   }
   if (path === '/api/repository/head' && request.method === 'GET') {
-    // Reads only, and only the ref the policy names. Nothing in the request
-    // selects the repository, the branch or the revision.
-    const head = await resolveHead(requireGithub(env))
-    return json({ ...head, capability: 'read-only', scope: `${repositoryPolicy.owner}/${repositoryPolicy.repo}` })
+    // Reads only the ref the policy names. Nothing in the request selects the
+    // repository, the branch or the revision.
+    const config = requireGithub(env)
+    const [head, access] = await Promise.all([resolveHead(config), installationAccess(config)])
+    return json({ ...head, contents: access.contents, canWrite: access.canWrite, collections: Object.keys(contentSources), scope: `${repositoryPolicy.owner}/${repositoryPolicy.repo}` })
+  }
+  if (path.startsWith(COLLECTION_ROUTE) && request.method === 'GET') {
+    return json(await readCollection(requireGithub(env), decodeURIComponent(path.slice(COLLECTION_ROUTE.length))))
+  }
+  // Writes name a collection, never a path: the Worker's registry decides which
+  // file that is, so no request can reach a file outside the allowlist.
+  if (path.startsWith(COLLECTION_ROUTE) && ['POST', 'PUT', 'DELETE'].includes(request.method)) {
+    const collection = decodeURIComponent(path.slice(COLLECTION_ROUTE.length))
+    const body = await jsonBody(request)
+    const baseSha = typeof body.baseSha === 'string' ? body.baseSha : ''
+    if (!/^[a-f0-9]{40}$/.test(baseSha)) throw new HttpError(400, 'base_revision_required')
+    const action = request.method === 'POST' ? 'create' : request.method === 'PUT' ? 'update' : 'delete'
+    const index = typeof body.index === 'number' ? body.index : undefined
+    return json(await applyEntryChange(requireGithub(env), action, { collection, index, entry: body.entry, baseSha }))
   }
   // Origin and a session-bound CSRF token were already required for this method
   // before the request reached here.

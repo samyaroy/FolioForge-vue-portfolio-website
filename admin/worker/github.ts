@@ -57,6 +57,44 @@ async function appJwt(config: GithubConfig) {
     .sign(key)
 }
 
+/**
+ * One authenticated call to the GitHub API. `expected` maps particular statuses
+ * to errors worth naming — a 409 on a write means someone else moved the file,
+ * which is a conflict to resolve rather than an outage.
+ */
+export async function githubRequest(config: GithubConfig, path: string, init: RequestInit = {}, expected: Record<number, HttpError> = {}, fetchImpl: typeof fetch = fetch): Promise<unknown> {
+  const token = await installationToken(config, fetchImpl)
+  const response = await fetchImpl(`${GITHUB_API}${path}`, {
+    ...init,
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    headers: {
+      accept: 'application/vnd.github+json',
+      authorization: `Bearer ${token}`,
+      'content-type': 'application/json',
+      'user-agent': 'folioforge-admin-beta',
+      'x-github-api-version': '2022-11-28',
+    },
+  }).catch(() => { throw new HttpError(502, 'github_unavailable', 'request_failed') })
+  if (expected[response.status]) throw expected[response.status]
+  if (response.status === 403 || response.status === 404) {
+    // A write with only Contents:read reads as 403 or 404 depending on the
+    // route, and both mean the same thing to whoever has to fix it.
+    throw new HttpError(403, 'github_permission_denied', `status_${response.status}`)
+  }
+  if (!response.ok) throw new HttpError(502, 'github_unavailable', `status_${response.status}`)
+  if (response.status === 204) return null
+  return response.json()
+}
+
+export type InstallationAccess = { contents: string; canWrite: boolean }
+
+/** What the installation is actually allowed to do, as GitHub reports it. */
+export async function installationAccess(config: GithubConfig, fetchImpl: typeof fetch = fetch): Promise<InstallationAccess> {
+  await installationToken(config, fetchImpl)
+  const contents = cachedPermissions?.contents === 'write' ? 'write' : cachedPermissions?.contents === 'read' ? 'read' : 'none'
+  return { contents, canWrite: contents === 'write' }
+}
+
 async function githubFetch(url: string, token: string, fetchImpl: typeof fetch, init: RequestInit = {}) {
   let response: Response
   try {
@@ -81,6 +119,9 @@ async function githubFetch(url: string, token: string, fetchImpl: typeof fetch, 
 // One installation token serves every request in this isolate until it nears
 // expiry. It is a credential: it is never logged, never returned to the browser.
 let cachedToken: { value: string; expiresAt: number; installationId: string } | undefined
+// GitHub reports what the installation may do when it issues the token, so the
+// admin can say "read-only" rather than discovering it at the moment of a write.
+let cachedPermissions: Record<string, string> | undefined
 
 export async function installationToken(config: GithubConfig, fetchImpl: typeof fetch = fetch) {
   const fresh = cachedToken && cachedToken.installationId === config.installationId && cachedToken.expiresAt - 60_000 > Date.now()
@@ -91,6 +132,8 @@ export async function installationToken(config: GithubConfig, fetchImpl: typeof 
   const expiresAt = body && typeof body === 'object' && 'expires_at' in body ? (body as { expires_at: unknown }).expires_at : undefined
   if (typeof token !== 'string' || !token) throw new HttpError(502, 'github_unavailable', 'no_installation_token')
   const parsedExpiry = typeof expiresAt === 'string' ? Date.parse(expiresAt) : Number.NaN
+  const permissions = body && typeof body === 'object' ? (body as { permissions?: unknown }).permissions : undefined
+  cachedPermissions = permissions && typeof permissions === 'object' ? permissions as Record<string, string> : undefined
   cachedToken = { value: token, expiresAt: Number.isNaN(parsedExpiry) ? Date.now() + 300_000 : parsedExpiry, installationId: config.installationId }
   return token
 }
@@ -98,6 +141,7 @@ export async function installationToken(config: GithubConfig, fetchImpl: typeof 
 /** Forget the cached credential. Used by tests; harmless in production. */
 export function resetInstallationToken() {
   cachedToken = undefined
+  cachedPermissions = undefined
 }
 
 export type RepositoryHead = { owner: string; repo: string; branch: string; ref: string; sha: string }

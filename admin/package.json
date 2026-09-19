@@ -28,7 +28,8 @@
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.18.4",
     "react-toastify": "^11.1.0",
-    "tailwind-merge": "^3.3.0"
+    "tailwind-merge": "^3.3.0",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260916.1",
