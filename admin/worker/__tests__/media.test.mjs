@@ -81,3 +81,106 @@ test('a storage failure surfaces as a gateway error, not as its cause', async ()
   const failing = { list: async () => { throw new Error('bucket exploded: secret detail') } }
   await assert.rejects(listLogos(failing), error => error.status === 502 && error.code === 'storage_unavailable' && !String(error.message).includes('secret'))
 })
+
+/* ------------------------- archiving and adding ------------------------- */
+
+import { archiveLogo, assertLogoName, storeLogo } from '../media.ts'
+
+function pngBytes() {
+  const chunk = (type, data) => {
+    const out = new Uint8Array(12 + data.length)
+    new DataView(out.buffer).setUint32(0, data.length)
+    out.set([...type].map(c => c.charCodeAt(0)), 4)
+    out.set(data, 8)
+    return out
+  }
+  const ihdr = new Uint8Array(13)
+  new DataView(ihdr.buffer).setUint32(0, 4)
+  new DataView(ihdr.buffer).setUint32(4, 3)
+  const parts = [new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]), chunk('IHDR', ihdr), chunk('IDAT', new Uint8Array([1])), chunk('IEND', new Uint8Array(0))]
+  const out = new Uint8Array(parts.reduce((n, p) => n + p.length, 0))
+  let at = 0
+  for (const p of parts) { out.set(p, at); at += p.length }
+  return out
+}
+
+function mediaBucket(initial = ['logo/IITM.png']) {
+  const store = new Map(initial.map(key => [key, { bytes: pngBytes(), contentType: 'image/png' }]))
+  const deleted = []
+  return {
+    store,
+    deleted,
+    binding: {
+      list: async ({ prefix }) => ({ objects: [...store.keys()].filter(k => k.startsWith(prefix)).map(key => ({ key })), truncated: false }),
+      get: async key => store.has(key) ? { body: new Response(store.get(key).bytes).body, httpMetadata: { contentType: store.get(key).contentType } } : null,
+      put: async (key, value, options) => { store.set(key, { bytes: new Uint8Array(value), contentType: options?.httpMetadata?.contentType }); return {} },
+      delete: async key => { store.delete(key); deleted.push(key) },
+    },
+  }
+}
+
+test('a logo name must be the kind of token a YAML value can carry', () => {
+  for (const good of ['IITM', 'VLED-IITRPR3', 'Royal Statistical Society', 'ideas_isi']) assert.equal(assertLogoName(good), good)
+  for (const bad of ['../secret', 'logo/IITM', 'a/b', '', ' ', '..', 'name.', '<script>', 'x'.repeat(65)]) {
+    assert.throws(() => assertLogoName(bad), error => error.code === 'invalid_logo_name', `expected ${JSON.stringify(bad)} to be refused`)
+  }
+})
+
+test('archiving moves the object and leaves it recoverable', async () => {
+  const bucket = mediaBucket()
+  const { archivedAs } = await archiveLogo(bucket.binding, 'IITM')
+  assert.equal(archivedAs, 'logo/archived/IITM.png')
+  assert.equal(bucket.store.has('logo/archived/IITM.png'), true, 'the archive copy must exist')
+  assert.equal(bucket.store.has('logo/IITM.png'), false, 'the catalogue copy must be gone')
+  // The copy is written before the original is removed, so a failure between
+  // the two leaves the archive rather than nothing.
+  assert.deepEqual(bucket.deleted, ['logo/IITM.png'])
+})
+
+test('an archived logo drops out of the catalogue but keeps its bytes', async () => {
+  const bucket = mediaBucket(['logo/IITM.png', 'logo/NPTEL.png'])
+  await archiveLogo(bucket.binding, 'IITM')
+  const { items } = await listLogos(bucket.binding)
+  assert.deepEqual(items.map(item => item.value), ['NPTEL'])
+  assert.equal(bucket.store.get('logo/archived/IITM.png').bytes.length > 0, true)
+})
+
+test('archiving something that is not there changes nothing', async () => {
+  const bucket = mediaBucket()
+  await assert.rejects(archiveLogo(bucket.binding, 'MISSING'), error => error.status === 404)
+  assert.deepEqual(bucket.deleted, [])
+})
+
+test('a new logo is stored under the name the YAML will carry', async () => {
+  const bucket = mediaBucket([])
+  const stored = await storeLogo(bucket.binding, 'IITM', pngBytes().buffer, 'image/png', false)
+  assert.equal(stored.value, 'IITM', 'the catalogue value is the name, not a digest')
+  assert.equal(stored.url, 'https://media.samyabrata.codeium.xyz/logo/IITM.png')
+  assert.equal(bucket.store.has('logo/IITM.png'), true)
+})
+
+test('an existing name is not overwritten unless replacing is asked for', async () => {
+  const bucket = mediaBucket()
+  await assert.rejects(storeLogo(bucket.binding, 'IITM', pngBytes().buffer, 'image/png', false), error => error.status === 409 && error.code === 'logo_exists')
+  assert.deepEqual(bucket.deleted, [], 'a refused upload must not disturb the live file')
+
+  await storeLogo(bucket.binding, 'IITM', pngBytes().buffer, 'image/png', true)
+  assert.equal(bucket.store.has('logo/archived/IITM.png'), true, 'the replaced file is archived, not dropped')
+  assert.equal(bucket.store.has('logo/IITM.png'), true)
+})
+
+test('an upload that is not an image never reaches the bucket', async () => {
+  const bucket = mediaBucket([])
+  const script = new TextEncoder().encode('#!/bin/sh\n')
+  await assert.rejects(storeLogo(bucket.binding, 'EVIL', script.buffer, 'image/png', false), error => error.code === 'unsupported_image')
+  assert.equal(bucket.store.size, 0)
+})
+
+test('a name cannot smuggle a path into a key', async () => {
+  const bucket = mediaBucket()
+  for (const name of ['../../etc/passwd', 'archived/IITM', 'a/b']) {
+    await assert.rejects(storeLogo(bucket.binding, name, pngBytes().buffer, 'image/png', true), error => error.code === 'invalid_logo_name')
+    await assert.rejects(archiveLogo(bucket.binding, name), error => error.code === 'invalid_logo_name')
+  }
+  assert.deepEqual(bucket.deleted, [])
+})
