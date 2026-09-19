@@ -483,15 +483,6 @@ education:
 
       link:
 
-  - type: Diploma
-    enabled: false
-    degree: Diploma
-    field: Web Designing (DWD)
-    institution: Chandigarh Institute of Technology and Consultancy
-    location: Mohali, PB
-    time_period: 2020
-    marks: 84.5%
-    cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview
 
   - type: School
     enabled: false
