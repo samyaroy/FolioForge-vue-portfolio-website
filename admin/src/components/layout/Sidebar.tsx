@@ -44,7 +44,9 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
         <div className="workspace-status">
           <span className={cn('status-dot', repository.connected === false && 'status-dot-local')} aria-hidden="true" />
           <span>{repository.head ? `${repository.head.branch} @ ${repository.head.sha.slice(0, 7)}` : 'Repository content'}</span>
-          <span className="workspace-label">{repository.connected === undefined ? '...' : repository.connected ? 'GITHUB' : 'LOCAL'}</span>
+          <span className={cn('workspace-label', repository.head && !repository.head.canWrite && 'workspace-label-warn')}>
+            {repository.connected === undefined ? '...' : !repository.connected ? 'LOCAL' : repository.head?.canWrite ? 'WRITE' : 'READ-ONLY'}
+          </span>
         </div>
 
         <nav className="sidebar-nav" aria-label="Admin sections">

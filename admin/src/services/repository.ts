@@ -4,6 +4,9 @@ export type RepositoryHead = {
   branch: string
   ref: string
   sha: string
+  /** What the GitHub App installation may do, as GitHub reports it. */
+  contents: 'read' | 'write' | 'none'
+  canWrite: boolean
 }
 
 // The ref the admin is allowed to publish to. The Worker owns this decision;
@@ -20,5 +23,7 @@ export async function fetchRepositoryHead(signal: AbortSignal): Promise<Reposito
   if ([owner, repo, branch].some(value => typeof value !== 'string' || !value)) throw new Error('Invalid repository response.')
   if (typeof sha !== 'string' || !/^[a-f0-9]{40}$/.test(sha)) throw new Error('Invalid repository revision.')
   if (ref !== EXPECTED_REF) throw new Error('Unexpected publishing ref.')
-  return { owner: owner as string, repo: repo as string, branch: branch as string, ref, sha }
+  const { contents, canWrite } = body as Record<string, unknown>
+  const access = contents === 'write' || contents === 'read' ? contents : 'none'
+  return { owner: owner as string, repo: repo as string, branch: branch as string, ref, sha, contents: access, canWrite: canWrite === true }
 }

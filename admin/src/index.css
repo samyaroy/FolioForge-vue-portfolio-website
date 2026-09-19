@@ -725,3 +725,7 @@ tbody tr:hover { background: #f9fbfd; }
 .logo-card-actions, .logo-confirm { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; }
 .logo-library-actions .field-wrapper { margin: 0; }
 .logo-library-actions input { width: 150px; }
+
+/* A connected repository the admin cannot write to is worth seeing before a
+   save fails, not after. */
+.workspace-label-warn { color: #f0a23a; }
