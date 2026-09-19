@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 import { AlertTriangle, ExternalLink, Pencil, Plus, Save, Trash2, X } from 'lucide-react'
 import { DataTable } from '@/components/admin/DataTable'
@@ -8,13 +8,30 @@ import { MetricGrid } from '@/components/admin/MetricGrid'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
 import { Button, IconButton, SelectField, TextField } from '@/components/form'
-import { hyperlinkEntries, type HyperlinkEntry, type HyperlinkGroup } from '@/lib/hyperlinkMetadata'
+import { HYPERLINK_COLLECTIONS, hyperlinkEntries, hyperlinkGroupEntries, hyperlinkIndex, serializeHyperlinkEntry, type HyperlinkEntry, type HyperlinkGroup } from '@/lib/hyperlinkMetadata'
+import { createEntry, deleteEntry, fetchCollection, saveEntry } from '@/services/content'
 
 const groups = ['Institute', 'Person'] as const
 
+/**
+ * Both groups are sequences in one file, so a single read gives the revision
+ * and the contents of both. Returns data rather than setting state, so the
+ * effect that calls it stays a plain fetch.
+ */
+async function readHyperlinks(signal: AbortSignal): Promise<{ entries: HyperlinkEntry[]; baseSha: string }> {
+  const [institutes, people] = await Promise.all([
+    fetchCollection(HYPERLINK_COLLECTIONS.Institute, signal),
+    fetchCollection(HYPERLINK_COLLECTIONS.Person, signal),
+  ])
+  return {
+    entries: [...hyperlinkGroupEntries('Institute', institutes.entries), ...hyperlinkGroupEntries('Person', people.entries)],
+    baseSha: institutes.baseSha,
+  }
+}
+
 const column = columnsFor<HyperlinkEntry>()
 
-const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void): DataTableColumns<HyperlinkEntry> => [
+const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void, onDelete: (entry: HyperlinkEntry) => void, canDelete: boolean): DataTableColumns<HyperlinkEntry> => [
   column.accessor('name', {
     header: 'Name',
     meta: { width: '30%' },
@@ -28,7 +45,7 @@ const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void):
   column.accessor(entry => entry.aliases.join(', '), {
     id: 'aliases',
     header: 'Aliases',
-    meta: { width: '57%' },
+    meta: { width: '54%' },
     cell: ({ row }) => row.original.aliases.length
       ? <span className="hyperlink-aliases">{row.original.aliases.join(', ')}</span>
       : <span className="credential-link-empty">-</span>,
@@ -42,14 +59,19 @@ const columnsFor_ = (urlLabel: string, onEdit: (entry: HyperlinkEntry) => void):
   }),
   column.display({
     id: 'actions',
-    meta: { width: '6%' },
+    meta: { width: '9%' },
     header: () => <span className="sr-only">Edit</span>,
-    cell: ({ row }) => <IconButton variant="outline" title="Edit link" label={`Edit ${row.original.name || 'entry'}`} onClick={() => onEdit(row.original)}><Pencil aria-hidden="true" /></IconButton>,
+    cell: ({ row }) => (
+      <div className="hyperlink-row-actions">
+        <IconButton variant="outline" title="Edit link" label={`Edit ${row.original.name || 'entry'}`} onClick={() => onEdit(row.original)}><Pencil aria-hidden="true" /></IconButton>
+        <IconButton variant="outline" title={canDelete ? 'Delete link' : 'This file cannot be saved yet'} label={`Delete ${row.original.name || 'entry'}`} disabled={!canDelete} onClick={() => onDelete(row.original)}><Trash2 aria-hidden="true" /></IconButton>
+      </div>
+    ),
   }),
 ]
 const groupOptions = groups.map(group => ({ value: group, label: group }))
 
-function EntryDialog({ entry, onClose, onSave }: { entry: HyperlinkEntry; onClose: () => void; onSave: (entry: HyperlinkEntry) => void }) {
+function EntryDialog({ entry, onClose, onSave, saving }: { entry: HyperlinkEntry; onClose: () => void; onSave: (entry: HyperlinkEntry) => void; saving: boolean }) {
   const [draft, setDraft] = useState(entry)
   const update = (patch: Partial<HyperlinkEntry>) => setDraft(current => ({ ...current, ...patch }))
 
@@ -94,16 +116,46 @@ function EntryDialog({ entry, onClose, onSave }: { entry: HyperlinkEntry; onClos
             ))}
           </div>
         </div>
-        <footer><Button variant="outline" onClick={onClose}>Cancel</Button><Button onClick={save}><Save aria-hidden="true" /> Save local change</Button></footer>
+        <footer><Button variant="outline" onClick={onClose} disabled={saving}>Cancel</Button><Button onClick={save} disabled={saving}><Save aria-hidden="true" /> {saving ? 'Committing...' : 'Save to V1'}</Button></footer>
       </section>
     </div>
   )
 }
 
 export function HyperlinkMetadataPage() {
+  // Starts from the bundled copy so the table is populated immediately, then is
+  // replaced by what the publishing branch actually holds.
   const [entries, setEntries] = useState(hyperlinkEntries)
   const [query, setQuery] = useState('')
   const [editing, setEditing] = useState<HyperlinkEntry | null>(null)
+  const [saving, setSaving] = useState(false)
+  const [baseSha, setBaseSha] = useState('')
+  const [reason, setReason] = useState('Checking whether this file can be saved...')
+
+  const apply = (state: { entries: HyperlinkEntry[]; baseSha: string }) => {
+    setEntries(state.entries)
+    setBaseSha(state.baseSha)
+    setReason('')
+  }
+
+  useEffect(() => {
+    const controller = new AbortController()
+    readHyperlinks(controller.signal)
+      .then(apply)
+      .catch((error: unknown) => {
+        if (error instanceof Error && error.name === 'AbortError') return
+        setBaseSha('')
+        setReason(error instanceof Error ? error.message : 'This file cannot be saved yet.')
+      })
+    return () => controller.abort()
+  }, [])
+
+  /** Re-read after a write, and hand back the revision the next one must quote. */
+  const reload = async () => {
+    const state = await readHyperlinks(new AbortController().signal)
+    apply(state)
+    return state.baseSha
+  }
 
   const brokenCount = entries.filter(entry => entry.issues.length).length
   const visibleEntries = useMemo(() => {
@@ -112,12 +164,53 @@ export function HyperlinkMetadataPage() {
     return entries.filter(entry => [entry.name, entry.url, ...entry.aliases].join(' ').toLowerCase().includes(normalizedQuery))
   }, [entries, query])
 
-  const saveEntry = (next: HyperlinkEntry) => {
-    setEntries(current => current.some(entry => entry.id === next.id)
-      ? current.map(entry => entry.id === next.id ? next : entry)
-      : [next, ...current])
-    setEditing(null)
-    toast.success('Link updated locally.')
+  const persist = async (next: HyperlinkEntry) => {
+    const existing = entries.find(entry => entry.id === next.id)
+    if (!baseSha) {
+      setEntries(current => existing ? current.map(entry => entry.id === next.id ? next : entry) : [next, ...current])
+      setEditing(null)
+      toast.info('Changed in this session only — GitHub is not connected.')
+      return
+    }
+    setSaving(true)
+    try {
+      const collection = HYPERLINK_COLLECTIONS[next.group]
+      const record = serializeHyperlinkEntry(next)
+      if (!existing) {
+        await createEntry(collection, record, baseSha)
+      } else if (existing.group === next.group) {
+        await saveEntry(collection, hyperlinkIndex(next), record, baseSha)
+      } else {
+        // The type changed, so the entry moves between two sequences in the same
+        // file. Add it to the new group first: a failure then leaves a duplicate
+        // to tidy rather than an entry that exists nowhere.
+        await createEntry(collection, record, baseSha)
+        const moved = await reload()
+        await deleteEntry(HYPERLINK_COLLECTIONS[existing.group], hyperlinkIndex(existing), moved)
+      }
+      await reload()
+      setEditing(null)
+      toast.success(existing ? 'Link updated on V1.' : 'Link added to V1.')
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not save that link.')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const removeEntry = async (entry: HyperlinkEntry) => {
+    if (!baseSha) { toast.error('This file cannot be saved yet.'); return }
+    if (!window.confirm(`Delete "${entry.name || 'this entry'}"? Anything in your content referencing it stops resolving.`)) return
+    setSaving(true)
+    try {
+      await deleteEntry(HYPERLINK_COLLECTIONS[entry.group], hyperlinkIndex(entry), baseSha)
+      await reload()
+      toast.success('Link deleted from V1.')
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not delete that link.')
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -133,7 +226,11 @@ export function HyperlinkMetadataPage() {
         { label: 'People', value: entries.filter(entry => entry.group === 'Person').length, detail: 'Profile entries' },
         { label: 'Needs a look', value: brokenCount, detail: brokenCount ? 'Entry will not resolve' : 'All entries resolve', healthy: brokenCount === 0 },
       ]} />
-      <LocalNotice>Edits stay in this session until the collection adapter can write YAML.</LocalNotice>
+      <LocalNotice>
+        {baseSha
+          ? <>Edits commit straight to <code>hyperlinkMetadata.yml</code> on <code>V1</code>. SmartLink resolves names and aliases through this file, so a deleted entry stops resolving wherever the content uses it.</>
+          : reason}
+      </LocalNotice>
 
       <div className="hyperlink-search">
         <SearchField value={query} onChange={setQuery} placeholder="Search names, aliases, or URLs" label="Search hyperlink metadata" />
@@ -150,7 +247,7 @@ export function HyperlinkMetadataPage() {
               <span>{groupEntries.length} of {entries.filter(entry => entry.group === group).length}</span>
             </div>
             <DataTable
-              columns={columnsFor_(urlLabel, setEditing)}
+              columns={columnsFor_(urlLabel, setEditing, entry => void removeEntry(entry), Boolean(baseSha) && !saving)}
               data={groupEntries}
               pageSize={25}
               labelledBy={`hyperlinks-${group}`}
@@ -161,7 +258,7 @@ export function HyperlinkMetadataPage() {
           </section>
         )
       })}
-      {editing && <EntryDialog key={editing.id} entry={editing} onClose={() => setEditing(null)} onSave={saveEntry} />}
+      {editing && <EntryDialog key={editing.id} entry={editing} saving={saving} onClose={() => setEditing(null)} onSave={entry => void persist(entry)} />}
     </>
   )
 }

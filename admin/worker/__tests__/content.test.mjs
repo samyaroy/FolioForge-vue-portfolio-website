@@ -16,10 +16,11 @@ test('every collection points at a file that really exists', () => {
 
 test('only content files are writable, and nothing outside the allowlist is', () => {
   for (const path of writablePaths) {
-    assert.match(path, /^(src\/content\/profile_info|blogs\/src\/content)\/.+\.yml$/, `${path} is not a content file`)
+    assert.match(path, /^(src\/content\/profile_info|src\/metadata|blogs\/src\/content)\/.+\.yml$/, `${path} is not a content file`)
   }
   for (const path of [
     '.github/workflows/deploy.yml', 'admin/wrangler.jsonc', 'package.json', 'src/router/routes.ts',
+    'src/metadata/../../secrets.yml', 'src/metadata/galleryTags.yml',
     '../../../etc/passwd', 'src/content/profile_info/../../../secret.yml', 'src/content/profile_info/education.yml/../x',
   ]) {
     assert.equal(isWritablePath(path), false, `${path} must not be writable`)
@@ -94,9 +95,10 @@ test('every real content file parses and round-trips without losing a comment', 
     const commentsAfter = (rendered.match(/#/g) ?? []).length
     assert.ok(commentsAfter >= commentsBefore, `${id}: ${commentsBefore} comments became ${commentsAfter}`)
     // Rendering must not re-wrap long values: that would rewrite most of a file.
+    // Indentation may be normalised, so compare the content of the line.
     for (const line of original.split('\n')) {
       if (line.length > 120 && !line.trimStart().startsWith('#')) {
-        assert.ok(rendered.includes(line.trimEnd()), `${id}: a long line was re-wrapped`)
+        assert.ok(rendered.includes(line.trim()), `${id}: a long value was broken across lines`)
         break
       }
     }

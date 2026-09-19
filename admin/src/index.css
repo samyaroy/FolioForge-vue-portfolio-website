@@ -735,3 +735,5 @@ tbody tr:hover { background: #f9fbfd; }
 .media-publish { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
 .media-publish .field-wrapper { margin: 0; flex: 1; min-width: 0; }
 .media-publish input { width: 100%; }
+
+.hyperlink-row-actions { display: inline-flex; gap: 5px; }

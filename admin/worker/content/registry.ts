@@ -15,6 +15,7 @@ export type ContentSource = { path: string; arrayKeys: readonly string[] }
 
 const PORTFOLIO = 'src/content/profile_info'
 const BLOG = 'blogs/src/content'
+const METADATA = 'src/metadata'
 
 export const contentSources = {
   'home/education': { path: `${PORTFOLIO}/education.yml`, arrayKeys: ['education'] },
@@ -51,6 +52,11 @@ export const contentSources = {
   'resources/study-material': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['subjects'] },
   'resources/worth-exploring': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['explore'] },
   'facts/facts': { path: `${PORTFOLIO}/facts.yml`, arrayKeys: ['facts'] },
+
+  // SmartLink resolves a name or alias to a URL through this file; both groups
+  // are top-level sequences in the same document.
+  'metadata/institutes': { path: `${METADATA}/hyperlinkMetadata.yml`, arrayKeys: ['Institute'] },
+  'metadata/people': { path: `${METADATA}/hyperlinkMetadata.yml`, arrayKeys: ['Person'] },
 
   'recommended/items': { path: `${BLOG}/recommended/data.yml`, arrayKeys: ['items'] },
   'readings/items': { path: `${BLOG}/readings/data.yml`, arrayKeys: ['items'] },
