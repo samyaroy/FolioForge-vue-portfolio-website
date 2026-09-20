@@ -7,7 +7,7 @@
         </div>
 
         <div v-if="projects && projects.length" class="space-y-6">
-            <div v-for="(project, index) in visibleProjects" :key="index" :id="`research-${index}`"
+            <div v-for="(project, index) in visibleProjects" :key="index" :id="projectSlug(project.title)"
                 class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4 pr-4 rounded-md bg-slate-50">
 
                 <!-- TITLE -->
@@ -157,8 +157,10 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
+import { PROJECT_ANCHOR_PARAM, projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import { logoUrl } from '@/config/mediaAssets'
 
@@ -170,6 +172,19 @@ const props = defineProps({
 })
 
 const showAllProjects = ref(false)
+
+// A link can name a project sitting behind "show more". Open the list so the
+// card it points at is actually on the page.
+const route = useRoute()
+watch(
+    () => route.query[PROJECT_ANCHOR_PARAM],
+    (slug) => {
+        if (slug && props.projects.some(project => projectSlug(project.title) === slug)) {
+            showAllProjects.value = true
+        }
+    },
+    { immediate: true }
+)
 const showToggleButton = computed(() => props.projects.length > 2)
 const visibleProjects = computed(() => {
     return showAllProjects.value || !showToggleButton.value

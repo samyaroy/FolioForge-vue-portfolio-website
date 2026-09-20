@@ -14,7 +14,7 @@
         </button>
 
         <div v-if="projects && projects.length > 0" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-            <div v-for="(project, index) in projects" :key="project.id || project.title || index"
+            <div v-for="(project, index) in projects" :key="project.id || project.title || index" :id="projectSlug(project.title)"
                 class="relative border rounded-lg p-3.5 hover:shadow-md transition-shadow duration-200 text-sm"
                 :class="isOpen ? '' : 'cursor-pointer'"
                 :role="isOpen ? undefined : 'button'"
@@ -87,6 +87,7 @@
 </template>
 
 <script setup>
+import { projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import { isFeatureEnabled } from '@/config/featureFlags'

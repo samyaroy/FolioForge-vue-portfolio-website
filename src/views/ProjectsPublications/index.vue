@@ -58,8 +58,9 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
+import { PROJECT_ANCHOR_PARAM, PROJECT_TAB } from '@/config/projectAnchors'
 import PublicationsTab from './components/PublicationsTab.vue'
 import ProjectsTab from './components/ProjectTab/index.vue'
 import ArticlesTab from './components/ArticlesTab/index.vue'
@@ -109,5 +110,51 @@ onMounted(() => {
   if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
+  focusRequestedProject()
 })
+
+// A link from elsewhere — an internship naming the project it produced — opens
+// the Projects tab and brings that project into view. The card is found by the
+// slug of its title, so neither side has to store an id.
+watch(() => route.query[PROJECT_ANCHOR_PARAM], focusRequestedProject)
+
+function focusRequestedProject() {
+  const slug = route.query[PROJECT_ANCHOR_PARAM]
+  if (!slug || typeof slug !== 'string') return
+  if (enabledTabIds.value.includes(PROJECT_TAB)) activeTab.value = PROJECT_TAB
+
+  // Two things happen after this runs: a group may expand to reveal the card,
+  // and the router's own scrollBehavior sends the page to the top. So the
+  // position is asserted until it holds rather than set once and hoped for.
+  let attempts = 0
+  const settle = () => {
+    const card = document.getElementById(slug)
+    if (!card) {
+      // A title edited on one side and not the other stops matching; the tab is
+      // still the right place to land, so a miss is not an error.
+      if (++attempts < 12) window.setTimeout(settle, 60)
+      return
+    }
+    if (!card.classList.contains('project-linked')) {
+      card.classList.add('project-linked')
+      window.setTimeout(() => card.classList.remove('project-linked'), 2400)
+    }
+    const box = card.getBoundingClientRect()
+    const centred = Math.abs(box.top + box.height / 2 - window.innerHeight / 2) < 140
+    if (centred) return
+    card.scrollIntoView({ behavior: attempts ? 'smooth' : 'auto', block: 'center' })
+    if (++attempts < 12) window.setTimeout(settle, 80)
+  }
+  nextTick(settle)
+}
 </script>
+
+<style scoped>
+/* A brief ring on the card a link asked for, so it is obvious which one the
+   page scrolled to. */
+:deep(.project-linked) {
+  outline: 2px solid #1980e6;
+  outline-offset: 3px;
+  transition: outline-color 400ms ease;
+}
+</style>
