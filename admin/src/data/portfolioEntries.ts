@@ -115,6 +115,19 @@ function groupedEntries(groupName: string) {
   return asRecords(group?.entries)
 }
 
+/**
+ * An entry that holds several roles has no `role` of its own, so it would list
+ * as untitled. Name it by the roles it carries instead — that is what the card
+ * shows and what someone is looking for in the list.
+ */
+function withGroupedRoleTitles(entries: UnknownRecord[]): UnknownRecord[] {
+  return entries.map(entry => {
+    if (entry.role || !Array.isArray(entry.roles)) return entry
+    const named = asRecords(entry.roles).map(item => displayText(item.role)).filter(Boolean)
+    return named.length ? { ...entry, role: named.join(' + ') } : entry
+  })
+}
+
 function mentoredProjects() {
   return arrayAt(documents.teaching, 'projects_mentored').flatMap(semester => {
     const semesterName = displayText(semester.semester)
@@ -176,8 +189,8 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'workshops/bootcamps': () => toEntries(arrayAt(documents.workshops, 'attended_bootcamps'), ['title'], ['institution', 'date']),
   'workshops/other': () => toEntries(arrayAt(documents.workshops, 'attended_webinars_n_others'), ['title'], ['type', 'date']),
 
-  'cocurricular/leadership': () => toEntries(groupedEntries('leadership_roles'), ['role', 'title'], ['affiliation', 'time_period']),
-  'cocurricular/volunteering': () => toEntries(groupedEntries('volunteering_roles'), ['role', 'title'], ['organization', 'time_period']),
+  'cocurricular/leadership': () => toEntries(withGroupedRoleTitles(groupedEntries('leadership_roles')), ['role', 'title'], ['affiliation', 'time_period']),
+  'cocurricular/volunteering': () => toEntries(withGroupedRoleTitles(groupedEntries('volunteering_roles')), ['role', 'title'], ['organization', 'time_period']),
   'professional-activity/invited-talks': () => toEntries(arrayAt(documents.professionalActivity, 'invited_talks'), ['title'], ['institution', 'date']),
   'professional-activity/hosted-events': () => toEntries([
     ...arrayAt(documents.professionalActivity, 'hosted_events'),

@@ -1,7 +1,7 @@
 import { Plus, Trash2 } from 'lucide-react'
 import { Button, IconButton, TextField } from '@/components/form'
 import { fieldCaption } from '@/lib/fieldNames'
-import type { ListFieldsRow } from '@/lib/listFields'
+import { blankRow, visibleColumns, type ListFieldsRow } from '@/lib/listFields'
 
 type ListFieldsEditorProps = {
   /** The entry key being edited, e.g. `students`. */
@@ -13,7 +13,7 @@ type ListFieldsEditorProps = {
 
 export function ListFieldsEditor({ name, fields, rows, onChange }: ListFieldsEditorProps) {
   const label = fieldCaption(name)
-  const columns = Object.keys(rows[0] ?? {}).length ? Object.keys(rows[0]) : fields
+  const columns = visibleColumns(rows[0], fields)
   const singular = fieldCaption(name.replace(/s$/, ''))
   const stacked = columns.length > 3
   const update = (index: number, key: string, value: string) => {
@@ -24,7 +24,7 @@ export function ListFieldsEditor({ name, fields, rows, onChange }: ListFieldsEdi
     <div className="list-fields-editor" style={{ '--list-columns': columns.length } as React.CSSProperties}>
       <div className="faculty-editor-heading">
         <span>{label} <small>{rows.length}</small></span>
-        <Button variant="outline" size="sm" onClick={() => onChange([...rows, Object.fromEntries(columns.map(key => [key, '']))])}><Plus aria-hidden="true" /> Add {singular.toLowerCase()}</Button>
+        <Button variant="outline" size="sm" onClick={() => onChange([...rows, blankRow(columns)])}><Plus aria-hidden="true" /> Add {singular.toLowerCase()}</Button>
       </div>
       {/* A couple of columns read well as a row; more than that needs a card,
           or each box is too narrow to show what is in it. */}

@@ -196,7 +196,7 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
           })}
         </div>
         {isEducation && <div className="entry-dialog-body curriculum-tab-body" hidden={educationTab !== 'curriculum'}><CurriculumEditor curriculum={curriculum} onChange={setCurriculum} /></div>}
-        <footer><Button variant="outline" onClick={onClose} disabled={saving}>Cancel</Button><Button onClick={saveEntry} disabled={saving}><Save aria-hidden="true" /> {saving ? 'Committing...' : 'Save to V1'}</Button></footer>
+        <footer><Button variant="outline" onClick={onClose} disabled={saving}>Cancel</Button><Button onClick={saveEntry} disabled={saving}><Save aria-hidden="true" /> {saving ? 'Saving...' : 'Save'}</Button></footer>
       </section>
     </div>
   )

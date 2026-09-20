@@ -141,33 +141,39 @@ export function CareerUnlocksPage() {
           ? <>Saving commits <code>gallery.yml</code> and the generated <code>galleryImageManifest.yml</code> together, so the two never disagree.</>
           : reason}
       </LocalNotice>
-      <section className="content-list-panel">
-        <div className="panel-toolbar">
-          <SearchField value={query} onChange={setQuery} placeholder="Search title, ID, or type" label="Search career unlocks" />
-          <span className="result-count">{visibleItems.length} of {entries.length} shown</span>
-        </div>
-        <div className="item-list">
-          {visibleItems.map(entry => (
-            <article className="content-row" key={entry.id}>
-              <GalleryThumbnail url={thumbnailUrl(entry.raw)} alt="" />
-              <IconButton
-                variant="bare"
-                size="none"
-                className={`feature-button ${entry.raw.featured === true ? 'feature-button-active' : ''}`}
-                label={`${entry.raw.featured === true ? 'Unfeature' : 'Feature'} ${entry.title}`}
-                disabled={!baseSha || saving}
-                onClick={() => toggleFeatured(entry)}
-              ><Star aria-hidden="true" /></IconButton>
-              <div className="content-row-main"><strong>{entry.title}</strong><code>{text(entry.raw.id)}</code></div>
-              <span className="type-badge">{text(entry.raw.type)}</span><time>{text(entry.raw.date)}</time>
-              <IconButton variant="outline" title="Edit entry" label={`Edit ${entry.title}`} disabled={saving} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></IconButton>
-              <IconButton variant="outline" title={baseSha ? 'Delete entry' : 'Not saveable yet'} label={`Delete ${entry.title}`} disabled={!baseSha || saving} onClick={() => remove(entry)}><Trash2 aria-hidden="true" /></IconButton>
-            </article>
-          ))}
-          {!visibleItems.length && <div className="simple-empty">{baseSha ? 'No entries match that search.' : 'Nothing loaded yet.'}</div>}
-        </div>
-      </section>
-      <div className="gallery-visibility"><VisibilityPane pageId="gallery" sectionId="career-unlocks" /></div>
+      {/* The list and what governs its visibility sit side by side, as every
+          other collection editor arranges them. */}
+      <div className="mapped-editor-layout">
+        <section className="content-list-panel">
+          <div className="panel-toolbar">
+            <SearchField value={query} onChange={setQuery} placeholder="Search title, ID, or type" label="Search career unlocks" />
+            <span className="result-count">{visibleItems.length} of {entries.length} shown</span>
+          </div>
+          <div className="item-list">
+            {visibleItems.map(entry => (
+              <article className="content-row" key={entry.id}>
+                <GalleryThumbnail url={thumbnailUrl(entry.raw)} alt="" />
+                <IconButton
+                  variant="bare"
+                  size="none"
+                  className={`feature-button ${entry.raw.featured === true ? 'feature-button-active' : ''}`}
+                  label={`${entry.raw.featured === true ? 'Unfeature' : 'Feature'} ${entry.title}`}
+                  disabled={!baseSha || saving}
+                  onClick={() => toggleFeatured(entry)}
+                ><Star aria-hidden="true" /></IconButton>
+                <div className="content-row-main"><strong>{entry.title}</strong><code>{text(entry.raw.id)}</code></div>
+                {/* An empty chip is a claim that the entry has a type; a gap is honest. */}
+                {text(entry.raw.type) ? <span className="type-badge">{text(entry.raw.type)}</span> : <span />}
+                {text(entry.raw.date) ? <time>{text(entry.raw.date)}</time> : <span />}
+                <IconButton variant="outline" title="Edit entry" label={`Edit ${entry.title}`} disabled={saving} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></IconButton>
+                <IconButton variant="outline" title={baseSha ? 'Delete entry' : 'Not saveable yet'} label={`Delete ${entry.title}`} disabled={!baseSha || saving} onClick={() => remove(entry)}><Trash2 aria-hidden="true" /></IconButton>
+              </article>
+            ))}
+            {!visibleItems.length && <div className="simple-empty">{baseSha ? 'No entries match that search.' : 'Nothing loaded yet.'}</div>}
+          </div>
+        </section>
+        <VisibilityPane pageId="gallery" sectionId="career-unlocks" />
+      </div>
       {editor && section && (
         <EntryEditorDialog
           key={editor.mode === 'edit' ? editor.entry.id : 'new'}

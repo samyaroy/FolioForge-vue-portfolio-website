@@ -4,6 +4,8 @@
  * (`cred_link (Drive file ID / URL)` stays readable).
  */
 export function fieldCaption(key: string): string {
-  const spaced = key.replaceAll('_', ' ').trim()
+  // A dotted column names a nested value; the path reads as a phrase rather
+  // than as a path, so `organization.web_link` becomes "Organization web link".
+  const spaced = key.replaceAll('.', ' ').replaceAll('_', ' ').trim()
   return spaced.charAt(0).toUpperCase() + spaced.slice(1)
 }

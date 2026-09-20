@@ -45,8 +45,13 @@ export const entryFields = {
   bootcamps: ['title', 'instructor', 'institution', 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link'],
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 
-  leadership: ['role', 'affiliation', 'description', 'cred_link'],
-  volunteering: ['role', 'organization', 'field', 'time_period', 'cred_link'],
+  // One leadership entry can hold several roles, each at its own organisation,
+  // with its own host and period. `cred_link` on an affiliation is a list of
+  // labelled documents and is preserved rather than edited here.
+  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period'] }, 'description', 'cred_link'],
+  // A volunteering entry is either a single role or a `roles` list of them. The
+  // per-role `field` list is preserved rather than edited here.
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],
