@@ -3,12 +3,14 @@ co_curriculars:
     entries:
       - role: Founder, Club Administrator
         affiliation:
-          - organization:
+          - role: Deputy Secretary
+            organization:
               name:  'Chi-Square: Statistics Interest Group'
               web_link: https://www.rasor.in/
             institute: Indian Institute of Technology Madras BS Degree
             time_period: 2026 - Present
-          - organization:
+          - role: Founder, Club Administrator
+            organization:
               name:  'Chi-Square: Statistics Club'
               web_link: https://22f2001443.github.io/chi-square/
             host:
@@ -16,12 +18,14 @@ co_curriculars:
               web_link:
             institute: Indian Institute of Technology Madras BS Degree
             time_period: 2023 - 2026
-        description: Created and led the statistics community of 700+ members over 2 years. Organized 20+ workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
-        cred_link:
-          - label: Certificate 2024-2025
-            url: https://drive.google.com/file/d/1oVT6q9AyRm0qfffNGatqN1MPvr6-bsyY/preview
-          - label: Certificate 2023-2024
-            url: https://drive.google.com/file/d/1DgDJXTVzKSZIzrJhvsVp8mc0qEZVptu2/preview
+            # Both certificates are dated inside this role's period, so they sit
+            # with it rather than with the entry as a whole.
+            cred_link:
+              - label: Certificate 2024-2025
+                url: https://drive.google.com/file/d/1oVT6q9AyRm0qfffNGatqN1MPvr6-bsyY/preview
+              - label: Certificate 2023-2024
+                url: https://drive.google.com/file/d/1DgDJXTVzKSZIzrJhvsVp8mc0qEZVptu2/preview
+        description: Created and led the statistics community of 850+ members over 3 years. Organized 25+ workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
        # skills: Leadership, Event Management, Team Building
 
       - role: Event Head
@@ -44,23 +48,37 @@ co_curriculars:
       organization: Researchers of Statistics Education (RoSE) Network
       time_period: 2026 - Present
 
-    - role: Project Mentor
-      organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
-      field: 
-        - sub_field: 'Summer Internship Program on Data Science 2026'  
-          time_period: June 2026 - July 2026
-        - sub_field: 'Spring Internship Program on Data Science 2026' 
-          time_period: February 2026 - March 2026
-      #   skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
-      #   details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
-      cred_link: '#'
-    - role: Teaching Assistant (Revision Sessions)
-      organization: "Chi-Square: Statistics Club X Nilgiri House, `Indian Institute of Technology Madras BS Degree`"
-      field:
-        - sub_field: 'Course: Statistics for Data Science I'
-          time_period: Jan Term 2025 (T1-2025) ; May Term 2025 (T2-2025)        
-          skills: Taught 25+ Students 
-      cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
+    # Mentoring the IDEAS-TIH internship programmes was paid work carried out
+    # inside the Associate Software Developer role (Oct 2025 - Aug 2026), so it
+    # is not volunteering. The projects and students are already recorded under
+    # teaching.yml -> projects_mentored; what is missing is the engagement from
+    # my own side, which belongs in other_teachings. Kept here until that move
+    # is made, so the month ranges below are not lost.
+    # - role: Project Mentor
+    #   organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
+    #   field: 
+    #     - sub_field: 'Summer Internship Program on Data Science 2026'  
+    #       time_period: June 2026 - July 2026
+    #     - sub_field: 'Spring Internship Program on Data Science 2026' 
+    #       time_period: February 2026 - March 2026
+    #   #   skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
+    #   #   details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
+    #   cred_link: '#'
+    # Two roles at Nilgiri House, shown as one card with a timeline. An entry
+    # with a `roles` list renders each as its own node; one without still works
+    # as a single role.
+    - roles:
+        - role: Web Admin
+          organization: "Nilgiri House, `Indian Institute of Technology Madras BS Degree`"
+          time_period: Sept Term 2026 (T3 2026) - Present
+
+        - role: Teaching Assistant (Revision Sessions)
+          organization: "Chi-Square: Statistics Club X Nilgiri House, `Indian Institute of Technology Madras BS Degree`"
+          field:
+            - sub_field: 'Course: Statistics for Data Science I'
+              time_period: Jan Term 2025 (T1 2025) ; May Term 2025 (T2 2025)
+              skills: Taught 25+ Students
+          cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview
 
       
       #Add more entries as needed
