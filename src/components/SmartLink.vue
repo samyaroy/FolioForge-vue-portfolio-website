@@ -6,16 +6,16 @@
             target="_blank"
             rel="noopener noreferrer"
             class="hover:underline"
-        >
-            {{ segment.text }}
-        </a>
-        <span v-else>{{ segment.text }}</span>
+        ><MarkedText v-for="run in segment.runs" :key="run.key" :text="run.text" :tags="run.tags" /></a>
+        <span v-else><MarkedText v-for="run in segment.runs" :key="run.key" :text="run.text" :tags="run.tags" /></span>
     </template>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import links from '@/metadata/hyperlinkMetadata.yml'
+import MarkedText from './MarkedText.vue'
+import { emphasisTags, splitEmphasis, stripEmphasis } from '@/utils/inlineMarkup'
 
 interface LinkItem {
     Name?: string
@@ -24,9 +24,15 @@ interface LinkItem {
     Link?: string
 }
 
-interface Segment {
+interface MarkedRun {
     key: string
     text: string
+    tags: string[]
+}
+
+interface Segment {
+    key: string
+    runs: MarkedRun[]
     href: string | null
 }
 
@@ -73,7 +79,7 @@ function buildSegments(text: string) {
             createSegment(
                 linkedText,
                 explicitHref ?? resolveUrl({
-                    text: linkedText,
+                    text: stripEmphasis(linkedText),
                     type: props.type,
                 })
             )
@@ -88,7 +94,7 @@ function buildSegments(text: string) {
                 createSegment(
                     text,
                     resolveUrl({
-                        text,
+                        text: stripEmphasis(text),
                         type: props.type,
                         href: props.href,
                         lookupText: props.lookupText,
@@ -105,7 +111,7 @@ function buildSegments(text: string) {
     }
 
     return parsedSegments
-        .filter((segment) => segment.text)
+        .filter((segment) => segment.runs.length)
         .map((segment, index) => withKey(segment, index))
 }
 
@@ -135,7 +141,14 @@ function resolveUrl(options: ResolveUrlOptions) {
 }
 
 function createSegment(text: string, href: string | null = null) {
-    return { text, href }
+    return {
+        runs: splitEmphasis(text).map((run, index) => ({
+            key: `run-${index}`,
+            text: run.text,
+            tags: emphasisTags(run),
+        })),
+        href,
+    }
 }
 
 function getCandidateNames(item: LinkItem) {

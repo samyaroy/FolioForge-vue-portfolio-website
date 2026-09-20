@@ -56,8 +56,9 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { SEMESTER_ANCHOR_PARAM, TEACHING_PROJECTS_TAB } from '@/config/teachingAnchors'
 import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
@@ -109,5 +110,35 @@ onMounted(() => {
   if (route.query.tab && enabledTabIds.value.includes(route.query.tab)) {
     activeTab.value = route.query.tab
   }
+  focusRequestedSemester()
 })
+
+// A link from elsewhere — a role describing the cohorts it mentored — opens the
+// Projects Mentored tab and brings that semester into view.
+watch(() => route.query[SEMESTER_ANCHOR_PARAM], focusRequestedSemester)
+
+function focusRequestedSemester() {
+  const slug = route.query[SEMESTER_ANCHOR_PARAM]
+  if (!slug || typeof slug !== 'string') return
+  if (enabledTabIds.value.includes(TEACHING_PROJECTS_TAB)) activeTab.value = TEACHING_PROJECTS_TAB
+
+  // The tab renders, the semester expands, and the router's own scrollBehavior
+  // sends the page to the top — so the position is asserted until it holds
+  // rather than set once and hoped for.
+  let attempts = 0
+  const settle = () => {
+    const group = document.getElementById(slug)
+    if (!group) {
+      // A semester renamed on one side only stops matching; the tab is still
+      // the right place to land, so a miss is not an error.
+      if (++attempts < 12) window.setTimeout(settle, 60)
+      return
+    }
+    const box = group.getBoundingClientRect()
+    if (box.top > 60 && box.top < window.innerHeight * 0.5) return
+    group.scrollIntoView({ behavior: attempts ? 'smooth' : 'auto', block: 'start' })
+    if (++attempts < 12) window.setTimeout(settle, 80)
+  }
+  nextTick(settle)
+}
 </script>

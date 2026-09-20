@@ -1,4 +1,5 @@
 import config from '@/content/profile_info'
+import { slugify } from '@/utils/slug'
 
 /**
  * Deep links to a single project.
@@ -17,13 +18,7 @@ export const PROJECT_ANCHOR_PARAM = 'project'
 const GROUPS = ['research_projects', 'technical_projects', 'minor_projects', 'other_projects'] as const
 
 export function projectSlug(title: unknown): string {
-  return String(title ?? '')
-    .toLowerCase()
-    .normalize('NFKD')
-    .replace(/[\u0300-\u036f]/g, '') // combining marks left by NFKD
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 80)
+  return slugify(title)
 }
 
 function titles(): string[] {
