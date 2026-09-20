@@ -15,6 +15,7 @@ experience:
     time_period: Oct 2025 - Aug 2026
     description:
       - "Contributed to the NPCYF platform by implementing **TabPFN**, **Panel OLS**, **ARIMAX** and **Random Forest**-based forecasting workflows, integrating hyperparameter tuning into the platform pipeline, optimizing frontend performance through caching, developing backend APIs, enabling feature-flag-driven releases, and automating data ingestion into a MinIO-based data lake"
+      - "Mentored 13 interns across 4 projects in the institute's ***Internship Program on Data Science***, an engagement that runs alongside the primary role, spanning over **Spring 2026** and **Summer 2026** cohorts @see[See the projects mentored](/teachings?tab=projects&semester=summer-2026)"
     cred_link: 'https://drive.google.com/file/d/1ELcq4N0K-Ql1i39egP4P6ZCee1GkZjtg/preview'
 
   - job_role: Freelance Web Developer
