@@ -20,10 +20,15 @@ courses_taught:
   #       students: 80
 
 projects_mentored:
-  - semester: "Summer 2026"
+  - semester: Summer 2026
+    role: Project Mentor
+    programme: Summer Internship Program on Data Science 2026
+    time_period: Jun 2026 - Jul 2026
+    institution:
+      name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+      location: Kolkata, WB
     projects:
       - title: "Weather-Uncertainty-Aware Indian Crop Yield Prediction Using Climatic Disturbance Indicators"
-        course: "Summer Internship Program on Data Science 2026"
         students:
           - name: "DOROTHY"
             Linkedin: https://www.linkedin.com/in/dorothy-b-a8659a345?utm_source=share_via&utm_content=profile&utm_medium=member_android
@@ -34,9 +39,6 @@ projects_mentored:
           - name: "SWAGATO LAHIRI"
             Linkedin:
         registration_number: ""
-        affiliation:
-          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-          location: Kolkata, WB
         cred_link:
           report: https://drive.google.com/file/d/1XCIbN4zAeLYdO4WSAsZ21DImJj6aP8Bx/view?usp=drive_link
 
@@ -45,7 +47,6 @@ projects_mentored:
           TrackTube is a full-stack web app (React 19 + FastAPI + CockroachDB) that converts any public YouTube playlist into a structured course — pulling video metadata via the YouTube Data API v3 and enforcing sequential lesson unlocking with second-level progress tracking and an anti-cheat buffer to stop skipping ahead.
            
           It layers gamification on top (XP, levels, daily streaks), auto-generates MCQ comprehension quizzes from video transcripts using Groq Cloud AI (llama-3.1-8b-instant), and offers optional in-browser webcam proctoring via MediaPipe Face Landmarker that pauses playback if the learner looks away for 3+ seconds. Checkout the [report](https://drive.google.com/file/d/1snwSUO3xx3nqUuqR4utgu8PfhZ_6uJP0/view?usp=drive_link) for more information.
-        course: "Summer Internship Program on Data Science 2026"
         students:
           - name: "NIRNOY CHATTERJEE"
             Linkedin:
@@ -53,32 +54,29 @@ projects_mentored:
             Linkedin:
           - name: "PRINCE KUMAR SINGH"
             Linkedin: # registration_number: "Group-A"
-        affiliation:
-          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-          location: Kolkata, WB
         cred_link:
           github: https://github.com/Nirnoy12/summer_intern_group-a
 
       - title: "Interpretable Machine Learning Application in Bird Migration Trajectory Analysis Using GPS Data"
         description:
-        course: "Summer Internship Program on Data Science 2026"
         students:
           - name: "BADABALLA JASVANTH"
             Linkedin: https://www.linkedin.com/in/jasvanth-badaballa-896032398/
           - name: "JAYANT PANDEY"
             Linkedin:
         registration_number: ""
-        affiliation:
-          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-          location: Kolkata, WB
         cred_link:
           report: https://drive.google.com/file/d/1qKCTRzN0qwnXQmIxEqhgVvLb7dRKVUqM/view?usp=drive_link
-
-  - semester: "Spring 2026"
+  - semester: Spring 2026
+    role: Project Mentor
+    programme: Spring Internship Program on Data Science 2026
+    time_period: Feb 2026 - Mar 2026
+    institution:
+      name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
+      location: Kolkata, WB
     projects:
       - title: "Noise-Aware Liver Cirrhosis Classification under Outlier-Rich Clinical Data"
         description: "This study benchmarks machine learning models for liver cirrhosis classification on the cleaned Indian Liver Patient Dataset and re-evaluates them after introducing controlled Gaussian Mixture Model-based perturbations. The comparison across clean and noisy variants reveals that ensemble tree-based methods gain substantially in minority-class detection under noise, while linear and imbalance-focused models remain largely unchanged."
-        course: "Spring Internship Program on Data Science 2026"
         students:
           - name: "SAPTARSHI DEY"
             email: saptarshidey6290186223@gmail.com
@@ -89,9 +87,6 @@ projects_mentored:
           - name: "SONU SHAW"
             email: sonushaw.work@gmail.com
         registration_number: ""
-        affiliation:
-          name: "Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute"
-          location: Kolkata, WB
         cred_link:
           report: https://drive.google.com/file/d/1i-835QLggY2OWbRxr_RAw1i1wsRBDKCD/view
           github: https://github.com/samyaroy/IDEAS_Spring_Internship_Contribution_2026

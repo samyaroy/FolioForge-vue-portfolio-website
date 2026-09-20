@@ -8,10 +8,39 @@
       <!-- Semester Loop -->
       <div v-for="semesterBlock in visibleProjects" :key="semesterBlock.semester">
         <!-- Semester Heading -->
-        <div class="mb-4 flex items-center justify-between border-b pb-2">
-          <h3 class="text-lg font-semibold text-[#0e141b]">
-            {{ semesterBlock.semester }}
-          </h3>
+        <div class="mb-4 flex items-start justify-between border-b pb-2 gap-4">
+          <div class="min-w-0">
+            <h3 class="text-lg font-semibold text-[#0e141b]">
+              {{ semesterBlock.semester }}
+            </h3>
+
+            <!-- The engagement: what was mentored, where, for how long, and how
+                 many people. Stated once here rather than on every project, and
+                 indented so it reads as detail under the semester rather than
+                 as a second heading beside it. The role is not repeated: the
+                 section is already titled Projects Mentored. -->
+            <p v-if="semesterBlock.programme" class="text-slate-600 text-sm mt-0.5 pl-3">
+              {{ semesterBlock.programme }}
+            </p>
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-0.5 mt-0.5 pl-3 text-sm text-[#4e7397]">
+              <span v-if="semesterBlock.institution?.name" class="flex items-center gap-1.5">
+                <v-icon size="15">mdi-domain</v-icon>
+                <SmartLink type="Institution" :text="semesterBlock.institution.name" />
+              </span>
+              <span v-if="semesterBlock.institution?.location" class="flex items-center gap-1.5">
+                <v-icon size="15">mdi-map-marker</v-icon>{{ semesterBlock.institution.location }}
+              </span>
+              <span v-if="semesterBlock.time_period" class="flex items-center gap-1.5">
+                <v-icon size="15">mdi-calendar</v-icon>{{ semesterBlock.time_period }}
+              </span>
+              <span v-if="mentoredCount(semesterBlock)" class="flex items-center gap-1.5">
+                <v-icon size="15">mdi-account-group</v-icon>{{ mentoredCount(semesterBlock) }}
+              </span>
+              <span v-if="semesterBlock.focus" class="flex items-center gap-1.5">
+                <v-icon size="15">mdi-puzzle-outline</v-icon>{{ semesterBlock.focus }}
+              </span>
+            </div>
+          </div>
           <button type="button"
             class="flex items-center justify-center focus:outline-none"
             :aria-expanded="!isCollapsed(semesterBlock.semester)"
@@ -24,7 +53,7 @@
         </div>
 
         <!-- Projects -->
-        <div class="space-y-6">
+        <div class="space-y-3">
           <div v-for="project in semesterBlock.projects" :key="project.title"
             class="border-l-4 border-slate-300 pl-5 py-3 pr-4 bg-slate-50 rounded-lg transition-colors"
             :class="isCollapsed(semesterBlock.semester) ? 'cursor-pointer hover:bg-slate-100' : ''"
@@ -171,6 +200,9 @@ const flattenedProjects = computed(() => (
   props.projects.flatMap((semesterBlock) => (
     (semesterBlock.projects || []).map((project) => ({
       semester: semesterBlock.semester,
+      // The group carries the engagement — who mentored, where, and for how
+      // long — so it has to travel with the projects through the paging below.
+      block: semesterBlock,
       project
     }))
   ))
@@ -197,7 +229,7 @@ const visibleProjects = computed(() => {
   const visibleItems = flattenedProjects.value.slice(0, effectiveVisibleProjectCount.value)
   const groupedProjects = []
 
-  visibleItems.forEach(({ semester, project }) => {
+  visibleItems.forEach(({ semester, block, project }) => {
     const currentBlock = groupedProjects[groupedProjects.length - 1]
 
     if (currentBlock?.semester === semester) {
@@ -206,6 +238,7 @@ const visibleProjects = computed(() => {
     }
 
     groupedProjects.push({
+      ...block,
       semester,
       projects: [project]
     })
@@ -213,6 +246,19 @@ const visibleProjects = computed(() => {
 
   return groupedProjects
 })
+
+/**
+ * How many people were mentored, counted from the projects rather than stored
+ * as a number: a figure written down beside the thing it counts goes stale the
+ * moment a project is added.
+ */
+const mentoredCount = (semesterBlock) => {
+  const source = props.projects.find((block) => block.semester === semesterBlock.semester)
+  const projects = source?.projects || []
+  const students = projects.reduce((total, project) => total + (project.students?.length || 0), 0)
+  if (!students) return ''
+  return `${students} ${students === 1 ? 'intern' : 'interns'} across ${projects.length} ${projects.length === 1 ? 'project' : 'projects'}`
+}
 
 const hasMoreProjects = computed(() => (
   effectiveVisibleProjectCount.value < flattenedProjects.value.length
