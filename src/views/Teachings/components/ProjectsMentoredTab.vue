@@ -15,13 +15,16 @@
               {{ semesterBlock.semester }}
             </h3>
 
-            <!-- The engagement: what was mentored, where, for how long, and how
-                 many people. Stated once here rather than on every project, and
-                 indented so it reads as detail under the semester rather than
-                 as a second heading beside it. The role is not repeated: the
-                 section is already titled Projects Mentored. -->
-            <p v-if="semesterBlock.programme" class="text-slate-600 text-sm mt-0.5 pl-3">
-              {{ semesterBlock.programme }}
+            <!-- The engagement: the role held, what was mentored, where, for
+                 how long, and how many people. Stated once here rather than on
+                 every project, and indented so it reads as detail under the
+                 semester rather than as a second heading beside it. The role
+                 leads on the same line, a step up in size from the programme it
+                 was held on, the two parted by a dot. -->
+            <p v-if="semesterBlock.role || semesterBlock.programme" class="text-slate-600 text-sm mt-1 pl-3">
+              <span v-if="semesterBlock.role" class="text-[#0e141b] text-[15px] font-medium">{{ semesterBlock.role }}</span>
+              <span v-if="semesterBlock.role && semesterBlock.programme" class="mx-1.5 text-slate-400">&middot;</span>
+              <span v-if="semesterBlock.programme">{{ semesterBlock.programme }}</span>
             </p>
             <div class="flex flex-wrap items-center gap-x-4 gap-y-0.5 mt-0.5 pl-3 text-sm text-[#4e7397]">
               <span v-if="semesterBlock.institution?.name" class="flex items-center gap-1.5">
