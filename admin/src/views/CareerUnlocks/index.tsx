@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Pencil, Plus, Star, Trash2 } from 'lucide-react'
+import { ImageOff, Pencil, Plus, Star, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -9,7 +9,7 @@ import { VisibilityPane } from '@/components/admin/VisibilityPane'
 import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
 import { findPortfolioPage } from '@/config/portfolio'
 import type { EntryPresentation } from '@/lib/entryPresentation'
-import type { PortfolioEntry } from '@/data/portfolioEntries'
+import { getPortfolioEntries, type PortfolioEntry } from '@/data/portfolioEntries'
 import { createEntry, deleteEntry, fetchCollection, saveEntry } from '@/services/content'
 
 const COLLECTION = 'gallery/career-unlocks'
@@ -17,6 +17,21 @@ const section = findPortfolioPage('gallery')?.sections[0]
 
 function text(value: unknown): string {
   return value === undefined || value === null ? '' : String(value)
+}
+
+const MEDIA_BASE = 'https://media.samyabrata.codeium.xyz'
+
+/**
+ * The first image of an entry, resolved the way the gallery resolves it: a full
+ * URL is used as-is, a bare key joins the media host, and an entry with no
+ * images falls back to its own id — which is how older entries were addressed
+ * before `images` was written explicitly.
+ */
+function thumbnailUrl(raw: Record<string, unknown>): string {
+  const images = Array.isArray(raw.images) ? raw.images : []
+  const first = text(images[0]) || text(raw.id)
+  if (!first) return ''
+  return /^https?:\/\//i.test(first) ? first : `${MEDIA_BASE}/${encodeURIComponent(first)}.jpeg`
 }
 
 // How the shared editor derives a heading for an entry it is given.
@@ -37,8 +52,17 @@ function toEntries(items: unknown[]): PortfolioEntry[] {
   })
 }
 
+/** A missing image is ordinary: not every entry has one uploaded yet. */
+function GalleryThumbnail({ url, alt }: { url: string; alt: string }) {
+  const [failed, setFailed] = useState(false)
+  if (!url || failed) return <span className="unlock-thumb unlock-thumb-empty" aria-hidden="true"><ImageOff /></span>
+  return <img className="unlock-thumb" src={url} alt={alt} loading="lazy" decoding="async" onError={() => setFailed(true)} />
+}
+
 export function CareerUnlocksPage() {
-  const [entries, setEntries] = useState<PortfolioEntry[]>([])
+  // Seeded from the bundled copy so the list is populated while the branch
+  // answers, the same as every other collection editor.
+  const [entries, setEntries] = useState<PortfolioEntry[]>(() => getPortfolioEntries('gallery', 'career-unlocks'))
   const [query, setQuery] = useState('')
   const [editor, setEditor] = useState<{ mode: 'new' } | { mode: 'edit'; entry: PortfolioEntry } | null>(null)
   const [saving, setSaving] = useState(false)
@@ -125,6 +149,7 @@ export function CareerUnlocksPage() {
         <div className="item-list">
           {visibleItems.map(entry => (
             <article className="content-row" key={entry.id}>
+              <GalleryThumbnail url={thumbnailUrl(entry.raw)} alt="" />
               <IconButton
                 variant="bare"
                 size="none"
