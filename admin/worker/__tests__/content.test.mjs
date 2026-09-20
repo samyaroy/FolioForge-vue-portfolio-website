@@ -314,3 +314,45 @@ test('discarding clears what was waiting', async () => {
   assert.equal(await discardPending(bucket.binding), 1)
   assert.equal((await listPending(bucket.binding)).length, 0)
 })
+
+/* ------------------------ mentoring engagements ------------------------- */
+
+test('a mentoring engagement is addressable, and its projects are not part of it', () => {
+  const engagements = contentSources['teaching/mentoring']
+  const projects = contentSources['teaching/projects']
+  // Two views of one file: the groups, and the projects inside them.
+  assert.equal(engagements.path, projects.path)
+  assert.deepEqual(engagements.arrayKeys, ['projects_mentored'])
+  assert.deepEqual(projects.arrayKeys, ['projects_mentored.*.projects'])
+
+  const document = parseContent(readFileSync(REPO + engagements.path, 'utf8'))
+  assert.ok(countEntries(document, engagements) > 0, 'there should be engagements to edit')
+})
+
+test('editing an engagement leaves the projects inside it untouched', () => {
+  const source = contentSources['teaching/mentoring']
+  const original = readFileSync(REPO + source.path, 'utf8')
+  const document = parseContent(original)
+  const location = locateEntry(document, source, 0)
+  const before = JSON.parse(JSON.stringify(readEntry(document, location)))
+  assert.ok(Array.isArray(before.projects) && before.projects.length, 'the fixture should carry projects')
+
+  // What the editor sends back: the whole entry with one field changed.
+  const text = replaceEntry(document, location, { ...before, focus: 'A different focus' })
+  const saved = parseContent(text).toJS().projects_mentored[0]
+  assert.equal(saved.focus, 'A different focus')
+  assert.deepEqual(saved.projects, before.projects, 'the projects must survive an engagement edit')
+  assert.equal(saved.institution.name, before.institution.name)
+})
+
+test('the engagement states once what the projects no longer repeat', () => {
+  const document = parseContent(readFileSync(REPO + contentSources['teaching/mentoring'].path, 'utf8'))
+  for (const group of document.toJS().projects_mentored) {
+    assert.ok(group.institution?.name, `${group.semester} should name its institution`)
+    for (const project of group.projects) {
+      // The repetition this change removed: the same institute on every project.
+      assert.equal(project.affiliation, undefined, `${project.title} still repeats the affiliation`)
+      assert.equal(project.course, undefined, `${project.title} still repeats the course`)
+    }
+  }
+})

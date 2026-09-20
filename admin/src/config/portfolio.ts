@@ -145,6 +145,7 @@ export const portfolioPages: PortfolioPage[] = [
     description: 'Courses taught, mentored projects, and other teaching contributions.',
     sections: [
       { id: 'courses', title: 'Courses Taught', sources: ['teaching.yml'], fields: ['Course and institution', 'Term and registration', 'Description and links'], requiredFields: ['title'] },
+      { id: 'mentoring', title: 'Mentoring', sources: ['teaching.yml'], fields: ['Programme and semester', 'Role and period', 'Institution', 'Focus'], requiredFields: ['semester'], entryFields: entryFields.mentoringEngagements },
       { id: 'projects', title: 'Projects Mentored', filterBy: { field: 'semester', fallback: '', fromEntries: true }, sources: ['teaching.yml'], fields: ['Semester groups', 'Projects and students', 'Descriptions and project links'], requiredFields: ['title'], entryFields: entryFields.mentoredProjects },
       { id: 'others', title: 'Other Teaching', sources: ['teaching.yml'], fields: ['Activity title', 'Affiliation and date', 'Description and credential'], requiredFields: ['title'], entryFields: entryFields.otherTeaching },
     ],

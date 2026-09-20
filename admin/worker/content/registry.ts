@@ -35,6 +35,8 @@ export const contentSources = {
   'teaching/courses': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['courses_taught'] },
   // Mentored projects are grouped by semester and shown as one list.
   'teaching/projects': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['projects_mentored.*.projects'] },
+  // The groups themselves: each one is a mentoring engagement.
+  'teaching/mentoring': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['projects_mentored'] },
   'teaching/others': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['other_teachings'] },
   'ongoing-projects/projects': { path: `${PORTFOLIO}/ongoing_projects.yml`, arrayKeys: ['ongoing_projects'] },
 
