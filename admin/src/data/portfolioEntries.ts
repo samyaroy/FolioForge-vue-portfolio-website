@@ -169,6 +169,10 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
 
   'teaching/courses': () => toEntries(arrayAt(documents.teaching, 'courses_taught'), ['title', 'course'], ['institution', 'term']),
   'teaching/projects': () => toEntries(mentoredProjects(), ['title'], ['course', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
+  // `projects` is its own collection; it is carried through a save untouched
+  // rather than shown here as a raw blob.
+  'teaching/mentoring': () => toEntries(arrayAt(documents.teaching, 'projects_mentored'), ['programme', 'semester'], ['time_period', 'semester'])
+    .map(entry => ({ ...entry, readOnlyFields: ['projects'] })),
   'teaching/others': () => toEntries(arrayAt(documents.teaching, 'other_teachings'), ['title'], ['role', 'duration']),
   'ongoing-projects/projects': () => toEntries(arrayAt(documents.ongoingProjects, 'ongoing_projects'), ['title'], ['status', 'type']),
 

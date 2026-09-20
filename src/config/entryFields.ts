@@ -32,6 +32,9 @@ export const entryFields = {
   projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, 'collaborators', 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
   articles: ['title', { key: 'publication', object: ['name', 'host'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
 
+  // A mentoring engagement: one internship programme, mentored once. The
+  // projects it produced are their own collection.
+  mentoringEngagements: ['semester', 'role', 'programme', 'time_period', 'focus', { key: 'institution', object: ['name', 'location'] }],
   otherTeaching: ['title', 'role', { key: 'institution', object: ['name', 'location'] }, 'duration', 'audience', 'students', 'description', 'link'],
   mentoredProjects: ['title', 'course', { key: 'students', list: ['name', 'email', 'Linkedin'] }, 'registration_number', { key: 'affiliation', object: ['name', 'location'] }, 'description', { key: 'cred_link', credentials: 'mentoredCategories' }],
 
