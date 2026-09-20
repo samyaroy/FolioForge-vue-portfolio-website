@@ -6,7 +6,8 @@
 
     <div v-if="projects && projects.length" class="space-y-10">
       <!-- Semester Loop -->
-      <div v-for="semesterBlock in visibleProjects" :key="semesterBlock.semester">
+      <div v-for="semesterBlock in visibleProjects" :key="semesterBlock.semester"
+        :id="slugify(semesterBlock.semester)">
         <!-- Semester Heading -->
         <div class="mb-4 flex items-start justify-between border-b pb-2 gap-4">
           <div class="min-w-0">
@@ -180,8 +181,11 @@
 </template>
 
 <script setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import SmartLink from '@/components/SmartLink.vue'
+import { slugify } from '@/utils/slug'
+import { SEMESTER_ANCHOR_PARAM } from '@/config/teachingAnchors'
 import ProjectDescriptionModal from './ProjectDescriptionModal.vue'
 
 const props = defineProps({
@@ -292,6 +296,26 @@ const expandSemester = (semester) => {
     collapsedSemesters[semester] = false
   }
 }
+
+// A link from elsewhere names a semester by slug. That semester is collapsed
+// like the rest, and may be past the paging cut, so both are undone before the
+// page tries to scroll to it.
+const route = useRoute()
+
+watch(() => route.query[SEMESTER_ANCHOR_PARAM], (slug) => {
+  if (!slug) return
+  const target = props.projects.find((block) => slugify(block.semester) === slug)
+  if (!target) return
+
+  collapsedSemesters[target.semester] = false
+  // Paging grows a page at a time; the guard is the number of pages there
+  // could ever be, so a slug that never appears cannot spin here.
+  for (let guard = flattenedProjects.value.length; guard > 0; guard -= 1) {
+    if (visibleProjects.value.some((block) => block.semester === target.semester)) break
+    if (!hasMoreProjects.value) break
+    showMoreProjects()
+  }
+}, { immediate: true })
 
 const normalizeLink = (link) => (
   typeof link === 'string' && link.trim() && link !== '#' ? link : ''

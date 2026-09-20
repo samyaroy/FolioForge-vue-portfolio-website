@@ -5,7 +5,11 @@
 //
 // The two forms below are deliberately the same ones as INLINE_LINK_PATTERN in
 // SmartLink.vue — both read the same authored strings, so a form added there
-// needs a case added here.
+// needs a case added here. Emphasis is stripped the same way, by the module
+// that defines it.
+
+import { stripEmphasis } from './inlineMarkup'
+import { stripCrossReference } from './crossReference'
 
 /** `[Upatto](https://…)` → `Upatto`. */
 const EXPLICIT_LINK_PATTERN = /\[([^\]]+)\]\((?:https?:\/\/[^\s)]+)\)/g
@@ -20,9 +24,11 @@ const LOOKUP_LINK_PATTERN = /`([^`]+)`/g
 export function smartLinkPlainText(text: string | undefined | null): string {
   if (!text) return ''
 
-  return text
-    .replace(EXPLICIT_LINK_PATTERN, '$1')
-    .replace(LOOKUP_LINK_PATTERN, '$1')
+  return stripEmphasis(
+    stripCrossReference(text)
+      .replace(EXPLICIT_LINK_PATTERN, '$1')
+      .replace(LOOKUP_LINK_PATTERN, '$1'),
+  )
     .replace(/\s+/g, ' ')
     .trim()
 }

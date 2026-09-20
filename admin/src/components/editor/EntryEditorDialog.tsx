@@ -7,6 +7,7 @@ import { driveFieldMode, fromDriveEditorValue, toDriveEditorValue } from '@/lib/
 import { entryPresentation } from '@/lib/entryPresentation'
 import { ExperienceProjectsEditor } from '@/components/editor/ExperienceProjectsEditor'
 import { DescriptionLinesEditor } from '@/components/editor/DescriptionLinesEditor'
+import { RichTextField } from '@/components/editor/RichTextField'
 import { CurriculumEditor } from '@/components/editor/CurriculumEditor'
 import { EducationSubFieldsEditor } from '@/components/editor/EducationSubFieldsEditor'
 import { CredentialLinksEditor } from '@/components/editor/CredentialLinksEditor'
@@ -188,6 +189,11 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
               return <SelectField key={key} label={fieldCaption(key)} placeholder="Select type" required={isRequired(key)} value={value} options={options} onChange={type => setFields(current => ({ ...current, type }))} />
             }
             const isStructured = value.includes('\n') || value.startsWith('{') || value.startsWith('[')
+            // Prose the site renders through SmartLink, so it can carry the
+            // same marks wherever it is written rather than only on experience.
+            if (key === 'description' && !isStructured) {
+              return <RichTextField key={key} label={fieldCaption(key)} required={isRequired(key)} value={value} onChange={next => setFields(current => ({ ...current, description: next }))} />
+            }
             const label = `${fieldCaption(key)}${!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}`
             const change = (next: string) => setFields(current => ({ ...current, [key]: next }))
             return isStructured

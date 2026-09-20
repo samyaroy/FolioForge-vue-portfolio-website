@@ -468,7 +468,23 @@ tbody tr:hover { background: #f9fbfd; }
 .description-line > button { margin-top: 20px; }
 .credential-link { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) 32px; align-items: start; gap: 8px; margin-top: 12px; }
 .credential-link > button { margin-top: 20px; }
-.entry-dialog-body .description-line textarea { min-height: 80px; font-family: inherit; font-size: 12px; }
+.entry-dialog-body .description-line textarea, .entry-dialog-body .rich-text-field textarea { min-height: 80px; border-top-left-radius: 0; border-top-right-radius: 0; font-family: inherit; font-size: 12px; }
+/* Carries the label typography .field used to provide, now that the toolbar
+   sits between the caption and the box it writes into. */
+.description-line-body, .rich-text-field { display: flex; min-width: 0; flex-direction: column; gap: 6px; color: #536b7f; font-size: 10px; font-weight: 700; }
+.description-line-body .editor-toolbar, .rich-text-field .editor-toolbar { margin-bottom: -6px; border: 1px solid var(--border); border-bottom: 0; border-radius: 5px 5px 0 0; }
+.rich-text-field { grid-column: 1 / -1; margin-top: 8px; }
+.description-line-preview { display: flex; gap: 7px; margin: 2px 0 0; color: #41586c; font-size: 11px; font-weight: 400; line-height: 1.55; }
+.description-line-preview > span:first-child { flex: none; padding-top: 1px; color: #8296a8; font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+/* SUB-BULLET FEATURE (unused): shown where it would sit, indented under the
+   line above, numbered as the site numbers it. */
+.description-line-preview[data-nested] { padding-left: 16px; }
+.description-line-ordinal { flex: none; color: #4e7397; font-size: 11px; font-weight: 400; }
+.editor-toolbar .toolbar-divider { width: 1px; height: 17px; margin: 6px 3px; background: var(--border); }
+.editor-toolbar button.is-active { background: #e7f2fc; color: #126cbe; }
+/* The page a line points at, drawn at the end of it as the site draws it. */
+.description-line-reference { display: inline-flex; align-items: center; gap: 3px; margin-left: auto; color: #1980e6; font-size: 11px; font-weight: 500; white-space: nowrap; }
+.description-line-reference svg { width: 12px; }
 .experience-projects-heading, .experience-project-section > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .experience-projects-heading h3, .experience-project-section h4 { margin: 0; color: #294258; font-size: 11px; font-weight: 700; }
 .experience-projects-heading h3 span { margin-left: 5px; color: #718396; font-size: 10px; }

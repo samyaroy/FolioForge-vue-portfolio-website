@@ -93,18 +93,41 @@
 
       <!-- Description -->
       <div class="col-span-2 px-0 sm:px-6 pb-4 sm:pb-6 mt-1 relative" v-if="description">
-        <p v-for="(line, index) in description" :key="index" class="content-justify text-[#0e141b] text-sm"><v-icon
-            class="text-[#4e7397]" size="16">mdi-circle-small</v-icon>
-          <SmartLink :text="line" />
-        </p>
+        <template v-for="(block, index) in descriptionBlocks" :key="index">
+          <!-- flow-root so the cross-reference's float is contained by the
+               line it belongs to instead of escaping the card. -->
+          <p v-if="block.kind === 'point'" class="content-justify text-[#0e141b] text-sm flow-root"><v-icon
+              class="text-[#4e7397]" size="16">mdi-circle-small</v-icon>
+            <SmartLink :text="block.text" />
+            <CrossReferenceLink v-if="block.reference" :reference="block.reference" />
+          </p>
+          <!-- SUB-BULLET FEATURE (unused) - start. No content authors a "- "
+               line today, so this branch never renders. A run of sub-bullets is
+               one numbered list laid out in a row, wrapping when the row runs
+               out. Delete this <ol> and the block model with it. -->
+          <ol v-else class="pl-5 sm:pl-6 flex flex-wrap gap-x-7 gap-y-0.5">
+            <li v-for="(item, position) in block.items" :key="position" class="text-[#0e141b] text-sm">
+              <span class="text-[#4e7397] mr-1">{{ position + 1 }}.</span>
+              <SmartLink :text="item.text" />
+              <CrossReferenceLink v-if="item.reference" :reference="item.reference" />
+            </li>
+          </ol>
+          <!-- SUB-BULLET FEATURE (unused) - end -->
+        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import CrossReferenceLink from '@/components/CrossReferenceLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+// SUB-BULLET FEATURE (unused): drop this import and render `description`
+// directly again if the feature goes.
+import { descriptionBlocks as toBlocks } from '@/utils/bulletLines'
+import { splitCrossReference } from '@/utils/crossReference'
 
 const projectTitle = (project) => {
   return typeof project === 'string' ? project : project?.title
@@ -124,7 +147,7 @@ const projectPrincipalInvestigator = (project) => {
   return [pi.name, [ pi.title, pi.department, pi.institution].filter(Boolean).join(', ')]
 }
 
-defineProps({
+const props = defineProps({
   isfirst: { type: Boolean, default: false },
   islast: { type: Boolean, default: false },
   title: { type: String, required: true },
@@ -140,4 +163,15 @@ defineProps({
   // One URL, or a list of { label, url } documents shown as tabs in DocumentViewer.
   cred_link: { type: [String, Array, Object], default: '#' }
 })
+
+// SUB-BULLET FEATURE (unused): a description line opening with "- " belongs
+// under the point above it. With no such line authored, every block is a point.
+//
+// Each line is then split from the trailing @see it may carry, so the sentence
+// and its cross-reference are drawn as two things on one line.
+const descriptionBlocks = computed(() => toBlocks(props.description ?? []).map(block =>
+  block.kind === 'point'
+    ? { ...block, ...splitCrossReference(block.text) }
+    : { ...block, items: block.items.map(splitCrossReference) },
+))
 </script>

@@ -14,6 +14,7 @@ import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
 import { getPortfolioEntries } from '@/data/portfolioEntries'
 import { hasSitePreview, previewFacts, previewHeading } from '@/lib/entryPreview'
+import { InlineMarkup } from '@/components/InlineMarkup'
 import { ENTRY_ENABLED_KEY, isEntryEnabled } from '../../../../src/config/entryStatus.ts'
 import type { PortfolioEntry } from '@/data/portfolioEntries'
 
@@ -243,13 +244,13 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
               <article key={entry.id} className={isEntryEnabled(entry.raw) ? undefined : 'entry-disabled'}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 <div>
-                  <strong>{hasSitePreview(previewKey) ? previewHeading(entry.raw, previewKey) || entry.title : entry.title}</strong>
+                  <strong><InlineMarkup text={hasSitePreview(previewKey) ? previewHeading(entry.raw, previewKey) || entry.title : entry.title} /></strong>
                   {!hasSitePreview(previewKey) && entry.subtitle && <small>{entry.subtitle}</small>}
                   {hasSitePreview(previewKey) && (
                     <span className="entry-facts">
                       {previewFacts(entry.raw, previewKey).map(item => {
                         const Icon = item.icon
-                        return <span key={item.text}><Icon aria-hidden="true" />{item.text}</span>
+                        return <span key={item.text}><Icon aria-hidden="true" /><InlineMarkup text={item.text} /></span>
                       })}
                     </span>
                   )}
