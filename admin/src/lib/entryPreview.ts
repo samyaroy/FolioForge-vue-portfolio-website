@@ -1,7 +1,7 @@
-import { AtSign, Award, BookOpen, Building, Building2, CalendarDays, Clock3, FileBadge, FileDown, FlaskConical, Github, Globe, GraduationCap, Hash, Heading1, House, ImageIcon, Images, Linkedin, Mail, MapPin, MonitorPlay, PanelBottom, Phone, Puzzle, Quote, Shapes, Share2, Sparkles, Star, Tag, TriangleAlert, Users, UserRound } from 'lucide-react'
+import { AtSign, Award, BookOpen, Link2, Building, Building2, CalendarDays, Clock3, FileBadge, FileDown, FlaskConical, Github, Globe, GraduationCap, Hash, Heading1, House, ImageIcon, Images, Linkedin, Mail, MapPin, MonitorPlay, PanelBottom, Phone, Puzzle, Quote, Shapes, Share2, Sparkles, Star, Tag, TriangleAlert, Users, UserRound } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { isAnimatedIcon, researchInterestIcon, researchInterestName, RESEARCH_INTEREST_FALLBACK_ICON } from '../../../src/config/researchInterestIcons'
-import { ongoingProjectLinkCategories } from '../../../src/config/projectLinkCategories'
+import { mentoredProjectLinkCategories, ongoingProjectLinkCategories } from '../../../src/config/projectLinkCategories'
 import { ENTRY_ENABLED_KEY } from '../../../src/config/entryStatus'
 
 /**
@@ -52,7 +52,16 @@ function lastSegment(value: unknown): string {
  */
 function names(value: unknown, key = 'name'): string {
   const items = Array.isArray(value) ? value : [value]
-  return items.map(item => item && typeof item === 'object' ? text((item as Record<string, unknown>)[key]) : text(item)).filter(Boolean).join(', ')
+  // A dotted key reaches into what the item nests, because content nests: a
+  // leadership role carries an organisation object rather than a flat name.
+  const read = (item: unknown) => key.split('.').reduce<unknown>((node, part) => block(node)[part], item)
+  return items.map(item => item && typeof item === 'object' ? text(read(item)) : text(item)).filter(Boolean).join(', ')
+}
+
+/** "3 projects" — what a row holds, when naming each one would flood it. */
+function counted(value: unknown, noun: string): string {
+  const total = Array.isArray(value) ? value.length : 0
+  return total ? `${total} ${noun}${total === 1 ? '' : 's'}` : ''
 }
 
 /**
@@ -211,6 +220,113 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Hash, raw.membership_id),
     ]
   }
+  if (collection === 'home/announcements') {
+    // The message is the row's heading, so its icon is all that is left to say.
+    return fact(Shapes, raw.icon)
+  }
+  if (collection === 'teaching/mentoring') {
+    const institution = block(raw.institution)
+    return [
+      ...fact(Tag, raw.semester),
+      ...fact(UserRound, raw.role),
+      ...fact(CalendarDays, raw.time_period),
+      ...fact(Building, institution.name),
+      ...fact(MapPin, institution.location),
+      ...fact(Puzzle, counted(raw.projects, 'project')),
+    ]
+  }
+  if (collection === 'teaching/projects') {
+    return [
+      ...fact(BookOpen, raw.course),
+      ...fact(CalendarDays, raw.semester),
+      ...fact(Users, names(raw.students)),
+      ...fact(Hash, raw.registration_number),
+      ...fact(FileBadge, linkLabels(raw.cred_link, mentoredProjectLinkCategories)),
+    ]
+  }
+  if (collection === 'teaching/others') {
+    const institution = block(raw.institution)
+    return [
+      ...fact(UserRound, raw.role),
+      ...fact(Building, institution.name),
+      ...fact(MapPin, institution.location),
+      ...fact(Clock3, raw.duration),
+      ...fact(Tag, raw.audience),
+      ...fact(Users, raw.students),
+    ]
+  }
+  if (collection === 'cocurricular/leadership') {
+    // One entry can hold several roles, each at its own organisation, with its
+    // own host and period; the row names them all.
+    return [
+      ...fact(UserRound, names(raw.affiliation, 'role')),
+      ...fact(Building, names(raw.affiliation, 'organization.name')),
+      ...fact(Building2, names(raw.affiliation, 'host.name')),
+      ...fact(GraduationCap, names(raw.affiliation, 'institute')),
+      ...fact(CalendarDays, names(raw.affiliation, 'time_period')),
+    ]
+  }
+  if (collection === 'cocurricular/volunteering') {
+    // An entry is either a single role or a `roles` list of them.
+    return [
+      ...fact(UserRound, names(raw.roles, 'role')),
+      ...fact(Building, text(raw.organization) || names(raw.roles, 'organization')),
+      ...fact(CalendarDays, text(raw.time_period) || names(raw.roles, 'time_period')),
+      ...fact(Shapes, names(raw.field, 'sub_field')),
+    ]
+  }
+  if (collection === 'professional-activity/hosted-events') {
+    return [
+      ...fact(Tag, raw.event_type),
+      ...fact(Users, names(raw.guest_speakers)),
+      ...fact(Building, names(raw.institution)),
+      ...fact(CalendarDays, raw.date),
+      ...fact(MonitorPlay, raw.mode),
+    ]
+  }
+  // A subject and a group are containers: the count is the summary, and what
+  // they hold is the editor's business.
+  if (collection === 'resources/study-material') return fact(BookOpen, counted(raw.materials, 'material'))
+  if (collection === 'resources/worth-exploring') return fact(Link2, counted(raw.links, 'link'))
+  if (collection === 'facts/facts') {
+    return [
+      ...fact(Shapes, raw.icon),
+      ...fact(Quote, raw.description),
+    ]
+  }
+  if (collection === 'recommended/items') {
+    return [
+      ...fact(UserRound, raw.author),
+      ...fact(BookOpen, raw.source),
+      ...fact(CalendarDays, raw.year),
+      ...fact(Globe, host(raw.url)),
+      ...fact(Quote, raw.note),
+    ]
+  }
+  if (collection === 'readings/items') {
+    return [
+      ...fact(UserRound, raw.author),
+      ...fact(Tag, raw.genre),
+      ...fact(Globe, host(raw.link)),
+      ...fact(ImageIcon, lastSegment(raw.image)),
+    ]
+  }
+  if (collection === 'movies/items') {
+    return [
+      ...fact(UserRound, raw.director),
+      ...fact(Tag, raw.genre),
+      ...fact(CalendarDays, raw.year),
+      ...fact(Globe, host(raw.link)),
+      ...fact(ImageIcon, lastSegment(raw.image)),
+    ]
+  }
+  if (collection === 'travel/states') {
+    return [
+      ...fact(Tag, raw.purpose),
+      ...fact(MapPin, names(raw.cities)),
+    ]
+  }
+  if (collection === 'hobbies/tiles') return fact(Shapes, raw.icon)
   if (collection.startsWith('workshops/')) {
     // The five collections on Conferences, Workshops & Bootcamps share a shape:
     // who ran it, where it sat, and when. `organizer`, `instructor`, `speaker`,
@@ -298,5 +414,11 @@ export function hasSitePreview(collection: string): boolean {
     'internships-certifications/internships', 'internships-certifications/certifications',
     'ongoing-projects/projects',
     'affiliations/memberships',
+    'home/announcements', 'facts/facts',
+    'teaching/mentoring', 'teaching/projects', 'teaching/others',
+    'cocurricular/leadership', 'cocurricular/volunteering',
+    'professional-activity/hosted-events',
+    'resources/study-material', 'resources/worth-exploring',
+    'recommended/items', 'readings/items', 'movies/items', 'travel/states', 'hobbies/tiles',
   ].includes(collection)
 }
