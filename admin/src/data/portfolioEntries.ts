@@ -204,7 +204,6 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'gallery/career-unlocks': () => toEntries(arrayAt(documents.gallery, 'items'), ['title'], ['date', 'type']),
   'resources/study-material': () => toEntries(arrayAt(documents.resources, 'subjects'), ['title'], [],),
   'resources/worth-exploring': () => toEntries(arrayAt(documents.resources, 'explore'), ['group', 'title']),
-  'contact/details': () => [{ id: 'contacts', title: 'Contact details', subtitle: firstText(asRecord(documents.profile.contacts), ['location']), raw: { ...asRecord(documents.profile.contacts), socials: documents.profile.socials }, presentation: { titlePaths: [], subtitlePaths: ['location'], fallbackTitle: 'Contact details' } }],
   'facts/facts': () => toEntries(arrayAt(documents.facts, 'facts'), ['title'], ['icon']),
 
   'recommended/items': () => toEntries(arrayAt(documents.blogRecommended, 'items'), ['title'], ['author', 'source']),

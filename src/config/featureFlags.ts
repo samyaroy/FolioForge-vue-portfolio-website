@@ -57,6 +57,22 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showGallery: true,
 
+  // The tiles on the Contact page (/contact). Each tile is one destination and
+  // is dropped on its own, so a profile can come off the page without the
+  // others going with it.
+  showContact: {
+    showPhone: true,
+    showGmail: true,
+    showStudentEmail: true,
+    showLinkedIn: true,
+    showGitHub: true,
+    showStudentGitHub: true,
+    showKaggle: true,
+    showGoogleScholar: true,
+    showResearchGate: true,
+    showOrcid: true,
+  },
+
   showBlog: true,
 
   showCocurricular: {

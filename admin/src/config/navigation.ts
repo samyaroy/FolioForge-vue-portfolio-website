@@ -59,7 +59,7 @@ export const navigation: NavigationGroup[] = [
     items: [
       { label: 'Media Library', path: '/portfolio/media', icon: Image },
       { label: 'Taxonomy & Links', path: '/portfolio/metadata', icon: Tags },
-      { label: 'Credentials', path: '/portfolio/credentials', icon: ShieldCheck },
+      { label: 'Credentials (Beta)', path: '/portfolio/credentials', icon: ShieldCheck },
       { label: 'Hyperlink Metadata', path: '/workspace/hyperlinks', icon: Link2 },
       { label: 'Publishing', path: '/workspace/publishing', icon: Rocket },
       { label: 'Media Storage', path: '/workspace/storage', icon: Cloud },

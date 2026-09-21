@@ -6,7 +6,9 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
-import { VisibilityPane } from '@/components/admin/VisibilityPane'
+import { VisibilityPane, VisibilitySwitches } from '@/components/admin/VisibilityPane'
+import { hasSectionVisibility, sectionVisibility } from '@/config/visibility'
+import { useVisibilityDraft } from '@/hooks/visibilityContext'
 import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
 import { Button, SelectField, SwitchField } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
@@ -30,6 +32,8 @@ export function PortfolioContentPage() {
 
   if (!page) return <Navigate to="/" replace />
   if (!section) return <Navigate to={portfolioAdminPath(page)} replace />
+  // No collection to read, so none of the machinery below applies.
+  if (section.visibilityOnly) return <PortfolioVisibilityEditor page={page} section={section} />
 
   // Switching group is switching collection, so the editor starts again; a
   // filter only changes what is shown, and must not throw away the revision
@@ -46,6 +50,59 @@ export function PortfolioContentPage() {
   )
 }
 
+/** The header both editors share: the page, and a link to it on the site. */
+function SectionHeader({ page, section }: { page: PortfolioPage; section: PortfolioSection }) {
+  return (
+    <>
+      <PageHeader
+        title={page.title}
+        description={page.description}
+        actions={
+          <Button variant="outline" asChild>
+            <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
+          </Button>
+        }
+      />
+      {page.sections.length > 1 && (
+        <nav className="section-tabs" aria-label={`${page.title} sections`}>
+          {page.sections.map(item => (
+            <Link className={item.id === section.id ? 'section-tab-active' : ''} key={item.id} to={portfolioAdminPath(page, item)}>{item.title}</Link>
+          ))}
+        </nav>
+      )}
+    </>
+  )
+}
+
+/**
+ * A section that is switches rather than entries. Nothing here reads or writes
+ * a collection, so there is no revision to quote and no list to search — the
+ * switches are the page, and they take its whole width.
+ */
+function PortfolioVisibilityEditor({ page, section }: { page: PortfolioPage; section: PortfolioSection }) {
+  const controls = sectionVisibility[`${page.id}/${section.id}`] ?? []
+  const { flags } = useVisibilityDraft()
+  const shown = controls.filter(control => flags[control.path] === true).length
+
+  return (
+    <>
+      <SectionHeader page={page} section={section} />
+      <LocalNotice>Switches change this session only. Feature flags are read from the Vue app and are not published from here yet.</LocalNotice>
+      <section className="form-panel">
+        <div className="panel-heading">
+          <div><span>Display</span><h2>{section.title}</h2></div>
+          <span>{shown} of {controls.length} shown</span>
+        </div>
+        <div className="source-strip">
+          <FileCode2 aria-hidden="true" />
+          <span><small>Flag source</small><strong>{section.sources.join(', ')}</strong></span>
+        </div>
+        <VisibilitySwitches controls={controls} />
+      </section>
+    </>
+  )
+}
+
 type EditorProps = { page: PortfolioPage; section: PortfolioSection; group: string; onGroupChange: (group: string) => void }
 
 // A section whose file groups its entries is shown one group at a time, so a
@@ -57,6 +114,9 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   // Writes address a group; the card shape belongs to the tab, which is the
   // same whichever group is on screen.
   const previewKey = `${page.id}/${section.id}`
+  // What the editor says you are editing. A filter only narrows what is listed,
+  // so it is not part of where an entry lives; a group is.
+  const editorContext = [page.title, section.title, section.groups?.find(item => item.id === group)?.label]
   const [query, setQuery] = useState('')
   const [entries, setEntries] = useState(() => getPortfolioEntries(page.id, section.groups ? group || section.id : section.id))
   const [editor, setEditor] = useState<EditorState | null>(null)
@@ -190,23 +250,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
 
   return (
     <>
-      <PageHeader
-        title={page.title}
-        description={page.description}
-        actions={
-          <Button variant="outline" asChild>
-            <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
-          </Button>
-        }
-      />
-
-      {page.sections.length > 1 && (
-        <nav className="section-tabs" aria-label={`${page.title} sections`}>
-          {page.sections.map(item => (
-            <Link className={item.id === section.id ? 'section-tab-active' : ''} key={item.id} to={portfolioAdminPath(page, item)}>{item.title}</Link>
-          ))}
-        </nav>
-      )}
+      <SectionHeader page={page} section={section} />
 
       <LocalNotice>
         {baseSha
@@ -214,7 +258,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
           : reason}
       </LocalNotice>
 
-      <div className="mapped-editor-layout">
+      <div className="mapped-editor-layout" data-solo={!hasSectionVisibility(page.id, section.id) || undefined}>
         <section className="form-panel">
           <div className="panel-heading">
             <div><span>Collection</span><h2>{section.title}</h2></div>
@@ -248,7 +292,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                   {!hasSitePreview(previewKey) && entry.subtitle && <small>{entry.subtitle}</small>}
                   {hasSitePreview(previewKey) && (
                     <span className="entry-facts">
-                      {previewFacts(entry.raw, previewKey).map(item => {
+                      {previewFacts(entry.raw, previewKey, entry.id).map(item => {
                         const Icon = item.icon
                         return <span key={item.text}><Icon aria-hidden="true" /><InlineMarkup text={item.text} /></span>
                       })}
@@ -275,14 +319,17 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
           </div>
         </section>
 
-        <aside className="mapped-editor-aside">
-          <VisibilityPane pageId={page.id} sectionId={section.id} />
-        </aside>
+        {hasSectionVisibility(page.id, section.id) && (
+          <aside className="mapped-editor-aside">
+            <VisibilityPane pageId={page.id} sectionId={section.id} />
+          </aside>
+        )}
       </div>
       {editor && (
         <EntryEditorDialog
           key={editor.mode === 'edit' ? editor.entry.id : 'new'}
           entry={editor.mode === 'edit' ? editor.entry : newEntrySeed}
+          context={editorContext}
           fieldGroups={section.fields}
           requiredFields={section.requiredFields}
           typeOptions={section.typeOptions}

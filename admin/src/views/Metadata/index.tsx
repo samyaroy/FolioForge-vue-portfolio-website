@@ -29,7 +29,7 @@ export function MetadataPage() {
     <>
       <PageHeader title="Metadata & Tags" description={<>Manage gallery taxonomy mapped from <code>src/metadata/galleryTags.yml</code>.</>} />
       <LocalNotice>Taxonomy edits are session-local. Referenced tag impact checks will run server-side later.</LocalNotice>
-      <section className="form-panel narrow-panel">
+      <section className="form-panel">
         <div className="panel-heading"><div><span>Taxonomy</span><h2>Career Unlock tags</h2></div><span>{tags.length} tags</span></div>
         <form className="inline-form" onSubmit={event => { event.preventDefault(); addTag() }}>
           <TextField label="New tag" required data-page-search value={newTag} onChange={setNewTag} placeholder="Add a unique label" />

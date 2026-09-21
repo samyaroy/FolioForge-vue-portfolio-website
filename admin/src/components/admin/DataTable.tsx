@@ -13,9 +13,11 @@ type DataTableProps<TData extends RowData> = {
   emptyDetail: string
   caption?: string
   labelledBy?: string
+  /** A class per row, for a table that reads its rows' state as colour. */
+  rowClassName?: (row: TData) => string | undefined
 }
 
-export function DataTable<TData extends RowData>({ columns, data, pageSize = 25, emptyTitle, emptyDetail, caption, labelledBy }: DataTableProps<TData>) {
+export function DataTable<TData extends RowData>({ columns, data, pageSize = 25, emptyTitle, emptyDetail, caption, labelledBy, rowClassName }: DataTableProps<TData>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: pageSize || data.length || 1 })
 
@@ -63,7 +65,7 @@ export function DataTable<TData extends RowData>({ columns, data, pageSize = 25,
           </thead>
           <tbody>
             {rows.map(row => (
-              <tr key={row.id}>
+              <tr key={row.id} className={rowClassName?.(row.original)}>
                 {row.getAllCells().map(cell => (
                   <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
                 ))}

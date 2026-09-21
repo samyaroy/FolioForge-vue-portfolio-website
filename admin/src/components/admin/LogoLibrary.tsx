@@ -66,9 +66,18 @@ export function LogoLibrary() {
       <div className="section-heading">
         <div><h2>Logos</h2><span>{logos.length} available</span></div>
         <div className="logo-library-actions">
-          <TextField aria-label="New logo name" value={name} onChange={setName} placeholder="Name, e.g. IITM" />
+          <TextField aria-label="New logo name" required value={name} onChange={setName} placeholder="Name, e.g. IITM" />
           <IconButton variant="outline" label="Refresh logos" disabled={loading} onClick={refresh}><RefreshCw aria-hidden="true" /></IconButton>
-          <FileField fieldClassName="logo-upload" accept="image/png,image/jpeg,image/webp" onSelect={files => void addLogo(files?.[0])}>
+          {/* The name is what the YAML will carry, so it has to exist before a
+              file is chosen. Refusing afterwards reads as a broken upload, so
+              the picker stays shut until there is a name to upload under. */}
+          <FileField
+            fieldClassName="logo-upload"
+            accept="image/png,image/jpeg,image/webp"
+            disabled={!name.trim()}
+            title={name.trim() ? `Upload a PNG, JPEG or WebP as ${name.trim()}` : 'Name the logo first — that name is what your YAML will carry'}
+            onSelect={files => void addLogo(files?.[0])}
+          >
             <Upload aria-hidden="true" /><span>Add logo</span>
           </FileField>
         </div>

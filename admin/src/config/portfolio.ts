@@ -34,6 +34,12 @@ export type PortfolioSection = {
    */
   previewFields?: readonly string[]
   /**
+   * This section has no collection behind it: it is the visibility switches
+   * registered for it in config/visibility.ts and nothing else. For a page
+   * whose content is edited elsewhere, what it still owns is what it shows.
+   */
+  visibilityOnly?: boolean
+  /**
    * Sub-lists the collection is drawn from, when the file groups its entries.
    * The editor shows one list and asks which group an entry belongs to; each
    * group is its own adapter, so a write reaches the right sequence.
@@ -153,7 +159,7 @@ export const portfolioPages: PortfolioPage[] = [
   {
     id: 'ongoing-projects', title: 'Ongoing Projects', publicPath: '/ongoing-projects', icon: FolderKanban,
     description: 'Current personal, academic, and collaborative work.',
-    sections: [{ id: 'projects', title: 'Current Projects', sources: ['ongoing_projects.yml'], fields: ['Title and status', 'Description', 'Collaborators', 'Repository and website links'], requiredFields: ['title'] }],
+    sections: [{ previewFields: ['type', 'affiliation', 'time_period'], id: 'projects', title: 'Current Projects', sources: ['ongoing_projects.yml'], fields: ['Title and status', 'Description', 'Collaborators', 'Repository and website links'], requiredFields: ['title'], entryFields: entryFields.ongoingProjects }],
   },
   {
     id: 'affiliations', title: 'Affiliations, Collaborators & Memberships', publicPath: '/affiliation-memberships', icon: Network,
@@ -214,8 +220,10 @@ export const portfolioPages: PortfolioPage[] = [
   },
   {
     id: 'contact', title: 'Contact', publicPath: '/contact', icon: Contact,
-    description: 'Public contact details and social destinations.',
-    sections: [{ id: 'details', title: 'Contact Details', sources: ['profile.yml'], fields: ['Email addresses', 'Phone and location', 'Social and profile URLs', 'Blog URL'], requiredFields: ['gmail'] }],
+    // The addresses and profile URLs themselves are profile.yml, edited under
+    // Home; this page decides which of them the public page puts on a tile.
+    description: 'Which contact tiles the public Contact page shows. The addresses themselves live under Home - Profile & Hero.',
+    sections: [{ id: 'details', title: 'Contact Tiles', visibilityOnly: true, sources: ['src/config/featureFlags.ts'], fields: ['Phone, Gmail, and student email', 'LinkedIn and GitHub profiles', 'Kaggle and research profiles'] }],
   },
   {
     id: 'facts', title: 'Did You Know?', publicPath: '/facts', icon: Lightbulb,

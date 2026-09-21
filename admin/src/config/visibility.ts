@@ -1,5 +1,15 @@
 export type VisibilityFlag = { path: string; label: string }
 
+/**
+ * Whether a section's visibility is something you can actually change. Most are;
+ * a handful are always on, and for those the pane has nothing to offer, so the
+ * editor gives the space back to the entry list rather than showing an empty
+ * panel that says so.
+ */
+export function hasSectionVisibility(pageId: string, sectionId: string): boolean {
+  return Boolean(sectionVisibility[`${pageId}/${sectionId}`]?.length)
+}
+
 export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'home/profile': [{ path: 'showHome.showHeroSection', label: 'Profile & Hero' }],
   'home/research-interests': [{ path: 'showHome.showResearchInterests', label: 'Research Interests' }],
@@ -48,6 +58,20 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'professional-activity/hosted-events': [
     { path: 'showProfessionalActivity.showHostedEvents.main', label: 'Hosted events' },
     { path: 'showProfessionalActivity.showHostedEvents.others', label: 'Other hosted events' },
+  ],
+  // The Contact page has no collection of its own — its values live in
+  // profile.yml, edited under Home. What it owns is which tiles it shows.
+  'contact/details': [
+    { path: 'showContact.showPhone', label: 'Phone' },
+    { path: 'showContact.showGmail', label: 'Gmail' },
+    { path: 'showContact.showStudentEmail', label: 'Student email' },
+    { path: 'showContact.showLinkedIn', label: 'LinkedIn' },
+    { path: 'showContact.showGitHub', label: 'GitHub' },
+    { path: 'showContact.showStudentGitHub', label: 'Student GitHub' },
+    { path: 'showContact.showKaggle', label: 'Kaggle' },
+    { path: 'showContact.showGoogleScholar', label: 'Google Scholar' },
+    { path: 'showContact.showResearchGate', label: 'ResearchGate' },
+    { path: 'showContact.showOrcid', label: 'ORCID iD' },
   ],
   'gallery/career-unlocks': [{ path: 'showGallery', label: 'Career Unlocks' }],
   'resources/study-material': [{ path: 'showResources.main', label: 'Resources page' }],

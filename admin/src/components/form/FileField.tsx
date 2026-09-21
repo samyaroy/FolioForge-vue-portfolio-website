@@ -11,9 +11,11 @@ export type FileFieldProps = Omit<React.ComponentProps<'input'>, 'onChange' | 'o
   fieldClassName?: string
 }
 
-export function FileField({ onSelect, children, className, fieldClassName, ...props }: FileFieldProps) {
+export function FileField({ onSelect, children, className, fieldClassName, title, ...props }: FileFieldProps) {
   return (
-    <label className={fieldClassName}>
+    // The input is hidden, so the tooltip and the disabled marker belong on the
+    // label: it is the thing someone looks at and clicks.
+    <label className={fieldClassName} title={title} data-disabled={props.disabled || undefined}>
       {children}
       <Input
         type="file"

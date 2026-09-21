@@ -57,8 +57,13 @@ function columnsOf(source: Record<string, unknown>, fields: readonly string[]): 
 }
 
 export function listFieldsDraft(value: unknown, fields: readonly string[]): ListFieldsRow[] {
-  if (!Array.isArray(value)) return []
-  return value.map((item, index) => {
+  // A value can still be the one comma-separated cell this list grew out of —
+  // "Ada Lovelace, Alan Turing" — which the site reads as a list too. Split it
+  // into rows rather than showing nothing and saving the names away.
+  const items = Array.isArray(value)
+    ? value
+    : typeof value === 'string' ? value.split(',').map(name => name.trim()).filter(Boolean) : []
+  return items.map((item, index) => {
     const source = item && typeof item === 'object' && !Array.isArray(item)
       ? item as Record<string, unknown>
       : { [fields[0]]: item }

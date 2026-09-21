@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { featureFlags } from '../../../../src/config/featureFlags'
 import { VisibilityContext } from '@/hooks/visibilityContext'
@@ -14,15 +14,19 @@ function flattenFlags(node: unknown, prefix = ''): Record<string, boolean> {
 const originalFlags = flattenFlags(featureFlags)
 
 export function VisibilityProvider({ children }: { children: ReactNode }) {
-  const [flags, setFlags] = useState(originalFlags)
+  // Only the edits live here. Holding the whole map in state instead froze it
+  // at mount: a flag added to featureFlags.ts afterwards was missing from that
+  // snapshot, so its switch read as unavailable until the page was reloaded.
+  const [changes, setChanges] = useState<Record<string, boolean>>({})
+  const flags = useMemo(() => ({ ...originalFlags, ...changes }), [changes])
 
   const setFlag = (path: string, value: boolean) => {
     if (!(path in originalFlags)) throw new Error(`Unknown feature flag: ${path}`)
-    setFlags(current => ({ ...current, [path]: value }))
+    setChanges(current => ({ ...current, [path]: value }))
   }
 
   return (
-    <VisibilityContext.Provider value={{ flags, originalFlags, setFlag, resetFlags: () => setFlags(originalFlags) }}>
+    <VisibilityContext.Provider value={{ flags, originalFlags, setFlag, resetFlags: () => setChanges({}) }}>
       {children}
     </VisibilityContext.Provider>
   )

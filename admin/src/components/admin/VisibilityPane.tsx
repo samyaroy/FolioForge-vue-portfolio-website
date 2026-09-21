@@ -29,15 +29,16 @@ export function VisibilitySwitches({ controls }: { controls: VisibilityFlag[] })
 export function VisibilityPane({ pageId, sectionId }: { pageId: string; sectionId: string }) {
   const controls = sectionVisibility[`${pageId}/${sectionId}`] ?? []
   const { flags } = useVisibilityDraft()
+  // A section with no flag is always on; a panel saying so is a panel's worth
+  // of width spent on nothing.
+  if (!controls.length) return null
   const controllingFlags = pageId === 'home' && sectionId === 'education' ? controls.slice(0, 1) : controls
   const isEnabled = controllingFlags.some(control => flags[control.path] === true)
   return (
     <section className="form-panel visibility-panel">
       <div className="panel-heading"><div><span>Display</span><h2>Section visibility</h2></div></div>
-      {controls.length ? <>
-        {controls.length > 1 && <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>}
-        <VisibilitySwitches controls={controls} />
-      </> : <p className="visibility-fixed">Always available. This page has no visibility feature flag.</p>}
+      {controls.length > 1 && <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>}
+      <VisibilitySwitches controls={controls} />
     </section>
   )
 }

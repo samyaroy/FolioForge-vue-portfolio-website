@@ -13,7 +13,8 @@ import { getPortfolioEntries, type PortfolioEntry } from '@/data/portfolioEntrie
 import { createEntry, deleteEntry, fetchCollection, saveEntry } from '@/services/content'
 
 const COLLECTION = 'gallery/career-unlocks'
-const section = findPortfolioPage('gallery')?.sections[0]
+const page = findPortfolioPage('gallery')
+const section = page?.sections[0]
 
 function text(value: unknown): string {
   return value === undefined || value === null ? '' : String(value)
@@ -178,6 +179,7 @@ export function CareerUnlocksPage() {
         <EntryEditorDialog
           key={editor.mode === 'edit' ? editor.entry.id : 'new'}
           entry={editor.mode === 'edit' ? editor.entry : undefined}
+          context={[page?.title, section.title]}
           fieldGroups={section.fields}
           requiredFields={section.requiredFields}
           entryFields={section.entryFields}

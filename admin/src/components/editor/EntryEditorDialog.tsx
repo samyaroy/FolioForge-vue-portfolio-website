@@ -21,13 +21,20 @@ import { ObjectFieldsEditor } from '@/components/editor/ObjectFieldsEditor'
 import { ListFieldsEditor } from '@/components/editor/ListFieldsEditor'
 import { fieldCaption } from '@/lib/fieldNames'
 import { credentialStyleOf, fieldKeys, listFieldsOf, objectFieldsOf, type EntryField } from '../../../../src/config/entryFields.ts'
-import { mentoredProjectLinkCategories, projectLinkCategories } from '../../../../src/config/projectLinkCategories.ts'
+import { mentoredProjectLinkCategories, ongoingProjectLinkCategories, projectLinkCategories } from '../../../../src/config/projectLinkCategories.ts'
 import { ENTRY_ENABLED_KEY } from '../../../../src/config/entryStatus.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 
 type EntryEditorDialogProps = {
   entry?: PortfolioEntry
+  /**
+   * Where the entry lives, outermost first: the page, its section, and the
+   * group when the section has them. Blanks are dropped, so a caller can pass
+   * a title it may not have. Without it the dialog can only say "entry", and
+   * every collection's editor looks like every other one's.
+   */
+  context?: (string | undefined)[]
   fieldGroups: string[]
   /** Entry keys this section cannot be saved without; see PortfolioSection. */
   requiredFields?: string[]
@@ -49,20 +56,26 @@ function editableValue(value: unknown): string {
   return JSON.stringify(value, null, 2)
 }
 
+const categoryStyles = {
+  categories: projectLinkCategories,
+  mentoredCategories: mentoredProjectLinkCategories,
+  ongoingCategories: ongoingProjectLinkCategories,
+} as const
+
 function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
   // Nesting is read off the schema, so a collection declares its shape once.
   const entryFields = useMemo(() => fieldKeys(schema), [schema])
   const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
   const listFields = useMemo(() => listFieldsOf(schema), [schema])
   const credentialStyle = useMemo(() => credentialStyleOf(schema), [schema])
-  // Both category styles are edited the same way; they differ only in which
+  // The category styles are edited the same way; they differ only in which
   // categories the card behind them renders.
-  const isCategoryStyle = credentialStyle === 'categories' || credentialStyle === 'mentoredCategories'
-  const linkCategories = credentialStyle === 'mentoredCategories' ? mentoredProjectLinkCategories : projectLinkCategories
+  const isCategoryStyle = credentialStyle ? credentialStyle in categoryStyles : false
+  const linkCategories = credentialStyle && credentialStyle in categoryStyles ? categoryStyles[credentialStyle as keyof typeof categoryStyles] : projectLinkCategories
   // What an untouched field holds before anything is typed into it.
   const blankValue = useCallback((key: string) => {
     if (objectFields[key]) return JSON.stringify(objectFieldsDraft(undefined, objectFields[key]))
@@ -162,11 +175,17 @@ export function EntryEditorDialog({ entry, fieldGroups, requiredFields = [], typ
     }
   }
 
+  const where = context.filter(Boolean).join(' · ')
+  const what = entry ? entry.title : 'New entry'
+
   return (
     <div className="entry-dialog-backdrop" role="presentation" onMouseDown={onClose}>
-      <section className="entry-dialog" role="dialog" aria-modal="true" aria-label={entry ? `Edit ${entry.title}` : 'Add entry'} onMouseDown={event => event.stopPropagation()}>
+      <section className="entry-dialog" role="dialog" aria-modal="true" aria-label={`${entry ? `Editing ${what}` : what}${where ? ` in ${where}` : ''}`} onMouseDown={event => event.stopPropagation()}>
         <header>
-          <div><span>{entry ? 'Edit entry' : 'New entry'}</span><h2>{entry?.title ?? 'Add collection entry'}</h2></div>
+          <div><span>{where || 'Collection entry'}</span><h2>{what}</h2></div>
+          {/* The heading names the entry; this says which of the two things
+              you are doing to it, which the entry's own name cannot. */}
+          <span className="entry-dialog-mode" data-mode={entry ? 'edit' : 'new'}>{entry ? 'Editing' : 'New'}</span>
           <IconButton variant="bare" size="none" label="Close editor" onClick={onClose}><X aria-hidden="true" /></IconButton>
         </header>
         {isEducation && <Tabs value={educationTab} onValueChange={setEducationTab} className="education-editor-tabs"><TabsList><TabsTrigger value="details">Education details</TabsTrigger><TabsTrigger value="curriculum">Curriculum</TabsTrigger></TabsList></Tabs>}

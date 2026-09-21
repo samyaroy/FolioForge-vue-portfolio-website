@@ -26,3 +26,16 @@ export const mentoredProjectLinkCategories = {
 } as const
 
 export type MentoredProjectLinkCategory = keyof typeof mentoredProjectLinkCategories
+
+/**
+ * The categories an ongoing-project card renders. Narrower again: the card in
+ * Ongoing Projects draws a repository and a Kaggle notebook and nothing else,
+ * so a report or a website set here would never appear.
+ * Mirrors the link row in views/OngoingProjects/components/ProjectCard.vue.
+ */
+export const ongoingProjectLinkCategories = {
+  github: 'GitHub',
+  kaggle: 'Kaggle',
+} as const
+
+export type OngoingProjectLinkCategory = keyof typeof ongoingProjectLinkCategories

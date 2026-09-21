@@ -23,6 +23,20 @@ const scopes = [
   { id: 'empty', label: 'Empty' },
 ] as const
 
+/**
+ * How much of a credential is attached, which is what the row's colour says.
+ * Declared once so the legend and the rows cannot drift apart.
+ */
+const linkStates = [
+  { id: 'many', label: 'Several documents' },
+  { id: 'one', label: 'One document' },
+  { id: 'none', label: 'Nothing attached' },
+] as const
+
+function linkState(row: CredentialDashboardRow) {
+  return row.links.length > 1 ? 'many' : row.links.length === 1 ? 'one' : 'none'
+}
+
 const column = columnsFor<CredentialDashboardRow>()
 
 const columns: DataTableColumns<CredentialDashboardRow> = [
@@ -94,9 +108,15 @@ export function CredentialsPage() {
             ))}
           </div>
         </div>
+        <ul className="credential-legend">
+          {linkStates.map(state => (
+            <li key={state.id} className={`credential-links-${state.id}`}><span aria-hidden="true" />{state.label}</li>
+          ))}
+        </ul>
         <DataTable
           columns={columns}
           data={visibleRows}
+          rowClassName={row => `credential-links-${linkState(row)}`}
           pageSize={20}
           labelledBy="credentials-heading"
           caption="Credential entries found in the portfolio content"

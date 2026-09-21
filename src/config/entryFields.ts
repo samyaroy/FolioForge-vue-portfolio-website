@@ -21,7 +21,7 @@ export type EntryField =
   | string
   | { key: string; object: readonly string[] }
   | { key: string; list: readonly string[] }
-  | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' }
+  | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' | 'ongoingCategories' }
 
 export const entryFields = {
   experience: ['job_role', 'type', 'company', 'department', 'location', 'time_period', 'supervisor', 'projects', 'description', { key: 'cred_link', credentials: 'documents' }],
@@ -29,8 +29,13 @@ export const entryFields = {
   researchInterests: ['key'],
   announcements: ['message', 'icon'],
 
-  projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, 'collaborators', 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
+  projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
   articles: ['title', { key: 'publication', object: ['name', 'host'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
+
+  // The card renders `instructor`, `institution` and `duration` although no
+  // entry fills them in yet; they are declared so one can be, without hand
+  // editing the YAML. `guide` is the same role under the older name.
+  ongoingProjects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', 'instructor', 'institution', 'duration', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'link'] }, { key: 'cred_link', credentials: 'ongoingCategories' }],
 
   // A mentoring engagement: one internship programme, mentored once. The
   // projects it produced are their own collection.
@@ -86,7 +91,7 @@ export function listFieldsOf(fields: readonly EntryField[]): Record<string, read
 }
 
 /** How this collection's `cred_link` is shaped, if it holds credentials. */
-export function credentialStyleOf(fields: readonly EntryField[]): 'documents' | 'categories' | 'mentoredCategories' | undefined {
+export function credentialStyleOf(fields: readonly EntryField[]): 'documents' | 'categories' | 'mentoredCategories' | 'ongoingCategories' | undefined {
   const field = fields.find(item => typeof item !== 'string' && 'credentials' in item)
   return field && typeof field !== 'string' && 'credentials' in field ? field.credentials : undefined
 }

@@ -10,8 +10,13 @@ import { SearchField } from '@/components/admin/SearchField'
 import { Button, IconButton, SelectField, TextField } from '@/components/form'
 import { HYPERLINK_COLLECTIONS, hyperlinkEntries, hyperlinkGroupEntries, hyperlinkIndex, serializeHyperlinkEntry, type HyperlinkEntry, type HyperlinkGroup } from '@/lib/hyperlinkMetadata'
 import { createEntry, deleteEntry, fetchCollection, saveEntry } from '@/services/content'
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const groups = ['Institute', 'Person'] as const
+
+function groupLabel(group: HyperlinkGroup): string {
+  return group === 'Person' ? 'People' : 'Institutes'
+}
 
 // Aliases are listed with a semicolon rather than a comma because several of
 // them contain commas of their own — "International Centre for Theoretical
@@ -133,6 +138,9 @@ export function HyperlinkMetadataPage() {
   const [entries, setEntries] = useState(hyperlinkEntries)
   const [query, setQuery] = useState('')
   const [editing, setEditing] = useState<HyperlinkEntry | null>(null)
+  // The two groups are separate sequences in the file and never mix, so the
+  // page shows one at a time rather than stacking both tables.
+  const [group, setGroup] = useState<HyperlinkGroup>('Institute')
   const [saving, setSaving] = useState(false)
   const [baseSha, setBaseSha] = useState('')
   const [reason, setReason] = useState('Checking whether this file can be saved...')
@@ -168,6 +176,8 @@ export function HyperlinkMetadataPage() {
     if (!normalizedQuery) return entries
     return entries.filter(entry => [entry.name, entry.url, ...entry.aliases].join(' ').toLowerCase().includes(normalizedQuery))
   }, [entries, query])
+
+  const groupEntries = visibleEntries.filter(entry => entry.group === group)
 
   const persist = async (next: HyperlinkEntry) => {
     const existing = entries.find(entry => entry.id === next.id)
@@ -223,7 +233,7 @@ export function HyperlinkMetadataPage() {
       <PageHeader
         title="Hyperlink Metadata"
         description={<>Names, aliases and URLs SmartLink resolves from <code>src/metadata/hyperlinkMetadata.yml</code>.</>}
-        actions={<Button onClick={() => setEditing({ id: `local-${Date.now()}`, group: 'Institute', name: '', aliases: [], url: '', issues: [] })}><Plus aria-hidden="true" /> New link</Button>}
+        actions={<Button onClick={() => setEditing({ id: `local-${Date.now()}`, group, name: '', aliases: [], url: '', issues: [] })}><Plus aria-hidden="true" /> New link</Button>}
       />
       <MetricGrid metrics={[
         { label: 'Links', value: entries.length, detail: 'Names SmartLink can resolve' },
@@ -242,27 +252,33 @@ export function HyperlinkMetadataPage() {
         <span className="result-count">{visibleEntries.length} of {entries.length} links</span>
       </div>
 
-      {groups.map(group => {
-        const groupEntries = visibleEntries.filter(entry => entry.group === group)
-        const urlLabel = group === 'Person' ? 'Link' : 'Website'
-        return (
-          <section className="posts-panel" key={group} aria-labelledby={`hyperlinks-${group}`}>
-            <div className="panel-heading">
-              <div><span>{group === 'Person' ? 'People' : 'Institutes'}</span><h2 id={`hyperlinks-${group}`}>{group === 'Person' ? 'People and profiles' : 'Institutes and organisations'}</h2></div>
-              <span>{groupEntries.length} of {entries.filter(entry => entry.group === group).length}</span>
-            </div>
-            <DataTable
-              columns={columnsFor_(urlLabel, setEditing, entry => void removeEntry(entry), Boolean(baseSha) && !saving)}
-              data={groupEntries}
-              pageSize={25}
-              labelledBy={`hyperlinks-${group}`}
-              caption={`${group === 'Person' ? 'People' : 'Institutes'} SmartLink can resolve`}
-              emptyTitle={`No ${group === 'Person' ? 'people' : 'institutes'} match this search`}
-              emptyDetail="Try different wording."
-            />
-          </section>
-        )
-      })}
+      {/* The count on each tab is what the current search matches there, so a
+          search that hits the other group says so rather than looking empty. */}
+      <Tabs value={group} onValueChange={value => setGroup(value as HyperlinkGroup)} className="hyperlink-tabs">
+        <TabsList>
+          {groups.map(item => (
+            <TabsTrigger key={item} value={item}>
+              {groupLabel(item)} <small>{visibleEntries.filter(entry => entry.group === item).length}</small>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+
+      <section className="posts-panel" aria-labelledby={`hyperlinks-${group}`}>
+        <div className="panel-heading">
+          <div><span>{groupLabel(group)}</span><h2 id={`hyperlinks-${group}`}>{group === 'Person' ? 'People and profiles' : 'Institutes and organisations'}</h2></div>
+          <span>{groupEntries.length} of {entries.filter(entry => entry.group === group).length}</span>
+        </div>
+        <DataTable
+          columns={columnsFor_(group === 'Person' ? 'Link' : 'Website', setEditing, entry => void removeEntry(entry), Boolean(baseSha) && !saving)}
+          data={groupEntries}
+          pageSize={25}
+          labelledBy={`hyperlinks-${group}`}
+          caption={`${groupLabel(group)} SmartLink can resolve`}
+          emptyTitle={`No ${group === 'Person' ? 'people' : 'institutes'} match this search`}
+          emptyDetail="Try different wording."
+        />
+      </section>
       {editing && <EntryDialog key={editing.id} entry={editing} saving={saving} onClose={() => setEditing(null)} onSave={entry => void persist(entry)} />}
     </>
   )

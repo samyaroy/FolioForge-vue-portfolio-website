@@ -55,13 +55,13 @@
                             </a>
                         </p>
 
-                        <p v-if="project.collaborators && project.collaborators.length"
+                        <p v-if="collaboratorNames(project).length"
                             class="text-sm text-gray-600 mb-3 flex items-center gap-1">
                             <v-icon size="16">mdi-account-supervisor</v-icon>
                             Collaborators:
-                            <template v-for="(colab, i) in project.collaborators.split(',')" :key="colab">
-                                <SmartLink :type="'Person'" :text="colab.trim()" />
-                                <span v-if="i < project.collaborators.split(',').length - 1">
+                            <template v-for="(colab, i) in collaboratorNames(project)" :key="colab">
+                                <SmartLink :type="'Person'" :text="colab" />
+                                <span v-if="i < collaboratorNames(project).length - 1">
                                     ,
                                 </span>
                             </template>
@@ -194,6 +194,24 @@ const visibleProjects = computed(() => {
 
 function getLogoPath(logo) {
     return logoUrl(logo)
+}
+
+// Collaborators are written either as one comma-separated line or as a list of
+// people, each with an optional link of their own. Only the names are wanted
+// here: SmartLink already resolves a person to their page.
+function collaboratorNames(project) {
+    const collaborators = project?.collaborators
+
+    if (Array.isArray(collaborators)) {
+        return collaborators
+            .map(collaborator => typeof collaborator === 'string' ? collaborator : collaborator?.name)
+            .map(name => typeof name === 'string' ? name.trim() : '')
+            .filter(Boolean)
+    }
+
+    return typeof collaborators === 'string'
+        ? collaborators.split(',').map(name => name.trim()).filter(Boolean)
+        : []
 }
 </script>
 
