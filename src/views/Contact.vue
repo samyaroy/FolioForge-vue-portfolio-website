@@ -173,10 +173,14 @@ const showPageDescription = isPageDescriptionEnabled('contact')
 
 const {contacts, socials} = config
 
+// A tile is drawn only when its own value is there, so `mailto:` is never
+// built from a missing address.
+const filled = value => typeof value === 'string' && value.trim().length > 0
+
 const gmail = contacts.gmail
-const gmail_link = "mailto:" + contacts.gmail
+const gmail_link = filled(gmail) ? "mailto:" + gmail : ""
 const email = contacts.email
-const email_link = "mailto:" + contacts.email
+const email_link = filled(email) ? "mailto:" + email : ""
 const phone = contacts.phone
 const kaggle = socials.kaggle
 const github = socials.github
@@ -190,16 +194,20 @@ const google_scholar = socials.google_scholar
 
 // Which tiles this page shows. Each is its own flag, edited from the admin's
 // Contact page; see src/config/featureFlags.ts.
-const showPhone = isFeatureEnabled('showContact.showPhone')
-const showGmail = isFeatureEnabled('showContact.showGmail')
-const showStudentEmail = isFeatureEnabled('showContact.showStudentEmail')
-const showLinkedIn = isFeatureEnabled('showContact.showLinkedIn')
-const showGitHub = isFeatureEnabled('showContact.showGitHub')
-const showStudentGitHub = isFeatureEnabled('showContact.showStudentGitHub')
-const showKaggle = isFeatureEnabled('showContact.showKaggle')
-const showGoogleScholar = isFeatureEnabled('showContact.showGoogleScholar')
-const showResearchGate = isFeatureEnabled('showContact.showResearchGate')
-const showOrcid = isFeatureEnabled('showContact.showOrcid')
+//
+// The value has to be there as well as the flag. These tiles label themselves
+// -- "LinkedIn Profile", not the URL -- so one drawn over a missing value is a
+// tile that looks entirely normal and leads nowhere.
+const showPhone = isFeatureEnabled('showContact.showPhone') && filled(phone)
+const showGmail = isFeatureEnabled('showContact.showGmail') && filled(gmail)
+const showStudentEmail = isFeatureEnabled('showContact.showStudentEmail') && filled(email)
+const showLinkedIn = isFeatureEnabled('showContact.showLinkedIn') && filled(linkedIn)
+const showGitHub = isFeatureEnabled('showContact.showGitHub') && filled(github)
+const showStudentGitHub = isFeatureEnabled('showContact.showStudentGitHub') && filled(github2)
+const showKaggle = isFeatureEnabled('showContact.showKaggle') && filled(kaggle)
+const showGoogleScholar = isFeatureEnabled('showContact.showGoogleScholar') && filled(google_scholar)
+const showResearchGate = isFeatureEnabled('showContact.showResearchGate') && filled(researchgate)
+const showOrcid = isFeatureEnabled('showContact.showOrcid') && filled(orcid_id)
 </script>
 
 <style scoped>
