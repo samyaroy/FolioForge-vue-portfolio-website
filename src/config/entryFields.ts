@@ -28,6 +28,9 @@ export const entryFields = {
   education: ['type', 'degree', 'field', 'sub_field', 'institution', 'campus', 'location', 'time_period', 'current_level', 'gpa', 'category', 'cred_link'],
   researchInterests: ['key'],
   announcements: ['message', 'icon'],
+  // Achievements carry no `prize`; they share the set and leave it blank, as
+  // an education entry without a GPA does.
+  awards: ['title', 'id', 'year', 'organization', 'category', 'prize', 'description', 'cred_link'],
 
   projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
   articles: ['title', { key: 'publication', object: ['name', 'host'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],

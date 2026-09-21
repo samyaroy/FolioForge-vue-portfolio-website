@@ -1,10 +1,27 @@
 affiliations:
+  # Placeholder, switched off: it settles the shape of this list so the
+  # admin can draw and edit it. Delete it once a real entry lands here.
+  - organization: Example Centre for Data Science
+    enabled: false
+    department: Department of Statistics
+    period: Jan 2026 - Present
+    location: Kolkata, IN
+
   # - organization: Center for Data Science
   #   department: Data Science
   #   period: Jan 2025 – Present
   #   location: Chennai, IN
 
 collaborators:
+  # Placeholder, switched off: it settles the shape of this list so the
+  # admin can draw and edit it. Delete it once a real entry lands here.
+  - name: Dr. Example Collaborator
+    enabled: false
+    affiliation: Example Institute of Research
+    location: Kolkata, IN
+    projects: [Placeholder Study]
+    period: 2026 - Present
+
   # - name: Dr. Jane Doe
   #   affiliation: Institute of AI Research
   #   location: Kolkata, IN

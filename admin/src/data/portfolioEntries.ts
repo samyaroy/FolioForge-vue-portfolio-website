@@ -1,4 +1,5 @@
 import affiliationsYaml from '../../../src/content/profile_info/affiliations.yml'
+import awardsYaml from '../../../src/content/profile_info/awards.yml'
 import certificationsYaml from '../../../src/content/profile_info/certifications.yml'
 import cocurricularYaml from '../../../src/content/profile_info/cocurricular.yml'
 import educationYaml from '../../../src/content/profile_info/education.yml'
@@ -39,6 +40,7 @@ export type PortfolioEntry = {
 
 const documents = {
   affiliations: affiliationsYaml as UnknownRecord,
+  awards: awardsYaml as UnknownRecord,
   certifications: certificationsYaml as UnknownRecord,
   cocurricular: cocurricularYaml as UnknownRecord,
   education: educationYaml as UnknownRecord,
@@ -128,6 +130,19 @@ function withGroupedRoleTitles(entries: UnknownRecord[]): UnknownRecord[] {
   })
 }
 
+/**
+ * The site groups courses by semester, as it does mentored projects, so a
+ * `courses_taught` item is a semester rather than a course. Flatten to the
+ * courses themselves and carry the semester on each, or every row would list
+ * as an untitled group.
+ */
+function coursesTaught() {
+  return arrayAt(documents.teaching, 'courses_taught').flatMap(semester => {
+    const semesterName = displayText(semester.semester)
+    return asRecords(semester.courses).map(course => ({ ...course, semester: semesterName }))
+  })
+}
+
 function mentoredProjects() {
   return arrayAt(documents.teaching, 'projects_mentored').flatMap(semester => {
     const semesterName = displayText(semester.semester)
@@ -150,7 +165,8 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'home/research-interests': () => toEntries(arrayAt(documents.researchInterests, 'research_interests'), ['title', 'name', 'key']),
   'home/experience': () => toEntries(arrayAt(documents.experience, 'experience'), ['job_role', 'title'], ['company', 'time_period']),
   'home/education': () => toEntries(arrayAt(documents.education, 'education'), ['degree', 'title'], ['institution', 'time_period']),
-  'home/awards': () => [],
+  'home/awards': () => toEntries(arrayAt(documents.awards, 'awards'), ['title'], ['organization', 'year']),
+  'home/achievements': () => toEntries(arrayAt(documents.awards, 'achievements'), ['title'], ['organization', 'year']),
   'home/announcements': () => toEntries(arrayAt(documents.ribbon, 'ribbon'), ['message'], ['icon']),
 
   'projects-publications/projects': () => toEntries([
@@ -167,7 +183,7 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'projects-publications/publications': () => toEntries(arrayAt(documents.publications, 'publications'), ['title'], ['publication', 'date']),
   'projects-publications/posters': () => toEntries(arrayAt(documents.publications, 'posters'), ['title'], ['event', 'date']),
 
-  'teaching/courses': () => toEntries(arrayAt(documents.teaching, 'courses_taught'), ['title', 'course'], ['institution', 'term']),
+  'teaching/courses': () => toEntries(coursesTaught(), ['title', 'course'], ['institution', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
   'teaching/projects': () => toEntries(mentoredProjects(), ['title'], ['course', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
   // `projects` is its own collection; it is carried through a save untouched
   // rather than shown here as a raw blob.

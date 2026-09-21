@@ -1,4 +1,16 @@
 invited_talks:
+  # Placeholder, switched off: it settles the shape of this list so the
+  # admin can draw and edit it. Delete it once a real entry lands here.
+  - title: "A Dummy Invited Talk on Statistical Practice"
+    enabled: false
+    event: Example Data Science Symposium
+    organizer:
+      - name: Example Institute of Technology
+        department: Department of Statistics
+    location: Chennai, TN
+    date: October 2026
+    link: https://example.com/talk
+
   # - title: "The Future of Data Science in Academia"
   #   event: "Annual Data Science Symposium"
   #   organizer:

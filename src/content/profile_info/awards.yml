@@ -1,0 +1,26 @@
+# Awards and achievements shown on the home page, behind the
+# `showHome.showAwards` and `showHome.showAchivement` flags in
+# src/config/featureFlags.ts. Each list is drawn as its own slide.
+#
+# Both entries below are placeholders, switched off so the site never renders
+# them; they settle the shape of each list so the admin can draw and edit it.
+# Delete them once real entries land here.
+awards:
+  - title: A Dummy Award for Statistical Work
+    enabled: false
+    id: dummy-award
+    year: 2026
+    organization: Example Institute of Statistics
+    category: Academic
+    prize: First Place
+    description: Placeholder award, kept switched off so the list has a shape.
+    cred_link:
+
+achievements:
+  - title: A Dummy Achievement in Research
+    enabled: false
+    year: 2026
+    category: Research
+    organization: Example Institute of Statistics
+    description: Placeholder achievement, kept switched off so the list has a shape.
+    cred_link:

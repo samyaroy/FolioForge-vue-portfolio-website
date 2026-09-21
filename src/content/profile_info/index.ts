@@ -21,6 +21,7 @@ import workshops from './workshops.yml'
 import teaching from './teaching.yml'
 import affiliations from './affiliations.yml'
 import professionalActivity from './professional_activity.yml'
+import awards from './awards.yml'
 import pageQuotes from './page_quotes.yml'
 import ribbon from './ribbon.yml'
 
@@ -44,6 +45,7 @@ export const profileInfoSources = ([
   { source: 'src/content/profile_info/teaching.yml', data: teaching },
   { source: 'src/content/profile_info/affiliations.yml', data: affiliations },
   { source: 'src/content/profile_info/professional_activity.yml', data: professionalActivity },
+  { source: 'src/content/profile_info/awards.yml', data: awards },
   { source: 'src/content/profile_info/page_quotes.yml', data: pageQuotes },
   { source: 'src/content/profile_info/ribbon.yml', data: ribbon },
 ] as const).map(entry => ({ ...entry, data: withoutDisabledEntries(entry.data) }))
@@ -67,6 +69,7 @@ const config: Record<string, any> = withoutDisabledEntries({
   ...teaching,
   ...affiliations,
   ...professionalActivity,
+  ...awards,
   ...pageQuotes,
   ...ribbon,
 })

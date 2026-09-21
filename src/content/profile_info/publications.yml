@@ -38,6 +38,16 @@ articles:
   # Add more fields as needed
 
 publications:
+  # Placeholder, switched off: it settles the shape of this list so the
+  # admin can draw and edit it. Delete it once a real entry lands here.
+  - title: "A Dummy Publication on Robust Estimation"
+    enabled: false
+    authors: Samyabrata Roy
+    journal: Journal of Example Statistics
+    year: 2026
+    tags: [Placeholder, Robust Estimation]
+    link: https://example.com/publication
+
   # - title: Publication Title 1
   #   authors: John Doe, Jane Smith
   #   journal: Journal of Example
@@ -46,6 +56,18 @@ publications:
   #   link: https://example.com/publication1
 
 posters:
+  # Placeholder, switched off: it settles the shape of this list so the
+  # admin can draw and edit it. Delete it once a real entry lands here.
+  - title: "A Dummy Poster on Time Series Forecasting"
+    enabled: false
+    event: Example Statistics Conference
+    authors: Samyabrata Roy
+    date: November 2026
+    description: Placeholder poster, kept switched off so the list has a shape.
+    cred_link: https://example.com/poster
+    image: /logo/placeholder.png
+    tags: [Placeholder, Time Series]
+
   # - title: "Innovations in Statistical Modeling"
   #   event: "International Statistics Conference"
   #   authors: "Samyabrata Roy, Dr. A. K. Sharma"

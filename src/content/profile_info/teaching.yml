@@ -1,4 +1,16 @@
 courses_taught:
+  # Placeholder, switched off: it settles the shape of this list so the
+  # admin can draw and edit it. Delete it once a real entry lands here.
+  - semester: Example Semester 2026
+    enabled: false
+    courses:
+      - title: Introduction to Example Statistics
+        institution: Example University
+        role: Teaching Assistant
+        collaborators:
+          - Prof. Example Name
+        students: 60
+
   # - semester: "Spring 2025"
   #   courses:
   #     - title: "Introduction to Statistics"

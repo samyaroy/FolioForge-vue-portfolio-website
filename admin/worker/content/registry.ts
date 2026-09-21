@@ -22,6 +22,9 @@ export const contentSources = {
   'home/experience': { path: `${PORTFOLIO}/experience.yml`, arrayKeys: ['experience'] },
   'home/research-interests': { path: `${PORTFOLIO}/research_interests.yml`, arrayKeys: ['research_interests'] },
   'home/announcements': { path: `${PORTFOLIO}/ribbon.yml`, arrayKeys: ['ribbon'] },
+  // Two sequences in one file, drawn as two slides on the home page.
+  'home/awards': { path: `${PORTFOLIO}/awards.yml`, arrayKeys: ['awards'] },
+  'home/achievements': { path: `${PORTFOLIO}/awards.yml`, arrayKeys: ['achievements'] },
 
   // One adapter per group, so a new entry joins the group being edited.
   'projects-publications/research': { path: `${PORTFOLIO}/projects.yml`, arrayKeys: ['projects.research_projects'] },
@@ -32,7 +35,8 @@ export const contentSources = {
   'projects-publications/publications': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['publications'] },
   'projects-publications/posters': { path: `${PORTFOLIO}/publications.yml`, arrayKeys: ['posters'] },
 
-  'teaching/courses': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['courses_taught'] },
+  // Courses are grouped by semester, as mentored projects are, and shown as one list.
+  'teaching/courses': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['courses_taught.*.courses'] },
   // Mentored projects are grouped by semester and shown as one list.
   'teaching/projects': { path: `${PORTFOLIO}/teaching.yml`, arrayKeys: ['projects_mentored.*.projects'] },
   // The groups themselves: each one is a mentoring engagement.

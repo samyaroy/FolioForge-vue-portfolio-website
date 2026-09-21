@@ -138,14 +138,26 @@ test('every collection names a key its file actually has', () => {
 })
 
 test('the first entry of an empty collection creates its sequence', () => {
-  // affiliations.yml keeps its keys with every entry commented out.
-  const source = contentSources['affiliations/affiliations']
-  const document = parseContent(readFileSync(REPO + source.path, 'utf8'))
+  // Written out here rather than taken from a real file: this is a collection
+  // before its first entry, a state the content keeps growing out of, and the
+  // behaviour should be provable without one of them happening to be empty.
+  const source = { path: 'src/content/profile_info/affiliations.yml', arrayKeys: ['affiliations'] }
+  const document = parseContent([
+    'affiliations:',
+    '  # - organization: Center for Data Science',
+    '  #   department: Data Science',
+    '',
+    'memberships:',
+    '  - organization: Example Society',
+    '',
+  ].join('\n'))
   assert.equal(countEntries(document, source), 0, 'fixture should start empty')
   const text = insertEntry(document, appendLocation(document, source), { organization: 'New Org', role: 'Member' })
   assert.ok(text.includes('organization: New Org'), 'the first entry landed')
   // The commented-out examples are what the owner kept as a template.
   assert.ok(text.includes('# - organization: Center for Data Science'), 'the commented template survived')
+  // The key below it is untouched: a new sequence does not swallow the rest.
+  assert.ok(text.includes('memberships:'), 'the next key survived')
   assert.equal(countEntries(parseContent(text), source), 1)
 })
 

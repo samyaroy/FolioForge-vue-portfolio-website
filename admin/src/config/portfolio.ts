@@ -119,7 +119,12 @@ export const portfolioPages: PortfolioPage[] = [
       { id: 'research-interests', title: 'Research Interests', sources: ['research_interests.yml'], fields: ['Interest title', 'Stable key', 'Display order'], requiredFields: ['title'], entryFields: entryFields.researchInterests },
       { previewFields: ['type', 'department', 'location', 'supervisor'], id: 'experience', title: 'Experience', sources: ['experience.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and links', 'Logo'], requiredFields: ['job_role', 'company', 'location', 'time_period'], typeOptions: Object.keys(experienceTypeIcons), entryFields: entryFields.experience },
       { previewFields: ['type', 'field', 'sub_field', 'campus', 'location', 'current_level', 'gpa'], id: 'education', title: 'Education', sources: ['education.yml'], fields: ['Institution and programme', 'Dates and grades', 'Coursework and details', 'Links and logos'], requiredFields: ['degree', 'institution', 'location', 'time_period'], typeOptions: Object.keys(educationTypeIcons), entryFields: entryFields.education },
-      { id: 'awards', title: 'Awards & Achievements', sources: ['awards.yml (planned)'], fields: ['Awards', 'Achievements', 'Images and credentials', 'Display order'] },
+      {
+        id: 'awards', title: 'Awards & Achievements', sources: ['awards.yml'],
+        groups: [{ id: 'awards', label: 'Awards' }, { id: 'achievements', label: 'Achievements' }],
+        fields: ['Title and year', 'Organisation and category', 'Prize and description', 'Credential'],
+        requiredFields: ['title'], entryFields: entryFields.awards,
+      },
       { id: 'announcements', title: 'Announcements', sources: ['ribbon.yml'], fields: ['Ribbon messages', 'Icons', 'Caption markup', 'Message order'], requiredFields: ['message'], entryFields: entryFields.announcements },
     ],
   },
