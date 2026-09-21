@@ -45,7 +45,7 @@ export const entryFields = {
 
   memberships: ['organization', 'chapter', 'role', 'membership_id', 'period', 'location', 'cred_link'],
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
-  certifications: ['title', 'issuer', 'instructor', 'date', 'duration', 'tag', 'logo', 'cred_link'],
+  certifications: ['title', { key: 'issuer', object: ['institution', 'platform', 'location'] }, 'instructor', 'date', 'duration', 'tag', 'logo', 'cred_link'],
 
   conferences: ['title', 'organizer', 'institution', 'location', 'date', 'link', 'cred_link'],
   fdps: ['title', 'institution', 'date', 'duration', 'mode', 'cred_link'],

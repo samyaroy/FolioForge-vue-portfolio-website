@@ -211,6 +211,23 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Hash, raw.membership_id),
     ]
   }
+  if (collection.startsWith('workshops/')) {
+    // The five collections on Conferences, Workshops & Bootcamps share a shape:
+    // who ran it, where it sat, and when. `organizer`, `instructor`, `speaker`,
+    // `institution` and `host` are each written as a list of objects, so read
+    // every name rather than the first one and a silent remainder.
+    return [
+      ...fact(Tag, raw.type),
+      ...fact(Users, names(raw.organizer) || names(raw.speaker)),
+      ...fact(UserRound, names(raw.instructor)),
+      // An FDP names its institution; a talk names its host. One line either way.
+      ...fact(Building, names(raw.institution) || names(raw.host)),
+      ...fact(Clock3, raw.duration),
+      ...fact(CalendarDays, raw.date),
+      ...fact(MonitorPlay, raw.mode),
+      ...fact(MapPin, raw.location),
+    ]
+  }
   if (collection === 'ongoing-projects/projects') {
     return [
       // The card's type badge is commented out at the moment, but the type is
@@ -272,6 +289,9 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
 
 /** Collections whose rows are drawn as the site draws them. */
 export function hasSitePreview(collection: string): boolean {
+  // Every Conferences, Workshops & Bootcamps collection is drawn the same way,
+  // so a section added there is covered without being listed again below.
+  if (collection.startsWith('workshops/')) return true
   return [
     'home/profile', 'home/education', 'home/experience', 'home/research-interests',
     'projects-publications/projects', 'projects-publications/articles',
