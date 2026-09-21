@@ -25,6 +25,7 @@ import { projectTypes } from '../../../src/config/projectTypes.ts'
 import { entryFields } from '../../../src/config/entryFields.ts'
 import type { EntryField } from '../../../src/config/entryFields.ts'
 import { articleTypeLabels, articleTypes } from '../../../src/config/articleTypes.ts'
+import { galleryTags, type GalleryTag } from '@/lib/galleryTags'
 
 export type PortfolioSection = {
   /**
@@ -33,6 +34,13 @@ export type PortfolioSection = {
    * one is readable at a glance.
    */
   previewFields?: readonly string[]
+  /**
+   * The tags this collection may carry, when they come from a file rather than
+   * being typed. The editor offers them as chips and will not save an entry
+   * that picks none of them: a tag outside the list renders on the card but
+   * reaches no filter, so an entry with only those can never be filtered to.
+   */
+  tagOptions?: readonly GalleryTag[]
   /**
    * This section has no collection behind it: it is the visibility switches
    * registered for it in config/visibility.ts and nothing else. For a page
@@ -208,7 +216,7 @@ export const portfolioPages: PortfolioPage[] = [
   {
     id: 'gallery', title: 'Career Unlocks', publicPath: '/gallery', icon: GalleryHorizontalEnd,
     description: 'Visual timeline of milestones, events, and professional moments.',
-    sections: [{ id: 'career-unlocks', title: 'Gallery Entries', sources: ['gallery.yml', 'galleryTags.yml'], fields: ['Title, date, type, and featured state', 'Captions and smart links', 'Tags, event, and location', 'Images and external link'], requiredFields: ['title'], entryFields: entryFields.galleryItems }],
+    sections: [{ id: 'career-unlocks', title: 'Gallery Entries', tagOptions: galleryTags, sources: ['gallery.yml', 'galleryTags.yml'], fields: ['Title, date, type, and featured state', 'Captions and smart links', 'Tags, event, and location', 'Images and external link'], requiredFields: ['title'], entryFields: entryFields.galleryItems }],
   },
   {
     id: 'resources', title: 'Resources', publicPath: '/resources', icon: BookOpenCheck,

@@ -331,6 +331,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
           entry={editor.mode === 'edit' ? editor.entry : newEntrySeed}
           context={editorContext}
           fieldGroups={section.fields}
+          tagOptions={section.tagOptions}
           requiredFields={section.requiredFields}
           typeOptions={section.typeOptions}
           entryFields={section.entryFields}

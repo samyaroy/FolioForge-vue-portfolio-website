@@ -25,6 +25,8 @@ import { mentoredProjectLinkCategories, ongoingProjectLinkCategories, projectLin
 import { ENTRY_ENABLED_KEY } from '../../../../src/config/entryStatus.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
+import { GalleryTagsEditor } from '@/components/editor/GalleryTagsEditor'
+import { hasDefinedTag, type GalleryTag } from '@/lib/galleryTags'
 
 type EntryEditorDialogProps = {
   entry?: PortfolioEntry
@@ -42,6 +44,8 @@ type EntryEditorDialogProps = {
   typeOptions?: readonly string[]
   /** Every field an entry carries, with nested shapes; see PortfolioSection. */
   entryFields?: readonly EntryField[]
+  /** The tag vocabulary `tags` is picked from; see PortfolioSection. */
+  tagOptions?: readonly GalleryTag[]
   isExperience?: boolean
   isEducation?: boolean
   onClose: () => void
@@ -62,11 +66,21 @@ const categoryStyles = {
   ongoingCategories: ongoingProjectLinkCategories,
 } as const
 
+/** The tags an editor field holds; anything unparseable reads as none. */
+function chosenTags(value: string | undefined): string[] {
+  try {
+    const parsed: unknown = JSON.parse(value ?? '[]')
+    return Array.isArray(parsed) ? parsed.filter((tag): tag is string => typeof tag === 'string' && Boolean(tag.trim())) : []
+  } catch {
+    return []
+  }
+}
+
 function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], tagOptions = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
   // Nesting is read off the schema, so a collection declares its shape once.
   const entryFields = useMemo(() => fieldKeys(schema), [schema])
   const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
@@ -83,8 +97,9 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
     if (key === 'cred_link' && credentialStyle) return '[]'
     if (isExperience && (key === 'projects' || key === 'description')) return '[]'
     if (isEducation && key === 'sub_field') return '[]'
+    if (tagOptions.length && key === 'tags') return '[]'
     return ''
-  }, [objectFields, listFields, credentialStyle, isExperience, isEducation])
+  }, [objectFields, listFields, credentialStyle, isExperience, isEducation, tagOptions])
 
   const initialFields = useMemo(() => {
     if (entry) {
@@ -138,6 +153,13 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       toast.error(`Enter ${blank.replaceAll('_', ' ')} before saving.`)
       return
     }
+    // Checked on every save, not only when the field was touched: an entry
+    // carrying nothing but tags the file does not define appears under no
+    // filter, however it came to be that way.
+    if (tagOptions.length && 'tags' in fields && !hasDefinedTag(chosenTags(fields.tags), tagOptions)) {
+      toast.error('Choose at least one gallery tag, or nothing can filter to this entry.')
+      return
+    }
     try {
       const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(fields).map(([key, value]) => {
         const original = entry?.raw[key]
@@ -146,7 +168,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
         if (isCategoryStyle && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
         if (objectFields[key]) return [key, serializeObjectFields(JSON.parse(value), original, objectFields[key], key)]
         if (listFields[key]) return [key, serializeListFields(JSON.parse(value), original, listFields[key], fieldCaption(key).toLowerCase())]
-        const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('['))
+        const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('[')) || (tagOptions.length > 0 && key === 'tags')
         const parsed: unknown = structured ? JSON.parse(value) : value
         if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || typeof item.name !== 'string' || !item.name.trim())) throw new Error('Enter a label and name for each sub-field before saving.')
         if (isExperience && key === 'description' && Array.isArray(parsed) && parsed.some(line => typeof line !== 'string' || !line.trim())) throw new Error('Enter text for each description line before saving.')
@@ -193,6 +215,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
           <div className="entry-field-divider"><span>{isExperience ? 'Role details' : 'Entry fields'}</span>{!isExperience && <small>{Object.keys(fields).length}</small>}</div>
           {orderedFields.filter(([key]) => key !== ENTRY_ENABLED_KEY).map(([key, value], index) => {
             if (key === 'logo') return <LogoSelector key={key} multiple={typeof entry?.raw.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => setFields(current => ({ ...current, logo: typeof entry?.raw.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) }))} />
+            if (tagOptions.length && key === 'tags') return <GalleryTagsEditor key={key} options={tagOptions} tags={chosenTags(value)} onChange={tags => setFields(current => ({ ...current, tags: JSON.stringify(tags) }))} />
             if (isEducation && key === 'sub_field') return <EducationSubFieldsEditor key={key} subFields={JSON.parse(value)} onChange={subFields => setFields(current => ({ ...current, sub_field: JSON.stringify(subFields) }))} />
             if (isExperience && key === 'projects') return <ExperienceProjectsEditor key={key} projects={JSON.parse(value)} onChange={projects => setFields(current => ({ ...current, projects: JSON.stringify(projects) }))} />
             if (isExperience && key === 'description') return <DescriptionLinesEditor key={key} lines={JSON.parse(value)} onChange={lines => setFields(current => ({ ...current, description: JSON.stringify(lines) }))} />

@@ -460,6 +460,15 @@ tbody tr:hover { background: #f9fbfd; }
 .education-subfield h4 { margin: 0; color: #294258; font-size: 11px; }
 .education-subfield-inputs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
 .logo-selector { grid-column: 1 / -1; min-width: 0; }
+.gallery-tags-editor { grid-column: 1 / -1; min-width: 0; }
+.gallery-tag-options { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 9px; }
+.gallery-tag { height: 28px; border: 1px solid #bfd1e0; border-radius: 4px; background: #f7fafc; padding: 0 10px; color: #39556b; font-size: 10px; cursor: pointer; }
+.gallery-tag:hover { border-color: #8fb4d4; }
+.gallery-tag[aria-pressed='true'] { border-color: #1980e6; background: #e8f2fd; color: #12558f; font-weight: 700; }
+.gallery-tag-loose { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 9px; }
+.gallery-tag-loose > small { width: 100%; color: #8a6d1f; font-size: 9px; }
+.gallery-tag-add { display: flex; align-items: center; gap: 8px; }
+.gallery-tag-add .field-wrapper { flex: 1; margin: 0; }
 .logo-selector-label { display: block; margin-bottom: 6px; color: #536b7f; font-size: 10px; font-weight: 700; }
 .logo-selector-trigger { width: 100%; justify-content: space-between; }
 .logo-selector-menu { z-index: 110; width: min(360px, calc(100vw - 32px)); overflow: hidden; border: 1px solid var(--border); border-radius: 6px; background: #fff; box-shadow: 0 8px 28px rgb(11 30 45 / 15%); }

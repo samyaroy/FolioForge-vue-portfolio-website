@@ -181,6 +181,7 @@ export function CareerUnlocksPage() {
           entry={editor.mode === 'edit' ? editor.entry : undefined}
           context={[page?.title, section.title]}
           fieldGroups={section.fields}
+          tagOptions={section.tagOptions}
           requiredFields={section.requiredFields}
           entryFields={section.entryFields}
           onClose={() => setEditor(null)}
