@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs'
 import { contentSource, contentSources, isWritablePath, writablePaths } from '../content/registry.ts'
 import { appendLocation, countEntries, hasSequenceKey, insertEntry, locateEntry, parseContent, readEntry, removeEntry, renderUnchanged, replaceEntry, sequencePath } from '../content/entries.ts'
 
+import { pageQuoteGroups } from '../../../src/config/pageQuotes.ts'
+
 const REPO = new URL('../../../', import.meta.url).pathname
 
 /* ------------------------------- allowlist ------------------------------- */
@@ -134,6 +136,18 @@ test('every collection names a key its file actually has', () => {
       const empty = node === null || node === undefined || node.value === null || node.value === undefined
       assert.ok(Array.isArray(node?.items) || empty, `${id}: ${arrayKey} is neither a sequence nor empty`)
     }
+  }
+})
+
+test('every page that can carry a quote is registered and keyed', () => {
+  // pageQuoteGroups is what the editor offers; the registry is what may be
+  // written; the file is what the site reads. A page missing from any of the
+  // three is a quote that cannot be edited, cannot be saved, or never shows.
+  const document = parseContent(readFileSync(REPO + 'src/content/profile_info/page_quotes.yml', 'utf8'))
+  for (const { id } of pageQuoteGroups) {
+    const source = contentSources[`quotes/${id}`]
+    assert.ok(source, `quotes/${id} is offered but not registered`)
+    assert.ok(hasSequenceKey(document, source.arrayKeys[0]), `page_quotes.${id} is registered but not in the file`)
   }
 })
 

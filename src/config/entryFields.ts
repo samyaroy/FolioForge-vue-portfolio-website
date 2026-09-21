@@ -66,6 +66,8 @@ export const entryFields = {
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],
+  // `source` is where the line is from -- a book, a film -- and is optional.
+  pageQuotes: ['text', 'author', 'source'],
   galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', 'images', 'manifestDescription', 'externalUrl'],
   studyMaterial: ['title', { key: 'materials', list: ['title', 'meta', 'instructor', 'distributor', 'logo', 'link'] }],
   worthExploring: ['group', 'links'],

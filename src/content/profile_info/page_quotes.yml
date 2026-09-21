@@ -1,3 +1,8 @@
+# Quotes for the pane between a page's content and the footer, keyed by the
+# router's route name -- QuoteDiv reads `page_quotes[route.name]` and falls
+# back to `default`. A key that is not a route name never shows, which is why
+# `Affilications` and `ProfessionalAcitivity` are spelt the way the routes are.
+# The list of pages lives in src/config/pageQuotes.ts.
 page_quotes:
   default:
     - text: "To punish the oppressors of humanity is clemency; to forgive them is cruelty."
@@ -18,7 +23,7 @@ page_quotes:
     - text: "You can outsource your thinking, but you cannot outsource your understanding."
       author: "Andrej Karpathy"
 
-  Affiliations:
+  Affilications:
     - text: "When you can't make them see the light, make them feel the heat."
       author: "Ronald Reagan"
 

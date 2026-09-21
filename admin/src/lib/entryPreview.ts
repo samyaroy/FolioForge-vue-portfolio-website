@@ -281,6 +281,13 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Globe, host(raw.link)),
     ]
   }
+  if (collection.startsWith('quotes/')) {
+    // The quote is the row's heading; who said it, and what it is from.
+    return [
+      ...fact(UserRound, raw.author),
+      ...fact(BookOpen, raw.source),
+    ]
+  }
   if (collection === 'home/announcements') {
     // The message is the row's heading, so its icon is all that is left to say.
     return fact(Shapes, raw.icon)
@@ -469,6 +476,8 @@ export function hasSitePreview(collection: string): boolean {
   // Every Conferences, Workshops & Bootcamps collection is drawn the same way,
   // so a section added there is covered without being listed again below.
   if (collection.startsWith('workshops/')) return true
+  // One collection per route name, all drawn the same way.
+  if (collection.startsWith('quotes/')) return true
   return [
     'home/profile', 'home/education', 'home/experience', 'home/research-interests',
     'projects-publications/projects', 'projects-publications/articles',

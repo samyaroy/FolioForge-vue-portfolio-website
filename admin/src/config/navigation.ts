@@ -11,7 +11,7 @@ import {
   ShieldCheck,
   Link2,
 } from 'lucide-react'
-import { blogPages, portfolioAdminPath, portfolioPages } from '@/config/portfolio'
+import { blogPages, portfolioAdminPath, portfolioPages, workspacePages } from '@/config/portfolio'
 import type { PortfolioPage } from '@/config/portfolio'
 import type { NavigationGroup } from '@/types/navigation'
 
@@ -61,6 +61,7 @@ export const navigation: NavigationGroup[] = [
       { label: 'Taxonomy & Links', path: '/portfolio/metadata', icon: Tags },
       { label: 'Credentials (Beta)', path: '/portfolio/credentials', icon: ShieldCheck },
       { label: 'Hyperlink Metadata', path: '/workspace/hyperlinks', icon: Link2 },
+      ...workspacePages.map(sectionNavItem),
       { label: 'Publishing', path: '/workspace/publishing', icon: Rocket },
       { label: 'Media Storage', path: '/workspace/storage', icon: Cloud },
       { label: 'Settings', path: '/workspace/settings', icon: Settings },

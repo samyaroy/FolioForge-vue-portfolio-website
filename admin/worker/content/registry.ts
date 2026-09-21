@@ -68,6 +68,24 @@ export const contentSources = {
   'professional-activity/invited-talks': { path: `${PORTFOLIO}/professional_activity.yml`, arrayKeys: ['invited_talks'] },
   'professional-activity/hosted-events': { path: `${PORTFOLIO}/professional_activity.yml`, arrayKeys: ['hosted_events', 'other_hosted_events'] },
 
+  // The quote pane, one sequence per route name. Listed out rather than
+  // generated: this table is what stands between the admin and the rest of
+  // the repository, so it is read, not computed. See src/config/pageQuotes.ts.
+  'quotes/default': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.default'] },
+  'quotes/Home': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Home'] },
+  'quotes/ProjectsPublications': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.ProjectsPublications'] },
+  'quotes/Teachings': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Teachings'] },
+  'quotes/OngoingProjects': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.OngoingProjects'] },
+  'quotes/Affilications': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Affilications'] },
+  'quotes/InternshipCertification': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.InternshipCertification'] },
+  'quotes/Workshops': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Workshops'] },
+  'quotes/Cocurricular': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Cocurricular'] },
+  'quotes/ProfessionalAcitivity': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.ProfessionalAcitivity'] },
+  'quotes/Gallery': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Gallery'] },
+  'quotes/Resources': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Resources'] },
+  'quotes/Contact': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.Contact'] },
+  'quotes/PrivacyPolicy': { path: `${PORTFOLIO}/page_quotes.yml`, arrayKeys: ['page_quotes.PrivacyPolicy'] },
+
   'gallery/career-unlocks': { path: `${PORTFOLIO}/gallery.yml`, arrayKeys: ['items'] },
   'resources/study-material': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['subjects'] },
   'resources/worth-exploring': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['explore'] },

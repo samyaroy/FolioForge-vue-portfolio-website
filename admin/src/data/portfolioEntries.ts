@@ -8,6 +8,7 @@ import factsYaml from '../../../src/content/profile_info/facts.yml'
 import galleryYaml from '../../../src/content/profile_info/gallery.yml'
 import internshipsYaml from '../../../src/content/profile_info/internships.yml'
 import ongoingProjectsYaml from '../../../src/content/profile_info/ongoing_projects.yml'
+import pageQuotesYaml from '../../../src/content/profile_info/page_quotes.yml'
 import professionalActivityYaml from '../../../src/content/profile_info/professional_activity.yml'
 import profileYaml from '../../../src/content/profile_info/profile.yml'
 import projectsYaml from '../../../src/content/profile_info/projects.yml'
@@ -49,6 +50,7 @@ const documents = {
   gallery: galleryYaml as UnknownRecord,
   internships: internshipsYaml as UnknownRecord,
   ongoingProjects: ongoingProjectsYaml as UnknownRecord,
+  pageQuotes: pageQuotesYaml as UnknownRecord,
   professionalActivity: professionalActivityYaml as UnknownRecord,
   profile: profileYaml as UnknownRecord,
   projects: projectsYaml as UnknownRecord,
@@ -162,6 +164,22 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
     const title = firstText(raw, titlePaths) || String(label)
     return { id: String(source), title, subtitle: firstText(raw, ['location']), raw, presentation: { titlePaths, subtitlePaths: ['location'], fallbackTitle: String(label) } }
   }),
+  // One collection per route name; the quote itself is the row's heading.
+  'quotes/default': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.default'), ['text'], ['author', 'source']),
+  'quotes/Home': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Home'), ['text'], ['author', 'source']),
+  'quotes/ProjectsPublications': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.ProjectsPublications'), ['text'], ['author', 'source']),
+  'quotes/Teachings': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Teachings'), ['text'], ['author', 'source']),
+  'quotes/OngoingProjects': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.OngoingProjects'), ['text'], ['author', 'source']),
+  'quotes/Affilications': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Affilications'), ['text'], ['author', 'source']),
+  'quotes/InternshipCertification': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.InternshipCertification'), ['text'], ['author', 'source']),
+  'quotes/Workshops': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Workshops'), ['text'], ['author', 'source']),
+  'quotes/Cocurricular': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Cocurricular'), ['text'], ['author', 'source']),
+  'quotes/ProfessionalAcitivity': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.ProfessionalAcitivity'), ['text'], ['author', 'source']),
+  'quotes/Gallery': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Gallery'), ['text'], ['author', 'source']),
+  'quotes/Resources': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Resources'), ['text'], ['author', 'source']),
+  'quotes/Contact': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Contact'), ['text'], ['author', 'source']),
+  'quotes/PrivacyPolicy': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.PrivacyPolicy'), ['text'], ['author', 'source']),
+
   'home/research-interests': () => toEntries(arrayAt(documents.researchInterests, 'research_interests'), ['title', 'name', 'key']),
   'home/experience': () => toEntries(arrayAt(documents.experience, 'experience'), ['job_role', 'title'], ['company', 'time_period']),
   'home/education': () => toEntries(arrayAt(documents.education, 'education'), ['degree', 'title'], ['institution', 'time_period']),

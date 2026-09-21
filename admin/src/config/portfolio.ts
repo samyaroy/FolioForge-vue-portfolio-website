@@ -16,6 +16,7 @@ import {
   MapPinned,
   Palette,
   Presentation,
+  Quote,
   Sparkles,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -26,6 +27,7 @@ import { entryFields } from '../../../src/config/entryFields.ts'
 import type { EntryField } from '../../../src/config/entryFields.ts'
 import { articleTypeLabels, articleTypes } from '../../../src/config/articleTypes.ts'
 import { galleryTags, type GalleryTag } from '@/lib/galleryTags'
+import { pageQuoteGroups } from '../../../src/config/pageQuotes.ts'
 
 export type PortfolioSection = {
   /**
@@ -275,7 +277,28 @@ export const blogPages: PortfolioPage[] = [
   },
 ]
 
-export const contentPages = [...portfolioPages, ...blogPages]
+/**
+ * Content that belongs to no single page. These are reachable and editable like
+ * any other collection, but they are left out of `portfolioPages` so the
+ * Portfolio navigation and the page registry keep mirroring the site's own
+ * pages; the sidebar places them under Workspace instead.
+ */
+export const workspacePages: PortfolioPage[] = [
+  {
+    id: 'quotes', title: 'Page Quotes', publicPath: '/', icon: Quote,
+    description: 'The quote pane between a page\u2019s content and the footer. A page with none falls back to the default quote.',
+    sections: [{
+      id: 'quotes', title: 'Quotes', sources: ['page_quotes.yml'],
+      // Each group is a route name, because that is how the pane looks a quote
+      // up; see src/config/pageQuotes.ts.
+      groups: pageQuoteGroups,
+      fields: ['Quote text', 'Author', 'Source'],
+      requiredFields: ['text'], entryFields: entryFields.pageQuotes,
+    }],
+  },
+]
+
+export const contentPages = [...portfolioPages, ...blogPages, ...workspacePages]
 
 export function portfolioAdminPath(page: PortfolioPage, section: PortfolioSection = page.sections[0]) {
   return `${page.basePath ?? '/portfolio/pages'}/${page.id}/${section.id}`
