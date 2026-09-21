@@ -1,4 +1,4 @@
-import { AtSign, Award, BookOpen, Link2, Building, Building2, CalendarDays, Clock3, FileBadge, FileDown, FlaskConical, Github, Globe, GraduationCap, Hash, Heading1, House, ImageIcon, Images, Linkedin, Mail, MapPin, MonitorPlay, PanelBottom, Phone, Puzzle, Quote, Shapes, Share2, Sparkles, Star, Tag, TriangleAlert, Users, UserRound } from 'lucide-react'
+import { AtSign, Award, BookOpen, Link2, Building, Building2, CalendarDays, Clock3, FileBadge, FileDown, FlaskConical, Github, Globe, GraduationCap, Hash, Heading1, House, ImageIcon, Images, Linkedin, Mail, MapPin, MonitorPlay, PanelBottom, Phone, Presentation, Puzzle, Quote, Shapes, Share2, Sparkles, Star, Tag, TriangleAlert, Users, UserRound } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { isAnimatedIcon, researchInterestIcon, researchInterestName, RESEARCH_INTEREST_FALLBACK_ICON } from '../../../src/config/researchInterestIcons'
 import { mentoredProjectLinkCategories, ongoingProjectLinkCategories } from '../../../src/config/projectLinkCategories'
@@ -220,6 +220,67 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Hash, raw.membership_id),
     ]
   }
+  if (collection === 'home/awards' || collection === 'home/achievements') {
+    return [
+      ...fact(Award, raw.prize),
+      ...fact(Tag, raw.category),
+      ...fact(Building, raw.organization),
+      ...fact(CalendarDays, raw.year),
+      ...fact(Quote, raw.description),
+    ]
+  }
+  if (collection === 'projects-publications/publications') {
+    return [
+      ...fact(Users, names(raw.authors)),
+      ...fact(BookOpen, raw.journal),
+      ...fact(CalendarDays, raw.year),
+      ...fact(Globe, host(raw.link)),
+    ]
+  }
+  if (collection === 'projects-publications/posters') {
+    return [
+      ...fact(Presentation, raw.event),
+      ...fact(Users, names(raw.authors)),
+      ...fact(CalendarDays, raw.date),
+      ...fact(ImageIcon, lastSegment(raw.image)),
+    ]
+  }
+  if (collection === 'teaching/courses') {
+    const students = text(raw.students)
+    return [
+      // The semester the course sat in; it belongs to the group, not the row,
+      // so it is carried here rather than edited.
+      ...fact(CalendarDays, raw.semester),
+      ...fact(UserRound, raw.role),
+      ...fact(Building, raw.institution),
+      ...fact(Users, names(raw.collaborators)),
+      ...fact(GraduationCap, students && `${students} students`),
+    ]
+  }
+  if (collection === 'affiliations/affiliations') {
+    return [
+      ...fact(Puzzle, raw.department),
+      ...fact(CalendarDays, raw.period),
+      ...fact(MapPin, raw.location),
+    ]
+  }
+  if (collection === 'affiliations/collaborators') {
+    return [
+      ...fact(Building, raw.affiliation),
+      ...fact(MapPin, raw.location),
+      ...fact(CalendarDays, raw.period),
+      ...fact(Puzzle, names(raw.projects)),
+    ]
+  }
+  if (collection === 'professional-activity/invited-talks') {
+    return [
+      ...fact(Presentation, raw.event),
+      ...fact(Building, names(raw.organizer)),
+      ...fact(MapPin, raw.location),
+      ...fact(CalendarDays, raw.date),
+      ...fact(Globe, host(raw.link)),
+    ]
+  }
   if (collection === 'home/announcements') {
     // The message is the row's heading, so its icon is all that is left to say.
     return fact(Shapes, raw.icon)
@@ -414,7 +475,10 @@ export function hasSitePreview(collection: string): boolean {
     'internships-certifications/internships', 'internships-certifications/certifications',
     'ongoing-projects/projects',
     'affiliations/memberships',
-    'home/announcements', 'facts/facts',
+    'home/announcements', 'facts/facts', 'home/awards', 'home/achievements',
+    'projects-publications/publications', 'projects-publications/posters',
+    'teaching/courses', 'affiliations/affiliations', 'affiliations/collaborators',
+    'professional-activity/invited-talks',
     'teaching/mentoring', 'teaching/projects', 'teaching/others',
     'cocurricular/leadership', 'cocurricular/volunteering',
     'professional-activity/hosted-events',
