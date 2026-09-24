@@ -48,7 +48,6 @@ education:
           course_name: Student Seminar I
           type: SEC/PSE/CLE
           credit: 2
-
   - type: University
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
@@ -66,7 +65,6 @@ education:
         url: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
       - label: Foundation Certificate
         url: https://drive.google.com/file/d/1T8tyIiua8CU0Wf6-R0Nbo5k0Cwc12Zba/preview
-
     category: NEP 2020
     cirriculum:
       foundation:
@@ -79,7 +77,9 @@ education:
           course_name: Mathematics for Data Science I
           type: CC
           credit: 4
-          faculty: [ Dr. Neelesh Upadhye, Prof. Madhavan Mukund ]
+          faculty:
+            - Dr. Neelesh Upadhye
+            - Prof. Madhavan Mukund
         - course_code: BSMA1002
           course_name: Statistics for Data Science I
           type: CC
@@ -115,7 +115,6 @@ education:
           type: CC
           credit: 4
           faculty: Prof. Sudarshan Iyengar
-
       dimpola_in_programming:
         - course_code: BSCS2002
           course_name: Programming, Data Structures and Algorithms using Python
@@ -161,7 +160,6 @@ education:
           course_name: Modern Application Development II - Project
           type: Project
           credit: 2
-
       diploma_in_data_science:
         - course_code: BSMS2001
           course_name: Business Data Management
@@ -184,17 +182,22 @@ education:
           course_name: Machine Learning Foundations
           type: CC
           credit: 4
-          faculty: [ Prof. Harish Guruprasad Ramaswamy, Prof. Arun Rajkumar, Dr. Prashanth L.A. ]
+          faculty:
+            - Prof. Harish Guruprasad Ramaswamy
+            - Prof. Arun Rajkumar
+            - Dr. Prashanth L.A.
         - course_code: BSCS2007
           course_name: Machine Learning Techniques
           type: CC
           credit: 4
-          faculty: [ Prof. Arun Rajkumar ]
+          faculty:
+            - Prof. Arun Rajkumar
         - course_code: BSCS2008
           course_name: Machine Learning Practice
           type: CC
           credit: 4
-          faculty: [ Dr. Ashish Tendulkar ]
+          faculty:
+            - Dr. Ashish Tendulkar
         - course_code: BSDA2001
           course_name: Introduction to Deep Learning and Generative AI
           type: CC
@@ -211,7 +214,6 @@ education:
           course_name: Deep Learning and Generative AI - Project
           type: Project
           credit: 2
-
       degree(BSc & BS):
         - course_code: BSCS3001
           course_name: Software Engineering
@@ -225,7 +227,7 @@ education:
           course_name: Software Testing
           type: CC
           faculty:
-            - name: "Prof. Meenakshi D'Souza"
+            - name: Prof. Meenakshi D'Souza
               link: https://www.iiitb.ac.in/faculty/meenakshi-dsouza
         - course_code: BSCS3003
           course_name: "AI: Search Methods for Problem Solving"
@@ -253,26 +255,28 @@ education:
           faculty:
             - name: Prof. Monalisa Sharma
               link: https://www.iitkgp.ac.in/department/RE/faculty/re-monalisa/
-          logo: [ IITKGP, NPTEL ]
-          # cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
-          # tag: 'Elite'
+          logo:
+            - IITKGP
+            - NPTEL
           credit: 2
         - course_code: NOC23CS113
-          enabled: false
+          enabled: true
           course_name: Introduction to Programming in C
           time_period: Feb 2023 - Mar 2023
           type: Elective
           faculty: Prof. Satyadev Nandakumar
-          logo: [ IITK, NPTEL ]
+          logo:
+            - IITK
+            - NPTEL
           cred_link: https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview
-          tag: 'Elite'
+          tag: Elite
           credit: 2
           issuer:
             institution: Indian Institute of Technology Kanpur
             platform: NPTEL
           duration: 8 weeks
-
-      link: https://study.iitm.ac.in/ds/academics.html
+      link: []
+    campus: ""
 
   - type: University
     degree: Bachelor of Science (BSc)
@@ -482,7 +486,6 @@ education:
           # credit: 1 
 
       link:
-
 
   - type: School
     enabled: false
