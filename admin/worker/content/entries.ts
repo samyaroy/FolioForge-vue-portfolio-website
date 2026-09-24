@@ -1,4 +1,4 @@
-import { parseDocument, type Document } from 'yaml'
+import { isMap, isScalar, isSeq, parseDocument, type Document } from 'yaml'
 import { HttpError } from '../http.ts'
 import type { ContentSource } from './registry.ts'
 
@@ -126,8 +126,54 @@ export function parseContent(text: string): Document {
   return document
 }
 
+const isPlainObject = (value: unknown): value is Record<string, unknown> =>
+  Boolean(value) && typeof value === 'object' && !Array.isArray(value)
+
+/**
+ * Write `value` over `node` by changing only what differs. Setting a whole new
+ * node would rebuild the entry from nothing: the comments between its keys,
+ * its flow lists (`[ IITK, NPTEL ]`), quoting and blank lines would all be
+ * lost though no value changed. Returns the node to keep at this position.
+ */
+function mergeNode(document: Document, node: unknown, value: unknown): unknown {
+  if (isMap(node) && isPlainObject(value)) {
+    for (const pair of [...node.items]) {
+      const key = isScalar(pair.key) ? pair.key.value : pair.key
+      if (typeof key !== 'string' || !Object.hasOwn(value, key)) node.delete(pair.key)
+    }
+    for (const [key, item] of Object.entries(value)) {
+      const pair = node.items.find(candidate => (isScalar(candidate.key) ? candidate.key.value : candidate.key) === key)
+      if (pair) pair.value = mergeNode(document, pair.value, item)
+      else node.add(document.createPair(key, item))
+    }
+    return node
+  }
+  if (isSeq(node) && Array.isArray(value)) {
+    node.items.splice(value.length)
+    value.forEach((item, index) => {
+      node.items[index] = index < node.items.length ? mergeNode(document, node.items[index], item) : document.createNode(item)
+    })
+    return node
+  }
+  if (isScalar(node) && (value === null || typeof value !== 'object')) {
+    if (node.value === value) return node
+    // A null written as `key:` or `~` keeps that spelling only while it stays
+    // null; a quote style only suits a value that is still a string.
+    const keepsStyle = typeof node.value === typeof value && node.value !== null
+    node.value = value
+    if (!keepsStyle) node.type = undefined
+    return node
+  }
+  const fresh = document.createNode(value) as Commented
+  const old = node as Commented | null | undefined
+  if (old?.comment) fresh.comment = old.comment
+  if (old?.commentBefore) fresh.commentBefore = old.commentBefore
+  return fresh
+}
+
 export function replaceEntry(document: Document, location: EntryLocation, entry: unknown): string {
-  document.setIn([...location.path, location.index], entry)
+  const node = document.getIn([...location.path, location.index], true)
+  document.setIn([...location.path, location.index], mergeNode(document, node, entry))
   return document.toString(RENDER)
 }
 

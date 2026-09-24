@@ -60,6 +60,31 @@ test('editing one entry leaves the comments, the nulls and the unknown fields al
   assert.ok(text.includes('degree: BSc (Hons)'), 'the edit landed')
 })
 
+test('saving an entry the dialog sent back whole rewrites only the value that changed', () => {
+  const before = `courses:
+  - code: NOC26CS154
+    enabled: false
+    logo: [ IITKGP, NPTEL ]
+    # cred_link: https://example.com/old
+    # tag: 'Elite'
+    tag: 'Elite'
+    credit: 2
+
+  - code: NOC23CS113
+    faculty: [ Prof. A, Prof. B ]
+`
+  const document = parseContent(before)
+  // The admin sends the whole entry, as plain data, with one value changed.
+  const text = replaceEntry(document, { path: ['courses'], index: 0 }, { code: 'NOC26CS154', enabled: true, logo: ['IITKGP', 'NPTEL'], tag: 'Elite', credit: 2 })
+  assert.equal(text, before.replace('enabled: false', 'enabled: true'))
+})
+
+test('a merged entry drops removed keys, adds new ones and resizes lists', () => {
+  const document = parseContent('a:\n  - name: x\n    old: 1\n    list: [ 1, 2, 3 ]\n')
+  const text = replaceEntry(document, { path: ['a'], index: 0 }, { name: 'x', list: [1, 4], added: 'y' })
+  assert.equal(text, 'a:\n  - name: x\n    list: [ 1, 4 ]\n    added: y\n')
+})
+
 test('a flat index finds the right array when a collection spans two', () => {
   const document = parseContent('a:\n  - one\n  - two\nb:\n  - three\n')
   const source = { path: 'x', arrayKeys: ['a', 'b'] }
@@ -195,7 +220,8 @@ test('a nested collection edits the nested array, not a new top-level one', () =
   assert.deepEqual(location.path, ['projects', 'research_projects'])
   const before = readEntry(document, location)
   const text = replaceEntry(document, location, { ...JSON.parse(JSON.stringify(before)), title: 'Edited title' })
-  assert.ok(text.includes('title: Edited title'))
+  // The value lands in the node already there, so it keeps that node's quoting.
+  assert.equal(readEntry(parseContent(text), location).get('title'), 'Edited title')
   // A top-level `research_projects:` key would mean the edit went to a sequence
   // the site never reads.
   assert.equal(/^research_projects:/m.test(text), false, 'a stray top-level sequence was created')
