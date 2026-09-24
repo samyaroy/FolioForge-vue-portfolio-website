@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { Plus, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
-import { Button, IconButton, TextareaField, TextField } from '@/components/form'
+import { Button, IconButton, SwitchField, TextareaField, TextField } from '@/components/form'
 import type { CourseDraft, CurriculumDraft } from '@/lib/curriculum'
 import { fieldCaption } from '@/lib/fieldNames'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 import { FacultyEditor } from '@/components/editor/FacultyEditor'
+import { CredentialLinksEditor } from '@/components/editor/CredentialLinksEditor'
 
 type CurriculumEditorProps = {
   curriculum: CurriculumDraft
@@ -36,11 +37,12 @@ export function CurriculumEditor({ curriculum, onChange }: CurriculumEditorProps
               <header><h4>Course {index + 1}</h4><IconButton label={`Remove course ${index + 1}`} title="Remove course" onClick={() => updateGroup(group, courses.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton></header>
               <div className="curriculum-course-fields">
                 {Object.entries(course.fields).map(([key, value]) => {
-                  if (key === 'faculty') return null
+                  if (key === 'faculty' || key === 'cred_link') return null
                   if (key === 'logo') return <LogoSelector key={key} multiple={typeof course.original.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, logo: typeof course.original.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) } } : item))} />
                   const structured = value.includes('\n') || value.startsWith('[') || value.startsWith('{')
                   const change = (value: string) => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, [key]: value } } : item))
                   const label = fieldCaption(key)
+                  if (key === 'enabled' || typeof course.original[key] === 'boolean') return <SwitchField key={key} fieldClassName="curriculum-switch" label={label} checked={value === 'true'} onChange={checked => change(String(checked))} />
                   // serializeCurriculum refuses to save a course without a name.
                   const required = key === 'course_name'
                   return structured
@@ -50,6 +52,7 @@ export function CurriculumEditor({ curriculum, onChange }: CurriculumEditorProps
                 {/* Shown on every course so faculty can be added where none is listed;
                     the key is only written once this editor is used. */}
                 <FacultyEditor members={JSON.parse(course.fields.faculty ?? '[]')} onChange={members => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, faculty: JSON.stringify(members) } } : item))} />
+                <CredentialLinksEditor links={JSON.parse(course.fields.cred_link ?? '[]')} onChange={links => updateGroup(group, courses.map((item, position) => position === index ? { ...item, fields: { ...item.fields, cred_link: JSON.stringify(links) } } : item))} />
               </div>
             </section>
           ))}

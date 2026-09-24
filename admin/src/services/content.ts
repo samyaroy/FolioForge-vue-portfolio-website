@@ -1,4 +1,5 @@
 import { mutate } from './uploads'
+import { announcePendingChange } from './pending'
 
 export type CollectionState = { path: string; baseSha: string; entries: unknown[] }
 
@@ -31,6 +32,7 @@ async function change(collection: string, method: string, body: Record<string, u
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   }, FAILURES)
+  announcePendingChange()
   const pending = result && typeof result === 'object' ? (result as { pending?: unknown }).pending : 0
   return typeof pending === 'number' ? pending : 0
 }

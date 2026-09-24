@@ -25,7 +25,7 @@ export type EntryField =
 
 export const entryFields = {
   experience: ['job_role', 'type', 'company', 'department', 'location', 'time_period', 'supervisor', 'projects', 'description', { key: 'cred_link', credentials: 'documents' }],
-  education: ['type', 'degree', 'field', 'sub_field', 'institution', 'campus', 'location', 'time_period', 'current_level', 'gpa', 'category', 'cred_link'],
+  education: ['type', 'degree', 'field', 'sub_field', 'institution', 'campus', 'location', 'time_period', 'current_level', 'gpa', 'category', { key: 'cred_link', credentials: 'documents' }],
   researchInterests: ['key'],
   announcements: ['message', 'icon'],
   // Achievements carry no `prize`; they share the set and leave it blank, as

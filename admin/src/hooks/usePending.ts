@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { fetchPending, type PendingFile } from '@/services/pending'
+import { fetchPending, onPendingChange, type PendingFile } from '@/services/pending'
 
 /**
  * What is waiting to be published. Shared by the header, which shows the count,
@@ -17,11 +17,17 @@ export function usePending() {
   }, [])
 
   useEffect(() => {
-    const controller = new AbortController()
-    fetchPending(controller.signal)
-      .then(next => { setFiles(next); setReady(true) })
-      .catch(() => setReady(true))
-    return () => controller.abort()
+    let controller = new AbortController()
+    const load = () => {
+      controller.abort()
+      controller = new AbortController()
+      fetchPending(controller.signal)
+        .then(next => { setFiles(next); setReady(true) })
+        .catch(error => { if (!(error instanceof DOMException && error.name === 'AbortError')) setReady(true) })
+    }
+    load()
+    const stop = onPendingChange(load)
+    return () => { stop(); controller.abort() }
   }, [])
 
   return { files, ready, refresh }

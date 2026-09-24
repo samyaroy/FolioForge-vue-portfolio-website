@@ -161,7 +161,7 @@ const props = defineProps({
   iconColor: { type: String, default: 'text-[#1980e6]' },
   isFirst: { type: Boolean, default: false },
   isLast: { type: Boolean, default: false },
-  cred_link: { type: String, default: '' },
+  cred_link: { type: [String, Array, Object], default: '' },
   cirriculum: { type: Object, default: () => ({}) }
 })
 

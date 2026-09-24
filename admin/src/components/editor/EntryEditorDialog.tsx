@@ -124,7 +124,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
     }
     if (entryFields.length) return Object.fromEntries(entryFields.map(key => [key, blankValue(key)]))
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
-    if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '', category: '', sub_field: '[]' }
+    if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '[]', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
   }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, isCategoryStyle, objectFields, listFields, entryFields, blankValue])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
@@ -183,7 +183,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
         else delete raw[key]
       }
       for (const key of entryFields) if (!(key in raw)) raw[key] = ''
-      if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum)
+      if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum, entry?.raw.cirriculum)
       const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(fields)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
       onSave({
         ...entry,
