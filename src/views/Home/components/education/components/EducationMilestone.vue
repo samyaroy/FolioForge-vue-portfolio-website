@@ -52,7 +52,9 @@
               mdi-certificate-outline
             </v-icon>
             <p class="text-slate-700 text-[15px] font-medium leading-normal">
-              <template v-if="subFieldEntry.prefix">{{ subFieldEntry.prefix }} </template>
+              <!-- The space lives inside the interpolation: Vue's whitespace condensing
+                   drops a trailing literal space at the end of a <template>. -->
+              <template v-if="subFieldEntry.prefix">{{ `${subFieldEntry.prefix} ` }}</template>
               <template v-for="(name, index) in subFieldEntry.names" :key="name"><span class="font-semibold">{{ name }}</span>{{ nameSeparator(index, subFieldEntry.names.length) }}</template>
             </p>
             <span v-if="subFieldEntry.credLink" class="inline-block align-middle">
