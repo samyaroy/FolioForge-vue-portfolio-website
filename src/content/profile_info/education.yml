@@ -6,7 +6,10 @@ education:
     campus: Taraknath Palit Siksha Prangan (Ballygunge Science College)
     # sub_field:
     #   - label: Specialization
-    #     name: Bayesian Statistics
+    #     name: Bayesian Statistics      # or a list, shown as "A and B":
+    #     # name:
+    #     #   - Bayesian Statistics
+    #     #   - Survival Analysis
     #     cred_link: ""
     location: Kolkata, WB
     time_period: 2026 - Present

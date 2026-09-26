@@ -58,6 +58,25 @@ function names(value: unknown, key = 'name'): string {
   return items.map(item => item && typeof item === 'object' ? text(read(item)) : text(item)).filter(Boolean).join(', ')
 }
 
+/**
+ * An education entry's sub-fields as the site words them: "Minor in A and B".
+ * Each one's name may be a list; a bare string or list is a Minor.
+ */
+function subFieldsLine(value: unknown): string {
+  const joined = (list: unknown) => {
+    const all = (Array.isArray(list) ? list : [list]).map(text).filter(Boolean)
+    return all.length > 1 ? `${all.slice(0, -1).join(', ')} and ${all[all.length - 1]}` : all.join('')
+  }
+  const items = Array.isArray(value) && value.some(item => item && typeof item === 'object') ? value : [value]
+  return items.map(item => {
+    const entry = item && typeof item === 'object' && !Array.isArray(item) ? block(item) : { name: item } as Record<string, unknown>
+    const names = joined(entry.name)
+    if (!names) return ''
+    const label = text(entry.label) || 'Minor'
+    return `${label} in ${names}`
+  }).filter(Boolean).join(' · ')
+}
+
 /** "3 projects" — what a row holds, when naming each one would flood it. */
 function counted(value: unknown, noun: string): string {
   const total = Array.isArray(value) ? value.length : 0
@@ -170,7 +189,7 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Building, raw.institution),
       ...fact(MapPin, raw.location),
       ...fact(Star, raw.gpa),
-      ...fact(GraduationCap, raw.sub_field),
+      ...fact(GraduationCap, subFieldsLine(raw.sub_field)),
     ]
   }
   if (collection === 'home/research-interests') {

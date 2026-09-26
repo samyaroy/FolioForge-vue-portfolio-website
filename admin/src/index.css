@@ -459,7 +459,11 @@ tbody tr:hover { background: #f9fbfd; }
 .education-subfield { margin-top: 12px; border-top: 1px solid #edf2f6; padding-top: 10px; }
 .education-subfield > header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .education-subfield h4 { margin: 0; color: #294258; font-size: 11px; }
-.education-subfield-inputs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.education-subfield-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.education-subfield-names { display: grid; justify-items: start; gap: 7px; margin-top: 10px; }
+.education-subfield-names-caption { color: #718396; font-size: 9px; font-weight: 700; text-transform: uppercase; }
+.education-subfield-names-caption small { font-weight: 400; text-transform: none; }
+.education-subfield-name { display: grid; grid-template-columns: minmax(0, 1fr) 28px; align-items: center; gap: 8px; justify-self: stretch; }
 .logo-selector { grid-column: 1 / -1; min-width: 0; }
 .gallery-tags-editor { grid-column: 1 / -1; min-width: 0; }
 .gallery-tag-options { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 9px; }

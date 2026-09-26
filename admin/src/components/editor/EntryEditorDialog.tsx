@@ -76,6 +76,12 @@ function chosenTags(value: string | undefined): string[] {
   }
 }
 
+/** A sub-field's name is one string or a list of them, none left blank. */
+function hasSubFieldNames(value: unknown): boolean {
+  const names = Array.isArray(value) ? value : [value]
+  return names.length > 0 && names.every(name => typeof name === 'string' && Boolean(name.trim()))
+}
+
 function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
@@ -170,7 +176,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
         if (listFields[key]) return [key, serializeListFields(JSON.parse(value), original, listFields[key], fieldCaption(key).toLowerCase())]
         const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('[')) || (tagOptions.length > 0 && key === 'tags')
         const parsed: unknown = structured ? JSON.parse(value) : value
-        if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || typeof item.name !== 'string' || !item.name.trim())) throw new Error('Enter a label and name for each sub-field before saving.')
+        if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || !hasSubFieldNames(item.name))) throw new Error('Enter a label and every name for each sub-field before saving.')
         if (isExperience && key === 'description' && Array.isArray(parsed) && parsed.some(line => typeof line !== 'string' || !line.trim())) throw new Error('Enter text for each description line before saving.')
         if (isExperience && key === 'projects' && Array.isArray(parsed) && parsed.some(project => !project || typeof project !== 'object' || typeof project.title !== 'string' || !project.title.trim())) throw new Error('Enter a title for each project before saving.')
         return [key, fromDriveEditorValue(parsed, original, key)]

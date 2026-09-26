@@ -45,14 +45,15 @@
         <div v-if="subFields.length" class="mt-0.5 space-y-0.5">
           <div
             v-for="subFieldEntry in subFields"
-            :key="`${subFieldEntry.label}:${subFieldEntry.name}`"
+            :key="`${subFieldEntry.label}:${subFieldEntry.names.join('|')}`"
             class="flex items-center gap-2"
           >
             <v-icon class="text-[#4e7397]" size="15">
               mdi-certificate-outline
             </v-icon>
             <p class="text-slate-700 text-[15px] font-medium leading-normal">
-              {{ subFieldEntry.text }}
+              <template v-if="subFieldEntry.prefix">{{ subFieldEntry.prefix }} </template>
+              <template v-for="(name, index) in subFieldEntry.names" :key="name"><span class="font-semibold">{{ name }}</span>{{ nameSeparator(index, subFieldEntry.names.length) }}</template>
             </p>
             <span v-if="subFieldEntry.credLink" class="inline-block align-middle">
               <DocumentViewer :src="subFieldEntry.credLink" :size="15" />
@@ -167,38 +168,47 @@ const props = defineProps({
 
 const showCurriculumModal = ref(false)
 
-function formatSubFieldText(label, name) {
+// "Minor in", or nothing when the entry has no label.
+function subFieldPrefix(label) {
   const normalizedLabel = String(label || '').trim()
-  if (!normalizedLabel) return name
+  if (!normalizedLabel) return ''
+  if (normalizedLabel.toLowerCase() === 'minor') return 'Minor in'
+  return `${normalizedLabel} in`
+}
 
-  if (normalizedLabel.toLowerCase() === 'minor') {
-    return `Minor in ${name}`
-  }
+// A name may be one string or a list of them; a list reads "A, B and C".
+function subFieldNames(value) {
+  const list = Array.isArray(value) ? value : [value]
+  return list.map(name => String(name ?? '').trim()).filter(Boolean)
+}
 
-  return `${normalizedLabel} in ${name}`
+function nameSeparator(index, count) {
+  if (index === count - 1) return ''
+  return index === count - 2 ? ' and ' : ', '
 }
 
 function normalizeSubField(value) {
   if (!value) return null
 
-  if (typeof value === 'string') {
-    const label = 'Minor'
+  if (typeof value === 'string' || Array.isArray(value)) {
+    const names = subFieldNames(value)
+    if (!names.length) return null
     return {
-      name: value,
-      label,
-      text: formatSubFieldText(label, value),
+      names,
+      label: 'Minor',
+      prefix: subFieldPrefix('Minor'),
       credLink: props.subFieldCredLink || '',
     }
   }
 
-  const name = value.name || value.title || value.value || ''
-  if (!name) return null
+  const names = subFieldNames(value.name || value.title || value.value)
+  if (!names.length) return null
   const label = value.label || 'Minor'
 
   return {
-    name,
+    names,
     label,
-    text: formatSubFieldText(label, name),
+    prefix: subFieldPrefix(label),
     credLink:
       value.cred_link ||
       value.credential_link ||
@@ -209,7 +219,10 @@ function normalizeSubField(value) {
 }
 
 const subFields = computed(() => {
-  const entries = Array.isArray(props.subField) ? props.subField : [props.subField]
+  // A bare list of strings is one sub-field with several names, not several sub-fields.
+  const entries = Array.isArray(props.subField) && props.subField.some(item => item && typeof item === 'object')
+    ? props.subField
+    : [props.subField]
   return entries.map(normalizeSubField).filter(Boolean)
 })
 
