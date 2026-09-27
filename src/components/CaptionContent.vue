@@ -13,6 +13,9 @@
     <em v-else-if="segment.kind === 'italic'" class="italic">
       {{ segment.text }}
     </em>
+    <u v-else-if="segment.kind === 'underline'">
+      {{ segment.text }}
+    </u>
     <span v-else>{{ segment.text }}</span>
   </template>
 </template>
@@ -28,7 +31,9 @@ const props = defineProps({
   },
 })
 
-const TOKEN_PATTERN = /\[\[([^[\]]+?)\]\]|\*\*([^*]+?)\*\*|\*([^*]+?)\*/g
+// Emphasis spellings match src/utils/inlineMarkup.ts, which every other
+// field goes through; a form added there belongs here too.
+const TOKEN_PATTERN = /\[\[([^[\]]+?)\]\]|\*\*([^*]+?)\*\*|__([^_]+?)__|\*([^*]+?)\*/g
 
 const segments = computed(() => parseCaption(props.text))
 
@@ -50,7 +55,9 @@ function parseCaption(text) {
     } else if (match[2]) {
       parsedSegments.push(createTextSegment('bold', match[2]))
     } else if (match[3]) {
-      parsedSegments.push(createTextSegment('italic', match[3]))
+      parsedSegments.push(createTextSegment('underline', match[3]))
+    } else if (match[4]) {
+      parsedSegments.push(createTextSegment('italic', match[4]))
     }
 
     lastIndex = matchIndex + match[0].length

@@ -27,8 +27,7 @@ items:
     year: 2015
     url: https://karpathy.github.io/2015/05/21/rnn-effectiveness/
     note: >
-      Still the clearest thing written about why sequence models work at all.
-      The character-level samples teach more than a chapter of theory would.
+      Still the clearest thing written about why sequence models work at all. The character-level samples teach more than a chapter of theory would.
 
   - id: the-bitter-lesson
     title: The Bitter Lesson
@@ -37,8 +36,7 @@ items:
     year: 2019
     url: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
     note: >
-      Two pages that reframe most arguments about model design. I disagree
-      with parts of it, which is exactly why I keep re-reading it.
+      Two pages that reframe most arguments about model design. I disagree with parts of it, which is exactly why I keep re-reading it.
 
   - id: understanding-lstm-networks
     title: Understanding LSTM Networks
@@ -47,8 +45,7 @@ items:
     year: 2015
     url: https://colah.github.io/posts/2015-08-Understanding-LSTMs/
     note: >
-      The diagrams are the explanation. This is what I send every student who
-      asks where to start with recurrent nets.
+      The diagrams are the explanation. This is what I send every student who asks where to start with recurrent nets.
 
   - id: more-to-mathematics-than-rigour
     title: There's More to Mathematics than Rigour and Proofs
@@ -57,8 +54,7 @@ items:
     year: 2009
     url: https://terrytao.wordpress.com/career-advice/theres-more-to-mathematics-than-rigour-and-proofs/
     note: >
-      Names the three stages of mathematical maturity. It gave words to
-      something I had felt for years and could not articulate.
+      Names the three stages of mathematical maturity. It gave words to something I had felt for years and could not articulate.
 
   - id: attention-attention
     title: Attention? Attention!
@@ -67,8 +63,7 @@ items:
     year: 2018
     url: https://lilianweng.github.io/posts/2018-06-24-attention/
     note: >
-      The bridge between the recurrent world and everything that came after
-      it. Dense, but it earns every equation on the page.
+      The bridge between the recurrent world and everything that came after it. Dense, but it earns every equation on the page.
 
   - id: how-to-do-great-work
     title: How to Do Great Work
@@ -77,5 +72,4 @@ items:
     year: 2023
     url: https://paulgraham.com/greatwork.html
     note: >
-      Less about work than about choosing problems. Worth the hour if you are
-      deciding what to spend the next few years on.
+      Less about work than about choosing problems. Worth the hour if you are deciding what to spend the next few years on.

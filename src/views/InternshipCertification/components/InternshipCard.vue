@@ -70,7 +70,13 @@
       <ul class="col-start-2 sm:col-start-3 grid">
         <li v-for="(project, index) in projectList" :key="index" class="leading-tight">
           <span v-if="projectList.length > 1">&bull; </span>
-          <a v-if="project.cred_link" :href="project.cred_link" target="_blank" rel="noopener">{{ project.title
+          <!-- A project the Projects page lists links to its card, which already
+               carries the credential alongside the description and the stack, so
+               it is the richer destination. Anything else falls back to its own
+               link, then to plain text rather than promising an empty page. -->
+          <RouterLink v-if="isKnownProject(project.title)" :to="projectRoute(project.title)"
+            class="text-[#1980e6] hover:underline">{{ project.title }}</RouterLink>
+          <a v-else-if="project.cred_link" :href="project.cred_link" target="_blank" rel="noopener">{{ project.title
             }}</a>
           <span v-else>{{ project.title }}</span>
         </li>
@@ -96,6 +102,8 @@
 </template>
 
 <script setup>
+import { RouterLink } from 'vue-router'
+import { isKnownProject, projectRoute } from '@/config/projectAnchors'
 import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'

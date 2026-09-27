@@ -7,7 +7,7 @@
         </div>
 
         <div v-if="projects && projects.length" class="space-y-6">
-            <div v-for="(project, index) in visibleProjects" :key="index" :id="`research-${index}`"
+            <div v-for="(project, index) in visibleProjects" :key="index" :id="projectSlug(project.title)"
                 class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4 pr-4 rounded-md bg-slate-50">
 
                 <!-- TITLE -->
@@ -55,13 +55,13 @@
                             </a>
                         </p>
 
-                        <p v-if="project.collaborators && project.collaborators.length"
+                        <p v-if="collaboratorNames(project).length"
                             class="text-sm text-gray-600 mb-3 flex items-center gap-1">
                             <v-icon size="16">mdi-account-supervisor</v-icon>
                             Collaborators:
-                            <template v-for="(colab, i) in project.collaborators.split(',')" :key="colab">
-                                <SmartLink :type="'Person'" :text="colab.trim()" />
-                                <span v-if="i < project.collaborators.split(',').length - 1">
+                            <template v-for="(colab, i) in collaboratorNames(project)" :key="colab">
+                                <SmartLink :type="'Person'" :text="colab" />
+                                <span v-if="i < collaboratorNames(project).length - 1">
                                     ,
                                 </span>
                             </template>
@@ -157,8 +157,10 @@
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router'
+import { PROJECT_ANCHOR_PARAM, projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import { logoUrl } from '@/config/mediaAssets'
 
@@ -170,6 +172,19 @@ const props = defineProps({
 })
 
 const showAllProjects = ref(false)
+
+// A link can name a project sitting behind "show more". Open the list so the
+// card it points at is actually on the page.
+const route = useRoute()
+watch(
+    () => route.query[PROJECT_ANCHOR_PARAM],
+    (slug) => {
+        if (slug && props.projects.some(project => projectSlug(project.title) === slug)) {
+            showAllProjects.value = true
+        }
+    },
+    { immediate: true }
+)
 const showToggleButton = computed(() => props.projects.length > 2)
 const visibleProjects = computed(() => {
     return showAllProjects.value || !showToggleButton.value
@@ -179,6 +194,24 @@ const visibleProjects = computed(() => {
 
 function getLogoPath(logo) {
     return logoUrl(logo)
+}
+
+// Collaborators are written either as one comma-separated line or as a list of
+// people, each with an optional link of their own. Only the names are wanted
+// here: SmartLink already resolves a person to their page.
+function collaboratorNames(project) {
+    const collaborators = project?.collaborators
+
+    if (Array.isArray(collaborators)) {
+        return collaborators
+            .map(collaborator => typeof collaborator === 'string' ? collaborator : collaborator?.name)
+            .map(name => typeof name === 'string' ? name.trim() : '')
+            .filter(Boolean)
+    }
+
+    return typeof collaborators === 'string'
+        ? collaborators.split(',').map(name => name.trim()).filter(Boolean)
+        : []
 }
 </script>
 

@@ -72,7 +72,7 @@ subjects:
         meta: "Book"
         instructor: "A. M. Goon, M. K. Gupta and B. Dasgupta"
         link: http://ia601509.us.archive.org/2/items/in.ernet.dli.2015.463316/2015.463316.Fundamental-Of.pdf
-      
+
       - title: Probability and Statistics
         meta: "Course"
         instructor: "Prof. Somesh Kumar"
@@ -86,21 +86,21 @@ subjects:
         instructor: "Prof. S R S Iyengar"
         distributor: "IIT Madras, NPTEL"
         logo: NPTEL
-        link: https://nptel.ac.in/courses/106106182 
-  
+        link: https://nptel.ac.in/courses/106106182
+
   - title: "Inferential Statistics"
     materials:
       - title: "Statistical Inference"
         meta: "Book"
         instructor: "Geoge Casella and Roger L. Berger"
         distributor: "CENEGAGE Learning"
-      
+
       - title: "Bayesian Statistics: From Concept to Data Analysis"
         meta: "Course"
         instructor: "Prof. Herbert Lee"
         distributor: "University of California, Santa Cruz ; Coursera"
         link: https://www.coursera.org/learn/bayesian-statistics
-      
+
       - title: "Multiple Hypotheses Testing [Ep. 32]"
         meta: "Lecture"
         instructor: "Prof. Gourangadeb Chattopadhyay"
@@ -154,7 +154,7 @@ external:
         ref: VLED
         incharge: "Prof. Sudarshan Iyengar"
         specility: "Education Design"
-  
+
   - group: "TIHs (Technology Innovation Hubs)"
     links:
       - label: "IHUB Data, IIIT Hyderabad"
@@ -207,7 +207,7 @@ explore:
       - label: "Distill"
         url: https://distill.pub/
         description: "Clear, interactive explanations of machine learning research"
-  
+
   - group: "Exercises to Build Intuition"
     links:
       - label: "OceanVesre"

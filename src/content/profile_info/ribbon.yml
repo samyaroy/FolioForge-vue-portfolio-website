@@ -11,5 +11,7 @@
 ribbon:
   - message: "Join [[Chi-Square: Statistics Interest Group|Chi-Square: Statistics Club | Institute]] for Statistics events and discussions (for IITM BS Degree students)"
     icon: mdi-information
-  # - message: "Second announcement — uncomment or add entries to start the rotation."
-  #   icon: mdi-bullhorn-outline
+  - message: "Join the [[RoSE Network|RoSE Network]] to explore statistics in an inclusive community of multidisciplinary researchers and practitioners (primarily based in the UK)"
+    icon: mdi-bullhorn-outline
+  - message: "If you’re looking for training internships, visit these: [[IDEAS-TIH Internships|https://www.ideas-tih.org/tihinternship]] or [[IIT Ropar VLED Internship|https://samagama.in/]] (for UG/PG students from STEM fields)"
+    icon: mdi-bullhorn-outline

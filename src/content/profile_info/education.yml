@@ -4,15 +4,18 @@ education:
     field: Statistics
     institution: University of Calcutta
     campus: Taraknath Palit Siksha Prangan (Ballygunge Science College)
+    # sub_field:
+    #   - label: Specialization
+    #     name: Bayesian Statistics      # or a list, shown as "A and B":
+    #     # name:
+    #     #   - Bayesian Statistics
+    #     #   - Survival Analysis
+    #     cred_link: ""
     location: Kolkata, WB
     time_period: 2026 - Present
-    # Where the programme currently stands. Free text so it can hold a semester
-    # ("Semester I") or a programme stage ("Degree Level"); omit it once the
-    # programme is finished and only `time_period` needs to carry the dates.
-    current_level: Semester I
     gpa:
     cred_link:
-    category: CCF
+    category: Curriculum and Credit Framework (CCF) under NEP 2020
     cirriculum:
       semester_1:
         - course_code: STS411
@@ -49,7 +52,6 @@ education:
           type: SEC/PSE/CLE
           credit: 2
 
-
   - type: University
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
@@ -62,7 +64,14 @@ education:
     time_period: 2022 - Present
     current_level: Degree Level
     gpa: Current CGPA - 5.97/10
-    cred_link: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
+    cred_link:
+      - label: Diploma certificate (Prog)
+        url: https://drive.google.com/file/d/1xLQpZV3fQmln5qZBsioEV4d8Lb8HncdQ/preview
+      - label: Diploma certificate (DS)
+        url: https://drive.google.com/file/d/1-8UhJE93fBx7gBf1h2AT1-KI16DfLavW/preview
+      - label: Foundation Certificate
+        url: https://drive.google.com/file/d/1T8tyIiua8CU0Wf6-R0Nbo5k0Cwc12Zba/preview
+
     category: NEP 2020
     cirriculum:
       foundation:
@@ -75,7 +84,7 @@ education:
           course_name: Mathematics for Data Science I
           type: CC
           credit: 4
-          faculty: [Dr. Neelesh Upadhye, Prof. Madhavan Mukund]
+          faculty: [ Dr. Neelesh Upadhye, Prof. Madhavan Mukund ]
         - course_code: BSMA1002
           course_name: Statistics for Data Science I
           type: CC
@@ -112,7 +121,6 @@ education:
           credit: 4
           faculty: Prof. Sudarshan Iyengar
 
-    
       dimpola_in_programming:
         - course_code: BSCS2002
           course_name: Programming, Data Structures and Algorithms using Python
@@ -164,7 +172,12 @@ education:
           course_name: Business Data Management
           type: CC
           credit: 4
-          faculty: [Prof. Ashwin J. Baliga, Prof. Siddharth Arora, Prof. Aaditya Chandel]
+          faculty:
+            - name: Prof. Ashwin J. Baliga
+            - name: Prof. Siddharth Arora
+            - name: Prof. Aaditya Chandel
+            - name: Prof. Chavi (Chi Yun) CHEN
+              link: https://www.ieseg.fr/en/faculty-and-research/professor/?id=1638
         - course_code: BSSE2002
           course_name: Tools in Data Science
           type: CC
@@ -176,25 +189,25 @@ education:
           course_name: Machine Learning Foundations
           type: CC
           credit: 4
-          faculty: [Prof. Harish Guruprasad Ramaswamy, Prof. Arun Rajkumar, Dr. Prashanth L.A.]
+          faculty: [ Prof. Harish Guruprasad Ramaswamy, Prof. Arun Rajkumar, Dr. Prashanth L.A. ]
         - course_code: BSCS2007
           course_name: Machine Learning Techniques
           type: CC
           credit: 4
-          faculty: [Prof. Arun Rajkumar]
+          faculty: [ Prof. Arun Rajkumar ]
         - course_code: BSCS2008
           course_name: Machine Learning Practice
           type: CC
           credit: 4
-          faculty: [Dr. Ashish Tendulkar]
+          faculty: [ Dr. Ashish Tendulkar ]
         - course_code: BSDA2001
           course_name: Introduction to Deep Learning and Generative AI
           type: CC
           credit: 4
           faculty:
-          - name: Prof. Balaji Srinivasan
-          - name: Prof. Ganapathy Krishnamurthi
-            link: https://wsai.iitm.ac.in/faculty/ganapathy-krishnamurthi/
+            - name: Prof. Balaji Srinivasan
+            - name: Prof. Ganapathy Krishnamurthi
+              link: https://wsai.iitm.ac.in/faculty/ganapathy-krishnamurthi/
         - course_code: BSCS2008P
           course_name: Machine Learning Practice - Project
           type: Project
@@ -203,47 +216,69 @@ education:
           course_name: Deep Learning and Generative AI - Project
           type: Project
           credit: 2
-          
+
       degree(BSc & BS):
         - course_code: BSCS3001
           course_name: Software Engineering
           type: CC
           faculty:
-          - name: Prof. Sridhar Iyer
-            link: https://www.cse.iitb.ac.in/~sri/
-          - name: Dr. Prajish Prasad
-            link: https://www.flame.edu.in/faculty/prajish-prasad
+            - name: Prof. Sridhar Iyer
+              link: https://www.cse.iitb.ac.in/~sri/
+            - name: Dr. Prajish Prasad
+              link: https://www.flame.edu.in/faculty/prajish-prasad
         - course_code: BSCS3002
           course_name: Software Testing
           type: CC
           faculty:
-          - name: "Prof. Meenakshi D'Souza"
-            link: https://www.iiitb.ac.in/faculty/meenakshi-dsouza
+            - name: "Prof. Meenakshi D'Souza"
+              link: https://www.iiitb.ac.in/faculty/meenakshi-dsouza
         - course_code: BSCS3003
           course_name: "AI: Search Methods for Problem Solving"
           type: CC
           faculty:
-          - name: Prof. Deepak Khemani
-            link: https://plaksha.edu.in/faculty-details/dr-deepak-khemani
+            - name: Prof. Deepak Khemani
+              link: https://plaksha.edu.in/faculty-details/dr-deepak-khemani
         - course_code: BSCS3004
           course_name: Deep Learning
           type: CC
           faculty:
-          - name: Prof. Mitesh M. Khapra
+            - name: Prof. Mitesh M. Khapra
         - course_code: BSMA3014
           course_name: Statistical Computing
           type: EC
           faculty:
-          - name: Prof. Dootika Vats
-            link: https://dvats.github.io/
+            - name: Prof. Dootika Vats
+              link: https://dvats.github.io/
       transfered_credits:
-        # - course_code: "Google"
-        #   course_name: Data Analysis with R Programming
-        #   type: Coursera
-
+        - course_code: NOC26CS154
+          enabled: false
+          course_name: Statistical Learning for Reliability Analysis
+          time_period: Jul 2026 - Oct 2026
+          type: Elective
+          faculty:
+            - name: Prof. Monalisa Sharma
+              link: https://www.iitkgp.ac.in/department/RE/faculty/re-monalisa/
+          logo: [ IITKGP, NPTEL ]
+          # cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
+          # tag: 'Elite'
+          credit: 2
+        - course_code: NOC23CS113
+          enabled: true
+          course_name: Introduction to Programming in C
+          time_period: Feb 2023 - Mar 2023
+          type: Elective
+          faculty: Prof. Satyadev Nandakumar
+          logo: [ IITK, NPTEL ]
+          cred_link: https://drive.google.com/file/d/1xpmBxg9wdw5Lr4cG9V66JP3GLLHj6hCX/preview
+          tag: 'Elite'
+          credit: 2
+          issuer:
+            institution: Indian Institute of Technology Kanpur
+            platform: NPTEL
+          duration: 8 weeks
 
       link: https://study.iitm.ac.in/ds/academics.html
-
+    campus: ""
 
   - type: University
     degree: Bachelor of Science (BSc)
@@ -256,16 +291,16 @@ education:
     category: Choice Based Credit System (CBCS)
     cirriculum:
       semester_1:
-        - course_code: [1090010101, 1090010202]
+        - course_code: [ 1090010101, 1090010202 ]
           course_name: Descriptive Statistics and Probability I (Theory + Lab)
           type: CC/PCC
           credit: 6
-          faculty: [Prof. (Dr.) Pradip Dutta Gupta, Prof. Argha Bhattacharya]
+          faculty: [ Prof. (Dr.) Pradip Dutta Gupta, Prof. Argha Bhattacharya ]
         - course_code: 1090010103
           course_name: Mathematics I
           type: CC/PCC
           credit: 6
-        - course_code: [2090010101, 2090010201]
+        - course_code: [ 2090010101, 2090010201 ]
           course_name: Statistical Computing with C++ (Theory + Lab)
           type: DSE/PEC
           credit: 6
@@ -275,19 +310,19 @@ education:
           credit: 2
 
       semester_2:
-        - course_code: [1090011103, 1090011203]
+        - course_code: [ 1090011103, 1090011203 ]
           course_name: Probability II (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Mr. Biswajit Basak
-        - course_code: [1090011104, 1090011204]
-          course_name: Sampling Distributions (Theory + Lab)            
+        - course_code: [ 1090011104, 1090011204 ]
+          course_name: Sampling Distributions (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Mr. Ardhendu Banerjee
-        - course_code: 
+        - course_code:
           course_name: Mathematics II
           type: DSE/PEC
           credit: 6
@@ -306,15 +341,15 @@ education:
           course_name: Mentored Seminar I
           type: SEC/PSE/CLE
           credit: 1
-        
+
       semester_3:
-        - course_code: [1090012106, 1090012226]
+        - course_code: [ 1090012106, 1090012226 ]
           course_name: Statistical Inference I (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Mr. Biswajit Basak
-        - course_code: [1090012105, 1090012205]
+        - course_code: [ 1090012105, 1090012205 ]
           course_name: Population Statistics (Theory + Lab)
           type: CC/PCC
           credit: 6
@@ -347,13 +382,13 @@ education:
               link: https://www.researchgate.net/profile/Subhadeep-Naskar
 
       semester_4:
-        - course_code: [1090013107, 1090013207]
+        - course_code: [ 1090013107, 1090013207 ]
           course_name: Statistical Inference II (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Mr. Biswajit Basak
-        - course_code: [1090013108, 1090013208]
+        - course_code: [ 1090013108, 1090013208 ]
           course_name: Sample Survey & Indian Official Statistics (Theory + Lab)
           type: CC/PCC
           credit: 6
@@ -384,19 +419,19 @@ education:
           credit: 4
 
       semester_5:
-        - course_code: [1090014101, 1090014202]
+        - course_code: [ 1090014101, 1090014202 ]
           course_name: Statistical Quality Control (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Prof. Aniruddha Choudhuri
-        - course_code: [1090014103, 1090014204]
+        - course_code: [ 1090014103, 1090014204 ]
           course_name: Linear Model and Regression (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Dr. Anindita Ghoshal
-        - course_code: [1090014105, 1090014206]
+        - course_code: [ 1090014105, 1090014206 ]
           course_name: Economic Statistics (Theory + Lab)
           type: CC/PCC
           credit: 6
@@ -417,17 +452,17 @@ education:
           credit: 4
 
       semester_6:
-        - course_code: [1090015101, 1090015202]
+        - course_code: [ 1090015101, 1090015202 ]
           course_name: Design of Experiment (Theory + Lab)
           type: CC/PCC
           credit: 6
           faculty:
             - name: Dr. Anindita Ghoshal
-        - course_code: [1090015103, 1090015204]
+        - course_code: [ 1090015103, 1090015204 ]
           course_name: Numerical Computing (Theory + Lab)
           type: CC/PCC
           credit: 6
-        - course_code: [1090015105, 1090015206]
+        - course_code: [ 1090015105, 1090015206 ]
           course_name: Statistical Computing with R Language (Theory + Lab)
           type: CC/PCC
           credit: 6
@@ -439,41 +474,38 @@ education:
           course_name: Foreign Language IV - Spanish
           type: USC/MUS
           credit: 2
-      
+
       transfered_credits:
         - course_name: Data Analysis with R Programming
-          logo: [GOOGLE, COURSERA]
+          time_period: Jan 2025 - Mar 2025
+          faculty:
+          logo: [ GOOGLE, COURSERA ]
           cred_link: https://drive.google.com/file/d/1iU4NVZSua6iB0ORmoR3-H9TWAWj3_8X7/preview
+          issuer:
+            institution: Google
+            platform: Coursera
           # tag: 'Elite'
           # credit: 1 
 
       link:
 
-  # - type: Diploma
-  #   degree: Diploma
-  #   field: Web Designing (DWD)
-  #   institution: Chandigarh Institute of Technology and Consultancy
-  #   location: Mohali, PB
-  #   time_period: 2020
-  #   marks: 84.5%
-  #   cred_link: https://drive.google.com/file/d/1vJ0LuDDAwMknYtJ46fD-DIrXtRpNWPbh/preview
+  - type: School
+    enabled: false
+    degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
+    field:
+    institution: Nava Nalanda High School
+    location: Kolkata, WB
+    time_period: 2020 - 2022
+    marks: 83.8%
+    cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
 
-  # - type: School
-  #   degree: XII (Science) - West Bengal Council of Higher Secondary Education (WBCHSE)
-  #   field:
-  #   institution: Nava Nalanda High School
-  #   location: Kolkata, WB
-  #   time_period: 2020 - 2022
-  #   marks: 83.8%
-  #   cred_link: https://drive.google.com/file/d/1mlRqQDTgjUjQvJ6FhORB56DUj_JhbxPy/preview
-
-  # - type: School
-  #   degree: X - West Bengal Board of Secondary Education (WBBSE)
-  #   field:
-  #   institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
-  #   location: Rishra, WB
-  #   time_period: 2010 - 2020
-  #   marks: 85.71%
-  #   cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
-
+  - type: School
+    enabled: false
+    degree: X - West Bengal Board of Secondary Education (WBBSE)
+    field:
+    institution: Mahesh Sri Ramkrishna Ashram Vidyalaya (HS)
+    location: Rishra, WB
+    time_period: 2010 - 2020
+    marks: 85.71%
+    cred_link: https://drive.google.com/file/d/1IdRD2pzHYqWQROrnC-hYdRjzaE4acnPg/preview
   # Add more fields as needed

@@ -11,7 +11,7 @@
         </button>
 
         <div v-if="projects && projects.length" class="space-y-6 text-sm">
-            <div v-for="(project, index) in projects" :key="project.title || index" :id="`minor-${index}`"
+            <div v-for="(project, index) in projects" :key="project.title || index" :id="projectSlug(project.title)"
                 class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 pt-4 pb-2 pr-4 rounded-md bg-slate-50 transition-colors"
                 :class="isOpen ? '' : 'cursor-pointer hover:bg-slate-100'"
                 :role="isOpen ? undefined : 'button'"
@@ -140,6 +140,7 @@
 </template>
 
 <script setup>
+import { projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'

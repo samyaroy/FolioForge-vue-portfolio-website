@@ -1,5 +1,5 @@
-import { profileInfoSources } from '@/content/profile_info'
-import { smartLinkPlainText } from '@/utils/smartLinkText'
+import { profileInfoSources } from '../content/profile_info'
+import { smartLinkPlainText } from './smartLinkText'
 
 const CREDENTIAL_KEYS = new Set([
   'cred_link',

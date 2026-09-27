@@ -28,7 +28,7 @@ items:
     type: LinkedIn
     date: 2026-08-15
     caption:
-    tags: [New Role]
+    tags: [ New Role ]
     featured: true
 
   - id: intern-project-02
@@ -43,17 +43,17 @@ items:
       - intern-project-02-02
       - intern-project-02-03
     caption: This Summer I got assigned with an amazing group of 9 interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]] to mentor them through their projects. We explored diverse topics starting from Gamified LMS Portal building to modelling El Niño/La Niña events and their impact on Indian Monsoon. It was a great experience to work with a talented group. Shoutout to [[Nirnoy|Person]], [[Dorothy|https://www.linkedin.com/in/dorothy-b-a8659a345?utm_source=share_via&utm_content=profile&utm_medium=member_android]], [[Sahithi|https://www.linkedin.com/in/sahithi-dharani]], [[Shreyan|Person]] for their hard work.
-    tags: [Mentoring]
+    tags: [ Mentoring ]
 
   - id: workshop-07
     title: Took the first conventional step towards Theoretical Computer Science
     caption: Visited [[IMSc|Institute of Mathematical Sciences, Chennai|Institute]] for 2 weeks to attend **Foundation Lecture Series on Theoretical Computer Science** and so many things started making sense every day. Thanks to [[Prof. Venkatesh Raman|Prof. Venkatesh Raman|Person]], Prof. Vikram Sharma and the whole team for letting us take those baby steps.
     type: gallery
     date: 2026-06-27
-    tags: [Bootcamp, Workshop]
+    tags: [ Bootcamp, Workshop ]
     event: FLSTCS 2026
     location: Alladi Ramakrishnan Hall, IMSc
-    images: 
+    images:
       - IMSc_Chennai
 
   - id: guest_event-10
@@ -65,7 +65,7 @@ items:
       - guest_event-10-1
     date: 2026-06-12
     featured: true
-    tags: ["Guest Event"]
+    tags: [ "Guest Event" ]
     location: NAC-2, IIT Madras
     event: Paradox 2026
     # externalUrl:
@@ -76,7 +76,7 @@ items:
     location: VLED lab, IIT Roper
     caption: While managing a degree and a job simultaneousely, I got myself into another roller coaster ride at [[Vicharashala|VLED|Institute]] **Summer Internship** for 2 months. Although it wasn't a success story in the way it was supposed to be, but got such an amazing group of peer in phrase 1 to lead, that I had to rethink the way I painted sucess earlier.
     date: 2026-07-07
-    tags: [Internship]
+    tags: [ Internship ]
 
   - id: intern-project-01
     title: Mentored a group of Spring Interns at IDEAS-TIH
@@ -87,7 +87,7 @@ items:
     type: gallery
     date: 2026-03-31
     # featured: true
-    tags: [Mentoring]
+    tags: [ Mentoring ]
 
   - id: workshop-IDEAS-TIH-01
     title: IDEAS-TIH hosted 3rd IDEASync Industry Connet Meet 2026
@@ -96,7 +96,7 @@ items:
     caption: Had the opportunity to attend the meet as a part of the hosting body, [[IDEAS-TIH, ISI Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. It was a great experience to see how the academia and industry is planning to bridge the gap between research and real-world applications in the field of data science and analytics in next few years.
     type: gallery
     date: 2026-03-26
-    tags: [Event]
+    tags: [ Event ]
     location: Fairfield by Marriott, New Town, Kolkata
     externalUrl: https://www.telegraphindia.com/my-kolkata/events/ideasync-2026-brings-industry-academia-and-policy-leaders-together-in-kolkata/cid/2153207
 
@@ -107,7 +107,7 @@ items:
     caption: At the 9th Graduation Ceremony of [[SNU|Sister Nivedita University|Institute]], I received my **B.Sc degree in Statistics**. Kinda proud, kinda stressed about the future.
     type: linkedin
     date: 2026-02-24
-    tags: ["Academic Milestone"]
+    tags: [ "Academic Milestone" ]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_last-monday-23rd-february-i-received-my-activity-7432903965090070528-izVx?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
     featured: true
     location: Sister Nivedita University
@@ -119,7 +119,7 @@ items:
     caption: My article **'Precision Without Understanding Uncertainty Is an Illusion of Control'** got published in *Gradient (Vol I)*, the annual magazine of the [[Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata|Institute]].
     type: linkedin
     date: 2026-02-17
-    tags: [Article, "New Publication"]
+    tags: [ Article, "New Publication" ]
     externalUrl: https://www.linkedin.com/posts/pgds-sxccal_gradient-vol-i-activity-7429850321499201536-hpb0?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
 
   - id: guest_event-01-01-01
@@ -127,7 +127,7 @@ items:
     caption: As the *Admin* of **Nilgiri House's Statistics Community**, I had the privilege of hosting [[Prof. Manisha Padala|Prof. Manisha Padala|Person]] ma'am as our guest speaker for a session on Federated Learning. It was a greatly insightful session for all of us.
     type: youtube
     date: 2026-02-05
-    tags: ["Guest Event"]
+    tags: [ "Guest Event" ]
     externalUrl: https://www.youtube.com/live/0iSF4Ggwa3Q?si=CWmS1q9WQWQGwhQU
 
   - id: workshop-06
@@ -136,7 +136,7 @@ items:
     event: Cryptology Conclave 2026
     caption: An introduction to new exploration, got introduced to lattice-based cryptography, PQC an their applications and need in the conclave. Great oppetunity to learn from the bests in the country in the field of Cryptography and Network Security.
     date: 2026-01-23
-    tags: [Confclave, Workshop]
+    tags: [ Confclave, Workshop ]
     location: CSE Dept.,IIT Hyderabad
 
   - id: workshop-05
@@ -146,7 +146,7 @@ items:
     caption: An overwhelming experience for me to attend [[ISEA|Information Security Education and Awareness|Institute]] **ISAP 2026**. Got to talk and learn from the best of the best.
     type: gallery
     date: 2026-01-18
-    tags: [Conference, Workshop]
+    tags: [ Conference, Workshop ]
     location: ICSR, IIT Madras
 
   - id: academic_milestone-03
@@ -155,7 +155,7 @@ items:
     caption: "My article **'Revisiting Outliers: Smarter Ways to Handle Them in Regression'**, a thought piece, got published in EPOCHS 2.0, the annual magazine of Wayanad House's ML Group at the IITM BS program."
     type: gallery
     date: 2025-11-30
-    tags: [Article, "New Publication"]
+    tags: [ Article, "New Publication" ]
     externalUrl: https://epochs.netlify.app/
 
   - id: new_role-01
@@ -164,7 +164,7 @@ items:
     caption: After completing my 8 months of internship at [[IDEAS-TIH, Indian Statistical Institute, Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]], I am super excited to join the team as an Associate Software Developer. Looking forward to contributing to impactful projects and learning from the amazing minds at ISI ecosystem.
     type: gallery
     date: 2025-10-21
-    tags: ["New Role"]
+    tags: [ "New Role" ]
     featured: true
     location: ISI Kolkata
 
@@ -177,7 +177,7 @@ items:
       - workshop-04
       - workshop-04-1
     date: 2025-06-10
-    tags: [Workshop, Bootcamp]
+    tags: [ Workshop, Bootcamp ]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_cogitocode-activity-7368899808171872256-17Wx?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
     location: HSB, IIT Madras
 
@@ -188,7 +188,7 @@ items:
     caption: Attended a 3-day workshop on Cybersecurity and Blockchain at [[IIIT Hyderabad|International Institute of Technology (IIIT) Hyderabad|Institute]]. It was an amazing experience to reexplore **Blockchain and Cryptocurrencies** along with the latest developments in this field and to interact with experts from academia and industry.
     type: gallery
     date: 2025-03-01
-    tags: [Workshop]
+    tags: [ Workshop ]
     location: IIIT Hyderabad
 
   - id: new_role-02
@@ -197,7 +197,7 @@ items:
     caption: I joined my first offline paid internship at [[IDEAS-TIH, ISI Kolkata|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]]. I am super excited to learn and contribute to real-world projects at IDEAS-TIH.
     type: gallery
     date: 2025-02-18
-    tags: ["New Role", Internship]
+    tags: [ "New Role", Internship ]
     featured: true
     location: R A Fisher bhawan, ISI Kolkata
 
@@ -208,7 +208,7 @@ items:
     caption: A one-month roller-coaster journey of learning came to an end at [[IIT Ropar|Indian Institute of Technology Ropar|Institute]] at AI Vicharana Shala. I enjoyed every minute of it and am surely going to miss those early morning lectures by Prof. [[Sudarshan Sir|Prof. Sudarshan Iyengar|Person]] and late-night jamming sessions.
     type: linkedin
     date: 2024-08-15
-    tags: [Workshop, Bootcamp]
+    tags: [ Workshop, Bootcamp ]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_aivicharanashalabootcamp-iitropar-ai-activity-7217160263765045248-Ano0?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
     location: CSE Dept.,IIT Ropar
 
@@ -219,7 +219,7 @@ items:
     caption: Attended the ACM Research on Computer Systems (ROCS) conference at [[IIT Madras|Indian Institute of Technology Madras|Institute]]. Honestly, I believe this was my first step into exploring CS for real. Thanks to [[ACM|https://www.acm.org/|Link]] for hosting such a mindful event. Still greateful to [[Prof. Sheweta Agarwal|Prof. Sheweta Agarwal|Person]] ma'am for introducing me to the world of **Cryptography** through her session.
     type: gallery
     date: 2024-01-15
-    tags: [Workshop]
+    tags: [ Workshop ]
     location: IIT Madras
 
   - id: event-01
@@ -229,7 +229,7 @@ items:
     caption: GOt oppertunity to represent the IITM BS Degree program at Education Interface 2023, Kolkata. Grateful to [[Shib Sankar Das|https://www.linkedin.com/in/ssdcet/|Link]] sir for giving me this opportunity.
     type: linkedin
     date: 2023-05-28
-    tags: [Event]
+    tags: [ Event ]
     externalUrl: https://www.linkedin.com/posts/samyabrata23_it-was-an-excellent-experience-representing-activity-7068892535384928256-TaBz?utm_source=share&utm_medium=member_desktop&rcm=ACoAADI0goQB2mEyMokFjiPzfy1x7-GS_G4iNbU
     location: Netaji Indoor Stadium, kolkata
 
@@ -240,7 +240,7 @@ items:
     caption: Attended the Google Cloud Community Day event in Kolkata. It was an excellent opportunity to learn about the latest developments in cloud computing and interact with experts from the industry. The place where I got introduced to Flutter and Firebase for the first time.
     type: gallery
     date: 2023-05-07
-    tags: [Workshop]
+    tags: [ Workshop ]
     location: Biswa Bangla Convension Center, Kolkata
 
   - id: tech_fest-03
@@ -250,7 +250,7 @@ items:
     caption: Kinda stepping out of comfort zone, althrough lost every competition I participated in, it was a great experience to visit IIT Delhi and attend workshops and seminars at Tryst.
     type: gallery
     date: 2023-03-10
-    tags: ["TechFest"]
+    tags: [ "TechFest" ]
 
   - id: meetup-05
     title: "Official IITM BS Kolkata Meetup: Met course instructors and students"
@@ -258,7 +258,7 @@ items:
     caption: The first official meetup for IITM BS students in Kolkata at [[UEM|University of Engineering and Management|Institute]] was a great success. I finally met Prof. [[Andrew Sir|Prof. Andrew Thangaraj|Person]] and [[Bharti Ma'am||Link]] in person and had a great time interacting with fellow students of the program.
     type: gallery
     date: 2023-03-10
-    tags: [Meetup]
+    tags: [ Meetup ]
     location: University of Engineering and Management
 
   - id: tech_fest-02
@@ -268,7 +268,7 @@ items:
     caption: We, students of **UG Sem 2, Stats Dept. of SNU**, presented our survey on mental health at the Science Day poster competition.
     type: instagram
     date: 2023-02-28
-    tags: [Poster Presentation, ScienceDay, "TechFest"]
+    tags: [ Poster Presentation, ScienceDay, "TechFest" ]
     externalUrl:
     location: Block A, Sister Nivedita University
 
@@ -281,7 +281,7 @@ items:
     caption: An amazing day attending Prof. [[P.K. Sir|Prof. Ponnurangam Kumaraguru|Person]]'s workshop at **IIIT Hyderabad**. I got to learn about the latest research and developments in this field of LLM and how it could be used reasearch for social computing, and I am excited to apply this knowledge in my future work. Here I also got introduced to the concept of **Legal AI**.
     type: instagram
     date: 2023-02-04
-    tags: [Workshop]
+    tags: [ Workshop ]
     externalUrl: https://www.instagram.com/p/CoP0d7gsSFK/?img_index=1&igsh=MWk0bW40NmYwaHM2MA==
     location: IIIT Hyderabad
 
@@ -292,7 +292,7 @@ items:
     caption: Visited IIT Kharagpur for the first time to attend their tech fest, Kshitij. It was something really different for me to explore the campus and attend workshops and seminars at Kshitij. I rember attending an excellent workshop on investments and financial literact by **Upstox**.
     type: gallery
     date: 2023-01-14
-    tags: ["TechFest"]
+    tags: [ "TechFest" ]
 
   - id: meetup-01
     title: Hosted a meetup for IITM BS students in Kolkata
@@ -301,8 +301,7 @@ items:
     type: gallery
     date: 2023-01-14
     location: Kolkata
-    tags: [Meetup]
-
+    tags: [ Meetup ]
   # - id: gallery-02
   #   title: Making mentoring repeatable
   #   caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.

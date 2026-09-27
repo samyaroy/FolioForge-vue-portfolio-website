@@ -32,6 +32,7 @@ import ResearchProjects from './components/ResearchProjects.vue'
 import OtherProjects from './components/OtherProjects.vue'
 import MinorProjects from './components/MinorProjects.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
+import { projectTypeLabels } from '@/config/projectTypes'
 
 defineOptions({
   name: 'ProjectTabSection'
@@ -50,10 +51,10 @@ const sectionArray = (...values) => values.find(Array.isArray) || []
 const projectSections = computed(() => {
   if (Array.isArray(props.projects)) {
     return {
-      research: props.projects.filter(p => p.type === 'Research Project'),
-      technical: props.projects.filter(p => p.type === 'Technical Project'),
-      other: props.projects.filter(p => p.type === 'Other Project'),
-      minor: props.projects.filter(p => p.type === 'Minor Project')
+      research: props.projects.filter(p => p.type === projectTypeLabels.research),
+      technical: props.projects.filter(p => p.type === projectTypeLabels.technical),
+      other: props.projects.filter(p => p.type === projectTypeLabels.other),
+      minor: props.projects.filter(p => p.type === projectTypeLabels.minor)
     }
   }
 

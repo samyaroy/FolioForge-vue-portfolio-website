@@ -21,6 +21,27 @@
               </span>
             </Transition>
           </span>
+          <span v-if="hasMultipleMessages" class="info-ribbon-controls" aria-label="Announcement controls">
+            <button
+              class="info-ribbon-nav"
+              type="button"
+              aria-label="Previous announcement"
+              @click="showPreviousMessage"
+            >
+              <v-icon color="#ffffff" size="16">mdi-chevron-left</v-icon>
+            </button>
+            <span class="info-ribbon-counter" aria-live="polite">
+              {{ activeIndex + 1 }}/{{ ribbonEntries.length }}
+            </span>
+            <button
+              class="info-ribbon-nav"
+              type="button"
+              aria-label="Next announcement"
+              @click="showNextMessage"
+            >
+              <v-icon color="#ffffff" size="16">mdi-chevron-right</v-icon>
+            </button>
+          </span>
           <button class="info-ribbon-close" type="button" aria-label="Close announcement" @click="closeRibbon">
             <v-icon color="#ffffff" size="14">mdi-close</v-icon>
           </button>
@@ -65,6 +86,7 @@ const ribbonEntries = computed(() => {
 })
 
 const currentEntry = computed(() => ribbonEntries.value[activeIndex.value] ?? null)
+const hasMultipleMessages = computed(() => ribbonEntries.value.length > 1)
 
 let rotationTimer = null
 
@@ -93,6 +115,21 @@ function pauseRotation() {
 
 function resumeRotation() {
   startRotation()
+}
+
+function showMessage(offset) {
+  const total = ribbonEntries.value.length
+  if (total < 2) return
+
+  activeIndex.value = (activeIndex.value + offset + total) % total
+}
+
+function showPreviousMessage() {
+  showMessage(-1)
+}
+
+function showNextMessage() {
+  showMessage(1)
 }
 
 watch(
@@ -245,6 +282,54 @@ function emitDismissed() {
   color: inherit;
 }
 
+.info-ribbon-controls {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 102px;
+}
+
+.info-ribbon-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.info-ribbon-counter {
+  min-width: 36px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.info-ribbon-nav:hover {
+  border-color: rgba(255, 255, 255, 0.44);
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.info-ribbon-nav:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 2px;
+}
+
 .info-ribbon-close {
   display: inline-flex;
   flex: 0 0 auto;
@@ -320,6 +405,16 @@ function emitDismissed() {
 
   .info-ribbon-message {
     font-size: 0.78rem;
+  }
+
+  .info-ribbon-controls {
+    min-width: 86px;
+    gap: 2px;
+  }
+
+  .info-ribbon-counter {
+    min-width: 30px;
+    font-size: 0.68rem;
   }
 
   .info-ribbon-close {
