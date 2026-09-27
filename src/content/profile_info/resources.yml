@@ -44,6 +44,10 @@
 #     logo: NPTEL          -> /logo/NPTEL.png (a file in public/logo)
 #     logo: https://…/x.png-> a full image URL
 #     logo: mdi-youtube    -> an mdi icon token
+#
+# Paid material: add `paid: true` to a material that is not available for free
+# (a book to buy, a paid course). Its card shows a rupee badge in place of
+# "Visit"; a `link`, if it has one, still opens (say, to where to buy it).
 
 subjects:
   - title: "Linear Algebra"
@@ -79,6 +83,34 @@ subjects:
         distributor: "IIT Kharagpur, NPTEL"
         logo: NPTEL
         link: https://nptel.ac.in/courses/111105090
+
+  - title: "Stochastic Processes"
+    materials:
+      - title: "Stochastic Processes | NPTEL"
+        meta: "Course"
+        instructor: "Prof. S. Dharmaraja"
+        distributor: "IIT Delhi, NPTEL"
+        logo: NPTEL
+        link: https://nptel.ac.in/courses/111102014
+
+      - title: "Discrete Stochastic Processes | MIT OpenCourseWare"
+        meta: "Course"
+        instructor: "Prof. Robert Gallager"
+        distributor: "MIT OpenCourseWare"
+        link: https://ocw.mit.edu/courses/6-262-discrete-stochastic-processes-spring-2011/
+
+      - title: "Stochastic Process of Finance: Brownian Motion [Ep. 7]"
+        meta: "Lecture"
+        instructor: "Prof. A. Sengupta"
+        distributor: "NPTEL Swayam [ARPIT-2018] X University of Calcutta"
+        link: https://youtu.be/gyUoPRCpttM?si=TLwmhHRiVbaKyYjS
+
+      - title: "Introduction to Probability Models"
+        meta: "Book"
+        instructor: "Sheldon M. Ross"
+        distributor: "Academic Press"
+        paid: true
+
   - title: "Introduction to CS"
     materials:
       - title: "Joy of Computing | NPTEL"
@@ -94,6 +126,7 @@ subjects:
         meta: "Book"
         instructor: "Geoge Casella and Roger L. Berger"
         distributor: "CENEGAGE Learning"
+        paid: true
 
       - title: "Bayesian Statistics: From Concept to Data Analysis"
         meta: "Course"

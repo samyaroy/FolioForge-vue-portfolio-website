@@ -232,7 +232,14 @@ function normalizeMaterial(material) {
     distributor: material.distributor || '',
     logo: material.logo || '',
     url: material.link || material.url || '',
+    paid: isPaid(material.paid),
   }
+}
+
+// `paid: true` in the YAML, but the admin's material rows write every column
+// back as text, so "true" counts too; its blank default does not.
+function isPaid(value) {
+  return value === true || /^(true|yes)$/i.test(String(value ?? '').trim())
 }
 
 function normalizeExternalLink(link) {

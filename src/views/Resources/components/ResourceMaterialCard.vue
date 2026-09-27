@@ -45,8 +45,18 @@
 
     <!-- Wraps under the text on a narrow pane instead of stealing ~60px from
          the title, which is the wider column of the two. -->
-    <div v-if="material.url" class="flex shrink-0 items-center ml-16 sm:ml-0">
-      <span class="inline-flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#1980e6]">
+    <div v-if="material.paid || material.url" class="flex shrink-0 items-center ml-16 sm:ml-0">
+      <!-- Paid material swaps "Visit" for a rupee badge, whether or not it
+           links anywhere; a link still opens from the card as a whole. -->
+      <span
+        v-if="material.paid"
+        class="inline-flex items-center text-gray-400"
+        title="Paid: not available for free"
+      >
+        <v-icon size="20" aria-hidden="true">mdi-currency-inr</v-icon>
+        <span class="sr-only">Paid, not available for free</span>
+      </span>
+      <span v-else class="inline-flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#1980e6]">
         Visit
         <v-icon size="16" class="arrow-jiggle">
           mdi-arrow-right
