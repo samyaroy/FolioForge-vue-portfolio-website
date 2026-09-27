@@ -7,6 +7,7 @@
  *   node scripts/fit-gallery-images.mjs --dry-run    check and report only
  *   node scripts/fit-gallery-images.mjs --preview=DIR   dry run, saving the fixes to DIR
  *   node scripts/fit-gallery-images.mjs --max-crop=0.25
+ *   node scripts/fit-gallery-images.mjs --only=KEY,... --whole=KEY,...
  *
  * The card shows its photo with object-cover in a box that is always 260px tall
  * (240px on phones) but whose width follows the grid, so its shape runs from
@@ -18,6 +19,12 @@
  * content. The margin takes the photo's own border colour when that border is
  * plain (a document on white, a slide on black), so the padding is invisible;
  * behind a busy photo edge it is white.
+ *
+ * --whole gives the listed photos a zero budget, for a document or poster that
+ * must show every line: they get as much margin as the widest and narrowest
+ * cards need to show all of them. --only limits a run to the listed photos.
+ * Crop is measured on the photo inside any plain margin, so a photo given a
+ * wide margin this way is left alone by later runs at the normal budget.
  *
  * Fixes are written back to the same key on the bucket with wrangler (installed
  * under admin/), so the site needs no change. Every original is copied to
@@ -51,15 +58,14 @@ const MIN_SAVING = 0.1
 
 // Card image box, width over height, at its narrowest and widest (measured).
 const CARD_RATIO = { min: 1.37, max: 1.87 }
-// Below this budget no photo shape can satisfy both ends of the range at once,
-// and a padded photo would be flagged again on the next run.
-const MIN_CROP_BUDGET = Math.ceil((1 - Math.sqrt(CARD_RATIO.min / CARD_RATIO.max)) * 100) / 100
 const DEFAULT_CROP_BUDGET = 0.2
 // Pixel rounding moves a padded photo's ratio by a hair; do not chase it.
 const CROP_TOLERANCE = 0.01
 
 // A border this even (mean per-channel standard deviation) counts as plain.
 const PLAIN_BORDER_STDEV = 12
+// How far from the corner pixel's colour a margin row may stray (JPEG noise).
+const TRIM_THRESHOLD = 12
 const WHITE = { r: 255, g: 255, b: 255 }
 
 const DOWNLOAD_CONCURRENCY = 6
@@ -71,7 +77,10 @@ main().catch((error) => {
 
 async function main() {
   const options = parseArgs(process.argv.slice(2))
-  const keys = galleryImageKeys(YAML.parse(fs.readFileSync(GALLERY_PATH, 'utf8')))
+  const allKeys = galleryImageKeys(YAML.parse(fs.readFileSync(GALLERY_PATH, 'utf8')))
+  const keys = options.only ? allKeys.filter(key => options.only.has(key)) : allKeys
+  const unknown = [...(options.only ?? []), ...options.whole].filter(key => !allKeys.includes(key))
+  if (unknown.length) throw new Error(`not in gallery.yml: ${unknown.join(', ')}`)
   const bucket = options.dryRun ? null : mediaBucketName()
 
   console.log(`fit-gallery-images: checking ${keys.length} photos (crop budget ${Math.round(options.maxCrop * 100)}%)...`)
@@ -88,7 +97,7 @@ async function main() {
       continue
     }
 
-    const plan = await planFix(buffer, options.maxCrop)
+    const plan = await planFix(buffer, options.whole.has(key) ? 0 : options.maxCrop)
     if (!plan.reasons.length) {
       fine.push(key)
       continue
@@ -133,7 +142,7 @@ async function main() {
 }
 
 function parseArgs(args) {
-  const options = { dryRun: false, maxCrop: DEFAULT_CROP_BUDGET, previewDir: null }
+  const options = { dryRun: false, maxCrop: DEFAULT_CROP_BUDGET, previewDir: null, only: null, whole: new Set() }
 
   for (const arg of args) {
     if (arg === '--dry-run') {
@@ -145,16 +154,24 @@ function parseArgs(args) {
       fs.mkdirSync(options.previewDir, { recursive: true })
     } else if (arg.startsWith('--max-crop=')) {
       options.maxCrop = Number(arg.slice('--max-crop='.length))
+    } else if (arg.startsWith('--only=')) {
+      options.only = new Set(keyList(arg.slice('--only='.length)))
+    } else if (arg.startsWith('--whole=')) {
+      keyList(arg.slice('--whole='.length)).forEach(key => options.whole.add(key))
     } else {
       throw new Error(`unknown option ${arg}`)
     }
   }
 
-  if (!(options.maxCrop >= MIN_CROP_BUDGET && options.maxCrop <= 0.5)) {
-    throw new Error(`--max-crop must be between ${MIN_CROP_BUDGET} and 0.5`)
+  if (!(options.maxCrop >= 0 && options.maxCrop <= 0.5)) {
+    throw new Error('--max-crop must be between 0 and 0.5')
   }
 
   return options
+}
+
+function keyList(value) {
+  return value.split(',').map(key => key.trim()).filter(Boolean)
 }
 
 /** Bare CDN keys, resolved the way the gallery page resolves them. */
@@ -201,15 +218,53 @@ async function downloadImage(key) {
 }
 
 /**
- * Share of the photo object-cover crops away at the worst card width: a photo
- * narrower than the widest box loses height there, one wider than the
- * narrowest box loses width there.
+ * Where the photo sits inside any plain margin around it: margins this script
+ * added, or a document's own white border. Crop is judged against this box, so
+ * a card trimming away margin does not count as losing photo.
  */
-function cropLoss(ratio) {
-  return {
-    tall: ratio < CARD_RATIO.max ? 1 - ratio / CARD_RATIO.max : 0,
-    wide: ratio > CARD_RATIO.min ? 1 - CARD_RATIO.min / ratio : 0,
+async function contentBox(buffer, width, height) {
+  const { info } = await sharp(buffer)
+    .rotate()
+    .flatten({ background: WHITE })
+    .trim({ threshold: TRIM_THRESHOLD })
+    .toBuffer({ resolveWithObject: true })
+
+  // An almost-uniform image trims down to a sliver; judge it whole instead.
+  if (info.width < width * 0.2 || info.height < height * 0.2) {
+    return { left: 0, top: 0, width, height }
   }
+
+  return {
+    left: -(info.trimOffsetLeft ?? 0),
+    top: -(info.trimOffsetTop ?? 0),
+    width: info.width,
+    height: info.height,
+  }
+}
+
+/**
+ * Share of the content object-cover crops away, per axis, at the worst card
+ * width. The card shows a centred window of the canvas, as wide as the box
+ * shape allows at full height or as tall as it allows at full width. Width is
+ * lost worst at the narrowest box and height at the widest.
+ */
+function cropLoss(canvas, content) {
+  const loss = { tall: 0, wide: 0 }
+
+  for (const box of [CARD_RATIO.min, CARD_RATIO.max]) {
+    const windowWidth = Math.min(canvas.width, canvas.height * box)
+    const windowHeight = Math.min(canvas.height, canvas.width / box)
+    loss.wide = Math.max(loss.wide, 1 - shown(canvas.width, windowWidth, content.left, content.width) / content.width)
+    loss.tall = Math.max(loss.tall, 1 - shown(canvas.height, windowHeight, content.top, content.height) / content.height)
+  }
+
+  return loss
+}
+
+/** How much of [start, start + size) falls in a window of `window` centred on [0, total). */
+function shown(total, window, start, size) {
+  const from = (total - window) / 2
+  return Math.max(0, Math.min(start + size, from + window) - Math.max(start, from))
 }
 
 async function planFix(buffer, maxCrop) {
@@ -218,8 +273,9 @@ async function planFix(buffer, maxCrop) {
   const rotated = (meta.orientation ?? 1) >= 5
   const width = rotated ? meta.height : meta.width
   const height = rotated ? meta.width : meta.height
-  const ratio = width / height
-  const loss = cropLoss(ratio)
+  const canvas = { width, height }
+  const content = await contentBox(buffer, width, height)
+  const loss = cropLoss(canvas, content)
   const worst = Math.max(loss.tall, loss.wide)
 
   const reasons = []
@@ -228,7 +284,7 @@ async function planFix(buffer, maxCrop) {
 
   let padding = null
   if (worst > maxCrop + CROP_TOLERANCE) {
-    padding = paddingFor(width, height, loss, maxCrop)
+    padding = paddingFor(canvas, content, maxCrop)
     reasons.push(`card crops ${Math.round(worst * 100)}% of it`)
   }
 
@@ -245,19 +301,31 @@ async function planFix(buffer, maxCrop) {
 }
 
 /**
- * Margins that bring the worst-case crop down to the budget. A too-tall photo
- * is widened just enough that the widest card crops `maxCrop`; at narrower
- * cards the crop then comes out of the new side margins. A too-wide photo is
- * the same turned sideways, against the narrowest card.
+ * Margins that bring the worst-case crop down to the budget. The widest card
+ * shows the least height, so the canvas must be wide enough that its window
+ * still holds all but `maxCrop` of the content's height; the narrowest card
+ * likewise sets how tall it must be for the content's width. A too-tall photo
+ * only gains side margins, a too-wide one top and bottom; a zero budget on a
+ * photo near the card's own shape can need both.
  */
-function paddingFor(width, height, loss, maxCrop) {
-  if (loss.tall >= loss.wide) {
-    const extra = Math.max(0, Math.ceil(height * CARD_RATIO.max * (1 - maxCrop)) - width)
-    return { top: 0, bottom: 0, left: Math.floor(extra / 2), right: Math.ceil(extra / 2) }
-  }
+function paddingFor(canvas, content, maxCrop) {
+  // The card's window is centred on the canvas and margins go on evenly, so
+  // content sitting off-centre needs the window to reach its far edge.
+  const spanWidth = 2 * Math.max(canvas.width / 2 - content.left, content.left + content.width - canvas.width / 2)
+  const spanHeight = 2 * Math.max(canvas.height / 2 - content.top, content.top + content.height - canvas.height / 2)
+  const windowWidth = Math.max(content.width * (1 - maxCrop), spanWidth - 2 * maxCrop * content.width)
+  const windowHeight = Math.max(content.height * (1 - maxCrop), spanHeight - 2 * maxCrop * content.height)
+  const width = Math.max(canvas.width, Math.ceil(windowHeight * CARD_RATIO.max))
+  const height = Math.max(canvas.height, Math.ceil(windowWidth / CARD_RATIO.min))
+  const extraWidth = width - canvas.width
+  const extraHeight = height - canvas.height
 
-  const extra = Math.max(0, Math.ceil(width * (1 - maxCrop) / CARD_RATIO.min) - height)
-  return { top: Math.floor(extra / 2), bottom: Math.ceil(extra / 2), left: 0, right: 0 }
+  return {
+    left: Math.floor(extraWidth / 2),
+    right: Math.ceil(extraWidth / 2),
+    top: Math.floor(extraHeight / 2),
+    bottom: Math.ceil(extraHeight / 2),
+  }
 }
 
 /**
