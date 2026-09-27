@@ -186,8 +186,15 @@ function imageUrl(key) {
   return `${MEDIA_BASE}/${encodeURIComponent(key)}.jpeg`
 }
 
+// Cloudflare's edge caches these photos for hours, so a plain request can hand
+// back the copy from before an upload. The cache key includes the query string,
+// so a fresh one reaches the bucket itself.
+function freshImageUrl(key) {
+  return `${imageUrl(key)}?fresh=${Date.now()}`
+}
+
 async function downloadImage(key) {
-  const response = await fetch(imageUrl(key), { cache: 'no-store' })
+  const response = await fetch(freshImageUrl(key), { cache: 'no-store' })
   if (response.status === 404) return { key, buffer: null }
   if (!response.ok) throw new Error(`${key}: HTTP ${response.status}`)
   return { key, buffer: Buffer.from(await response.arrayBuffer()) }
@@ -333,7 +340,7 @@ function upload(bucket, key, buffer) {
   }
 }
 
-/** Reads the object back through the CDN, which serves the bucket uncached. */
+/** Reads the object back through the CDN, past its cache. */
 async function verifyUpload(key, expected) {
   const { buffer } = await downloadImage(key)
   if (!buffer || sha256(buffer) !== sha256(expected)) {
