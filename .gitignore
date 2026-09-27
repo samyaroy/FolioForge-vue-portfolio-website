@@ -45,3 +45,6 @@ src/components/Footer/Index.vue
 */.copilot
 # rollup-plugin-visualizer output (npm run analyze)
 bundle-report.html
+
+# Originals replaced by scripts/fit-gallery-images.mjs
+.gallery-image-backups/
