@@ -129,3 +129,9 @@ categories:
       - id: workshop-01
         date: 2023-02-04
         description: Social computing workshop at IIITH
+
+  - category: Other
+    images:
+      - id: competition-01
+        date: 2026-09-25
+        description: Second place in OverFlow and Predicta at Symmetry 2026

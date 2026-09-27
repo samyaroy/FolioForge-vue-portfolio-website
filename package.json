@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "typecheck": "vue-tsc -b",
     "sync:gallery-manifest": "node scripts/sync-gallery-image-manifest.js",
+    "gallery:images": "node scripts/fit-gallery-images.mjs",
     "prebuild": "npm run sync:gallery-manifest",
     "build": "vite build",
     "preview": "vite preview",

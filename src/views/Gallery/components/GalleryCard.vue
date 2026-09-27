@@ -325,6 +325,22 @@ const isCardLoading = computed(() => Boolean(images.value.length) && !imageLoade
 function handleImageLoad() {
   imageLoaded.value = true
 }
+
+// A card with no bone yet (a new entry before `npm run boneyard:build`) gets
+// only boneyard's #fallback slot, so the <img> never mounts and its load/error
+// never fire. Probe the lead image off-DOM so the card is released either way;
+// on failure the real <img> then mounts, errors, and shows the sample artwork.
+watch(() => images.value[0], (source) => {
+  if (!source || typeof Image === 'undefined') return
+
+  const probe = new Image()
+  const release = () => {
+    if (images.value[0] === source) handleImageLoad()
+  }
+  probe.onload = release
+  probe.onerror = release
+  probe.src = source
+}, { immediate: true })
 const slideTransitionName = computed(() => `gallery-slide-${slideDirection.value}`)
 const dotProgressStyle = computed(() => ({
   animationDuration: `${AUTO_ROTATE_INTERVAL}ms`,

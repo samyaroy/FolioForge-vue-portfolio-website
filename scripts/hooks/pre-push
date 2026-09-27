@@ -12,6 +12,13 @@
 # stale this hook updates the files, commits them, and ABORTS the push with
 # a warning. Just run `git push` again -- the new commit carries the fix.
 #
+# When the push updates V1, it next runs scripts/fit-gallery-images.mjs, which
+# checks every photo gallery.yml names on the media bucket and rewrites the ones
+# that are oversized, not really JPEG, or cropped too hard by the gallery card.
+# The photos live on the bucket, not in git, so nothing is added to the push and
+# a failure there only warns. Only V1 runs it, since it writes to the live
+# bucket; set SKIP_GALLERY_IMAGES=1 to push V1 without it.
+#
 # It then dispatches to blogs/scripts/hooks/pre-push, which syncs rail-route
 # geometry when the travel data changes. That indirection exists because
 # core.hooksPath names a single directory, so the blogs hooks cannot be
@@ -27,6 +34,17 @@ MONTH=$(date +"%B %Y")
 
 MAIN="src/content/profile_info/meta.yml"
 BLOG="blogs/src/content/site.yml"
+ZERO="0000000000000000000000000000000000000000"
+
+# git lists the refs being pushed on stdin, one per line:
+#   <local ref> <local sha> <remote ref> <remote sha>
+# Both the V1 check and the blogs hook need it, and stdin can be read only once,
+# so it is read here and replayed to each.
+PUSHED_REFS=$(cat)
+
+replay_refs() {
+  [ -n "$PUSHED_REFS" ] && printf '%s\n' "$PUSHED_REFS"
+}
 
 changed_files=""
 
@@ -61,11 +79,44 @@ fi
 
 echo "pre-push: footer month already current."
 
+pushes_v1() {
+  replay_refs | {
+    while read -r _local_ref local_sha remote_ref _remote_sha; do
+      # Deleting a remote branch pushes no content.
+      [ "$local_sha" = "$ZERO" ] && continue
+      [ "$remote_ref" = "refs/heads/V1" ] && exit 0
+    done
+    exit 1
+  }
+}
+
+fit_gallery_images() {
+  pushes_v1 || return 0
+
+  if [ -n "$SKIP_GALLERY_IMAGES" ]; then
+    echo "pre-push: SKIP_GALLERY_IMAGES is set; not checking gallery photos."
+    return 0
+  fi
+
+  if ! command -v node >/dev/null 2>&1 || [ ! -d node_modules/sharp ]; then
+    echo "pre-push: dependencies missing (run 'npm install'); skipping gallery photo check." >&2
+    return 0
+  fi
+
+  echo "pre-push: pushing V1; fitting gallery photos to the card..."
+  if ! node scripts/fit-gallery-images.mjs; then
+    echo "pre-push: WARNING - some gallery photos could not be fixed (see above)." >&2
+    echo "          The push continues; the photos are not part of it." >&2
+  fi
+}
+
+fit_gallery_images
+
 # core.hooksPath can only name one directory, so the blogs sub-app's hooks are
-# dispatched from here rather than run by git. stdin (the ref list git gave us)
-# has not been consumed above, so the child inherits it intact.
+# dispatched from here rather than run by git. It reads the same ref list on its
+# stdin, replayed from what was read above.
 if [ -x blogs/scripts/hooks/pre-push ]; then
-  blogs/scripts/hooks/pre-push "$@" || exit $?
+  replay_refs | blogs/scripts/hooks/pre-push "$@" || exit $?
 fi
 
 exit 0
