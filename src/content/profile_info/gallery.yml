@@ -44,6 +44,8 @@ items:
     caption: After spending nearly a year working full-time, I am back to being a student again. Started a new chapter at the [[University of Calcutta|University of Calcutta|Institute]], pursuing my M.Sc. in Statistics. A transition I was preparing for an entire year, missed going back to the classroom and exploring statistics more deeply. Looking forward to seeing where this journey takes me.
     tags: [ New Role ]
     featured: true
+    images:
+      - new_role-101
 
   - id: intern-project-02
     title: Mentored 9 amazing Summer Interns at IDEAS-TIH
@@ -56,7 +58,7 @@ items:
       - intern-project-02-01
       - intern-project-02-02
       - intern-project-02-03
-    caption: This Summer I got assigned with an amazing group of 9 interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]] to mentor them through their projects. We explored diverse topics starting from Gamified LMS Portal building to modelling El Niño/La Niña events and their impact on Indian Monsoon. It was a great experience to work with a talented group. Shoutout to [[Nirnoy|Person]], [[Dorothy|https://www.linkedin.com/in/dorothy-b-a8659a345?utm_source=share_via&utm_content=profile&utm_medium=member_android]], [[Sahithi|https://www.linkedin.com/in/sahithi-dharani]], [[Shreyan|Person]] for their hard work.
+    caption: This Summer I got assigned with an amazing group of 9 interns at [[IDEAS-TIH|Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute, Kolkata|Institute]] to mentor them through their projects. We explored diverse topics starting from Gamified LMS Portal building to modelling El Niño/La Niña events and their impact on Indian Monsoon. It was a great experience to work with a talented group. Shoutout to [[Nirnoy|Person]], [[Dorothy|https://www.linkedin.com/in/dorothy-b-a8659a345?utm_source=share_via&utm_content=profile&utm_medium=member_android]], [[Sahithi|https://www.linkedin.com/in/sahithi-dharani]], [[Shreyan|https://in.linkedin.com/in/shreyan-ghosh-b63556258]] for their hard work.
     tags: [ Mentoring ]
 
   - id: workshop-07
