@@ -21,13 +21,27 @@
 #     - https://example.com/extra.jpg  # or a full URL
 
 items:
+  - id: competition-01
+    title: Two Competitions, Two Podium Finishes at Symmetry 2026
+    manifestDescription: Second place in OverFlow and Predicta at Symmetry 2026
+    event: Symmetry 2026
+    location: Presidency University, Kolkata
+    caption: Symmetry 2026 at **Dept. of Mathematics,** [[**Presidency University, Kolkata**|Presidency University, Kolkata|Institute]] was a bit of a mixed bag. The paper presentation didn’t quite go my way, but I ended up securing 2nd place in OverFlow, a solo competitive coding competition, and 2nd place in Predicta, a team ML competition hosted on Kaggle. Shoutout to [[Tamaghano Saha|Person]] for being a great teammate through the Predicta grind.
+    date: 2026-09-25
+    images:
+    - competition-01
+    - competition-01-01
+    - competition-01-02
+    tags: [ Competition, Achievement ]
+    featured: false
+
   - id: new_role-101
     title: New Transition, New Journey
     event:
     location: Calcutta University
-    type: LinkedIn
+    type: Gallery
     date: 2026-08-15
-    caption:
+    caption: After spending nearly a year working full-time, I am back to being a student again. Started a new chapter at the [[University of Calcutta|University of Calcutta|Institute]], pursuing my M.Sc. in Statistics. A transition I was preparing for an entire year, missed going back to the classroom and exploring statistics more deeply. Looking forward to seeing where this journey takes me.
     tags: [ New Role ]
     featured: true
 
