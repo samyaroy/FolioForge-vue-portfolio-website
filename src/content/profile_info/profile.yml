@@ -20,6 +20,11 @@ media:
   logosBaseUrl: https://media.samyabrata.codeium.xyz/logo
   iconsBaseUrl: https://media.samyabrata.codeium.xyz/icons
 
+# Live badge count and issuers on the Certifications tab's Credly banner, served
+# by the Worker in services/credly-badges (it re-reads the public Credly profile
+# once a month). Clear it to show the plain Credly link only.
+credlyBadgesApi: https://api.samyabrata.codeium.xyz/credly-count
+
 contacts:
   # address: "121 BBD Sarani Railpark,<br>
   #           PO: Morepukur, Rishra,<br>

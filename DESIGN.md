@@ -75,6 +75,10 @@ badges (LinkedIn `#0a66c2`, YouTube `#ff0000`, Instagram gradient, Zoom `#0b5cff
   [src/style.css](src/style.css)). No web font is loaded; stay system-native.
 - **Serif accent:** card titles in the gallery use `font-serif` for an editorial feel.
   Use it deliberately for titles, not body copy.
+- **Readout accent:** the live Credly count, its "last updated" line and the issuer chips
+  (`CredlyBanner.vue`) are set in Orbitron (`@fontsource-variable/orbitron`, imported by
+  that component so it ships only with the Certifications route). It marks data read live
+  from another service; don't use it for authored copy.
 - **Antialiasing/legibility** are globally enabled; don't fight them.
 
 Scale and weight conventions seen across pages:

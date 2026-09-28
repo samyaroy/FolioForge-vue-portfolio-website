@@ -217,6 +217,10 @@ The sitemap hostname is currently `https://samyabrata.codeium.xyz`.
 
 The root [CNAME](CNAME) and [public/CNAME](public/CNAME) are present for custom domain hosting workflows.
 
+### Services
+
+[services/credly-badges](services/credly-badges/README.md) is a standalone Cloudflare Worker, deployed separately from the site, that serves `GET https://api.samyabrata.codeium.xyz/credly-count` → `{ count, issuers, updatedAt }`. A cron job re-reads the public Credly profile's undocumented `badges.json` endpoint once a month into KV (Credly has no official earner API). The Certifications tab's `CredlyBanner.vue` reads the URL from `credlyBadgesApi` in `profile.yml` and falls back to the plain Credly link on any failure.
+
 ## Maintenance Notes
 
 - Prefer editing YAML content before editing Vue components when the desired change is content-only.

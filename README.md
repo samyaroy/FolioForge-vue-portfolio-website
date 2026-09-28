@@ -65,6 +65,7 @@ npm run lint
 ├── config/                         Build-tool configuration (social card content)
 ├── public/                         Static files copied directly into the build
 ├── scripts/                        Maintenance scripts
+├── services/credly-badges/         Cloudflare Worker serving the Credly badge count
 ├── shared/                         Framework-free modules used by both this app and blogs/
 ├── src/
 │   ├── components/                 Shared layout and reusable UI components
@@ -165,6 +166,8 @@ The app builds to a static `dist/` directory. Deployment options already represe
 - GitHub Pages via `npm run deploy`
 - Cloudflare static assets via [wrangler.jsonc](wrangler.jsonc)
 - Any static host that can serve the Vite output
+
+The Credly badge count on the Certifications tab comes from a separate Worker in [services/credly-badges](services/credly-badges/README.md), deployed on its own with `npm run deploy` from that folder. The site works without it; the banner then shows the plain Credly link.
 
 The current Vite sitemap hostname is configured as `https://samyabrata.codeium.xyz` in [vite.config.js](vite.config.js). Update it if the production domain changes.
 
