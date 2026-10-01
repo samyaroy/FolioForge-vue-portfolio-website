@@ -4,7 +4,7 @@
   "compatibility_date": "2026-03-21",
   "assets": {
     "directory": "./dist",
-    // Every real route is prerendered to its own dist/<route>/index.html (see
+    // Every real route is prerendered to its own dist/<route>.html (see
     // scripts/seo-build.ts), so history-mode routes resolve on direct
     // load from a static file and only genuinely unknown paths fall through.
     // Those get dist/404.html with a real 404 status — the SPA still boots and
@@ -12,10 +12,10 @@
     // every misspelled URL is a valid page (the "soft 404" that
     // single-page-application handling produces).
     "not_found_handling": "404-page",
-    // Serve /contact from /contact/index.html directly. The default
-    // (auto-trailing-slash) instead 307s /contact -> /contact/, which would
-    // put a redirect in front of every page and disagree with the canonical
-    // and sitemap URLs, both of which are written without a trailing slash.
+    // Serve /contact from contact.html directly and redirect /contact/ to it,
+    // matching the canonical and sitemap URLs, both of which are written
+    // without a trailing slash. Cloudflare Pages does not read this block; the
+    // flat contact.html layout is what keeps it redirect-free there too.
     "html_handling": "drop-trailing-slash"
   }
 }

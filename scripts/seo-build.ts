@@ -11,8 +11,8 @@ import path from 'node:path'
 // bundle is written it stamps out one HTML file per known route, each a copy of
 // the shell with that route's own <title>, description, canonical, Open Graph,
 // Twitter card, and JSON-LD baked into the head. Static hosts serve
-// dist/<route>/index.html directly for /<route>, and the SPA still boots and
-// takes over navigation exactly as before.
+// dist/<route>.html directly for /<route>, and the SPA still boots and takes
+// over navigation exactly as before.
 
 export interface SeoPage {
   /** Route path, e.g. '/' or '/contact'. */
@@ -239,11 +239,17 @@ export function writeSeoOutput(outDir: string, rawOptions: SeoPrerenderOptions):
   const render = (page: SeoPage): string =>
     shell.replace(/\s*<\/head>/, `\n${headFor(page, options)}\n  </head>`)
 
+  // /contact is written as contact.html, not contact/index.html. Cloudflare
+  // Pages answers /contact with a 308 to /contact/ whenever the file is a
+  // directory index, and has no setting to turn that off -- so every page sat
+  // behind a redirect to a URL its own canonical and the sitemap disagreed
+  // with. A flat file is served at /contact itself by Pages, by Workers static
+  // assets, and by `vite preview`, and each of them redirects /contact/ to it.
   for (const page of options.pages) {
     const target =
       page.path === '/'
         ? shellPath
-        : path.join(outDir, page.path.replace(/^\/+/, ''), 'index.html')
+        : path.join(outDir, `${page.path.replace(/^\/+|\/+$/g, '')}.html`)
 
     fs.mkdirSync(path.dirname(target), { recursive: true })
     fs.writeFileSync(target, render(page))
