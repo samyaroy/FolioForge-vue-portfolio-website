@@ -6,6 +6,9 @@
         <span v-if="leadership.cred_link" class="inline-block ml-2 align-middle">
           <DocumentViewer :src="leadership.cred_link" />
         </span>
+        <span v-else-if="leadership.ext_link" class="inline-block ml-2 align-middle">
+          <ExternalLink :href="leadership.ext_link" :label="`Open link for ${leadership.role}`" />
+        </span>
       </h3>
     </div>
 
@@ -35,6 +38,9 @@
               {{ affiliation.role }}
               <span v-if="affiliation.cred_link" class="inline-block ml-1.5 align-middle">
                 <DocumentViewer :src="affiliation.cred_link" />
+              </span>
+              <span v-else-if="affiliation.ext_link" class="inline-block ml-1.5 align-middle">
+                <ExternalLink :href="affiliation.ext_link" :label="`Open link for ${affiliation.role}`" />
               </span>
             </p>
             <span v-if="affiliation.time_period" class="text-sm text-gray-500 sm:ml-auto shrink-0">{{ affiliation.time_period }}</span>
@@ -102,6 +108,7 @@
 <script setup>
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import ExternalLink from '@/components/ExternalLink.vue'
 import SmartLink from '@/components/SmartLink.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 
@@ -124,6 +131,7 @@ const affiliations = computed(() =>
     // two organizations reads differently from two distinct roles.
     role: affiliation.role || '',
     cred_link: affiliation.cred_link || null,
+    ext_link: affiliation.ext_link || '',
     name: affiliation.organization?.name || '',
     link: affiliation.organization?.web_link || '',
     host: affiliation.host || null,

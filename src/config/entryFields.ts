@@ -59,10 +59,16 @@ export const entryFields = {
   // One leadership entry can hold several roles, each at its own organisation,
   // with its own host and period. `cred_link` on an affiliation is a list of
   // labelled documents and is preserved rather than edited here.
-  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period'] }, 'description', 'cred_link'],
+  //
+  // In both co-curricular collections a role carries either `cred_link` (a
+  // document, opened in the viewer) or `ext_link` (a site, opened in a new
+  // tab) -- never both; the card shows the credential if both are set.
+  // `ext_link` belongs to the role, unlike `organization.web_link`, which is the
+  // organisation's own site.
+  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'ext_link'] }, 'description', 'cred_link', 'ext_link'],
   // A volunteering entry is either a single role or a `roles` list of them. The
   // per-role `field` list is preserved rather than edited here.
-  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link'],
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills', 'ext_link'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],

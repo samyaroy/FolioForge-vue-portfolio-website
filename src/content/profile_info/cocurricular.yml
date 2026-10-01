@@ -1,3 +1,9 @@
+# A role -- a leadership entry or affiliation, a volunteering entry or one of
+# its `roles` -- carries either of:
+#   cred_link: a document (Drive file), opened in the viewer
+#   ext_link:  a site (https:// URL), opened in a new tab
+# never both; the card shows the credential if both are set. A `cred_link: '#'`
+# placeholder still counts as a credential, so remove it when adding ext_link.
 co_curriculars:
   - title: leadership_roles
     entries:
@@ -47,6 +53,7 @@ co_curriculars:
     - role: Website Officer (Communications Team)
       organization: Researchers of Statistics Education (RoSE) Network
       time_period: 2026 - Present
+      ext_link: https://www.rose-network.org/about-us/meet-the-team/comms#h.2dd5tg2qv8nr
 
     # Switched off rather than commented out, so it stays editable in the admin
     # and can be switched back from there. Mentoring the IDEAS-TIH internship

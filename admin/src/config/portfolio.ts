@@ -208,8 +208,8 @@ export const portfolioPages: PortfolioPage[] = [
     id: 'cocurricular', title: 'Volunteering & Co-curricular', publicPath: '/cocurricular', icon: HandHeart,
     description: 'Leadership, organisations, volunteering, and related activities.',
     sections: [
-      { id: 'leadership', title: 'Leadership & Organizations', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description and website'], requiredFields: ['role'], entryFields: entryFields.leadership },
-      { id: 'volunteering', title: 'Volunteering', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description and credential'], requiredFields: ['role', 'organization'], entryFields: entryFields.volunteering },
+      { id: 'leadership', title: 'Leadership & Organizations', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description, website and link'], requiredFields: ['role'], entryFields: entryFields.leadership },
+      { id: 'volunteering', title: 'Volunteering', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description, credential and link'], requiredFields: ['role', 'organization'], entryFields: entryFields.volunteering },
     ],
   },
   {
