@@ -185,7 +185,7 @@
                  the row count: maxflags / columns. 24 flags over 3 columns = 8
                  rows instead of the previous 5. -->
             <div class="pt-2 pb-0">
-              <a href="https://info.flagcounter.com/Wh9G"><img
+              <a href="https://info.flagcounter.com/Wh9G" target="_blank" rel="noopener noreferrer"><img
                   src="https://s01.flagcounter.com/count2/Wh9G/bg_FFFFFF/txt_000000/border_CCCCCC/columns_3/maxflags_24/viewers_0/labels_0/pageviews_1/flags_0/percent_0/"
                   alt="Flag Counter" border="0"></a>
             </div>
