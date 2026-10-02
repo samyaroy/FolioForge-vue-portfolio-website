@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "folioforge-admin-beta",
   "main": "worker/index.ts",
+  "alias": { "yaml": "./node_modules/yaml" },
   "compatibility_date": "2026-09-16",
   "workers_dev": false,
   "preview_urls": false,
