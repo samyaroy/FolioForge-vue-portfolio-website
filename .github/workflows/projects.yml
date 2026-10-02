@@ -1,0 +1,58 @@
+# Routes issues and pull requests to the GitHub Project of each app they are
+# labeled for:
+#   app:portfolio -> https://github.com/users/samyaroy/projects/4
+#   app:admin     -> https://github.com/users/samyaroy/projects/3
+#   app:blogs     -> https://github.com/users/samyaroy/projects/2
+# Pull requests are first labeled from the paths they change (.github/labeler.yml).
+# Issues are labeled by hand.
+#
+# The Projects are owned by the user account, which GITHUB_TOKEN cannot reach,
+# so adding items takes ADD_TO_PROJECT_PAT: a classic token with only the
+# `project` scope.
+#
+# pull_request_target runs this file from the base branch, with secrets, even
+# for pull requests from forks. Never check out or run the pull request's code
+# here.
+
+name: Projects
+
+on:
+  issues:
+    types: [opened, labeled]
+  pull_request_target:
+    types: [opened, reopened, synchronize, labeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  route:
+    # Copies of this template repo have neither the Projects nor the token.
+    if: github.repository == 'samyaroy/FolioForge-vue-portfolio-website'
+    runs-on: ubuntu-latest
+    steps:
+      # Labels added here with GITHUB_TOKEN do not trigger another run, so the
+      # next step reads them from this step's output instead of the event.
+      - id: labeler
+        if: github.event_name == 'pull_request_target'
+        uses: actions/labeler@v7
+
+      - name: Add to app projects
+        env:
+          GH_TOKEN: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          ITEM_URL: ${{ github.event.issue.html_url || github.event.pull_request.html_url }}
+          LABELS: ${{ steps.labeler.outputs.all-labels || join(github.event.issue.labels.*.name, ',') }}
+        run: |
+          # Adding an item that is already in a Project is a no-op.
+          add() { # <label> <project number>
+            case ",$LABELS," in
+              *",$1,"*)
+                gh project item-add "$2" --owner samyaroy --url "$ITEM_URL"
+                echo "Added $ITEM_URL to project $2 ($1)"
+                ;;
+            esac
+          }
+          add app:portfolio 4
+          add app:admin 3
+          add app:blogs 2
