@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 import { isAnimatedIcon, researchInterestIcon, researchInterestName, RESEARCH_INTEREST_FALLBACK_ICON } from '../../../src/config/researchInterestIcons'
 import { mentoredProjectLinkCategories, ongoingProjectLinkCategories } from '../../../src/config/projectLinkCategories'
 import { ENTRY_ENABLED_KEY } from '../../../src/config/entryStatus'
+import { galleryCoverUrl } from '@/lib/galleryImages'
 
 /**
  * A row's preview, shaped like the card the site renders rather than a list of
@@ -91,6 +92,23 @@ function counted(value: unknown, noun: string): string {
 function linkLabels(value: unknown, categories: Readonly<Record<string, string>>): string {
   const links = block(value)
   return Object.entries(categories).filter(([key]) => text(links[key])).map(([, label]) => label).join(', ')
+}
+
+/**
+ * What a co-curricular entry's roles link to, as their cards show it: a role's
+ * credential if it has one, otherwise its website. The entry counts as a role,
+ * and so does each one it lists under `rows`.
+ */
+function roleLinkFacts(raw: Record<string, unknown>, rows: string): PreviewFact[] {
+  const roles = [raw, ...(Array.isArray(raw[rows]) ? raw[rows] : [])].map(block)
+  // One document, or a list of labelled ones.
+  const hasCredential = (role: Record<string, unknown>) => Array.isArray(role.cred_link) ? role.cred_link.length > 0 : Boolean(text(role.cred_link))
+  const credentials = roles.filter(hasCredential).length
+  const sites = roles.filter(role => !hasCredential(role) && /^https?:\/\//i.test(text(role.ext_link))).map(role => host(role.ext_link))
+  return [
+    ...fact(FileBadge, credentials > 1 ? `${credentials} credentials` : credentials ? 'Credential' : ''),
+    ...fact(Globe, sites.join(', ')),
+  ]
 }
 
 /** A nested block, for content that nests a guide, an issuer or a publication. */
@@ -351,6 +369,7 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Building2, names(raw.affiliation, 'host.name')),
       ...fact(GraduationCap, names(raw.affiliation, 'institute')),
       ...fact(CalendarDays, names(raw.affiliation, 'time_period')),
+      ...roleLinkFacts(raw, 'affiliation'),
     ]
   }
   if (collection === 'cocurricular/volunteering') {
@@ -360,6 +379,17 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Building, text(raw.organization) || names(raw.roles, 'organization')),
       ...fact(CalendarDays, text(raw.time_period) || names(raw.roles, 'time_period')),
       ...fact(Shapes, names(raw.field, 'sub_field')),
+      ...roleLinkFacts(raw, 'roles'),
+    ]
+  }
+  if (collection === 'gallery/career-unlocks') {
+    return [
+      ...fact(CalendarDays, raw.date),
+      ...fact(Presentation, raw.event),
+      ...fact(MapPin, raw.location),
+      ...fact(Tag, names(raw.tags)),
+      ...fact(Images, counted(raw.images, 'image')),
+      ...fact(Shapes, raw.type),
     ]
   }
   if (collection === 'professional-activity/hosted-events') {
@@ -490,6 +520,15 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
   return []
 }
 
+/**
+ * The picture a row leads with, for a collection whose card is a picture; an
+ * empty string when that entry has none, undefined for every other collection.
+ */
+export function previewImage(raw: Record<string, unknown>, collection: string): string | undefined {
+  if (collection === 'gallery/career-unlocks') return galleryCoverUrl(raw)
+  return undefined
+}
+
 /** Collections whose rows are drawn as the site draws them. */
 export function hasSitePreview(collection: string): boolean {
   // Every Conferences, Workshops & Bootcamps collection is drawn the same way,
@@ -510,6 +549,7 @@ export function hasSitePreview(collection: string): boolean {
     'teaching/mentoring', 'teaching/projects', 'teaching/others',
     'cocurricular/leadership', 'cocurricular/volunteering',
     'professional-activity/hosted-events',
+    'gallery/career-unlocks',
     'resources/study-material', 'resources/worth-exploring',
     'recommended/items', 'readings/items', 'movies/items', 'travel/states', 'hobbies/tiles',
   ].includes(collection)

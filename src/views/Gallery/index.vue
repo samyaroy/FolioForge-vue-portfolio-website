@@ -35,6 +35,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { galleryCardsPerRow } from '@/config/featureFlags'
+import { isEntryEnabled } from '@/config/entryStatus'
 import galleryContent from '@/content/profile_info/gallery.yml'
 import galleryTagMetadata from '@/metadata/galleryTags.yml'
 import { GALLERY_ITEM_PARAM, galleryAnchorId } from '@/utils/shareLinks'
@@ -51,7 +52,9 @@ defineOptions({
 // would otherwise hide most of them from the capture run.
 const shouldExposeAllItemsForCapture = typeof window !== 'undefined' && window.__BONEYARD_BUILD === true
 
-const rawItems = Array.isArray(galleryContent?.items) ? galleryContent.items : []
+// An item switched off in the admin (`enabled: false`) is left out, as it is
+// from every other collection the site renders.
+const rawItems = Array.isArray(galleryContent?.items) ? galleryContent.items.filter(isEntryEnabled) : []
 const configuredTags = Array.isArray(galleryTagMetadata?.tags) ? galleryTagMetadata.tags : []
 const configuredTagIds = new Set(
   configuredTags

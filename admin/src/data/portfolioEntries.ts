@@ -110,6 +110,11 @@ function toEntries(records: UnknownRecord[], titlePaths: string[], subtitlePaths
   })
 }
 
+export function mentoringCohorts(records: unknown[]): PortfolioEntry[] {
+  return toEntries(asRecords(records), ['programme', 'semester'], ['time_period', 'semester'])
+    .map(entry => ({ ...entry, readOnlyFields: ['projects'] }))
+}
+
 function arrayAt(document: UnknownRecord, path: string) {
   return asRecords(readPath(document, path))
 }
@@ -122,13 +127,16 @@ function groupedEntries(groupName: string) {
 /**
  * An entry that holds several roles has no `role` of its own, so it would list
  * as untitled. Name it by the roles it carries instead — that is what the card
- * shows and what someone is looking for in the list.
+ * shows and what someone is looking for in the list. Only the title changes:
+ * `raw` is what a save writes back, so a role put there would land in the file.
  */
-function withGroupedRoleTitles(entries: UnknownRecord[]): UnknownRecord[] {
+function withGroupedRoleTitles(entries: PortfolioEntry[]): PortfolioEntry[] {
   return entries.map(entry => {
-    if (entry.role || !Array.isArray(entry.roles)) return entry
-    const named = asRecords(entry.roles).map(item => displayText(item.role)).filter(Boolean)
-    return named.length ? { ...entry, role: named.join(' + ') } : entry
+    if (entry.raw.role || !Array.isArray(entry.raw.roles)) return entry
+    const named = asRecords(entry.raw.roles).map(item => displayText(item.role)).filter(Boolean)
+    if (!named.length) return entry
+    const title = named.join(' + ')
+    return { ...entry, title, presentation: entry.presentation && { ...entry.presentation, fallbackTitle: title } }
   })
 }
 
@@ -205,8 +213,7 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'teaching/projects': () => toEntries(mentoredProjects(), ['title'], ['course', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
   // `projects` is its own collection; it is carried through a save untouched
   // rather than shown here as a raw blob.
-  'teaching/mentoring': () => toEntries(arrayAt(documents.teaching, 'projects_mentored'), ['programme', 'semester'], ['time_period', 'semester'])
-    .map(entry => ({ ...entry, readOnlyFields: ['projects'] })),
+  'teaching/mentoring': () => mentoringCohorts(arrayAt(documents.teaching, 'projects_mentored')),
   'teaching/others': () => toEntries(arrayAt(documents.teaching, 'other_teachings'), ['title'], ['role', 'duration']),
   'ongoing-projects/projects': () => toEntries(arrayAt(documents.ongoingProjects, 'ongoing_projects'), ['title'], ['status', 'type']),
 
@@ -227,8 +234,8 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'workshops/bootcamps': () => toEntries(arrayAt(documents.workshops, 'attended_bootcamps'), ['title'], ['institution', 'date']),
   'workshops/other': () => toEntries(arrayAt(documents.workshops, 'attended_webinars_n_others'), ['title'], ['type', 'date']),
 
-  'cocurricular/leadership': () => toEntries(withGroupedRoleTitles(groupedEntries('leadership_roles')), ['role', 'title'], ['affiliation', 'time_period']),
-  'cocurricular/volunteering': () => toEntries(withGroupedRoleTitles(groupedEntries('volunteering_roles')), ['role', 'title'], ['organization', 'time_period']),
+  'cocurricular/leadership': () => withGroupedRoleTitles(toEntries(groupedEntries('leadership_roles'), ['role', 'title'], ['affiliation', 'time_period'])),
+  'cocurricular/volunteering': () => withGroupedRoleTitles(toEntries(groupedEntries('volunteering_roles'), ['role', 'title'], ['organization', 'time_period'])),
   'professional-activity/invited-talks': () => toEntries(arrayAt(documents.professionalActivity, 'invited_talks'), ['title'], ['institution', 'date']),
   'professional-activity/hosted-events': () => toEntries([
     ...arrayAt(documents.professionalActivity, 'hosted_events'),

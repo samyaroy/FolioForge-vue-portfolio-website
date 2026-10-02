@@ -40,6 +40,11 @@ import path from 'node:path'
 import process from 'node:process'
 import sharp from 'sharp'
 import YAML from 'yaml'
+import {
+  GALLERY_PHOTO_JPEG_QUALITY,
+  GALLERY_PHOTO_MAX_BYTES,
+  GALLERY_PHOTO_MAX_EDGE,
+} from '../shared/gallery/photoPolicy.js'
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 const GALLERY_PATH = path.join(ROOT, 'src/content/profile_info/gallery.yml')
@@ -49,9 +54,10 @@ const BACKUP_DIR = path.join(ROOT, '.gallery-image-backups')
 // Must match getGalleryImageById in src/views/Gallery/index.vue.
 const MEDIA_BASE = 'https://media.samyabrata.codeium.xyz'
 
-const MAX_EDGE = 1920
-const MAX_BYTES = 500 * 1024
-const JPEG_QUALITY = 80
+// Shared with the admin's photo upload, which prepares photos to the same limits.
+const MAX_EDGE = GALLERY_PHOTO_MAX_EDGE
+const MAX_BYTES = GALLERY_PHOTO_MAX_BYTES
+const JPEG_QUALITY = GALLERY_PHOTO_JPEG_QUALITY
 // A size-only re-encode is uploaded only when it saves at least this much, so a
 // photo that is already as small as it will get is not recompressed each run.
 const MIN_SAVING = 0.1

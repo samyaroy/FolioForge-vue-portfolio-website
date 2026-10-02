@@ -64,6 +64,16 @@ export function draftPreviewUrl(name: string): string {
   return `/api/media/drafts/${encodeURIComponent(name)}`
 }
 
+/** A refused media request, carrying the Worker's code as well as its message. */
+export class MediaRequestError extends Error {
+  readonly code: string
+  constructor(message: string, code: string) {
+    super(message)
+    this.name = 'MediaRequestError'
+    this.code = code
+  }
+}
+
 export async function mutate(url: string, init: RequestInit, failures: Record<string, string>) {
   const response = await fetch(url, {
     ...init,
@@ -74,7 +84,7 @@ export async function mutate(url: string, init: RequestInit, failures: Record<st
     const failure: unknown = await response.json().catch(() => null)
     const code = failure && typeof failure === 'object' ? String((failure as { error?: unknown }).error ?? '') : ''
     if (code === 'invalid_csrf_token') pendingToken = undefined
-    throw new Error(failures[code] ?? MESSAGES[code] ?? `Request failed (${response.status}).`)
+    throw new MediaRequestError(failures[code] ?? MESSAGES[code] ?? `Request failed (${response.status}).`, code)
   }
   return response.json() as Promise<unknown>
 }

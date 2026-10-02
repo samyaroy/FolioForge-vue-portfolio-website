@@ -20,13 +20,18 @@ import { ProjectLinksEditor } from '@/components/editor/ProjectLinksEditor'
 import { ObjectFieldsEditor } from '@/components/editor/ObjectFieldsEditor'
 import { ListFieldsEditor } from '@/components/editor/ListFieldsEditor'
 import { fieldCaption } from '@/lib/fieldNames'
-import { credentialStyleOf, fieldKeys, listFieldsOf, objectFieldsOf, type EntryField } from '../../../../src/config/entryFields.ts'
+import { credentialStyleOf, fieldKeys, galleryImagesKeyOf, listFieldsOf, objectFieldsOf, type EntryField } from '../../../../src/config/entryFields.ts'
 import { mentoredProjectLinkCategories, ongoingProjectLinkCategories, projectLinkCategories } from '../../../../src/config/projectLinkCategories.ts'
 import { ENTRY_ENABLED_KEY } from '../../../../src/config/entryStatus.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { LogoSelector } from '@/components/editor/LogoSelector'
 import { GalleryTagsEditor } from '@/components/editor/GalleryTagsEditor'
+import { GalleryImagesEditor } from '@/components/editor/GalleryImagesEditor'
+import { RoleLinkField } from '@/components/editor/RoleLinkField'
+import { useGalleryUploads } from '@/hooks/useGalleryUploads'
 import { hasDefinedTag, type GalleryTag } from '@/lib/galleryTags'
+import { galleryImagesDraft, serializeGalleryImages } from '@/lib/galleryImages'
+import { CREDENTIAL_KEY, hasRoleLink, isWebsiteUrl, WEBSITE_KEY, WEBSITE_URL_ERROR } from '@/lib/roleLinks'
 
 type EntryEditorDialogProps = {
   entry?: PortfolioEntry
@@ -40,6 +45,8 @@ type EntryEditorDialogProps = {
   fieldGroups: string[]
   /** Entry keys this section cannot be saved without; see PortfolioSection. */
   requiredFields?: string[]
+  /** A list whose rows stand in for the entry's own fields; see PortfolioSection. */
+  groupedBy?: string
   /** Values offered for the entry's `type` field; see PortfolioSection. */
   typeOptions?: readonly string[]
   /** Every field an entry carries, with nested shapes; see PortfolioSection. */
@@ -82,16 +89,43 @@ function hasSubFieldNames(value: unknown): boolean {
   return names.length > 0 && names.every(name => typeof name === 'string' && Boolean(name.trim()))
 }
 
+/** How many documents a credential lists, when it is a list rather than one link. */
+function listedCredentials(value: string | undefined): number | undefined {
+  if (!value || !/^[[{]/.test(value)) return undefined
+  try {
+    const parsed: unknown = JSON.parse(value)
+    return Array.isArray(parsed) ? parsed.length : 1
+  } catch {
+    return undefined
+  }
+}
+
+/** Website links in list rows that the site would not show. */
+function invalidRowWebsite(value: string): boolean {
+  try {
+    const rows: unknown = JSON.parse(value)
+    return Array.isArray(rows) && rows.some(row => {
+      const website = row && typeof row === 'object' ? (row as Record<string, unknown>)[WEBSITE_KEY] : undefined
+      return typeof website === 'string' && Boolean(website.trim()) && !isWebsiteUrl(website)
+    })
+  } catch {
+    return false
+  }
+}
+
 function fieldKey(label: string) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '')
 }
 
-export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFields = [], typeOptions = [], entryFields: schema = [], tagOptions = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
+export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFields = [], groupedBy, typeOptions = [], entryFields: schema = [], tagOptions = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
   // Nesting is read off the schema, so a collection declares its shape once.
   const entryFields = useMemo(() => fieldKeys(schema), [schema])
   const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
   const listFields = useMemo(() => listFieldsOf(schema), [schema])
   const credentialStyle = useMemo(() => credentialStyleOf(schema), [schema])
+  const imagesKey = useMemo(() => galleryImagesKeyOf(schema), [schema])
+  // A role's credential and website are one choice, never two filled boxes.
+  const roleLink = useMemo(() => !credentialStyle && hasRoleLink(entryFields), [credentialStyle, entryFields])
   // The category styles are edited the same way; they differ only in which
   // categories the card behind them renders.
   const isCategoryStyle = credentialStyle ? credentialStyle in categoryStyles : false
@@ -99,13 +133,13 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
   // What an untouched field holds before anything is typed into it.
   const blankValue = useCallback((key: string) => {
     if (objectFields[key]) return JSON.stringify(objectFieldsDraft(undefined, objectFields[key]))
-    if (listFields[key]) return '[]'
+    if (listFields[key] || key === imagesKey) return '[]'
     if (key === 'cred_link' && credentialStyle) return '[]'
     if (isExperience && (key === 'projects' || key === 'description')) return '[]'
     if (isEducation && key === 'sub_field') return '[]'
     if (tagOptions.length && key === 'tags') return '[]'
     return ''
-  }, [objectFields, listFields, credentialStyle, isExperience, isEducation, tagOptions])
+  }, [objectFields, listFields, imagesKey, credentialStyle, isExperience, isEducation, tagOptions])
 
   const initialFields = useMemo(() => {
     if (entry) {
@@ -117,6 +151,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       const drafts: Record<string, unknown> = {
         ...(credentialStyle === 'documents' ? { cred_link: credentialLinksDraft(base.cred_link) } : {}),
         ...(isCategoryStyle ? { cred_link: projectLinksDraft(base.cred_link) } : {}),
+        ...(imagesKey ? { [imagesKey]: galleryImagesDraft(base[imagesKey]) } : {}),
         // Declared object keys are drafted even when the entry lacks them, so
         // one can be filled in; an untouched blank group writes no key.
         ...Object.fromEntries(Object.entries(objectFields).map(([key, fields]) => [key, objectFieldsDraft(base[key], fields)])),
@@ -132,8 +167,21 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
     if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '[]', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
-  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, isCategoryStyle, objectFields, listFields, entryFields, blankValue])
+  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, isCategoryStyle, imagesKey, objectFields, listFields, entryFields, blankValue])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
+  // Photos uploaded for a gallery entry, published to the media host on save.
+  const photos = useGalleryUploads({
+    id: fields.id ?? '',
+    images: imagesKey ? JSON.parse(fields[imagesKey] ?? '[]') as string[] : [],
+    updateImages: change => {
+      if (imagesKey) setFields(current => ({ ...current, [imagesKey]: JSON.stringify(change(JSON.parse(current[imagesKey] ?? '[]') as string[])) }))
+    },
+  })
+  const [publishing, setPublishing] = useState(false)
+  // Closing mid-publish would discard a photo the host may already hold.
+  const close = () => { if (!publishing) onClose() }
+  // A credential written as a list of documents is shown, and saved untouched.
+  const keptCredentials = roleLink ? listedCredentials(initialFields[CREDENTIAL_KEY]) : undefined
   const [educationTab, setEducationTab] = useState('details')
   const [curriculum, setCurriculum] = useState(() => curriculumDraft(entry?.raw.cirriculum))
   const fieldOrder = ['job_role', 'type', 'company', 'department', 'location', 'time_period', 'supervisor']
@@ -146,10 +194,12 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
     : Object.entries(fields)
 
   // Only fields the dialog actually shows are enforced, so an older entry that
-  // never carried one of these keys stays editable.
-  const isRequired = (key: string) => requiredFields.includes(key) && key in fields
+  // never carried one of these keys stays editable. A grouped entry's rows
+  // carry what its own fields would, so a field they hold is theirs to fill.
+  const grouped = Boolean(groupedBy && listFields[groupedBy] && (JSON.parse(fields[groupedBy] ?? '[]') as unknown[]).length)
+  const isRequired = (key: string) => requiredFields.includes(key) && key in fields && !(grouped && listFields[groupedBy!].includes(key))
 
-  const saveEntry = () => {
+  const saveEntry = async () => {
     if (!Object.values(fields).some(value => value.trim())) {
       toast.error('Enter content before saving.')
       return
@@ -166,12 +216,34 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       toast.error('Choose at least one gallery tag, or nothing can filter to this entry.')
       return
     }
+    // ExternalLink.vue drops anything but an http(s) address without a word,
+    // so a link the site would not show is stopped here instead.
+    const website = fields[WEBSITE_KEY]
+    if ((website?.trim() && !isWebsiteUrl(website)) || Object.keys(listFields).some(key => listFields[key].includes(WEBSITE_KEY) && invalidRowWebsite(fields[key] ?? '[]'))) {
+      toast.error(WEBSITE_URL_ERROR)
+      return
+    }
+    // Only once everything else is in order, so a form that cannot be saved
+    // never puts a photo on the media host.
+    let values = fields
+    if (imagesKey && photos.pending) {
+      setPublishing(true)
+      try {
+        values = { ...fields, [imagesKey]: JSON.stringify(await photos.publishAll(JSON.parse(fields[imagesKey] ?? '[]') as string[])) }
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Could not publish the photos.')
+        return
+      } finally {
+        setPublishing(false)
+      }
+    }
     try {
-      const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(fields).map(([key, value]) => {
+      const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(values).map(([key, value]) => {
         const original = entry?.raw[key]
         if (value === initialFields[key] && original !== undefined) return [key, original]
         if (credentialStyle === 'documents' && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
         if (isCategoryStyle && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
+        if (key === imagesKey) return [key, serializeGalleryImages(JSON.parse(value), original)]
         if (objectFields[key]) return [key, serializeObjectFields(JSON.parse(value), original, objectFields[key], key)]
         if (listFields[key]) return [key, serializeListFields(JSON.parse(value), original, listFields[key], fieldCaption(key).toLowerCase())]
         const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('[')) || (tagOptions.length > 0 && key === 'tags')
@@ -190,7 +262,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       }
       for (const key of entryFields) if (!(key in raw)) raw[key] = ''
       if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum, entry?.raw.cirriculum)
-      const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(fields)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
+      const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(values)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
       onSave({
         ...entry,
         id: entry?.id ?? `local-${Date.now()}`,
@@ -207,20 +279,44 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
   const what = entry ? entry.title : 'New entry'
 
   return (
-    <div className="entry-dialog-backdrop" role="presentation" onMouseDown={onClose}>
+    <div className="entry-dialog-backdrop" role="presentation" onMouseDown={close}>
       <section className="entry-dialog" role="dialog" aria-modal="true" aria-label={`${entry ? `Editing ${what}` : what}${where ? ` in ${where}` : ''}`} onMouseDown={event => event.stopPropagation()}>
         <header>
           <div><span>{where || 'Collection entry'}</span><h2>{what}</h2></div>
           {/* The heading names the entry; this says which of the two things
               you are doing to it, which the entry's own name cannot. */}
           <span className="entry-dialog-mode" data-mode={entry ? 'edit' : 'new'}>{entry ? 'Editing' : 'New'}</span>
-          <IconButton variant="bare" size="none" label="Close editor" onClick={onClose}><X aria-hidden="true" /></IconButton>
+          <IconButton variant="bare" size="none" label="Close editor" onClick={close}><X aria-hidden="true" /></IconButton>
         </header>
         {isEducation && <Tabs value={educationTab} onValueChange={setEducationTab} className="education-editor-tabs"><TabsList><TabsTrigger value="details">Education details</TabsTrigger><TabsTrigger value="curriculum">Curriculum</TabsTrigger></TabsList></Tabs>}
         <div className="entry-dialog-body" hidden={isEducation && educationTab !== 'details'}>
           <div className="entry-field-divider"><span>{isExperience ? 'Role details' : 'Entry fields'}</span>{!isExperience && <small>{Object.keys(fields).length}</small>}</div>
           {orderedFields.filter(([key]) => key !== ENTRY_ENABLED_KEY).map(([key, value], index) => {
             if (key === 'logo') return <LogoSelector key={key} multiple={typeof entry?.raw.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => setFields(current => ({ ...current, logo: typeof entry?.raw.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) }))} />
+            if (key === imagesKey) {
+              return (
+                <GalleryImagesEditor
+                  key={key}
+                  images={JSON.parse(value)}
+                  fallbackId={fields.id ?? ''}
+                  uploads={photos.photos}
+                  onUpload={photos.upload}
+                  onChange={images => { photos.prune(images); setFields(current => ({ ...current, [key]: JSON.stringify(images) })) }}
+                />
+              )
+            }
+            if (roleLink && key === WEBSITE_KEY) return null
+            if (roleLink && key === CREDENTIAL_KEY) {
+              return (
+                <RoleLinkField
+                  key={key}
+                  credential={keptCredentials === undefined ? value : ''}
+                  website={fields[WEBSITE_KEY] ?? ''}
+                  keptCredentials={keptCredentials}
+                  onChange={link => setFields(current => ({ ...current, [CREDENTIAL_KEY]: keptCredentials === undefined ? link.credential : current[CREDENTIAL_KEY], [WEBSITE_KEY]: link.website }))}
+                />
+              )
+            }
             if (tagOptions.length && key === 'tags') return <GalleryTagsEditor key={key} options={tagOptions} tags={chosenTags(value)} onChange={tags => setFields(current => ({ ...current, tags: JSON.stringify(tags) }))} />
             if (isEducation && key === 'sub_field') return <EducationSubFieldsEditor key={key} subFields={JSON.parse(value)} onChange={subFields => setFields(current => ({ ...current, sub_field: JSON.stringify(subFields) }))} />
             if (isExperience && key === 'projects') return <ExperienceProjectsEditor key={key} projects={JSON.parse(value)} onChange={projects => setFields(current => ({ ...current, projects: JSON.stringify(projects) }))} />
@@ -250,7 +346,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
           })}
         </div>
         {isEducation && <div className="entry-dialog-body curriculum-tab-body" hidden={educationTab !== 'curriculum'}><CurriculumEditor curriculum={curriculum} onChange={setCurriculum} /></div>}
-        <footer><Button variant="outline" onClick={onClose} disabled={saving}>Cancel</Button><Button onClick={saveEntry} disabled={saving}><Save aria-hidden="true" /> {saving ? 'Saving...' : 'Save'}</Button></footer>
+        <footer><Button variant="outline" onClick={onClose} disabled={saving || publishing}>Cancel</Button><Button onClick={() => void saveEntry()} disabled={saving || publishing}><Save aria-hidden="true" /> {publishing ? 'Publishing photos...' : saving ? 'Saving...' : 'Save'}</Button></footer>
       </section>
     </div>
   )

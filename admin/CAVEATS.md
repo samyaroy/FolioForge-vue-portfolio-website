@@ -37,7 +37,9 @@ It does not go deeper than that. A **list inside a list row** cannot be edited:
 
 These are **preserved, not editable**. The list editor starts from the original
 item and overwrites only the declared columns, so anything it does not
-understand survives a save untouched. Edit them in the YAML.
+understand survives a save untouched. Edit them in the YAML. A declared column
+that holds such a list — an affiliation's `cred_link` — is shown as kept (the
+role's Link reads "2 credential documents") rather than as an empty box.
 
 Lifting this means a recursive editor rather than the current flat column model.
 Worth doing only if this content starts changing often.
@@ -66,6 +68,20 @@ where those two disagree is a state nothing should be able to create.
 Publishing a batch also uses the Git data API. The single-file path remains only
 for a collection with no generated output, and unifying them would be a
 simplification with no behaviour change.
+
+## Gallery photos go live before the entry does
+
+Photos uploaded from the Career Unlocks editor are prepared in the browser to
+the limits `scripts/fit-gallery-images.mjs` checks (`shared/gallery/photoPolicy.js`),
+staged privately, and published to the media bucket when the entry is saved.
+Closing the editor or removing a photo before then discards it.
+
+Saving the entry only queues `gallery.yml` for the next publish, but the photo
+is on the media host from that moment. Nothing links to it until the batch is
+published; if the batch is discarded instead, the photo stays in the bucket
+unreferenced, and can be archived from the Media Library. The browser does not
+add the card-crop margins the fit script adds, so the next V1 push may still
+pad a photo whose shape the card would crop too hard.
 
 ## Previews are replicas, not previews
 

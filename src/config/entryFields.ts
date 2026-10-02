@@ -14,14 +14,15 @@
 /**
  * A field is either a plain key, or a key with the shape of what sits inside
  * it: an object edited as named sub-fields, a list edited as rows of columns,
- * or a credential holder. The first sub-field or column is the head — the rest
- * mean nothing without it.
+ * a credential holder, or a list of gallery image keys. The first sub-field or
+ * column is the head — the rest mean nothing without it.
  */
 export type EntryField =
   | string
   | { key: string; object: readonly string[] }
   | { key: string; list: readonly string[] }
   | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' | 'ongoingCategories' }
+  | { key: string; images: 'gallery' }
 
 export const entryFields = {
   experience: ['job_role', 'type', 'company', 'department', 'location', 'time_period', 'supervisor', 'projects', 'description', { key: 'cred_link', credentials: 'documents' }],
@@ -57,24 +58,25 @@ export const entryFields = {
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 
   // One leadership entry can hold several roles, each at its own organisation,
-  // with its own host and period. `cred_link` on an affiliation is a list of
-  // labelled documents and is preserved rather than edited here.
+  // with its own host and period. `cred_link` on an affiliation may be a list
+  // of labelled documents, which is preserved rather than edited here.
   //
   // In both co-curricular collections a role carries either `cred_link` (a
   // document, opened in the viewer) or `ext_link` (a site, opened in a new
-  // tab) -- never both; the card shows the credential if both are set.
-  // `ext_link` belongs to the role, unlike `organization.web_link`, which is the
+  // tab) -- never both; the card shows the credential if both are set. Where
+  // the two sit side by side, the admin edits them as one choice. `ext_link`
+  // belongs to the role, unlike `organization.web_link`, which is the
   // organisation's own site.
-  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'ext_link'] }, 'description', 'cred_link', 'ext_link'],
+  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'cred_link', 'ext_link'] }, 'description', 'cred_link', 'ext_link'],
   // A volunteering entry is either a single role or a `roles` list of them. The
   // per-role `field` list is preserved rather than edited here.
-  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills', 'ext_link'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],
   // `source` is where the line is from -- a book, a film -- and is optional.
   pageQuotes: ['text', 'author', 'source'],
-  galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', 'images', 'manifestDescription', 'externalUrl'],
+  galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', { key: 'images', images: 'gallery' }, 'manifestDescription', 'externalUrl'],
   studyMaterial: ['title', { key: 'materials', list: ['title', 'meta', 'instructor', 'distributor', 'logo', 'link', 'paid'] }],
   worthExploring: ['group', 'links'],
 
@@ -99,6 +101,12 @@ export function objectFieldsOf(fields: readonly EntryField[]): Record<string, re
 /** Keys edited as rows, mapped to their columns. */
 export function listFieldsOf(fields: readonly EntryField[]): Record<string, readonly string[]> {
   return Object.fromEntries(fields.flatMap(field => typeof field !== 'string' && 'list' in field ? [[field.key, field.list]] : []))
+}
+
+/** The key that lists gallery image keys, if the collection has one. */
+export function galleryImagesKeyOf(fields: readonly EntryField[]): string | undefined {
+  const field = fields.find(item => typeof item !== 'string' && 'images' in item)
+  return field && typeof field !== 'string' ? field.key : undefined
 }
 
 /** How this collection's `cred_link` is shaped, if it holds credentials. */
