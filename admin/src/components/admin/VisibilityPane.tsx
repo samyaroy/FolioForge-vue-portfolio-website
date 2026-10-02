@@ -31,24 +31,26 @@ export function VisibilityPane({ pageId, sectionId, sources = [], entryCount }: 
   pageId: string
   sectionId: string
   sources?: readonly string[]
-  entryCount?: { visible: number; total: number }
+  entryCount?: { enabled: number; total: number }
 }) {
   const controls = sectionVisibility[`${pageId}/${sectionId}`] ?? []
-  const { flags } = useVisibilityDraft()
   if (!controls.length && !sources.length && !entryCount) return null
-  const controllingFlags = pageId === 'home' && sectionId === 'education' ? controls.slice(0, 1) : controls
-  const isEnabled = controllingFlags.some(control => flags[control.path] === true)
   return (
     <section className="form-panel visibility-panel">
-      <div className="panel-heading"><div><h2>Section metainfo</h2></div></div>
-      {entryCount && <p className="visibility-summary" aria-live="polite">{entryCount.visible} of {entryCount.total} entries</p>}
+      <div className="panel-heading">
+        <div><h2>SECTION METAINFO</h2></div>
+        {entryCount && (
+          <span className="visibility-entry-count" aria-live="polite" aria-label={`${entryCount.enabled} enabled entries out of ${entryCount.total} total entries`} title="Enabled entries / Total entries">
+            {entryCount.enabled}/{entryCount.total}
+          </span>
+        )}
+      </div>
       {sources.length > 0 && (
         <div className="source-strip">
           <FileCode2 aria-hidden="true" />
           <span><small>Content source</small><strong>{sources.join(', ')}</strong></span>
         </div>
       )}
-      {controls.length > 1 && <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>}
       <VisibilitySwitches controls={controls} />
     </section>
   )

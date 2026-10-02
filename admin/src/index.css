@@ -319,6 +319,7 @@ tbody tr:hover { background: #f9fbfd; }
 .hyperlink-issue { display: inline-flex; align-items: center; gap: 4px; color: #b42318; font-size: 9px; }
 .hyperlink-issue svg { width: 11px; height: 11px; }
 .hyperlink-aliases { display: block; color: #5c7285; font-size: 10px; overflow-wrap: anywhere; }
+.hyperlink-collection-panel .data-table { min-width: 560px; }
 .table-footer { display: flex; min-height: 42px; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--border); padding: 8px 13px; color: #718396; font-size: 10px; }
 
 .connection-banner { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 12px; margin-top: 18px; border: 1px solid #bad9f5; background: #eef7ff; padding: 13px 14px; }
@@ -328,6 +329,9 @@ tbody tr:hover { background: #f9fbfd; }
 .connection-banner p { margin: 2px 0 0; color: #5e7488; font-size: 10px; }
 
 .page-actions { display: flex; flex: none; gap: 8px; }
+.beta-globe-icon { position: relative; display: inline-flex; width: 20px; height: 20px; flex: none; align-items: center; justify-content: center; }
+.beta-globe-icon > svg { width: 16px; height: 16px; }
+.beta-globe-icon__badge { position: absolute; bottom: -1px; right: -2px; display: grid; width: 12px; height: 14px; place-items: center; border: 1px solid #d6a63d; border-radius: 3px; background: #fff4cf; color: #805900; font-size: 10px; font-weight: 700; line-height: 1; }
 .page-action-stack { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
 .info-hint { position: relative; display: inline-flex; }
 .info-hint-trigger { display: grid; width: 22px; height: 22px; place-items: center; border: 0; border-radius: 50%; background: transparent; padding: 0; color: #1980e6; cursor: help; }
@@ -384,7 +388,7 @@ tbody tr:hover { background: #f9fbfd; }
 .section-tabs a:hover { color: #126abb; }
 .section-tabs .section-tab-active { color: #126abb; }
 .section-tabs .section-tab-active::after { position: absolute; right: 8px; bottom: -1px; left: 8px; height: 2px; background: #1980e6; content: ''; }
-.mapped-editor-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(270px, .65fr); align-items: start; gap: 18px; }
+.mapped-editor-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(240px, .5fr); align-items: start; gap: 18px; }
 .mapped-editor-layout[data-solo] { grid-template-columns: minmax(0, 1fr); }
 .mapped-editor-aside { display: grid; gap: 18px; }
 .admin-toast { border: 1px solid var(--border); border-radius: 6px; background: #fff; color: var(--foreground); font-family: inherit; font-size: 12px; line-height: 18px; }
@@ -728,6 +732,7 @@ tbody tr:hover { background: #f9fbfd; }
 /* Visibility is a couple of switches, not a form: it gets a slimmer header. */
 .visibility-panel .panel-heading { min-height: 40px; padding: 7px 12px; }
 .visibility-panel .panel-heading h2 { font-size: 13px; }
+.visibility-panel .visibility-entry-count { margin-left: auto; flex-shrink: 0; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 /* The eyebrow repeats what the heading says, and costs a whole line. */
 .visibility-panel .panel-heading > div > span { display: none; }
 .gallery-visibility { max-width: 420px; margin-top: 18px; }
@@ -873,17 +878,22 @@ tbody tr:hover { background: #f9fbfd; }
 .panel-heading-actions { display: flex; align-items: center; gap: 8px; }
 .collection-panel { min-width: 0; }
 .collection-panel > .panel-heading { flex-wrap: wrap; }
-.collection-panel .panel-heading-actions { flex-wrap: wrap; justify-content: flex-end; margin-left: auto; max-width: 100%; }
+.collection-panel .panel-heading-actions { min-width: 0; flex-wrap: nowrap; justify-content: flex-end; gap: 6px; margin-left: auto; max-width: 100%; }
+.collection-panel .panel-heading-actions > .section-action-button { flex-shrink: 0; white-space: nowrap; }
 .collection-entry-actions { display: flex; min-width: 0; max-width: 100%; align-items: center; gap: 8px; }
 .section-action-button { background: #173b63; color: #fff; }
 .section-action-button:hover { background: #204d7a; color: #fff; }
 .expandable-search { display: flex; width: 32px; min-width: 32px; max-width: 100%; height: 32px; align-items: center; justify-content: flex-end; gap: 0; transition: width 180ms ease; }
 .expandable-search[data-expanded] { width: 230px; }
 .expandable-search input { width: 0; min-width: 0; flex: 1; height: 32px; border-radius: 4px 0 0 4px; font-size: 11px; }
+.expandable-search input:focus,
+.expandable-search[data-expanded] button:focus { outline: none; box-shadow: none; --tw-ring-shadow: 0 0 #0000; --tw-ring-offset-shadow: 0 0 #0000; }
 .expandable-search button { border-radius: 4px; }
 .expandable-search[data-expanded] button { border-radius: 0 4px 4px 0; }
 .visibility-panel .source-strip strong { white-space: normal; overflow-wrap: anywhere; }
-.group-select { min-width: 150px; background: #fff; }
+.group-select { width: 110px; min-width: 80px; max-width: 110px; flex: 0 1 110px; height: 32px; min-height: 32px; gap: 4px; padding: 4px 6px; background: #fff; }
+.group-select .select-prefix { display: none; }
+.group-select > [data-slot="select-value"] { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
 /* The caption lives in the trigger, so the control reads as one phrase
    ("Group  Research") instead of a labelled field stacked over a line. */
 .select-prefix { color: #8ca0b0; font-size: 8px; font-weight: 750; letter-spacing: 0.02em; text-transform: uppercase; }

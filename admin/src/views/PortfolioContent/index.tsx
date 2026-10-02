@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { toast } from 'react-toastify'
 import { createEntry as createCollectionEntry, deleteEntry as deleteCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
-import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Star, Trash2 } from 'lucide-react'
+import { ArrowUpRight, Check, FileCode2, Globe, Pencil, Plus, Star, Trash2 } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { EntryThumbnail } from '@/components/admin/EntryThumbnail'
 import { SaveStatusHint } from '@/components/admin/InfoHint'
@@ -66,8 +66,24 @@ function SectionHeader({ page, section, status }: { page: PortfolioPage; section
         description={page.description}
         status={status}
         actions={
-          <Button variant="outline" asChild>
-            <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
+          <Button variant="outline" size="sm" asChild>
+            <a
+              href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${page.site === 'blog' ? 'blog' : 'beta'} page`}
+              title={`View ${page.site === 'blog' ? 'blog' : 'beta'} page`}
+            >
+              {page.site === 'blog' ? (
+                <><span aria-hidden="true">Blog</span><Globe aria-hidden="true" /></>
+              ) : (
+                <span className="beta-globe-icon" aria-hidden="true">
+                  <Globe />
+                  <span className="beta-globe-icon__badge">{'\u03b2'}</span>
+                </span>
+              )}
+              <ArrowUpRight aria-hidden="true" />
+            </a>
           </Button>
         }
       />
@@ -291,6 +307,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
           <div className="panel-heading">
             <div><span>Collection</span><h2>{section.title}</h2></div>
             <div className="panel-heading-actions">
+              <ExpandableSearchField value={query} onChange={setQuery} placeholder={`Search ${section.title.toLowerCase()}`} label={`Search ${section.title}`} />
               {(section.groups ?? (filterOptions.length ? filterOptions : undefined)) && (
                 <SelectField
                   prefix={section.groups ? 'Group' : section.filterBy?.field === 'semester' ? 'Semester' : 'Type'}
@@ -300,10 +317,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                   onChange={onGroupChange}
                 />
               )}
-              <div className="collection-entry-actions">
-                <ExpandableSearchField value={query} onChange={setQuery} placeholder={`Search ${section.title.toLowerCase()}`} label={`Search ${section.title}`} />
-                <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
-              </div>
+              <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
             </div>
           </div>
           <div className="repository-entry-list">
@@ -361,7 +375,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
         </section>
 
         <aside className="mapped-editor-aside">
-          <VisibilityPane pageId={page.id} sectionId={section.id} sources={section.sources} entryCount={{ visible: visibleEntries.length, total: entries.length }} />
+          <VisibilityPane pageId={page.id} sectionId={section.id} sources={section.sources} entryCount={{ enabled: entries.filter(entry => isEntryEnabled(entry.raw)).length, total: entries.length }} />
         </aside>
       </div>
       {editor && (
