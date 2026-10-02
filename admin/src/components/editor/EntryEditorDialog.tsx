@@ -28,6 +28,7 @@ import { LogoSelector } from '@/components/editor/LogoSelector'
 import { GalleryTagsEditor } from '@/components/editor/GalleryTagsEditor'
 import { GalleryImagesEditor } from '@/components/editor/GalleryImagesEditor'
 import { RoleLinkField } from '@/components/editor/RoleLinkField'
+import { useGalleryUploads } from '@/hooks/useGalleryUploads'
 import { hasDefinedTag, type GalleryTag } from '@/lib/galleryTags'
 import { galleryImagesDraft, serializeGalleryImages } from '@/lib/galleryImages'
 import { CREDENTIAL_KEY, hasRoleLink, isWebsiteUrl, WEBSITE_KEY, WEBSITE_URL_ERROR } from '@/lib/roleLinks'
@@ -168,6 +169,17 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
   }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, isCategoryStyle, imagesKey, objectFields, listFields, entryFields, blankValue])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
+  // Photos uploaded for a gallery entry, published to the media host on save.
+  const photos = useGalleryUploads({
+    id: fields.id ?? '',
+    images: imagesKey ? JSON.parse(fields[imagesKey] ?? '[]') as string[] : [],
+    updateImages: change => {
+      if (imagesKey) setFields(current => ({ ...current, [imagesKey]: JSON.stringify(change(JSON.parse(current[imagesKey] ?? '[]') as string[])) }))
+    },
+  })
+  const [publishing, setPublishing] = useState(false)
+  // Closing mid-publish would discard a photo the host may already hold.
+  const close = () => { if (!publishing) onClose() }
   // A credential written as a list of documents is shown, and saved untouched.
   const keptCredentials = roleLink ? listedCredentials(initialFields[CREDENTIAL_KEY]) : undefined
   const [educationTab, setEducationTab] = useState('details')
@@ -187,7 +199,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
   const grouped = Boolean(groupedBy && listFields[groupedBy] && (JSON.parse(fields[groupedBy] ?? '[]') as unknown[]).length)
   const isRequired = (key: string) => requiredFields.includes(key) && key in fields && !(grouped && listFields[groupedBy!].includes(key))
 
-  const saveEntry = () => {
+  const saveEntry = async () => {
     if (!Object.values(fields).some(value => value.trim())) {
       toast.error('Enter content before saving.')
       return
@@ -211,8 +223,22 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       toast.error(WEBSITE_URL_ERROR)
       return
     }
+    // Only once everything else is in order, so a form that cannot be saved
+    // never puts a photo on the media host.
+    let values = fields
+    if (imagesKey && photos.pending) {
+      setPublishing(true)
+      try {
+        values = { ...fields, [imagesKey]: JSON.stringify(await photos.publishAll(JSON.parse(fields[imagesKey] ?? '[]') as string[])) }
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Could not publish the photos.')
+        return
+      } finally {
+        setPublishing(false)
+      }
+    }
     try {
-      const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(fields).map(([key, value]) => {
+      const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(values).map(([key, value]) => {
         const original = entry?.raw[key]
         if (value === initialFields[key] && original !== undefined) return [key, original]
         if (credentialStyle === 'documents' && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
@@ -236,7 +262,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       }
       for (const key of entryFields) if (!(key in raw)) raw[key] = ''
       if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum, entry?.raw.cirriculum)
-      const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(fields)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
+      const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(values)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
       onSave({
         ...entry,
         id: entry?.id ?? `local-${Date.now()}`,
@@ -253,21 +279,32 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
   const what = entry ? entry.title : 'New entry'
 
   return (
-    <div className="entry-dialog-backdrop" role="presentation" onMouseDown={onClose}>
+    <div className="entry-dialog-backdrop" role="presentation" onMouseDown={close}>
       <section className="entry-dialog" role="dialog" aria-modal="true" aria-label={`${entry ? `Editing ${what}` : what}${where ? ` in ${where}` : ''}`} onMouseDown={event => event.stopPropagation()}>
         <header>
           <div><span>{where || 'Collection entry'}</span><h2>{what}</h2></div>
           {/* The heading names the entry; this says which of the two things
               you are doing to it, which the entry's own name cannot. */}
           <span className="entry-dialog-mode" data-mode={entry ? 'edit' : 'new'}>{entry ? 'Editing' : 'New'}</span>
-          <IconButton variant="bare" size="none" label="Close editor" onClick={onClose}><X aria-hidden="true" /></IconButton>
+          <IconButton variant="bare" size="none" label="Close editor" onClick={close}><X aria-hidden="true" /></IconButton>
         </header>
         {isEducation && <Tabs value={educationTab} onValueChange={setEducationTab} className="education-editor-tabs"><TabsList><TabsTrigger value="details">Education details</TabsTrigger><TabsTrigger value="curriculum">Curriculum</TabsTrigger></TabsList></Tabs>}
         <div className="entry-dialog-body" hidden={isEducation && educationTab !== 'details'}>
           <div className="entry-field-divider"><span>{isExperience ? 'Role details' : 'Entry fields'}</span>{!isExperience && <small>{Object.keys(fields).length}</small>}</div>
           {orderedFields.filter(([key]) => key !== ENTRY_ENABLED_KEY).map(([key, value], index) => {
             if (key === 'logo') return <LogoSelector key={key} multiple={typeof entry?.raw.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => setFields(current => ({ ...current, logo: typeof entry?.raw.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) }))} />
-            if (key === imagesKey) return <GalleryImagesEditor key={key} images={JSON.parse(value)} fallbackId={fields.id ?? ''} onChange={images => setFields(current => ({ ...current, [key]: JSON.stringify(images) }))} />
+            if (key === imagesKey) {
+              return (
+                <GalleryImagesEditor
+                  key={key}
+                  images={JSON.parse(value)}
+                  fallbackId={fields.id ?? ''}
+                  uploads={photos.photos}
+                  onUpload={photos.upload}
+                  onChange={images => { photos.prune(images); setFields(current => ({ ...current, [key]: JSON.stringify(images) })) }}
+                />
+              )
+            }
             if (roleLink && key === WEBSITE_KEY) return null
             if (roleLink && key === CREDENTIAL_KEY) {
               return (
@@ -309,7 +346,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
           })}
         </div>
         {isEducation && <div className="entry-dialog-body curriculum-tab-body" hidden={educationTab !== 'curriculum'}><CurriculumEditor curriculum={curriculum} onChange={setCurriculum} /></div>}
-        <footer><Button variant="outline" onClick={onClose} disabled={saving}>Cancel</Button><Button onClick={saveEntry} disabled={saving}><Save aria-hidden="true" /> {saving ? 'Saving...' : 'Save'}</Button></footer>
+        <footer><Button variant="outline" onClick={onClose} disabled={saving || publishing}>Cancel</Button><Button onClick={() => void saveEntry()} disabled={saving || publishing}><Save aria-hidden="true" /> {publishing ? 'Publishing photos...' : saving ? 'Saving...' : 'Save'}</Button></footer>
       </section>
     </div>
   )

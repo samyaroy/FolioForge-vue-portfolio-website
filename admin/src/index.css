@@ -549,6 +549,16 @@ tbody tr:hover { background: #f9fbfd; }
 .gallery-image-add-preview .gallery-image-missing small { display: none; }
 .gallery-image-add-preview > svg { width: 15px; height: 15px; }
 .gallery-image-hint { display: block; margin-top: 6px; color: #8193a3; font-size: 10px; }
+.gallery-images-editor[data-dropping] { border-radius: 6px; outline: 2px dashed var(--primary); outline-offset: 6px; background: #f5faff; }
+.gallery-image-upload { position: relative; display: inline-flex; height: 32px; flex: none; align-items: center; gap: 6px; border: 1px solid #cbd8e3; border-radius: 5px; background: #fff; padding: 0 11px; color: #1d364b; font-size: 12px; font-weight: 500; cursor: pointer; }
+.gallery-image-upload:hover { background: #f3f7fa; }
+.gallery-image-upload:focus-within { outline: 2px solid var(--primary); outline-offset: 2px; }
+.gallery-image-upload[data-disabled] { opacity: .5; cursor: not-allowed; }
+.gallery-image-upload svg { width: 15px; height: 15px; }
+.gallery-image-status { position: absolute; right: 6px; bottom: 6px; left: 6px; display: flex; align-items: center; gap: 5px; overflow: hidden; border-radius: 4px; background: rgb(13 41 66 / 80%); padding: 4px 7px; color: #fff; font-size: 10px; font-weight: 600; white-space: nowrap; }
+.gallery-image-status svg { width: 12px; height: 12px; flex: none; }
+.gallery-image-status[data-state='ready'] { background: rgb(23 113 70 / 88%); }
+.gallery-image-status[data-state='failed'] { background: rgb(180 35 24 / 90%); }
 .gallery-image-hint code, .gallery-image-fallback code { color: #536b7f; font-size: 10px; }
 
 .role-link-field { display: flex; grid-column: 1 / -1; min-width: 0; flex-direction: column; gap: 6px; }
