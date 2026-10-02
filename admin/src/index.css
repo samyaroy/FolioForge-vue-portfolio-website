@@ -320,6 +320,18 @@ tbody tr:hover { background: #f9fbfd; }
 .hyperlink-issue svg { width: 11px; height: 11px; }
 .hyperlink-aliases { display: block; color: #5c7285; font-size: 10px; overflow-wrap: anywhere; }
 .hyperlink-collection-panel .data-table { min-width: 560px; }
+.page-quotes-panel .data-table { min-width: 760px; }
+.page-quotes-panel .data-table td { overflow-wrap: anywhere; }
+.page-quotes-panel .page-quote-text { display: block; line-height: 1.6; }
+.page-quotes-panel tr.entry-disabled { opacity: .55; }
+.hyperlink-group-tabs { width: 100%; height: 38px; justify-content: flex-start; gap: 12px; border-bottom: 1px solid var(--border); padding: 0; margin-bottom: 10px; }
+.hyperlink-group-tabs > [data-slot="tabs-trigger"] { flex: none; height: 38px; border: 0; border-radius: 0; padding: 0 10px; color: #607b93; font-size: 10px; font-weight: 700; }
+.hyperlink-group-tabs > [data-slot="tabs-trigger"][data-state="active"] { color: #126abb; }
+.hyperlink-group-tabs > [data-slot="tabs-trigger"]::after { bottom: 0; background: #1980e6; }
+.hyperlink-source-toggle { cursor: pointer; }
+.hyperlink-source-popover { z-index: 120; width: 320px; max-width: calc(100vw - 32px); overflow: hidden; border: 1px solid var(--border); border-radius: 5px; background: #fff; box-shadow: 0 6px 18px rgb(11 30 45 / 12%); }
+.hyperlink-source-popover .source-strip { border: 0; }
+.hyperlink-source-popover .source-strip strong { white-space: normal; overflow-wrap: anywhere; }
 .table-footer { display: flex; min-height: 42px; align-items: center; justify-content: space-between; gap: 12px; border-top: 1px solid var(--border); padding: 8px 13px; color: #718396; font-size: 10px; }
 
 .connection-banner { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 12px; margin-top: 18px; border: 1px solid #bad9f5; background: #eef7ff; padding: 13px 14px; }

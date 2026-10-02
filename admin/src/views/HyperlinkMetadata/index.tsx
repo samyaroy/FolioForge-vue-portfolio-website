@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
-import { AlertTriangle, ExternalLink, FileCode2, Pencil, Plus, Save, Trash2, X } from 'lucide-react'
+import { AlertTriangle, CircleHelp, ExternalLink, FileCode2, Pencil, Plus, Save, Trash2, X } from 'lucide-react'
+import { Popover } from 'radix-ui'
 import { DataTable } from '@/components/admin/DataTable'
 import { columnsFor, type DataTableColumns } from '@/lib/dataTable'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -9,11 +10,12 @@ import { ExpandableSearchField } from '@/components/admin/SearchField'
 import { Button, IconButton, SelectField, TextField } from '@/components/form'
 import { HYPERLINK_COLLECTIONS, hyperlinkEntries, hyperlinkGroupEntries, hyperlinkIndex, serializeHyperlinkEntry, type HyperlinkEntry, type HyperlinkGroup } from '@/lib/hyperlinkMetadata'
 import { createEntry, deleteEntry, fetchCollection, saveEntry } from '@/services/content'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const groups = ['Institute', 'Person'] as const
 
 function groupLabel(group: HyperlinkGroup): string {
-  return group === 'Person' ? 'People' : 'Institutes'
+  return group === 'Person' ? 'People' : 'Institutions'
 }
 
 // Aliases are listed with a semicolon rather than a comma because several of
@@ -175,10 +177,6 @@ export function HyperlinkMetadataPage() {
     return entries.filter(entry => [entry.name, entry.url, ...entry.aliases].join(' ').toLowerCase().includes(normalizedQuery))
   }, [entries, query])
 
-  const groupEntries = visibleEntries.filter(entry => entry.group === group)
-  const totalGroupEntries = entries.filter(entry => entry.group === group)
-  const brokenCount = totalGroupEntries.filter(entry => entry.issues.length).length
-
   const persist = async (next: HyperlinkEntry) => {
     const existing = entries.find(entry => entry.id === next.id)
     if (!baseSha) {
@@ -234,53 +232,53 @@ export function HyperlinkMetadataPage() {
         title="Hyperlink Metadata"
         description="Names, aliases and URLs"
         status={(
-          <SaveStatusHint saveable={Boolean(baseSha)} failure={failure}>
-            Edits wait until you publish. SmartLink resolves names and aliases through this file, so a deleted entry stops resolving wherever the content uses it.
-          </SaveStatusHint>
+          <>
+            <SaveStatusHint saveable={Boolean(baseSha)} failure={failure}>
+              Edits wait until you publish. SmartLink resolves names and aliases through this file, so a deleted entry stops resolving wherever the content uses it.
+            </SaveStatusHint>
+            <Popover.Root>
+              <Popover.Trigger asChild>
+                <button type="button" className="info-hint-trigger hyperlink-source-toggle" aria-label="Content source" title="Content source"><CircleHelp aria-hidden="true" /></button>
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content className="hyperlink-source-popover" align="end" sideOffset={6} collisionPadding={16} aria-label="Content source">
+                  <div className="source-strip">
+                    <FileCode2 aria-hidden="true" />
+                    <span><small>Content source</small><strong>src/metadata/hyperlinkMetadata.yml</strong></span>
+                  </div>
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
+          </>
         )}
       />
-      <div className="mapped-editor-layout">
-        <section className="form-panel collection-panel hyperlink-collection-panel" aria-labelledby="hyperlink-collection-heading">
-          <div className="panel-heading">
-            <div><span>Collection</span><h2 id="hyperlink-collection-heading">Links</h2></div>
-            <div className="panel-heading-actions">
-              <ExpandableSearchField value={query} onChange={setQuery} placeholder="Search names, aliases, or URLs" label="Search hyperlink metadata" />
-              <SelectField
-                prefix="Group"
-                className="group-select"
-                value={group}
-                options={groups.map(item => ({ value: item, label: groupLabel(item) }))}
-                onChange={value => setGroup(value as HyperlinkGroup)}
+      <Tabs value={group} onValueChange={value => setGroup(value as HyperlinkGroup)}>
+        <TabsList variant="line" className="hyperlink-group-tabs" aria-label="Hyperlink groups">
+          {groups.map(item => <TabsTrigger key={item} value={item}>{groupLabel(item)} <small>{visibleEntries.filter(entry => entry.group === item).length}</small></TabsTrigger>)}
+        </TabsList>
+        {groups.map(item => (
+          <TabsContent key={item} value={item}>
+            <section className="form-panel collection-panel hyperlink-collection-panel" aria-labelledby={`hyperlink-collection-${item}`}>
+              <div className="panel-heading">
+                <div><span>Collection</span><h2 id={`hyperlink-collection-${item}`}>{groupLabel(item)}</h2></div>
+                <div className="panel-heading-actions">
+                  <ExpandableSearchField value={query} onChange={setQuery} placeholder="Search names, aliases, or URLs" label="Search hyperlink metadata" />
+                  <Button className="section-action-button" size="sm" onClick={() => setEditing({ id: `local-${Date.now()}`, group: item, name: '', aliases: [], url: '', issues: [] })}><Plus aria-hidden="true" /> New entry</Button>
+                </div>
+              </div>
+              <DataTable
+                key={query}
+                columns={columnsFor_(item === 'Person' ? 'Link' : 'Website', setEditing, entry => void removeEntry(entry), Boolean(baseSha) && !saving)}
+                data={visibleEntries.filter(entry => entry.group === item)}
+                pageSize={25}
+                caption={`${groupLabel(item)} SmartLink can resolve`}
+                emptyTitle={`No ${item === 'Person' ? 'people' : 'institutions'} match this search`}
+                emptyDetail="Try different wording."
               />
-              <Button className="section-action-button" size="sm" onClick={() => setEditing({ id: `local-${Date.now()}`, group, name: '', aliases: [], url: '', issues: [] })}><Plus aria-hidden="true" /> New entry</Button>
-            </div>
-          </div>
-          <DataTable
-            key={`${group}:${query}`}
-            columns={columnsFor_(group === 'Person' ? 'Link' : 'Website', setEditing, entry => void removeEntry(entry), Boolean(baseSha) && !saving)}
-            data={groupEntries}
-            pageSize={25}
-            caption={`${groupLabel(group)} SmartLink can resolve`}
-            emptyTitle={`No ${group === 'Person' ? 'people' : 'institutes'} match this search`}
-            emptyDetail="Try different wording."
-          />
-        </section>
-        <aside className="mapped-editor-aside">
-          <section className="form-panel visibility-panel">
-            <div className="panel-heading">
-              <div><h2>SECTION METAINFO</h2></div>
-              <span className="visibility-entry-count" aria-live="polite" aria-label={`${groupEntries.length} matching entries out of ${totalGroupEntries.length} ${groupLabel(group).toLowerCase()}`} title="Matching entries / Total entries">
-                {groupEntries.length}/{totalGroupEntries.length}
-              </span>
-            </div>
-            <div className="source-strip">
-              <FileCode2 aria-hidden="true" />
-              <span><small>Content source</small><strong>src/metadata/hyperlinkMetadata.yml</strong></span>
-            </div>
-            {brokenCount > 0 && <div className="source-strip"><AlertTriangle aria-hidden="true" /><span><small>Needs attention</small><strong>{brokenCount} {brokenCount === 1 ? 'entry' : 'entries'}</strong></span></div>}
-          </section>
-        </aside>
-      </div>
+            </section>
+          </TabsContent>
+        ))}
+      </Tabs>
       {editing && <EntryDialog key={editing.id} entry={editing} saving={saving} onClose={() => setEditing(null)} onSave={entry => void persist(entry)} />}
     </>
   )
