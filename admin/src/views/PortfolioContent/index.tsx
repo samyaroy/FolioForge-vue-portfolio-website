@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import { createEntry as createCollectionEntry, deleteEntry as deleteCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
 import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Trash2 } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { InfoHint } from '@/components/admin/InfoHint'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
@@ -50,17 +51,27 @@ export function PortfolioContentPage() {
   )
 }
 
-/** The header both editors share: the page, and a link to it on the site. */
-function SectionHeader({ page, section }: { page: PortfolioPage; section: PortfolioSection }) {
+/**
+ * The header both editors share: the page, and a link to it on the site.
+ * `saveable` adds how saving works, for an editor whose saves can land.
+ */
+function SectionHeader({ page, section, saveable = false }: { page: PortfolioPage; section: PortfolioSection; saveable?: boolean }) {
   return (
     <>
       <PageHeader
         title={page.title}
         description={page.description}
         actions={
-          <Button variant="outline" asChild>
-            <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
-          </Button>
+          <div className="page-action-stack">
+            <Button variant="outline" asChild>
+              <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
+            </Button>
+            {saveable && (
+              <InfoHint label="How saving works">
+                Edits wait here until you publish. Publishing writes every change as one commit on <code>{publishingTarget.branch}</code>.
+              </InfoHint>
+            )}
+          </div>
         }
       />
       {page.sections.length > 1 && (
@@ -250,13 +261,10 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
 
   return (
     <>
-      <SectionHeader page={page} section={section} />
+      <SectionHeader page={page} section={section} saveable={Boolean(baseSha)} />
 
-      <LocalNotice>
-        {baseSha
-          ? <>Edits wait here until you publish. Publishing writes every change as one commit on <code>{publishingTarget.branch}</code>.</>
-          : reason}
-      </LocalNotice>
+      {/* Only a collection that cannot be saved has anything to say here. */}
+      {!baseSha && reason && <LocalNotice>{reason}</LocalNotice>}
 
       <div className="mapped-editor-layout" data-solo={!hasSectionVisibility(page.id, section.id) || undefined}>
         <section className="form-panel">
@@ -333,6 +341,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
           fieldGroups={section.fields}
           tagOptions={section.tagOptions}
           requiredFields={section.requiredFields}
+          groupedBy={section.groupedBy}
           typeOptions={section.typeOptions}
           entryFields={section.entryFields}
           isExperience={page.id === 'home' && section.id === 'experience'}

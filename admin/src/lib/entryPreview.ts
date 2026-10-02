@@ -93,6 +93,23 @@ function linkLabels(value: unknown, categories: Readonly<Record<string, string>>
   return Object.entries(categories).filter(([key]) => text(links[key])).map(([, label]) => label).join(', ')
 }
 
+/**
+ * What a co-curricular entry's roles link to, as their cards show it: a role's
+ * credential if it has one, otherwise its website. The entry counts as a role,
+ * and so does each one it lists under `rows`.
+ */
+function roleLinkFacts(raw: Record<string, unknown>, rows: string): PreviewFact[] {
+  const roles = [raw, ...(Array.isArray(raw[rows]) ? raw[rows] : [])].map(block)
+  // One document, or a list of labelled ones.
+  const hasCredential = (role: Record<string, unknown>) => Array.isArray(role.cred_link) ? role.cred_link.length > 0 : Boolean(text(role.cred_link))
+  const credentials = roles.filter(hasCredential).length
+  const sites = roles.filter(role => !hasCredential(role) && /^https?:\/\//i.test(text(role.ext_link))).map(role => host(role.ext_link))
+  return [
+    ...fact(FileBadge, credentials > 1 ? `${credentials} credentials` : credentials ? 'Credential' : ''),
+    ...fact(Globe, sites.join(', ')),
+  ]
+}
+
 /** A nested block, for content that nests a guide, an issuer or a publication. */
 function block(value: unknown): Record<string, unknown> {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Record<string, unknown> : {}
@@ -351,6 +368,7 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Building2, names(raw.affiliation, 'host.name')),
       ...fact(GraduationCap, names(raw.affiliation, 'institute')),
       ...fact(CalendarDays, names(raw.affiliation, 'time_period')),
+      ...roleLinkFacts(raw, 'affiliation'),
     ]
   }
   if (collection === 'cocurricular/volunteering') {
@@ -360,6 +378,7 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(Building, text(raw.organization) || names(raw.roles, 'organization')),
       ...fact(CalendarDays, text(raw.time_period) || names(raw.roles, 'time_period')),
       ...fact(Shapes, names(raw.field, 'sub_field')),
+      ...roleLinkFacts(raw, 'roles'),
     ]
   }
   if (collection === 'professional-activity/hosted-events') {

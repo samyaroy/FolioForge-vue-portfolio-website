@@ -85,6 +85,13 @@ export type PortfolioSection = {
    */
   requiredFields?: string[]
   /**
+   * A list key whose rows can stand in for the entry itself: a volunteering
+   * entry holds either one role or a `roles` list of them. While that list has
+   * rows, a required field the rows carry is required of each row instead of
+   * the entry.
+   */
+  groupedBy?: string
+  /**
    * Values offered for the entry's `type` field, which the editor shows as a
    * dropdown instead of a text box. Each list comes from the site, where an
    * unrecognised type changes how the entry renders or hides it altogether.
@@ -209,7 +216,7 @@ export const portfolioPages: PortfolioPage[] = [
     description: 'Leadership, organisations, volunteering, and related activities.',
     sections: [
       { id: 'leadership', title: 'Leadership & Organizations', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description, website and link'], requiredFields: ['role'], entryFields: entryFields.leadership },
-      { id: 'volunteering', title: 'Volunteering', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description, credential and link'], requiredFields: ['role', 'organization'], entryFields: entryFields.volunteering },
+      { id: 'volunteering', title: 'Volunteering', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description, credential and link'], requiredFields: ['role', 'organization'], groupedBy: 'roles', entryFields: entryFields.volunteering },
     ],
   },
   {

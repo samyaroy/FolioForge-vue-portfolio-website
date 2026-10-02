@@ -10,6 +10,7 @@ import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
 import { findPortfolioPage } from '@/config/portfolio'
 import type { EntryPresentation } from '@/lib/entryPresentation'
 import { getPortfolioEntries, type PortfolioEntry } from '@/data/portfolioEntries'
+import { galleryCoverUrl } from '@/lib/galleryImages'
 import { createEntry, deleteEntry, fetchCollection, saveEntry } from '@/services/content'
 
 const COLLECTION = 'gallery/career-unlocks'
@@ -18,21 +19,6 @@ const section = page?.sections[0]
 
 function text(value: unknown): string {
   return value === undefined || value === null ? '' : String(value)
-}
-
-const MEDIA_BASE = 'https://media.samyabrata.codeium.xyz'
-
-/**
- * The first image of an entry, resolved the way the gallery resolves it: a full
- * URL is used as-is, a bare key joins the media host, and an entry with no
- * images falls back to its own id — which is how older entries were addressed
- * before `images` was written explicitly.
- */
-function thumbnailUrl(raw: Record<string, unknown>): string {
-  const images = Array.isArray(raw.images) ? raw.images : []
-  const first = text(images[0]) || text(raw.id)
-  if (!first) return ''
-  return /^https?:\/\//i.test(first) ? first : `${MEDIA_BASE}/${encodeURIComponent(first)}.jpeg`
 }
 
 // How the shared editor derives a heading for an entry it is given.
@@ -153,7 +139,7 @@ export function CareerUnlocksPage() {
           <div className="item-list">
             {visibleItems.map(entry => (
               <article className="content-row" key={entry.id}>
-                <GalleryThumbnail url={thumbnailUrl(entry.raw)} alt="" />
+                <GalleryThumbnail url={galleryCoverUrl(entry.raw)} alt="" />
                 <IconButton
                   variant="bare"
                   size="none"
