@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
-import { ArrowLeft, ExternalLink, Pencil, Plus, Trash2 } from 'lucide-react'
+import { ArrowLeft, ExternalLink, FileText, Github, Pencil, Plus, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
 import { DataTable } from '@/components/admin/DataTable'
 import { SaveStatusHint } from '@/components/admin/InfoHint'
@@ -116,8 +116,16 @@ function CohortProjectTable({ cohortId }: { cohortId: string }) {
       cell: ({ getValue }) => <span className="mentoring-project-students">{getValue() || '-'}</span>,
     }),
     column.display({
-      id: 'links', header: 'Links', meta: { width: '120px' },
-      cell: ({ row }) => <div className="mentoring-project-links">{Object.entries(record(row.original.raw.cred_link)).filter(([, value]) => typeof value === 'string' && /^https?:\/\//i.test(value)).map(([name, url]) => <a key={name} href={String(url)} target="_blank" rel="noopener noreferrer" title={name} aria-label={`Open ${name} for ${row.original.title}`}><ExternalLink aria-hidden="true" /><span>{name}</span></a>)}</div>,
+      id: 'links', header: 'Links', meta: { width: '88px' },
+      cell: ({ row }) => (
+        <div className="mentoring-project-links">
+          {Object.entries(record(row.original.raw.cred_link)).filter(([, value]) => typeof value === 'string' && /^https?:\/\//i.test(value)).map(([name, url]) => {
+            const Icon = name === 'github' ? Github : name === 'report' ? FileText : ExternalLink
+            const label = name === 'github' ? 'GitHub repository' : name === 'report' ? 'Project report' : name
+            return <IconButton key={name} variant="outline" label={`Open ${label} for ${row.original.title}`} title={label} asChild><a href={String(url)} target="_blank" rel="noopener noreferrer"><Icon aria-hidden="true" /></a></IconButton>
+          })}
+        </div>
+      ),
     }),
     column.display({
       id: 'enabled', header: 'Enabled', meta: { width: '76px' },
