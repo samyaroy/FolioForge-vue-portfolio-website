@@ -3,7 +3,7 @@ title: Hello, world
 date: 2026-06-18
 description: First post on the new blog — what it runs on and why.
 tags: [meta, react]
-draft: false
+draft: true
 ---
 
 Welcome to the blog. This lives at **blogs.samyabrata.codeium.xyz**, separate

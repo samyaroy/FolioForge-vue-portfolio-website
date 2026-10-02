@@ -10,4 +10,5 @@
 #     - guest_event-01-01-2      # second photo
 #     - https://example.com/extra.jpg  # or a full URL
 
+# Intentionally left empty until a curated gallery set is ready.
 items: []

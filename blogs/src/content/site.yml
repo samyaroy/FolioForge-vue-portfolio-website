@@ -18,8 +18,6 @@ hero:
 # Social links rendered vertically on the right edge of the hero.
 # Edit the hrefs to point at your own profiles; remove any you don't use.
 socialLinks:
-  - label: X
-    href: https://x.com/
   - label: Instagram
     href: https://www.instagram.com/the_pessimist_one/
   - label: LinkedIn

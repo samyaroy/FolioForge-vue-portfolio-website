@@ -48,7 +48,7 @@
 #       - { label: Places stayed, value: 14 villages }
 #       - { label: Distance, value: 320 km }
 
-# Dummy entries below — replace with real trips.
+# Recent trips and short travel journals.
 trips:
   - id: mahababipuram26
     title: Never miss a trip to Mamallapuram specialy if you made new friends in Chennai
@@ -57,11 +57,11 @@ trips:
     places:
       - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
-    summary: ABC
+    summary: A spontaneous Sunday ride from Chennai to the Shore Temple town.
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26.jpeg
     narrative:
-      - ABC
-      - ABC
+      - We left Chennai before sunrise, reached Mamallapuram by bus, and spent the morning walking the Shore Temple complex and nearby sculptures.
+      - It was a short trip, but the sea breeze, stone carvings, and street-side seafood made it one of those easy refreshers that feels longer than a day.
     stats:
       - { label: Distance (One Way), value: '57 KM' }
       - { label: Monuments, value: '4' }
@@ -70,10 +70,6 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26-03.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26-04.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26-05.jpeg
-    clicked_by:
-      - name: Shuvadeep Mitra
-        url:
-
   - id: uttarakhand-devbhumi-2025
     title: Char Dham circuit through Uttarakhand
     date: 2025-05-28
@@ -90,15 +86,15 @@ trips:
       - { name: Badrinath, mode: car }
       - { name: Ranikhet, mode: car }
       - { name: Nainital, mode: car }
-    summary: BCD
+    summary: A long Himalayan circuit through the Char Dham region and Kumaon.
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025.jpeg
     tags: [Mountains, Pilgrimage]
     narrative:
-      - BCD
-      - BCD
+      - This route combined pilgrimage stops with slow mountain travel, including long road stretches through Uttarkashi, Rudraprayag, and Badrinath.
+      - The Kedarnath foot section was the toughest leg of the trip, but it was also the most memorable because of the changing weather and high-altitude views.
     stats:
-      - { label: Places stayed, value: 14 villages }
-      - { label: Distance, value: 320 km }
+      - { label: Places stayed, value: 9 towns }
+      - { label: Distance, value: 1,450 km }
       - { label: Total trekked, value: 115 km on foot }
     gallery:
       - https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025-02.jpeg
@@ -119,12 +115,12 @@ trips:
       - { name: Lammasingi, mode: bike}
       - { name: Visakhapatnam, mode: bike}
       - { name: Araku, mode: train, train: 08551}
-    summary: XYZ
+    summary: A term-break mix of coast, hills, and local train rides around Vizag.
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/vizag-01-2025.jpeg
-    tags: [Mountains, Pilgrimage]
+    tags: [Coastline, Train Journey]
     narrative:
-      - XYZ
-      - XYZ
+      - We took the train from Kolkata to Vizag, rented a bike for Lammasingi, then returned to the city before taking the scenic line to Araku.
+      - The contrast between the sea-facing city roads and the colder hill section made this one of the most varied short trips of the year.
     stats:
       - { label: Places stayed, value: 3 }
       - { label: Distance Ridden, value: 320 km }
@@ -155,12 +151,12 @@ trips:
       - { name: Haridwar, mode: car}
       - { name: Delhi, mode: train, train: 12056}
       - { name: Kolkata, mode: flight}
-    summary: PQR
+    summary: A family trip covering Delhi, Agra, Varanasi, and Uttarakhand together.
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.jpeg
     tags: [Mountains, Pilgrimage]
     narrative:
-      - PQR
-      - PQR
+      - This was my first long multi-city trip with my parents, so the pace was slower and planned around comfort instead of quick hops.
+      - The Mussoorie and Haridwar leg became the highlight because we could balance sightseeing with relaxed evenings together.
     stats:
       - { label: Days, value: '22' }
       - { label: Cities, value: '6-7' }
@@ -170,44 +166,19 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-04.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01-05.jpeg
 
-  # - id: derjeeling-2024
-  #   title: Another long weekend in the hills
-  #   date: 2024-05-15
-  #   location: Darjeeling, West Bengal
-  #   places:
-  #     - Kolkata
-  #     - { name: Darjeeling, mode: bus}
-  #   summary: MNO
-  #   coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
-  #   tags: [Mountains]
-  #   narrative:
-  #     - MNO
-  #     - MNO
-  #   stats:
-  #     - { label: Places stayed, value: 14 villages }
-  #     - { label: Distance, value: 501 km }
-  #   gallery:
-  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-02.jpeg
-  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-03.jpeg
-  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-04.jpeg
-  #     - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-05.jpeg
-  #   clicked_by:
-  #     - name: Saubhadra Chatterjee
-  #       url: https://www.instagram.com/_sau.bhadraa_/
-  
   - id: bike-trip-digha-2024
     title: "A 2 days bike trip is all you need to refresh your mind"
     date: 2024-12-30
     location: New Digha, West Bengal
-    summary: SSS
+    summary: A two-day year-end bike ride from Kolkata to Digha and back.
     places:
       - Kolkata
       - { name: Digha, mode: bike, lat: 21.6266, lng: 87.5074 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024.jpeg
     tags: [Bike Trip, New Year]
     narrative:
-      - SSS
-      - SSS
+      - We started early from Kolkata, stayed in New Digha overnight, and spent most of day one covering highway miles with short tea breaks.
+      - The return ride was quieter and smoother, and the trip turned out to be the perfect reset before the new year.
     stats:
       - { label: Distance Ridden, value: '385 Km' }
       - { label: Days, value: 2 }
@@ -228,12 +199,12 @@ trips:
       - Kolkata
       - { name: Chandigarh, mode: flight, via: Delhi }
       - { name: Ropar, mode: car, note: IIT Roper campus}
-    summary: QAZ
+    summary: A month in Ropar during AIVS at IIT Ropar, with weekend Chandigarh escapes.
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.jpeg
     tags: [Bootcamp]
     narrative:
-      - QAZ
-      - QAZ
+      - I spent four weeks at IIT Ropar for AIVS, balancing sessions, project work, and hostel life with a completely new routine.
+      - Weekend breaks to Chandigarh gave me breathing space, and that mix of structure and travel changed how I plan long stays now.
     stats:
       - { label: Days, value: '31' }
     gallery:
@@ -248,14 +219,14 @@ trips:
     places:
       - Kolkata
       - { name: Darjeeling, mode: bus}
-    summary: UVW
+    summary: A quick long-weekend escape from Kolkata to Darjeeling.
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
     tags: [Mountains]
     narrative:
-      - UVW
-      - UVW
+      - We took an overnight bus from Kolkata, reached Darjeeling by morning, and spent the day around Mall Road and nearby viewpoints.
+      - It was short but refreshing, with just enough time for the toy-train atmosphere, café stops, and mountain weather.
     stats:
-      - { label: Places stayed, value: 14 villages }
+      - { label: Places stayed, value: 2 stays }
       - { label: Distance, value: 501 km }
     gallery:
       - https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024-02.jpeg
@@ -274,11 +245,11 @@ trips:
       - Kolkata
       - { name: Chennai, mode: train, train: 12841 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.jpeg
-    summary: MNO
-    tags: [Dummy, Test]
+    summary: First visit to IIT Madras with time to explore Chennai around campus.
+    tags: [Campus Visit, City Walk]
     narrative:
-      - MNO
-      - MNO
+      - This trip was anchored around my first IIT Madras campus visit, with most of the schedule planned around meetings and student interactions.
+      - Outside campus hours I explored Marina-side neighborhoods and local food spots, which made the Chennai add-on feel meaningful.
     stats:
       - { label: Campus Stays, value: '3' }
       - { label: City stays, value: 2 }
@@ -292,15 +263,15 @@ trips:
     title: "Two Friends, One long Weekend: IIT Delhi"
     date: 2023-03
     location: New Delhi, Delhi
-    summary: MNO
+    summary: A long-weekend Delhi trip centered around IIT Delhi and old-city walks.
     places:
       - Kolkata
       - { name: New Delhi, mode: train, train: 12301 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.jpeg
-    tags: [Dummy, Test]
+    tags: [Campus Visit, Long Weekend]
     narrative:
-      - MNO
-      - MNO
+      - We reached New Delhi by train and used IIT Delhi as our base while planning day-wise stops around the city.
+      - The best part was combining campus time with unplanned city walks and food trails in the evenings.
     stats:
       - { label: Campus Stays, value: '3' }
       - { label: City stays, value: 2 }
@@ -321,15 +292,15 @@ trips:
     title: First solo trip to Hyderabad
     date: 2023-03
     location: Hyderabad, Telangana
-    summary: MNO
+    summary: My first solo long-distance train trip to Hyderabad.
     places:
       - Kolkata
       - { name: Hyderabad, mode: train, train: 18045 }
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
-    tags: [Dummy, Test]
+    tags: [Solo Trip, Train Journey]
     narrative:
-      - MNO
-      - MNO
+      - I traveled alone from Kolkata to Hyderabad by train, managed my own schedule, and learned quickly how to navigate a new city independently.
+      - Between old-city landmarks and metro-connected neighborhoods, the trip gave me confidence for planning future solo journeys.
     stats:
       - { label: Days, value: '5' }
       - { label: Cities covered, value: 2 }
