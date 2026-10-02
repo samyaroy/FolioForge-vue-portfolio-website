@@ -15,7 +15,7 @@
         <!-- <h2 class="text-3xl font-bold text-[#0e141b] mb-6">Workshops Attended</h2> -->
         <!-- <p class="text-gray-600">Academic and professional workshops I've participated in</p> -->
 
-        <div v-if="ongoingProjects" class="space-y-6">
+        <div v-if="ongoingProjects.length" class="space-y-6">
           <ProjectCard v-for="(project, index) in ongoingProjects" :key="index" :project="project" />
         </div>
         <div v-else class="text-gray-600">
@@ -39,7 +39,10 @@ import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
 import { isPageDescriptionEnabled } from '@/config/featureFlags'
 const { ongoing_projects } = config
-const ongoingProjects = ongoing_projects
+// Entries switched off with `enabled: false` are already gone from the config,
+// so a file whose every project is off leaves an empty list here -- which is
+// truthy, and would render an empty section rather than the empty state.
+const ongoingProjects = Array.isArray(ongoing_projects) ? ongoing_projects : []
 const pageDescription = descriptions.ongoingProjects
 const showPageDescription = isPageDescriptionEnabled('ongoingProjects')
 </script>
