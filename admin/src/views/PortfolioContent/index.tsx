@@ -29,13 +29,19 @@ type EditorState = { mode: 'new' } | { mode: 'edit'; entry: PortfolioEntry }
 export function PortfolioContentPage() {
   const { pageId, sectionId } = useParams()
   const page = findPortfolioPage(pageId)
-  const section = page?.sections.find(item => item.id === sectionId)
+  // A page with one section is addressed without it (see portfolioAdminPath),
+  // so a missing section means that one.
+  const section = sectionId
+    ? page?.sections.find(item => item.id === sectionId)
+    : page?.sections.length === 1 ? page.sections[0] : undefined
   // Held here so the editor can be keyed on it: switching group is switching
   // collection, and everything below starts again from that group's entries.
   const [group, setGroup] = useState(section?.groups?.[0]?.id ?? section?.filterBy?.options?.[0]?.id ?? '')
 
   if (!page) return <Navigate to="/" replace />
-  if (!section) return <Navigate to={portfolioAdminPath(page)} replace />
+  // An unknown section, a page named without one, or an old address that
+  // still spells out a page's only section all land on the canonical address.
+  if (!section || (sectionId && page.sections.length === 1)) return <Navigate to={portfolioAdminPath(page)} replace />
   // No collection to read, so none of the machinery below applies.
   if (section.visibilityOnly) return <PortfolioVisibilityEditor page={page} section={section} />
 

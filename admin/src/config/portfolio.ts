@@ -307,8 +307,14 @@ export const workspacePages: PortfolioPage[] = [
 
 export const contentPages = [...portfolioPages, ...blogPages, ...workspacePages]
 
+/**
+ * Where a section is edited. A page with one section is addressed by the page
+ * alone: its section adds nothing to the address, and where the two share an
+ * id it would read `quotes/quotes`.
+ */
 export function portfolioAdminPath(page: PortfolioPage, section: PortfolioSection = page.sections[0]) {
-  return `${page.basePath ?? '/portfolio/pages'}/${page.id}/${section.id}`
+  const base = `${page.basePath ?? '/portfolio/pages'}/${page.id}`
+  return page.sections.length === 1 ? base : `${base}/${section.id}`
 }
 
 export function findPortfolioPage(pageId?: string) {
