@@ -24,6 +24,22 @@ the roles it holds (`admin/src/data/portfolioEntries.ts`).
 `src/data/portfolioEntries.ts` and writes it through `worker/content/registry.ts`.
 Neither is regenerated; both are hand-maintained tables.
 
+## The deploy build installs only the admin
+
+Cloudflare builds this app from `admin/` and installs only its dependencies.
+Anything the build reaches outside `admin/` must not need the root project's
+`node_modules`. Two places did, and broke the first such build:
+
+- `vite.config.ts` imports `yaml` directly, from the admin's own dependencies.
+- The Worker bundles `shared/gallery/manifest.js`, whose `yaml` import would
+  resolve from the repository root. The `alias` in `wrangler.jsonc` points it
+  at the admin's copy. (That file is parsed as strict JSON by the security
+  test, so it carries no comments; the reason lives here.)
+
+**Before importing a package from shared or root code,** check it resolves with
+only `admin/node_modules` present: a checkout with no root `node_modules`,
+then `npm run build` and `npm run worker:check`.
+
 ## Editor depth stops at one level of nesting
 
 `entryFields.ts` declares a collection's fields. A field may be a plain key, an
