@@ -1,6 +1,14 @@
 export type VisibilityFlag = { path: string; label: string }
 
 /**
+ * Marks a path in the blog's flags (blogs/src/config/featureFlags.ts) rather
+ * than the portfolio's. The two files share names -- each has `showGallery`
+ * and `showPageDescriptions` -- so a blog path carries this prefix to stay
+ * unambiguous: `blog:showMovies`.
+ */
+export const BLOG_FLAG_PREFIX = 'blog:'
+
+/**
  * Whether a section's visibility is something you can actually change. Most are;
  * a handful are always on, and for those the pane has nothing to offer, so the
  * editor gives the space back to the entry list rather than showing an empty
@@ -77,6 +85,9 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'resources/study-material': [{ path: 'showResources.main', label: 'Resources page' }],
   'resources/worth-exploring': [{ path: 'showResources.main', label: 'Resources page' }],
   'facts/facts': [{ path: 'showFacts', label: 'Did You Know?' }],
+
+  // Blog pages. Each flag hides its page's route and its header link.
+  'movies/items': [{ path: `${BLOG_FLAG_PREFIX}showMovies`, label: 'Worth Binge-watching' }],
 }
 
 export const globalVisibility: VisibilityFlag[] = [
