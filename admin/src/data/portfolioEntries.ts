@@ -115,6 +115,15 @@ export function mentoringCohorts(records: unknown[]): PortfolioEntry[] {
     .map(entry => ({ ...entry, readOnlyFields: ['projects'] }))
 }
 
+/**
+ * The cohort a Projects Mentored semester belongs to. That page lists every
+ * cohort's projects flat, each carrying its semester's name, so it cannot say
+ * which list a new project joins; the cohort's own page can.
+ */
+export function mentoringCohortFor(semester: string): PortfolioEntry | undefined {
+  return mentoringCohorts(arrayAt(documents.teaching, 'projects_mentored')).find(cohort => displayText(cohort.raw.semester) === semester)
+}
+
 function arrayAt(document: UnknownRecord, path: string) {
   return asRecords(readPath(document, path))
 }

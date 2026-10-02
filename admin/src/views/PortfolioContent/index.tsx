@@ -17,7 +17,7 @@ import { Button, SelectField, SwitchField } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
-import { getPortfolioEntries, mentoringCohorts } from '@/data/portfolioEntries'
+import { getPortfolioEntries, mentoringCohortFor, mentoringCohorts } from '@/data/portfolioEntries'
 import { hasSitePreview, previewFacts, previewHeading, previewImage } from '@/lib/entryPreview'
 import { InlineMarkup } from '@/components/InlineMarkup'
 import { ENTRY_ENABLED_KEY, isEntryEnabled } from '../../../../src/config/entryStatus.ts'
@@ -200,6 +200,20 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   // first choice rather than showing an empty list.
   const activeFilter = filterOptions.some(option => option.id === group) ? group : filterOptions[0]?.id ?? ''
 
+  // Projects Mentored lists every cohort's projects flat, so a new one made here
+  // would land in whichever semester the file lists last. It is added from the
+  // cohort of the semester on screen instead, whose page writes to that list.
+  const projectsCohort = collection === 'teaching/projects' ? mentoringCohortFor(activeFilter) : undefined
+  const newEntryButton = collection === 'teaching/projects'
+    ? (
+      <Button className="section-action-button" size="sm" asChild>
+        {projectsCohort
+          ? <Link to={`/portfolio/pages/teaching/mentoring/${encodeURIComponent(projectsCohort.id)}/projects`} state={{ cohort: projectsCohort }} title={`Add a project to ${activeFilter}`}><Plus aria-hidden="true" /> New project</Link>
+          : <Link to="/portfolio/pages/teaching/mentoring" title="Add the project from its cohort"><Plus aria-hidden="true" /> New project</Link>}
+      </Button>
+    )
+    : <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
+
   const matchesFilter = (entry: PortfolioEntry) => {
     if (!section.filterBy) return true
     const value = String(entry.raw[section.filterBy.field] ?? '')
@@ -333,7 +347,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                   onChange={onGroupChange}
                 />
               )}
-              <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
+              {newEntryButton}
             </div>
           </div>
           <div className="repository-entry-list">
@@ -391,7 +405,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
               <div className="collection-empty-state">
                 <strong>{entries.length ? 'No matching entries' : `No ${section.title.toLowerCase()} added yet`}</strong>
                 <span>{entries.length ? 'Try a different search.' : 'Create the first entry for this section.'}</span>
-                {!entries.length && <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>}
+                {!entries.length && newEntryButton}
               </div>
             )}
           </div>
