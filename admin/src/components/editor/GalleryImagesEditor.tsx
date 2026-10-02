@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { DragEvent, KeyboardEvent } from 'react'
-import { AlertCircle, ChevronLeft, ChevronRight, CloudUpload, ImageOff, Loader2, Plus, Trash2 } from 'lucide-react'
+import { AlertCircle, ChevronLeft, ChevronRight, CloudUpload, GripVertical, ImageOff, Loader2, Plus, Star, Trash2 } from 'lucide-react'
 import { Button, FileField, IconButton, TextField } from '@/components/form'
 import { galleryImageUrl, splitGalleryImages } from '@/lib/galleryImages'
 import type { PendingPhoto } from '@/hooks/useGalleryUploads'
@@ -96,7 +96,7 @@ export function GalleryImagesEditor({ images, fallbackId, onChange, uploads = {}
     >
       <div className="gallery-images-heading">
         <span className="logo-selector-label">Images <small>{images.length}</small></span>
-        {images.length > 1 && <small>Drag to reorder. The first image is the cover.</small>}
+        {images.length > 1 && <small>Drag a photo, or use its arrows, to reorder. The first is the cover.</small>}
       </div>
       {images.length ? (
         <ol className="gallery-image-grid">
@@ -107,7 +107,9 @@ export function GalleryImagesEditor({ images, fallbackId, onChange, uploads = {}
               className="gallery-image"
               draggable
               data-dragging={dragging === index || undefined}
-              data-over={over === index && dragging !== index ? true : undefined}
+              // Which side the dragged photo will land on: after this one when it
+              // comes from earlier in the list, before it when from later.
+              data-over={over === index && dragging !== null && dragging !== index ? (dragging < index ? 'after' : 'before') : undefined}
               onDragStart={event => { setDragging(index); event.dataTransfer.effectAllowed = 'move'; event.dataTransfer.setData('text/plain', image) }}
               onDragOver={event => { if (dragging === null) return; event.preventDefault(); setOver(index) }}
               onDrop={event => { event.preventDefault(); if (dragging !== null) move(dragging, index); setDragging(null); setOver(null) }}
@@ -115,20 +117,22 @@ export function GalleryImagesEditor({ images, fallbackId, onChange, uploads = {}
             >
               <div className="gallery-image-frame">
                 <ImagePreview key={uploads[image]?.previewUrl ?? image} image={image} src={uploads[image]?.previewUrl} />
-                {index === 0 && <span className="gallery-image-cover">Cover</span>}
+                <span className="gallery-image-position" data-cover={index === 0 || undefined}>{index === 0 ? '1 · Cover' : index + 1}</span>
                 {uploads[image] && (
                   <span className="gallery-image-status" data-state={uploads[image].state} title={uploads[image].error}>
                     {uploads[image].state === 'failed' ? <AlertCircle aria-hidden="true" /> : uploads[image].state === 'ready' ? <CloudUpload aria-hidden="true" /> : <Loader2 className="animate-spin" aria-hidden="true" />}
                     {UPLOAD_STATUS[uploads[image].state]}
                   </span>
                 )}
-                <span className="gallery-image-actions">
-                  <IconButton variant="bare" size="none" label={`Move ${image} earlier`} title="Move earlier" disabled={index === 0} onClick={() => move(index, index - 1)}><ChevronLeft aria-hidden="true" /></IconButton>
-                  <IconButton variant="bare" size="none" label={`Move ${image} later`} title="Move later" disabled={index === images.length - 1} onClick={() => move(index, index + 1)}><ChevronRight aria-hidden="true" /></IconButton>
-                  <IconButton variant="bare" size="none" label={`Remove ${image}`} title="Remove" onClick={() => onChange(images.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton>
-                </span>
               </div>
               <code className="gallery-image-key" title={image}>{image}</code>
+              <div className="gallery-image-toolbar">
+                <span className="gallery-image-handle" title="Drag to reorder" aria-hidden="true"><GripVertical /></span>
+                <IconButton variant="bare" size="none" label={`Move ${image} earlier`} title="Move earlier" disabled={index === 0} onClick={() => move(index, index - 1)}><ChevronLeft aria-hidden="true" /></IconButton>
+                <IconButton variant="bare" size="none" label={`Move ${image} later`} title="Move later" disabled={index === images.length - 1} onClick={() => move(index, index + 1)}><ChevronRight aria-hidden="true" /></IconButton>
+                <IconButton variant="bare" size="none" label={`Make ${image} the cover`} title={index === 0 ? 'Already the cover' : 'Make cover'} disabled={index === 0} onClick={() => move(index, 0)}><Star aria-hidden="true" /></IconButton>
+                <IconButton variant="bare" size="none" className="gallery-image-remove" label={`Remove ${image}`} title="Remove" onClick={() => onChange(images.filter((_, position) => position !== index))}><Trash2 aria-hidden="true" /></IconButton>
+              </div>
             </li>
           ))}
         </ol>
