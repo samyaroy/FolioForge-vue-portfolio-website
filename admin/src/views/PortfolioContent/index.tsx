@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { toast } from 'react-toastify'
 import { createEntry as createCollectionEntry, deleteEntry as deleteCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
-import { ArrowUpRight, Check, FileCode2, Globe, Pencil, Plus, Star, Trash2 } from 'lucide-react'
+import { ArrowUpRight, Check, FileCode2, Globe, Pencil, Plus, Star, Table2, Trash2 } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { EntryThumbnail } from '@/components/admin/EntryThumbnail'
 import { SaveStatusHint } from '@/components/admin/InfoHint'
@@ -17,7 +17,7 @@ import { Button, SelectField, SwitchField } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
-import { getPortfolioEntries } from '@/data/portfolioEntries'
+import { getPortfolioEntries, mentoringCohorts } from '@/data/portfolioEntries'
 import { hasSitePreview, previewFacts, previewHeading, previewImage } from '@/lib/entryPreview'
 import { InlineMarkup } from '@/components/InlineMarkup'
 import { ENTRY_ENABLED_KEY, isEntryEnabled } from '../../../../src/config/entryStatus.ts'
@@ -155,7 +155,11 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   useEffect(() => {
     const controller = new AbortController()
     fetchCollection(collection, controller.signal)
-      .then(state => { setBaseSha(state.baseSha); setFailure('') })
+      .then(state => {
+        setBaseSha(state.baseSha)
+        setFailure('')
+        if (collection === 'teaching/mentoring') setEntries(mentoringCohorts(state.entries))
+      })
       .catch((error: unknown) => {
         if (error instanceof Error && error.name === 'AbortError') return
         setBaseSha('')
@@ -167,7 +171,10 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   /** Re-read the revision a save must quote next time. */
   const refreshBase = async () => {
     const next = await fetchCollection(collection, new AbortController().signal).catch(() => null)
-    if (next) setBaseSha(next.baseSha)
+    if (next) {
+      setBaseSha(next.baseSha)
+      if (collection === 'teaching/mentoring') setEntries(mentoringCohorts(next.entries))
+    }
   }
 
   // Choices either come from configuration or from the values the content
@@ -281,7 +288,10 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
       setEditor(null)
       // The file has a new revision now, so the next save must quote that one.
       const refreshed = await fetchCollection(collection, new AbortController().signal).catch(() => null)
-      if (refreshed) setBaseSha(refreshed.baseSha)
+      if (refreshed) {
+        setBaseSha(refreshed.baseSha)
+        if (collection === 'teaching/mentoring') setEntries(mentoringCohorts(refreshed.entries))
+      }
       toast.success(`Saved. ${pending} file${pending === 1 ? '' : 's'} waiting to publish.`)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not save this entry.')
@@ -361,6 +371,13 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                 </span>
                 <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
                 <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={!baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
+                {collection === 'teaching/mentoring' && (
+                  <Button variant="outline" size="sm" className="mentoring-project-info" asChild>
+                    <Link to={`/portfolio/pages/teaching/mentoring/${encodeURIComponent(entry.id)}/projects`} state={{ cohort: entry }} aria-label={`Project info for ${entry.title}`}>
+                      <Table2 aria-hidden="true" /> Project info <span>{Array.isArray(entry.raw.projects) ? entry.raw.projects.length : 0}</span>
+                    </Link>
+                  </Button>
+                )}
               </article>
               )
             })}
