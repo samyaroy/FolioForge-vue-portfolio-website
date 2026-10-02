@@ -4,7 +4,7 @@ date: 2026-06-10
 description: Tables, task lists, code blocks, and other GFM niceties.
 cover: /hero.jpg
 tags: [markdown, reference]
-draft: false
+draft: true
 ---
 
 Because the renderer uses `remark-gfm`, GitHub-flavored Markdown works here.
