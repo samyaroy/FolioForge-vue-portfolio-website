@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 import { toast } from 'react-toastify'
 import { createEntry as createCollectionEntry, deleteEntry as deleteCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
 import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Trash2 } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { InfoHint } from '@/components/admin/InfoHint'
+import { SaveStatusHint } from '@/components/admin/InfoHint'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
@@ -53,25 +54,19 @@ export function PortfolioContentPage() {
 
 /**
  * The header both editors share: the page, and a link to it on the site.
- * `saveable` adds how saving works, for an editor whose saves can land.
+ * `status` sits under the link, for an editor that saves.
  */
-function SectionHeader({ page, section, saveable = false }: { page: PortfolioPage; section: PortfolioSection; saveable?: boolean }) {
+function SectionHeader({ page, section, status }: { page: PortfolioPage; section: PortfolioSection; status?: ReactNode }) {
   return (
     <>
       <PageHeader
         title={page.title}
         description={page.description}
+        status={status}
         actions={
-          <div className="page-action-stack">
-            <Button variant="outline" asChild>
-              <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
-            </Button>
-            {saveable && (
-              <InfoHint label="How saving works">
-                Edits wait here until you publish. Publishing writes every change as one commit on <code>{publishingTarget.branch}</code>.
-              </InfoHint>
-            )}
-          </div>
+          <Button variant="outline" asChild>
+            <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
+          </Button>
         }
       />
       {page.sections.length > 1 && (
@@ -136,16 +131,17 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   // that moved on becomes a conflict instead of an overwrite.
   const [baseSha, setBaseSha] = useState('')
 
-  const [reason, setReason] = useState('Checking whether this collection can be saved...')
+  // Why the collection could not be read; empty while it is being read.
+  const [failure, setFailure] = useState('')
 
   useEffect(() => {
     const controller = new AbortController()
     fetchCollection(collection, controller.signal)
-      .then(state => { setBaseSha(state.baseSha); setReason('') })
+      .then(state => { setBaseSha(state.baseSha); setFailure('') })
       .catch((error: unknown) => {
         if (error instanceof Error && error.name === 'AbortError') return
         setBaseSha('')
-        setReason(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
+        setFailure(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
       })
     return () => controller.abort()
   }, [collection])
@@ -261,10 +257,15 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
 
   return (
     <>
-      <SectionHeader page={page} section={section} saveable={Boolean(baseSha)} />
-
-      {/* Only a collection that cannot be saved has anything to say here. */}
-      {!baseSha && reason && <LocalNotice>{reason}</LocalNotice>}
+      <SectionHeader
+        page={page}
+        section={section}
+        status={(
+          <SaveStatusHint saveable={Boolean(baseSha)} failure={failure}>
+            Edits wait here until you publish. Publishing writes every change as one commit on <code>{publishingTarget.branch}</code>.
+          </SaveStatusHint>
+        )}
+      />
 
       <div className="mapped-editor-layout" data-solo={!hasSectionVisibility(page.id, section.id) || undefined}>
         <section className="form-panel">

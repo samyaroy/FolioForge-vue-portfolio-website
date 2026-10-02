@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ImageOff, Pencil, Plus, Star, Trash2 } from 'lucide-react'
 import { toast } from 'react-toastify'
-import { LocalNotice } from '@/components/admin/LocalNotice'
+import { SaveStatusHint } from '@/components/admin/InfoHint'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
 import { Button, IconButton } from '@/components/form'
@@ -54,15 +54,16 @@ export function CareerUnlocksPage() {
   const [editor, setEditor] = useState<{ mode: 'new' } | { mode: 'edit'; entry: PortfolioEntry } | null>(null)
   const [saving, setSaving] = useState(false)
   const [baseSha, setBaseSha] = useState('')
-  const [reason, setReason] = useState('Loading gallery entries from the publishing branch...')
+  // Why the file could not be read; empty while it is being read.
+  const [failure, setFailure] = useState('')
 
   useEffect(() => {
     const controller = new AbortController()
     fetchCollection(COLLECTION, controller.signal)
-      .then(state => { setEntries(toEntries(state.entries)); setBaseSha(state.baseSha); setReason('') })
+      .then(state => { setEntries(toEntries(state.entries)); setBaseSha(state.baseSha); setFailure('') })
       .catch((error: unknown) => {
         if (error instanceof Error && error.name === 'AbortError') return
-        setReason(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
+        setFailure(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
       })
     return () => controller.abort()
   }, [])
@@ -122,12 +123,12 @@ export function CareerUnlocksPage() {
         title="Career Unlocks"
         description={<>Entries in <code>src/content/profile_info/gallery.yml</code>.</>}
         actions={<Button disabled={!baseSha || saving} onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New unlock</Button>}
+        status={(
+          <SaveStatusHint saveable={Boolean(baseSha)} failure={failure}>
+            Saving commits <code>gallery.yml</code> and the generated <code>galleryImageManifest.yml</code> together, so the two never disagree.
+          </SaveStatusHint>
+        )}
       />
-      <LocalNotice>
-        {baseSha
-          ? <>Saving commits <code>gallery.yml</code> and the generated <code>galleryImageManifest.yml</code> together, so the two never disagree.</>
-          : reason}
-      </LocalNotice>
       {/* The list and what governs its visibility sit side by side, as every
           other collection editor arranges them. */}
       <div className="mapped-editor-layout">

@@ -3,9 +3,9 @@ import { toast } from 'react-toastify'
 import { AlertTriangle, ExternalLink, Pencil, Plus, Save, Trash2, X } from 'lucide-react'
 import { DataTable } from '@/components/admin/DataTable'
 import { columnsFor, type DataTableColumns } from '@/lib/dataTable'
-import { LocalNotice } from '@/components/admin/LocalNotice'
 import { MetricGrid } from '@/components/admin/MetricGrid'
 import { PageHeader } from '@/components/admin/PageHeader'
+import { SaveStatusHint } from '@/components/admin/InfoHint'
 import { SearchField } from '@/components/admin/SearchField'
 import { Button, IconButton, SelectField, TextField } from '@/components/form'
 import { HYPERLINK_COLLECTIONS, hyperlinkEntries, hyperlinkGroupEntries, hyperlinkIndex, serializeHyperlinkEntry, type HyperlinkEntry, type HyperlinkGroup } from '@/lib/hyperlinkMetadata'
@@ -143,12 +143,13 @@ export function HyperlinkMetadataPage() {
   const [group, setGroup] = useState<HyperlinkGroup>('Institute')
   const [saving, setSaving] = useState(false)
   const [baseSha, setBaseSha] = useState('')
-  const [reason, setReason] = useState('Checking whether this file can be saved...')
+  // Why the file could not be read; empty while it is being read.
+  const [failure, setFailure] = useState('')
 
   const apply = (state: { entries: HyperlinkEntry[]; baseSha: string }) => {
     setEntries(state.entries)
     setBaseSha(state.baseSha)
-    setReason('')
+    setFailure('')
   }
 
   useEffect(() => {
@@ -158,7 +159,7 @@ export function HyperlinkMetadataPage() {
       .catch((error: unknown) => {
         if (error instanceof Error && error.name === 'AbortError') return
         setBaseSha('')
-        setReason(error instanceof Error ? error.message : 'This file cannot be saved yet.')
+        setFailure(error instanceof Error ? error.message : 'This file cannot be saved yet.')
       })
     return () => controller.abort()
   }, [])
@@ -234,6 +235,11 @@ export function HyperlinkMetadataPage() {
         title="Hyperlink Metadata"
         description={<>Names, aliases and URLs SmartLink resolves from <code>src/metadata/hyperlinkMetadata.yml</code>.</>}
         actions={<Button onClick={() => setEditing({ id: `local-${Date.now()}`, group, name: '', aliases: [], url: '', issues: [] })}><Plus aria-hidden="true" /> New link</Button>}
+        status={(
+          <SaveStatusHint saveable={Boolean(baseSha)} failure={failure}>
+            Edits wait until you publish. SmartLink resolves names and aliases through this file, so a deleted entry stops resolving wherever the content uses it.
+          </SaveStatusHint>
+        )}
       />
       <MetricGrid metrics={[
         { label: 'Links', value: entries.length, detail: 'Names SmartLink can resolve' },
@@ -241,11 +247,6 @@ export function HyperlinkMetadataPage() {
         { label: 'People', value: entries.filter(entry => entry.group === 'Person').length, detail: 'Profile entries' },
         { label: 'Needs a look', value: brokenCount, detail: brokenCount ? 'Entry will not resolve' : 'All entries resolve', healthy: brokenCount === 0 },
       ]} />
-      <LocalNotice>
-        {baseSha
-          ? <>Edits wait until you publish. SmartLink resolves names and aliases through this file, so a deleted entry stops resolving wherever the content uses it.</>
-          : reason}
-      </LocalNotice>
 
       <div className="hyperlink-search">
         <SearchField value={query} onChange={setQuery} placeholder="Search names, aliases, or URLs" label="Search hyperlink metadata" />

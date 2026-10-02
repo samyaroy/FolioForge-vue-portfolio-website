@@ -336,6 +336,9 @@ tbody tr:hover { background: #f9fbfd; }
 .info-hint-text { position: absolute; top: calc(100% + 6px); right: 0; z-index: 40; width: max-content; max-width: 260px; border: 1px solid #c6ddf2; border-radius: 5px; background: #eff7ff; padding: 7px 9px; box-shadow: 0 6px 18px rgb(11 30 45 / 12%); color: #526d85; font-size: 10px; font-weight: 500; line-height: 1.45; opacity: 0; pointer-events: none; transition: opacity .12s ease; visibility: hidden; }
 .info-hint:hover .info-hint-text, .info-hint:focus-within .info-hint-text { opacity: 1; visibility: visible; }
 .info-hint-text code { border-radius: 3px; background: #dcebfa; padding: 1px 3px; color: #385269; font-size: 9px; }
+.info-hint[data-tone='warning'] .info-hint-trigger { color: #b7791f; }
+.info-hint[data-tone='warning'] .info-hint-trigger:hover, .info-hint[data-tone='warning'] .info-hint-trigger:focus-visible { background: #fdf6e3; }
+.info-hint[data-tone='warning'] .info-hint-text { border-color: #ecd59b; background: #fdf6e3; color: #7a5b12; }
 .local-notice { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; border: 1px solid #c6ddf2; background: #eff7ff; padding: 10px 12px; color: #526d85; font-size: 11px; }
 .local-notice svg { width: 15px; height: 15px; flex: none; color: #1980e6; }
 
