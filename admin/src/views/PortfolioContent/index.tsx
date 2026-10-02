@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { toast } from 'react-toastify'
 import { createEntry as createCollectionEntry, deleteEntry as deleteCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
-import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Trash2 } from 'lucide-react'
+import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Star, Trash2 } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { EntryThumbnail } from '@/components/admin/EntryThumbnail'
 import { SaveStatusHint } from '@/components/admin/InfoHint'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
@@ -17,9 +18,10 @@ import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
 import { getPortfolioEntries } from '@/data/portfolioEntries'
-import { hasSitePreview, previewFacts, previewHeading } from '@/lib/entryPreview'
+import { hasSitePreview, previewFacts, previewHeading, previewImage } from '@/lib/entryPreview'
 import { InlineMarkup } from '@/components/InlineMarkup'
 import { ENTRY_ENABLED_KEY, isEntryEnabled } from '../../../../src/config/entryStatus.ts'
+import { fieldKeys } from '../../../../src/config/entryFields.ts'
 import type { PortfolioEntry } from '@/data/portfolioEntries'
 
 type EditorState = { mode: 'new' } | { mode: 'edit'; entry: PortfolioEntry }
@@ -183,26 +185,43 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     .filter(matchesFilter)
     .filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
 
-  // Switching an entry off writes `enabled: false`, which the site filters out,
-  // in place of commenting the block out of the YAML.
-  const toggleEntry = async (entry: PortfolioEntry, enabled: boolean) => {
-    const raw = { ...entry.raw, [ENTRY_ENABLED_KEY]: enabled }
+  // A collection that declares `featured` gets a star on each row for it.
+  const hasFeatured = fieldKeys(section.entryFields ?? []).includes('featured')
+
+  /** Flip one yes/no key on an entry and save it at once, as a switch does. */
+  const setFlag = async (entry: PortfolioEntry, key: string, value: boolean, outcome: { local: string; saved: string }) => {
+    const raw = { ...entry.raw, [key]: value }
     const previous = entries
-    setEntries(current => current.map(item => item.id === entry.id ? { ...item, enabled, raw } : item))
+    setEntries(current => current.map(item => item.id === entry.id ? { ...item, raw, ...(key === ENTRY_ENABLED_KEY ? { enabled: value } : {}) } : item))
     if (!baseSha) {
-      toast.info(`${entry.title} ${enabled ? 'shown' : 'hidden'} in this session only.`)
+      toast.info(outcome.local)
       return
     }
     try {
       await saveCollectionEntry(collection, entries.findIndex(item => item.id === entry.id), raw, baseSha)
       await refreshBase()
-      toast.success(enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`)
+      toast.success(outcome.saved)
     } catch (error) {
-      // The switch already moved, so put it back rather than leaving the UI
+      // The control already moved, so put it back rather than leaving the UI
       // claiming something the file does not say.
       setEntries(previous)
       toast.error(error instanceof Error ? error.message : 'Could not change that entry.')
     }
+  }
+
+  // Switching an entry off writes `enabled: false`, which the site filters out,
+  // in place of commenting the block out of the YAML.
+  const toggleEntry = (entry: PortfolioEntry, enabled: boolean) => setFlag(entry, ENTRY_ENABLED_KEY, enabled, {
+    local: `${entry.title} ${enabled ? 'shown' : 'hidden'} in this session only.`,
+    saved: enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`,
+  })
+
+  const toggleFeatured = (entry: PortfolioEntry) => {
+    const featured = entry.raw.featured !== true
+    return setFlag(entry, 'featured', featured, {
+      local: `${entry.title} ${featured ? 'featured' : 'unfeatured'} in this session only.`,
+      saved: featured ? `${entry.title} is featured.` : `${entry.title} is no longer featured.`,
+    })
   }
 
   // Creating from a filtered list should produce something that shows up in it.
@@ -293,9 +312,13 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
             <span>{visibleEntries.length} of {entries.length} entries</span>
           </div>
           <div className="repository-entry-list">
-            {visibleEntries.map((entry, index) => (
-              <article key={entry.id} className={isEntryEnabled(entry.raw) ? undefined : 'entry-disabled'}>
+            {visibleEntries.map((entry, index) => {
+              const image = previewImage(entry.raw, previewKey)
+              const featured = entry.raw.featured === true
+              return (
+              <article key={entry.id} className={isEntryEnabled(entry.raw) ? undefined : 'entry-disabled'} data-thumbnail={image !== undefined || undefined}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
+                {image !== undefined && <EntryThumbnail url={image} />}
                 <div>
                   <strong><InlineMarkup text={hasSitePreview(previewKey) ? previewHeading(entry.raw, previewKey) || entry.title : entry.title} /></strong>
                   {!hasSitePreview(previewKey) && entry.subtitle && <small>{entry.subtitle}</small>}
@@ -309,15 +332,29 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                   )}
                 </div>
                 <span className="mapped-state"><Check aria-hidden="true" /> Mapped</span>
-                <SwitchField
-                  aria-label={`Show ${entry.title} on the site`}
-                  checked={isEntryEnabled(entry.raw)}
-                  onChange={enabled => void toggleEntry(entry, enabled)}
-                />
+                <span className="entry-flags">
+                  {hasFeatured && (
+                    <Button
+                      variant="outline"
+                      size="icon-sm"
+                      className={`feature-button${featured ? ' feature-button-active' : ''}`}
+                      title={featured ? 'Featured' : 'Not featured'}
+                      aria-label={`${featured ? 'Unfeature' : 'Feature'} ${entry.title}`}
+                      aria-pressed={featured}
+                      onClick={() => void toggleFeatured(entry)}
+                    ><Star aria-hidden="true" /></Button>
+                  )}
+                  <SwitchField
+                    aria-label={`Show ${entry.title} on the site`}
+                    checked={isEntryEnabled(entry.raw)}
+                    onChange={enabled => void toggleEntry(entry, enabled)}
+                  />
+                </span>
                 <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
                 <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={!baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
               </article>
-            ))}
+              )
+            })}
             {!visibleEntries.length && (
               <div className="collection-empty-state">
                 <strong>{entries.length ? 'No matching entries' : `No ${section.title.toLowerCase()} added yet`}</strong>

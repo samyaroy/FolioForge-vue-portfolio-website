@@ -3,6 +3,7 @@ import type { LucideIcon } from 'lucide-react'
 import { isAnimatedIcon, researchInterestIcon, researchInterestName, RESEARCH_INTEREST_FALLBACK_ICON } from '../../../src/config/researchInterestIcons'
 import { mentoredProjectLinkCategories, ongoingProjectLinkCategories } from '../../../src/config/projectLinkCategories'
 import { ENTRY_ENABLED_KEY } from '../../../src/config/entryStatus'
+import { galleryCoverUrl } from '@/lib/galleryImages'
 
 /**
  * A row's preview, shaped like the card the site renders rather than a list of
@@ -381,6 +382,16 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...roleLinkFacts(raw, 'roles'),
     ]
   }
+  if (collection === 'gallery/career-unlocks') {
+    return [
+      ...fact(CalendarDays, raw.date),
+      ...fact(Presentation, raw.event),
+      ...fact(MapPin, raw.location),
+      ...fact(Tag, names(raw.tags)),
+      ...fact(Images, counted(raw.images, 'image')),
+      ...fact(Shapes, raw.type),
+    ]
+  }
   if (collection === 'professional-activity/hosted-events') {
     return [
       ...fact(Tag, raw.event_type),
@@ -509,6 +520,15 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
   return []
 }
 
+/**
+ * The picture a row leads with, for a collection whose card is a picture; an
+ * empty string when that entry has none, undefined for every other collection.
+ */
+export function previewImage(raw: Record<string, unknown>, collection: string): string | undefined {
+  if (collection === 'gallery/career-unlocks') return galleryCoverUrl(raw)
+  return undefined
+}
+
 /** Collections whose rows are drawn as the site draws them. */
 export function hasSitePreview(collection: string): boolean {
   // Every Conferences, Workshops & Bootcamps collection is drawn the same way,
@@ -529,6 +549,7 @@ export function hasSitePreview(collection: string): boolean {
     'teaching/mentoring', 'teaching/projects', 'teaching/others',
     'cocurricular/leadership', 'cocurricular/volunteering',
     'professional-activity/hosted-events',
+    'gallery/career-unlocks',
     'resources/study-material', 'resources/worth-exploring',
     'recommended/items', 'readings/items', 'movies/items', 'travel/states', 'hobbies/tiles',
   ].includes(collection)

@@ -1,10 +1,9 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 import { BlogGalleryPage } from '@/views/BlogGallery'
 import { BlogOverviewPage } from '@/views/BlogOverview'
 import { BlogPagesPage } from '@/views/BlogPages'
 import { BlogPostsPage } from '@/views/BlogPosts'
-import { CareerUnlocksPage } from '@/views/CareerUnlocks'
 import { MediaLibraryPage } from '@/views/MediaLibrary'
 import { MetadataPage } from '@/views/Metadata'
 import { CredentialsPage } from '@/views/Credentials'
@@ -22,8 +21,8 @@ export const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       { path: '/', element: <PortfolioOverviewPage /> },
-      { path: '/portfolio/career-unlocks', element: <CareerUnlocksPage /> },
-      { path: '/portfolio/pages/gallery/career-unlocks', element: <CareerUnlocksPage /> },
+      // Career Unlocks is an ordinary collection now; the old address still lands on it.
+      { path: '/portfolio/career-unlocks', element: <Navigate to="/portfolio/pages/gallery/career-unlocks" replace /> },
       { path: '/portfolio/pages/:pageId/:sectionId', element: <PortfolioContentPage /> },
       { path: '/portfolio/media', element: <MediaLibraryPage /> },
       { path: '/portfolio/metadata', element: <MetadataPage /> },
