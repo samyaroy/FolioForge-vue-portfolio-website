@@ -12,6 +12,7 @@ import { NotFoundPage } from '@/views/NotFound'
 import { PortfolioOverviewPage } from '@/views/PortfolioOverview'
 import { PortfolioContentPage } from '@/views/PortfolioContent'
 import { PageQuotesPage } from '@/views/PageQuotes'
+import { MentoringProjectsPage } from '@/views/MentoringProjects'
 import { PostEditorPage } from '@/views/PostEditor'
 import { PublishingPage } from '@/views/Publishing'
 import { SettingsPage } from '@/views/Settings'
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
       { path: '/portfolio/pages/:pageId', element: <PortfolioContentPage /> },
       { path: '/portfolio/pages/:pageId/:sectionId', element: <PortfolioContentPage /> },
       { path: '/portfolio/pages/quotes', element: <PageQuotesPage /> },
+      { path: '/portfolio/pages/teaching/mentoring/:cohortId/projects', element: <MentoringProjectsPage /> },
       { path: '/portfolio/media', element: <MediaLibraryPage /> },
       { path: '/portfolio/metadata', element: <MetadataPage /> },
       { path: '/portfolio/credentials', element: <CredentialsPage /> },

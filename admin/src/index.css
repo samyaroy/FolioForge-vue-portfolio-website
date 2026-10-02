@@ -416,6 +416,14 @@ tbody tr:hover { background: #f9fbfd; }
 /* A switched-off entry stays listed and editable, but reads as unpublished. */
 .entry-disabled > span:first-child, .entry-disabled > div, .entry-disabled .mapped-state { opacity: .5; }
 .repository-entry-list article:first-child { border-top: 0; }
+.repository-entry-list article > .mentoring-project-info { grid-column: 2 / -1; justify-self: end; white-space: nowrap; }
+.repository-entry-list article:has(> .mentoring-project-info) { row-gap: 7px; }
+.mentoring-project-panel .data-table { min-width: 640px; }
+.mentoring-project-panel tr.entry-disabled { opacity: .55; }
+.mentoring-project-students { overflow-wrap: anywhere; }
+.mentoring-project-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.mentoring-project-links a { display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; padding: 0; color: #126abb; }
+.mentoring-project-links svg { width: 14px; height: 14px; }
 .repository-entry-list article:hover { background: #f9fbfd; }
 .repository-entry-list article > span:first-child { color: #8ca0b0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; }
 .repository-entry-list article > div { display: flex; min-width: 0; flex-direction: column; gap: 3px; }

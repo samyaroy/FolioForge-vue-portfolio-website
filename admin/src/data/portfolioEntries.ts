@@ -110,6 +110,11 @@ function toEntries(records: UnknownRecord[], titlePaths: string[], subtitlePaths
   })
 }
 
+export function mentoringCohorts(records: unknown[]): PortfolioEntry[] {
+  return toEntries(asRecords(records), ['programme', 'semester'], ['time_period', 'semester'])
+    .map(entry => ({ ...entry, readOnlyFields: ['projects'] }))
+}
+
 function arrayAt(document: UnknownRecord, path: string) {
   return asRecords(readPath(document, path))
 }
@@ -208,8 +213,7 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'teaching/projects': () => toEntries(mentoredProjects(), ['title'], ['course', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
   // `projects` is its own collection; it is carried through a save untouched
   // rather than shown here as a raw blob.
-  'teaching/mentoring': () => toEntries(arrayAt(documents.teaching, 'projects_mentored'), ['programme', 'semester'], ['time_period', 'semester'])
-    .map(entry => ({ ...entry, readOnlyFields: ['projects'] })),
+  'teaching/mentoring': () => mentoringCohorts(arrayAt(documents.teaching, 'projects_mentored')),
   'teaching/others': () => toEntries(arrayAt(documents.teaching, 'other_teachings'), ['title'], ['role', 'duration']),
   'ongoing-projects/projects': () => toEntries(arrayAt(documents.ongoingProjects, 'ongoing_projects'), ['title'], ['status', 'type']),
 

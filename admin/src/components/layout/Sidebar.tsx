@@ -56,7 +56,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
               {group.items.map(item => {
                 const Icon = item.icon
                 if (item.children?.length) {
-                  const isActive = item.children.some(child => child.path === location.pathname)
+                  const isActive = item.children.some(child => child.path === location.pathname || location.pathname.startsWith(`${child.path}/`))
                   const isExpanded = expandedItems[item.label] ?? isActive
                   return (
                     <div className="nav-tree" key={item.path}>
