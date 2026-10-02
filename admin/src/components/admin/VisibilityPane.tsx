@@ -1,4 +1,5 @@
 import { SwitchField } from '@/components/form'
+import { FileCode2 } from 'lucide-react'
 import { sectionVisibility } from '@/config/visibility'
 import type { VisibilityFlag } from '@/config/visibility'
 import { useVisibilityDraft } from '@/hooks/visibilityContext'
@@ -26,17 +27,27 @@ export function VisibilitySwitches({ controls }: { controls: VisibilityFlag[] })
   )
 }
 
-export function VisibilityPane({ pageId, sectionId }: { pageId: string; sectionId: string }) {
+export function VisibilityPane({ pageId, sectionId, sources = [], entryCount }: {
+  pageId: string
+  sectionId: string
+  sources?: readonly string[]
+  entryCount?: { visible: number; total: number }
+}) {
   const controls = sectionVisibility[`${pageId}/${sectionId}`] ?? []
   const { flags } = useVisibilityDraft()
-  // A section with no flag is always on; a panel saying so is a panel's worth
-  // of width spent on nothing.
-  if (!controls.length) return null
+  if (!controls.length && !sources.length && !entryCount) return null
   const controllingFlags = pageId === 'home' && sectionId === 'education' ? controls.slice(0, 1) : controls
   const isEnabled = controllingFlags.some(control => flags[control.path] === true)
   return (
     <section className="form-panel visibility-panel">
-      <div className="panel-heading"><div><span>Display</span><h2>Section visibility</h2></div></div>
+      <div className="panel-heading"><div><h2>Section metainfo</h2></div></div>
+      {entryCount && <p className="visibility-summary" aria-live="polite">{entryCount.visible} of {entryCount.total} entries</p>}
+      {sources.length > 0 && (
+        <div className="source-strip">
+          <FileCode2 aria-hidden="true" />
+          <span><small>Content source</small><strong>{sources.join(', ')}</strong></span>
+        </div>
+      )}
       {controls.length > 1 && <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>}
       <VisibilitySwitches controls={controls} />
     </section>

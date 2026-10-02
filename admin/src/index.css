@@ -167,8 +167,8 @@
 .storage-status { display: grid; grid-template-columns: 18px minmax(0, 1fr) 8px; align-items: center; gap: 9px; border-top: 1px solid #20374b; padding: 14px 16px; }
 .storage-status > svg { width: 17px; color: #7da0bd; }
 .storage-status strong { overflow: hidden; color: #dce9f5; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
-.storage-dot { width: 7px; height: 7px; border-radius: 50%; background: #f0a23a; }
-.storage-dot-ready { background: #23b26d; }
+.storage-dot { width: 7px; height: 7px; border-radius: 50%; background: #f0a23a; box-shadow: 0 0 4px #f0a23a, 0 0 9px rgb(240 162 58 / 55%); }
+.storage-dot-ready { background: #23b26d; box-shadow: 0 0 4px #23b26d, 0 0 9px rgb(35 178 109 / 55%); }
 
 .workspace { min-height: 100svh; padding-left: var(--sidebar-width); }
 .topbar {
@@ -395,9 +395,6 @@ tbody tr:hover { background: #f9fbfd; }
 .source-strip > span { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
 .source-strip small { color: #718396; font-size: 8px; font-weight: 750; text-transform: uppercase; }
 .source-strip strong { overflow: hidden; color: #3c586e; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
-.entry-list-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--border); padding: 10px 14px; }
-.entry-list-toolbar .search-field { width: min(420px, 100%); }
-.entry-list-toolbar > span { color: #718396; font-size: 9px; white-space: nowrap; }
 .repository-entry-list { display: flex; flex-direction: column; }
 .repository-entry-list article { display: grid; min-height: 68px; grid-template-columns: 28px minmax(0, 1fr) auto auto auto auto; align-items: center; gap: 11px; border-top: 1px solid var(--border); padding: 10px 14px; }
 /* A switched-off entry stays listed and editable, but reads as unpublished. */
@@ -804,8 +801,6 @@ tbody tr:hover { background: #f9fbfd; }
   .page-registry-heading { grid-template-columns: 32px minmax(0, 1fr) 16px; }
   .page-registry-heading .collection-meta { display: none; }
   .page-section-links { padding-left: 14px; }
-  .entry-list-toolbar { align-items: stretch; flex-direction: column; }
-  .entry-list-toolbar > span { text-align: right; }
   .repository-entry-list article { grid-template-columns: 22px minmax(0, 1fr) auto auto auto; gap: 8px; }
   .repository-entry-list article .mapped-state { display: none; }
   .repository-entry-list article button { width: 32px; padding: 0; }
@@ -876,6 +871,18 @@ tbody tr:hover { background: #f9fbfd; }
 /* The group sits with the action it governs: a new entry joins the group shown
    here, so the two belong together. */
 .panel-heading-actions { display: flex; align-items: center; gap: 8px; }
+.collection-panel { min-width: 0; }
+.collection-panel > .panel-heading { flex-wrap: wrap; }
+.collection-panel .panel-heading-actions { flex-wrap: wrap; justify-content: flex-end; margin-left: auto; max-width: 100%; }
+.collection-entry-actions { display: flex; min-width: 0; max-width: 100%; align-items: center; gap: 8px; }
+.section-action-button { background: #173b63; color: #fff; }
+.section-action-button:hover { background: #204d7a; color: #fff; }
+.expandable-search { display: flex; width: 32px; min-width: 32px; max-width: 100%; height: 32px; align-items: center; justify-content: flex-end; gap: 0; transition: width 180ms ease; }
+.expandable-search[data-expanded] { width: 230px; }
+.expandable-search input { width: 0; min-width: 0; flex: 1; height: 32px; border-radius: 4px 0 0 4px; font-size: 11px; }
+.expandable-search button { border-radius: 4px; }
+.expandable-search[data-expanded] button { border-radius: 0 4px 4px 0; }
+.visibility-panel .source-strip strong { white-space: normal; overflow-wrap: anywhere; }
 .group-select { min-width: 150px; background: #fff; }
 /* The caption lives in the trigger, so the control reads as one phrase
    ("Group  Research") instead of a labelled field stacked over a line. */

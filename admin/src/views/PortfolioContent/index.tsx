@@ -8,9 +8,9 @@ import { EntryThumbnail } from '@/components/admin/EntryThumbnail'
 import { SaveStatusHint } from '@/components/admin/InfoHint'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { SearchField } from '@/components/admin/SearchField'
+import { ExpandableSearchField } from '@/components/admin/SearchField'
 import { VisibilityPane, VisibilitySwitches } from '@/components/admin/VisibilityPane'
-import { hasSectionVisibility, sectionVisibility } from '@/config/visibility'
+import { sectionVisibility } from '@/config/visibility'
 import { useVisibilityDraft } from '@/hooks/visibilityContext'
 import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
 import { Button, SelectField, SwitchField } from '@/components/form'
@@ -286,8 +286,8 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
         )}
       />
 
-      <div className="mapped-editor-layout" data-solo={!hasSectionVisibility(page.id, section.id) || undefined}>
-        <section className="form-panel">
+      <div className="mapped-editor-layout">
+        <section className="form-panel collection-panel">
           <div className="panel-heading">
             <div><span>Collection</span><h2>{section.title}</h2></div>
             <div className="panel-heading-actions">
@@ -300,16 +300,11 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                   onChange={onGroupChange}
                 />
               )}
-              <Button size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
+              <div className="collection-entry-actions">
+                <ExpandableSearchField value={query} onChange={setQuery} placeholder={`Search ${section.title.toLowerCase()}`} label={`Search ${section.title}`} />
+                <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
+              </div>
             </div>
-          </div>
-          <div className="source-strip">
-            <FileCode2 aria-hidden="true" />
-            <span><small>Content source</small><strong>{section.sources.join(', ')}</strong></span>
-          </div>
-          <div className="entry-list-toolbar">
-            <SearchField value={query} onChange={setQuery} placeholder={`Search ${section.title.toLowerCase()}`} label={`Search ${section.title}`} />
-            <span>{visibleEntries.length} of {entries.length} entries</span>
           </div>
           <div className="repository-entry-list">
             {visibleEntries.map((entry, index) => {
@@ -359,17 +354,15 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
               <div className="collection-empty-state">
                 <strong>{entries.length ? 'No matching entries' : `No ${section.title.toLowerCase()} added yet`}</strong>
                 <span>{entries.length ? 'Try a different search.' : 'Create the first entry for this section.'}</span>
-                {!entries.length && <Button size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>}
+                {!entries.length && <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>}
               </div>
             )}
           </div>
         </section>
 
-        {hasSectionVisibility(page.id, section.id) && (
-          <aside className="mapped-editor-aside">
-            <VisibilityPane pageId={page.id} sectionId={section.id} />
-          </aside>
-        )}
+        <aside className="mapped-editor-aside">
+          <VisibilityPane pageId={page.id} sectionId={section.id} sources={section.sources} entryCount={{ visible: visibleEntries.length, total: entries.length }} />
+        </aside>
       </div>
       {editor && (
         <EntryEditorDialog
