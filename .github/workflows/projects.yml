@@ -41,18 +41,25 @@ jobs:
       - name: Add to app projects
         env:
           GH_TOKEN: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          ITEM_ID: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
           ITEM_URL: ${{ github.event.issue.html_url || github.event.pull_request.html_url }}
           LABELS: ${{ steps.labeler.outputs.all-labels || join(github.event.issue.labels.*.name, ',') }}
         run: |
-          # Adding an item that is already in a Project is a no-op.
-          add() { # <label> <project number>
+          # Adds by node ID: `gh project item-add --owner` first resolves the
+          # owner's type, which needs read:org and fails with a project-only
+          # token. Adding an item that is already in a Project is a no-op.
+          add() { # <label> <project node ID> <project name>
             case ",$LABELS," in
               *",$1,"*)
-                gh project item-add "$2" --owner samyaroy --url "$ITEM_URL"
-                echo "Added $ITEM_URL to project $2 ($1)"
+                gh api graphql -f project="$2" -f item="$ITEM_ID" -f query='
+                  mutation($project: ID!, $item: ID!) {
+                    addProjectV2ItemById(input: {projectId: $project, contentId: $item}) { item { id } }
+                  }' >/dev/null
+                echo "Added $ITEM_URL to $3"
                 ;;
             esac
           }
-          add app:portfolio 4
-          add app:admin 3
-          add app:blogs 2
+          # Node IDs from: gh project view <number> --owner samyaroy --format json --jq .id
+          add app:portfolio PVT_kwHOBDrUnc4BlcCH Portfolio
+          add app:admin PVT_kwHOBDrUnc4BlcCE Admin
+          add app:blogs PVT_kwHOBDrUnc4BCYeX Blogs
