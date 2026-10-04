@@ -1,8 +1,11 @@
 # CV Content, Build & Publishing
 
-Status: plan, revised 2026-10-04 to fit the admin as it is built, and again
-the same day after analysing the seven existing CVs in `admin/docs/` (§18).
-Nothing here is implemented yet.
+Status: revised 2026-10-04 to fit the admin as it is built, and again the same
+day after analysing the seven existing CVs in `admin/docs/` (§18). On the
+`admin-cv` branch: the schema, validator, resolver, LaTeX converter,
+`resume-v1` template, the imported content for all seven presets, and
+`npm run cv:build`. All seven build with no LaTeX errors on two pages each.
+The admin screens, browser compilation, snapshots and Drive are not built yet.
 
 > **Structured content is the source of truth. LaTeX and PDF are build
 > artifacts.**
@@ -95,7 +98,7 @@ PORTFOLIO YAML + CV LIBRARY ─► PRESET (+ application patch) ─► BUILD INP
 | Facts: roles, dates, degrees, institutions, projects, publications, awards, contact details | Portfolio YAML (Git, V1) | Unchanged, except that entries the CV uses gain an `id` |
 | CV entries, bullets, variants, summaries, skills, interests | `src/content/cv/library.yml` (Git, V1) | Public: everything here appears on a published CV anyway |
 | Presets | `src/content/cv/presets.yml` (Git, V1) | |
-| Templates | `admin/src/cv/templates/*.tex` | Code; changes go through review |
+| Templates | `admin/src/cv/templates/` | Code; changes go through review |
 | Drive targets (preset → file ID) | `CV_DRIVE_TARGETS` in `wrangler.jsonc` vars | File IDs are not secret; the site's CV file ID is already in `profile.yml` |
 | Service-account key | Worker secrets | Never reaches the browser |
 | Snapshots and publication records | R2 `CV_ARCHIVE` | Private |
@@ -243,21 +246,24 @@ presets:
     name: Research CV (Statistics)
     prefer: [stats, research]
     template: resume-v1
+    template_options:
+      bullet_size: small
     filename: SamyabrataRoy_Resume_Research_Stats
     pages: 2
     header: [phone, gmail, website, linkedin, github]
     sections:
-      - id: summary
+      - kind: summary
         items: [profile]
-      - id: education
+      - kind: education
         items: [home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu]
-      - id: experience
+      - kind: experience
         items:
           - ref: home/experience#ideas-tih-asd
             bullets: [npcyf-lead, npcyf-models, npcyf-pipeline]
           - ref: home/experience#ideas-tih-intern
             bullets: [fasal-lead, imd-scraping, fastapi-react]
-      - id: projects
+      - kind: projects
+        title: Projects
         items:
           - ref: projects-publications/research#messymashup
             bullets: [mm-cnn, mm-mashups, mm-features]
@@ -265,15 +271,15 @@ presets:
             bullets: [wine-methods, wine-compare]
           - ref: projects-publications/technical#quiz-pilot
             style: compact
-      - id: skills
+      - kind: skills
         items: [stats-modelling, languages, databases, others]
-      - id: certifications
+      - kind: certifications
         items: [internships-certifications/certifications#jhu-uq]
-      - id: positions
+      - kind: positions
         items:
           - ref: cocurricular/leadership#chi-square
             bullets: [chi-founded, chi-events, chi-reading-group]
-      - id: interests
+      - kind: interests
         items: [nonparametric, bayesian, ml, dl, uq]
     variants:
       npcyf-models: concise
@@ -351,39 +357,51 @@ replaces the base's list when present, and `variants` merges into it.
 Application builds are archived like any other build but have no Drive
 target.
 
-### 5.5 Types
+### 5.5 Schema
 
-``` ts
-/** Any lowercase key on a library row other than its own fields. */
-type VariantKey = string
+The schema is code: zod schemas in
+[admin/src/cv/schema.ts](../src/cv/schema.ts), with every TypeScript type
+inferred from them, so the types and the runtime checks cannot drift
+apart. Its only import is zod, so the browser, the Worker and the Node
+tests load the same file.
 
-type PresetItem = string | { ref: string; bullets?: string[]; style?: 'full' | 'compact' }
+| Schema | Reads | Type |
+|---|---|---|
+| `cvLibrarySchema` | `library.yml` | `CvLibrary` (`CvEntry`, `CvBullet`, `CvSummary`, `CvSkill`, `CvInterest`) |
+| `cvPresetsSchema` | `presets.yml` | `CvPreset[]` (`PresetSection`, `PresetItem`) |
+| `applicationBuildSchema` | `cv/applications/<ulid>.json` in R2 | `ApplicationBuild` |
+| `buildInputSchema` | `build.json`, from the browser and in snapshots | `BuildInput` (`ResolvedSection`, `ResolvedItem`) |
 
-type Preset = {
-  id: string
-  name: string
-  prefer: VariantKey[]
-  template: string
-  filename: string
-  pages: number
-  /** Keys of profile.yml, in display order. */
-  header: string[]
-  sections: { id: SectionKind; items: PresetItem[] }[]
-  variants?: Record<string, VariantKey>
-}
+-   **What the schemas fix while reading.** Blank YAML values are
+    absent, and blank lists are empty. Numbers become text (`period: 2026`).
+    Variant keys are gathered from beside `text` into a `variants` map.
+    Defaults are filled in: `kind: item`, `style: full`, and empty
+    `prefer`, `header`, `variants` and `template_options`.
+-   **Preset fields keep their YAML names** (`template_options`). The
+    builder edits a preset and writes the same row back.
+-   **`buildInputSchema` transforms nothing**, so a parsed build input is
+    exactly what was sent and hashes the same.
+-   **Problems carry a path** from file to field:
+    `presets.yml/presets/0/sections/2/kind`. `parseLibrary` and
+    `parsePresets` return every problem, not just the first.
+-   **zod runs `jitless`.** By default zod compiles fast paths with
+    `new Function`. The admin's CSP forbids that, and so do Workers, and
+    zod's probe for it is itself reported as a CSP violation. A test pins
+    the setting.
 
-/** Everything the renderer reads, fully resolved. Archived as build.json. */
-type BuildInput = {
-  rendererVersion: number
-  template: { id: string; sha256: string }
-  preset: { id: string; name: string; filename: string }
-  application?: { organization: string; purpose: string }
-  header: { name: string; fields: { key: string; label: string; href?: string }[] }
-  sections: ResolvedSection[]
-  /** Where the content came from. Excluded from the input hash. */
-  source: { v1Sha: string; pending: boolean }
-}
-```
+Checks that span rows and files live in
+[validate.ts](../src/cv/validate.ts) as `validateCv`:
+
+-   ids are unique (across every list with wording, because a preset's
+    `variants` map names rows by id alone)
+-   every ref lands, in the portfolio or among CV-only entries
+-   a section draws only from its allowed collections (§5.3)
+-   a bullet shown under an item belongs to that item, with at most one
+    lead
+-   a summary section shows exactly one summary
+-   each preset suits its template: section kinds, item styles and option
+    values
+-   every variant key is preferred by some preset, which catches typos
 
 A `ResolvedSection` holds final strings with the variant already chosen:
 titles, subtitles, locations, periods, links and bullets. The renderer
@@ -417,12 +435,66 @@ application patch ──────┘        inputHash          view · copy �
 
 ### 6.1 Templates
 
-Presentation stays separate from content:
+Presentation stays separate from content, and **more than one template is
+expected**. Each template is a folder plus one entry in the registry,
+[templates/index.ts](../src/cv/templates/index.ts):
 
 ``` text
 admin/src/cv/templates/
-    resume-v1.tex
+    index.ts                 the registry: one manifest per template
+    resume-v1/
+        skeleton.ts          the document: preamble, commands, {{HEADER}}, {{BODY}}
+        render.ts            one renderer per section kind it supports
+    <next-template>/
+        skeleton.ts
+        render.ts
 ```
+
+A manifest (`TemplateManifest` in the schema) is what a template promises:
+
+``` ts
+export const resumeV1 = {
+  id: 'resume-v1',
+  name: 'Resume',
+  version: 1,
+  engine: 'pdftex',            // or 'xetex' for a template that needs system fonts
+  paper: 'letter',
+  sections: {
+    kinds: SECTION_KINDS,      // the section kinds it can draw
+    styles: { projects: ['full', 'compact'] },
+  },
+  options: {
+    bullet_size: { type: 'choice', choices: ['footnotesize', 'small'], default: 'footnotesize' },
+  },
+} as const satisfies TemplateManifest
+```
+
+Adding a template touches nothing else:
+
+-   **The content model does not change.** A template reads the same
+    resolved `BuildInput`, and presets that don't choose it are
+    unaffected.
+-   **Presets are checked against the template they name.**
+    `validateCv` reports a section kind the template cannot draw, an item
+    style it lacks, and an unknown or ill-typed option. Switching a preset
+    to a new template shows what has to change before anything renders.
+-   **Options are the template's own knobs.** A preset sets them in
+    `template_options`, and the manifest supplies a default for each one
+    left out. `resume-v1`'s `bullet_size` exists because the Consolidated
+    CV sets bullets in `\footnotesize` and the six older files used
+    `\small`.
+-   **The engine is per template.** A template that needs XeLaTeX (for
+    `fontspec` and system fonts) says `engine: 'xetex'`, and the builder
+    loads that engine from `/cv-engine/xetex/<version>/` instead. It sits
+    under the same engine policy (§8), so the page policy still doesn't
+    change.
+-   **Renderers can be shared.** A new template's `render.ts` may reuse
+    `resume-v1`'s renderer for any section it draws the same way, and
+    write its own for the rest.
+-   **An application build may switch template** through its patch, for
+    a one-off application that wants a different look.
+
+The template parts:
 
 ``` latex
 % preamble and macros: \resumeSubheading, \resumeItem, \resumeProjectHeading ...
@@ -441,14 +513,13 @@ admin/src/cv/templates/
     still fits.
 -   Each section kind emits calls to the template's macros. `{{BODY}}`
     receives the sections in preset order.
--   A template declares the section kinds it supports. A preset that
-    names an unsupported kind fails to render instead of losing the
-    section.
--   The template's SHA-256 is part of `BuildInput`, so editing a template
-    marks every build that uses it as outdated.
--   Templates are imported as text, through a `Text` module rule for
-    `*.tex` in `wrangler.jsonc` and the equivalent few-line loader in
-    `vite.config.ts`. The browser and the Worker then load the same file.
+-   The template's id, version, SHA-256 and resolved options are part of
+    `BuildInput`, so editing a template, or a preset's options, marks
+    every affected build as outdated.
+-   A skeleton is a TypeScript module exporting the document as a
+    `String.raw` string, so the browser, the Worker and Node load it with no
+    loader configured. LaTeX here never needs a backtick, the one character
+    such a string cannot hold.
 -   Several layouts (current resume, academic traditional, compact) are
     several files; content is not duplicated.
 
@@ -623,8 +694,8 @@ engine is never created from one.
 
 1.  The engine (pdfTeX compiled to WebAssembly, its format file, and the
     TeX files the template needs) is vendored in
-    `admin/public/cv-engine/<version>/`.
-2.  The page calls `new Worker('/cv-engine/<version>/engine.js')`. The page
+    `admin/public/cv-engine/<engine>/<version>/`.
+2.  The page calls `new Worker('/cv-engine/pdftex/<version>/engine.js')`. The page
     policy already allows this, because `worker-src` falls back to
     `script-src 'self'`.
 3.  The Worker serves every `/cv-engine/` response with the **engine
@@ -755,9 +826,13 @@ What the Worker checks on Save Version:
 
 -   The PDF starts with `%PDF-` and is at most 5 MB. Each text part is at
     most 1 MB.
--   It re-renders `build.json` with the shared renderer and requires the
-    result to equal `document.tex`, or `generated.tex` for an override.
-    The archived source and input therefore always agree.
+-   It parses `build.json` with `buildInputSchema`, so a malformed or
+    oversized input never reaches the archive.
+-   Optionally, it re-renders `build.json` with the shared renderer and
+    requires the result to equal `document.tex`, or `generated.tex` for an
+    override, so the archived source and input always agree. This is the
+    only reason the Worker would import the renderer; it is an open
+    question (§17).
 -   It cannot prove the PDF came from that `.tex`, because only the
     browser saw the compile. The metadata says so: `compiledIn: browser`.
 -   Keys are ULIDs the Worker generates. The browser never names a key.
@@ -861,6 +936,25 @@ Status          Current ✓
 
 ## 11. Worker API
 
+### 11.1 What the Worker does, and doesn't
+
+The Worker's CV code is small. It does only what the browser cannot do
+safely:
+
+| Job | Why it cannot be in the browser | Code |
+|---|---|---|
+| Talk to Google Drive | The service-account key must never reach the browser | `worker/cv/drive.ts` |
+| Write and read the R2 archive | R2 is reached through the Worker's bucket binding; the browser holds no storage credentials | `worker/cv/snapshots.ts` |
+| Check what the browser sends | Anything from the browser is untrusted: `build.json` goes through `buildInputSchema`, the PDF and `.tex` through size and format checks | `worker/cv/routes.ts` |
+| Read and write CV content | Already done by the existing collection routes and GitHub publish path: **no new code**, six registry entries | `worker/content/registry.ts` |
+
+It does **not** render LaTeX, compile, preview, diff or resolve presets.
+All of that runs in the browser, which is why the Worker needs no TeX
+engine. The one exception under discussion is the optional re-render
+check (§9, §17).
+
+### 11.2 Routes
+
 All routes sit under the existing `/api/*` handling in
 [index.ts](../worker/index.ts), so Access verification, and Origin plus
 CSRF on mutations, apply without new code.
@@ -891,7 +985,6 @@ JSON, so it carries no comments):
   { "binding": "DRAFTS", "bucket_name": "folioforge-admin-drafts" },
   { "binding": "CV_ARCHIVE", "bucket_name": "folioforge-cv-archive" }
 ],
-"rules": [{ "type": "Text", "globs": ["**/*.tex"], "fallthrough": true }],
 "vars": {
   "ADMIN_ORIGIN": "https://admin.samyabrata.codeium.xyz",
   "CV_DRIVE_TARGETS": { "consolidated": "1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz" }
@@ -955,16 +1048,17 @@ src/content/cv/                       Git (V1), written through the registry
   library.yml                         entries, bullets, summaries, skills, interests
   presets.yml
 
-admin/src/cv/                         pure TypeScript; the Worker imports render and hash
-  model.ts                            types
-  resolve.ts                          collections + library + preset (+ patch) → BuildInput
-  validate.ts                         ids unique, refs resolve, variant keys preferred somewhere
-  hash.ts                             canonical JSON, SHA-256
-  latex/escape.ts                     special characters, URLs
-  latex/markup.ts                     site markup → LaTeX, via the site's parsers
-  latex/render.ts                     BuildInput + template → .tex
-  latex/sections/*.ts                 one renderer per section kind
-  templates/resume-v1.tex
+admin/src/cv/                         pure TypeScript; the Worker imports the schema
+  schema.ts                           zod schemas and inferred types (done)
+  validate.ts                         checks across rows, files and templates (done)
+  resolve.ts                          collections + library + preset (+ patch) → BuildInput (done)
+  hash.ts                             canonical JSON, SHA-256 (done)
+  render.ts                           BuildInput → .tex, by the template it names (done)
+  latex/escape.ts                     special characters, URLs (done)
+  latex/markup.ts                     site markup → LaTeX, via the site's parsers (done)
+  templates/index.ts                  registry of template manifests (done)
+  templates/resume-v1/skeleton.ts     the document as a string (done)
+  templates/resume-v1/render.ts       one renderer per section kind (done)
   compile/engine.ts                   engine worker lifecycle, timeout, messages
   compile/parseLog.ts                 log → errors and warnings with line numbers
   diff.ts                             BuildInput vs BuildInput
@@ -975,12 +1069,14 @@ admin/src/views/CvLibrary/            the existing list editor on cv/entries, bu
 admin/src/views/CvBuilder/
 admin/src/views/CvVersions/
 admin/src/views/CvPublishing/
-admin/public/cv-engine/<version>/     vendored engine, TeX files, MANIFEST.sha256
+admin/public/cv-engine/<engine>/<version>/  vendored engine, TeX files, MANIFEST.sha256
 admin/worker/cv/
   routes.ts                           /api/cv/*
   snapshots.ts                        archive bucket, checks
   drive.ts                            token, update, verify
 admin/worker/http.ts                  engine policy chosen by path
+admin/scripts/cv-build.mjs            npm run cv:build: every preset to .tex, and with --pdf to PDF (done)
+admin/scripts/cvContent.mjs           the committed content, read as the admin reads V1 (done)
 ```
 
 Navigation gets a **CV** group between Editorial and Workspace in
@@ -1029,14 +1125,19 @@ Exit: all three succeed, or this plan is amended before phase 1.
 -   Ids on the portfolio entries the CV uses; `id` declared read-only in
     `entryFields.ts`.
 -   `library.yml`, `presets.yml`, six registry entries.
--   Model, validator, resolver, converter, renderer, hash, and
-    `resume-v1`.
--   **Import the seven CVs.** Write `library.yml` and the seven presets
+-   Schema, validator and template registry: done on `admin-cv`
+    (`admin/src/cv/schema.ts`, `validate.ts`, `templates/index.ts`, with
+    `worker/__tests__/cvSchema.test.mjs`).
+-   Resolver, converter, renderer, hash, and `resume-v1`: done.
+-   `npm run cv:build -- --pdf` builds every preset with pdflatex and
+    `-halt-on-error`, the check `compile_all.sh` meant to make: done. All
+    seven build with no errors and no box warnings, two pages each.
+-   **Import the seven CVs** (done). Write `library.yml` and the seven presets
     from them by hand; the files are too irregular to parse reliably. The
     newest wording, the Consolidated file's (2026-10-04), becomes `text`.
     A difference becomes a variant only where it is clearly aimed at an
-    audience; drift is dropped. The conflicting facts in §18.2 are settled
-    by the owner first, not guessed.
+    audience; drift is dropped. The conflicting facts take the values the
+    owner settled (§18.2).
 -   CV Overview, and the builder's configuration column and source view
     with Copy and Download `.tex`. The Content Library uses the existing
     list editor.
@@ -1089,21 +1190,23 @@ Track each phase as an issue labelled `app:admin`.
 
 ## 15. Tests
 
-Same runners as the rest of the admin: `node --test` on `tests/*.test.mjs`
-and `worker/__tests__/*.test.mjs`.
+CV tests live in `worker/__tests__/` and run with `npm run test:worker`.
+`admin/.gitignore` ignores `tests/`, so a test there is never committed.
 
 | Test | Covers |
 |---|---|
-| `tests/cvEscape.test.mjs` | Every special character; URL encoding; only `https` and `mailto` become links |
-| `tests/cvMarkup.test.mjs` | Emphasis, links, `@see`, smart links and `<br>` map as in §6.2, using the site's parsers |
-| `tests/cvRender.test.mjs` | A fixture `BuildInput` renders to a committed golden `.tex`; rendering twice is byte-identical |
-| `tests/cvResolve.test.mjs` | A missing ref fails, naming preset and ref; variant fallback order; explicit inclusion and order; compact items gathered under Other Projects; title split at the first `: ` |
-| `tests/cvLibrary.test.mjs` | Runs the validator on the committed `library.yml` and `presets.yml`: ids unique, every ref resolves, every variant key appears in some `prefer`. CI fails on a broken preset before the admin ever renders it. |
-| `tests/cvHash.test.mjs` | Key order does not change the hash; `source` is excluded |
-| `tests/cvLog.test.mjs` | Errors, line numbers and warnings parsed from captured pdfTeX logs |
+| `worker/__tests__/cvBuild.test.mjs` (done) | Escaping and the link allowlist; site markup to LaTeX; the committed content validates against the portfolio; every preset resolves to a build input the Worker would accept unchanged; facts from the portfolio, settled facts in the output; variant preference; compact and split project titles; roles sharing a heading; deterministic rendering and hashing; authored LaTeX printed, not run; template options; application patches |
+| `worker/__tests__/cvSchema.test.mjs` (done) | zod runs `jitless`; a Consolidated fixture parses and validates cleanly; flat rows become the model; every problem reported at its path; references across files; presets against their template; unwanted variants and reused ids; template option defaults; a build input parses unchanged |
+| `worker/__tests__/cvEscape.test.mjs` | Every special character; URL encoding; only `https` and `mailto` become links |
+| `worker/__tests__/cvMarkup.test.mjs` | Emphasis, links, `@see`, smart links and `<br>` map as in §6.2, using the site's parsers |
+| `worker/__tests__/cvRender.test.mjs` | A fixture `BuildInput` renders to a committed golden `.tex`; rendering twice is byte-identical |
+| `worker/__tests__/cvResolve.test.mjs` | A missing ref fails, naming preset and ref; variant fallback order; explicit inclusion and order; compact items gathered under Other Projects; title split at the first `: ` |
+| `worker/__tests__/cvLibrary.test.mjs` | Runs the validator on the committed `library.yml` and `presets.yml`: ids unique, every ref resolves, every variant key appears in some `prefer`. CI fails on a broken preset before the admin ever renders it. |
+| `worker/__tests__/cvHash.test.mjs` | Key order does not change the hash; `source` is excluded |
+| `worker/__tests__/cvLog.test.mjs` | Errors, line numbers and warnings parsed from captured pdfTeX logs |
 | `worker/__tests__/cv.test.mjs` | Snapshot route refuses non-PDFs, oversized parts and `.tex`/`build.json` mismatches; publish refuses unknown presets and application builds; Drive request shape (mocked fetch); an md5 mismatch records nothing |
 | `worker/__tests__/security.test.mjs` | The page policy equals its previous value exactly; `'wasm-unsafe-eval'` appears only on `/cv-engine/` responses; `'unsafe-eval'` appears nowhere; a missing `/cv-engine/` path is 404, not `index.html`; HTML under `/cv-engine/` is refused |
-| `tests/cvEngineManifest.test.mjs` | Every vendored engine file matches `MANIFEST.sha256` |
+| `worker/__tests__/cvEngineManifest.test.mjs` | Every vendored engine file matches `MANIFEST.sha256` |
 
 ------------------------------------------------------------------------
 
@@ -1121,13 +1224,15 @@ and `worker/__tests__/*.test.mjs`.
 
 ## 17. Open questions
 
--   The conflicting facts in §18.2: the true NPCYF accuracy gain, the
-    API-call reduction, and the number of interns mentored. The import
-    waits on these.
--   Which of the seven is the file behind `profile.yml`'s `cv` link today,
-    and which others get a permanent Drive file at launch?
+-   Which presets besides `consolidated` get a permanent Drive file at
+    launch? (`consolidated` is the file behind `profile.yml`'s `cv` link,
+    settled 2026-10-04.)
 -   Should an application build ever be published to Drive, for example as
     a temporary link? This plan says no.
+-   Should the Worker re-render `build.json` to check a snapshot's `.tex`
+    (§9)? It is the only reason the Worker would import the renderer;
+    without it, the Worker's CV code is storage, Drive and validation only
+    (§11).
 
 ------------------------------------------------------------------------
 
@@ -1190,13 +1295,13 @@ file and `projects.yml` both use. On generated CVs the link comes from
 `projects.yml`, so it cannot drift again.
 
 **The same fact differs between files, or between a file and the site.**
-The owner settles these before the import:
+Settled by the owner on 2026-10-04 (last column); the import uses these:
 
-| Fact | Values found |
-|---|---|
-| NPCYF forecast-accuracy improvement | 30% (Consolidated); 40% (the other six) |
-| Reduction in redundant API calls | 60% (Consolidated); 70% (Corporate_FS) |
-| Interns mentored at IDEAS-TIH | 15 (Consolidated, Academic, Research_ML, Research_Stats); 13 across 4 projects (`experience.yml`) |
+| Fact | Values found | Settled |
+|---|---|---|
+| NPCYF forecast-accuracy improvement | 30% (Consolidated); 40% (the other six) | 30% |
+| Reduction in redundant API calls | 60% (Consolidated); 70% (Corporate_FS) | 60% |
+| Interns mentored at IDEAS-TIH | 15 (Consolidated, Academic, Research_ML, Research_Stats); 13 across 4 projects (`experience.yml`) | 13 |
 
 Typos in text that is not commented out: "into he platform's"
 (Consolidated), "Techniquess" (Consolidated, Academic), and both "Vahaan"
