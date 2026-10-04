@@ -41,6 +41,7 @@ projects_mentored:
       location: Kolkata, WB
     projects:
       - title: "Weather-Uncertainty-Aware Indian Crop Yield Prediction Using Climatic Disturbance Indicators"
+        description: "A modular, weather-uncertainty-aware crop yield forecasting framework inspired by the NPCYF platform under FASAL 2.0. Three independent verticals model climatic risk: an ENSO forecaster that gives El Niño, Neutral and La Niña probabilities up to six months ahead, a Western Disturbance classifier, and a cloudburst detector built for extreme class imbalance. Combined with ICRISAT district-level yield data, the study suggests that district-level weather risk carries far more signal than national climate indices."
         students:
           - name: "DOROTHY"
             Linkedin: https://www.linkedin.com/in/dorothy-b-a8659a345?utm_source=share_via&utm_content=profile&utm_medium=member_android
@@ -70,7 +71,7 @@ projects_mentored:
           github: https://github.com/Nirnoy12/summer_intern_group-a
 
       - title: "Interpretable Machine Learning Application in Bird Migration Trajectory Analysis Using GPS Data"
-        description:
+        description: "An end-to-end, reproducible pipeline that predicts migration zones from GPS telemetry of three white storks tracked between the Netherlands and West Africa. Clustering recovered geographically coherent zones, and tree-based classifiers looked near-perfect under time-aware validation, until SHAP showed they relied on the very coordinates that defined the labels. The study is diagnostic: it exposes label persistence posing as prediction and argues for behaviourally defined zones."
         students:
           - name: "BADABALLA JASVANTH"
             Linkedin: https://www.linkedin.com/in/jasvanth-badaballa-896032398/
