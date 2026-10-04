@@ -100,7 +100,7 @@
         <div :key="currentIndex" class="absolute inset-0">
           <img :src="currentImage" :alt="resolvedAlt"
             class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy"
-            @load="handleImageLoad"
+            @load="handleSlideLoad"
             @error="handleImageError">
         </div>
       </Transition>
@@ -257,7 +257,7 @@
 </template>
 
 <script setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import Skeleton from 'boneyard-js/vue'
 import CaptionContent from '@/components/CaptionContent.vue'
 import ShareMenu from '@/components/ShareMenu.vue'
@@ -301,6 +301,9 @@ const failedIndices = ref(new Set())
 const currentIndex = ref(0)
 const slideDirection = ref('next')
 const isZoomOpen = ref(false)
+// The slide on screen has loaded (or failed). Rotation counts its interval from
+// then, so a slow photo is shown late rather than skipped before it appears.
+const isSlideReady = ref(false)
 let autoRotateTimer = null
 const images = computed(() => {
   if (Array.isArray(props.item.images) && props.item.images.length) {
@@ -344,7 +347,7 @@ watch(() => images.value[0], (source) => {
 const slideTransitionName = computed(() => `gallery-slide-${slideDirection.value}`)
 const dotProgressStyle = computed(() => ({
   animationDuration: `${AUTO_ROTATE_INTERVAL}ms`,
-  animationPlayState: isZoomOpen.value ? 'paused' : 'running',
+  animationPlayState: isZoomOpen.value || !isSlideReady.value ? 'paused' : 'running',
 }))
 const currentImage = computed(() => {
   const source = images.value[currentIndex.value]
@@ -352,6 +355,12 @@ const currentImage = computed(() => {
   return !source || failedIndices.value.has(currentIndex.value)
     ? galleryFallbackSample
     : source
+})
+// A new source on screen (another slide, or the fallback after a failure) has
+// to load before rotation moves on from it.
+watch(currentImage, () => {
+  isSlideReady.value = false
+  stopAutoRotate()
 })
 // The image on screen, but only when it is a real one — the fallback artwork is
 // a local placeholder, and there is nothing worth handing Instagram in it.
@@ -430,8 +439,6 @@ watch(isZoomOpen, (isOpen) => {
   document.body.style.overflow = ''
 })
 
-onMounted(startAutoRotate)
-
 onBeforeUnmount(() => {
   stopAutoRotate()
 
@@ -477,10 +484,23 @@ function getPlatformLabel(value) {
   return 'Uploaded'
 }
 
+function handleSlideLoad() {
+  handleImageLoad()
+  markSlideReady()
+}
+
+function markSlideReady() {
+  isSlideReady.value = true
+  startAutoRotate()
+}
+
 function handleImageError() {
   // Release the skeleton on failure too, otherwise a dead image URL leaves the
   // card shimmering forever instead of falling back to the sample artwork.
   imageLoaded.value = true
+  // Likewise release rotation. When the fallback artwork takes over, the
+  // currentImage watcher holds rotation again until that has loaded.
+  markSlideReady()
 
   if (failedIndices.value.has(currentIndex.value)) return
 
@@ -491,17 +511,20 @@ function handleImageError() {
 
 function stopAutoRotate() {
   if (autoRotateTimer) {
-    clearInterval(autoRotateTimer)
+    clearTimeout(autoRotateTimer)
     autoRotateTimer = null
   }
 }
 
+// One timeout per slide rather than an interval: the next slide's load starts
+// the timer again.
 function startAutoRotate() {
   stopAutoRotate()
 
-  if (!hasMultipleImages.value || isZoomOpen.value) return
+  if (!hasMultipleImages.value || isZoomOpen.value || !isSlideReady.value) return
 
-  autoRotateTimer = setInterval(() => {
+  autoRotateTimer = setTimeout(() => {
+    autoRotateTimer = null
     slideDirection.value = 'next'
     currentIndex.value = (currentIndex.value + 1) % images.value.length
   }, AUTO_ROTATE_INTERVAL)
