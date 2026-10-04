@@ -1,0 +1,214 @@
+# CV wording the portfolio pages don't carry.
+#
+# Facts (titles, places, dates, links) come from the portfolio entry named by
+# `ref`; a field set on an entry here replaces that fact on the CV only. Keys
+# beside `text` are variants: the wording a preset that prefers that key prints
+# instead. Markup is the site's: **bold**, *italic*, __underline__, `name`.
+# See admin/docs/cv_architecture.md §5.
+
+entries:
+  - ref: home/education#msc-cu
+    subtitle: Semester I - Master of Science (MSc) in Statistics
+    coursework: Multivariate Calculus and Multivariate Statistical Analysis
+  - ref: home/education#bs-iitm
+    coursework: Machine Learning Foundation, Machine Learning Techniques, Machine Learning Practice
+  - ref: home/education#bsc-snu
+    subtitle: Bachelor of Science (BSc) in Statistics (Hons.) [CGPA 7.01/10]
+    coursework: Statistical Inference I & II, Design of Experiment, Linear Model and Regression
+
+  - ref: projects-publications/research#messymashup
+    tech: Python, Deep Learning, Audio Processing (Librosa), CNN
+    context: BS in Data Science and Applications, DLGenAI - Diploma project, `IIT Madras`
+  - ref: projects-publications/research#reddit-classification
+    tech: Python, NLP, Text Classification, TF-IDF
+    context: BS in Data Science and Applications, MLP - Diploma project, `IIT Madras`
+  - ref: projects-publications/research#wine-quality
+    tech: R, Parametric Linear Regression, Robust Regression
+    context: BSc. (Hons.) in Statistics Degree Project, `Sister Nivedita University`
+  - ref: projects-publications/research#career-preferences
+    tech: Python, Nonparametric Inference, Data Visualization, Survey Design, pandas, Matplotlib
+    context: Internship Project, Data Science Intern at `IDEAS TIH, ISI`
+    short_context: Internship Project (Data Science Intern), `IDEAS TIH, ISI`
+  - ref: projects-publications/minor#quiz-pilot
+    short_title: Quiz Pilot
+    tech: Flask, Vue.js, SQLite, Redis, Celery
+    short_context: Diploma Proj., BS in DS and App., `IIT Madras`
+  - ref: projects-publications/technical#doctor-vaahaan
+    title: Doctor Vaahaan - Website Development
+
+  # Positions the site lists in another shape, so they live here whole.
+  - id: ideas-mentor
+    title: IDEAS-TIH, Indian Statistical Institute Kolkata
+    location: Kolkata, WB
+    subtitle: Project Mentor, Spring and Summer (Data Science) Internship Programs
+    period: '2026'
+  - id: chi-square
+    title: 'Chi-Square: Statistics Club - Under Nilgiri House, IIT Madras BS Degree'
+    location: Chennai, TN
+    subtitle: Founder, Club Administrator
+    period: 2023 - 2026
+
+bullets:
+  # Associate Software Developer, IDEAS-TIH
+  - id: npcyf-lead
+    ref: home/experience#ideas-tih-asd
+    kind: lead
+    text: "Developed core components of **National Platform for Crop Yield Forecasting (NPCYF)** as a part of the **FASAL 2.0** project, funded by the **Ministry of Agriculture & Farmers' Welfare (GoI)**, supporting nationwide agricultural data processing and forecasting workflows."
+  - id: npcyf-models
+    ref: home/experience#ideas-tih-asd
+    text: "Integrated **TabPFN**, **Panel Regression** and **Random Forest**-based forecasting workflows, including hyperparameter tuning, into the platform's model building pipeline, improving forecast accuracy by 30% over the previous baseline"
+  - id: npcyf-pipeline
+    ref: home/experience#ideas-tih-asd
+    text: Built a data preprocessing pipeline over datasets stored in **Apache Iceberg** tables within **MinIO data lake**
+  - id: npcyf-dashboard
+    ref: home/experience#ideas-tih-asd
+    text: Optimized dashboard performance by combining **TanStack Query**–based frontend caching and **feature-flag** driven rollouts, reducing redundant API calls by 60% and enabling role-based feature releases at runtime
+
+  # Student Intern, IDEAS-TIH
+  - id: fasal-lead
+    ref: home/experience#ideas-tih-intern
+    kind: lead
+    text: "Contributed to the **FASAL 2.0** project funded by the **Ministry of Agriculture & Farmers' Welfare (GoI)**, focusing on end-to-end agricultural data processing and application development:"
+  - id: imd-scraping
+    ref: home/experience#ideas-tih-intern
+    text: Scraped and preprocessed district-wise meteorological data using **IMDLib library** to build ML-ready datasets
+  - id: quarterly-reports
+    ref: home/experience#ideas-tih-intern
+    text: Automated quarterly report generation and integrated the workflow into production
+  - id: fastapi-react
+    ref: home/experience#ideas-tih-intern
+    text: Built RESTful APIs using **FastAPI** and developed responsive UI using **React**, **Tailwind CSS** and **Material UI**
+
+  # Messy Mashup
+  - id: mm-cnn
+    ref: projects-publications/research#messymashup
+    text: Built and trained CNN classifiers using custom and pretrained backbones for music genre classification under noisy mashup conditions, achieving 87% accuracy
+  - id: mm-mashups
+    ref: projects-publications/research#messymashup
+    text: Generated on-the-fly synthetic same-genre mashups from multi-stem audio with tempo synchronization to simulate distribution shift
+  - id: mm-features
+    ref: projects-publications/research#messymashup
+    text: Engineered Mel-spectrogram and MFCC features with variable environmental noise augmentation to improve robustness under noise and cross-track mixing
+
+  # Political comment classification
+  - id: reddit-data
+    ref: projects-publications/research#reddit-classification
+    text: Analyzed Reddit comment data leveraging a publicly available dataset for large-scale political discourse analysis
+  - id: reddit-pipeline
+    ref: projects-publications/research#reddit-classification
+    text: Built and tuned an end-to-end NLP pipeline including text preprocessing, TF-IDF feature extraction, and supervised ML models such as Logistic Regression, Random Forest, XGBoost, Multinomial Naive Bayes, and SVM, achieving 80% test accuracy with performance evaluated using precision, recall and F1-score
+
+  # Predicting wine quality
+  - id: wine-methods
+    ref: projects-publications/research#wine-quality
+    text: Applied linear, ridge, and robust regression to a Wine Quality dataset (n = 32), diagnosing multicollinearity using VIF and addressing outlier influence with robust estimators
+  - id: wine-compare
+    ref: projects-publications/research#wine-quality
+    text: Compared model performance using RMSE and Adjusted R², demonstrating greater stability of robust regression
+
+  # Career preferences
+  - id: career-study
+    ref: projects-publications/research#career-preferences
+    text: "Collaboratively carried out a statistical study on career preferences among Kolkata’s college students (age group: 18–25 years) using a custom-collected dataset (n = 172 valid responses from 194 surveyed)"
+  - id: career-eda
+    ref: projects-publications/research#career-preferences
+    text: "Performed EDA and applied non-parametric inference techniques to explore academic and socio-economic factors' influence on students' choice of career vectors (Degree, Subject)"
+
+  # Quiz Pilot
+  - id: qp-rbac
+    ref: projects-publications/minor#quiz-pilot
+    text: Designed a full-stack web application with role-based access control along with CSV export functionality
+  - id: qp-admin
+    ref: projects-publications/minor#quiz-pilot
+    text: Deployed Admin dashboard for user and core functionality management, including analytics charts
+  - id: qp-analytics
+    ref: projects-publications/minor#quiz-pilot
+    text: Built User analytics dashboard using Chart.js for score tracking, and historical performance summaries
+  - id: qp-reminders
+    ref: projects-publications/minor#quiz-pilot
+    text: Integrated daily and monthly reminders via email webhooks to improve engagement using Redis + Celery
+  - id: qp-performance
+    ref: projects-publications/minor#quiz-pilot
+    text: Implemented performance optimizations through caching, backend validation, and responsive UI design
+
+  # Doctor Vaahaan
+  - id: dv-fullstack
+    ref: projects-publications/technical#doctor-vaahaan
+    text: Built a full-stack web application for Doctor Vaahaan, a car engine decarbonization service, using Laravel
+  - id: dv-booking
+    ref: projects-publications/technical#doctor-vaahaan
+    text: Developed a responsive web application with secure login authentication, customer booking system, along with a service management dashboard using HTML and CSS for seamless cross-device usability
+  - id: dv-seo
+    ref: projects-publications/technical#doctor-vaahaan
+    text: Optimized SEO, leading to a 75% increase in booking rates and significantly enhancing digital outreach and customer engagement
+
+  # Positions
+  - id: mentor-interns
+    ref: ideas-mentor
+    text: Mentored 13 interns across Spring and Summer internship programs, supervising mandatory project work and guiding final outcome presentations
+  - id: chi-founded
+    ref: chi-square
+    text: Founded and scaled a vibrant statistics community of 500+ members, fostering peer learning and collaboration
+  - id: chi-events
+    ref: chi-square
+    text: Led the organization of 15+ academic events, including invited sessions with guest speakers from premier institutes including IIT Gandhinagar and ISI Kolkata, engaging over 2,000 participants in total
+  - id: chi-reading-group
+    ref: chi-square
+    text: Initiated a collaborative research paper reading group with RaSoR (Research Society of IITM BS Degree) to encourage peers to explore the field of statistics and engage with recent studies and developments
+
+summaries:
+  - id: profile
+    text: Statistics postgraduate student with a background in data science and prior experience in software development and applied quantitative work. Interested in statistical inference, machine learning, and their applications to real-world problems. Have worked on projects involving statistical modelling, forecasting, survey analysis, NLP, and deep learning, and am looking to further develop my research and analytical skills.
+    academic: M.Sc. Statistics student with experience in applied statistical modelling and machine learning. My work so far has involved both statistical and computational approaches to real-world problems, and I am now particularly interested in exploring inferential statistics more deeply and applying it to research-oriented problems.
+    data: Data analyst with a background in statistics and data science, and experience in data preprocessing, exploratory analysis, predictive modelling, and reporting workflows. Worked on forecasting systems, survey-based analysis, and text classification projects across academic and applied environments. Interested in turning complex datasets into actionable insights and decision-support tools.
+    fullstack: Quantitative developer with experience in statistical modelling, machine learning, full-stack web application development, and production-oriented ML pipelines. Built forecasting workflows, analytical APIs, scalable data processing systems, and real-world machine learning solutions in applied research environments. Focused on translating quantitative methods into usable products and decision-support systems.
+    ml: Applied machine learning developer with experience in statistical modelling, machine learning, and production-oriented data workflows. Built forecasting pipelines, analytical APIs, and real-world ML solutions across applied research environments, with work spanning time-series forecasting, NLP, and deep learning. Interested in developing robust, scalable machine learning systems for real-world decision support.
+    research-ml: Statistics graduate and data science student with experience in machine learning, statistical modelling, and applied research projects across academic and interdisciplinary settings. Worked on data preprocessing, predictive modelling, and experimental analysis in forecasting, NLP, and deep learning tasks, with interest in statistical learning and research involving complex real-world datasets.
+    stats: Statistics graduate with experience in statistical modelling, quantitative analysis, and applied research projects across academic and interdisciplinary settings. Worked on data preprocessing, regression, non-parametric inference, and predictive modelling, with interest in statistical learning and research involving complex real-world datasets.
+
+skills:
+  - id: languages
+    label: Languages
+    text: Python, R, JavaScript, TypeScript
+    academic: Python, R, JavaScript
+    stats: Python, R, JavaScript
+    ml: Python, R, JavaScript, C++
+  - id: web-development
+    label: Web Development (Backend & Frontend)
+    text: FastAPI, Flask, Laravel, React, Vue 3, TanStack Query, Tailwind CSS
+  - id: statistics-ml
+    label: Statistics & ML
+    text: Statistical Inference, Time Series Forecasting, Supervised & Unsupervised Learning, Transfer Learning
+  - id: machine-learning
+    label: Machine Learning
+    text: Statistical Inference, Regression, Classification, Time-series Forecasting
+  - id: statistics-modelling
+    label: Statistics & Modelling
+    text: Regression, Non-parametric Inference, Time-series Forecasting, Classification
+  - id: databases
+    label: Database & Storage
+    text: MySQL, PostgreSQL, SQLite, MongoDB, Redis, MinIO
+  - id: others
+    label: Others
+    text: Git, Apache Iceberg, Web Scraping
+    academic: Git, Apache Iceberg
+
+interests:
+  - id: nonparametric
+    text: Non-parametric Inference
+  - id: bayesian
+    text: Bayesian Inference
+  - id: ml
+    text: Machine Learning
+  - id: dl
+    text: Deep Learning
+  - id: uq
+    text: Uncertainty Quantification
+  - id: nlp
+    text: NLP
+  - id: statistical-learning
+    text: Statistical Learning
+  - id: data-engineering
+    text: Data Engineering
+  - id: cryptology
+    text: Cryptology

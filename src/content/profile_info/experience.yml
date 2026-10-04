@@ -1,5 +1,6 @@
 experience:
-  - job_role: Associate Software Developer
+  - id: ideas-tih-asd
+    job_role: Associate Software Developer
     type: Employment
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     location: Kolkata, WB
@@ -29,7 +30,8 @@ experience:
     description: Successfully completed multiple freelance web development projects on Upwork, delivering high-quality websites and applications that meet client specifications. Utilized skills in front-end and back-end development to create dynamic and user-friendly solutions.
     cred_link: https://www.upwork.com/freelancers/~01f3b1e4b5c9c3e5d6
 
-  - job_role: Student Intern
+  - id: ideas-tih-intern
+    job_role: Student Intern
     type: Internship
     company: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
     supervisor:

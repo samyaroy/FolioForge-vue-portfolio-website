@@ -139,6 +139,22 @@ normalised deliberately in one commit so that later edits diff cleanly.
 Without it the renderer re-wraps long strings and a no-op round trip rewrites
 most of a file — measured at 435 of 521 lines in `education.yml`.
 
+## CV presets point at portfolio entries by id
+
+The CV module (`admin/docs/cv_architecture.md`) reads its facts — titles, places,
+dates, links — from the portfolio YAML, addressing each entry as
+`<collection>#<id>`. Entries a CV uses therefore carry an `id:` key, which the
+site ignores.
+
+Renaming or removing such an id breaks every preset that names it. It breaks
+loudly: `validateCv` reports the preset and the reference, `npm run cv:build`
+refuses to build, and `worker/__tests__/cvBuild.test.mjs` fails. The list editor
+still shows `id` as an ordinary column, so for now nothing stops the edit
+itself; declaring it read-only in `src/config/entryFields.ts` would.
+
+Unlike the collection cards above, a CV preview is not a replica: it is the real
+LaTeX the template produces, compiled by a real TeX engine.
+
 ## Still local-only
 
 The blog post editor, blog gallery, Settings and taxonomy screens read content

@@ -1,5 +1,6 @@
 certifications:
-  - title: Introduction to Uncertainty Quantification
+  - id: jhu-uq
+    title: Introduction to Uncertainty Quantification
     logo: [ 'JHU', 'COURSERA' ]
     issuer:
       institution: Whiting School of Engineering, Johns Hopkins University

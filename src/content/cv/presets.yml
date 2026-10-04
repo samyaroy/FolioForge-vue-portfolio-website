@@ -1,0 +1,266 @@
+# The CVs built from library.yml and the portfolio.
+#
+# A preset lists what it shows, in order: nothing joins it until it is added
+# here or ticked in the builder. `prefer` names the variant keys whose wording
+# it prints; `template_options` are the template's own settings. See
+# admin/docs/cv_architecture.md §5.3.
+
+presets:
+  - id: consolidated
+    name: Consolidated CV
+    filename: SamyabrataRoy_Resume_Consolidated
+    template: resume-v1
+    pages: 2
+    header: [ phone, gmail, website, linkedin, github ]
+    sections:
+      - kind: summary
+        items: [ profile ]
+      - kind: experience
+        items:
+          - ref: home/experience#ideas-tih-asd
+            bullets: [ npcyf-lead, npcyf-models, npcyf-pipeline, npcyf-dashboard ]
+      - kind: education
+        items: [ home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu ]
+      - kind: projects
+        title: Selected Projects
+        items:
+          - ref: projects-publications/research#messymashup
+            bullets: [ mm-cnn, mm-mashups, mm-features ]
+          - ref: projects-publications/research#reddit-classification
+            bullets: [ reddit-data, reddit-pipeline ]
+          - ref: projects-publications/research#wine-quality
+            bullets: [ wine-methods, wine-compare ]
+          - ref: projects-publications/research#career-preferences
+            bullets: [ career-study, career-eda ]
+          - ref: projects-publications/minor#quiz-pilot
+            style: compact
+          - ref: projects-publications/technical#doctor-vaahaan
+            style: compact
+      - kind: skills
+        items: [ languages, web-development, statistics-ml, databases, others ]
+      - kind: positions
+        items:
+          - ref: ideas-mentor
+            bullets: [ mentor-interns ]
+          - ref: chi-square
+            bullets: [ chi-founded, chi-events ]
+      - kind: interests
+        items: [ nonparametric, bayesian, ml, dl, uq ]
+
+  - id: academic
+    name: Academic CV
+    filename: SamyabrataRoy_Resume_Academic
+    template: resume-v1
+    template_options: { bullet_size: small, body_size: normalsize }
+    prefer: [ academic ]
+    pages: 2
+    header: [ phone, gmail, website, linkedin, github ]
+    sections:
+      - kind: summary
+        items: [ profile ]
+      - kind: education
+        items: [ home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu ]
+      - kind: experience
+        items:
+          - ref: home/experience#ideas-tih-asd
+            bullets: [ npcyf-lead, npcyf-models, npcyf-pipeline ]
+          - ref: home/experience#ideas-tih-intern
+            bullets: [ fasal-lead, imd-scraping, fastapi-react ]
+      - kind: projects
+        items:
+          - ref: projects-publications/research#messymashup
+            bullets: [ mm-cnn, mm-mashups, mm-features ]
+          - ref: projects-publications/research#wine-quality
+            bullets: [ wine-methods, wine-compare ]
+          - ref: projects-publications/research#reddit-classification
+            bullets: [ reddit-data, reddit-pipeline ]
+          - ref: projects-publications/research#career-preferences
+            style: compact
+          - ref: projects-publications/minor#quiz-pilot
+            style: compact
+      - kind: skills
+        items: [ languages, statistics-ml, databases, others ]
+      - kind: positions
+        items:
+          - ref: ideas-mentor
+            bullets: [ mentor-interns ]
+          - ref: chi-square
+            bullets: [ chi-founded, chi-events, chi-reading-group ]
+      - kind: interests
+        items: [ nonparametric, bayesian, ml, dl, uq ]
+
+  - id: corporate-da
+    name: Corporate CV (Data Analysis)
+    filename: SamyabrataRoy_Resume_Corporate_DA
+    template: resume-v1
+    template_options: { bullet_size: small, body_size: normalsize }
+    prefer: [ data ]
+    pages: 2
+    header: [ phone, gmail, website, linkedin, github ]
+    sections:
+      - kind: summary
+        items: [ profile ]
+      - kind: experience
+        items:
+          - ref: home/experience#ideas-tih-asd
+            bullets: [ npcyf-lead, npcyf-models, npcyf-pipeline ]
+          - ref: home/experience#ideas-tih-intern
+            bullets: [ fasal-lead, imd-scraping, fastapi-react ]
+      - kind: education
+        items: [ home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu ]
+      - kind: projects
+        items:
+          - ref: projects-publications/research#career-preferences
+            bullets: [ career-study, career-eda ]
+          - ref: projects-publications/research#reddit-classification
+            bullets: [ reddit-data, reddit-pipeline ]
+          - ref: projects-publications/research#wine-quality
+            bullets: [ wine-methods, wine-compare ]
+          - ref: projects-publications/minor#quiz-pilot
+            style: compact
+      - kind: skills
+        items: [ languages, machine-learning, databases, others ]
+      - kind: interests
+        items: [ ml, dl, nlp, statistical-learning, nonparametric, data-engineering ]
+
+  - id: corporate-fs
+    name: Corporate CV (Full Stack)
+    filename: SamyabrataRoy_Resume_Corporate_FS
+    template: resume-v1
+    template_options: { bullet_size: small, body_size: normalsize }
+    prefer: [ fullstack ]
+    pages: 2
+    header: [ phone, gmail, website, linkedin, github ]
+    sections:
+      - kind: summary
+        items: [ profile ]
+      - kind: experience
+        items:
+          - ref: home/experience#ideas-tih-asd
+            bullets: [ npcyf-lead, npcyf-models, npcyf-pipeline, npcyf-dashboard ]
+          - ref: home/experience#ideas-tih-intern
+            bullets: [ fasal-lead, imd-scraping, quarterly-reports, fastapi-react ]
+      - kind: education
+        items: [ home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu ]
+      - kind: projects
+        items:
+          - ref: projects-publications/technical#doctor-vaahaan
+            bullets: [ dv-fullstack, dv-booking, dv-seo ]
+          - ref: projects-publications/minor#quiz-pilot
+            bullets: [ qp-rbac, qp-admin, qp-analytics, qp-reminders, qp-performance ]
+          - ref: projects-publications/research#reddit-classification
+            bullets: [ reddit-data, reddit-pipeline ]
+      - kind: skills
+        items: [ languages, web-development, machine-learning, databases, others ]
+      - kind: interests
+        items: [ ml, dl, nlp, nonparametric, data-engineering, cryptology ]
+
+  - id: corporate-ml
+    name: Corporate CV (Machine Learning)
+    filename: SamyabrataRoy_Resume_Corporate_ML
+    template: resume-v1
+    template_options: { bullet_size: small, body_size: normalsize }
+    prefer: [ ml ]
+    pages: 2
+    header: [ phone, gmail, website, linkedin, github ]
+    sections:
+      - kind: summary
+        items: [ profile ]
+      - kind: experience
+        items:
+          - ref: home/experience#ideas-tih-asd
+            bullets: [ npcyf-lead, npcyf-models, npcyf-pipeline ]
+          - ref: home/experience#ideas-tih-intern
+            bullets: [ fasal-lead, imd-scraping, fastapi-react ]
+      - kind: education
+        items: [ home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu ]
+      - kind: projects
+        items:
+          - ref: projects-publications/research#messymashup
+            bullets: [ mm-cnn, mm-mashups, mm-features ]
+          - ref: projects-publications/research#reddit-classification
+            bullets: [ reddit-data, reddit-pipeline ]
+          - ref: projects-publications/research#career-preferences
+            bullets: [ career-study, career-eda ]
+          - ref: projects-publications/minor#quiz-pilot
+            style: compact
+      - kind: skills
+        items: [ languages, machine-learning, databases, others ]
+      - kind: interests
+        items: [ ml, dl, nlp, nonparametric, bayesian, data-engineering ]
+
+  - id: research-ml
+    name: Research CV (Machine Learning)
+    filename: SamyabrataRoy_Resume_Research_ML
+    template: resume-v1
+    template_options: { bullet_size: small, body_size: normalsize }
+    prefer: [ research-ml ]
+    pages: 2
+    header: [ phone, gmail, website, linkedin, github ]
+    sections:
+      - kind: summary
+        items: [ profile ]
+      - kind: education
+        items: [ home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu ]
+      - kind: experience
+        items:
+          - ref: home/experience#ideas-tih-asd
+            bullets: [ npcyf-lead, npcyf-models, npcyf-pipeline ]
+          - ref: home/experience#ideas-tih-intern
+            bullets: [ fasal-lead, imd-scraping, fastapi-react ]
+      - kind: projects
+        items:
+          - ref: projects-publications/research#messymashup
+            bullets: [ mm-cnn, mm-mashups, mm-features ]
+          - ref: projects-publications/research#reddit-classification
+            bullets: [ reddit-data, reddit-pipeline ]
+          - ref: projects-publications/research#career-preferences
+            bullets: [ career-study, career-eda ]
+      - kind: skills
+        items: [ languages, statistics-ml, databases, others ]
+      - kind: positions
+        items:
+          - ref: chi-square
+            bullets: [ chi-founded, chi-events, chi-reading-group ]
+      - kind: interests
+        items: [ ml, dl, nlp, nonparametric, bayesian, data-engineering ]
+
+  - id: research-stats
+    name: Research CV (Statistics)
+    filename: SamyabrataRoy_Resume_Research_Stats
+    template: resume-v1
+    template_options: { bullet_size: small, body_size: normalsize }
+    prefer: [ stats ]
+    pages: 2
+    header: [ phone, gmail, website, linkedin, github ]
+    sections:
+      - kind: summary
+        items: [ profile ]
+      - kind: education
+        items: [ home/education#msc-cu, home/education#bs-iitm, home/education#bsc-snu ]
+      - kind: experience
+        items:
+          - ref: home/experience#ideas-tih-asd
+            bullets: [ npcyf-lead, npcyf-models, npcyf-pipeline ]
+          - ref: home/experience#ideas-tih-intern
+            bullets: [ fasal-lead, imd-scraping, fastapi-react ]
+      - kind: projects
+        items:
+          - ref: projects-publications/research#career-preferences
+            bullets: [ career-study, career-eda ]
+          - ref: projects-publications/research#messymashup
+            bullets: [ mm-cnn, mm-mashups, mm-features ]
+          - ref: projects-publications/research#wine-quality
+            bullets: [ wine-methods, wine-compare ]
+          - ref: projects-publications/research#reddit-classification
+            bullets: [ reddit-data, reddit-pipeline ]
+      - kind: skills
+        items: [ statistics-modelling, languages, databases, others ]
+      - kind: certifications
+        items: [ internships-certifications/certifications#jhu-uq ]
+      - kind: positions
+        items:
+          - ref: chi-square
+            bullets: [ chi-founded, chi-events, chi-reading-group ]
+      - kind: interests
+        items: [ ml, dl, nlp, nonparametric, bayesian, data-engineering ]
