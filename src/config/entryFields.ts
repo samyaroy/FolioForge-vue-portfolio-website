@@ -76,6 +76,15 @@ export const entryFields = {
   facts: ['title', 'description', 'icon'],
   // `source` is where the line is from -- a book, a film -- and is optional.
   pageQuotes: ['text', 'author', 'source'],
+
+  // The CV library (src/content/cv/library.yml). A row's keys beyond these are
+  // wording variants, which the editor shows as columns of their own; `tags`
+  // is left to the YAML.
+  cvEntries: ['ref', 'id', 'title', 'subtitle', 'tech', 'context', 'link', 'link_label', 'location', 'period', 'coursework', 'short_title', 'short_context'],
+  cvBullets: ['id', 'ref', 'kind', 'text'],
+  cvSummaries: ['id', 'text'],
+  cvSkills: ['id', 'label', 'text'],
+  cvInterests: ['id', 'text'],
   galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', { key: 'images', images: 'gallery' }, 'manifestDescription', 'externalUrl'],
   studyMaterial: ['title', { key: 'materials', list: ['title', 'meta', 'instructor', 'distributor', 'logo', 'link', 'paid'] }],
   worthExploring: ['group', 'links'],

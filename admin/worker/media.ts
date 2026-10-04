@@ -19,6 +19,12 @@ export const logoPolicy = {
   pageSize: 200,
 } as const
 
+export const iconPolicy = {
+  prefix: 'icons/',
+  publicBase: logoPolicy.publicBase,
+  pageSize: logoPolicy.pageSize,
+} as const
+
 /**
  * A logo's name is not decoration: it is the value written into the YAML, which
  * the site joins to the media base. So it has to be a plain token, and it has to
@@ -56,6 +62,8 @@ const CURSOR = /^[A-Za-z0-9+/=_-]{1,1024}$/
 
 export type LogoItem = { value: string; name: string; url: string }
 
+export type IconItem = { value: string; name: string; url: string }
+
 function toLogoItem(key: string): LogoItem {
   const file = key.slice(logoPolicy.prefix.length)
   // The site's resolver turns a bare name into `<base>/<name>.png`, so only a
@@ -80,6 +88,26 @@ export async function listLogos(bucket: ReadOnlyBucket, cursor?: string): Promis
     // prefix too and are deliberately not part of the catalogue.
     .filter(key => key.startsWith(logoPolicy.prefix) && !key.startsWith(logoPolicy.archivePrefix) && !key.includes('..') && SUPPORTED.test(key))
     .map(toLogoItem)
+  return listing.truncated && listing.cursor ? { items, cursor: listing.cursor } : { items }
+}
+
+function toIconItem(key: string): IconItem {
+  const file = key.slice(iconPolicy.prefix.length)
+  return { value: file, name: file.replace(/\.[^.]+$/, ''), url: new URL(`${iconPolicy.prefix}${file}`, `${iconPolicy.publicBase}/`).href }
+}
+
+export async function listIcons(bucket: ReadOnlyBucket, cursor?: string): Promise<{ items: IconItem[]; cursor?: string }> {
+  if (cursor !== undefined && !CURSOR.test(cursor)) throw new HttpError(400, 'invalid_cursor')
+  let listing: R2Listing
+  try {
+    listing = await bucket.list({ prefix: iconPolicy.prefix, limit: iconPolicy.pageSize, cursor })
+  } catch {
+    throw new HttpError(502, 'storage_unavailable', 'list_failed')
+  }
+  const items = listing.objects
+    .map(object => object.key)
+    .filter(key => key.startsWith(iconPolicy.prefix) && !key.includes('..') && SUPPORTED.test(key))
+    .map(toIconItem)
   return listing.truncated && listing.cursor ? { items, cursor: listing.cursor } : { items }
 }
 

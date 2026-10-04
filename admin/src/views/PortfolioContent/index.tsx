@@ -383,11 +383,13 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                       onClick={() => void toggleFeatured(entry)}
                     ><Star aria-hidden="true" /></Button>
                   )}
-                  <SwitchField
-                    aria-label={`Show ${entry.title} on the site`}
-                    checked={isEntryEnabled(entry.raw)}
-                    onChange={enabled => void toggleEntry(entry, enabled)}
-                  />
+                  {!section.notOnSite && (
+                    <SwitchField
+                      aria-label={`Show ${entry.title} on the site`}
+                      checked={isEntryEnabled(entry.raw)}
+                      onChange={enabled => void toggleEntry(entry, enabled)}
+                    />
+                  )}
                 </span>
                 <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
                 <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={!baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
