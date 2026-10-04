@@ -1,6 +1,8 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 import { BlogGalleryPage } from '@/views/BlogGallery'
+import { CvBuilderPage } from '@/views/CvBuilder'
+import { CvOverviewPage } from '@/views/CvOverview'
 import { BlogOverviewPage } from '@/views/BlogOverview'
 import { BlogPagesPage } from '@/views/BlogPages'
 import { BlogPostsPage } from '@/views/BlogPosts'
@@ -41,6 +43,9 @@ export const router = createBrowserRouter([
       { path: '/blog/pages', element: <BlogPagesPage /> },
       { path: '/blog/pages/:pageId', element: <PortfolioContentPage /> },
       { path: '/blog/pages/:pageId/:sectionId', element: <PortfolioContentPage /> },
+      { path: '/cv', element: <CvOverviewPage /> },
+      { path: '/cv/builder', element: <CvBuilderPage /> },
+      { path: '/cv/builder/:presetId', element: <CvBuilderPage /> },
       { path: '/workspace/publishing', element: <PublishingPage /> },
       { path: '/workspace/storage', element: <StoragePage /> },
       { path: '/workspace/settings', element: <SettingsPage /> },

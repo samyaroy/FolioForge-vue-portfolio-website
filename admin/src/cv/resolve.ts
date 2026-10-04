@@ -111,7 +111,27 @@ function entryFacts(entry: CvEntry | undefined): Facts {
   return Object.fromEntries(Object.entries(entry).filter(([key, value]) => key !== 'ref' && key !== 'id' && value !== undefined))
 }
 
-function wording(row: WordedRow, preset: CvPreset): string {
+/**
+ * A reference as the builder lists it: the title a CV would print, and a line
+ * of detail. Undefined when the reference names nothing.
+ */
+export function describeRef(ref: string, context: Pick<ResolveContext, 'library' | 'portfolio'>): { title: string; detail: string } | undefined {
+  const target = portfolioRef(ref)
+  const own = entryFacts(context.library.entries.find(entry => entryKey(entry) === ref))
+  let source: Facts = {}
+  if (target) {
+    const entry = context.portfolio.get(target.collection)?.find(candidate => isMap(candidate) && candidate.id === target.id)
+    if (!isMap(entry)) return undefined
+    source = portfolioFacts(target.collection, entry)
+  } else if (!Object.keys(own).length) {
+    return undefined
+  }
+  const facts = { ...source, ...own }
+  return { title: facts.title ?? ref, detail: join([facts.subtitle, facts.period], ' · ') ?? '' }
+}
+
+/** The wording a row prints in a preset: its own choice, then `prefer`, then `text`. */
+export function wording(row: WordedRow, preset: CvPreset): string {
   const chosen = preset.variants[row.id]
   if (chosen && Object.hasOwn(row.variants, chosen)) return row.variants[chosen]
   const preferred = preset.prefer.find(key => Object.hasOwn(row.variants, key))

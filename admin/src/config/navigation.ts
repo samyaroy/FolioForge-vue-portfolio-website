@@ -10,6 +10,8 @@ import {
   Tags,
   ShieldCheck,
   Link2,
+  FileText,
+  SlidersHorizontal,
 } from 'lucide-react'
 import { blogPages, cvLibraryPage, portfolioAdminPath, portfolioPages, workspacePages } from '@/config/portfolio'
 import type { PortfolioPage } from '@/config/portfolio'
@@ -56,7 +58,11 @@ export const navigation: NavigationGroup[] = [
   },
   {
     label: 'CV',
-    items: [sectionNavItem(cvLibraryPage)],
+    items: [
+      { label: 'CV Overview', path: '/cv', icon: FileText },
+      { label: 'CV Builder', path: '/cv/builder', icon: SlidersHorizontal },
+      sectionNavItem(cvLibraryPage),
+    ],
   },
   {
     label: 'Workspace',
