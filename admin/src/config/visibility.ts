@@ -44,7 +44,10 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'projects-publications/publications': [{ path: 'showProjectsPublications.showPublications', label: 'Publications' }],
   'projects-publications/posters': [{ path: 'showProjectsPublications.showPosters', label: 'Posters' }],
   'teaching/courses': [{ path: 'showTeachings.showCoursesTaught', label: 'Courses Taught' }],
-  'teaching/projects': [{ path: 'showTeachings.showProjectsMentored', label: 'Projects Mentored' }],
+  'teaching/projects': [
+    { path: 'showTeachings.showProjectsMentored', label: 'Projects Mentored' },
+    { path: 'showTeachings.showCreditRequest', label: 'Get credited link' },
+  ],
   'teaching/others': [{ path: 'showTeachings.showOtherTeachings', label: 'Other Teaching' }],
   'ongoing-projects/projects': [{ path: 'showOngoingProjects', label: 'Ongoing Projects' }],
   'affiliations/affiliations': [{ path: 'showAffiliations.showAffiliations', label: 'Affiliations' }],

@@ -102,6 +102,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showCoursesTaught: true,
     showProjectsMentored: true,
     showOtherTeachings: true,
+    // The "Get credited" link beside the Projects Mentored heading. Off hides
+    // only the link; the page shows while any tab is on, so this cannot hide it.
+    showCreditRequest: true,
   },
 
   showAffiliations: {
