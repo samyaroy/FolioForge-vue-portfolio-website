@@ -121,6 +121,22 @@ security configuration it intentionally serves 503, including for static assets.
 Continue using Vite for local UI work. See [Cloudflare setup](./worker/README.md)
 for the account and Access prerequisites before any deployment.
 
+## CV module
+
+The CVs are built from the portfolio YAML plus `src/content/cv/library.yml` and
+`presets.yml`; see [the CV plan](./docs/cv_architecture.md). The pipeline lives
+in `src/cv/` as plain TypeScript the browser, the Worker and Node share: zod
+schemas, cross-file validation, a resolver, and one renderer per template.
+
+```sh
+npm run cv:build                    # every preset to .tex, in .cv-build/
+npm run cv:build -- --pdf           # and to PDF with pdflatex; any LaTeX error fails
+npm run cv:build -- academic --pdf  # only the presets named
+```
+
+The admin screens, browser compilation, snapshots and Drive publishing are not
+built yet.
+
 ## Planned integration
 
 See [the implementation plan](../docs/admin-plan.md). Delivery order: verify the

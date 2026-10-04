@@ -1,6 +1,7 @@
 projects:
   research_projects:
-    - title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
+    - id: messymashup
+      title: 'Messy Mashup: Robust Music Genre Classification under Noisy Mashup Conditions'
       type: Research Project
       description: Built a deep learning pipeline for robust music genre classification under noisy mashup conditions, simulating distribution shift beyond clean training data and achieving 87% accuracy. Generated on-the-fly same-genre mashups from multi-stem audio, engineered Mel-spectrogram/MFCC representations with environmental noise augmentation, and trained CNN classifiers using both from-scratch and pretrained backbones.
       affiliation: Diploma Project (DLGenAI), BS in Data Science and Applications, `Indian Institute of Technology Madras`
@@ -12,7 +13,8 @@ projects:
         github: https://github.com/22f2001443/MessyMashup-dl-genai-peoject
         kaggle:
 
-    - title: Political Comment Classification using Reddit Data (US Election 2024)
+    - id: reddit-classification
+      title: Political Comment Classification using Reddit Data (US Election 2024)
       type: Research Project
       description: Built a machine learning pipeline for classifying Reddit comments into predefined categories using a publicly available Kaggle dataset on political discourse. The main challenge was dealing with high-dimensional TF-IDF features, noisy text, and class imbalance.
       affiliation: Diploma Project (MLP), BS in Data Science and Applications, `Indian Institute of Technology Madras`
@@ -23,7 +25,8 @@ projects:
       cred_link:
         github: https://github.com/22f2001443/Comment-Category-Prediction-MLP_P-t1_2026
 
-    - title: 'Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset'
+    - id: wine-quality
+      title: 'Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset'
       description: Conducted robust linear regression analysis on a Wine Quality dataset (n = 32) to evaluate model performance under multicollinearity and outlier influence.
       type: Research Project
       doi: 10.13140/RG.2.2.16657.13926
@@ -42,7 +45,8 @@ projects:
         github: https://github.com/samyaroy/Predicting-Wine-Quality-Robust-Regression
         researchgate: researchgate.net/publication/391766786_Predicting_Wine_Quality_A_Comparison_of_Linear_Regression_Techniques_on_a_Multicollinear_and_Outlier-Affected_Dataset?_sg%5B0%5D=KMAA__Av1JZU5QW09RmRJh5HSiCHSKQOWtY16iDgz1a-BkmBHVSbh1ayNVa1l4i3mM_SCPfifAd86eWtOl8VXOuygtU2Crm3VRrYc31j.UhBIrCOgdI1HgmgNG6U-yPJyEd7STApaAvphsDR8B4MUGmog_jFi6eOzgU1CxGC8KFeV_7ktVVLz-Thb6YXr_Q&_tp=eyJjb250ZXh0Ijp7ImZpcnN0UGFnZSI6InB1YmxpY2F0aW9uIiwicGFnZSI6InByb2ZpbGUiLCJwb3NpdGlvbiI6InBhZ2VDb250ZW50In19
 
-    - title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
+    - id: career-preferences
+      title: 'Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students'
       description: Conducted a comprehensive survey among college students (aged 18-25) in Kolkata to understand their career preferences. Utilized multivariate inference to identify key factors influencing career choices and segment students based on their preferences.
       type: Research Project
       doi:
@@ -60,7 +64,8 @@ projects:
         github: https://github.com/samyaroy/Multivariate_Analysis_of_Career_Preference_in_Kolkata
 
   technical_projects:
-    - title: Doctor Vaahaan
+    - id: doctor-vaahaan
+      title: Doctor Vaahaan
       description: Responsive website for vehicle decabonation services, deployed with Laravel, MySQL, and Bootstrap.
       type: "Technical Project"
       affiliation: Freelance Project
@@ -127,7 +132,8 @@ projects:
         github: "https://github.com/vicharanashala/cs9"
       logo: [ 'VLED-IITRPR3' ]
 
-    - title: Quiz Pilot (V1 & V2)
+    - id: quiz-pilot
+      title: Quiz Pilot (V1 & V2)
       description: "Full-stack quiz platform with role-based dashboards, score analytics, and Redis + Celery powered reminders. Built with Flask, Vue.js, SQLite, and Bootstrap."
       type: "Minor Project"
       affiliation: Diploma Projects (MAD I, MAD II), `BS in Data Science and Applications, Indian Institute of Technology Madras`
