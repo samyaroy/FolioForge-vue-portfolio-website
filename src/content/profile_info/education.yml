@@ -1,5 +1,6 @@
 education:
-  - type: University
+  - id: msc-cu
+    type: University
     degree: Master of Science (MSc)
     field: Statistics
     institution: University of Calcutta
@@ -52,7 +53,8 @@ education:
           type: SEC/PSE/CLE
           credit: 2
 
-  - type: University
+  - id: bs-iitm
+    type: University
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
     sub_field:
@@ -280,7 +282,8 @@ education:
       link: https://study.iitm.ac.in/ds/academics.html
     campus: ""
 
-  - type: University
+  - id: bsc-snu
+    type: University
     degree: Bachelor of Science (BSc)
     field: Statistics (Honours)
     institution: Sister Nivedita University
