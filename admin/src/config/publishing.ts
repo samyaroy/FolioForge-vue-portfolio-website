@@ -6,3 +6,6 @@ export const publishingTarget = {
 } as const
 
 export const publishingBranchLabel = `${publishingTarget.environment} / ${publishingTarget.branch}`
+
+/** The live portfolio's address, printed in CV headers. */
+export const portfolioPublicUrl = 'https://samyabrata.codeium.xyz/'
