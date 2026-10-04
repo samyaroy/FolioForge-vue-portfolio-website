@@ -12,6 +12,7 @@ import {
   House,
   Lightbulb,
   LibraryBig,
+  Library,
   Network,
   MapPinned,
   Palette,
@@ -49,6 +50,12 @@ export type PortfolioSection = {
    * whose content is edited elsewhere, what it still owns is what it shows.
    */
   visibilityOnly?: boolean
+  /**
+   * The site does not render this collection, so its entries get no on/off
+   * switch: an `enabled` key would mean nothing there, and the CV schema
+   * rejects keys it does not know.
+   */
+  notOnSite?: boolean
   /**
    * Sub-lists the collection is drawn from, when the file groups its entries.
    * The editor shows one list and asks which group an entry belongs to; each
@@ -305,7 +312,24 @@ export const workspacePages: PortfolioPage[] = [
   },
 ]
 
-export const contentPages = [...portfolioPages, ...blogPages, ...workspacePages]
+/**
+ * The CV library, edited like any other collection. Its page id is `cv`, so
+ * each section is the registry collection `cv/<section>`; what each preset
+ * shows is chosen in the CV builder, not here.
+ */
+export const cvLibraryPage: PortfolioPage = {
+  id: 'cv', title: 'CV Library', publicPath: '/', icon: Library,
+  description: 'What the CVs say beyond the portfolio: bullets, summaries, skills, interests, and CV-only facts. A key beside `text` is a wording variant.',
+  sections: [
+    { id: 'bullets', title: 'Bullets', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'ref', 'text'], previewFields: ['ref', 'kind'], entryFields: entryFields.cvBullets },
+    { id: 'entries', title: 'Entries', sources: ['cv/library.yml'], notOnSite: true, fields: ['Facts'], previewFields: ['ref', 'period'], entryFields: entryFields.cvEntries },
+    { id: 'summaries', title: 'Summaries', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'text'], entryFields: entryFields.cvSummaries },
+    { id: 'skills', title: 'Skills', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'label', 'text'], entryFields: entryFields.cvSkills },
+    { id: 'interests', title: 'Interests', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'text'], entryFields: entryFields.cvInterests },
+  ],
+}
+
+export const contentPages = [...portfolioPages, ...blogPages, ...workspacePages, cvLibraryPage]
 
 /**
  * Where a section is edited. A page with one section is addressed by the page

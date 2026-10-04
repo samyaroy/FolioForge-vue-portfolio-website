@@ -11,7 +11,7 @@ import {
   ShieldCheck,
   Link2,
 } from 'lucide-react'
-import { blogPages, portfolioAdminPath, portfolioPages, workspacePages } from '@/config/portfolio'
+import { blogPages, cvLibraryPage, portfolioAdminPath, portfolioPages, workspacePages } from '@/config/portfolio'
 import type { PortfolioPage } from '@/config/portfolio'
 import type { NavigationGroup } from '@/types/navigation'
 
@@ -53,6 +53,10 @@ export const navigation: NavigationGroup[] = [
       { label: 'Blog Pages', path: '/blog/pages', icon: Files },
       ...blogPages.map(sectionNavItem),
     ],
+  },
+  {
+    label: 'CV',
+    items: [sectionNavItem(cvLibraryPage)],
   },
   {
     label: 'Workspace',
