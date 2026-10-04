@@ -943,3 +943,79 @@ tbody tr:hover { background: #f9fbfd; }
 .publish-message { display: flex; align-items: flex-end; gap: 10px; border-bottom: 1px solid var(--border); padding: 11px 14px; }
 .publish-message .field { margin: 0; flex: 1; }
 .publish-message > span { padding-bottom: 7px; color: #718396; font-size: 10px; }
+
+/* ---------------------------------------------------------------- CV pages */
+.cv-builder { display: grid; grid-template-columns: minmax(330px, 1fr) minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; gap: 14px; }
+.cv-panel { min-width: 0; border: 1px solid var(--border); background: #fff; }
+.cv-panel-heading { display: flex; min-height: 58px; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid var(--border); padding: 10px 14px; }
+.cv-panel-heading > div > span { display: block; margin-bottom: 2px; color: #718396; font-size: 10px; font-weight: 750; text-transform: uppercase; }
+.cv-panel-heading h2 { margin: 0; overflow: hidden; color: #142334; font-size: 14px; line-height: 20px; text-overflow: ellipsis; white-space: nowrap; }
+.cv-panel-heading > div:first-child { min-width: 0; flex: 1; }
+.cv-panel-actions { display: flex; flex: none; gap: 6px; }
+.cv-panel-foot { display: flex; align-items: center; gap: 6px; margin: 0; border-top: 1px solid var(--border); padding: 8px 14px; color: var(--muted-foreground); font-size: 10px; }
+.cv-panel-foot svg { width: 13px; height: 13px; flex: none; }
+.cv-panel-foot code, .cv-hint code { border-radius: 3px; background: #eaf0f5; padding: 1px 4px; color: #385269; font-size: 10px; }
+.cv-placeholder p { margin: 0; padding: 40px 18px; color: var(--muted-foreground); font-size: 12px; text-align: center; }
+
+.cv-tex { max-height: calc(100vh - 240px); overflow: auto; margin: 0; background: #fbfcfe; padding: 10px 0; font-size: 11px; line-height: 17px; counter-reset: line; }
+.cv-tex code { display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.cv-tex code > span { display: block; padding: 0 12px 0 52px; white-space: pre-wrap; word-break: break-word; text-indent: -40px; }
+.cv-tex code > span::before { display: inline-block; width: 30px; margin-right: 10px; color: #a3b3c2; content: counter(line); counter-increment: line; text-align: right; text-indent: 0; user-select: none; }
+
+.cv-hash { border-radius: 3px; background: #eef4f9; padding: 2px 6px; color: #4b6478; font-family: ui-monospace, Menlo, monospace; font-size: 10px; }
+.cv-outline-body { max-height: calc(100vh - 240px); overflow: auto; padding: 14px 16px; color: #24384b; font-size: 11px; line-height: 16px; }
+.cv-outline-body header { margin-bottom: 10px; text-align: center; }
+.cv-outline-body header h3 { margin: 0; font-size: 17px; font-variant: small-caps; }
+.cv-outline-body header p { margin: 3px 0 0; color: #5d7184; font-size: 10px; }
+.cv-outline-body h4 { margin: 12px 0 6px; border-bottom: 1px solid #c9d5e0; padding-bottom: 2px; font-size: 12px; font-variant: small-caps; letter-spacing: .02em; }
+.cv-outline-body p { margin: 0; }
+.cv-outline-items, .cv-outline-plain { margin: 0; padding: 0; list-style: none; }
+.cv-outline-item + .cv-outline-item { margin-top: 8px; }
+.cv-outline-heading { display: flex; justify-content: space-between; gap: 10px; }
+.cv-outline-heading span { flex: none; color: #5d7184; font-style: italic; }
+.cv-outline-sub { font-style: italic; }
+.cv-outline-meta { color: #5d7184; font-size: 10px; }
+.cv-outline-meta span + span::before { content: ' · '; }
+.cv-outline-lead { margin-top: 2px !important; }
+.cv-outline-item ul { margin: 3px 0 0; padding-left: 16px; }
+
+.cv-config-body { display: flex; max-height: calc(100vh - 240px); overflow: auto; flex-direction: column; gap: 12px; padding: 12px; }
+.cv-fieldset { display: flex; min-width: 0; flex-direction: column; gap: 9px; margin: 0; border: 1px solid var(--border); padding: 10px 11px 12px; }
+.cv-fieldset legend { padding: 0 4px; color: #4b6478; font-size: 10px; font-weight: 750; text-transform: uppercase; }
+.cv-section-heading { display: flex; align-items: center; gap: 6px; }
+.cv-section-heading > :first-child { flex: 1; }
+.cv-header-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 10px; font-size: 11px; text-transform: capitalize; }
+.cv-order { display: inline-flex; flex: none; }
+.cv-rows, .cv-items, .cv-bullets { display: flex; flex-direction: column; gap: 6px; }
+.cv-row { display: flex; align-items: center; gap: 6px; }
+.cv-row-text { min-width: 0; flex: 1; color: #24384b; font-size: 11px; line-height: 15px; }
+.cv-row-muted { color: #7b8c9c; font-size: 11px; line-height: 15px; }
+.cv-variant-select { width: 120px; flex: none; }
+.cv-wording { margin: 0; color: #4b6478; font-size: 11px; line-height: 15px; }
+.cv-item { border: 1px solid #e3eaf1; background: #fbfcfe; padding: 8px; }
+.cv-item > header { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 6px; }
+.cv-item > header > span:first-child { display: flex; min-width: 0; flex: 1; flex-direction: column; }
+.cv-item > header strong { overflow: hidden; color: #183148; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.cv-item > header small { color: #718396; font-size: 10px; }
+.cv-bullets { border-left: 2px solid #e3eaf1; padding-left: 8px; }
+.cv-hint { margin: 0; color: #718396; font-size: 10px; line-height: 15px; }
+.cv-hint code + code { margin-left: 4px; }
+
+.cv-issues { margin-bottom: 14px; border: 1px solid #efc7c3; background: #fdf4f3; padding: 10px 12px; }
+.cv-issues h2 { display: flex; align-items: center; gap: 7px; margin: 0 0 6px; color: #8b2e24; font-size: 12px; }
+.cv-issues h2 svg { width: 14px; height: 14px; }
+.cv-issues ul { margin: 0; padding-left: 0; list-style: none; }
+.cv-issues li { color: #5b2a24; font-size: 11px; line-height: 17px; }
+.cv-issues code { margin-right: 7px; color: #8b2e24; font-size: 10px; }
+.cv-preset-row .cv-issues { margin: 0 14px 12px; }
+.cv-meta-problem { color: #b4442f; }
+
+.cv-status { display: flex; gap: 6px; }
+.cv-chip { border-radius: 999px; padding: 2px 8px; font-size: 10px; font-weight: 650; }
+.cv-chip-ok { background: #e3f5ea; color: #1f7a4d; }
+.cv-chip-warn { background: #fdf0d8; color: #8a5a00; }
+
+@media (max-width: 1280px) {
+  .cv-builder { grid-template-columns: minmax(0, 1fr); }
+  .cv-tex, .cv-outline-body, .cv-config-body { max-height: none; }
+}

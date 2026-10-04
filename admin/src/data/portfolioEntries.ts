@@ -23,6 +23,7 @@ import blogReadingsYaml from '../../../blogs/src/content/readings/data.yml'
 import blogMoviesYaml from '../../../blogs/src/content/movies/data.yml'
 import blogTravelYaml from '../../../blogs/src/content/travel/data.yml'
 import blogHobbiesYaml from '../../../blogs/src/content/hobbies/data.yml'
+import cvLibraryYaml from '../../../src/content/cv/library.yml'
 
 import type { EntryPresentation } from '@/lib/entryPresentation'
 
@@ -42,6 +43,7 @@ export type PortfolioEntry = {
 const documents = {
   affiliations: affiliationsYaml as UnknownRecord,
   awards: awardsYaml as UnknownRecord,
+  cvLibrary: cvLibraryYaml as UnknownRecord,
   certifications: certificationsYaml as UnknownRecord,
   cocurricular: cocurricularYaml as UnknownRecord,
   education: educationYaml as UnknownRecord,
@@ -261,6 +263,12 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'movies/items': () => toEntries(arrayAt(documents.blogMovies, 'items'), ['title'], ['director', 'year']),
   'travel/states': () => toEntries(arrayAt(documents.blogTravel, 'states'), ['state'], ['purpose']),
   'hobbies/tiles': () => toEntries(arrayAt(documents.blogHobbies, 'tiles'), ['label'], ['icon']),
+
+  'cv/bullets': () => toEntries(arrayAt(documents.cvLibrary, 'bullets'), ['text'], ['ref', 'kind']),
+  'cv/entries': () => toEntries(arrayAt(documents.cvLibrary, 'entries'), ['title', 'ref', 'id'], ['ref', 'period']),
+  'cv/summaries': () => toEntries(arrayAt(documents.cvLibrary, 'summaries'), ['id'], ['text']),
+  'cv/skills': () => toEntries(arrayAt(documents.cvLibrary, 'skills'), ['label'], ['text']),
+  'cv/interests': () => toEntries(arrayAt(documents.cvLibrary, 'interests'), ['text'], ['id']),
 }
 
 export function getPortfolioEntries(pageId: string, sectionId: string): PortfolioEntry[] {
