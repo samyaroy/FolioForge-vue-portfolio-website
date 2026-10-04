@@ -5,7 +5,7 @@ import { githubConfig, installationAccess, repositoryPolicy, requireGithub, reso
 import { applyEntryChange, discardChanges, pendingChanges, publishChanges, readCollection } from '../content/index.ts'
 import { contentSources } from '../content/registry.ts'
 import { HttpError, json } from '../http.ts'
-import { archiveLogo, archiveMedia, listLogos, publishDraft, storeLogo } from '../media.ts'
+import { archiveLogo, archiveMedia, listIcons, listLogos, publishDraft, storeLogo } from '../media.ts'
 import { discardDraft, listDrafts, readDraft, storeDraft } from '../drafts.ts'
 import { imagePolicy } from '../images.ts'
 
@@ -124,6 +124,10 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     // The cursor is the only thing the browser contributes, and it is checked
     // before it reaches storage.
     return json(await listLogos(env.MEDIA, new URL(request.url).searchParams.get('cursor') ?? undefined))
+  }
+  if (path === '/api/media/icons' && request.method === 'GET') {
+    if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)
+    return json(await listIcons(env.MEDIA, new URL(request.url).searchParams.get('cursor') ?? undefined))
   }
   return json({ error: 'not_found' }, 404)
 }

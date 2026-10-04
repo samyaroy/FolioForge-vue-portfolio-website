@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { listLogos, logoPolicy } from '../media.ts'
+import { iconPolicy, listIcons, listLogos, logoPolicy } from '../media.ts'
 
 /**
  * A binding that answers `list` and treats every other R2 method as a failure.
@@ -80,6 +80,23 @@ test('a cursor that came from R2 is handed straight back', async () => {
 test('a storage failure surfaces as a gateway error, not as its cause', async () => {
   const failing = { list: async () => { throw new Error('bucket exploded: secret detail') } }
   await assert.rejects(listLogos(failing), error => error.status === 502 && error.code === 'storage_unavailable' && !String(error.message).includes('secret'))
+})
+
+test('the icon listing is confined to the icons prefix and a bounded page', async () => {
+  const media = bucket(['icons/github.png', 'icons/kaggle.webp', 'logo/IITM.png', 'icons/../../escape.png', 'icons/readme.txt'])
+  const { items } = await listIcons(media.binding)
+  assert.deepEqual(media.calls[0], { prefix: 'icons/', limit: iconPolicy.pageSize, cursor: undefined })
+  assert.equal(iconPolicy.prefix, 'icons/')
+  assert.deepEqual(items.map(item => item.value), ['github.png', 'kaggle.webp'])
+  assert.equal(items[0].url, 'https://media.samyabrata.codeium.xyz/icons/github.png')
+})
+
+test('an invented icon cursor is refused before it reaches storage', async () => {
+  for (const cursor of ['../../etc', 'a'.repeat(1025), 'has space', '<script>', '']) {
+    const media = bucket(['icons/a.png'])
+    await assert.rejects(listIcons(media.binding, cursor), error => error.status === 400 && error.code === 'invalid_cursor')
+    assert.equal(media.calls.length, 0, `storage was reached with cursor ${cursor}`)
+  }
 })
 
 /* ------------------------- archiving and adding ------------------------- */
