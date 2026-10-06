@@ -30,63 +30,53 @@
 
       <!-- Navigation Tabs -->
       <div class="flex justify-center mb-8">
-        <div class="flex flex-wrap justify-center gap-1 bg-white rounded-lg p-1 shadow-sm">
-          <button
-            v-for="tab in topTabs"
-            :key="tab.id"
-            @click="activeTopTab = tab.id"
-            :class="[
-              'px-3 py-2 sm:px-6 sm:py-3 rounded-md text-sm font-medium transition-all duration-200',
-              activeTopTab === tab.id
-                ? 'bg-[#1980e6] text-white shadow-sm'
-                : 'text-gray-600 hover:text-[#1980e6] hover:bg-gray-50'
-            ]"
-          >
-            {{ tab.name }}
-          </button>
-        </div>
+        <TabBar v-model="activeTopTab" :tabs="topTabs" />
       </div>
 
-      <template v-if="activeTopTab === 'study-material'">
-        <div
-          v-if="subjects.length"
-          class="grid grid-cols-1 gap-y-6 lg:grid-cols-[270px_minmax(0,1fr)_auto] lg:gap-x-0"
-        >
-          <SubjectTabs
-            :subjects="subjects"
-            :active-index="activeIndex"
-            :default-icon="DEFAULT_SUBJECT_ICON"
-            @select="activeIndex = $event"
-          />
+      <TabPanels :tabs="topTabs" :active="activeTopTab">
+        <template v-if="activeTopTab === 'study-material'">
+          <div
+            v-if="subjects.length"
+            class="grid grid-cols-1 gap-y-6 lg:grid-cols-[270px_minmax(0,1fr)_auto] lg:gap-x-0"
+          >
+            <SubjectTabs
+              :subjects="subjects"
+              :active-index="activeIndex"
+              :default-icon="DEFAULT_SUBJECT_ICON"
+              @select="activeIndex = $event"
+            />
 
-          <ResourceContentPane
-            class="lg:self-start"
-            :subject="activeSubject"
-            :materials="activeMaterials"
-            :active-index="activeIndex"
-          />
+            <ResourceContentPane
+              class="lg:self-start"
+              :subject="activeSubject"
+              :materials="activeMaterials"
+              :active-index="activeIndex"
+            />
 
-          <ExternalLinksPane :groups="externalLinkGroups" />
-        </div>
+            <ExternalLinksPane :groups="externalLinkGroups" />
+          </div>
 
-        <div v-else class="mx-auto max-w-2xl text-center text-gray-500">
-          <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
-            <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
-            <span>No resources are available right now.</span>
-          </span>
-        </div>
-      </template>
+          <div v-else class="mx-auto max-w-2xl text-center text-gray-500">
+            <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+              <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+              <span>No resources are available right now.</span>
+            </span>
+          </div>
+        </template>
 
-      <WorthExploringPane
-        v-else
-        :groups="exploringGroups"
-      />
+        <WorthExploringPane
+          v-else
+          :groups="exploringGroups"
+        />
+      </TabPanels>
     </div>
   </div>
 </template>
 
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import TabBar from '@/components/ui/TabBar.vue'
+import TabPanels from '@/components/ui/TabPanels.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import resourcesContent from '@/content/profile_info/resources.yml'
@@ -140,7 +130,7 @@ const subjects = computed(() => {
 
 const topTabs = [
   { id: 'study-material', name: 'Study Material' },
-  { id: 'worth-exploring', name: 'Worth Exploring' },
+  { id: 'worth-exploring', name: 'Worth Exploring', highlight: true },
 ]
 
 const route = useRoute()
@@ -253,3 +243,4 @@ function normalizeExternalLink(link) {
   }
 }
 </script>
+

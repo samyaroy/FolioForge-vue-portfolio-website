@@ -13,23 +13,14 @@
 
       <!-- Navigation Tabs -->
       <div v-if="tabs.length" class="flex justify-center mb-8">
-        <div class="flex flex-wrap justify-center gap-1 bg-white rounded-lg p-1 shadow-sm">
-          <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
-            'px-3 py-2 sm:px-6 sm:py-3 rounded-md text-sm font-medium transition-all duration-200',
-            activeTab === tab.id
-              ? 'bg-[#1980e6] text-white shadow-sm'
-              : 'text-gray-600 hover:text-[#1980e6] hover:bg-gray-50'
-          ]">
-            {{ tab.name }}
-          </button>
-        </div>
+        <TabBar v-model="activeTab" :tabs="tabs" />
       </div>
       <div v-else class="text-center text-gray-500 mb-8">
         No sections are enabled right now.
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-[1280px] mx-auto">
+      <TabPanels class="max-w-[1280px] mx-auto" :tabs="tabs" :active="activeTab">
         <!-- Internships Section -->
         <div v-if="showInternshipsTab && activeTab === 'internships'" class="mb-16">
           <div class="space-y-6 max-w-4xl mx-auto">
@@ -63,7 +54,7 @@
             </span>
           </div>
         </div>
-      </div>
+      </TabPanels>
 
       <MoreCertificatesModal v-model="showMoreCertificates" :certifications="moreCertifications" />
     </div>
@@ -71,6 +62,8 @@
 </template>
 
 <script setup>
+import TabBar from '@/components/ui/TabBar.vue'
+import TabPanels from '@/components/ui/TabPanels.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
