@@ -10,7 +10,7 @@
     :aria-label="label"
   >
     <div
-      class="mb-4 flex items-center"
+      class="mb-1 flex items-center"
       :class="collapsed
         ? (stacked ? 'justify-between gap-2 lg:justify-center' : 'justify-center')
         : 'justify-between gap-2'"
@@ -44,6 +44,11 @@
         </template>
       </v-tooltip>
     </div>
+
+    <p v-if="!collapsed" class="mb-2 flex items-center justify-end gap-1 text-right text-[10px] leading-4 text-gray-500">
+      <v-icon size="8" class="shrink-0 text-gray-400" aria-hidden="true">mdi-star</v-icon>
+      <span>To access the link, click on the title.</span>
+    </p>
 
     <slot v-if="!collapsed" />
   </aside>

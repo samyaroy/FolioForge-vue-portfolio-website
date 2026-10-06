@@ -183,14 +183,9 @@ const externalLinkGroups = computed(() => {
 
 const exploringGroups = computed(() => normalizeExternalGroups(resources?.explore))
 
-// Each group names its own call to action: Subscribe, Follow, ...
 const subscribeGroups = computed(() => (
   normalizeExternalGroups(resources?.subscribe)
     .filter(isSubscribeGroupEnabled)
-    .map(group => ({
-      ...group,
-      cta: group.cta || 'Subscribe',
-    }))
 ))
 
 function isSubscribeGroupEnabled(group) {
@@ -207,7 +202,6 @@ function normalizeExternalGroups(rawGroups) {
       id: group.id || '',
       title: group.group || group.title || '',
       icon: group.icon || '',
-      cta: group.cta || '',
       links: Array.isArray(group.links)
         ? group.links.filter(isObject).map(normalizeExternalLink)
         : [],
@@ -278,9 +272,7 @@ function normalizeExternalLink(link) {
     description: link.description || '',
     incharge: link.incharge || '',
     speciality: link.speciality || link.specialty || link.specility || '',
-    subscribeUrl: link.subscribe_url || '',
     cadence: link.cadence || '',
   }
 }
 </script>
-
