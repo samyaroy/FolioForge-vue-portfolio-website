@@ -64,17 +64,26 @@
           </div>
         </template>
 
+        <!-- Laid out like Study Material, so the right column's divider stays
+             put when switching tabs. Without anything to subscribe to, the
+             cards take the full width as before. -->
         <div
-          v-else
+          v-else-if="showWorthSubscribing && subscribeGroups.length"
           class="grid grid-cols-1 gap-y-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-0"
         >
           <WorthExploringPane
             class="lg:self-start"
             :groups="exploringGroups"
+            compact
           />
 
-          <ExternalLinksPane :groups="exploringSubscriptions" />
+          <SubscribePane :groups="subscribeGroups" />
         </div>
+
+        <WorthExploringPane
+          v-else
+          :groups="exploringGroups"
+        />
       </TabPanels>
     </div>
   </div>
@@ -90,6 +99,7 @@ import resourcesContent from '@/content/profile_info/resources.yml'
 import descriptions from '@/content/profile_info/description.yml'
 import config from '@/content/profile_info'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+import { withoutDisabledEntries } from '@/config/entryStatus'
 import { resolveHyperlink } from '@/utils/resolveHyperlink'
 import InfoRibbon from '@/components/InfoRibbon.vue'
 import RibbonToggle from '@/components/RibbonToggle.vue'
@@ -97,12 +107,18 @@ import BetaRibbon from '@/components/BetaRibbon.vue'
 import ExternalLinksPane from './components/ExternalLinksPane.vue'
 import ResourceContentPane from './components/ResourceContentPane.vue'
 import SubjectTabs from './components/SubjectTabs.vue'
+import SubscribePane from './components/SubscribePane.vue'
 import WorthExploringPane from './components/WorthExploringPane.vue'
 
 const pageDescription = descriptions.resources
 const showPageDescription = isPageDescriptionEnabled('resources')
 
 const showRibbon = isFeatureEnabled('showResources.showRibbon')
+const showWorthSubscribing = isFeatureEnabled('showResources.showWorthSubscribing')
+
+// resources.yml is read here rather than through profile_info, so entries
+// switched off in it (`enabled: false`) are dropped here too.
+const resources = withoutDisabledEntries(resourcesContent)
 // ribbon.yml holds a list of announcements; InfoRibbon cycles through them and
 // the toggle (shown once dismissed) keeps the first one's icon.
 const ribbonEntries = Array.isArray(config.ribbon) ? config.ribbon : [config.ribbon]
@@ -117,8 +133,8 @@ defineOptions({
 const DEFAULT_SUBJECT_ICON = 'mdi-book-open-page-variant'
 
 const subjects = computed(() => {
-  const rawSubjects = Array.isArray(resourcesContent?.subjects)
-    ? resourcesContent.subjects
+  const rawSubjects = Array.isArray(resources?.subjects)
+    ? resources.subjects
     : []
 
   return rawSubjects.filter(isObject).map((subject, index) => ({
@@ -153,42 +169,28 @@ const externalLinkGroups = computed(() => {
     return [{ title: '', links: activeSubject.value.links }]
   }
 
-  const rawGroups = Array.isArray(resourcesContent?.external)
-    ? resourcesContent.external
-    : []
+  return normalizeExternalGroups(resources?.external)
+})
+
+const exploringGroups = computed(() => normalizeExternalGroups(resources?.explore))
+
+// Each group names its own call to action: Subscribe, Follow, ...
+const subscribeGroups = computed(() => (
+  normalizeExternalGroups(resources?.subscribe).map(group => ({
+    ...group,
+    cta: group.cta || 'Subscribe',
+  }))
+))
+
+function normalizeExternalGroups(rawGroups) {
+  if (!Array.isArray(rawGroups)) return []
 
   return rawGroups
     .filter(isObject)
     .map(group => ({
       title: group.group || group.title || '',
-      links: Array.isArray(group.links)
-        ? group.links.filter(isObject).map(normalizeExternalLink)
-        : [],
-    }))
-    .filter(group => group.links.length)
-})
-
-const exploringGroups = computed(() => {
-  const rawGroups = Array.isArray(resourcesContent?.explore)
-    ? resourcesContent.explore
-    : []
-
-  return normalizeExternalGroups(rawGroups)
-})
-
-const exploringSubscriptions = computed(() => {
-  const rawGroups = Array.isArray(resourcesContent?.exploreSubscriptions)
-    ? resourcesContent.exploreSubscriptions
-    : []
-
-  return normalizeExternalGroups(rawGroups)
-})
-
-function normalizeExternalGroups(rawGroups = []) {
-  return rawGroups
-    .filter(isObject)
-    .map(group => ({
-      title: group.group || group.title || '',
+      icon: group.icon || '',
+      cta: group.cta || '',
       links: Array.isArray(group.links)
         ? group.links.filter(isObject).map(normalizeExternalLink)
         : [],
@@ -259,6 +261,8 @@ function normalizeExternalLink(link) {
     description: link.description || '',
     incharge: link.incharge || '',
     speciality: link.speciality || link.specialty || link.specility || '',
+    subscribeUrl: link.subscribe_url || '',
+    cadence: link.cadence || '',
   }
 }
 </script>

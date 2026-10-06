@@ -245,6 +245,7 @@ export const portfolioPages: PortfolioPage[] = [
     sections: [
       { id: 'study-material', title: 'Study Material', sources: ['resources.yml'], fields: ['Subjects', 'Materials and descriptions', 'Files and external links'], requiredFields: ['title'], entryFields: entryFields.studyMaterial },
       { id: 'worth-exploring', title: 'Worth Exploring', sources: ['resources.yml'], fields: ['Groups and labels', 'Recommended links', 'People and logos'], requiredFields: ['group'], entryFields: entryFields.worthExploring },
+      { id: 'worth-subscribing', title: 'Worth Subscribing', sources: ['resources.yml'], fields: ['Groups, icons and button labels', 'Newsletters, venues and seminar series', 'Subscribe links and cadence'], requiredFields: ['group'], entryFields: entryFields.worthSubscribing },
     ],
   },
   {

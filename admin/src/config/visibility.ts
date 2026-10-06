@@ -87,6 +87,10 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'gallery/career-unlocks': [{ path: 'showGallery', label: 'Career Unlocks' }],
   'resources/study-material': [{ path: 'showResources.main', label: 'Resources page' }],
   'resources/worth-exploring': [{ path: 'showResources.main', label: 'Resources page' }],
+  'resources/worth-subscribing': [
+    { path: 'showResources.main', label: 'Resources page' },
+    { path: 'showResources.showWorthSubscribing', label: 'Worth Subscribing column' },
+  ],
   'facts/facts': [{ path: 'showFacts', label: 'Did You Know?' }],
 
   // Blog pages. Each flag hides its page's route and its header link.
