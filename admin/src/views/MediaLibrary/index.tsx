@@ -4,6 +4,7 @@ import { AlertCircle, Archive, CheckCircle2, CloudUpload, ImagePlus, Loader2, Tr
 import { InfoHint } from '@/components/admin/InfoHint'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { Button, FileField, IconButton, TextField } from '@/components/form'
+import { imagePreviewUrl } from '@/lib/imagePreviewUrl'
 import { LogoLibrary } from '@/components/admin/LogoLibrary'
 import { useIntegrations } from '@/hooks/useIntegrations'
 import { archiveMedia, discardDraft, draftPreviewUrl, listDrafts, publishDraft, uploadImage, type StoredDraft } from '@/services/uploads'
@@ -59,7 +60,7 @@ export function MediaLibraryPage() {
       const id = `${file.name}:${file.size}:${crypto.randomUUID()}`
       // The local preview is shown immediately; the server decides whether the
       // file is acceptable, and says so on this same card.
-      setStaged(current => [...current, { id, name: file.name, size: megabytes(file.size), previewUrl: URL.createObjectURL(file), state: 'uploading' }])
+      setStaged(current => [...current, { id, name: file.name, size: megabytes(file.size), previewUrl: imagePreviewUrl(file), state: 'uploading' }])
       const controller = new AbortController()
       controllers.current.add(controller)
       uploadImage(file, controller.signal)
