@@ -77,10 +77,17 @@
         </div>
       </template>
 
-      <WorthExploringPane
+      <div
         v-else
-        :groups="exploringGroups"
-      />
+        class="grid grid-cols-1 gap-y-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-x-0"
+      >
+        <WorthExploringPane
+          class="lg:self-start"
+          :groups="exploringGroups"
+        />
+
+        <ExternalLinksPane :groups="exploringSubscriptions" />
+      </div>
     </div>
   </div>
 </template>
@@ -176,6 +183,18 @@ const exploringGroups = computed(() => {
     ? resourcesContent.explore
     : []
 
+  return normalizeExternalGroups(rawGroups)
+})
+
+const exploringSubscriptions = computed(() => {
+  const rawGroups = Array.isArray(resourcesContent?.exploreSubscriptions)
+    ? resourcesContent.exploreSubscriptions
+    : []
+
+  return normalizeExternalGroups(rawGroups)
+})
+
+function normalizeExternalGroups(rawGroups = []) {
   return rawGroups
     .filter(isObject)
     .map(group => ({
@@ -185,7 +204,7 @@ const exploringGroups = computed(() => {
         : [],
     }))
     .filter(group => group.links.length)
-})
+}
 
 watch(subjects, (nextSubjects) => {
   if (activeIndex.value >= nextSubjects.length) {

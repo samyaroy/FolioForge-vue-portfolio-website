@@ -247,3 +247,54 @@ explore:
         url: https://sudarshansudarshan.github.io/aicamp/oceanverse/
         description: "A series of challenging mathematical/computer programming problems to build intuition in linear algebra, probability, statistics, and machine learning by `Prof. Sudarshan Iyengar` and his team."
         speciality: "Foundation of ML"
+
+# Right column on the "Worth Exploring" tab.
+exploreSubscriptions:
+  - group: "Newsletters Worth Subscribing To"
+    links:
+      - label: "The Batch (DeepLearning.AI)"
+        url: https://www.deeplearning.ai/the-batch/
+        description: "Weekly AI newsletter with practical updates and research highlights."
+        speciality: "AI/ML"
+      - label: "Data Elixir"
+        url: https://dataelixir.com/
+        description: "Curated links on data science, statistics, and machine learning."
+        speciality: "Data Science"
+      - label: "Import AI"
+        url: https://jack-clark.net/
+        description: "Regular commentary on AI policy, research, and trends."
+        speciality: "AI Policy"
+
+  - group: "Research Paper Venues (Journals & Conferences)"
+    links:
+      - label: "Journal of Machine Learning Research (JMLR)"
+        url: https://www.jmlr.org/
+        description: "Open-access journal publishing machine learning research."
+        speciality: "Journal"
+      - label: "Annals of Statistics"
+        url: https://imstat.org/journals-and-publications/annals-of-statistics/
+        description: "Flagship statistics journal for theoretical and methodological work."
+        speciality: "Journal"
+      - label: "NeurIPS"
+        url: https://neurips.cc/
+        description: "Premier annual conference in machine learning and computational neuroscience."
+        speciality: "Conference"
+      - label: "ICML"
+        url: https://icml.cc/
+        description: "Top conference for machine learning theory and applications."
+        speciality: "Conference"
+
+  - group: "Seminar Series"
+    links:
+      - label: "Simons Institute Talks"
+        url: https://simons.berkeley.edu/talks
+        description: "Research seminars and workshop talks across theoretical computer science."
+        speciality: "Theory"
+      - label: "CMU Machine Learning Department Seminars"
+        url: https://www.ml.cmu.edu/calendar.html
+        description: "Academic seminar series on modern ML research."
+        speciality: "Machine Learning"
+      - label: "NCRM Methods eSeminars"
+        url: https://www.ncrm.ac.uk/training/short-courses-and-events/online-seminars/
+        description: "Online seminar series focused on quantitative and qualitative research methods."
+        speciality: "Methods"
