@@ -114,7 +114,16 @@ const pageDescription = descriptions.resources
 const showPageDescription = isPageDescriptionEnabled('resources')
 
 const showRibbon = isFeatureEnabled('showResources.showRibbon')
-const showWorthSubscribing = isFeatureEnabled('showResources.showWorthSubscribing')
+const showWorthSubscribing = isFeatureEnabled('showResources.showWorthSubscribing.main')
+
+// Each subscribe group's own switch under showResources.showWorthSubscribing,
+// by the group's `id` in resources.yml. A group with no switch here shows
+// whenever the column does.
+const SUBSCRIBE_GROUP_FLAGS = {
+  newsletters: 'showNewsletters',
+  'research-venues': 'showResearchVenues',
+  seminars: 'showSeminarSeries',
+}
 
 // resources.yml is read here rather than through profile_info, so entries
 // switched off in it (`enabled: false`) are dropped here too.
@@ -176,11 +185,18 @@ const exploringGroups = computed(() => normalizeExternalGroups(resources?.explor
 
 // Each group names its own call to action: Subscribe, Follow, ...
 const subscribeGroups = computed(() => (
-  normalizeExternalGroups(resources?.subscribe).map(group => ({
-    ...group,
-    cta: group.cta || 'Subscribe',
-  }))
+  normalizeExternalGroups(resources?.subscribe)
+    .filter(isSubscribeGroupEnabled)
+    .map(group => ({
+      ...group,
+      cta: group.cta || 'Subscribe',
+    }))
 ))
+
+function isSubscribeGroupEnabled(group) {
+  const flag = SUBSCRIBE_GROUP_FLAGS[group.id]
+  return !flag || isFeatureEnabled(`showResources.showWorthSubscribing.${flag}`)
+}
 
 function normalizeExternalGroups(rawGroups) {
   if (!Array.isArray(rawGroups)) return []
@@ -188,6 +204,7 @@ function normalizeExternalGroups(rawGroups) {
   return rawGroups
     .filter(isObject)
     .map(group => ({
+      id: group.id || '',
       title: group.group || group.title || '',
       icon: group.icon || '',
       cta: group.cta || '',

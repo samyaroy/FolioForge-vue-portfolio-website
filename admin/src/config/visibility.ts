@@ -89,7 +89,10 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'resources/worth-exploring': [{ path: 'showResources.main', label: 'Resources page' }],
   'resources/worth-subscribing': [
     { path: 'showResources.main', label: 'Resources page' },
-    { path: 'showResources.showWorthSubscribing', label: 'Worth Subscribing column' },
+    { path: 'showResources.showWorthSubscribing.main', label: 'Worth Subscribing column' },
+    { path: 'showResources.showWorthSubscribing.showNewsletters', label: 'Newsletters' },
+    { path: 'showResources.showWorthSubscribing.showResearchVenues', label: 'Research paper venues' },
+    { path: 'showResources.showWorthSubscribing.showSeminarSeries', label: 'Seminar series' },
   ],
   'facts/facts': [{ path: 'showFacts', label: 'Did You Know?' }],
 
