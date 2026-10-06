@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { discardDraft, MediaRequestError, publishDraft, uploadImage } from '@/services/uploads'
 import { galleryKeyOf, galleryPublishName, nextGalleryKey, prepareGalleryPhoto } from '@/lib/galleryPhotos'
+import { imagePreviewUrl } from '@/lib/imagePreviewUrl'
 
 export type PendingPhoto = {
   /** A local copy to show while the photo is not on the media host yet. */
@@ -62,7 +63,7 @@ export function useGalleryUploads({ id, images, updateImages }: GalleryUploadsOp
       reserved.current.add(key)
       const controller = new AbortController()
       controllers.current.set(key, controller)
-      const original = URL.createObjectURL(file)
+      const original = imagePreviewUrl(file)
       setPhotos(current => ({ ...current, [key]: { previewUrl: original, state: 'preparing' } }))
       updateImages(list => [...list, key])
       void (async () => {
@@ -71,7 +72,7 @@ export function useGalleryUploads({ id, images, updateImages }: GalleryUploadsOp
           if (controller.signal.aborted) return
           // The prepared copy is what will be published, and one every browser
           // can show, which a HEIC original is not.
-          const previewUrl = URL.createObjectURL(prepared)
+          const previewUrl = imagePreviewUrl(prepared)
           URL.revokeObjectURL(original)
           change(key, { state: 'uploading', previewUrl })
           const draft = await uploadImage(prepared, controller.signal)
