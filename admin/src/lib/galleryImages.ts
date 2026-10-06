@@ -8,7 +8,16 @@ const MEDIA_BASE = 'https://media.samyabrata.codeium.xyz'
 export function galleryImageUrl(image: string): string {
   const value = image.trim()
   if (!value) return ''
-  return /^https?:\/\//i.test(value) ? value : `${MEDIA_BASE}/${encodeURIComponent(value)}.jpeg`
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      const parsed = new URL(value)
+      if ((parsed.protocol !== 'http:' && parsed.protocol !== 'https:') || parsed.username || parsed.password) return ''
+      return parsed.toString()
+    } catch {
+      return ''
+    }
+  }
+  return `${MEDIA_BASE}/${encodeURIComponent(value)}.jpeg`
 }
 
 /** The images an entry lists, as the editor holds them. */
