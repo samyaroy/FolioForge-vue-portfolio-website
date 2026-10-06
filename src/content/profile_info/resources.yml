@@ -5,7 +5,8 @@
 #   - right column : that category's `links` (external links)
 # The "Worth Exploring" tab renders the top-level `explore` groups as cards
 # (YouTube videos, articles, or anything fun to wander into); each entry
-# supports the same fields as `external` links below.
+# supports the same fields as `external` links below. Its right column,
+# "Worth Subscribing", renders the top-level `subscribe` groups (see there).
 #
 # Schema per category:
 #   - id: unique-kebab-id
@@ -247,3 +248,104 @@ explore:
         url: https://sudarshansudarshan.github.io/aicamp/oceanverse/
         description: "A series of challenging mathematical/computer programming problems to build intuition in linear algebra, probability, statistics, and machine learning by `Prof. Sudarshan Iyengar` and his team."
         speciality: "Foundation of ML"
+
+# "Worth Exploring" tab, right column ("Worth Subscribing"): groups of things
+# to subscribe to. Same link fields as `external` (label, url/ref, description,
+# speciality/specility, incharge), plus:
+#   subscribe_url: where the group's button goes (a sign-up or alerts page);
+#                  falls back to `url`
+#   cadence:       short meta text, e.g. Weekly, Journal, Conference · Annual
+# Group-level options:
+#   icon: an mdi-* icon shown before the heading (optional)
+#   cta:  the button label for every entry in the group (default "Subscribe")
+# The column is hidden while no entry is switched on. The entries below start
+# switched off (`enabled: false`) until reviewed; remove the key, or turn the
+# entry on in the admin, to show one.
+subscribe:
+  - group: "Newsletters"
+    icon: mdi-email-outline
+    cta: Subscribe
+    links:
+      - label: "Import AI"
+        url: https://jack-clark.net/
+        subscribe_url: https://importai.substack.com/
+        cadence: Weekly
+        description: "Jack Clark's newsletter on AI research, policy and trends."
+        speciality: "AI Research"
+        enabled: false
+      - label: "The Batch"
+        url: https://www.deeplearning.ai/the-batch/
+        cadence: Weekly
+        description: "DeepLearning.AI's AI news, practical updates and research highlights."
+        speciality: "AI/ML"
+        enabled: false
+      - label: "Data Elixir"
+        url: https://dataelixir.com/
+        cadence: Weekly
+        description: "Curated picks on data science, statistics and machine learning."
+        speciality: "Data Science"
+        enabled: false
+
+  - group: "Research Paper Venues"
+    icon: mdi-book-open-variant
+    cta: Follow
+    links:
+      - label: "The Annals of Statistics"
+        url: https://projecteuclid.org/journals/annals-of-statistics
+        cadence: Journal
+        description: "The IMS's flagship journal for statistical theory and methods."
+        speciality: "Statistical Theory"
+        enabled: false
+      - label: "Journal of the American Statistical Association"
+        url: https://www.tandfonline.com/toc/uasa20/current
+        cadence: Journal
+        description: "JASA: theory and methods alongside applications and case studies."
+        speciality: "Applied Statistics"
+        enabled: false
+      - label: "Journal of Machine Learning Research"
+        url: https://www.jmlr.org/
+        cadence: Journal · Open access
+        description: "Open-access journal publishing machine learning research."
+        speciality: "Machine Learning"
+        enabled: false
+      - label: "NeurIPS"
+        url: https://neurips.cc/
+        cadence: Conference · Annual
+        description: "Proceedings, calls for papers and workshop tracks."
+        speciality: "Machine Learning"
+        enabled: false
+      - label: "ICML"
+        url: https://icml.cc/
+        cadence: Conference · Annual
+        description: "Machine learning theory and applications."
+        speciality: "Machine Learning"
+        enabled: false
+
+  - group: "Seminar Series"
+    icon: mdi-presentation
+    cta: Follow
+    links:
+      - label: "Online Causal Inference Seminar"
+        url: https://sites.google.com/view/ocis
+        cadence: Online
+        description: "Research talks on causal inference, open to anyone."
+        speciality: "Causal Inference"
+        enabled: false
+      - label: "One World Probability Seminar"
+        url: https://www.owprobability.org/
+        cadence: Online
+        description: "Talks across probability theory, hosted online."
+        speciality: "Probability"
+        enabled: false
+      - label: "Bayesian Analysis Discussion Paper Webinars"
+        url: https://bayesian.org/ba-webinars/
+        cadence: Online
+        description: "ISBA's webinars on discussion papers in Bayesian Analysis."
+        speciality: "Bayesian"
+        enabled: false
+      - label: "Simons Institute videos"
+        url: https://simons.berkeley.edu/videos
+        cadence: Recorded talks
+        description: "Talks from Simons Institute programs and workshops."
+        speciality: "Theory of Computing"
+        enabled: false

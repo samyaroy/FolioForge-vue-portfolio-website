@@ -1,11 +1,14 @@
 <template>
   <div :class="{ 'tab-panels-sliding': sliding }">
     <!-- Keyed on the active tab, so whatever the slot shows for it slides out
-         and the next tab's content slides in from the side it was picked on. -->
+         and the next tab's content slides in from the side it was picked on.
+         Out-in only once animating: without CSS the leave finishes at once,
+         and out-in then re-renders the transition in the middle of its own
+         update, which crashed a page that picks its tab (?tab=) on mount. -->
     <Transition
       :name="`tab-slide-${direction}`"
       :css="animated"
-      mode="out-in"
+      :mode="animated ? 'out-in' : undefined"
       @before-leave="sliding = true"
       @before-enter="sliding = true"
       @after-enter="sliding = false"

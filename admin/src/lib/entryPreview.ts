@@ -405,6 +405,7 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
   // they hold is the editor's business.
   if (collection === 'resources/study-material') return fact(BookOpen, counted(raw.materials, 'material'))
   if (collection === 'resources/worth-exploring') return fact(Link2, counted(raw.links, 'link'))
+  if (collection === 'resources/worth-subscribing') return fact(Mail, counted(raw.links, 'link'))
   if (collection === 'facts/facts') {
     return [
       ...fact(Shapes, raw.icon),
@@ -550,7 +551,7 @@ export function hasSitePreview(collection: string): boolean {
     'cocurricular/leadership', 'cocurricular/volunteering',
     'professional-activity/hosted-events',
     'gallery/career-unlocks',
-    'resources/study-material', 'resources/worth-exploring',
+    'resources/study-material', 'resources/worth-exploring', 'resources/worth-subscribing',
     'recommended/items', 'readings/items', 'movies/items', 'travel/states', 'hobbies/tiles',
   ].includes(collection)
 }

@@ -124,6 +124,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showResources: {
     main: true,
     showRibbon: true,
+    // The "Worth Subscribing" column on the Worth Exploring tab. Off, the tab
+    // shows its cards full width, as it did before the column.
+    showWorthSubscribing: true,
   },
 
   // Controls the "Did you know?" facts page (/facts) and its nav link.
