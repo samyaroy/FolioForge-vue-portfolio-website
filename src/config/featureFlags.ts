@@ -130,7 +130,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     // resources.yml; with every group off, the column goes too.
     showWorthSubscribing: {
       main: true,
-      showNewsletters: true,
+      showNewsletters: false,
       showResearchVenues: true,
       showSeminarSeries: true,
     },

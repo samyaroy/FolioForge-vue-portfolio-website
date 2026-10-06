@@ -1,4 +1,9 @@
-export type VisibilityFlag = { path: string; label: string }
+/**
+ * `entry` ties a switch to one entry of its section's collection, by the
+ * entry's id: while the switch is off, the entry list shows that row as hidden
+ * from the site, whatever the row's own switch says.
+ */
+export type VisibilityFlag = { path: string; label: string; entry?: string }
 
 /**
  * Marks a path in the blog's flags (blogs/src/config/featureFlags.ts) rather
@@ -90,9 +95,9 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'resources/worth-subscribing': [
     { path: 'showResources.main', label: 'Resources page' },
     { path: 'showResources.showWorthSubscribing.main', label: 'Worth Subscribing column' },
-    { path: 'showResources.showWorthSubscribing.showNewsletters', label: 'Newsletters' },
-    { path: 'showResources.showWorthSubscribing.showResearchVenues', label: 'Research paper venues' },
-    { path: 'showResources.showWorthSubscribing.showSeminarSeries', label: 'Seminar series' },
+    { path: 'showResources.showWorthSubscribing.showNewsletters', label: 'Newsletters', entry: 'newsletters' },
+    { path: 'showResources.showWorthSubscribing.showResearchVenues', label: 'Research paper venues', entry: 'research-venues' },
+    { path: 'showResources.showWorthSubscribing.showSeminarSeries', label: 'Seminar series', entry: 'seminars' },
   ],
   'facts/facts': [{ path: 'showFacts', label: 'Did You Know?' }],
 
