@@ -15,7 +15,7 @@
         <p v-if="poster.description" class="content-justify text-gray-700 mb-3">{{ poster.description }}</p>
         <div v-if="poster.link" class="mb-3">
           <a :href="poster.link" target="_blank" class="text-[#1980e6] hover:underline text-sm flex items-center">
-            <v-icon size="20" class="mr-1">mdi-link</v-icon> View Poster
+            <v-img :src="posterIcon" alt="" width="18" height="18" class="mr-1 flex-grow-0" contain /> View Poster
           </a>
         </div>
         <div v-if="poster.cred_link" class="mb-3">
@@ -46,6 +46,7 @@
 
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import posterIcon from '@/assets/icons/poster-by-flaticon-blue.png'
 defineProps({
   posters: {
     type: Array,

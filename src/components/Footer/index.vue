@@ -245,9 +245,10 @@
 
           <p class="text-gray-500 text-sm mt-1">
             &#9432; Some icons used are made by
-            <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>
-            &
+            <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>,
             <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a>
+            &
+            <a href="https://www.flaticon.com/free-icons/poster" title="poster icons" target="_blank">Andika Syaif</a>
             from
             <a href="https://www.flaticon.com/free-icons/class" target="_blank">Flaticon</a>
           </p>

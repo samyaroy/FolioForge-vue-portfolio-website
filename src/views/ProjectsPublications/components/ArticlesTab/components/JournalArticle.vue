@@ -58,7 +58,7 @@
               :class="isSectionCollapsed ? '' : 'mb-3'"
             >
               <p v-if="article.publication?.name || article.publication?.host" class="min-w-0 text-gray-700">
-                <v-icon size="20">mdi-book-open-page-variant</v-icon>
+                <FontAwesomeIcon :icon="faNewspaper" class="text-[18px]" />
                 <span v-if="article.publication?.name" class="pl-3">
                   {{ article.publication.name }}
                 </span>
@@ -142,6 +142,8 @@
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import SmartLink from '@/components/SmartLink.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import { logoUrl } from '@/config/mediaAssets'
