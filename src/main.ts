@@ -1,10 +1,9 @@
 import { createApp } from 'vue'
 import './style.css'
-// Registers the boneyard-js skeleton definitions in src/bones/ so components
-// can name a bone while their data loads. Extensionless on purpose: the CLI
-// emits registry.ts, and pinning the extension here is how a stale registry.js
-// from an older CLI kept being imported after a rebuild.
-import './bones/registry'
+// Configures boneyard-js and registers the app shell's skeleton. Page bones are
+// registered by the pages that render them (see src/bones/load.ts), so the
+// entry chunk no longer carries every page's skeleton data.
+import './bones/shell'
 import App from './App.vue'
 import router from './router'
 

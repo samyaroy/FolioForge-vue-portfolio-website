@@ -134,7 +134,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import config from "@/content/profile_info"
+import config from "@/content/profile_info/site"
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const router = useRouter()

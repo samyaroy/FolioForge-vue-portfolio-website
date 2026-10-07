@@ -11,7 +11,7 @@
 //   - BetaBadge.vue    links to the stable site, but only on the beta host
 //   - Footer/index.vue links to the beta site, but only on the stable host
 
-import config from '@/content/profile_info'
+import config from '@/content/profile_info/site'
 import { SITE_URL } from '@/router/routes'
 
 const BETA_HOST_PREFIX = 'beta.'

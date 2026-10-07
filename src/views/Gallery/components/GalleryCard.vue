@@ -259,6 +259,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import Skeleton from 'boneyard-js/vue'
+import '@/bones/gallery'
 import CaptionContent from '@/components/CaptionContent.vue'
 import ShareMenu from '@/components/ShareMenu.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
