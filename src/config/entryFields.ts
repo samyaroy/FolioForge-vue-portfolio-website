@@ -88,6 +88,7 @@ export const entryFields = {
   galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', { key: 'images', images: 'gallery' }, 'manifestDescription', 'externalUrl'],
   studyMaterial: ['title', { key: 'materials', list: ['title', 'meta', 'instructor', 'distributor', 'logo', 'link', 'paid'] }],
   worthExploring: ['group', 'links'],
+  worthSubscribing: ['group', 'id', 'icon', { key: 'links', list: ['label', 'url', 'cadence', 'speciality', 'incharge'] }],
 
   // Blog collections.
   blogRecommended: ['id', 'title', 'author', 'source', 'year', 'url', 'note'],

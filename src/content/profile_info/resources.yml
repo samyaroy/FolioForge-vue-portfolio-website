@@ -5,7 +5,8 @@
 #   - right column : that category's `links` (external links)
 # The "Worth Exploring" tab renders the top-level `explore` groups as cards
 # (YouTube videos, articles, or anything fun to wander into); each entry
-# supports the same fields as `external` links below.
+# supports the same fields as `external` links below. Its right column,
+# "Worth Subscribing", renders the top-level `subscribe` groups (see there).
 #
 # Schema per category:
 #   - id: unique-kebab-id
@@ -77,6 +78,12 @@ subjects:
         instructor: "A. M. Goon, M. K. Gupta and B. Dasgupta"
         link: http://ia601509.us.archive.org/2/items/in.ernet.dli.2015.463316/2015.463316.Fundamental-Of.pdf
 
+      - title: "A First Course in Probability"
+        meta: "Book"
+        instructor: "Sheldon M. Ross"
+        distributor: "Pearson"
+        paid: true
+
       - title: Probability and Statistics
         meta: "Course"
         instructor: "Prof. Somesh Kumar"
@@ -127,6 +134,13 @@ subjects:
         instructor: "Geoge Casella and Roger L. Berger"
         distributor: "CENEGAGE Learning"
         paid: true
+
+      - title: "An Introduction to Probability and Statistics"
+        meta: "Book"
+        instructor: "Vijay K. Rohatgi and A. K. Md. Ehsanes Saleh"
+        distributor: "Wiley"
+        paid: true
+        link: https://onlinelibrary.wiley.com/doi/book/10.1002/9781118799635
 
       - title: "Bayesian Statistics: From Concept to Data Analysis"
         meta: "Course"
@@ -201,13 +215,15 @@ external:
 
   - group: "Club or Society (Statistics)"
     links:
-      - label: RoSE Network
-        url: https://www.rose-network.org/
-      - label: The International Society for Bayesian Analysis
-        ref: ISBA
-      - label: American Statistical Association
-        url: https://www.amstat.org/
-      - label: Royal Statistical Society
+      # - label: RoSE Network
+      #   url: https://www.rose-network.org/
+      # - label: The International Society for Bayesian Analysis
+      #   ref: ISBA
+      # - label: American Statistical Association
+      #   url: https://www.amstat.org/
+      # - label: Royal Statistical Society
+      - label: "Society of Statistics, Computer and Applications (SSCA)"
+        url: https://ssca.org.in/
 
 # "Worth Exploring" tab: groups of cards for YouTube videos, articles, or
 # anything else worth a detour. Same fields as `external` links above
@@ -247,3 +263,90 @@ explore:
         url: https://sudarshansudarshan.github.io/aicamp/oceanverse/
         description: "A series of challenging mathematical/computer programming problems to build intuition in linear algebra, probability, statistics, and machine learning by `Prof. Sudarshan Iyengar` and his team."
         speciality: "Foundation of ML"
+
+# "Worth Exploring" tab, right column ("Worth Subscribing"): groups of things
+# to subscribe to. Same link fields as `external` (label, url/ref,
+# speciality/specility, incharge), plus:
+#   cadence:       short meta text, e.g. Weekly, Journal, Conference · Annual
+# Group-level options:
+#   icon: an mdi-* icon shown before the heading (optional)
+#   id:   ties the group to its switch under showResources.showWorthSubscribing
+#         in src/config/featureFlags.ts (newsletters, research-venues,
+#         seminars); keep it when renaming the group
+# The column is hidden while no entry is switched on. To hide an entry, add
+# `enabled: false` to it, or switch it off in the admin.
+subscribe:
+  - group: "Newsletters"
+    id: newsletters
+    icon: mdi-email-outline
+    links:
+      - label: "Import AI"
+        url: https://jack-clark.net/
+        cadence: Weekly
+        speciality: "AI Research"
+      - label: "The Batch"
+        url: https://www.deeplearning.ai/the-batch/
+        cadence: Weekly
+        speciality: "AI/ML"
+      - label: "Data Elixir"
+        url: https://dataelixir.com/
+        cadence: Weekly
+        speciality: "Data Science"
+
+  - group: "Research Paper Venues"
+    id: research-venues
+    icon: mdi-book-open-variant
+    links:
+      - label: "The Annals of Statistics"
+        url: https://projecteuclid.org/journals/annals-of-statistics
+        cadence: Journal
+        speciality: "Statistical Theory"
+      - label: "Society of Statistics, Computer and Applications"
+        url: https://www.ssca.org.in/journal.html
+        cadence: Journal
+        speciality: "Applied Statistics"
+      # - label: "Journal of the American Statistical Association"
+      #   url: https://www.tandfonline.com/toc/uasa20/current
+      #   cadence: Journal
+      #   speciality: "Applied Statistics"
+      # - label: "Journal of Machine Learning Research"
+      #   url: https://www.jmlr.org/
+      #   cadence: Journal · Open access
+      #   speciality: "Machine Learning"
+      # - label: "NeurIPS"
+      #   url: https://neurips.cc/
+      #   cadence: Conference · Annual
+      #   speciality: "Machine Learning"
+      # - label: "ICML"
+      #   url: https://icml.cc/
+      #   cadence: Conference · Annual
+      #   speciality: "Machine Learning"
+
+  - group: "Seminar Series"
+    id: seminars
+    icon: mdi-presentation
+    links:
+      - label: "Biostatistics Seminar"
+        url: https://asuevents.asu.edu/?searchText=Biostatistics+seminar
+        cadence: "Arizona State University"
+        speciality: "Biostatistics"
+      - label: "How Machines Decide"
+        url: "https://lib.asu.edu/data/events"
+        cadence: "Arizona State University"
+        speciality: "Machine Learning"
+      # - label: "Online Causal Inference Seminar"
+      #   url: https://sites.google.com/view/ocis
+      #   cadence: "Online Causal Inference Seminar"
+      #   speciality: "Causal Inference"
+      # - label: "One World Probability Seminar"
+      #   url: https://www.owprobability.org/
+      #   cadence: "One World Probability"
+      #   speciality: "Probability"
+      # - label: "Bayesian Analysis Discussion Paper Webinars"
+      #   url: https://bayesian.org/ba-webinars/
+      #   cadence: "International Society for Bayesian Analysis"
+      #   speciality: "Bayesian"
+      # - label: "Simons Institute videos"
+      #   url: https://simons.berkeley.edu/videos
+      #   cadence: "Simons Institute"
+      #   speciality: "Theory of Computing"

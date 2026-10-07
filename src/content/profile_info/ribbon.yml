@@ -4,7 +4,8 @@
 # pausing while the ribbon is hovered or focused so links stay clickable.
 # A single entry simply never rotates.
 #
-# `icon` is optional and defaults to mdi-information.
+# `icon` is optional and defaults to mdi-information. `enabled: false` hides a
+# message but keeps it editable (and switchable back on) from the admin.
 # Message text supports the CaptionContent syntax: [[Label|Type]] links,
 # **bold**, and *italic*.
 
@@ -13,5 +14,6 @@ ribbon:
     icon: mdi-information
   - message: "Join the [[RoSE Network|RoSE Network]] to explore statistics in an inclusive community of multidisciplinary researchers and practitioners (primarily based in the UK)"
     icon: mdi-bullhorn-outline
+    enabled: false
   - message: "If you’re looking for training internships, visit these: [[IDEAS-TIH Internships|https://www.ideas-tih.org/tihinternship]] or [[IIT Ropar VLED Internship|https://samagama.in/]] (for UG/PG students from STEM fields)"
     icon: mdi-bullhorn-outline

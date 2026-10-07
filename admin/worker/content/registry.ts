@@ -90,6 +90,7 @@ export const contentSources = {
   'gallery/career-unlocks': { path: `${PORTFOLIO}/gallery.yml`, arrayKeys: ['items'] },
   'resources/study-material': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['subjects'] },
   'resources/worth-exploring': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['explore'] },
+  'resources/worth-subscribing': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['subscribe'] },
   'facts/facts': { path: `${PORTFOLIO}/facts.yml`, arrayKeys: ['facts'] },
 
   // SmartLink resolves a name or alias to a URL through this file; both groups

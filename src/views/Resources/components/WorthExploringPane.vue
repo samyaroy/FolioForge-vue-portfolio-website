@@ -8,7 +8,12 @@
         {{ group.title }}
       </h2>
 
-      <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <!-- Beside the Worth Subscribing column there is room for one card
+           across at lg and two from xl; stacked above it, the full width. -->
+      <ul
+        class="grid grid-cols-1 gap-4 sm:grid-cols-2"
+        :class="compact ? 'lg:grid-cols-1 xl:grid-cols-2' : 'xl:grid-cols-3'"
+      >
         <li v-for="(link, index) in group.links" :key="`${link.label}-${index}`">
           <div class="flex h-full flex-col rounded-lg bg-white p-4 shadow-sm transition-shadow hover:shadow-md">
             <a
@@ -70,6 +75,11 @@ defineProps({
   groups: {
     type: Array,
     default: () => [],
+  },
+  // True while the Worth Subscribing column takes the right third.
+  compact: {
+    type: Boolean,
+    default: false,
   },
 })
 </script>

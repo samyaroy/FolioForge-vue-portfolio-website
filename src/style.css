@@ -159,9 +159,11 @@ button {
 button:hover {
   border-color: #646cff;
 }
+/* No focus ring on buttons anywhere on the site, whether clicked or reached
+   by keyboard. */
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
 }
 
 .card {

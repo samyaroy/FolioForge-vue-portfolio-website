@@ -256,6 +256,7 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
   'gallery/career-unlocks': () => toEntries(arrayAt(documents.gallery, 'items'), ['title'], ['date', 'type']),
   'resources/study-material': () => toEntries(arrayAt(documents.resources, 'subjects'), ['title'], [],),
   'resources/worth-exploring': () => toEntries(arrayAt(documents.resources, 'explore'), ['group', 'title']),
+  'resources/worth-subscribing': () => toEntries(arrayAt(documents.resources, 'subscribe'), ['group', 'title']),
   'facts/facts': () => toEntries(arrayAt(documents.facts, 'facts'), ['title'], ['icon']),
 
   'recommended/items': () => toEntries(arrayAt(documents.blogRecommended, 'items'), ['title'], ['author', 'source']),

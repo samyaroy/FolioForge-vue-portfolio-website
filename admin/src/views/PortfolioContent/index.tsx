@@ -224,6 +224,12 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   // Filtering is for display only: an index has to address the whole array, or
   // a write would land on whichever entry happens to sit at that position in
   // the filtered view.
+  const { flags } = useVisibilityDraft()
+  // The section switch tied to this entry, while it is off; see VisibilityFlag.
+  const switchHiding = (entry: PortfolioEntry) => (sectionVisibility[previewKey] ?? [])
+    .find(control => control.entry === entry.id && flags[control.path] === false)
+  const isShownOnSite = (entry: PortfolioEntry) => isEntryEnabled(entry.raw) && !switchHiding(entry)
+
   const visibleEntries = entries
     .filter(matchesFilter)
     .filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
@@ -354,8 +360,9 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
             {visibleEntries.map((entry, index) => {
               const image = previewImage(entry.raw, previewKey)
               const featured = entry.raw.featured === true
+              const hiddenBy = switchHiding(entry)
               return (
-              <article key={entry.id} className={isEntryEnabled(entry.raw) ? undefined : 'entry-disabled'} data-thumbnail={image !== undefined || undefined}>
+              <article key={entry.id} className={isShownOnSite(entry) ? undefined : 'entry-disabled'} data-thumbnail={image !== undefined || undefined}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 {image !== undefined && <EntryThumbnail url={image} />}
                 <div>
@@ -369,6 +376,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                       })}
                     </span>
                   )}
+                  {hiddenBy && <small>Hidden by the {hiddenBy.label} switch</small>}
                 </div>
                 <span className="mapped-state"><Check aria-hidden="true" /> Mapped</span>
                 <span className="entry-flags">
@@ -414,7 +422,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
         </section>
 
         <aside className="mapped-editor-aside">
-          <VisibilityPane pageId={page.id} sectionId={section.id} sources={section.sources} entryCount={{ enabled: entries.filter(entry => isEntryEnabled(entry.raw)).length, total: entries.length }} />
+          <VisibilityPane pageId={page.id} sectionId={section.id} sources={section.sources} entryCount={{ enabled: entries.filter(isShownOnSite).length, total: entries.length }} />
         </aside>
       </div>
       {editor && (

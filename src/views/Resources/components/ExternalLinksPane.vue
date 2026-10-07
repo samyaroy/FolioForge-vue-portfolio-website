@@ -1,34 +1,12 @@
 <template>
-  <aside
-    class="transition-all duration-300 lg:ml-6 lg:border-l lg:border-slate-300 lg:pl-4"
-    :class="collapsed ? 'lg:w-10' : 'lg:w-[400px]'"
-    aria-label="External links"
+  <ResourceSidePane
+    title="External Links"
+    label="External links"
+    show-label="Show links"
+    hide-label="Hide links"
+    toggle-label="Toggle external links"
   >
-    <div
-      class="mb-4 flex items-center"
-      :class="collapsed ? 'justify-center' : 'justify-between gap-2'"
-    >
-      <h2 v-if="!collapsed" class="text-lg font-bold text-[#0e141b]">
-        External Links
-      </h2>
-
-      <v-tooltip :text="collapsed ? 'Show links' : 'Hide links'" location="left">
-        <template #activator="{ props }">
-          <button
-            v-bind="props"
-            type="button"
-            class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#1980e6]/10 text-[#1980e6] outline-none [-webkit-tap-highlight-color:transparent] focus:outline-none"
-            :aria-expanded="!collapsed"
-            aria-label="Toggle external links"
-            @click="collapsed = !collapsed"
-          >
-            <v-icon size="18">{{ collapsed ? 'mdi-chevron-left' : 'mdi-chevron-right' }}</v-icon>
-          </button>
-        </template>
-      </v-tooltip>
-    </div>
-
-    <div v-if="!collapsed && groups.length" class="flex flex-col gap-6">
+    <div v-if="groups.length" class="flex flex-col gap-6">
       <section v-for="(group, groupIndex) in groups" :key="`${group.title}-${groupIndex}`">
         <h2
           v-if="group.title"
@@ -84,21 +62,19 @@
       </section>
     </div>
 
-    <p v-else-if="!collapsed" class="text-sm text-gray-500">
+    <p v-else class="text-sm text-gray-500">
       <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
         <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
         <span>No external links yet.</span>
       </span>
     </p>
-  </aside>
+  </ResourceSidePane>
 </template>
 
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
-import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
-
-const collapsed = ref(false)
+import ResourceSidePane from './ResourceSidePane.vue'
 
 defineProps({
   groups: {

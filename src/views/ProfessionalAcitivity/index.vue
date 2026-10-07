@@ -14,28 +14,14 @@
 
       <!-- Navigation Tabs -->
       <div v-if="tabs.length" class="flex justify-center mb-8">
-        <div class="flex flex-wrap justify-center gap-1 bg-white rounded-lg p-1 shadow-sm">
-          <button
-            v-for="tab in tabs"
-            :key="tab.id"
-            @click="activeTab = tab.id"
-            :class="[
-              'px-3 py-2 sm:px-6 sm:py-3 rounded-md text-sm font-medium transition-all duration-200',
-              activeTab === tab.id
-                ? 'bg-[#1980e6] text-white shadow-sm'
-                : 'text-gray-600 hover:text-[#1980e6] hover:bg-gray-50'
-            ]"
-          >
-            {{ tab.name }}
-          </button>
-        </div>
+        <TabBar v-model="activeTab" :tabs="tabs" />
       </div>
       <div v-else class="text-center text-gray-500 mb-8">
         No sections are enabled right now.
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-[1280px] mx-auto">
+      <TabPanels class="max-w-[1280px] mx-auto" :tabs="tabs" :active="activeTab">
         <InvitedTalksTab
           v-if="showInvitedTalksTab && activeTab === 'invited-talks'"
           :talks="invitedTalks"
@@ -47,12 +33,14 @@
           :show-main="showHostedEventsMain"
           :show-other-hosted-events="showHostedEventsOthers"
         />
-      </div>
+      </TabPanels>
     </div>
   </div>
 </template>
 
 <script setup>
+import TabBar from '@/components/ui/TabBar.vue'
+import TabPanels from '@/components/ui/TabPanels.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InvitedTalksTab from './components/tabs/InvitedTalksTab.vue'

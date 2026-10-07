@@ -10,6 +10,7 @@ co_curriculars:
       - role: Founder, Club Administrator
         affiliation:
           - role: Deputy Secretary
+            enabled: false
             organization:
               name:  'Chi-Square: Statistics Interest Group'
               web_link: https://www.rasor.in/
