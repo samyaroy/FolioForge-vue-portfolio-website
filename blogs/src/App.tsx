@@ -4,6 +4,7 @@ import { Layout } from './components/Layout'
 import { BlogsPage } from './views/Blogs'
 import { PostPage } from './views/Post'
 import { NotFoundPage } from './views/NotFound'
+import { ErrorPage } from './views/Error'
 import { RecommendedPage } from './views/Recommended'
 import { ReadingsPage } from './views/Readings'
 import { MoviesPage } from './views/Movies'
@@ -73,17 +74,27 @@ const optionalRoutes = [
 export const router = createBrowserRouter([
   {
     element: <Layout />,
+    // Only reached when the layout itself throws, so it renders without the
+    // header and footer.
+    errorElement: <ErrorPage />,
     children: [
-      ...(isFeatureEnabled('showBlogHome')
-        ? [{ path: '/', element: <BlogsPage /> }]
-        : []),
-      ...optionalRoutes,
       {
-        path: FOOTER_CONTENT.privacyPath,
-        element: <PrivacyPolicyPage />,
+        // A page that throws, or whose lazy chunk fails to load, shows the
+        // error screen inside the layout instead.
+        errorElement: <ErrorPage />,
+        children: [
+          ...(isFeatureEnabled('showBlogHome')
+            ? [{ path: '/', element: <BlogsPage /> }]
+            : []),
+          ...optionalRoutes,
+          {
+            path: FOOTER_CONTENT.privacyPath,
+            element: <PrivacyPolicyPage />,
+          },
+          { path: '/posts/:slug', element: <PostPage /> },
+          { path: '*', element: <NotFoundPage /> },
+        ],
       },
-      { path: '/posts/:slug', element: <PostPage /> },
-      { path: '*', element: <NotFoundPage /> },
     ],
   },
 ])
