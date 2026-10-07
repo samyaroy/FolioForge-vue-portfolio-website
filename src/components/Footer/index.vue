@@ -269,7 +269,7 @@
 </template>
 
 <script>
-import config from "@/content/profile_info"
+import config from "@/content/profile_info/site"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'

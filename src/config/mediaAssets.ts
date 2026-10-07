@@ -9,7 +9,7 @@
 // This module owns the two things that were previously repeated inline: joining
 // the base and appending the .png extension.
 
-import config from '@/content/profile_info'
+import config from '@/content/profile_info/site'
 
 /** Used when the YAML base is blank, so the in-repo copies still resolve. */
 const LOCAL_LOGOS = '/logo'
