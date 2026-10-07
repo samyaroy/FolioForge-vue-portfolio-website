@@ -29,6 +29,12 @@
               Hosting and content delivery providers may process standard request information, such as your IP address, browser details, requested pages, and request times, to deliver the site, maintain security, and diagnose errors.
             </li>
             <li class="content-justify">
+              <span class="font-semibold text-[#0e141b]">Visitor statistics (Flag Counter):</span>
+              The footer automatically loads a Flag Counter image to display visitor counts by country or region; no click is needed. This sends your IP address, browser and operating-system information, and any referrer information supplied by your browser to Boardhost.com, Inc., which says its servers are in the United States. According to its
+              <a href="https://www.flagcounter.com/privacy.html" class="font-semibold text-[#0f62fe] hover:text-[#0842a0]" target="_blank" rel="noopener noreferrer">privacy policy</a>,
+              Flag Counter uses your IP address to estimate your country or region and creates a counter-specific hash to limit repeat counting. The hash is kept for up to seven days; the provider says it does not log visitors' IP addresses.
+            </li>
+            <li class="content-justify">
               <span class="font-semibold text-[#0e141b]">Certification badge summary:</span>
               The Certifications page may request a public summary of my Credly badges from a hosted endpoint. This request retrieves badge counts and issuer information; it does not ask for your Credly account or login details. The endpoint's hosting provider may process standard technical request data.
             </li>
@@ -38,7 +44,7 @@
             </li>
             <li class="content-justify">
               <span class="font-semibold text-[#0e141b]">Cookies and analytics:</span>
-              The portfolio application does not currently set its own cookies or use visitor analytics scripts. Third-party services may handle cookies or other identifiers under their own policies when you access them.
+              The portfolio application does not currently set its own cookies. Flag Counter states that its embedded counter image does not use cookies, although its separate statistics website may use cookies and advertising when you follow the counter link. Other external services have their own cookie practices.
             </li>
             <li class="content-justify">
               <span class="font-semibold text-[#0e141b]">Contact:</span>
