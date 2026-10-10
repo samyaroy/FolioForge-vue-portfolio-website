@@ -41,6 +41,12 @@
           <span v-if="cred_link" class="inline-block ml-4 align-middle">
             <DocumentViewer :src="cred_link" />
           </span>
+          <!-- A site the entry points at, such as a student profile. It sits
+               beside the credentials rather than replacing them. Centred as
+               the credential icon is: on the baseline it rides ~3px high. -->
+          <span v-if="ext_link" class="inline-block ml-2 align-middle">
+            <ExternalLink class="align-middle" :href="ext_link" :label="`Open link for ${title}`" />
+          </span>
         </p>
         <div v-if="subFields.length" class="mt-0.5 space-y-0.5">
           <div
@@ -145,6 +151,7 @@
 import { ref, computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import ExternalLink from '@/components/ExternalLink.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import CourseCirriculumModal from './CourseCirriculumModal.vue'
 
@@ -165,6 +172,7 @@ const props = defineProps({
   isFirst: { type: Boolean, default: false },
   isLast: { type: Boolean, default: false },
   cred_link: { type: [String, Array, Object], default: '' },
+  ext_link: { type: String, default: '' },
   cirriculum: { type: Object, default: () => ({}) }
 })
 

@@ -26,7 +26,9 @@ export type EntryField =
 
 export const entryFields = {
   experience: ['job_role', 'type', 'company', 'department', 'location', 'time_period', 'supervisor', 'projects', 'description', { key: 'cred_link', credentials: 'documents' }],
-  education: ['type', 'degree', 'field', 'sub_field', 'institution', 'campus', 'location', 'time_period', 'current_level', 'gpa', 'category', { key: 'cred_link', credentials: 'documents' }],
+  // `ext_link` is a site the card links to beside its credentials, not
+  // instead of them, so it stays its own box rather than a role-link choice.
+  education: ['type', 'degree', 'field', 'sub_field', 'institution', 'campus', 'location', 'time_period', 'current_level', 'gpa', 'category', { key: 'cred_link', credentials: 'documents' }, 'ext_link'],
   researchInterests: ['key'],
   announcements: ['message', 'icon'],
   // Achievements carry no `prize`; they share the set and leave it blank, as

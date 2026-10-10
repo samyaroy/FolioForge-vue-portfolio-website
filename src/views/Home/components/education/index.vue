@@ -25,6 +25,7 @@
         :isFirst="index === 0"
         :isLast="index === education.length - 1"
         :cred_link="edu.cred_link || '#'"
+        :ext_link="edu.ext_link"
         :cirriculum="edu.cirriculum|| {}"
       />
 

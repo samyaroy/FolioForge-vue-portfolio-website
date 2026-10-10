@@ -338,7 +338,10 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
             if (key === 'description' && !isStructured) {
               return <RichTextField key={key} label={fieldCaption(key)} required={isRequired(key)} value={value} onChange={next => setFields(current => ({ ...current, description: next }))} />
             }
-            const label = `${fieldCaption(key)}${!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}`
+            // Outside a role-link choice the website has a box of its own,
+            // which "Ext link" would not explain.
+            const caption = key === WEBSITE_KEY ? 'Website (https:// link, opens in a new tab)' : fieldCaption(key)
+            const label = `${caption}${!isStructured && driveFieldMode(key, entry?.raw[key]) ? ' (Drive file ID / URL)' : ''}`
             const change = (next: string) => setFields(current => ({ ...current, [key]: next }))
             return isStructured
               ? <TextareaField key={key} label={label} required={isRequired(key)} value={value} onChange={change} />

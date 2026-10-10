@@ -74,6 +74,9 @@ education:
         url: https://drive.google.com/file/d/1-8UhJE93fBx7gBf1h2AT1-KI16DfLavW/preview
       - label: Foundation Certificate
         url: https://drive.google.com/file/d/1T8tyIiua8CU0Wf6-R0Nbo5k0Cwc12Zba/preview
+    # A site (https:// URL), opened in a new tab. Unlike a co-curricular role,
+    # an education entry shows it beside its credentials, not instead of them.
+    ext_link: https://ds.study.iitm.ac.in/student/22F2001443
 
     category: NEP 2020
     cirriculum:

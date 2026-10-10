@@ -208,6 +208,8 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       ...fact(MapPin, raw.location),
       ...fact(Star, raw.gpa),
       ...fact(GraduationCap, subFieldsLine(raw.sub_field)),
+      // ExternalLink.vue shows only an http(s) address.
+      ...fact(Globe, /^https?:\/\//i.test(text(raw.ext_link)) ? host(raw.ext_link) : ''),
     ]
   }
   if (collection === 'home/research-interests') {
