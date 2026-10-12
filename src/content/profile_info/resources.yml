@@ -213,17 +213,21 @@ external:
       - label: "C3iHub, IIT Kanpur"
         url: https://c3ihub.org/
 
-  - group: "Club or Society (Statistics)"
+  - group: "Club or Society (Statistics & beyond)"
     links:
-      # - label: RoSE Network
-      #   url: https://www.rose-network.org/
-      # - label: The International Society for Bayesian Analysis
-      #   ref: ISBA
-      # - label: American Statistical Association
-      #   url: https://www.amstat.org/
-      # - label: Royal Statistical Society
-      - label: "Society of Statistics, Computer and Applications (SSCA)"
-        url: https://ssca.org.in/
+      - label: RoSE Network
+        url: https://www.rose-network.org/
+      - label: The International Society for Bayesian Analysis
+        ref: ISBA
+      - label: American Statistical Association
+        url: https://www.amstat.org/
+      - label: Royal Statistical Society
+      # - label: "Society of Statistics, Computer and Applications (SSCA)"
+      #   url: https://ssca.org.in/
+      - label: "DASS (Detecting Anomalous Structure in Streaming Data)"
+        url: https://www.dass-programme.org/about
+        description: "Research programme developing statistical foundations for anomaly detection in streaming data, bringing together Lancaster, LSE, Bristol and Warwick."
+        speciality: "Anomaly Detection"
 
 # "Worth Exploring" tab: groups of cards for YouTube videos, articles, or
 # anything else worth a detour. Same fields as `external` links above

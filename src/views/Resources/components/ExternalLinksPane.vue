@@ -18,7 +18,7 @@
         <ul class="flex flex-col gap-3">
           <li v-for="(link, index) in group.links" :key="`${link.label}-${index}`">
             <v-tooltip
-              :text="link.description || link.label"
+              :text="link.label"
               location="left"
             >
               <template #activator="{ props }">
