@@ -227,6 +227,7 @@ education:
         - course_code: BSCS3001
           course_name: Software Engineering
           type: CC
+          credit: 4
           faculty:
             - name: Prof. Sridhar Iyer
               link: https://www.cse.iitb.ac.in/~sri/
@@ -235,20 +236,27 @@ education:
         - course_code: BSCS3002
           course_name: Software Testing
           type: CC
+          credit: 4
           faculty:
             - name: "Prof. Meenakshi D'Souza"
               link: https://www.iiitb.ac.in/faculty/meenakshi-dsouza
         - course_code: BSCS3003
           course_name: "AI: Search Methods for Problem Solving"
           type: CC
+          credit: 4
           faculty:
             - name: Prof. Deepak Khemani
               link: https://plaksha.edu.in/faculty-details/dr-deepak-khemani
         - course_code: BSCS3004
           course_name: Deep Learning
           type: CC
+          credit: 4
           faculty:
             - name: Prof. Mitesh M. Khapra
+        - course_code: BSGN3001
+          course_name: Strategies for Professional Growth
+          type: CC
+          credit: 4
         - course_code: BSMA3014
           course_name: Statistical Computing
           type: EC

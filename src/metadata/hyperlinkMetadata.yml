@@ -322,3 +322,13 @@ Person:
 
   - Name: Prof. Satyadev Nandakumar
     Link: https://www.cse.iitk.ac.in/users/satyadev/
+
+  - Name: Prof. Siva Athreya
+    Aliases:
+      - Siva Athreya
+    Link: https://www.icts.res.in/people/athreya
+
+  - Name: Prof. Galin Jones
+    Aliases:
+      - Galin Jones
+    Link: https://cla.umn.edu/about/directory/profile/galin

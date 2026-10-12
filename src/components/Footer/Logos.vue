@@ -5,7 +5,7 @@
       <img v-for="(tooltip, key) in logos" :key="key" :src="getLogoPath(key)" :alt="tooltip" :title="tooltip"
         class="h-8 px-2 cursor-pointer transition-transform hover:scale-110" />
     </div>
-    <div class="text-xs text-gray-500 pt-3">* All the logos used are property of respective institutions</div>
+    <div class="text-xs text-red-400 pt-3">* Logos belong to their institutions; no active affiliation implied</div>
   </div>
 </template>
 

@@ -224,16 +224,19 @@
       </div>
 
       <!-- Same column template as the blocks above so the privacy link lines up
-           under the "Other Links" column, level with the last-updated line. -->
+           under the "Other Links" column, beside the source-code lines; the icon
+           attribution below spans both columns so it stays on one line. -->
       <div
         class="mt-1 grid grid-cols-1 gap-y-2 justify-items-center md:gap-y-0 md:items-center md:justify-items-start md:grid-cols-[minmax(0,39%)_minmax(0,1fr)_max-content]">
         <!-- Vuetify also ships a `.text-center`, and its copy is
              `text-align:center!important` late in the bundle, so Tailwind's
              `md:text-left` can never win. Its own `text-md-left` helper would,
              but Vuetify's md starts at 960px while this grid goes side by side
-             at Tailwind's 768px — hence the scoped override below. -->
-        <div class="text-center footer-meta">
-          <p class="text-gray-500 text-sm footer-source">
+             at Tailwind's 768px — hence the scoped override below. On md the
+             wrapper dissolves (`contents`) so its two lines take their own cells;
+             stacked, it stays one block and keeps their spacing. -->
+        <div class="text-center footer-meta md:contents">
+          <p class="text-gray-500 text-sm footer-source md:col-start-1 md:row-start-1">
             Source code available at
             <a class="underline hover:text-white"
               href="https://github.com/samyaroy/FolioForge-vue-portfolio-website/tree/V1_template" target="_blank">
@@ -243,7 +246,7 @@
             Please fork/clone from there — not directly from the site’s source
           </p>
 
-          <p class="text-gray-500 text-sm mt-1">
+          <p class="text-gray-500 text-sm mt-1 md:col-start-1 md:col-span-2 md:row-start-2">
             &#9432; Some icons used are made by
             <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a>,
             <a href="https://www.flaticon.com/authors/smashicons" target="_blank">Smashicons</a>
@@ -256,12 +259,12 @@
 
         <router-link
           :to="{ name: 'PrivacyPolicy' }"
-          class="footer-link text-sm"
+          class="footer-link text-sm md:col-start-2 md:row-start-1 md:self-start"
         >
           Privacy Policy
         </router-link>
 
-        <p class="text-gray-500 text-sm shrink-0 md:justify-self-end">
+        <p class="text-gray-500 text-sm shrink-0 md:justify-self-end md:col-start-3 md:row-start-1 md:row-span-2">
           &#10038; Last updated: {{ last_updated_on }}
         </p>
       </div>
