@@ -150,8 +150,8 @@ projects:
       tech_stack: Vue.js, Tailwind CSS, JavaScript
       cred_link:
         github: "https://github.com/samyaroy/FolioForge-vue-portfolio-website"
-    - title: "Chi-Square: Statistics Club - Website"
-      description: Responsive website for the Statistics Club of IITM BS Degree.
+    - title: "Chi-Square: Statistics Groups - Website"
+      description: Responsive website for the Statistics Interest Group of IITM BS Degree.
       tech_stack: Typescript, React.js, Tailwind CSS, Headless UI
       cred_link:
         github: "https://github.com/22f2001443/chi-square"

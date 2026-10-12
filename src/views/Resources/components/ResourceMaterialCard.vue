@@ -8,10 +8,10 @@
   >
     <div class="flex w-12 shrink-0 justify-center pt-1">
       <div class="flex size-10 items-center justify-center overflow-hidden rounded-full bg-[#1980e6]/10 text-[#1980e6]">
-        <img
+        <LogoImage
           v-if="showImage"
           :src="logoSrc"
-          :alt="material.distributor || ''"
+          :name="logoTitle"
           class="size-5 object-contain"
           loading="lazy"
           @error="imageFailed = true"
@@ -68,7 +68,8 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
+import { logoName, logoUrl } from '@/config/mediaAssets'
 
 const props = defineProps({
   material: {
@@ -133,6 +134,16 @@ const logoSrc = computed(() => {
 
   if (META_PREFERS_ICON.has(normalizedMeta.value)) return ''
   return faviconSrc.value
+})
+
+// Hover text for the badge: a named logo ('NPTEL') shows the institute's full
+// name; a favicon or image URL shows the distributor it stands for.
+const logoTitle = computed(() => {
+  const override = overrideLogo.value
+  if (override && !overrideIsMdi.value && !/^https?:\/\//.test(override) && !override.startsWith('/')) {
+    return logoName(override)
+  }
+  return props.material.distributor || ''
 })
 
 const usingFavicon = computed(() => Boolean(logoSrc.value) && logoSrc.value === faviconSrc.value)

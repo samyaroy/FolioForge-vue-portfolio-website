@@ -66,6 +66,8 @@ import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 
 const linkIcon = useTemplateRef('linkIcon')
 
+const TRANSFER_SECTIONS = new Set(['transfered_credits', 'transferred_credits'])
+
 const props = defineProps({
   modelValue: { type: Boolean, default: false },
   cirriculum: { type: Object, default: () => ({}) },
@@ -85,11 +87,15 @@ const sections = computed(() => {
     return props.cirriculum.length ? { curriculum: props.cirriculum } : {}
   }
 
-  return Object.fromEntries(
-    Object.entries(props.cirriculum || {}).filter(
-      ([key, courses]) => key !== 'link' && Array.isArray(courses) && courses.length
-    )
+  const entries = Object.entries(props.cirriculum || {}).filter(
+    ([key, courses]) => key !== 'link' && Array.isArray(courses) && courses.length
   )
+
+  // Transferred credits lead the modal; the rest keep their YAML order.
+  return Object.fromEntries([
+    ...entries.filter(([key]) => TRANSFER_SECTIONS.has(key)),
+    ...entries.filter(([key]) => !TRANSFER_SECTIONS.has(key))
+  ])
 })
 
 const curriculumLink = computed(() => Array.isArray(props.cirriculum) ? '' : props.cirriculum?.link || '')

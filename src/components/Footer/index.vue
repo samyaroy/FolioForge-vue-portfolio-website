@@ -316,11 +316,12 @@ export default {
       // Mirrors the router's betaOnly guard, so the link is only ever offered
       // where /credentials-dashboard actually resolves instead of redirecting.
       showCredentialsDashboardLink: isBetaSite(),
-      // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University'},   
-      // logos: {'MSRKAV': 'Mahesh Shri Ramkrishna Ashram Vidyalaya','NN': 'Nava Nalanda High School (Higher Secondary)','SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
-      // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'Calcutta University', 'VLED-IITRPR2': 'Vicharanashala Lab for Education Design, Indian Institute of Technology Ropar'},   
-      logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute', 'CU': 'University of Calcutta'},  
-      // logos: {'SNU': 'Sister Nivedita University', 'IITM': 'Indian Institute of Technology Madras', 'IDEAS-ISI': 'IDEAS Technology Innovation Hub, Indian Statistical Institute'},
+      // Logo names only; the hover names come from src/metadata/logoMetadata.yml.
+      // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS-ISI', 'CU'],
+      // logos: ['MSRKAV', 'NN', 'SNU', 'IITM', 'IDEAS-ISI', 'CU', 'VLED-IITRPR2'],
+      // logos: ['SNU', 'IITM', 'IDEAS-ISI', 'CU', 'VLED-IITRPR2'],
+      logos: ['SNU', 'IITM', 'IDEAS-ISI', 'CU'],
+      // logos: ['SNU', 'IITM', 'IDEAS-ISI'],
 
       last_updated_on: config.last_updated_on,
       showCocurricularLink,

@@ -289,7 +289,7 @@ education:
           issuer:
             institution: Indian Institute of Technology Kanpur
             platform: NPTEL
-          duration: 8 weeks
+          duration: 8 weeks - online
 
       link: https://study.iitm.ac.in/ds/academics.html
     campus: ""
@@ -499,6 +499,7 @@ education:
           issuer:
             institution: Google
             platform: Coursera
+          duration: 1.5 months - online
           # tag: 'Elite'
           # credit: 1 
 

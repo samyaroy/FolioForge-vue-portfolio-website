@@ -10,6 +10,7 @@
 // the base and appending the .png extension.
 
 import config from '@/content/profile_info/site'
+import logoMetadata from '@/metadata/logoMetadata.yml'
 
 /** Used when the YAML base is blank, so the in-repo copies still resolve. */
 const LOCAL_LOGOS = '/logo'
@@ -40,6 +41,32 @@ function assetUrl(base: string, name: unknown): string {
 /** Institute/organisation logo, e.g. logoUrl('IITM'). */
 export function logoUrl(name: unknown): string {
   return assetUrl(LOGOS_BASE, name)
+}
+
+interface LogoEntry {
+  Name?: string
+  Logos?: string[]
+}
+
+// Bare logo name (lower-cased) -> full institute name, from
+// src/metadata/logoMetadata.yml.
+const LOGO_NAMES = new Map<string, string>()
+for (const entry of (logoMetadata?.Logo || []) as LogoEntry[]) {
+  const full = typeof entry?.Name === 'string' ? entry.Name.trim() : ''
+  if (!full || !Array.isArray(entry.Logos)) continue
+  for (const logo of entry.Logos) {
+    if (typeof logo === 'string' && logo.trim()) LOGO_NAMES.set(logo.trim().toLowerCase(), full)
+  }
+}
+
+/**
+ * Full institute name for a logo, used as its tooltip and alt text, e.g.
+ * logoName('IITM') -> 'Indian Institute of Technology Madras'. Unlisted logos
+ * fall back to the bare name they were given.
+ */
+export function logoName(name: unknown): string {
+  const key = typeof name === 'string' ? name.trim() : ''
+  return LOGO_NAMES.get(key.toLowerCase()) || key
 }
 
 /** Service icon, e.g. iconUrl('Credly'). */

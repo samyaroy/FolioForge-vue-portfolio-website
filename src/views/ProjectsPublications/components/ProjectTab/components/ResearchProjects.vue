@@ -71,62 +71,62 @@
                             {{ project.description }}
                         </p>
 
-                        <div class="flex flex-wrap gap-2">
-                            <span v-for="tag in Array.isArray(project.tech_stack)
-                                ? project.tech_stack
-                                : project.tech_stack.split(',').map(t => t.trim())" :key="tag"
-                                class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                                {{ tag }}
-                            </span>
+                        <!-- Tags on the left, credential links on the same line at the right -->
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex flex-wrap gap-px">
+                                <span v-for="tag in Array.isArray(project.tech_stack)
+                                    ? project.tech_stack
+                                    : project.tech_stack.split(',').map(t => t.trim())" :key="tag"
+                                    class="px-3 py-1 bg-blue-100 text-blue-800 text-xs first:rounded-l-md last:rounded-r-md">
+                                    {{ tag }}
+                                </span>
+                            </div>
+
+                            <div class="ml-auto flex shrink-0 items-center">
+                                <v-tooltip location="top">
+                                    <template #activator="{ props }">
+                                        <a v-bind="props" v-if="project.cred_link?.report" :href="project.cred_link.report"
+                                            target="_blank"
+                                            class="mx-1 icon-wrapper border border-[#1980e6] text-[#1980e6] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                            <v-icon size="16">mdi-notebook</v-icon>
+                                        </a>
+                                    </template>
+                                    <span>Project Report</span>
+                                </v-tooltip>
+
+                                <a v-if="project.cred_link?.researchgate" :href="project.cred_link.researchgate" target="_blank"
+                                    class="mx-1 icon-wrapper border border-[#1980e6] text-[#1980e6] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                    <v-icon class="circle-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon-svg">
+                                            <path
+                                                d="M0 32v448h448V32H0zm262.2 334.4c-6.6 3-33.2 6-50-14.2-9.2-10.6-25.3-33.3-42.2-63.6-8.9 0-14.7 0-21.4-.6v46.4c0 23.5 6 21.2 25.8 23.9v8.1c-6.9-.3-23.1-.8-35.6-.8-13.1 0-26.1.6-33.6.8v-8.1c15.5-2.9 22-1.3 22-23.9V225c0-22.6-6.4-21-22-23.9V193c25.8 1 53.1-.6 70.9-.6 31.7 0 55.9 14.4 55.9 45.6 0 21.1-16.7 42.2-39.2 47.5 13.6 24.2 30 45.6 42.2 58.9 7.2 7.8 17.2 14.7 27.2 14.7v7.3z"
+                                                fill="#1980e6" />
+                                        </svg>
+                                    </v-icon>
+                                </a>
+
+                                <a v-if="project.cred_link?.github" :href="project.cred_link.github" target="_blank"
+                                    class="border border-[#1980e6] text-[#1980e6] mx-1 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                    <v-icon size="16">mdi-github</v-icon>
+                                </a>
+
+                                <a v-if="project.cred_link?.kaggle" :href="project.cred_link.kaggle" target="_blank"
+                                    class="border border-[#1980e6] text-[#1980e6] mx-1 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                    <v-icon size="16"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                                            <path fill="currentColor"
+                                                d="M464.2 565.5L318.4 384.3L458.2 249C460.8 246.3 459.9 238.5 452.9 238.5L383.7 238.5C380.2 238.5 376.7 240.3 373.2 243.8L240.9 377.5L240.9 71.5C240.9 66.5 238.4 64 233.4 64L181.5 64C176.5 64 174 66.5 174 71.5L174 568.5C174 573.5 176.5 576 181.5 576L233.4 576C238.4 576 240.9 573.5 240.9 568.5L240.9 459.5L271.7 430.2L382.2 570.8C385.2 574.3 388.7 576.1 392.7 576.1L459.6 576.1C463.1 576.1 465.1 575.1 465.6 573.1L464.2 565.5z" />
+                                        </svg></v-icon>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <!-- RIGHT LOGO (12%) -->
                     <div
                         class="w-full md:w-[12%] flex flex-col items-start justify-start gap-3 md:items-center mt-4 md:mt-0">
-                        <img v-for="logo in project.logo" :key="logo" :src="getLogoPath(logo)" :alt="logo" :title="logo"
+                        <LogoImage v-for="logo in project.logo" :key="logo" :logo="logo"
                             class="max-h-8 md:max-h-16 object-contain opacity-90" />
                     </div>
-
-                </div>
-
-                <!-- ACTION BUTTONS -->
-                <div class="flex justify-end items-center mt-2">
-
-                    <v-tooltip location="top">
-                        <template #activator="{ props }">
-                            <a v-bind="props" v-if="project.cred_link?.report" :href="project.cred_link.report"
-                                target="_blank"
-                                class="px-2 mx-1 icon-wrapper border border-[#1980e6] text-[#1980e6] w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                                <v-icon>mdi-notebook</v-icon>
-                            </a>
-                        </template>
-                        <span>Project Report</span>
-                    </v-tooltip>
-
-                    <a v-if="project.cred_link?.researchgate" :href="project.cred_link.researchgate" target="_blank"
-                        class="px-2 mx-1 icon-wrapper border border-[#1980e6] text-[#1980e6] w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                        <v-icon class="circle-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon-svg">
-                                <path
-                                    d="M0 32v448h448V32H0zm262.2 334.4c-6.6 3-33.2 6-50-14.2-9.2-10.6-25.3-33.3-42.2-63.6-8.9 0-14.7 0-21.4-.6v46.4c0 23.5 6 21.2 25.8 23.9v8.1c-6.9-.3-23.1-.8-35.6-.8-13.1 0-26.1.6-33.6.8v-8.1c15.5-2.9 22-1.3 22-23.9V225c0-22.6-6.4-21-22-23.9V193c25.8 1 53.1-.6 70.9-.6 31.7 0 55.9 14.4 55.9 45.6 0 21.1-16.7 42.2-39.2 47.5 13.6 24.2 30 45.6 42.2 58.9 7.2 7.8 17.2 14.7 27.2 14.7v7.3z"
-                                    fill="#1980e6" />
-                            </svg>
-                        </v-icon>
-                    </a>
-
-                    <a v-if="project.cred_link?.github" :href="project.cred_link.github" target="_blank"
-                        class="border border-[#1980e6] text-[#1980e6] px-2 mx-1 w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                        <v-icon>mdi-github</v-icon>
-                    </a>
-
-                    <a v-if="project.cred_link?.kaggle" :href="project.cred_link.kaggle" target="_blank"
-                        class="border border-[#1980e6] text-[#1980e6] px-2 mx-1 w-10 h-10 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                        <v-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                                <path fill="currentColor"
-                                    d="M464.2 565.5L318.4 384.3L458.2 249C460.8 246.3 459.9 238.5 452.9 238.5L383.7 238.5C380.2 238.5 376.7 240.3 373.2 243.8L240.9 377.5L240.9 71.5C240.9 66.5 238.4 64 233.4 64L181.5 64C176.5 64 174 66.5 174 71.5L174 568.5C174 573.5 176.5 576 181.5 576L233.4 576C238.4 576 240.9 573.5 240.9 568.5L240.9 459.5L271.7 430.2L382.2 570.8C385.2 574.3 388.7 576.1 392.7 576.1L459.6 576.1C463.1 576.1 465.1 575.1 465.6 573.1L464.2 565.5z" />
-                            </svg></v-icon>
-                    </a>
 
                 </div>
             </div>
@@ -162,7 +162,7 @@ import { PROJECT_ANCHOR_PARAM, projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, ref, watch } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 const props = defineProps({
     projects: {
@@ -192,9 +192,6 @@ const visibleProjects = computed(() => {
         : props.projects.slice(0, 2)
 })
 
-function getLogoPath(logo) {
-    return logoUrl(logo)
-}
 
 // Collaborators are written either as one comma-separated line or as a list of
 // people, each with an optional link of their own. Only the names are wanted
@@ -221,8 +218,8 @@ function collaboratorNames(project) {
 }
 
 .circle-icon {
-    width: 19px;
-    height: 23px;
+    width: 14px;
+    height: 16px;
     border-radius: 60%;
     background: #e9f3ff;
     display: flex;

@@ -51,8 +51,8 @@
         <div v-if="certification.logo && certification.logo.length" class="mt-auto flex w-full justify-end pt-4 pr-3">
           <div class="flex items-center justify-end gap-1 empty:hidden">
             <template v-for="(logo, index) in certification.logo" :key="logo">
-              <img :src="getLogoPath(logo)" :alt="logo" :title="logo"
-                class="h-5 md:h-7 w-auto object-contain" @error="handleLogoError">
+              <LogoImage :logo="logo"
+                class="h-5 md:h-7 w-auto object-contain" @error="handleLogoError" />
               <span v-if="index < certification.logo.length - 1"> &bull; </span>
             </template>
           </div>
@@ -65,7 +65,7 @@
 <script setup>
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 defineProps({
   certification: {
@@ -74,9 +74,6 @@ defineProps({
   }
 })
 
-function getLogoPath(logo) {
-  return logoUrl(logo)
-}
 
 function handleLogoError(event) {
   event.target.remove()

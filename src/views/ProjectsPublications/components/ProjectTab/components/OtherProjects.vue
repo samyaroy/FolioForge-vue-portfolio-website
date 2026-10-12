@@ -49,29 +49,33 @@
 
                 <v-expand-transition>
                     <div v-show="isOpen">
-                        <div v-if="getTechStack(project.tech_stack).length" class="flex flex-wrap gap-1 mb-2">
-                            <span v-for="tag in getTechStack(project.tech_stack)" :key="tag"
-                                class="px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded-full">
-                                {{ tag }}
-                            </span>
+                        <!-- Tags on the left, credential links on the same line at the right -->
+                        <div v-if="getTechStack(project.tech_stack).length || hasActionLinks(project)"
+                            class="flex items-center justify-between gap-3 mb-2">
+                            <div v-if="getTechStack(project.tech_stack).length" class="flex flex-wrap gap-px">
+                                <span v-for="tag in getTechStack(project.tech_stack)" :key="tag"
+                                    class="px-2 py-0.5 bg-gray-100 text-gray-700 text-xs first:rounded-l-md last:rounded-r-md">
+                                    {{ tag }}
+                                </span>
+                            </div>
+
+                            <div v-if="hasActionLinks(project)" class="ml-auto flex shrink-0 gap-1.5">
+                                <a v-if="project.cred_link?.github" :href="project.cred_link.github" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="border border-[#1980e6] text-[#1980e6] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                    <v-icon size="16">mdi-github</v-icon>
+                                </a>
+                                <a v-if="project.cred_link?.website" :href="project.cred_link.website" target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="border border-[#01070d] text-[#000000] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#000000] hover:text-white transition">
+                                    <v-icon size="16">mdi-web</v-icon>
+                                </a>
+                            </div>
                         </div>
 
                         <p v-if="project.description" class="content-justify text-gray-600 leading-5">
                             {{ project.description }}
                         </p>
-
-                        <div v-if="hasActionLinks(project)" class="flex justify-end gap-1.5 mt-2">
-                            <a v-if="project.cred_link?.github" :href="project.cred_link.github" target="_blank"
-                                rel="noopener noreferrer"
-                                class="border border-[#1980e6] text-[#1980e6] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                                <v-icon size="16">mdi-github</v-icon>
-                            </a>
-                            <a v-if="project.cred_link?.website" :href="project.cred_link.website" target="_blank"
-                                rel="noopener noreferrer"
-                                class="border border-[#01070d] text-[#000000] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#000000] hover:text-white transition">
-                                <v-icon size="16">mdi-web</v-icon>
-                            </a>
-                        </div>
                     </div>
                 </v-expand-transition>
             </div>

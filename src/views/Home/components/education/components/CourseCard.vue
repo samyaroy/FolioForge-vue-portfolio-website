@@ -63,13 +63,10 @@
           :class="hasCourseMeta(course) ? 'mt-2' : 'mt-1'"
         >
           <template v-for="(logo, li) in normalizedLogos(course.logo)" :key="logo">
-            <img
-              :src="getLogoPath(logo)"
-              :alt="logo"
-              :title="logo"
+            <LogoImage
+              :logo="logo"
               class="h-6 w-auto object-contain opacity-95"
-              @error="handleLogoError"
-            >
+              @error="handleLogoError" />
             <span v-if="li < normalizedLogos(course.logo).length - 1" class="text-xs font-semibold">&bull;</span>
           </template>
         </div>
@@ -95,7 +92,7 @@
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import SmartLink from '@/components/SmartLink.vue'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 defineOptions({ name: 'CourseCard' })
 
@@ -205,9 +202,6 @@ function normalizedLogos(logo) {
   return Array.isArray(logo) ? logo : [logo]
 }
 
-function getLogoPath(logo) {
-  return logoUrl(logo)
-}
 
 function handleLogoError(event) {
   event.target.remove()
