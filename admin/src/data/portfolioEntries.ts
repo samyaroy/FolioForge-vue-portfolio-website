@@ -25,20 +25,12 @@ import blogTravelYaml from '../../../blogs/src/content/travel/data.yml'
 import blogHobbiesYaml from '../../../blogs/src/content/hobbies/data.yml'
 import cvLibraryYaml from '../../../src/content/cv/library.yml'
 
-import type { EntryPresentation } from '@/lib/entryPresentation'
+import { repositoryEntries, mentoringCohorts } from './collectionEntries'
+import type { PortfolioEntry } from './collectionEntries'
+export type { PortfolioEntry } from './collectionEntries'
+export { mentoringCohorts } from './collectionEntries'
 
 type UnknownRecord = Record<string, unknown>
-
-export type PortfolioEntry = {
-  id: string
-  title: string
-  subtitle: string
-  /** False only when the entry is switched off in the content. */
-  enabled?: boolean
-  raw: UnknownRecord
-  presentation?: EntryPresentation
-  readOnlyFields?: string[]
-}
 
 const documents = {
   affiliations: affiliationsYaml as UnknownRecord,
@@ -69,18 +61,6 @@ const documents = {
   blogHobbies: blogHobbiesYaml as UnknownRecord,
 }
 
-function asRecord(value: unknown): UnknownRecord {
-  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as UnknownRecord : {}
-}
-
-function asRecords(value: unknown): UnknownRecord[] {
-  return Array.isArray(value) ? value.map(asRecord).filter(item => Object.keys(item).length) : []
-}
-
-function readPath(record: UnknownRecord, path: string): unknown {
-  return path.split('.').reduce<unknown>((value, key) => asRecord(value)[key], record)
-}
-
 function displayText(value: unknown): string {
   if (typeof value === 'string' || typeof value === 'number') return String(value)
   if (Array.isArray(value)) return value.map(displayText).filter(Boolean).join(', ')
@@ -99,29 +79,18 @@ function firstText(record: UnknownRecord, paths: string[]): string {
   return ''
 }
 
-function slugify(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'entry'
+function asRecord(value: unknown): UnknownRecord {
+  return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as UnknownRecord : {}
 }
 
-function toEntries(records: UnknownRecord[], titlePaths: string[], subtitlePaths: string[] = []): PortfolioEntry[] {
-  return records.map((raw, index) => {
-    const title = firstText(raw, titlePaths) || `Untitled entry ${index + 1}`
-    const subtitle = subtitlePaths.map(path => displayText(readPath(raw, path))).filter(Boolean).slice(0, 2).join(' · ')
-    const sourceId = firstText(raw, ['id', 'key', 'membership_id'])
-    return { id: sourceId || `${slugify(title)}-${index}`, title, subtitle, raw, presentation: { titlePaths, subtitlePaths, fallbackTitle: title } }
-  })
+function asRecords(value: unknown): UnknownRecord[] {
+  return Array.isArray(value) ? value.map(asRecord).filter(item => Object.keys(item).length) : []
 }
 
-export function mentoringCohorts(records: unknown[]): PortfolioEntry[] {
-  return toEntries(asRecords(records), ['programme', 'semester'], ['time_period', 'semester'])
-    .map(entry => ({ ...entry, readOnlyFields: ['projects'] }))
+function readPath(record: UnknownRecord, path: string): unknown {
+  return path.split('.').reduce<unknown>((value, key) => asRecord(value)[key], record)
 }
 
-/**
- * The cohort a Projects Mentored semester belongs to. That page lists every
- * cohort's projects flat, each carrying its semester's name, so it cannot say
- * which list a new project joins; the cohort's own page can.
- */
 export function mentoringCohortFor(semester: string): PortfolioEntry | undefined {
   return mentoringCohorts(arrayAt(documents.teaching, 'projects_mentored')).find(cohort => displayText(cohort.raw.semester) === semester)
 }
@@ -133,22 +102,6 @@ function arrayAt(document: UnknownRecord, path: string) {
 function groupedEntries(groupName: string) {
   const group = arrayAt(documents.cocurricular, 'co_curriculars').find(item => item.title === groupName)
   return asRecords(group?.entries)
-}
-
-/**
- * An entry that holds several roles has no `role` of its own, so it would list
- * as untitled. Name it by the roles it carries instead — that is what the card
- * shows and what someone is looking for in the list. Only the title changes:
- * `raw` is what a save writes back, so a role put there would land in the file.
- */
-function withGroupedRoleTitles(entries: PortfolioEntry[]): PortfolioEntry[] {
-  return entries.map(entry => {
-    if (entry.raw.role || !Array.isArray(entry.raw.roles)) return entry
-    const named = asRecords(entry.raw.roles).map(item => displayText(item.role)).filter(Boolean)
-    if (!named.length) return entry
-    const title = named.join(' + ')
-    return { ...entry, title, presentation: entry.presentation && { ...entry.presentation, fallbackTitle: title } }
-  })
 }
 
 /**
@@ -183,93 +136,80 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
     const title = firstText(raw, titlePaths) || String(label)
     return { id: String(source), title, subtitle: firstText(raw, ['location']), raw, presentation: { titlePaths, subtitlePaths: ['location'], fallbackTitle: String(label) } }
   }),
-  // One collection per route name; the quote itself is the row's heading.
-  'quotes/default': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.default'), ['text'], ['author', 'source']),
-  'quotes/Home': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Home'), ['text'], ['author', 'source']),
-  'quotes/ProjectsPublications': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.ProjectsPublications'), ['text'], ['author', 'source']),
-  'quotes/Teachings': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Teachings'), ['text'], ['author', 'source']),
-  'quotes/OngoingProjects': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.OngoingProjects'), ['text'], ['author', 'source']),
-  'quotes/Affilications': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Affilications'), ['text'], ['author', 'source']),
-  'quotes/InternshipCertification': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.InternshipCertification'), ['text'], ['author', 'source']),
-  'quotes/Workshops': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Workshops'), ['text'], ['author', 'source']),
-  'quotes/Cocurricular': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Cocurricular'), ['text'], ['author', 'source']),
-  'quotes/ProfessionalAcitivity': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.ProfessionalAcitivity'), ['text'], ['author', 'source']),
-  'quotes/Gallery': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Gallery'), ['text'], ['author', 'source']),
-  'quotes/Resources': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Resources'), ['text'], ['author', 'source']),
-  'quotes/Contact': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.Contact'), ['text'], ['author', 'source']),
-  'quotes/PrivacyPolicy': () => toEntries(arrayAt(documents.pageQuotes, 'page_quotes.PrivacyPolicy'), ['text'], ['author', 'source']),
-
-  'home/research-interests': () => toEntries(arrayAt(documents.researchInterests, 'research_interests'), ['title', 'name', 'key']),
-  'home/experience': () => toEntries(arrayAt(documents.experience, 'experience'), ['job_role', 'title'], ['company', 'time_period']),
-  'home/education': () => toEntries(arrayAt(documents.education, 'education'), ['degree', 'title'], ['institution', 'time_period']),
-  'home/awards': () => toEntries(arrayAt(documents.awards, 'awards'), ['title'], ['organization', 'year']),
-  'home/achievements': () => toEntries(arrayAt(documents.awards, 'achievements'), ['title'], ['organization', 'year']),
-  'home/announcements': () => toEntries(arrayAt(documents.ribbon, 'ribbon'), ['message'], ['icon']),
-
-  'projects-publications/projects': () => toEntries([
+  'quotes/default': () => repositoryEntries('quotes/default', arrayAt(documents.pageQuotes, 'page_quotes.default')),
+  'quotes/Home': () => repositoryEntries('quotes/Home', arrayAt(documents.pageQuotes, 'page_quotes.Home')),
+  'quotes/ProjectsPublications': () => repositoryEntries('quotes/ProjectsPublications', arrayAt(documents.pageQuotes, 'page_quotes.ProjectsPublications')),
+  'quotes/Teachings': () => repositoryEntries('quotes/Teachings', arrayAt(documents.pageQuotes, 'page_quotes.Teachings')),
+  'quotes/OngoingProjects': () => repositoryEntries('quotes/OngoingProjects', arrayAt(documents.pageQuotes, 'page_quotes.OngoingProjects')),
+  'quotes/Affilications': () => repositoryEntries('quotes/Affilications', arrayAt(documents.pageQuotes, 'page_quotes.Affilications')),
+  'quotes/InternshipCertification': () => repositoryEntries('quotes/InternshipCertification', arrayAt(documents.pageQuotes, 'page_quotes.InternshipCertification')),
+  'quotes/Workshops': () => repositoryEntries('quotes/Workshops', arrayAt(documents.pageQuotes, 'page_quotes.Workshops')),
+  'quotes/Cocurricular': () => repositoryEntries('quotes/Cocurricular', arrayAt(documents.pageQuotes, 'page_quotes.Cocurricular')),
+  'quotes/ProfessionalAcitivity': () => repositoryEntries('quotes/ProfessionalAcitivity', arrayAt(documents.pageQuotes, 'page_quotes.ProfessionalAcitivity')),
+  'quotes/Gallery': () => repositoryEntries('quotes/Gallery', arrayAt(documents.pageQuotes, 'page_quotes.Gallery')),
+  'quotes/Resources': () => repositoryEntries('quotes/Resources', arrayAt(documents.pageQuotes, 'page_quotes.Resources')),
+  'quotes/Contact': () => repositoryEntries('quotes/Contact', arrayAt(documents.pageQuotes, 'page_quotes.Contact')),
+  'quotes/PrivacyPolicy': () => repositoryEntries('quotes/PrivacyPolicy', arrayAt(documents.pageQuotes, 'page_quotes.PrivacyPolicy')),
+  'home/research-interests': () => repositoryEntries('home/research-interests', arrayAt(documents.researchInterests, 'research_interests')),
+  'home/experience': () => repositoryEntries('home/experience', arrayAt(documents.experience, 'experience')),
+  'home/education': () => repositoryEntries('home/education', arrayAt(documents.education, 'education')),
+  'home/awards': () => repositoryEntries('home/awards', arrayAt(documents.awards, 'awards')),
+  'home/achievements': () => repositoryEntries('home/achievements', arrayAt(documents.awards, 'achievements')),
+  'home/announcements': () => repositoryEntries('home/announcements', arrayAt(documents.ribbon, 'ribbon')),
+  'projects-publications/projects': () => repositoryEntries('projects-publications/projects', [
     ...arrayAt(documents.projects, 'projects.research_projects'),
     ...arrayAt(documents.projects, 'projects.technical_projects'),
     ...arrayAt(documents.projects, 'projects.minor_projects'),
     ...arrayAt(documents.projects, 'projects.other_projects'),
-  ], ['title'], ['type', 'time_period']),
-  'projects-publications/research': () => toEntries(arrayAt(documents.projects, 'projects.research_projects'), ['title'], ['type', 'time_period']),
-  'projects-publications/technical': () => toEntries(arrayAt(documents.projects, 'projects.technical_projects'), ['title'], ['type', 'time_period']),
-  'projects-publications/minor': () => toEntries(arrayAt(documents.projects, 'projects.minor_projects'), ['title'], ['type', 'time_period']),
-  'projects-publications/other': () => toEntries(arrayAt(documents.projects, 'projects.other_projects'), ['title'], ['type', 'time_period']),
-  'projects-publications/articles': () => toEntries(arrayAt(documents.publications, 'articles'), ['title'], ['article_type', 'date']),
-  'projects-publications/publications': () => toEntries(arrayAt(documents.publications, 'publications'), ['title'], ['publication', 'date']),
-  'projects-publications/posters': () => toEntries(arrayAt(documents.publications, 'posters'), ['title'], ['event', 'date']),
-
-  'teaching/courses': () => toEntries(coursesTaught(), ['title', 'course'], ['institution', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
-  'teaching/projects': () => toEntries(mentoredProjects(), ['title'], ['course', 'semester']).map(entry => ({ ...entry, readOnlyFields: ['semester'] })),
-  // `projects` is its own collection; it is carried through a save untouched
-  // rather than shown here as a raw blob.
-  'teaching/mentoring': () => mentoringCohorts(arrayAt(documents.teaching, 'projects_mentored')),
-  'teaching/others': () => toEntries(arrayAt(documents.teaching, 'other_teachings'), ['title'], ['role', 'duration']),
-  'ongoing-projects/projects': () => toEntries(arrayAt(documents.ongoingProjects, 'ongoing_projects'), ['title'], ['status', 'type']),
-
-  'affiliations/affiliations': () => toEntries(arrayAt(documents.affiliations, 'affiliations'), ['organization', 'name'], ['role', 'period']),
-  'affiliations/collaborators': () => toEntries(arrayAt(documents.affiliations, 'collaborators'), ['name', 'person'], ['affiliation', 'period']),
-  'affiliations/memberships': () => toEntries(arrayAt(documents.affiliations, 'memberships'), ['organization'], ['role', 'period']),
-
-  'internships-certifications/internships': () => toEntries(arrayAt(documents.internships, 'internships'), ['role', 'title'], ['company', 'time_period']),
-  'internships-certifications/certifications': () => toEntries([
+  ]),
+  'projects-publications/research': () => repositoryEntries('projects-publications/research', arrayAt(documents.projects, 'projects.research_projects')),
+  'projects-publications/technical': () => repositoryEntries('projects-publications/technical', arrayAt(documents.projects, 'projects.technical_projects')),
+  'projects-publications/minor': () => repositoryEntries('projects-publications/minor', arrayAt(documents.projects, 'projects.minor_projects')),
+  'projects-publications/other': () => repositoryEntries('projects-publications/other', arrayAt(documents.projects, 'projects.other_projects')),
+  'projects-publications/articles': () => repositoryEntries('projects-publications/articles', arrayAt(documents.publications, 'articles')),
+  'projects-publications/publications': () => repositoryEntries('projects-publications/publications', arrayAt(documents.publications, 'publications')),
+  'projects-publications/posters': () => repositoryEntries('projects-publications/posters', arrayAt(documents.publications, 'posters')),
+  'teaching/courses': () => repositoryEntries('teaching/courses', coursesTaught()),
+  'teaching/projects': () => repositoryEntries('teaching/projects', mentoredProjects()),
+  'teaching/mentoring': () => repositoryEntries('teaching/mentoring', arrayAt(documents.teaching, 'projects_mentored')),
+  'teaching/others': () => repositoryEntries('teaching/others', arrayAt(documents.teaching, 'other_teachings')),
+  'ongoing-projects/projects': () => repositoryEntries('ongoing-projects/projects', arrayAt(documents.ongoingProjects, 'ongoing_projects')),
+  'affiliations/affiliations': () => repositoryEntries('affiliations/affiliations', arrayAt(documents.affiliations, 'affiliations')),
+  'affiliations/collaborators': () => repositoryEntries('affiliations/collaborators', arrayAt(documents.affiliations, 'collaborators')),
+  'affiliations/memberships': () => repositoryEntries('affiliations/memberships', arrayAt(documents.affiliations, 'memberships')),
+  'internships-certifications/internships': () => repositoryEntries('internships-certifications/internships', arrayAt(documents.internships, 'internships')),
+  'internships-certifications/certifications': () => repositoryEntries('internships-certifications/certifications', [
     ...arrayAt(documents.certifications, 'certifications'),
     ...arrayAt(documents.certifications, 'more_certifications'),
-  ], ['title'], ['issuer', 'date']),
-
-  'workshops/conferences': () => toEntries(arrayAt(documents.workshops, 'attended_conferences'), ['title'], ['location', 'date']),
-  'workshops/fdps': () => toEntries(arrayAt(documents.workshops, 'attended_fdps'), ['title'], ['institution', 'date']),
-  'workshops/main': () => toEntries(arrayAt(documents.workshops, 'attended_workshops'), ['title'], ['institution', 'date']),
-  'workshops/additional': () => toEntries(arrayAt(documents.workshops, 'attended_other_workshops'), ['title'], ['institution', 'date']),
-  'workshops/bootcamps': () => toEntries(arrayAt(documents.workshops, 'attended_bootcamps'), ['title'], ['institution', 'date']),
-  'workshops/other': () => toEntries(arrayAt(documents.workshops, 'attended_webinars_n_others'), ['title'], ['type', 'date']),
-
-  'cocurricular/leadership': () => withGroupedRoleTitles(toEntries(groupedEntries('leadership_roles'), ['role', 'title'], ['affiliation', 'time_period'])),
-  'cocurricular/volunteering': () => withGroupedRoleTitles(toEntries(groupedEntries('volunteering_roles'), ['role', 'title'], ['organization', 'time_period'])),
-  'professional-activity/invited-talks': () => toEntries(arrayAt(documents.professionalActivity, 'invited_talks'), ['title'], ['institution', 'date']),
-  'professional-activity/hosted-events': () => toEntries([
+  ]),
+  'workshops/conferences': () => repositoryEntries('workshops/conferences', arrayAt(documents.workshops, 'attended_conferences')),
+  'workshops/fdps': () => repositoryEntries('workshops/fdps', arrayAt(documents.workshops, 'attended_fdps')),
+  'workshops/main': () => repositoryEntries('workshops/main', arrayAt(documents.workshops, 'attended_workshops')),
+  'workshops/additional': () => repositoryEntries('workshops/additional', arrayAt(documents.workshops, 'attended_other_workshops')),
+  'workshops/bootcamps': () => repositoryEntries('workshops/bootcamps', arrayAt(documents.workshops, 'attended_bootcamps')),
+  'workshops/other': () => repositoryEntries('workshops/other', arrayAt(documents.workshops, 'attended_webinars_n_others')),
+  'cocurricular/leadership': () => repositoryEntries('cocurricular/leadership', groupedEntries('leadership_roles')),
+  'cocurricular/volunteering': () => repositoryEntries('cocurricular/volunteering', groupedEntries('volunteering_roles')),
+  'professional-activity/invited-talks': () => repositoryEntries('professional-activity/invited-talks', arrayAt(documents.professionalActivity, 'invited_talks')),
+  'professional-activity/hosted-events': () => repositoryEntries('professional-activity/hosted-events', [
     ...arrayAt(documents.professionalActivity, 'hosted_events'),
     ...arrayAt(documents.professionalActivity, 'other_hosted_events'),
-  ], ['title'], ['event_type', 'date']),
-
-  'gallery/career-unlocks': () => toEntries(arrayAt(documents.gallery, 'items'), ['title'], ['date', 'type']),
-  'resources/study-material': () => toEntries(arrayAt(documents.resources, 'subjects'), ['title'], [],),
-  'resources/worth-exploring': () => toEntries(arrayAt(documents.resources, 'explore'), ['group', 'title']),
-  'resources/worth-subscribing': () => toEntries(arrayAt(documents.resources, 'subscribe'), ['group', 'title']),
-  'facts/facts': () => toEntries(arrayAt(documents.facts, 'facts'), ['title'], ['icon']),
-
-  'recommended/items': () => toEntries(arrayAt(documents.blogRecommended, 'items'), ['title'], ['author', 'source']),
-  'readings/items': () => toEntries(arrayAt(documents.blogReadings, 'items'), ['title'], ['author', 'genre']),
-  'movies/items': () => toEntries(arrayAt(documents.blogMovies, 'items'), ['title'], ['director', 'year']),
-  'travel/states': () => toEntries(arrayAt(documents.blogTravel, 'states'), ['state'], ['purpose']),
-  'hobbies/tiles': () => toEntries(arrayAt(documents.blogHobbies, 'tiles'), ['label'], ['icon']),
-
-  'cv/bullets': () => toEntries(arrayAt(documents.cvLibrary, 'bullets'), ['text'], ['ref', 'kind']),
-  'cv/entries': () => toEntries(arrayAt(documents.cvLibrary, 'entries'), ['title', 'ref', 'id'], ['ref', 'period']),
-  'cv/summaries': () => toEntries(arrayAt(documents.cvLibrary, 'summaries'), ['id'], ['text']),
-  'cv/skills': () => toEntries(arrayAt(documents.cvLibrary, 'skills'), ['label'], ['text']),
-  'cv/interests': () => toEntries(arrayAt(documents.cvLibrary, 'interests'), ['text'], ['id']),
+  ]),
+  'gallery/career-unlocks': () => repositoryEntries('gallery/career-unlocks', arrayAt(documents.gallery, 'items')),
+  'resources/study-material': () => repositoryEntries('resources/study-material', arrayAt(documents.resources, 'subjects')),
+  'resources/worth-exploring': () => repositoryEntries('resources/worth-exploring', arrayAt(documents.resources, 'explore')),
+  'resources/worth-subscribing': () => repositoryEntries('resources/worth-subscribing', arrayAt(documents.resources, 'subscribe')),
+  'facts/facts': () => repositoryEntries('facts/facts', arrayAt(documents.facts, 'facts')),
+  'recommended/items': () => repositoryEntries('recommended/items', arrayAt(documents.blogRecommended, 'items')),
+  'readings/items': () => repositoryEntries('readings/items', arrayAt(documents.blogReadings, 'items')),
+  'movies/items': () => repositoryEntries('movies/items', arrayAt(documents.blogMovies, 'items')),
+  'travel/states': () => repositoryEntries('travel/states', arrayAt(documents.blogTravel, 'states')),
+  'hobbies/tiles': () => repositoryEntries('hobbies/tiles', arrayAt(documents.blogHobbies, 'tiles')),
+  'cv/bullets': () => repositoryEntries('cv/bullets', arrayAt(documents.cvLibrary, 'bullets')),
+  'cv/entries': () => repositoryEntries('cv/entries', arrayAt(documents.cvLibrary, 'entries')),
+  'cv/summaries': () => repositoryEntries('cv/summaries', arrayAt(documents.cvLibrary, 'summaries')),
+  'cv/skills': () => repositoryEntries('cv/skills', arrayAt(documents.cvLibrary, 'skills')),
+  'cv/interests': () => repositoryEntries('cv/interests', arrayAt(documents.cvLibrary, 'interests')),
 }
 
 export function getPortfolioEntries(pageId: string, sectionId: string): PortfolioEntry[] {

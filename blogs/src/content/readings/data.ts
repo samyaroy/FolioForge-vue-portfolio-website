@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors over data.yml. Edit the YAML file to add readings.
 import raw from './data.yml'
 
@@ -32,6 +33,6 @@ function resolveCoverImage(entry?: string) {
   return `https://media.samyabrata.codeium.xyz/${encodeURIComponent(trimmedEntry)}.jpeg`
 }
 
-export const READINGS: ReadingItem[] = items
+export const READINGS: ReadingItem[] = withoutDisabledEntries(items)
   .map((item) => ({ ...item, image: resolveCoverImage(item.image) }))
   .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))

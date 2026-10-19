@@ -17,7 +17,8 @@ import { Button, SelectField, SwitchField } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
-import { getPortfolioEntries, mentoringCohortFor, mentoringCohorts } from '@/data/portfolioEntries'
+import { getPortfolioEntries, mentoringCohortFor } from '@/data/portfolioEntries'
+import { repositoryEntries } from '@/data/collectionEntries'
 import { hasSitePreview, previewFacts, previewHeading, previewImage } from '@/lib/entryPreview'
 import { InlineMarkup } from '@/components/InlineMarkup'
 import { ENTRY_ENABLED_KEY, isEntryEnabled } from '../../../../src/config/entryStatus.ts'
@@ -151,6 +152,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   const [entries, setEntries] = useState(() => getPortfolioEntries(page.id, section.groups ? group || section.id : section.id))
   const [editor, setEditor] = useState<EditorState | null>(null)
   const [saving, setSaving] = useState(false)
+  const [loading, setLoading] = useState(true)
   // The revision this editor is working against. A save carries it so a file
   // that moved on becomes a conflict instead of an overwrite.
   const [baseSha, setBaseSha] = useState('')
@@ -162,24 +164,33 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     const controller = new AbortController()
     fetchCollection(collection, controller.signal)
       .then(state => {
+        const rows = repositoryEntries(collection, state.entries)
+        setEntries(rows)
+        setEditor(null)
         setBaseSha(state.baseSha)
         setFailure('')
-        if (collection === 'teaching/mentoring') setEntries(mentoringCohorts(state.entries))
       })
       .catch((error: unknown) => {
         if (error instanceof Error && error.name === 'AbortError') return
         setBaseSha('')
         setFailure(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
       })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false) })
     return () => controller.abort()
   }, [collection])
 
-  /** Re-read the revision a save must quote next time. */
+  /** Rows and revision must always come from the same read. */
   const refreshBase = async () => {
-    const next = await fetchCollection(collection, new AbortController().signal).catch(() => null)
-    if (next) {
+    try {
+      const next = await fetchCollection(collection, new AbortController().signal)
+      const rows = repositoryEntries(collection, next.entries)
+      setEntries(rows)
       setBaseSha(next.baseSha)
-      if (collection === 'teaching/mentoring') setEntries(mentoringCohorts(next.entries))
+      setFailure('')
+    } catch (error) {
+      // Never pair an old list with a newer revision after a failed refresh.
+      setBaseSha('')
+      setFailure(error instanceof Error ? error.message : 'Reload before editing again.')
     }
   }
 
@@ -212,7 +223,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
           : <Link to="/portfolio/pages/teaching/mentoring" title="Add the project from its cohort"><Plus aria-hidden="true" /> New project</Link>}
       </Button>
     )
-    : <Button className="section-action-button" size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
+    : <Button className="section-action-button" size="sm" disabled={loading || saving} onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
 
   const matchesFilter = (entry: PortfolioEntry) => {
     if (!section.filterBy) return true
@@ -239,6 +250,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
 
   /** Flip one yes/no key on an entry and save it at once, as a switch does. */
   const setFlag = async (entry: PortfolioEntry, key: string, value: boolean, outcome: { local: string; saved: string }) => {
+    if (loading || saving) return
     const raw = { ...entry.raw, [key]: value }
     const previous = entries
     setEntries(current => current.map(item => item.id === entry.id ? { ...item, raw, ...(key === ENTRY_ENABLED_KEY ? { enabled: value } : {}) } : item))
@@ -246,6 +258,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
       toast.info(outcome.local)
       return
     }
+    setSaving(true)
     try {
       await saveCollectionEntry(collection, entries.findIndex(item => item.id === entry.id), raw, baseSha)
       await refreshBase()
@@ -255,6 +268,8 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
       // claiming something the file does not say.
       setEntries(previous)
       toast.error(error instanceof Error ? error.message : 'Could not change that entry.')
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -279,8 +294,10 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     : undefined
 
   const removeEntry = async (entry: PortfolioEntry) => {
+    if (loading || saving) return
     if (!baseSha) { toast.error('This collection cannot be saved yet.'); return }
     if (!window.confirm(`Delete "${entry.title}" from ${section.title}? This commits to V1.`)) return
+    setSaving(true)
     const previous = entries
     const index = entries.findIndex(item => item.id === entry.id)
     setEntries(current => current.filter(item => item.id !== entry.id))
@@ -291,10 +308,13 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     } catch (error) {
       setEntries(previous)
       toast.error(error instanceof Error ? error.message : 'Could not delete that entry.')
+    } finally {
+      setSaving(false)
     }
   }
 
   const saveEntry = async (nextEntry: PortfolioEntry) => {
+    if (loading || saving) return
     const editing = editor?.mode === 'edit'
     if (!baseSha) {
       setEntries(current => editing ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry) : [nextEntry, ...current])
@@ -312,12 +332,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
         ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry)
         : [...current, nextEntry])
       setEditor(null)
-      // The file has a new revision now, so the next save must quote that one.
-      const refreshed = await fetchCollection(collection, new AbortController().signal).catch(() => null)
-      if (refreshed) {
-        setBaseSha(refreshed.baseSha)
-        if (collection === 'teaching/mentoring') setEntries(mentoringCohorts(refreshed.entries))
-      }
+      await refreshBase()
       toast.success(`Saved. ${pending} file${pending === 1 ? '' : 's'} waiting to publish.`)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not save this entry.')
@@ -388,19 +403,21 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                       title={featured ? 'Featured' : 'Not featured'}
                       aria-label={`${featured ? 'Unfeature' : 'Feature'} ${entry.title}`}
                       aria-pressed={featured}
+                      disabled={loading || saving}
                       onClick={() => void toggleFeatured(entry)}
                     ><Star aria-hidden="true" /></Button>
                   )}
                   {!section.notOnSite && (
                     <SwitchField
                       aria-label={`Show ${entry.title} on the site`}
+                      disabled={loading || saving}
                       checked={isEntryEnabled(entry.raw)}
                       onChange={enabled => void toggleEntry(entry, enabled)}
                     />
                   )}
                 </span>
-                <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
-                <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={!baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
+                <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} disabled={loading || saving} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
+                <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={loading || saving || !baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
                 {collection === 'teaching/mentoring' && (
                   <Button variant="outline" size="sm" className="mentoring-project-info" asChild>
                     <Link to={`/portfolio/pages/teaching/mentoring/${encodeURIComponent(entry.id)}/projects`} state={{ cohort: entry }} aria-label={`Project info for ${entry.title}`}>

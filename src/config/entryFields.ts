@@ -19,6 +19,7 @@
  */
 export type EntryField =
   | string
+  | { key: string; type: 'number' | 'boolean' | 'date' | 'text-or-list' | 'json-array' | 'multiline'; min?: number; max?: number; placeholder?: string }
   | { key: string; object: readonly string[] }
   | { key: string; list: readonly string[] }
   | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' | 'ongoingCategories' }
@@ -93,11 +94,11 @@ export const entryFields = {
   worthSubscribing: ['group', 'id', 'icon', { key: 'links', list: ['label', 'url', 'cadence', 'speciality', 'incharge'] }],
 
   // Blog collections.
-  blogRecommended: ['id', 'title', 'author', 'source', 'year', 'url', 'note'],
-  blogReadings: ['id', 'title', 'author', 'genre', 'description', 'image', 'link'],
-  blogMovies: ['id', 'title', 'director', 'genre', 'year', 'description', 'image', 'link'],
-  blogTravel: ['state', 'purpose', 'cities'],
-  blogHobbies: ['label', 'icon'],
+  blogRecommended: ['id', 'title', 'author', 'source', { key: 'year', type: 'number' }, 'url', { key: 'note', type: 'multiline' }],
+  blogReadings: ['id', 'title', 'author', 'genre', { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
+  blogMovies: ['id', 'title', 'director', 'genre', { key: 'year', type: 'number' }, { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
+  blogTravel: ['state', 'purpose', { key: 'home', type: 'boolean' }, { key: 'cities', type: 'json-array', placeholder: '[{"name":"Chennai","visits":1,"stayed":true,"stayReason":"College","home":false,"lat":13.08,"lng":80.27}]' }],
+  blogHobbies: ['label', 'icon', { key: 'imageId', type: 'text-or-list' }, { key: 'image', type: 'text-or-list' }, { key: 'tint', type: 'boolean' }],
 } as const satisfies Record<string, readonly EntryField[]>
 
 /** Just the keys, in order. */

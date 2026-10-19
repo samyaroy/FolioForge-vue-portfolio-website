@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors over data.yml. Edit the YAML file to add movies.
 import raw from './data.yml'
 
@@ -34,6 +35,6 @@ function resolvePosterImage(entry?: string) {
   return `https://media.samyabrata.codeium.xyz/${encodeURIComponent(trimmedEntry)}.jpeg`
 }
 
-export const MOVIES: MovieItem[] = items
+export const MOVIES: MovieItem[] = withoutDisabledEntries(items)
   .map((item) => ({ ...item, image: resolvePosterImage(item.image) }))
   .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))

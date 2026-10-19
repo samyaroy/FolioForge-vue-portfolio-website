@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors for individual trips on the travel page. The trip data
 // itself lives in trips.yml; edit that file to add or update trips.
 import raw from './trips.yml'
@@ -69,7 +70,7 @@ interface TripsContent {
   trips?: Trip[]
 }
 
-const content = (raw ?? {}) as TripsContent
+const content = withoutDisabledEntries((raw ?? {}) as TripsContent)
 
 /** Trips sorted newest-first by date. */
 export const TRIPS: Trip[] = [...(content.trips ?? [])].sort(

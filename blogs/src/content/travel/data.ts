@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors and derived values for the travel map. The visit data
 // itself lives in data.yml; edit that file to keep the map up to date.
 import raw from './data.yml'
@@ -49,7 +50,7 @@ interface TravelContent {
   states: StateEntry[]
 }
 
-const travel = raw as TravelContent
+const travel = withoutDisabledEntries(raw as TravelContent)
 
 export const STATE_VISITS: StateVisit[] = travel.states.map(
   ({ state, purpose, home }) => ({ state, purpose, home }),

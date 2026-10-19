@@ -4,6 +4,7 @@ import { Save, X } from 'lucide-react'
 import { Button, IconButton, SelectField, TextareaField, TextField } from '@/components/form'
 import type { PortfolioEntry } from '@/data/portfolioEntries'
 import { driveFieldMode, fromDriveEditorValue, toDriveEditorValue } from '@/lib/driveLinks'
+import { scalarFieldsOf, serializeScalarField } from '@/lib/entryScalarFields'
 import { entryPresentation } from '@/lib/entryPresentation'
 import { ExperienceProjectsEditor } from '@/components/editor/ExperienceProjectsEditor'
 import { DescriptionLinesEditor } from '@/components/editor/DescriptionLinesEditor'
@@ -119,6 +120,7 @@ function fieldKey(label: string) {
 
 export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFields = [], groupedBy, typeOptions = [], entryFields: schema = [], tagOptions = [], isExperience = false, isEducation = false, onClose, onSave, saving = false }: EntryEditorDialogProps) {
   // Nesting is read off the schema, so a collection declares its shape once.
+  const scalarFields = useMemo(() => scalarFieldsOf(schema), [schema])
   const entryFields = useMemo(() => fieldKeys(schema), [schema])
   const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
   const listFields = useMemo(() => listFieldsOf(schema), [schema])
@@ -133,13 +135,13 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
   // What an untouched field holds before anything is typed into it.
   const blankValue = useCallback((key: string) => {
     if (objectFields[key]) return JSON.stringify(objectFieldsDraft(undefined, objectFields[key]))
-    if (listFields[key] || key === imagesKey) return '[]'
+    if (listFields[key] || key === imagesKey || scalarFields[key]?.type === 'json-array') return '[]'
     if (key === 'cred_link' && credentialStyle) return '[]'
     if (isExperience && (key === 'projects' || key === 'description')) return '[]'
     if (isEducation && key === 'sub_field') return '[]'
     if (tagOptions.length && key === 'tags') return '[]'
     return ''
-  }, [objectFields, listFields, imagesKey, credentialStyle, isExperience, isEducation, tagOptions])
+  }, [objectFields, listFields, imagesKey, credentialStyle, isExperience, isEducation, tagOptions, scalarFields])
 
   const initialFields = useMemo(() => {
     if (entry) {
@@ -241,6 +243,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       const raw = { ...entry?.raw, ...Object.fromEntries(Object.entries(values).map(([key, value]) => {
         const original = entry?.raw[key]
         if (value === initialFields[key] && original !== undefined) return [key, original]
+        if (scalarFields[key]) return [key, serializeScalarField(value, scalarFields[key])]
         if (credentialStyle === 'documents' && key === 'cred_link') return [key, serializeCredentialLinks(JSON.parse(value), original)]
         if (isCategoryStyle && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
         if (key === imagesKey) return [key, serializeGalleryImages(JSON.parse(value), original)]
@@ -257,10 +260,11 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       // the collection keeps the same shape. Undeclared ones vanish as before.
       for (const key of Object.keys(raw)) {
         if (raw[key] !== undefined) continue
-        if (entryFields.includes(key)) raw[key] = null
+        if (scalarFields[key]) delete raw[key]
+        else if (entryFields.includes(key)) raw[key] = null
         else delete raw[key]
       }
-      for (const key of entryFields) if (!(key in raw)) raw[key] = ''
+      for (const key of entryFields) if (!(key in raw) && !scalarFields[key]) raw[key] = ''
       if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum, entry?.raw.cirriculum)
       const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(values)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
       onSave({
@@ -292,6 +296,14 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
         <div className="entry-dialog-body" hidden={isEducation && educationTab !== 'details'}>
           <div className="entry-field-divider"><span>{isExperience ? 'Role details' : 'Entry fields'}</span>{!isExperience && <small>{Object.keys(fields).length}</small>}</div>
           {orderedFields.filter(([key]) => key !== ENTRY_ENABLED_KEY).map(([key, value], index) => {
+            const scalar = scalarFields[key]
+            if (scalar) {
+              const label = fieldCaption(key)
+              const change = (next: string) => setFields(current => ({ ...current, [key]: next }))
+              if (scalar.type === 'boolean') return <SelectField key={key} label={label} value={value || '__default'} options={[{ value: '__default', label: 'Default' }, { value: 'true', label: 'Yes' }, { value: 'false', label: 'No' }]} onChange={next => change(next === '__default' ? '' : next)} />
+              if (scalar.type === 'number' || scalar.type === 'date') return <TextField key={key} label={label} type={scalar.type === 'number' ? 'number' : 'date'} min={scalar.min} max={scalar.max} step={scalar.type === 'number' ? 1 : undefined} value={value} onChange={change} />
+              return <TextareaField key={key} label={scalar.type === 'text-or-list' ? `${label} (one value or a JSON list)` : scalar.type === 'json-array' ? `${label} (JSON list)` : label} value={value} placeholder={scalar.placeholder} onChange={change} />
+            }
             if (key === 'logo') return <LogoSelector key={key} multiple={typeof entry?.raw.logo !== 'string'} values={value.startsWith('[') ? JSON.parse(value) : value ? [value] : []} onChange={logos => setFields(current => ({ ...current, logo: typeof entry?.raw.logo === 'string' ? logos[0] ?? '' : JSON.stringify(logos) }))} />
             if (key === imagesKey) {
               return (

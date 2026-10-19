@@ -8,6 +8,7 @@ import yaml from '@modyfi/vite-plugin-yaml'
 import { parse as parseYaml } from 'yaml'
 import { parseFrontmatter } from './src/lib/frontmatter'
 import { isFeatureEnabled } from './src/config/featureFlags'
+import { withoutDisabledEntries } from '../src/config/entryStatus'
 import { SITE_URL } from './src/lib/seo'
 // Shared with the portfolio build; see ../scripts/seo-build.ts for why the
 // head has to be stamped at build time rather than by the app.
@@ -90,7 +91,7 @@ interface Trip {
 
 function loadTrips(): Trip[] {
   const parsed = readYaml<{ trips?: Trip[] }>('travel/trips.yml')
-  return (parsed.trips ?? []).filter(
+  return withoutDisabledEntries(parsed.trips ?? []).filter(
     (trip) => typeof trip.id === 'string' && trip.id.length > 0,
   )
 }
