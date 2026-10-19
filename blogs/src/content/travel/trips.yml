@@ -50,6 +50,29 @@
 
 # Dummy entries below — replace with real trips.
 trips:
+  - id: darjeeling-2026
+    title: A long weekend in the hills
+    date: 2026-08-29
+    location: Rambam, West Bengal
+    places:
+      - Kolkata
+      - { name: Rambam, mode: car}
+    summary: ABC
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026.jpeg
+    tags: [Mountains]
+    narrative:
+      - ABC
+      - ABC
+    stats:
+      - { label: Places stayed, value: 4 villages }
+      - { label: Treked, value: '15 km' }
+      # - { label: Distance travelled, value: 501 km }
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-05.jpeg
+
   - id: mahababipuram26
     title: Never miss a trip to Mamallapuram specialy if you made new friends in Chennai
     date: 2026-06-28

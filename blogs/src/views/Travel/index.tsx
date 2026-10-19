@@ -82,8 +82,6 @@ const HOME_COLOR = '#7c3aed'
 // trips of the same year collapse into one group.
 function groupTripsByYear(trips: Trip[]): { year: string; trips: Trip[] }[] {
   return trips.reduce<{ year: string; trips: Trip[] }[]>((groups, trip) => {
-    // The YAML loader hands dates over as Date objects at runtime (the Trip
-    // type says string), so go through the Date constructor for the year.
     const year = String(new Date(trip.date).getFullYear())
     const last = groups[groups.length - 1]
     if (last?.year === year) {

@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import yaml from '@modyfi/vite-plugin-yaml'
 import { parse as parseYaml } from 'yaml'
+import { contentYaml } from './scripts/content-yaml'
 import { parseFrontmatter } from './src/lib/frontmatter'
 import { isFeatureEnabled } from './src/config/featureFlags'
 import { withoutDisabledEntries } from '../src/config/entryStatus'
@@ -444,7 +444,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    yaml(),
+    contentYaml(),
     seoPrerender({
       siteName: BASE_TITLE,
       siteUrl: SITE_URL,
