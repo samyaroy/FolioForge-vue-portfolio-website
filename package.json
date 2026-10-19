@@ -12,6 +12,7 @@
     "gallery:images": "node scripts/fit-gallery-images.mjs",
     "prebuild": "npm run sync:gallery-manifest",
     "build": "vite build",
+    "build:beta": "VITE_SITE_ENV=beta npm run build -- --outDir dist-beta",
     "preview": "vite preview",
     "analyze": "ANALYZE=1 vite build",
     "boneyard:build": "node scripts/build-boneyard.mjs",

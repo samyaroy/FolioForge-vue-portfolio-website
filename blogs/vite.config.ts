@@ -202,8 +202,9 @@ const privacyPage: SeoPage = {
   ],
 }
 
-const SECTION_KEYS = ['readings', 'movies', 'travel', 'hobbies', 'gallery'] as const
+const SECTION_KEYS = ['recommended', 'readings', 'movies', 'travel', 'hobbies', 'gallery'] as const
 const SECTION_FLAGS: Record<(typeof SECTION_KEYS)[number], string> = {
+  recommended: 'showRecommended',
   readings: 'showReadings',
   movies: 'showMovies',
   travel: 'showTravel',

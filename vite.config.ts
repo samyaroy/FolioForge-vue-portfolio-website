@@ -42,7 +42,7 @@ const publicRoutes = routeMetadata.filter(
 )
 
 interface Profile {
-  profile?: { name?: string; about?: string; footer?: string }
+  profile?: { name?: string; about?: string; footer?: string; betaVersionUrl?: string }
   socials?: Record<string, string>
 }
 
@@ -55,9 +55,12 @@ function readProfile(): Profile {
 }
 
 const profile = readProfile()
+const DEPLOYMENT_URL = IS_BETA_BUILD
+  ? new URL(profile.profile?.betaVersionUrl ?? `https://beta.${new URL(SITE_URL).hostname}`).origin
+  : SITE_URL
 
 const PERSON_ID = `${SITE_URL}/#person`
-const WEBSITE_ID = `${SITE_URL}/#website`
+const WEBSITE_ID = `${DEPLOYMENT_URL}/#website`
 
 // The sameAs list is what ties this site, the blog, and every academic and
 // social profile to one entity — it is the single strongest signal available
@@ -77,7 +80,7 @@ const website = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   '@id': WEBSITE_ID,
-  url: `${SITE_URL}/`,
+  url: `${DEPLOYMENT_URL}/`,
   name: SITE_NAME,
   inLanguage: 'en',
   publisher: { '@id': PERSON_ID },
@@ -92,14 +95,14 @@ function jsonLdFor(route: (typeof routeMetadata)[number]): unknown[] {
       {
         '@context': 'https://schema.org',
         '@type': 'ProfilePage',
-        url: `${SITE_URL}/`,
+        url: `${DEPLOYMENT_URL}/`,
         mainEntity: { '@id': PERSON_ID },
         isPartOf: { '@id': WEBSITE_ID },
       },
     ]
   }
 
-  const url = absoluteUrl(SITE_URL, route.path)
+  const url = absoluteUrl(DEPLOYMENT_URL, route.path)
   return [
     {
       '@context': 'https://schema.org',
@@ -117,7 +120,7 @@ function jsonLdFor(route: (typeof routeMetadata)[number]): unknown[] {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${DEPLOYMENT_URL}/` },
         { '@type': 'ListItem', position: 2, name: route.title, item: url },
       ],
     },
@@ -176,9 +179,10 @@ export default defineConfig({
       : []),
     seoPrerender({
       siteName: SITE_NAME,
-      siteUrl: SITE_URL,
+      siteUrl: DEPLOYMENT_URL,
       pages,
-      sitemap: !IS_BETA_BUILD,
+      sitemap: true,
+      sitemapOnNoindex: IS_BETA_BUILD,
       // The beta site is a byte-identical copy of production on another host,
       // and the stable footer links to it, so it is both duplicate content and
       // genuinely reachable. Runtime hostname checks cannot help here: this
