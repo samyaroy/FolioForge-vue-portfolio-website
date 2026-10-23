@@ -7,6 +7,11 @@ interface SectionsContent {
     title: string
     heroHeading: string
     allPostsTitle: string
+    tagFilterTitle: string
+    tagFilterOpen: string
+    tagFilterClear: string
+    postCountOne: string
+    postCountMany: string
   }
   recommended: {
     title: string

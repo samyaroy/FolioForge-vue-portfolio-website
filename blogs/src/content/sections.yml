@@ -8,6 +8,13 @@ blogs:
   heroHeading: "Pound your thoughts and walk into the Auraverse..."
   # Heading of the year-grouped post index beside the post list.
   allPostsTitle: All posts
+  # Tag filter above the post list (flag: showPostTagFilter), styled like the
+  # portfolio's Career Unlocks filter.
+  tagFilterTitle: Filter posts
+  tagFilterOpen: Open post filters
+  tagFilterClear: Clear
+  postCountOne: post
+  postCountMany: posts
 
 recommended:
   title: Recommended reads

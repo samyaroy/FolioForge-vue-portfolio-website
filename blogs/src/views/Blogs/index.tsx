@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { posts } from '../../lib/posts'
 import { usePageTitle } from '../../lib/usePageTitle'
 import { AllPostsIndex } from '../../components/AllPostsIndex'
@@ -7,7 +8,7 @@ import { EMPTY_TEXT_CLASS, RAIL_CONTENT_CLASS, RAIL_GRID_CLASS } from '../../lib
 import { HomeHero } from './components/HomeHero'
 import { HomeLatest, OlderPostsHeading } from './components/HomeLatest'
 import { latestItems } from './components/latestItems'
-import { PostCard } from './components/PostCard'
+import { TaggedPostList } from './components/TaggedPostList'
 import { RecommendedTeaser } from './components/RecommendedTeaser'
 
 export function BlogsPage() {
@@ -19,7 +20,7 @@ export function BlogsPage() {
   const showLatest = isFeatureEnabled('showHomeLatest')
   const featured = showLatest ? posts[0] : undefined
   const extras = showLatest ? latestItems() : []
-  const listed = featured ? posts.slice(1) : posts
+  const listed = useMemo(() => (featured ? posts.slice(1) : posts), [featured])
 
   return (
     <>
@@ -44,12 +45,10 @@ export function BlogsPage() {
 
               <div className={RAIL_CONTENT_CLASS}>
                 {featured && <OlderPostsHeading featured={featured} />}
-                {/* Exactly 87% of the pane — no max-width cap. */}
-                <div className="mx-auto grid w-[87%] grid-cols-1 gap-6">
-                  {listed.map((post) => (
-                    <PostCard key={post.slug} post={post} />
-                  ))}
-                </div>
+                <TaggedPostList
+                  posts={listed}
+                  filterable={isFeatureEnabled('showPostTagFilter')}
+                />
               </div>
             </div>
           )}

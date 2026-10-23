@@ -14,6 +14,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   // Blog home: the "What's new" panel beside the hero, with the newest post,
   // reading, movie and trip. Off restores the original centred hero.
   showHomeLatest: true,
+  // Blog home: tag filter above the post list that narrows that list only.
+  showPostTagFilter: true,
   // "Worth Your Time" nav link to /recommended. Separate from showRecommended
   // so the page and the blog home teaser can stay on while the header link is
   // off -- the teaser's "All N recommendations" link is then the way in.
