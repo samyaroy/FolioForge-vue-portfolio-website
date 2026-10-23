@@ -10,8 +10,6 @@ interface SectionsContent {
     tagFilterTitle: string
     tagFilterOpen: string
     tagFilterClear: string
-    postCountOne: string
-    postCountMany: string
   }
   recommended: {
     title: string

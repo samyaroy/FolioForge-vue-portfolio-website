@@ -44,10 +44,16 @@ export function BlogsPage() {
               <AllPostsIndex />
 
               <div className={RAIL_CONTENT_CLASS}>
-                {featured && <OlderPostsHeading featured={featured} />}
                 <TaggedPostList
                   posts={listed}
                   filterable={isFeatureEnabled('showPostTagFilter')}
+                  renderHeading={
+                    featured
+                      ? (filter) => (
+                          <OlderPostsHeading featured={featured} filter={filter} />
+                        )
+                      : undefined
+                  }
                 />
               </div>
             </div>

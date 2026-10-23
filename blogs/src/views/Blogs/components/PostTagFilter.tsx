@@ -6,6 +6,11 @@ type PostTagFilterProps = {
   options: string[]
   selected: string[]
   onChange: (selected: string[]) => void
+  /** 'right': the popover hangs from the button's right edge. 'left': the
+      root isn't positioned, so the popover lines up with the left edge of the
+      nearest positioned ancestor (the heading row), which keeps it on screen
+      when the button sits partway across a narrow row. */
+  align?: 'left' | 'right'
 }
 
 /**
@@ -15,7 +20,12 @@ type PostTagFilterProps = {
  * picked tags, "Clear" empties them, and the popover closes on an outside
  * click or Escape.
  */
-export function PostTagFilter({ options, selected, onChange }: PostTagFilterProps) {
+export function PostTagFilter({
+  options,
+  selected,
+  onChange,
+  align = 'right',
+}: PostTagFilterProps) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
 
@@ -43,7 +53,10 @@ export function PostTagFilter({ options, selected, onChange }: PostTagFilterProp
     )
 
   return (
-    <div ref={rootRef} className="relative flex flex-col items-end">
+    <div
+      ref={rootRef}
+      className={`flex flex-col ${align === 'left' ? 'items-start' : 'relative items-end'}`}
+    >
       <button
         type="button"
         aria-expanded={open}
@@ -67,7 +80,7 @@ export function PostTagFilter({ options, selected, onChange }: PostTagFilterProp
         <div
           role="dialog"
           aria-label={BLOGS_SECTION.tagFilterTitle}
-          className="absolute top-full right-0 z-40 mt-2 w-[min(19rem,calc(100vw-2rem))] rounded-[12px] border border-white/70 bg-white/85 p-4 shadow-xl backdrop-blur-md"
+          className={`absolute top-full z-40 mt-2 w-[min(19rem,calc(100vw-2rem))] rounded-[12px] border border-white/70 bg-white/85 p-4 shadow-xl backdrop-blur-md ${align === 'left' ? 'left-0' : 'right-0'}`}
         >
           <div className="flex items-start justify-between gap-2">
             <p className="text-xs font-bold tracking-[0.22em] text-slate-400 uppercase">

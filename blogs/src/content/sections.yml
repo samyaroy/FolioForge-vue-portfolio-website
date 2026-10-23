@@ -13,8 +13,6 @@ blogs:
   tagFilterTitle: Filter posts
   tagFilterOpen: Open post filters
   tagFilterClear: Clear
-  postCountOne: post
-  postCountMany: posts
 
 recommended:
   title: Recommended reads

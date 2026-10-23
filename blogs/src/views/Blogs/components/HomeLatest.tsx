@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { HOME_LATEST_LABELS as LABELS } from '../../../content/site'
 import { formatDate } from '../../../lib/format'
@@ -117,12 +117,22 @@ function FeaturedPost({ post }: { post: PostMeta }) {
  * so a reader landing on the list knows it starts from the second post and
  * where the newest one went.
  */
-export function OlderPostsHeading({ featured }: { featured: PostMeta }) {
+export function OlderPostsHeading({
+  featured,
+  filter,
+}: {
+  featured: PostMeta
+  /** The list's tag filter, shown beside the heading. */
+  filter?: ReactNode
+}) {
   const [before, after = ''] = LABELS.olderNote.split('{title}')
 
   return (
-    <div className="mx-auto mb-5 flex w-[87%] flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-      <h2 className={`${CARD_META_CLASS} mt-0!`}>{LABELS.olderTitle}</h2>
+    <div className="relative z-30 mx-auto mb-5 flex w-[87%] flex-wrap items-center justify-between gap-x-4 gap-y-1">
+      <div className="flex items-center gap-3">
+        <h2 className={`${CARD_META_CLASS} mt-0!`}>{LABELS.olderTitle}</h2>
+        {filter}
+      </div>
       <p className="text-sm leading-normal text-muted">
         <span
           className="mdi mdi-arrow-up mr-1 leading-none text-primary"

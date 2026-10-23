@@ -1,5 +1,4 @@
-import { useMemo, useState } from 'react'
-import { BLOGS_SECTION } from '../../../content/sections'
+import { useMemo, useState, type ReactNode } from 'react'
 import type { PostMeta } from '../../../types'
 import { PostCard } from './PostCard'
 import { PostTagFilter } from './PostTagFilter'
@@ -9,38 +8,43 @@ type TaggedPostListProps = {
   posts: PostMeta[]
   /** Show the tag filter. Off renders the plain card list. */
   filterable: boolean
+  /** Heading over the list, given the filter button to place beside it.
+      Without one, the filter sits alone at the list's top right. */
+  renderHeading?: (filter: ReactNode) => ReactNode
 }
 
 /**
- * The blog home's post cards, optionally under a toolbar like the portfolio's
- * Career Unlocks page: a rule, the post count and the tag filter. Picked tags
- * are local state, so the rest of the page neither changes nor re-renders.
+ * The blog home's post cards with an optional tag filter (the portfolio's
+ * Career Unlocks filter button). Picked tags are local state, so the rest of
+ * the page neither changes nor re-renders when they change.
  */
-export function TaggedPostList({ posts, filterable }: TaggedPostListProps) {
+export function TaggedPostList({ posts, filterable, renderHeading }: TaggedPostListProps) {
   const [selected, setSelected] = useState<string[]>([])
   const tags = useMemo(
     () => (filterable ? tagCounts(posts).map(({ tag }) => tag) : []),
     [filterable, posts],
   )
   const shown = postsWithAnyTag(posts, selected)
-  const countLabel =
-    posts.length === 1 ? BLOGS_SECTION.postCountOne : BLOGS_SECTION.postCountMany
+
+  const filter =
+    tags.length > 0 ? (
+      <PostTagFilter
+        options={tags}
+        selected={selected}
+        onChange={setSelected}
+        align={renderHeading ? 'left' : 'right'}
+      />
+    ) : null
 
   return (
     <>
-      {tags.length > 0 && (
-        <div className="relative z-30 mx-auto mb-5 flex w-[87%] items-center">
-          <div className="flex-1">
-            <hr className="border-slate-300" />
-          </div>
-          <div className="flex shrink-0 items-center justify-end gap-3 pl-4">
-            <span className="text-xs font-semibold tracking-[0.16em] whitespace-nowrap text-slate-400 uppercase">
-              {posts.length} {countLabel}
-            </span>
-            <PostTagFilter options={tags} selected={selected} onChange={setSelected} />
-          </div>
-        </div>
-      )}
+      {renderHeading
+        ? renderHeading(filter)
+        : filter && (
+            <div className="relative z-30 mx-auto mb-5 flex w-[87%] justify-end">
+              {filter}
+            </div>
+          )}
 
       {/* Exactly 87% of the pane — no max-width cap. */}
       <div className="mx-auto grid w-[87%] grid-cols-1 gap-6">
