@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "sync-rail": "node scripts/sync-rail.mjs",
+    "fit-covers": "node scripts/fit-trip-covers.mjs",
     "hooks:install": "git config core.hooksPath blogs/scripts/hooks",
     "deploy": "npm run build && rm -f dist/_redirects && wrangler deploy"
   },

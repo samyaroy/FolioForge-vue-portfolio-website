@@ -12,3 +12,6 @@ dist-ssr
 # Local secrets for wrangler / sync scripts
 .dev.vars
 .env
+
+# HD trip cover copies made by scripts/fit-trip-covers.mjs, kept for review
+.trip-cover-cards/
