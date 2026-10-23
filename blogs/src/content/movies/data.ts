@@ -9,6 +9,8 @@ export type MovieItem = {
   /** Exact IMDb profile URL; falls back to a name search when omitted. */
   directorImdbUrl?: string
   genre: string
+  /** Tags shown on cards and offered in the Movies filter. */
+  tags?: string[]
   /** ISO date string for when it was watched, e.g. "2026-07-12". */
   date?: string
   description: string

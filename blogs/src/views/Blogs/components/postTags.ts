@@ -1,4 +1,4 @@
-import type { PostMeta } from '../../../types'
+type TaggedItem = { tags?: string[] }
 
 // Tag helpers for the blog home's tag filter. Tags compare case-insensitively,
 // so "React" and "react" in different posts count as one tag.
@@ -9,10 +9,10 @@ const normalize = (tag: string) => tag.trim().toLowerCase()
 
 /** Each tag used by `posts`, with how many posts carry it; most used first,
     then alphabetical. */
-export function tagCounts(posts: PostMeta[]): TagCount[] {
+export function tagCounts(posts: TaggedItem[]): TagCount[] {
   const counts = new Map<string, number>()
   for (const post of posts) {
-    for (const tag of new Set(post.tags.map(normalize).filter(Boolean))) {
+    for (const tag of new Set((post.tags ?? []).map(normalize).filter(Boolean))) {
       counts.set(tag, (counts.get(tag) ?? 0) + 1)
     }
   }
@@ -22,7 +22,7 @@ export function tagCounts(posts: PostMeta[]): TagCount[] {
 }
 
 /** Posts carrying any of `tags`, or every post when none are picked. */
-export function postsWithAnyTag(posts: PostMeta[], tags: string[]): PostMeta[] {
+export function postsWithAnyTag<T extends TaggedItem>(posts: T[], tags: string[]): T[] {
   if (tags.length === 0) return posts
-  return posts.filter((post) => post.tags.some((t) => tags.includes(normalize(t))))
+  return posts.filter((post) => post.tags?.some((t) => tags.includes(normalize(t))))
 }

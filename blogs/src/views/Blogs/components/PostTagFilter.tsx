@@ -11,6 +11,9 @@ type PostTagFilterProps = {
       nearest positioned ancestor (the heading row), which keeps it on screen
       when the button sits partway across a narrow row. */
   align?: 'left' | 'right'
+  title?: string
+  openLabel?: string
+  clearLabel?: string
 }
 
 /**
@@ -25,6 +28,9 @@ export function PostTagFilter({
   selected,
   onChange,
   align = 'right',
+  title = BLOGS_SECTION.tagFilterTitle,
+  openLabel = BLOGS_SECTION.tagFilterOpen,
+  clearLabel = BLOGS_SECTION.tagFilterClear,
 }: PostTagFilterProps) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement | null>(null)
@@ -61,7 +67,7 @@ export function PostTagFilter({
         type="button"
         aria-expanded={open}
         aria-haspopup="dialog"
-        aria-label={BLOGS_SECTION.tagFilterOpen}
+        aria-label={openLabel}
         onClick={() => setOpen((o) => !o)}
         className="relative inline-flex h-10 w-8 items-center justify-center rounded-full border border-white/60 bg-white/50 text-slate-600 shadow-lg backdrop-blur-md transition-all duration-200 hover:border-primary/60 hover:bg-white/70 hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:outline-none"
       >
@@ -79,19 +85,19 @@ export function PostTagFilter({
       {open && (
         <div
           role="dialog"
-          aria-label={BLOGS_SECTION.tagFilterTitle}
+          aria-label={title}
           className={`absolute top-full z-40 mt-2 w-[min(19rem,calc(100vw-2rem))] rounded-[12px] border border-white/70 bg-white/85 p-4 shadow-xl backdrop-blur-md ${align === 'left' ? 'left-0' : 'right-0'}`}
         >
           <div className="flex items-start justify-between gap-2">
             <p className="text-xs font-bold tracking-[0.22em] text-slate-400 uppercase">
-              {BLOGS_SECTION.tagFilterTitle}
+              {title}
             </p>
             <button
               type="button"
               onClick={() => onChange([])}
               className={`-mt-1 min-w-14 text-right text-xs font-semibold tracking-[0.18em] text-primary uppercase transition-colors duration-200 hover:text-primary-700 ${selected.length > 0 ? 'visible' : 'pointer-events-none invisible'}`}
             >
-              {BLOGS_SECTION.tagFilterClear}
+              {clearLabel}
             </button>
           </div>
 

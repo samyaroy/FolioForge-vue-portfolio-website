@@ -8,6 +8,7 @@ import {
   CARD_META_CLASS,
   CARD_SHELL_CLASS,
   CARD_TITLE_CLASS,
+  POST_TAG_CLASS,
 } from '../../../../lib/ui'
 import { PosterArt } from '../PosterArt'
 import { MovieModal } from '../MovieModal'
@@ -84,6 +85,15 @@ export function MovieCard({ movie, illustrationSide = 'left' }: MovieCardProps) 
         </div>
         {movie.description && (
           <p className={CARD_EXCERPT_CLASS}>{movie.description}</p>
+        )}
+        {!!movie.tags?.length && (
+          <ul className="mt-3 flex flex-wrap gap-[0.4rem]" aria-label="Tags">
+            {movie.tags.map((tag) => (
+              <li key={tag} className={POST_TAG_CLASS}>
+                {tag}
+              </li>
+            ))}
+          </ul>
         )}
         <button
           type="button"

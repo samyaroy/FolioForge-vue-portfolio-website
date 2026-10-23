@@ -34,6 +34,10 @@ interface SectionsContent {
     tag: string
     cardLabel: string
     emptyLabel: string
+    filteredEmptyLabel: string
+    tagFilterTitle: string
+    tagFilterOpen: string
+    tagFilterClear: string
     reviewLabel: string
     watchedLabel: string
     noteLabel: string

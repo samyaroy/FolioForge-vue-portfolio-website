@@ -43,6 +43,10 @@ movies:
   tag: movies
   cardLabel: Movie
   emptyLabel: Nothing worth binge-watching here yet.
+  filteredEmptyLabel: No films match the selected tags.
+  tagFilterTitle: Filter movies
+  tagFilterOpen: Open movie filters
+  tagFilterClear: Clear
   reviewLabel: "Read review ->"
   # Labels inside the review modal opened from a movie card.
   watchedLabel: "watched"

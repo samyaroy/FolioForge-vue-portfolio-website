@@ -6,6 +6,7 @@
 #
 # Optional per-item fields:
 #   directorImdbUrl: exact IMDb profile URL for the director
+#   tags:   list of tags shown on cards and used by the filter (case-insensitive)
 #   year:   release year, shown in the card/modal meta line
 #   date:   when you watched it, as "YYYY-MM-DD"
 #   image:  poster picture; a public path, full URL, or bare CDN key resolved to
@@ -22,6 +23,7 @@ items:
     director: Robert Wiene
     directorImdbUrl: https://www.imdb.com/name/nm0927468/
     genre: German Expressionist horror
+    tags: [horror, silent cinema, German expressionism]
     year: 1920
     description: "A landmark of silent cinema, with distorted sets and stark shadows turning a mystery about a hypnotist and a sleepwalker into a fever dream."
     image: /posters/the-cabinet-of-dr-caligari.jpg
