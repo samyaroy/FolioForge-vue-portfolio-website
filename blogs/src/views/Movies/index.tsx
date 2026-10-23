@@ -10,6 +10,7 @@ import {
   INTRO_TITLE_CLASS,
 } from '../../lib/ui'
 import { usePageTitle } from '../../lib/usePageTitle'
+import { CreatorShoutouts } from './components/CreatorShoutouts'
 import { MovieCard } from './components/MovieCard'
 import { PostTagFilter } from '../Blogs/components/PostTagFilter'
 import { postsWithAnyTag, tagCounts } from '../Blogs/components/postTags'
@@ -61,6 +62,8 @@ export function MoviesPage() {
           ))}
         </div>
       )}
+
+      <CreatorShoutouts />
     </>
   )
 }

@@ -1,0 +1,16 @@
+# Creator shoutouts below the movie reviews. Edit the introductory line here;
+# add creators under items in the order you want them shown.
+# Required: id, name. Optional: platform, url, note (your personal shoutout).
+# Leave url empty until you have a link; the tile still shows the creator name.
+# Set status: disabled on an entry to hide it without deleting it.
+
+title: Get best movie recommendations from these creators...
+
+items:
+  - id: pj-explained
+    name: Priyanshu Jaiswal (PJ Explained)
+    url: https://www.instagram.com/pjexplained/?hl=en
+
+  - id: amrita-mohapatra
+    name: Amrita Mohapatra
+    url: "" # Paste Amrita's link here when ready.

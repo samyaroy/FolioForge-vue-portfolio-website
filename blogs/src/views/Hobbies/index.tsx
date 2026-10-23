@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { HOBBIES_SECTION } from '../../content/sections'
 import { HOBBY_TILES } from '../../content/hobbies/data'
 import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
@@ -15,6 +16,15 @@ import { usePageTitle } from '../../lib/usePageTitle'
 
 export function HobbiesPage() {
   usePageTitle(HOBBIES_SECTION.title)
+  // Shuffle once per page visit; tile animations and rerenders keep this order.
+  const [tiles] = useState(() => {
+    const shuffled = [...HOBBY_TILES]
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1))
+      ;[shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]]
+    }
+    return shuffled
+  })
   const showPageDescription = isPageDescriptionEnabled('hobbies')
   const tag = HOBBIES_SECTION.tag.toLowerCase()
   const hobbyPosts = posts.filter((post) =>
@@ -35,7 +45,7 @@ export function HobbiesPage() {
         aria-label="Hobbies"
       >
         <ul className="flex flex-wrap justify-center gap-3 sm:gap-4">
-          {HOBBY_TILES.map((tile, index) => (
+          {tiles.map((tile, index) => (
             <HobbyTile key={tile.label} tile={tile} order={index} />
           ))}
         </ul>

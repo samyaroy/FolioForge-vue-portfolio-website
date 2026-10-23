@@ -78,6 +78,14 @@ X shares an excerpt and a link; LinkedIn shares the link. Instagram saves a
 portrait PNG with a review excerpt and copies the full review and link as a
 caption for manual posting. No account connection is required.
 
+## Movie creator shoutouts
+
+The Movies page includes a small creator recommendation line below the reviews.
+Edit `src/content/movies/creators.yml` to change that line,
+and add creator names, platforms, links, and personal shoutout notes under
+`items`. Entries appear in the order you write them; `status: disabled` hides
+an entry. The file includes a commented example to get started.
+
 ## Rail-route geometry (train map)
 
 Train legs on the travel map are drawn from real route geometry. To stay within

@@ -1,5 +1,5 @@
 # Tiles for the Hobbies page mosaic. Loaded through data.ts, which applies
-# the types.
+# the types. Tile order is shuffled each time the Hobbies page opens.
 #
 # tiles entries:
 #   label — hobby name (tooltip + screen readers; tiles are icon-only)
