@@ -3,6 +3,9 @@ import { MAIN_SITE_URL } from '../../content/navigation'
 import { FOOTER_CONTENT, SITE_PROFILE } from '../../content/site'
 
 const META_TEXT_CLASS = 'text-sm leading-5 text-[#6b7280]'
+// The icon and design credits under the name sit a step smaller than the
+// copyright lines.
+const CREDIT_TEXT_CLASS = 'text-xs leading-4 text-[#6b7280]'
 // Matches the root site's global anchor style (font-weight 500, #646cff,
 // no underline, #535bf2 on hover) used by its attribution lines.
 const META_LINK_CLASS =
@@ -29,7 +32,7 @@ export function Footer() {
                   aria-hidden="true"
                 />
               </a>
-              <p className={META_TEXT_CLASS}>
+              <p className={CREDIT_TEXT_CLASS}>
                 {FOOTER_CONTENT.iconAttributionIntro}{' '}
                 <a
                   className={META_LINK_CLASS}
@@ -58,7 +61,7 @@ export function Footer() {
                   {FOOTER_CONTENT.iconAttributionLinks[2].label}
                 </a>
               </p>
-              <p className={`mt-1 ${META_TEXT_CLASS}`}>
+              <p className={`mt-1 ${CREDIT_TEXT_CLASS}`}>
                 {FOOTER_CONTENT.designCreditIntro}{' '}
                 <a
                   className={META_LINK_CLASS}

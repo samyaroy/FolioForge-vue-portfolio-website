@@ -3,7 +3,7 @@ import { MODE_ICONS } from './transportModes'
 import type { TravelOverview as Overview } from './travelStats'
 
 const TILE_CLASS =
-  'min-w-0 rounded-lg border border-border bg-surface px-4 py-3 shadow-[0_1px_2px_rgba(15,23,42,0.04)]'
+  'min-w-0 rounded-lg border border-border bg-surface px-3 py-2.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]'
 
 const LABEL_CLASS =
   'flex items-center gap-1 text-[0.625rem] leading-normal font-semibold tracking-[0.1em] text-faint uppercase'
@@ -26,13 +26,15 @@ function StatTile({
   sub?: string
 }) {
   return (
-    <div className={TILE_CLASS}>
+    // Values sit on the tile's bottom edge so they line up across a row even
+    // when a narrow tile wraps its label onto two lines.
+    <div className={`${TILE_CLASS} flex flex-col justify-between`}>
       <dt className={LABEL_CLASS}>
         <span className={`mdi ${icon} text-xs leading-none`} aria-hidden="true" />
         {label}
       </dt>
       <dd className="mt-1 flex items-baseline gap-1.5">
-        <span className="text-3xl leading-tight font-black tracking-[-0.033em] text-ink">
+        <span className="text-[1.75rem] leading-tight font-black tracking-[-0.033em] text-ink">
           {value.toLocaleString()}
         </span>
         {sub && <span className="text-xs text-muted">{sub}</span>}
@@ -65,8 +67,8 @@ export function TravelOverview({ overview, totalStates }: TravelOverviewProps) {
   ].filter(Boolean) as { label: string; value: string; sub?: string }[]
 
   return (
-    <section aria-label="Travel at a glance" className="mb-10">
-      <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <section aria-label="Travel at a glance" className="shrink-0">
+      <dl className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
         <StatTile
           icon="mdi-map-outline"
           label={LABELS.states}
@@ -91,7 +93,7 @@ export function TravelOverview({ overview, totalStates }: TravelOverviewProps) {
       </dl>
 
       <div
-        className={`${TILE_CLASS} mt-3 grid gap-x-6 gap-y-4 py-4 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]`}
+        className={`${TILE_CLASS} mt-3 grid gap-x-5 gap-y-4 py-3 sm:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]`}
       >
         {overview.modes.length > 0 && (
           <div>
@@ -99,11 +101,11 @@ export function TravelOverview({ overview, totalStates }: TravelOverviewProps) {
               <span className="mdi mdi-routes text-xs leading-none" aria-hidden="true" />
               {LABELS.gettingAround}
             </h2>
-            <ul className="mt-2.5 flex flex-col gap-2">
+            <ul className="mt-2 flex flex-col gap-1.5">
               {overview.modes.map(({ mode, legs }) => (
                 <li
                   key={mode}
-                  className="grid grid-cols-[5.5rem_minmax(0,1fr)_3.25rem] items-center gap-3 text-xs text-muted"
+                  className="grid grid-cols-[5rem_minmax(0,1fr)_3.25rem] items-center gap-3 text-xs text-muted"
                   title={`${mode}: ${legs} ${LABELS.legs}`}
                 >
                   <span className="inline-flex items-center gap-1.5 capitalize">
@@ -130,7 +132,7 @@ export function TravelOverview({ overview, totalStates }: TravelOverviewProps) {
         )}
 
         {highlights.length > 0 && (
-          <dl className="flex flex-col justify-center gap-3 sm:border-l sm:border-border sm:pl-6">
+          <dl className="flex flex-col justify-center gap-3 sm:border-l sm:border-border sm:pl-5">
             {highlights.map((h) => (
               <div key={h.label}>
                 <dt className={LABEL_CLASS}>{h.label}</dt>

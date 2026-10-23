@@ -3,6 +3,7 @@ import * as echarts from 'echarts'
 import { PostCard } from '../Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
 import { usePageTitle } from '../../lib/usePageTitle'
+import { useStickyTop } from '../../lib/useStickyTop'
 import { TRAVEL_SECTION } from '../../content/sections'
 import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
@@ -111,6 +112,9 @@ const PURPOSE_SERIES = 'Purpose'
 const CITIES_SERIES = 'Cities'
 
 const OVERVIEW = buildTravelOverview(TRIPS)
+
+// The map + stats column pins just under the sticky header (top-19).
+const SIDE_COLUMN_TOP_PX = 76
 const TRIP_TARGETS = new Map(TRIPS.map((trip) => [trip.id, tripMapTargets(trip)]))
 
 function bucketFor(count: number): number {
@@ -158,9 +162,10 @@ function tooltipFormatter(params: unknown): string {
 }
 
 // Shared placement for both geo layers (choropleth + border outline) so they
-// always overlap exactly. Slightly below center so the top isn't clipped.
-const MAP_LAYOUT_CENTER = ['50%', '52%']
-const MAP_LAYOUT_SIZE = '108%'
+// always overlap exactly. ECharts fits the map inside this box keeping its
+// aspect, so the whole country (Kashmir to the southern tip) is always shown;
+// the pane's aspect ratio matches India's so the map fills the width.
+const MAP_LAYOUT = { left: 8, right: 8, top: 8, bottom: 8 }
 
 function buildOption(
   cities: GeoCity[],
@@ -184,9 +189,7 @@ function buildOption(
         nameProperty: 'st_nm',
         z: 3,
         tooltip: { show: true, formatter: tooltipFormatter },
-        // Zoom in to make better use of the (now taller) pane width.
-        layoutCenter: MAP_LAYOUT_CENTER,
-        layoutSize: MAP_LAYOUT_SIZE,
+        ...MAP_LAYOUT,
         // Mild horizontal stretch (default 0.75 squeezes longitude; higher widens).
         aspectScale: 0.9,
         itemStyle: {
@@ -222,8 +225,7 @@ function buildOption(
         nameProperty: 'st_nm',
         z: 1,
         silent: true,
-        layoutCenter: MAP_LAYOUT_CENTER,
-        layoutSize: MAP_LAYOUT_SIZE,
+        ...MAP_LAYOUT,
         aspectScale: 0.9,
         itemStyle: {
           areaColor: 'transparent',
@@ -359,6 +361,8 @@ export function TravelPage() {
   usePageTitle(TRAVEL_SECTION.title)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
+  const sideColumnRef = useRef<HTMLDivElement | null>(null)
+  const sideColumnTop = useStickyTop(sideColumnRef, SIDE_COLUMN_TOP_PX)
   // Names actually plotted by each city series once the map is drawn, so a
   // highlight never asks a series for a point it doesn't have.
   const plottedRef = useRef<{ cities: Set<string>; stayed: Set<string> } | null>(
@@ -467,8 +471,6 @@ export function TravelPage() {
           )}
         </section>
 
-        <TravelOverview overview={OVERVIEW} totalStates={totalStates} />
-
         {travelPosts.length > 0 && (
           <div className={POST_LIST_CLASS}>
             {travelPosts.map((post) => (
@@ -512,115 +514,128 @@ export function TravelPage() {
         )}
       </div>
 
-      <section
-        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map] min-[900px]:sticky min-[900px]:top-19 min-[900px]:flex min-[900px]:h-[calc(100vh-6rem)] min-[900px]:flex-col min-[900px]:overflow-hidden"
-        aria-label="Map of states visited in India"
+      {/* Map with the stats under it, pinned together on desktop. The map
+          takes the height the stats leave (within limits); a column that
+          still overflows the viewport pins by its bottom (useStickyTop). */}
+      <div
+        ref={sideColumnRef}
+        style={{ top: sideColumnTop }}
+        className="flex min-w-0 flex-col gap-3 min-[900px]:sticky"
       >
-        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          <h2 className="text-lg font-bold text-ink">{TRAVEL_SECTION.mapTitle}</h2>
-          <p className="inline-flex items-center gap-1 text-xs text-faint max-[899px]:hidden">
-            <span className="mdi mdi-cursor-default-click-outline leading-none" aria-hidden="true" />
-            {TRAVEL_OVERVIEW_LABELS.mapHint}
-          </p>
-        </div>
+        <section
+          className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map]"
+          aria-label="Map of states visited in India"
+        >
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h2 className="text-lg font-bold text-ink">{TRAVEL_SECTION.mapTitle}</h2>
+            <p className="inline-flex items-center gap-1 text-xs text-faint max-[899px]:hidden">
+              <span className="mdi mdi-cursor-default-click-outline leading-none" aria-hidden="true" />
+              {TRAVEL_OVERVIEW_LABELS.mapHint}
+            </p>
+          </div>
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-border pb-3 text-[0.72rem] text-muted">
-          <span className={LEGEND_ROW_CLASS}>
-            <span>{COUNT_LABELS[0]}</span>
-            <span className="inline-flex overflow-hidden rounded-[3px] border border-border">
-              {COUNT_PALETTE.map((c) => (
-                <i
-                  key={c}
-                  className="block h-2.5 w-3.25"
-                  style={{ background: c }}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-border pb-3 text-[0.72rem] text-muted">
+            <span className={LEGEND_ROW_CLASS}>
+              <span>{COUNT_LABELS[0]}</span>
+              <span className="inline-flex overflow-hidden rounded-[3px] border border-border">
+                {COUNT_PALETTE.map((c) => (
+                  <i
+                    key={c}
+                    className="block h-2.5 w-3.25"
+                    style={{ background: c }}
+                  />
+                ))}
+              </span>
+              <span>
+                {COUNT_LABELS[COUNT_LABELS.length - 1]}{' '}
+                {TRAVEL_LEGEND_LABELS.citiesSuffix}
+              </span>
+            </span>
+
+            {homeState && (
+              <span className={LEGEND_ROW_CLASS}>
+                <span
+                  className="inline-block size-3 rounded-[3px] border border-[#4c1d95]"
+                  style={{ background: HOME_COLOR }}
                 />
-              ))}
-            </span>
-            <span>
-              {COUNT_LABELS[COUNT_LABELS.length - 1]}{' '}
-              {TRAVEL_LEGEND_LABELS.citiesSuffix}
-            </span>
-          </span>
+                {TRAVEL_LEGEND_LABELS.homeState} ({homeState})
+              </span>
+            )}
 
-          <span className={LEGEND_ROW_CLASS}>
-            <span
-              className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
-            />
-            {TRAVEL_LEGEND_LABELS.academic}
-          </span>
-          <span className={LEGEND_ROW_CLASS}>
-            <span
-              className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
-            />
-            {TRAVEL_LEGEND_LABELS.travel}
-          </span>
-          <span className={LEGEND_ROW_CLASS}>
-            <span
-              className={`${LEGEND_HATCH_CLASS} bg-[radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] bg-size-[3px_3px]`}
-            />
-            {TRAVEL_LEGEND_LABELS.both}
-          </span>
-
-          {homeState && (
             <span className={LEGEND_ROW_CLASS}>
-              <span
-                className="inline-block size-3 rounded-[3px] border border-[#4c1d95]"
-                style={{ background: HOME_COLOR }}
-              />
-              {TRAVEL_LEGEND_LABELS.homeState} ({homeState})
+              <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#ef4444] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
+              {TRAVEL_LEGEND_LABELS.cityVisited}
             </span>
-          )}
 
-          <span className={LEGEND_ROW_CLASS}>
-            <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#ef4444] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
-            {TRAVEL_LEGEND_LABELS.cityVisited}
-          </span>
+            {stayedCities.length > 0 && (
+              <span className={LEGEND_ROW_CLASS}>
+                <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#2563eb] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
+                {TRAVEL_LEGEND_LABELS.stayed}
+              </span>
+            )}
 
-          {stayedCities.length > 0 && (
-            <span className={LEGEND_ROW_CLASS}>
-              <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#2563eb] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
-              {TRAVEL_LEGEND_LABELS.stayed}
-            </span>
-          )}
+            {homeCity && (
+              <span className={LEGEND_ROW_CLASS}>
+                <svg
+                  className="inline-block h-3 w-2.25"
+                  viewBox="0 0 24 32"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 0C5.4 0 0 5.4 0 12c0 8 12 20 12 20s12-12 12-20C24 5.4 18.6 0 12 0z"
+                    fill={HOME_CITY_COLOR}
+                    stroke="#7c2d12"
+                  />
+                  <circle cx="12" cy="12" r="4.5" fill="#fff" />
+                </svg>
+                {TRAVEL_LEGEND_LABELS.homeCity} ({homeCity})
+              </span>
+            )}
+          </div>
 
-          {homeCity && (
-            <span className={LEGEND_ROW_CLASS}>
-              <svg
-                className="inline-block h-3 w-2.25"
-                viewBox="0 0 24 32"
-                aria-hidden="true"
-              >
-                <path
-                  d="M12 0C5.4 0 0 5.4 0 12c0 8 12 20 12 20s12-12 12-20C24 5.4 18.6 0 12 0z"
-                  fill={HOME_CITY_COLOR}
-                  stroke="#7c2d12"
+          {/* India's own proportions at full width, so the map is never
+              squeezed to fit the viewport. */}
+          <div className="relative aspect-[100/115] w-full overflow-hidden bg-white">
+            <div className="size-full bg-white" ref={containerRef} />
+
+            {/* Purpose hatching key, over the empty Arabian Sea corner. */}
+            <div className="absolute bottom-3 left-3 z-2 flex flex-col gap-1 rounded-lg border border-border bg-[rgba(255,255,255,0.85)] px-2.5 py-2 text-[0.72rem] text-muted backdrop-blur-[2px]">
+              <span className={LEGEND_ROW_CLASS}>
+                <span
+                  className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
                 />
-                <circle cx="12" cy="12" r="4.5" fill="#fff" />
-              </svg>
-              {TRAVEL_LEGEND_LABELS.homeCity} ({homeCity})
-            </span>
-          )}
-        </div>
-
-        <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white min-[900px]:h-auto min-[900px]:min-h-0 min-[900px]:flex-1">
-          <div
-            className="h-[92vh] min-h-150 w-full bg-white min-[900px]:h-full min-[900px]:min-h-0"
-            ref={containerRef}
-          />
-        </div>
-        <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
-          {TRAVEL_SECTION.mapAttribution}
-        </p>
-
-        {status === 'loading' && (
-          <p className="mt-2 text-sm text-muted">Loading map…</p>
-        )}
-        {status === 'error' && (
-          <p className="mt-2 text-sm text-[#dc2626]">
-            Could not load the map data. Please try again later.
+                {TRAVEL_LEGEND_LABELS.academic}
+              </span>
+              <span className={LEGEND_ROW_CLASS}>
+                <span
+                  className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+                />
+                {TRAVEL_LEGEND_LABELS.travel}
+              </span>
+              <span className={LEGEND_ROW_CLASS}>
+                <span
+                  className={`${LEGEND_HATCH_CLASS} bg-[radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] bg-size-[3px_3px]`}
+                />
+                {TRAVEL_LEGEND_LABELS.both}
+              </span>
+            </div>
+          </div>
+          <p className="mt-[0.65rem] text-left text-xs leading-normal text-faint">
+            {TRAVEL_SECTION.mapAttribution}
           </p>
-        )}
-      </section>
+
+          {status === 'loading' && (
+            <p className="mt-2 text-sm text-muted">Loading map…</p>
+          )}
+          {status === 'error' && (
+            <p className="mt-2 text-sm text-[#dc2626]">
+              Could not load the map data. Please try again later.
+            </p>
+          )}
+        </section>
+
+        <TravelOverview overview={OVERVIEW} totalStates={totalStates} />
+      </div>
     </div>
   )
 }

@@ -29,6 +29,8 @@
 #   mode   — how this stop was reached from the PREVIOUS one; omit on the
 #            first stop. One of: flight | train | bus | car | bike | ferry | foot.
 #            Will pick the animation style (e.g. arced path for flights).
+#            Use foot for walking and treks: the leg follows mapped footpaths,
+#            or is drawn as a straight dotted line when the trail isn't mapped.
 #   lat    — explicit coordinates; when both are set, geocoding is
 #   lng      skipped for this stop (use for small places the geocoder misses)
 #   train  — 5-digit train number for mode: train legs; the route map then
@@ -58,8 +60,13 @@ trips:
     location: Rammam, West Bengal
     places:
       - Kolkata
-      # Village coordinates: https://mapcarta.com/N2554092089
-      - { name: Rammam, mode: car, lat: 27.15772, lng: 88.08007 }
+      # Village coordinates: Srikhola and Rimbik from OpenStreetMap (the
+      # geocoder misses Srikhola and has two Rimbiks), Rammam from
+      # https://mapcarta.com/N2554092089
+      - { name: Srikhola, mode: car, lat: 27.13193, lng: 88.07637 }
+      - { name: Rammam, mode: foot, lat: 27.15772, lng: 88.08007 }
+      - { name: Rimbik, mode: car, lat: 27.11692, lng: 88.10143 }
+      - { name: Darjeeling, mode: car }
     summary: ABC
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026.jpeg
     tags: [Mountains]
