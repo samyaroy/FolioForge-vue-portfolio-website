@@ -58,6 +58,8 @@ export type Trip = {
   narrative?: string[]
   /** Metric cards on the details page, e.g. { label: Distance, value: 320 km }. */
   stats?: TripStat[]
+  /** Optional destination facts, shown across the page above the photo gallery. */
+  placeFacts?: string[]
   /** Image for the details page "Route map" card; falls back to coverImage. */
   routeMapImage?: string
   /** Photo URLs for the details page gallery grid. */

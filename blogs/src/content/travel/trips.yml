@@ -16,6 +16,8 @@
 #   narrative     — list of long-form paragraphs for the details page
 #                   (falls back to summary when omitted)
 #   stats         — metric cards for the details page: {label, value} pairs
+#   placeFacts    — optional list of short destination facts, shown in a
+#                   full-width card above the photos; omit or leave [] to hide
 #   routeMapImage — image for the details page "Route map" card
 #                   (falls back to coverImage when omitted)
 #   gallery       — photo URLs for the details page gallery grid
@@ -68,6 +70,10 @@ trips:
       - { label: Places stayed, value: 4 villages }
       - { label: Treked, value: '15 km' }
       # - { label: Distance travelled, value: 501 km }
+    # Optional: uncomment and fill in to show the "About the place" card.
+    # placeFacts:
+    #   - "Add a short fact about the destination here."
+    #   - "Add another fact, local highlight, or useful detail."
     gallery:
       - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-02.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-03.jpeg

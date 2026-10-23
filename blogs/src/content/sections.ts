@@ -53,6 +53,7 @@ interface SectionsContent {
     backToTravel: string
     routeMapTitle: string
     routeMapAttribution: string
+    placeFactsTitle: string
   }
   post: {
     backToBlogs: string
