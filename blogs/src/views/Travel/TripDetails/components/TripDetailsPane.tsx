@@ -5,7 +5,7 @@ const CHIP_CLASS =
   'inline-flex items-center rounded-full border border-border bg-surface-soft px-3 py-1 text-xs leading-normal tracking-[0.16em] uppercase'
 
 const STAT_CARD_CLASS =
-  'min-h-24 rounded-xl border border-border bg-surface p-5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]'
+  'min-h-16 min-w-0 rounded-lg border border-border bg-surface px-3 py-2.5 shadow-[0_1px_2px_rgba(15,23,42,0.04)]'
 
 type TripDetailsPaneProps = {
   trip: Trip
@@ -68,7 +68,7 @@ export function TripDetailsPane({
 
       {stats.length > 0 && (
         <div
-          className="mt-auto grid grid-cols-1 gap-4 sm:grid-cols-3"
+          className="mt-auto grid grid-cols-2 gap-2 sm:grid-cols-3"
           aria-busy={statsLoading}
         >
           {statsLoading ? (
@@ -80,18 +80,18 @@ export function TripDetailsPane({
                   className={`${STAT_CARD_CLASS} animate-pulse`}
                   aria-hidden="true"
                 >
-                  <div className="h-3 w-2/3 rounded-sm bg-border" />
-                  <div className="mt-3 h-7 w-1/2 rounded-sm bg-surface-soft" />
+                  <div className="h-2.5 w-2/3 rounded-sm bg-border" />
+                  <div className="mt-2 h-5 w-1/2 rounded-sm bg-surface-soft" />
                 </div>
               ))}
             </>
           ) : (
             stats.map((stat) => (
               <div key={stat.label} className={STAT_CARD_CLASS}>
-                <div className="text-xs leading-normal font-bold tracking-[0.16em] text-faint uppercase">
+                <div className="text-[0.625rem] leading-normal font-semibold tracking-[0.1em] text-faint uppercase">
                   {stat.label}
                 </div>
-                <div className="mt-2 text-2xl leading-tight font-bold text-ink">
+                <div className="mt-1 text-lg leading-tight font-bold wrap-break-word text-ink">
                   {stat.value}
                 </div>
               </div>
