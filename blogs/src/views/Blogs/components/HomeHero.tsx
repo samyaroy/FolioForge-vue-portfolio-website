@@ -77,12 +77,16 @@ export function HomeHero({ aside }: HomeHeroProps) {
     )
   }
 
-  // With a panel: artwork and panel side by side from lg. The gap leaves room
+  // With a panel: artwork and panel side by side from lg, across the same 90vw
+  // as the post list below (capped on very wide screens). The gap leaves room
   // for the social rail, which sits just off the artwork's right edge.
   return (
-    <section className="relative mx-auto mb-9 max-w-6xl" aria-label="Featured">
+    <section
+      className="relative mb-9 ml-[50%] w-[90vw] max-w-[88rem] -translate-x-1/2"
+      aria-label="Featured"
+    >
       {heading}
-      <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:items-center lg:gap-x-18">
+      <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:items-center lg:gap-x-18">
         <div className="mx-auto w-full max-w-[52rem]">{artwork}</div>
         {aside}
       </div>

@@ -15,16 +15,20 @@ hero:
   alt: Featured artwork
   caption: Generated using Gemini 3.1 Pro
 
-# "What's new" panel beside the hero (flag: showHomeLatest). Each row is the
-# newest entry from one section; a row hides when its section is switched off
-# or has nothing in it.
+# "What's new" panel beside the hero (flag: showHomeLatest): the newest post
+# as a featured card, then a row each for the newest reading and movie. A row
+# hides when its section is switched off or has nothing in it.
 homeLatest:
-  kicker: Latest
+  # Small uppercase heading above the panel.
   title: What's new around here
   post: New post
+  readPost: Read post
   reading: Reading
   movie: Watched
-  trip: Latest trip
+  # Heading over the post list below the hero while the newest post is
+  # featured up top; {title} becomes a link to that post.
+  olderTitle: Older posts
+  olderNote: "The newest, {title}, is featured up top."
 
 # Social links rendered vertically on the right edge of the hero.
 # Edit the hrefs to point at your own profiles; remove any you don't use.

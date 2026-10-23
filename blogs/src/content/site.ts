@@ -16,12 +16,13 @@ export interface HomeHero {
 }
 
 export interface HomeLatestLabels {
-  kicker: string
   title: string
   post: string
+  readPost: string
   reading: string
   movie: string
-  trip: string
+  olderTitle: string
+  olderNote: string
 }
 
 export interface LabeledLink {

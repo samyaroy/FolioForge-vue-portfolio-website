@@ -42,3 +42,7 @@ export const CARD_ART_BACKDROP_CLASS =
 
 export const CARD_META_CLASS =
   'mt-3 flex flex-wrap items-center gap-2 text-xs leading-normal font-bold tracking-[0.16em] text-faint uppercase'
+
+// Tag chip on post cards (the post list and the home page's featured post).
+export const POST_TAG_CLASS =
+  'rounded-[5px] bg-[rgba(219,234,254,0.5)] px-[0.4rem] py-1 text-[0.625rem] leading-none font-semibold tracking-widest text-[#475569] uppercase'

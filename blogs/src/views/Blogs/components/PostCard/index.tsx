@@ -7,6 +7,7 @@ import {
   CARD_META_CLASS,
   CARD_SHELL_STATIC_CLASS,
   CARD_TITLE_CLASS,
+  POST_TAG_CLASS,
 } from '../../../../lib/ui'
 
 type PostCardProps = {
@@ -64,10 +65,7 @@ export function PostCard({ post }: PostCardProps) {
         {post.tags.length > 0 && (
           <ul className="mt-auto flex flex-wrap gap-[0.4rem] pt-3">
             {post.tags.map((tag) => (
-              <li
-                key={tag}
-                className="rounded-[5px] bg-[rgba(219,234,254,0.5)] px-[0.4rem] py-1 text-[0.625rem] leading-none font-semibold tracking-widest text-[#475569] uppercase"
-              >
+              <li key={tag} className={POST_TAG_CLASS}>
                 {tag}
               </li>
             ))}
