@@ -392,6 +392,7 @@ type TripRouteMapProps = {
 export function TripRouteMap({ trip, onLoadingChange }: TripRouteMapProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [errorMessage, setErrorMessage] = useState('Could not load the route map. Please try again later.')
 
   useEffect(() => {
     onLoadingChange?.(true)
@@ -412,7 +413,14 @@ export function TripRouteMap({ trip, onLoadingChange }: TripRouteMapProps) {
           loadIndiaStateBorders(),
         ])
         if (cancelled) return
-        if (stops.length < 2) throw new Error('fewer than two locatable stops')
+        if (stops.length < 2) {
+          const locatedNames = new Set(stops.map(stop => stop.name))
+          const missingNames = [...new Set(tripStops(trip).filter(stop => !locatedNames.has(stop.name)).map(stop => stop.name))]
+          if (missingNames.length) {
+            setErrorMessage(`Could not locate ${missingNames.join(', ')} in India. This route is unavailable.`)
+          }
+          throw new Error('fewer than two locatable stops')
+        }
 
         const legCount = stops.length - 1
         const legGeoms: (LegCoords | null)[] = stops.slice(1).map(() => null)
@@ -527,7 +535,7 @@ export function TripRouteMap({ trip, onLoadingChange }: TripRouteMapProps) {
       )}
       {status === 'error' && (
         <p className="absolute inset-0 flex items-center justify-center px-6 text-center text-sm text-[#dc2626]">
-          Could not load the route map. Please try again later.
+          {errorMessage}
         </p>
       )}
     </div>

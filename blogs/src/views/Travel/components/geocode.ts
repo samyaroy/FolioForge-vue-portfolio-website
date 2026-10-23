@@ -1,6 +1,6 @@
 import type { CityVisit } from '../../../content/travel/data'
 
-// Resolve city names to coordinates at runtime via the Open-Meteo geocoding
+// Resolve Indian city names to coordinates via the Open-Meteo geocoding
 // API (free, no key, CORS-enabled). Results are cached in localStorage so the
 // network is only hit the first time a name is seen.
 
@@ -16,7 +16,10 @@ export type GeocodeQuery = {
 }
 
 const ENDPOINT = 'https://geocoding-api.open-meteo.com/v1/search'
-const CACHE_KEY = 'travel-geocode-v1'
+// Old results could point to another country. Re-resolve them under this policy.
+const CACHE_KEY = 'travel-geocode-in-v2'
+const LOOKUP_TIMEOUT_MS = 8_000
+const pendingLookups = new Map<string, Promise<Coord | null>>()
 
 type Coord = { lat: number; lng: number }
 type Cache = Record<string, Coord>
@@ -30,10 +33,18 @@ type GeoResult = {
 
 function readCache(): Cache {
   try {
-    return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}') as Cache
+    const value: unknown = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}')
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
+    return Object.fromEntries(Object.entries(value).filter(([, coord]) => validCoord(coord)))
   } catch {
     return {}
   }
+}
+
+function validCoord(value: unknown): value is Coord {
+  if (!value || typeof value !== 'object') return false
+  const { lat, lng } = value as Coord
+  return Number.isFinite(lat) && Math.abs(lat) <= 90 && Number.isFinite(lng) && Math.abs(lng) <= 180
 }
 
 function writeCache(cache: Cache): void {
@@ -49,16 +60,22 @@ function keyFor(city: GeocodeQuery): string {
 }
 
 async function lookup(city: GeocodeQuery): Promise<Coord | null> {
-  const url = `${ENDPOINT}?name=${encodeURIComponent(
-    city.name,
-  )}&count=10&language=en&format=json`
-  const res = await fetch(url)
+  const params = new URLSearchParams({
+    name: city.state ? `${city.name}, ${city.state}` : city.name,
+    countryCode: 'IN',
+    count: '10',
+    language: 'en',
+    format: 'json',
+  })
+  const res = await fetch(`${ENDPOINT}?${params}`, {
+    signal: AbortSignal.timeout(LOOKUP_TIMEOUT_MS),
+  })
   if (!res.ok) return null
   const data = (await res.json()) as { results?: GeoResult[] }
   const results = data.results ?? []
-  // Prefer Indian matches; if a state is given, prefer the one in that state.
-  const inIndia = results.filter((r) => r.country_code === 'IN')
-  const pool = inIndia.length ? inIndia : results
+  // This chart only contains India. A foreign namesake must never move the
+  // route camera outside its map, even if the provider ignores our filter.
+  const pool = results.filter((r) => r.country_code === 'IN' && validCoord({ lat: r.latitude, lng: r.longitude }))
   if (!pool.length) return null
 
   let pick = pool[0]
@@ -73,6 +90,15 @@ async function lookup(city: GeocodeQuery): Promise<Coord | null> {
   return { lat: pick.latitude, lng: pick.longitude }
 }
 
+function lookupOnce(city: GeocodeQuery): Promise<Coord | null> {
+  const key = keyFor(city)
+  const pending = pendingLookups.get(key)
+  if (pending) return pending
+  const request = lookup(city).catch(() => null).finally(() => pendingLookups.delete(key))
+  pendingLookups.set(key, request)
+  return request
+}
+
 export async function geocodeCities<T extends GeocodeQuery>(
   cities: T[],
 ): Promise<(T & Coord)[]> {
@@ -85,13 +111,13 @@ export async function geocodeCities<T extends GeocodeQuery>(
   // synchronously afterwards.
   const coords = await Promise.all(
     cities.map(async (city): Promise<Coord | null> => {
-      if (city.lat != null && city.lng != null) {
+      if (validCoord(city)) {
         return { lat: city.lat, lng: city.lng }
       }
       const key = keyFor(city)
       let coord: Coord | undefined = cache[key]
       if (!coord) {
-        const found = await lookup(city).catch(() => null)
+        const found = await lookupOnce(city)
         if (found) {
           coord = found
           cache[key] = found
