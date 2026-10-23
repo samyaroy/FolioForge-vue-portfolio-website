@@ -6,6 +6,8 @@ export type MovieItem = {
   id: string
   title: string
   director: string
+  /** Exact IMDb profile URL; falls back to a name search when omitted. */
+  directorImdbUrl?: string
   genre: string
   /** ISO date string for when it was watched, e.g. "2026-07-12". */
   date?: string

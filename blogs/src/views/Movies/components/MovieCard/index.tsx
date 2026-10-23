@@ -11,6 +11,7 @@ import {
 } from '../../../../lib/ui'
 import { PosterArt } from '../PosterArt'
 import { MovieModal } from '../MovieModal'
+import { DirectorName } from '../DirectorName'
 
 type MovieCardProps = {
   movie: MovieItem
@@ -71,7 +72,7 @@ export function MovieCard({ movie, illustrationSide = 'left' }: MovieCardProps) 
           <span className="tracking-normal text-primary" aria-hidden="true">
             •
           </span>
-          <span>{movie.director}</span>
+          <DirectorName name={movie.director} imdbUrl={movie.directorImdbUrl} />
           {movie.year && (
             <>
               <span className="tracking-normal text-primary" aria-hidden="true">

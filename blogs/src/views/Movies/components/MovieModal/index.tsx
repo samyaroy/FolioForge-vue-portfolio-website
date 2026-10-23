@@ -5,6 +5,7 @@ import { MOVIES_SECTION } from '../../../../content/sections'
 import { formatDate } from '../../../../lib/format'
 import { CARD_ART_BACKDROP_CLASS, CARD_META_CLASS } from '../../../../lib/ui'
 import { PosterArt } from '../PosterArt'
+import { DirectorName } from '../DirectorName'
 
 type MovieModalProps = {
   movie: MovieItem
@@ -64,7 +65,7 @@ export function MovieModal({ movie, onClose }: MovieModalProps) {
               {movie.year ? ` (${movie.year})` : ''}
             </h2>
             <p className="mt-0.5 text-sm text-muted">
-              directed by {movie.director}
+              directed by <DirectorName name={movie.director} imdbUrl={movie.directorImdbUrl} />
             </p>
           </div>
           <button
