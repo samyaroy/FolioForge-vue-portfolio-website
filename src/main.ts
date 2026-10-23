@@ -1,10 +1,12 @@
 import { createApp } from 'vue'
 import './style.css'
-// Registers the boneyard-js skeleton definitions in src/bones/ so components
-// can name a bone while their data loads. Extensionless on purpose: the CLI
-// emits registry.ts, and pinning the extension here is how a stale registry.js
-// from an older CLI kept being imported after a rebuild.
-import './bones/registry'
+// Inter with its optical-size axis, so small text and headlines switch cuts the
+// way SF Pro Text and Display do. Used on non-Apple devices; see style.css.
+import '@fontsource-variable/inter/opsz.css'
+// Configures boneyard-js and registers the app shell's skeleton. Page bones are
+// registered by the pages that render them (see src/bones/load.ts), so the
+// entry chunk no longer carries every page's skeleton data.
+import './bones/shell'
 import App from './App.vue'
 import router from './router'
 

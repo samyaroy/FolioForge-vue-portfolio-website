@@ -78,53 +78,57 @@
                             {{ project.description }}
                         </p>
 
-                        <div v-if="getTechStack(project.tech_stack).length" class="flex flex-wrap gap-1">
-                            <span v-for="tag in getTechStack(project.tech_stack)" :key="tag"
-                                class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                                {{ tag }}
-                            </span>
+                        <!-- Tags on the left, credential links on the same line at the right -->
+                        <div v-if="getTechStack(project.tech_stack).length || hasActionLinks(project)"
+                            class="flex items-center justify-between gap-3 mb-2">
+                            <div v-if="getTechStack(project.tech_stack).length" class="flex flex-wrap gap-px">
+                                <span v-for="tag in getTechStack(project.tech_stack)" :key="tag"
+                                    class="px-3 py-1 bg-blue-100 text-blue-800 text-xs first:rounded-l-md last:rounded-r-md">
+                                    {{ tag }}
+                                </span>
+                            </div>
+
+                            <div v-if="hasActionLinks(project)" class="ml-auto flex shrink-0 items-center">
+                                <v-tooltip v-if="project.cred_link?.report" location="top">
+                                    <template #activator="{ props }">
+                                        <a v-bind="props" :href="project.cred_link.report" target="_blank" rel="noopener noreferrer"
+                                            class="mx-1 border border-[#1980e6] text-[#1980e6] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                            <v-icon size="16">mdi-notebook</v-icon>
+                                        </a>
+                                    </template>
+                                    <span>Project Report</span>
+                                </v-tooltip>
+
+                                <v-tooltip v-if="project.cred_link?.github" location="top">
+                                    <template #activator="{ props }">
+                                        <a v-bind="props" :href="project.cred_link.github" target="_blank" rel="noopener noreferrer"
+                                            class="border border-[#1980e6] text-[#1980e6] mx-1 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                            <v-icon size="16">mdi-github</v-icon>
+                                        </a>
+                                    </template>
+                                    <span>GitHub Repository</span>
+                                </v-tooltip>
+
+                                <v-tooltip v-if="project.cred_link?.website" location="top">
+                                    <template #activator="{ props }">
+                                        <a v-bind="props" :href="project.cred_link.website" target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="border border-[#1980e6] text-[#1980e6] mx-1 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                                            <v-icon size="16">mdi-web</v-icon>
+                                        </a>
+                                    </template>
+                                    <span>Project Website</span>
+                                </v-tooltip>
+                            </div>
                         </div>
                     </div>
 
                     <div v-if="getLogos(project.logo).length"
                         class="w-full md:w-[4%] flex flex-col items-start justify-start gap-1 md:items-center mr-3 mt-4 md:mt-0 md:overflow-visible">
-                        <img v-for="logo in getLogos(project.logo)" :key="logo" :src="getLogoPath(logo)" :alt="logo"
-                            :title="logo" class="max-h-8 w-auto object-contain opacity-100 md:max-h-14 md:max-w-none">
+                        <LogoImage v-for="logo in getLogos(project.logo)" :key="logo" :logo="logo" class="max-h-8 w-auto object-contain opacity-100 md:max-h-14 md:max-w-none" />
                     </div>
                 </div>
 
-                <div v-if="hasActionLinks(project)" class="flex justify-end items-center mt-1">
-                    <v-tooltip v-if="project.cred_link?.report" location="top">
-                        <template #activator="{ props }">
-                            <a v-bind="props" :href="project.cred_link.report" target="_blank" rel="noopener noreferrer"
-                                class="px-1 mx-1 border border-[#1980e6] text-[#1980e6] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                                <v-icon size="16">mdi-notebook</v-icon>
-                            </a>
-                        </template>
-                        <span>Project Report</span>
-                    </v-tooltip>
-
-                    <v-tooltip v-if="project.cred_link?.github" location="top">
-                        <template #activator="{ props }">
-                            <a v-bind="props" :href="project.cred_link.github" target="_blank" rel="noopener noreferrer"
-                                class="border border-[#1980e6] text-[#1980e6] px-1 mx-1 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                                <v-icon size="16">mdi-github</v-icon>
-                            </a>
-                        </template>
-                        <span>GitHub Repository</span>
-                    </v-tooltip>
-
-                    <v-tooltip v-if="project.cred_link?.website" location="top">
-                        <template #activator="{ props }">
-                            <a v-bind="props" :href="project.cred_link.website" target="_blank"
-                                rel="noopener noreferrer"
-                                class="border border-[#1980e6] text-[#1980e6] px-1 mx-1 w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                                <v-icon size="16">mdi-web</v-icon>
-                            </a>
-                        </template>
-                        <span>Project Website</span>
-                    </v-tooltip>
-                </div>
                 </div>
                 </v-expand-transition>
             </div>
@@ -145,7 +149,7 @@ import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 // Default expanded/collapsed state is controlled by a feature flag
 const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.minorProjects'))
@@ -237,7 +241,4 @@ function hasActionLinks(project) {
     )
 }
 
-function getLogoPath(logo) {
-    return logoUrl(logo)
-}
 </script>

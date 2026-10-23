@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { listLogos, logoPolicy } from '../media.ts'
+import { iconPolicy, listIcons, listLogos, logoPolicy } from '../media.ts'
 
 /**
  * A binding that answers `list` and treats every other R2 method as a failure.
@@ -80,6 +80,23 @@ test('a cursor that came from R2 is handed straight back', async () => {
 test('a storage failure surfaces as a gateway error, not as its cause', async () => {
   const failing = { list: async () => { throw new Error('bucket exploded: secret detail') } }
   await assert.rejects(listLogos(failing), error => error.status === 502 && error.code === 'storage_unavailable' && !String(error.message).includes('secret'))
+})
+
+test('the icon listing is confined to the icons prefix and a bounded page', async () => {
+  const media = bucket(['icons/github.png', 'icons/kaggle.webp', 'logo/IITM.png', 'icons/../../escape.png', 'icons/readme.txt'])
+  const { items } = await listIcons(media.binding)
+  assert.deepEqual(media.calls[0], { prefix: 'icons/', limit: iconPolicy.pageSize, cursor: undefined })
+  assert.equal(iconPolicy.prefix, 'icons/')
+  assert.deepEqual(items.map(item => item.value), ['github.png', 'kaggle.webp'])
+  assert.equal(items[0].url, 'https://media.samyabrata.codeium.xyz/icons/github.png')
+})
+
+test('an invented icon cursor is refused before it reaches storage', async () => {
+  for (const cursor of ['../../etc', 'a'.repeat(1025), 'has space', '<script>', '']) {
+    const media = bucket(['icons/a.png'])
+    await assert.rejects(listIcons(media.binding, cursor), error => error.status === 400 && error.code === 'invalid_cursor')
+    assert.equal(media.calls.length, 0, `storage was reached with cursor ${cursor}`)
+  }
 })
 
 /* ------------------------- archiving and adding ------------------------- */
@@ -269,4 +286,88 @@ test('archiving media refuses a name that is not there or not a name', async () 
     await assert.rejects(archiveMedia(bucket.binding, bad), error => error.code === 'invalid_media_name')
   }
   assert.deepEqual(bucket.deleted, [], 'nothing was removed')
+})
+
+/* ---------------------------- publishing a cover ------------------------- */
+
+import { publishTripCover, tripCoverPolicy } from '../media.ts'
+
+function webpBytes({ width = 5, height = 7 } = {}) {
+  const chunk = (fourcc, data) => {
+    const out = new Uint8Array(8 + data.length + (data.length % 2))
+    out.set([...fourcc].map(c => c.charCodeAt(0)))
+    new DataView(out.buffer).setUint32(4, data.length, true)
+    out.set(data, 8)
+    return out
+  }
+  const vp8x = new Uint8Array(10)
+  const w = width - 1
+  const h = height - 1
+  vp8x.set([0, 0, 0, 0, w & 255, (w >> 8) & 255, (w >> 16) & 255, h & 255, (h >> 8) & 255, (h >> 16) & 255])
+  const payload = [chunk('VP8X', vp8x), chunk('VP8 ', new Uint8Array([1, 2, 3, 4]))]
+  const header = new Uint8Array(12)
+  header.set([...'RIFF'].map(c => c.charCodeAt(0)))
+  header.set([...'WEBP'].map(c => c.charCodeAt(0)), 8)
+  const out = new Uint8Array(12 + payload.reduce((n, p) => n + p.length, 0))
+  out.set(header)
+  let at = 12
+  for (const p of payload) { out.set(p, at); at += p.length }
+  new DataView(out.buffer).setUint32(4, out.length - 8, true)
+  return out
+}
+
+const WEBP_DRAFT = 'b'.repeat(64) + '.webp'
+
+function coverDrafts(entries) {
+  const store = new Map(Object.entries(entries).map(([name, bytes]) => [`drafts/${name}`, bytes]))
+  return {
+    get: async key => store.has(key) ? { body: new Response(store.get(key)).body } : null,
+    put: async () => ({}),
+    list: async () => ({ objects: [], truncated: false }),
+  }
+}
+
+test('a WebP cover is published into blog-travel/ under the trip name', async () => {
+  const media = mediaBucket([])
+  const published = await publishTripCover(media.binding, coverDrafts({ [WEBP_DRAFT]: webpBytes() }), WEBP_DRAFT, 'darjeeling-2026')
+  assert.equal(published.key, 'blog-travel/darjeeling-2026.webp')
+  assert.equal(published.url, 'https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026.webp')
+  assert.equal(media.store.get('blog-travel/darjeeling-2026.webp').contentType, 'image/webp')
+  assert.equal(tripCoverPolicy.prefix, 'blog-travel/')
+})
+
+test('a cover that is not WebP never reaches the bucket', async () => {
+  const media = mediaBucket([])
+  // A JPEG or PNG draft is refused by its name...
+  await assert.rejects(publishTripCover(media.binding, draftStore().binding, DRAFT, 'trip'), error => error.status === 415 && error.reason === 'trip_cover_not_webp')
+  // ...and a PNG staged under a .webp name is refused by its bytes.
+  await assert.rejects(publishTripCover(media.binding, coverDrafts({ [WEBP_DRAFT]: pngBytes() }), WEBP_DRAFT, 'trip'), error => error.status === 415)
+  assert.equal(media.store.size, 0)
+})
+
+test('a cover over 4K on its long side is refused', async () => {
+  const media = mediaBucket([])
+  const drafts = coverDrafts({ [WEBP_DRAFT]: webpBytes({ width: tripCoverPolicy.maxEdge + 1, height: 10 }) })
+  await assert.rejects(publishTripCover(media.binding, drafts, WEBP_DRAFT, 'trip'), error => error.status === 413 && error.reason === `edge_${tripCoverPolicy.maxEdge + 1}`)
+  assert.equal(media.store.size, 0)
+})
+
+test('an existing cover is never replaced; the next free name is taken', async () => {
+  const media = mediaBucket(['blog-travel/trip.webp', 'blog-travel/trip-01.webp'])
+  const before = media.store.get('blog-travel/trip.webp')
+  const published = await publishTripCover(media.binding, coverDrafts({ [WEBP_DRAFT]: webpBytes() }), WEBP_DRAFT, 'trip')
+  assert.equal(published.key, 'blog-travel/trip-02.webp')
+  assert.equal(media.store.get('blog-travel/trip.webp'), before)
+})
+
+test('a trip id cannot carry a path, a dot or another folder', async () => {
+  const media = mediaBucket([])
+  const drafts = coverDrafts({ [WEBP_DRAFT]: webpBytes() })
+  for (const bad of ['', '../escape', 'a/b', 'trip.webp', 'Trip', '-trip', 'card/trip', ' trip']) {
+    await assert.rejects(publishTripCover(media.binding, drafts, WEBP_DRAFT, bad), error => error.code === 'invalid_media_name', `${JSON.stringify(bad)} should be refused`)
+  }
+  for (const name of ['../../secret.webp', 'not-a-digest.webp']) {
+    await assert.rejects(publishTripCover(media.binding, drafts, name, 'trip'), error => error.status === 404)
+  }
+  assert.equal(media.store.size, 0)
 })

@@ -9,7 +9,10 @@ const sectionCount = portfolioPages.reduce((total, page) => total + page.section
 export function PortfolioOverviewPage() {
   return (
     <>
-      <PageHeader title="Portfolio Overview" description="Manage content using the same page and subsection hierarchy as the Vue portfolio." />
+      <PageHeader
+        title="Portfolio Overview"
+        description="Manage content using the same page and subsection hierarchy as the Vue portfolio."
+      />
       <MetricGrid metrics={[
         { label: 'Portfolio pages', value: portfolioPages.length, detail: 'Public routes mapped', healthy: true },
         { label: 'Page sections', value: sectionCount, detail: 'Tabs and sections mapped' },

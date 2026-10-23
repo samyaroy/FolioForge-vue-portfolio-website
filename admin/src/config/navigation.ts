@@ -10,8 +10,10 @@ import {
   Tags,
   ShieldCheck,
   Link2,
+  FileText,
+  SlidersHorizontal,
 } from 'lucide-react'
-import { blogPages, portfolioAdminPath, portfolioPages, workspacePages } from '@/config/portfolio'
+import { blogPages, cvLibraryPage, portfolioAdminPath, portfolioPages, workspacePages } from '@/config/portfolio'
 import type { PortfolioPage } from '@/config/portfolio'
 import type { NavigationGroup } from '@/types/navigation'
 
@@ -52,6 +54,14 @@ export const navigation: NavigationGroup[] = [
       { label: 'Blog Gallery', path: '/blog/gallery', icon: GalleryHorizontalEnd },
       { label: 'Blog Pages', path: '/blog/pages', icon: Files },
       ...blogPages.map(sectionNavItem),
+    ],
+  },
+  {
+    label: 'CV',
+    items: [
+      { label: 'CV Overview', path: '/cv', icon: FileText },
+      { label: 'CV Builder', path: '/cv/builder', icon: SlidersHorizontal },
+      sectionNavItem(cvLibraryPage),
     ],
   },
   {

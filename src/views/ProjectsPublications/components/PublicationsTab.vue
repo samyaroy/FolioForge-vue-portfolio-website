@@ -19,14 +19,11 @@
                 v-if="getLogos(publication.logo).length"
                 class="flex shrink-0 items-center justify-start gap-3 md:w-36 md:justify-center"
               >
-                <img
+                <LogoImage
                   v-for="logo in getLogos(publication.logo)"
                   :key="logo"
-                  :src="getLogoPath(logo)"
-                  :alt="logo"
-                  :title="logo"
-                  class="max-h-12 w-auto object-contain opacity-90 md:max-h-20"
-                >
+                  :logo="logo"
+                  class="max-h-12 w-auto object-contain opacity-90 md:max-h-20" />
               </div>
 
               <div class="min-w-0 flex-1">
@@ -98,7 +95,7 @@
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed } from 'vue'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 const props = defineProps({
   publications: {
@@ -144,7 +141,6 @@ const getLogos = (logo) => {
   return []
 }
 
-const getLogoPath = (logo) => logoUrl(logo)
 
 const getPublicationInfo = (publication) => (
   [publication?.journal, publication?.year]

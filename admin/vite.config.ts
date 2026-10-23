@@ -1,12 +1,10 @@
 import { fileURLToPath } from 'node:url'
-import { createRequire } from 'node:module'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-
-const { parse } = createRequire(new URL('../package.json', import.meta.url))('yaml') as {
-  parse: (source: string) => unknown
-}
+// The admin's own copy. Loading the root project's instead failed wherever only
+// this app's dependencies are installed, as in the Cloudflare build.
+import { parse } from 'yaml'
 
 export default defineConfig({
   plugins: [

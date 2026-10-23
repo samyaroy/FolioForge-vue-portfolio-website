@@ -13,23 +13,14 @@
 
       <!-- Navigation Tabs -->
       <div v-if="tabs.length" class="flex justify-center mb-8">
-        <div class="flex flex-wrap justify-center gap-1 bg-white rounded-lg p-1 shadow-sm">
-          <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
-            'px-3 py-2 sm:px-6 sm:py-3 rounded-md text-sm font-medium transition-all duration-200',
-            activeTab === tab.id
-              ? 'bg-[#1980e6] text-white shadow-sm'
-              : 'text-gray-600 hover:text-[#1980e6] hover:bg-gray-50'
-          ]">
-            {{ tab.name }}
-          </button>
-        </div>
+        <TabBar v-model="activeTab" :tabs="tabs" />
       </div>
       <div v-else class="text-center text-gray-500 mb-8">
         No sections are enabled right now.
       </div>
 
       <!-- Tab Content -->
-      <div class="max-w-[1280px] mx-auto">
+      <TabPanels class="max-w-[1280px] mx-auto" :tabs="tabs" :active="activeTab">
         <!-- Internships Section -->
         <div v-if="showInternshipsTab && activeTab === 'internships'" class="mb-16">
           <div class="space-y-6 max-w-4xl mx-auto">
@@ -40,24 +31,7 @@
 
         <!-- Certifications Section -->
         <div v-if="showCertificationsTab && activeTab === 'certifications'" class="mb-16">
-          <div v-if="credly" class="max-w-4xl mx-auto mb-6">
-            <div class="bg-white rounded-lg shadow-md flex items-center overflow-hidden">
-              <!-- Left 20%: Credly Logo. At 20% of a phone-width card the box is
-                   narrower than its own `px-6`, which crushed the logo; the
-                   padding and share both scale down below `sm`. -->
-              <div class="w-[30%] sm:w-[20%] shrink-0 flex items-start justify-center px-2 sm:px-6 pt-3 pb-3 border-r border-[#166fd1]">
-                <img :src="credlyIcon" alt="Credly logo" class="w-full max-w-[160px] h-8 sm:h-12 object-contain" />
-              </div>
-              <!-- Right 80%: Text -->
-              <div class="w-[70%] sm:w-[80%] py-2 px-3 sm:pl-6 sm:pr-6">
-                <p class="text-sm text-[#4e7397]">
-                  View my verified badges on
-                  <a :href="credly" target="_blank" rel="noopener noreferrer"
-                    class="text-[#1980e6] font-medium underline hover:text-[#126ab5]">Credly</a>
-                </p>
-              </div>
-            </div>
-          </div>
+          <CredlyBanner v-if="credly" :profile-url="credly" :summary-endpoint="credlyBadgesApi" />
 
           <div v-if="certifications && certifications.length > 0" class="space-y-6 max-w-4xl mx-auto">
             <CertificationCard v-for="certification in certifications" :key="certification.id"
@@ -80,7 +54,7 @@
             </span>
           </div>
         </div>
-      </div>
+      </TabPanels>
 
       <MoreCertificatesModal v-model="showMoreCertificates" :certifications="moreCertifications" />
     </div>
@@ -88,14 +62,14 @@
 </template>
 
 <script setup>
+import TabBar from '@/components/ui/TabBar.vue'
+import TabPanels from '@/components/ui/TabPanels.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
-import { iconUrl } from '@/config/mediaAssets'
-
-const credlyIcon = iconUrl('Credly')
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
+import CredlyBanner from './components/CredlyBanner.vue'
 import MoreCertificatesModal from './components/MoreCertificatesModal.vue'
 import config from "@/content/profile_info"
 import descriptions from '@/content/profile_info/description.yml'
@@ -104,6 +78,7 @@ import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlag
 const { certifications, internships } = config
 const moreCertifications = config.more_certifications || []
 const credly = config.socials.credly
+const credlyBadgesApi = config.credlyBadgesApi
 const pageDescription = descriptions.internshipCertifications
 
 const showInternshipsTab = isFeatureEnabled('showInternshipCertifications.showInternships')

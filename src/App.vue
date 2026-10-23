@@ -7,6 +7,7 @@ import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer/index.vue'
 import QuoteDiv from '@/components/QuoteDiv.vue'
 import BetaRibbon from '@/components/BetaRibbon.vue'
+import PageErrorBoundary from '@/components/PageErrorBoundary.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 
 const showLayout = true //set to true
@@ -45,17 +46,23 @@ const stopBeforeEach = router.beforeEach(() => {
   return true
 })
 
-// Runs for aborted and failed navigations too, so the shell cannot get stuck on
-// if a guard redirects or the chunk request fails.
-const stopAfterEach = router.afterEach(() => {
+function hideShell() {
   clearTimeout(pendingTimer)
   isRouteLoading.value = false
-})
+}
+
+// Runs for aborted and redirected navigations too, so the shell cannot get
+// stuck on when a guard redirects.
+const stopAfterEach = router.afterEach(hideShell)
+// A navigation that throws (a page chunk that fails to load) skips afterEach,
+// so it needs the same cleanup. PageErrorBoundary decides what to show then.
+const stopOnError = router.onError(hideShell)
 
 onUnmounted(() => {
   clearTimeout(pendingTimer)
   stopBeforeEach()
   stopAfterEach()
+  stopOnError()
 })
 </script>
 
@@ -69,31 +76,35 @@ onUnmounted(() => {
       <BetaRibbon v-if="showLayout && betaRibbonBelongsHere" />
 
       <main class="flex-1">
-        <Skeleton name="page-shell" :loading="isRouteLoading" class="block h-full">
-          <!-- Shown when `page-shell` has not been captured yet. Without a
-               fallback the library renders an empty slot in that state, which
-               would blank the page instead of degrading to the old behaviour.
-               Once the bone exists this is never used. -->
-          <template #fallback>
-            <div class="min-h-screen bg-slate-50">
-              <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
-                <div class="mx-auto mb-8 h-9 w-2/3 max-w-md rounded-full bg-slate-200 sm:h-10" />
-                <div class="mx-auto mb-8 h-4 w-5/6 max-w-2xl rounded-full bg-slate-100" />
-                <div class="mx-auto mb-8 h-11 w-64 rounded-lg bg-slate-200" />
-                <div class="space-y-6">
-                  <div v-for="row in 3" :key="row" class="rounded-lg bg-white p-4 shadow-sm sm:p-8">
-                    <div class="mb-4 h-5 w-1/2 rounded-full bg-slate-200" />
-                    <div class="mb-2 h-3 w-full rounded-full bg-slate-100" />
-                    <div class="mb-2 h-3 w-11/12 rounded-full bg-slate-100" />
-                    <div class="h-3 w-3/4 rounded-full bg-slate-100" />
+        <!-- Outside the skeleton, which unmounts its slot while it shows the
+             fallback shell. -->
+        <PageErrorBoundary>
+          <Skeleton name="page-shell" :loading="isRouteLoading" class="block h-full">
+            <!-- Shown when `page-shell` has not been captured yet. Without a
+                 fallback the library renders an empty slot in that state, which
+                 would blank the page instead of degrading to the old behaviour.
+                 Once the bone exists this is never used. -->
+            <template #fallback>
+              <div class="min-h-screen bg-slate-50">
+                <div class="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-8">
+                  <div class="mx-auto mb-8 h-9 w-2/3 max-w-md rounded-full bg-slate-200 sm:h-10" />
+                  <div class="mx-auto mb-8 h-4 w-5/6 max-w-2xl rounded-full bg-slate-100" />
+                  <div class="mx-auto mb-8 h-11 w-64 rounded-lg bg-slate-200" />
+                  <div class="space-y-6">
+                    <div v-for="row in 3" :key="row" class="rounded-lg bg-white p-4 shadow-sm sm:p-8">
+                      <div class="mb-4 h-5 w-1/2 rounded-full bg-slate-200" />
+                      <div class="mb-2 h-3 w-full rounded-full bg-slate-100" />
+                      <div class="mb-2 h-3 w-11/12 rounded-full bg-slate-100" />
+                      <div class="h-3 w-3/4 rounded-full bg-slate-100" />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </template>
+            </template>
 
-          <router-view />
-        </Skeleton>
+            <router-view />
+          </Skeleton>
+        </PageErrorBoundary>
       </main>
 
       <QuoteDiv v-if="showLayout && showPageQuotePane" />

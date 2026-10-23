@@ -16,6 +16,7 @@ export type ContentSource = { path: string; arrayKeys: readonly string[] }
 const PORTFOLIO = 'src/content/profile_info'
 const BLOG = 'blogs/src/content'
 const METADATA = 'src/metadata'
+const CV = 'src/content/cv'
 
 export const contentSources = {
   'home/education': { path: `${PORTFOLIO}/education.yml`, arrayKeys: ['education'] },
@@ -89,6 +90,7 @@ export const contentSources = {
   'gallery/career-unlocks': { path: `${PORTFOLIO}/gallery.yml`, arrayKeys: ['items'] },
   'resources/study-material': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['subjects'] },
   'resources/worth-exploring': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['explore'] },
+  'resources/worth-subscribing': { path: `${PORTFOLIO}/resources.yml`, arrayKeys: ['subscribe'] },
   'facts/facts': { path: `${PORTFOLIO}/facts.yml`, arrayKeys: ['facts'] },
 
   // SmartLink resolves a name or alias to a URL through this file; both groups
@@ -96,10 +98,22 @@ export const contentSources = {
   'metadata/institutes': { path: `${METADATA}/hyperlinkMetadata.yml`, arrayKeys: ['Institute'] },
   'metadata/people': { path: `${METADATA}/hyperlinkMetadata.yml`, arrayKeys: ['Person'] },
 
+  // The CV library and its presets, one collection per list. The admin's CV
+  // module validates them with admin/src/cv/schema.ts before rendering.
+  'cv/entries': { path: `${CV}/library.yml`, arrayKeys: ['entries'] },
+  'cv/bullets': { path: `${CV}/library.yml`, arrayKeys: ['bullets'] },
+  'cv/summaries': { path: `${CV}/library.yml`, arrayKeys: ['summaries'] },
+  'cv/skills': { path: `${CV}/library.yml`, arrayKeys: ['skills'] },
+  'cv/interests': { path: `${CV}/library.yml`, arrayKeys: ['interests'] },
+  'cv/presets': { path: `${CV}/presets.yml`, arrayKeys: ['presets'] },
+
   'recommended/items': { path: `${BLOG}/recommended/data.yml`, arrayKeys: ['items'] },
   'readings/items': { path: `${BLOG}/readings/data.yml`, arrayKeys: ['items'] },
   'movies/items': { path: `${BLOG}/movies/data.yml`, arrayKeys: ['items'] },
   'travel/states': { path: `${BLOG}/travel/data.yml`, arrayKeys: ['states'] },
+  // Written by the Media Library's trip cover uploader, which changes only a
+  // trip's coverImage.
+  'travel/trips': { path: `${BLOG}/travel/trips.yml`, arrayKeys: ['trips'] },
   'hobbies/tiles': { path: `${BLOG}/hobbies/data.yml`, arrayKeys: ['tiles'] },
 } as const satisfies Record<string, ContentSource>
 

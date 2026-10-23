@@ -11,11 +11,15 @@
 #                   (e.g. "Hyderabad, Telangana")
 #   places        — stops on the trip, in travel order (see below)
 #   summary       — short description shown on the trip card
-#   coverImage    — full URL (or CDN key) for a cover photo
+#   coverImage    — full URL (or CDN key) for a cover photo; covers in
+#                   blog-travel/ are WebP (see scripts/fit-trip-covers.mjs,
+#                   or upload one from the admin's Media Library)
 #   tags          — free-form labels, e.g. [Mountains, Conference]
 #   narrative     — list of long-form paragraphs for the details page
 #                   (falls back to summary when omitted)
 #   stats         — metric cards for the details page: {label, value} pairs
+#   placeFacts    — optional list of short destination facts, shown in a
+#                   full-width card above the photos; omit or leave [] to hide
 #   routeMapImage — image for the details page "Route map" card
 #                   (falls back to coverImage when omitted)
 #   gallery       — photo URLs for the details page gallery grid
@@ -27,6 +31,8 @@
 #   mode   — how this stop was reached from the PREVIOUS one; omit on the
 #            first stop. One of: flight | train | bus | car | bike | ferry | foot.
 #            Will pick the animation style (e.g. arced path for flights).
+#            Use foot for walking and treks: the leg follows mapped footpaths,
+#            or is drawn as a straight dotted line when the trail isn't mapped.
 #   lat    — explicit coordinates; when both are set, geocoding is
 #   lng      skipped for this stop (use for small places the geocoder misses)
 #   train  — 5-digit train number for mode: train legs; the route map then
@@ -50,6 +56,39 @@
 
 # Dummy entries below — replace with real trips.
 trips:
+  - id: darjeeling-2026
+    title: A long weekend in the hills
+    date: 2026-08-29
+    location: Rammam, West Bengal
+    places:
+      - Kolkata
+      # Village coordinates: Srikhola and Rimbik from OpenStreetMap (the
+      # geocoder misses Srikhola and has two Rimbiks), Rammam from
+      # https://mapcarta.com/N2554092089
+      - { name: Srikhola, mode: car, lat: 27.13193, lng: 88.07637 }
+      - { name: Rammam, mode: foot, lat: 27.15772, lng: 88.08007 }
+      - { name: Rimbik, mode: car, lat: 27.11692, lng: 88.10143 }
+      - { name: Darjeeling, mode: car }
+    summary: ABC
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026.webp
+    tags: [Mountains]
+    narrative:
+      - ABC
+      - ABC
+    stats:
+      - { label: Places stayed, value: 4 villages }
+      - { label: Treked, value: '15 km' }
+      # - { label: Distance travelled, value: 501 km }
+    # Optional: uncomment and fill in to show the "About the place" card.
+    # placeFacts:
+    #   - "Add a short fact about the destination here."
+    #   - "Add another fact, local highlight, or useful detail."
+    gallery:
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-02.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-03.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-04.jpeg
+      - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-05.jpeg
+
   - id: mahababipuram26
     title: Never miss a trip to Mamallapuram specialy if you made new friends in Chennai
     date: 2026-06-28
@@ -58,7 +97,7 @@ trips:
       - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
     summary: ABC
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26.webp
     narrative:
       - ABC
       - ABC
@@ -91,7 +130,7 @@ trips:
       - { name: Ranikhet, mode: car }
       - { name: Nainital, mode: car }
     summary: BCD
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025.webp
     tags: [Mountains, Pilgrimage]
     narrative:
       - BCD
@@ -120,7 +159,7 @@ trips:
       - { name: Visakhapatnam, mode: bike}
       - { name: Araku, mode: train, train: 08551}
     summary: XYZ
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/vizag-01-2025.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/vizag-01-2025.webp
     tags: [Mountains, Pilgrimage]
     narrative:
       - XYZ
@@ -156,7 +195,7 @@ trips:
       - { name: Delhi, mode: train, train: 12056}
       - { name: Kolkata, mode: flight}
     summary: PQR
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.webp
     tags: [Mountains, Pilgrimage]
     narrative:
       - PQR
@@ -178,7 +217,7 @@ trips:
   #     - Kolkata
   #     - { name: Darjeeling, mode: bus}
   #   summary: MNO
-  #   coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
+  #   coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.webp
   #   tags: [Mountains]
   #   narrative:
   #     - MNO
@@ -203,7 +242,7 @@ trips:
     places:
       - Kolkata
       - { name: Digha, mode: bike, lat: 21.6266, lng: 87.5074 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024.webp
     tags: [Bike Trip, New Year]
     narrative:
       - SSS
@@ -229,7 +268,7 @@ trips:
       - { name: Chandigarh, mode: flight, via: Delhi }
       - { name: Ropar, mode: car, note: IIT Roper campus}
     summary: QAZ
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.webp
     tags: [Bootcamp]
     narrative:
       - QAZ
@@ -249,7 +288,7 @@ trips:
       - Kolkata
       - { name: Darjeeling, mode: bus}
     summary: UVW
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.webp
     tags: [Mountains]
     narrative:
       - UVW
@@ -273,7 +312,7 @@ trips:
     places:
       - Kolkata
       - { name: Chennai, mode: train, train: 12841 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.webp
     summary: MNO
     tags: [Dummy, Test]
     narrative:
@@ -296,7 +335,7 @@ trips:
     places:
       - Kolkata
       - { name: New Delhi, mode: train, train: 12301 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.webp
     tags: [Dummy, Test]
     narrative:
       - MNO
@@ -325,7 +364,7 @@ trips:
     places:
       - Kolkata
       - { name: Hyderabad, mode: train, train: 18045 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.webp
     tags: [Dummy, Test]
     narrative:
       - MNO

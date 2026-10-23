@@ -1,0 +1,69 @@
+# Full institute names shown as the hover tooltip (and alt text) on every logo.
+#
+# Content names a logo by its bare file name (`logo: [ IITM ]`); list that name
+# under `Logos` of the institute it belongs to. One institute can own several
+# logo files. A logo missing here falls back to its bare name, so add new logos
+# to this list as well. Lookup is case-insensitive; see logoName() in
+# src/config/mediaAssets.ts.
+Logo:
+  - Name: Chandigarh Institute of Technology and Consultancy
+    Logos:
+      - CITC
+
+  - Name: Coursera
+    Logos:
+      - COURSERA
+
+  - Name: University of Calcutta
+    Logos:
+      - CU
+
+  - Name: Google
+    Logos:
+      - GOOGLE
+
+  - Name: IDEAS - Technology Innovation Hub, Indian Statistical Institute
+    Logos:
+      - IDEAS
+      - IDEAS-ISI
+
+  - Name: Indian Institute of Technology Kanpur
+    Logos:
+      - IITK
+
+  - Name: Indian Institute of Technology Kharagpur
+    Logos:
+      - IITKGP
+
+  - Name: Indian Institute of Technology Madras
+    Logos:
+      - IITM
+
+  - Name: Johns Hopkins University
+    Logos:
+      - JHU
+
+  - Name: Mahesh Shri Ramkrishna Ashram Vidyalaya
+    Logos:
+      - MSRKAV
+
+  - Name: Nava Nalanda High School (Higher Secondary)
+    Logos:
+      - NN
+
+  - Name: National Programme on Technology Enhanced Learning
+    Logos:
+      - NPTEL
+
+  - Name: Simplilearn
+    Logos:
+      - SIMPLILEARN
+
+  - Name: Sister Nivedita University
+    Logos:
+      - SNU
+
+  - Name: Vicharanashala Lab for Education of Design, Indian Institute of Technology Ropar
+    Logos:
+      - VLED-IITRPR2
+      - VLED-IITRPR3

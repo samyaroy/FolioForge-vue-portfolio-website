@@ -16,7 +16,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import config from '@/content/profile_info'
+import config from '@/content/profile_info/site'
 
 const route = useRoute()
 

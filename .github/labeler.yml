@@ -1,0 +1,17 @@
+# Labels a pull request with the app(s) its changed files belong to, for
+# actions/labeler in .github/workflows/projects.yml. Each app:* label routes
+# the pull request to that app's GitHub Project.
+
+# shared/ is imported by the admin app as well as the portfolio site.
+'app:admin':
+  - changed-files:
+      - any-glob-to-any-file: ['admin/**', 'shared/**']
+
+'app:blogs':
+  - changed-files:
+      - any-glob-to-any-file: 'blogs/**'
+
+# Everything outside admin/ and blogs/ belongs to the portfolio site.
+'app:portfolio':
+  - changed-files:
+      - all-globs-to-any-file: ['!admin/**', '!blogs/**']

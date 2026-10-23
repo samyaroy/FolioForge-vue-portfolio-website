@@ -2,10 +2,10 @@ import type { AccessIdentity, WorkerEnv } from '../types.ts'
 import { issueCsrfToken } from '../auth/csrf.ts'
 import { publishingPolicy, type SecurityConfig } from '../config.ts'
 import { githubConfig, installationAccess, repositoryPolicy, requireGithub, resolveHead } from '../github.ts'
-import { applyEntryChange, discardChanges, pendingChanges, publishChanges, readCollection } from '../content/index.ts'
+import { applyEntryChange, discardChanges, pendingChanges, prepareTripCover, publishChanges, readCollection } from '../content/index.ts'
 import { contentSources } from '../content/registry.ts'
 import { HttpError, json } from '../http.ts'
-import { archiveLogo, archiveMedia, listLogos, publishDraft, storeLogo } from '../media.ts'
+import { archiveLogo, archiveMedia, listIcons, listLogos, publishDraft, publishTripCover, storeLogo } from '../media.ts'
 import { discardDraft, listDrafts, readDraft, storeDraft } from '../drafts.ts'
 import { imagePolicy } from '../images.ts'
 
@@ -84,6 +84,18 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     const published = await publishDraft(env.MEDIA, env.DRAFTS, String(body.draft ?? ''), String(body.name ?? ''), body.replace === true)
     return json(published, 201)
   }
+  // A staged WebP becomes a trip's cover: published into blog-travel/, and the
+  // trip's coverImage changed in the batch waiting to be published.
+  if (path === '/api/media/trip-covers' && request.method === 'POST') {
+    if (!env.MEDIA || !env.DRAFTS) return json({ error: 'r2_not_connected' }, 503)
+    const body = await jsonBody(request)
+    const trip = String(body.trip ?? '')
+    const baseSha = typeof body.baseSha === 'string' ? body.baseSha : ''
+    if (!/^[a-f0-9]{40}$/.test(baseSha)) throw new HttpError(400, 'base_revision_required')
+    const setCover = await prepareTripCover(requireGithub(env), env.DRAFTS, trip, baseSha)
+    const published = await publishTripCover(env.MEDIA, env.DRAFTS, String(body.draft ?? ''), trip)
+    return json({ ...published, pending: await setCover(published.url) }, 201)
+  }
   if (path === '/api/media/drafts' && request.method === 'GET') {
     if (!env.DRAFTS) return json({ error: 'uploads_not_connected' }, 503)
     return json(await listDrafts(env.DRAFTS, new URL(request.url).searchParams.get('cursor') ?? undefined))
@@ -124,6 +136,10 @@ export async function apiResponse(request: Request, env: WorkerEnv, config: Secu
     // The cursor is the only thing the browser contributes, and it is checked
     // before it reaches storage.
     return json(await listLogos(env.MEDIA, new URL(request.url).searchParams.get('cursor') ?? undefined))
+  }
+  if (path === '/api/media/icons' && request.method === 'GET') {
+    if (!env.MEDIA) return json({ error: 'r2_not_connected' }, 503)
+    return json(await listIcons(env.MEDIA, new URL(request.url).searchParams.get('cursor') ?? undefined))
   }
   return json({ error: 'not_found' }, 404)
 }

@@ -6,7 +6,7 @@
             <div class="w-12 sm:w-16 shrink-0 flex items-start">
                 <div
                     class="w-full aspect-square rounded-lg overflow-hidden bg-gray-100 border border-slate-200 flex items-center justify-center">
-                    <img v-if="logoSrc" :src="logoSrc" :alt="`${membership.organization || 'Membership'} logo`"
+                    <LogoImage v-if="logoSrc" :src="logoSrc" :name="membership.organization"
                         class="w-full h-full object-contain" />
                     <v-icon v-else size="22" class="text-slate-500">mdi-account-group</v-icon>
                 </div>
@@ -42,6 +42,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 const props = defineProps({
     membership: {

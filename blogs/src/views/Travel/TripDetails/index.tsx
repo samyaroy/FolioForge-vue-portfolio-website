@@ -7,6 +7,7 @@ import { NotFoundPage } from '../../NotFound'
 import { TripDetailsPane } from './components/TripDetailsPane'
 import { TripImageBelt } from './components/TripImageBelt'
 import { TripMapPane } from './components/TripMapPane'
+import { TripPlaceFacts } from './components/TripPlaceFacts'
 
 export function TripDetailsPage() {
   const { tripId } = useParams<{ tripId: string }>()
@@ -33,6 +34,8 @@ export function TripDetailsPage() {
         <TripDetailsPane trip={trip} statsLoading={routeLoading} />
         <TripMapPane trip={trip} onLoadingChange={setRouteLoading} />
       </div>
+
+      <TripPlaceFacts facts={trip.placeFacts} />
 
       <div className="mt-6 h-px w-full bg-border" aria-hidden="true" />
       <TripImageBelt gallery={trip.gallery} clickedBy={trip.clicked_by} />

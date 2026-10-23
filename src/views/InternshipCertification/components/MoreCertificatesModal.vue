@@ -49,8 +49,8 @@
             <!-- Issuer logo(s). A fixed 160px column ate half the width of the
                  dialog on a phone and left nothing for the title. -->
             <div class="shrink-0 flex items-center justify-end gap-2 w-20 sm:w-40">
-              <img v-for="logo in row.logos" :key="logo" :src="logoUrl(logo)" :alt="logo" :title="logo"
-                class="h-10 sm:h-16 w-auto max-w-[40px] sm:max-w-[76px] object-contain" @error="handleLogoError">
+              <LogoImage v-for="logo in row.logos" :key="logo" :logo="logo"
+                class="h-10 sm:h-16 w-auto max-w-[40px] sm:max-w-[76px] object-contain" @error="handleLogoError" />
               <v-icon v-if="!row.logos.length" size="40" class="text-gray-300">
                 mdi-certificate-outline
               </v-icon>
@@ -66,7 +66,7 @@
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import SmartLink from '@/components/SmartLink.vue'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 const props = defineProps({
   certifications: {

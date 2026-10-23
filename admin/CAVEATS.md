@@ -24,6 +24,22 @@ the roles it holds (`admin/src/data/portfolioEntries.ts`).
 `src/data/portfolioEntries.ts` and writes it through `worker/content/registry.ts`.
 Neither is regenerated; both are hand-maintained tables.
 
+## The deploy build installs only the admin
+
+Cloudflare builds this app from `admin/` and installs only its dependencies.
+Anything the build reaches outside `admin/` must not need the root project's
+`node_modules`. Two places did, and broke the first such build:
+
+- `vite.config.ts` imports `yaml` directly, from the admin's own dependencies.
+- The Worker bundles `shared/gallery/manifest.js`, whose `yaml` import would
+  resolve from the repository root. The `alias` in `wrangler.jsonc` points it
+  at the admin's copy. (That file is parsed as strict JSON by the security
+  test, so it carries no comments; the reason lives here.)
+
+**Before importing a package from shared or root code,** check it resolves with
+only `admin/node_modules` present: a checkout with no root `node_modules`,
+then `npm run build` and `npm run worker:check`.
+
 ## Editor depth stops at one level of nesting
 
 `entryFields.ts` declares a collection's fields. A field may be a plain key, an
@@ -37,7 +53,9 @@ It does not go deeper than that. A **list inside a list row** cannot be edited:
 
 These are **preserved, not editable**. The list editor starts from the original
 item and overwrites only the declared columns, so anything it does not
-understand survives a save untouched. Edit them in the YAML.
+understand survives a save untouched. Edit them in the YAML. A declared column
+that holds such a list — an affiliation's `cred_link` — is shown as kept (the
+role's Link reads "2 credential documents") rather than as an empty box.
 
 Lifting this means a recursive editor rather than the current flat column model.
 Worth doing only if this content starts changing often.
@@ -45,27 +63,41 @@ Worth doing only if this content starts changing often.
 Extra scalar keys that are not declared columns still appear as columns, so a
 field added by hand does not vanish from view.
 
-## Six collections have no write adapter
+## `home/profile` has no write adapter
 
-`home/profile`, `home/awards`, `contact/details`, and previously the nested
-co-curricular and mentoring collections. The first three are **maps, not lists** —
-one record of fields rather than a sequence of entries — so the list editor is
-the wrong shape for them. They need a settings-style form.
+`profile.yml` is a **map, not a list** — four blocks of fields rather than a
+sequence of entries — so the list editor is the wrong shape for it, and the
+Worker registry has no entry that writes it. Profile & Hero is shown but cannot
+be saved. It needs a settings-style form.
 
-`home/awards` additionally has no file: the Home components expect awards but
-nothing backs them. `awards.yml` has to exist and be read by the site before the
-admin can expose it.
+The others this once named are settled: `awards.yml` exists and the site reads
+it, so Awards & Achievements are written like any collection, and Contact is a
+page of visibility switches whose values live in `profile.yml`.
 
-## Two commit paths
+## One commit path
 
-Most collections write through GitHub's Contents API, one file per request.
-The gallery writes through the Git data API, because `gallery.yml` and the
-generated `galleryImageManifest.yml` must land in the same commit — a commit
-where those two disagree is a state nothing should be able to create.
+An edit does not commit. It waits in the pending store, and publishing commits
+the whole batch at once through the Git data API, with a non-forced ref update so
+a branch that moved underneath fails instead of losing work. A generated file
+travels with its source in the same commit — `gallery.yml` with
+`galleryImageManifest.yml` — so the two can never disagree.
 
-Publishing a batch also uses the Git data API. The single-file path remains only
-for a collection with no generated output, and unifying them would be a
-simplification with no behaviour change.
+`writeFile` in `worker/content/files.ts`, the per-file Contents API path, is no
+longer called by anything.
+
+## Gallery photos go live before the entry does
+
+Photos uploaded from the Career Unlocks editor are prepared in the browser to
+the limits `scripts/fit-gallery-images.mjs` checks (`shared/gallery/photoPolicy.js`),
+staged privately, and published to the media bucket when the entry is saved.
+Closing the editor or removing a photo before then discards it.
+
+Saving the entry only queues `gallery.yml` for the next publish, but the photo
+is on the media host from that moment. Nothing links to it until the batch is
+published; if the batch is discarded instead, the photo stays in the bucket
+unreferenced, and can be archived from the Media Library. The browser does not
+add the card-crop margins the fit script adds, so the next V1 push may still
+pad a photo whose shape the card would crop too hard.
 
 ## Previews are replicas, not previews
 
@@ -79,19 +111,18 @@ A real preview means the separate Vue preview build described in
 between them. Until then, treat these as a convenience, not as proof of how
 something will look.
 
-## Projects Mentored: the semester dropdown filters, it does not target
+## Projects Mentored adds through the cohort
 
-Semesters are content, not configuration, so that dropdown derives its options
-from the values the entries carry. It **filters the view**. A new entry is still
-appended to the last semester in the file.
+Projects Mentored lists every cohort's projects flat, and its semester dropdown
+only **filters the view**: the collection it writes cannot say which semester a
+new project joins, and a project created there landed in the last one in the
+file. So it creates nothing itself. Its New project opens the cohort page of the
+semester on screen (Mentoring → the cohort → Project info), which edits that
+cohort's own `projects` list. Editing and deleting a listed project still work
+in place.
 
-Usually right — you add to the current semester — but creating an entry while
-viewing an earlier one puts it somewhere you did not choose. Projects and
-Workshops do not have this problem: their dropdowns select a real write target.
-
-Fixing it needs dynamic collection keys so a selector like
-`projects_mentored[semester=Summer 2026].projects` can be addressed from the
-browser. The registry already supports that path syntax.
+The page matches a semester to its cohort by the semester's name; a semester no
+cohort carries falls back to the Mentoring list.
 
 ## YAML formatting is normalised on write
 
@@ -108,19 +139,29 @@ normalised deliberately in one commit so that later edits diff cleanly.
 Without it the renderer re-wraps long strings and a no-op round trip rewrites
 most of a file — measured at 435 of 521 lines in `education.yml`.
 
+## CV presets point at portfolio entries by id
+
+The CV module (`admin/docs/cv_architecture.md`) reads its facts — titles, places,
+dates, links — from the portfolio YAML, addressing each entry as
+`<collection>#<id>`. Entries a CV uses therefore carry an `id:` key, which the
+site ignores.
+
+Renaming or removing such an id breaks every preset that names it. It breaks
+loudly: `validateCv` reports the preset and the reference, `npm run cv:build`
+refuses to build, and `worker/__tests__/cvBuild.test.mjs` fails. The list editor
+still shows `id` as an ordinary column, so for now nothing stops the edit
+itself; declaring it read-only in `src/config/entryFields.ts` would.
+
+Unlike the collection cards above, a CV preview is not a replica: it is the real
+LaTeX the template produces, compiled by a real TeX engine.
+
 ## Still local-only
 
 The blog post editor, blog gallery, Settings and taxonomy screens read content
-but do not write it.
+but do not write it. Visibility switches, the portfolio's flags and the blog's
+(`blog:` paths) alike, change only the current session.
 
 Settings is blocked upstream: feature flags live in `src/config/featureFlags.ts`,
 and `docs/admin-plan.md` requires migrating them to a validated
 `site_settings.yml` — with the Vue consumers updated — before the admin may
 touch them. That is a developer migration, not admin work.
-
-## Access is single-factor
-
-Tracked as [issue #30](https://github.com/samyaroy/FolioForge-vue-portfolio-website/issues/30). Login uses Cloudflare Access One-time PIN, so the admin's
-security is the security of the owner's mailbox. Uploads write only to a private
-drafts bucket and content edits are reviewable commits, which is what makes this
-tolerable. It should be resolved before any unreviewed write path is added.

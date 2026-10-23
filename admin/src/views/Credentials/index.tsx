@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { ExternalLink } from 'lucide-react'
 import { DataTable } from '@/components/admin/DataTable'
 import { columnsFor, type DataTableColumns } from '@/lib/dataTable'
-import { LocalNotice } from '@/components/admin/LocalNotice'
 import { MetricGrid } from '@/components/admin/MetricGrid'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { SearchField } from '@/components/admin/SearchField'
@@ -97,7 +96,6 @@ export function CredentialsPage() {
         { label: 'Linked', value: linkedCount, detail: 'Have a document', healthy: linkedCount === rows.length },
         { label: 'Empty', value: rows.length - linkedCount, detail: 'Nothing attached yet' },
       ]} />
-      <LocalNotice>Rows are read from the repository YAML, the same source the site's dashboard uses.</LocalNotice>
 
       <section className="posts-panel" aria-labelledby="credentials-heading">
         <div className="panel-toolbar">

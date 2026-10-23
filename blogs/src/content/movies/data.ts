@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors over data.yml. Edit the YAML file to add movies.
 import raw from './data.yml'
 
@@ -5,7 +6,11 @@ export type MovieItem = {
   id: string
   title: string
   director: string
+  /** Exact IMDb profile URL; falls back to a name search when omitted. */
+  directorImdbUrl?: string
   genre: string
+  /** Tags shown on cards and offered in the Movies filter. */
+  tags?: string[]
   /** ISO date string for when it was watched, e.g. "2026-07-12". */
   date?: string
   description: string
@@ -13,7 +18,9 @@ export type MovieItem = {
   year?: number
   /** Poster image: full URL or bare CDN key (resolved like gallery images). */
   image?: string
-  /** Longer note shown in the review modal; blank lines split paragraphs. */
+  /** Personal review shown only in the modal; blank lines split paragraphs. */
+  review?: string
+  /** Legacy personal review field; used when review is omitted. */
   note?: string
   /** Star rating shown in the review modal, 1-5. */
   rating?: number
@@ -34,6 +41,6 @@ function resolvePosterImage(entry?: string) {
   return `https://media.samyabrata.codeium.xyz/${encodeURIComponent(trimmedEntry)}.jpeg`
 }
 
-export const MOVIES: MovieItem[] = items
+export const MOVIES: MovieItem[] = withoutDisabledEntries(items)
   .map((item) => ({ ...item, image: resolvePosterImage(item.image) }))
   .sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))

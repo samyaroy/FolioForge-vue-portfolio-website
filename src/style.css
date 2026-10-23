@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* Apple devices get San Francisco, the system font, with nothing to download.
+     Everyone else gets Inter, its closest open-licence match, self-hosted from
+     src/main.ts. A browser downloads a web font only when it renders with it,
+     so Apple visitors never fetch Inter. */
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter Variable', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -155,9 +159,11 @@ button {
 button:hover {
   border-color: #646cff;
 }
+/* No focus ring on buttons anywhere on the site, whether clicked or reached
+   by keyboard. */
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
 }
 
 .card {

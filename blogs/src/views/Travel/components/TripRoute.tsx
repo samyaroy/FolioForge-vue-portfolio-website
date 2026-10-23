@@ -1,18 +1,5 @@
-import {
-  tripStops,
-  type TransportMode,
-  type Trip,
-} from '../../../content/travel/trips'
-
-const MODE_ICONS: Record<TransportMode, string> = {
-  flight: 'mdi-airplane',
-  train: 'mdi-train',
-  bus: 'mdi-bus',
-  car: 'mdi-car',
-  bike: 'mdi-motorbike',
-  ferry: 'mdi-ferry',
-  foot: 'mdi-walk',
-}
+import { tripStops, type Trip } from '../../../content/travel/trips'
+import { MODE_ICONS } from './transportModes'
 
 // The rail column: markers and connector lines share this width so the
 // vertical line runs straight through the stop markers.

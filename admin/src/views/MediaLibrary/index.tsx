@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import { AlertCircle, Archive, CheckCircle2, CloudUpload, ImagePlus, Loader2, Trash2 } from 'lucide-react'
-import { LocalNotice } from '@/components/admin/LocalNotice'
+import { InfoHint } from '@/components/admin/InfoHint'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { Button, FileField, IconButton, TextField } from '@/components/form'
+import { imagePreviewUrl } from '@/lib/imagePreviewUrl'
 import { LogoLibrary } from '@/components/admin/LogoLibrary'
+import { TripCovers } from '@/components/admin/TripCovers'
 import { useIntegrations } from '@/hooks/useIntegrations'
 import { archiveMedia, discardDraft, draftPreviewUrl, listDrafts, publishDraft, uploadImage, type StoredDraft } from '@/services/uploads'
 
@@ -59,7 +61,7 @@ export function MediaLibraryPage() {
       const id = `${file.name}:${file.size}:${crypto.randomUUID()}`
       // The local preview is shown immediately; the server decides whether the
       // file is acceptable, and says so on this same card.
-      setStaged(current => [...current, { id, name: file.name, size: megabytes(file.size), previewUrl: URL.createObjectURL(file), state: 'uploading' }])
+      setStaged(current => [...current, { id, name: file.name, size: megabytes(file.size), previewUrl: imagePreviewUrl(file), state: 'uploading' }])
       const controller = new AbortController()
       controllers.current.add(controller)
       uploadImage(file, controller.signal)
@@ -125,17 +127,20 @@ export function MediaLibraryPage() {
         title="Media & Gallery"
         description="Upload images to private staging and inspect what was stored."
         actions={<Button variant="outline" disabled>{storedCount} staged this session</Button>}
+        status={(
+          <InfoHint label="Upload storage information" tone={integrations.uploads ? 'info' : 'warning'}>
+            {integrations.uploads
+              ? 'Uploads land in a private bucket with no public address, and location metadata is stripped before anything is written. Publishing copies one to the media host under the name your content will reference.'
+              : 'Upload storage is not connected, so files stay in your browser and reach nothing.'}
+          </InfoHint>
+        )}
       />
-      <LocalNotice>
-        {integrations.uploads
-          ? 'Uploads land in a private bucket with no public address, and location metadata is stripped before anything is written. Publishing copies one to the media host under the name your content will reference.'
-          : 'Upload storage is not connected, so files stay in your browser and reach nothing.'}
-      </LocalNotice>
       <LogoLibrary />
+      <TripCovers connected={integrations.github && integrations.r2 && integrations.uploads} />
       <FileField fieldClassName="media-dropzone" data-page-search multiple accept="image/jpeg,image/png,image/webp" onSelect={addFiles}>
         <ImagePlus aria-hidden="true" />
-        <strong>Add portfolio images</strong>
-        <span>JPEG, PNG or WebP, up to 10 MB and 25 megapixels.</span>
+        <strong>Stage media uploads</strong>
+        <span>JPEG, PNG or WebP, up to 10 MB and 25 megapixels. Publish staged files under the media-host name your content will reference.</span>
         <Button asChild variant="outline"><span>Choose files</span></Button>
       </FileField>
       {staged.length

@@ -1,4 +1,5 @@
 import { SwitchField } from '@/components/form'
+import { FileCode2 } from 'lucide-react'
 import { sectionVisibility } from '@/config/visibility'
 import type { VisibilityFlag } from '@/config/visibility'
 import { useVisibilityDraft } from '@/hooks/visibilityContext'
@@ -26,18 +27,30 @@ export function VisibilitySwitches({ controls }: { controls: VisibilityFlag[] })
   )
 }
 
-export function VisibilityPane({ pageId, sectionId }: { pageId: string; sectionId: string }) {
+export function VisibilityPane({ pageId, sectionId, sources = [], entryCount }: {
+  pageId: string
+  sectionId: string
+  sources?: readonly string[]
+  entryCount?: { enabled: number; total: number }
+}) {
   const controls = sectionVisibility[`${pageId}/${sectionId}`] ?? []
-  const { flags } = useVisibilityDraft()
-  // A section with no flag is always on; a panel saying so is a panel's worth
-  // of width spent on nothing.
-  if (!controls.length) return null
-  const controllingFlags = pageId === 'home' && sectionId === 'education' ? controls.slice(0, 1) : controls
-  const isEnabled = controllingFlags.some(control => flags[control.path] === true)
+  if (!controls.length && !sources.length && !entryCount) return null
   return (
     <section className="form-panel visibility-panel">
-      <div className="panel-heading"><div><span>Display</span><h2>Section visibility</h2></div></div>
-      {controls.length > 1 && <p className="visibility-summary">Visibility {isEnabled ? 'enabled' : 'disabled'} in this draft</p>}
+      <div className="panel-heading">
+        <div><h2>SECTION METAINFO</h2></div>
+        {entryCount && (
+          <span className="visibility-entry-count" aria-live="polite" aria-label={`${entryCount.enabled} enabled entries out of ${entryCount.total} total entries`} title="Enabled entries / Total entries">
+            {entryCount.enabled}/{entryCount.total}
+          </span>
+        )}
+      </div>
+      {sources.length > 0 && (
+        <div className="source-strip">
+          <FileCode2 aria-hidden="true" />
+          <span><small>Content source</small><strong>{sources.join(', ')}</strong></span>
+        </div>
+      )}
       <VisibilitySwitches controls={controls} />
     </section>
   )

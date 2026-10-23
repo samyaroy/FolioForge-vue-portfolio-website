@@ -6,17 +6,26 @@
  * exactly as a commented-out one did — but stays editable, and can be switched
  * back on from the admin. A missing key means enabled, so existing content and
  * anything hand-written keeps working untouched.
+ *
+ * The admin's list editors (an affiliation's roles, a group's links) write
+ * every column back as text, so a nested `enabled: false` comes back as
+ * "false" once its row is saved; that counts as off too.
  */
 export const ENTRY_ENABLED_KEY = 'enabled'
 
 export function isEntryEnabled(entry: unknown): boolean {
   if (!entry || typeof entry !== 'object') return true
-  return (entry as Record<string, unknown>)[ENTRY_ENABLED_KEY] !== false
+  const value = (entry as Record<string, unknown>)[ENTRY_ENABLED_KEY]
+  return value !== false && String(value ?? '').trim().toLowerCase() !== 'false'
 }
 
 export function withoutDisabledEntries<T>(value: T): T {
   if (Array.isArray(value)) return value.filter(isEntryEnabled).map(item => withoutDisabledEntries(item)) as T
   if (value && typeof value === 'object') {
+    // YAML loaders may produce Date instances. Only plain content records
+    // should be rebuilt; rebuilding a Date from its entries would yield {}.
+    const prototype = Object.getPrototypeOf(value)
+    if (prototype !== Object.prototype && prototype !== null) return value
     return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, withoutDisabledEntries(item)])) as T
   }
   return value

@@ -1,23 +1,28 @@
 import { useEffect, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 import { toast } from 'react-toastify'
 import { createEntry as createCollectionEntry, deleteEntry as deleteCollectionEntry, fetchCollection, saveEntry as saveCollectionEntry } from '@/services/content'
-import { ArrowUpRight, Check, FileCode2, Pencil, Plus, Trash2 } from 'lucide-react'
+import { ArrowUpRight, Check, FileCode2, Globe, Pencil, Plus, Star, Table2, Trash2 } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { EntryThumbnail } from '@/components/admin/EntryThumbnail'
+import { SaveStatusHint } from '@/components/admin/InfoHint'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { SearchField } from '@/components/admin/SearchField'
+import { ExpandableSearchField } from '@/components/admin/SearchField'
 import { VisibilityPane, VisibilitySwitches } from '@/components/admin/VisibilityPane'
-import { hasSectionVisibility, sectionVisibility } from '@/config/visibility'
+import { sectionVisibility } from '@/config/visibility'
 import { useVisibilityDraft } from '@/hooks/visibilityContext'
 import { EntryEditorDialog } from '@/components/editor/EntryEditorDialog'
 import { Button, SelectField, SwitchField } from '@/components/form'
 import { findPortfolioPage, portfolioAdminPath } from '@/config/portfolio'
 import type { PortfolioPage, PortfolioSection } from '@/config/portfolio'
 import { publishingTarget } from '@/config/publishing'
-import { getPortfolioEntries } from '@/data/portfolioEntries'
-import { hasSitePreview, previewFacts, previewHeading } from '@/lib/entryPreview'
+import { getPortfolioEntries, mentoringCohortFor } from '@/data/portfolioEntries'
+import { repositoryEntries } from '@/data/collectionEntries'
+import { hasSitePreview, previewFacts, previewHeading, previewImage } from '@/lib/entryPreview'
 import { InlineMarkup } from '@/components/InlineMarkup'
 import { ENTRY_ENABLED_KEY, isEntryEnabled } from '../../../../src/config/entryStatus.ts'
+import { fieldKeys } from '../../../../src/config/entryFields.ts'
 import type { PortfolioEntry } from '@/data/portfolioEntries'
 
 type EditorState = { mode: 'new' } | { mode: 'edit'; entry: PortfolioEntry }
@@ -25,13 +30,19 @@ type EditorState = { mode: 'new' } | { mode: 'edit'; entry: PortfolioEntry }
 export function PortfolioContentPage() {
   const { pageId, sectionId } = useParams()
   const page = findPortfolioPage(pageId)
-  const section = page?.sections.find(item => item.id === sectionId)
+  // A page with one section is addressed without it (see portfolioAdminPath),
+  // so a missing section means that one.
+  const section = sectionId
+    ? page?.sections.find(item => item.id === sectionId)
+    : page?.sections.length === 1 ? page.sections[0] : undefined
   // Held here so the editor can be keyed on it: switching group is switching
   // collection, and everything below starts again from that group's entries.
   const [group, setGroup] = useState(section?.groups?.[0]?.id ?? section?.filterBy?.options?.[0]?.id ?? '')
 
   if (!page) return <Navigate to="/" replace />
-  if (!section) return <Navigate to={portfolioAdminPath(page)} replace />
+  // An unknown section, a page named without one, or an old address that
+  // still spells out a page's only section all land on the canonical address.
+  if (!section || (sectionId && page.sections.length === 1)) return <Navigate to={portfolioAdminPath(page)} replace />
   // No collection to read, so none of the machinery below applies.
   if (section.visibilityOnly) return <PortfolioVisibilityEditor page={page} section={section} />
 
@@ -50,16 +61,36 @@ export function PortfolioContentPage() {
   )
 }
 
-/** The header both editors share: the page, and a link to it on the site. */
-function SectionHeader({ page, section }: { page: PortfolioPage; section: PortfolioSection }) {
+/**
+ * The header both editors share: the page, and a link to it on the site.
+ * `status` sits under the link, for an editor that saves.
+ */
+function SectionHeader({ page, section, status }: { page: PortfolioPage; section: PortfolioSection; status?: ReactNode }) {
   return (
     <>
       <PageHeader
         title={page.title}
         description={page.description}
+        status={status}
         actions={
-          <Button variant="outline" asChild>
-            <a href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`} target="_blank" rel="noreferrer">View {page.site === 'blog' ? 'blog' : 'beta'} page <ArrowUpRight aria-hidden="true" /></a>
+          <Button variant="outline" size="sm" asChild>
+            <a
+              href={`${page.site === 'blog' ? publishingTarget.blogOrigin : publishingTarget.portfolioOrigin}${page.publicPath}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${page.site === 'blog' ? 'blog' : 'beta'} page`}
+              title={`View ${page.site === 'blog' ? 'blog' : 'beta'} page`}
+            >
+              {page.site === 'blog' ? (
+                <><span aria-hidden="true">Blog</span><Globe aria-hidden="true" /></>
+              ) : (
+                <span className="beta-globe-icon" aria-hidden="true">
+                  <Globe />
+                  <span className="beta-globe-icon__badge">{'\u03b2'}</span>
+                </span>
+              )}
+              <ArrowUpRight aria-hidden="true" />
+            </a>
           </Button>
         }
       />
@@ -121,28 +152,46 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   const [entries, setEntries] = useState(() => getPortfolioEntries(page.id, section.groups ? group || section.id : section.id))
   const [editor, setEditor] = useState<EditorState | null>(null)
   const [saving, setSaving] = useState(false)
+  const [loading, setLoading] = useState(true)
   // The revision this editor is working against. A save carries it so a file
   // that moved on becomes a conflict instead of an overwrite.
   const [baseSha, setBaseSha] = useState('')
 
-  const [reason, setReason] = useState('Checking whether this collection can be saved...')
+  // Why the collection could not be read; empty while it is being read.
+  const [failure, setFailure] = useState('')
 
   useEffect(() => {
     const controller = new AbortController()
     fetchCollection(collection, controller.signal)
-      .then(state => { setBaseSha(state.baseSha); setReason('') })
+      .then(state => {
+        const rows = repositoryEntries(collection, state.entries)
+        setEntries(rows)
+        setEditor(null)
+        setBaseSha(state.baseSha)
+        setFailure('')
+      })
       .catch((error: unknown) => {
         if (error instanceof Error && error.name === 'AbortError') return
         setBaseSha('')
-        setReason(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
+        setFailure(error instanceof Error ? error.message : 'This collection cannot be saved yet.')
       })
+      .finally(() => { if (!controller.signal.aborted) setLoading(false) })
     return () => controller.abort()
   }, [collection])
 
-  /** Re-read the revision a save must quote next time. */
+  /** Rows and revision must always come from the same read. */
   const refreshBase = async () => {
-    const next = await fetchCollection(collection, new AbortController().signal).catch(() => null)
-    if (next) setBaseSha(next.baseSha)
+    try {
+      const next = await fetchCollection(collection, new AbortController().signal)
+      const rows = repositoryEntries(collection, next.entries)
+      setEntries(rows)
+      setBaseSha(next.baseSha)
+      setFailure('')
+    } catch (error) {
+      // Never pair an old list with a newer revision after a failed refresh.
+      setBaseSha('')
+      setFailure(error instanceof Error ? error.message : 'Reload before editing again.')
+    }
   }
 
   // Choices either come from configuration or from the values the content
@@ -162,6 +211,20 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   // first choice rather than showing an empty list.
   const activeFilter = filterOptions.some(option => option.id === group) ? group : filterOptions[0]?.id ?? ''
 
+  // Projects Mentored lists every cohort's projects flat, so a new one made here
+  // would land in whichever semester the file lists last. It is added from the
+  // cohort of the semester on screen instead, whose page writes to that list.
+  const projectsCohort = collection === 'teaching/projects' ? mentoringCohortFor(activeFilter) : undefined
+  const newEntryButton = collection === 'teaching/projects'
+    ? (
+      <Button className="section-action-button" size="sm" asChild>
+        {projectsCohort
+          ? <Link to={`/portfolio/pages/teaching/mentoring/${encodeURIComponent(projectsCohort.id)}/projects`} state={{ cohort: projectsCohort }} title={`Add a project to ${activeFilter}`}><Plus aria-hidden="true" /> New project</Link>
+          : <Link to="/portfolio/pages/teaching/mentoring" title="Add the project from its cohort"><Plus aria-hidden="true" /> New project</Link>}
+      </Button>
+    )
+    : <Button className="section-action-button" size="sm" disabled={loading || saving} onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
+
   const matchesFilter = (entry: PortfolioEntry) => {
     if (!section.filterBy) return true
     const value = String(entry.raw[section.filterBy.field] ?? '')
@@ -172,30 +235,57 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
   // Filtering is for display only: an index has to address the whole array, or
   // a write would land on whichever entry happens to sit at that position in
   // the filtered view.
+  const { flags } = useVisibilityDraft()
+  // The section switch tied to this entry, while it is off; see VisibilityFlag.
+  const switchHiding = (entry: PortfolioEntry) => (sectionVisibility[previewKey] ?? [])
+    .find(control => control.entry === entry.id && flags[control.path] === false)
+  const isShownOnSite = (entry: PortfolioEntry) => isEntryEnabled(entry.raw) && !switchHiding(entry)
+
   const visibleEntries = entries
     .filter(matchesFilter)
     .filter(entry => `${entry.title} ${entry.subtitle}`.toLowerCase().includes(query.trim().toLowerCase()))
 
-  // Switching an entry off writes `enabled: false`, which the site filters out,
-  // in place of commenting the block out of the YAML.
-  const toggleEntry = async (entry: PortfolioEntry, enabled: boolean) => {
-    const raw = { ...entry.raw, [ENTRY_ENABLED_KEY]: enabled }
+  // A collection that declares `featured` gets a star on each row for it.
+  const hasFeatured = fieldKeys(section.entryFields ?? []).includes('featured')
+
+  /** Flip one yes/no key on an entry and save it at once, as a switch does. */
+  const setFlag = async (entry: PortfolioEntry, key: string, value: boolean, outcome: { local: string; saved: string }) => {
+    if (loading || saving) return
+    const raw = { ...entry.raw, [key]: value }
     const previous = entries
-    setEntries(current => current.map(item => item.id === entry.id ? { ...item, enabled, raw } : item))
+    setEntries(current => current.map(item => item.id === entry.id ? { ...item, raw, ...(key === ENTRY_ENABLED_KEY ? { enabled: value } : {}) } : item))
     if (!baseSha) {
-      toast.info(`${entry.title} ${enabled ? 'shown' : 'hidden'} in this session only.`)
+      toast.info(outcome.local)
       return
     }
+    setSaving(true)
     try {
       await saveCollectionEntry(collection, entries.findIndex(item => item.id === entry.id), raw, baseSha)
       await refreshBase()
-      toast.success(enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`)
+      toast.success(outcome.saved)
     } catch (error) {
-      // The switch already moved, so put it back rather than leaving the UI
+      // The control already moved, so put it back rather than leaving the UI
       // claiming something the file does not say.
       setEntries(previous)
       toast.error(error instanceof Error ? error.message : 'Could not change that entry.')
+    } finally {
+      setSaving(false)
     }
+  }
+
+  // Switching an entry off writes `enabled: false`, which the site filters out,
+  // in place of commenting the block out of the YAML.
+  const toggleEntry = (entry: PortfolioEntry, enabled: boolean) => setFlag(entry, ENTRY_ENABLED_KEY, enabled, {
+    local: `${entry.title} ${enabled ? 'shown' : 'hidden'} in this session only.`,
+    saved: enabled ? `${entry.title} will show on the site.` : `${entry.title} is hidden from the site.`,
+  })
+
+  const toggleFeatured = (entry: PortfolioEntry) => {
+    const featured = entry.raw.featured !== true
+    return setFlag(entry, 'featured', featured, {
+      local: `${entry.title} ${featured ? 'featured' : 'unfeatured'} in this session only.`,
+      saved: featured ? `${entry.title} is featured.` : `${entry.title} is no longer featured.`,
+    })
   }
 
   // Creating from a filtered list should produce something that shows up in it.
@@ -204,8 +294,10 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     : undefined
 
   const removeEntry = async (entry: PortfolioEntry) => {
+    if (loading || saving) return
     if (!baseSha) { toast.error('This collection cannot be saved yet.'); return }
     if (!window.confirm(`Delete "${entry.title}" from ${section.title}? This commits to V1.`)) return
+    setSaving(true)
     const previous = entries
     const index = entries.findIndex(item => item.id === entry.id)
     setEntries(current => current.filter(item => item.id !== entry.id))
@@ -216,10 +308,13 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
     } catch (error) {
       setEntries(previous)
       toast.error(error instanceof Error ? error.message : 'Could not delete that entry.')
+    } finally {
+      setSaving(false)
     }
   }
 
   const saveEntry = async (nextEntry: PortfolioEntry) => {
+    if (loading || saving) return
     const editing = editor?.mode === 'edit'
     if (!baseSha) {
       setEntries(current => editing ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry) : [nextEntry, ...current])
@@ -237,9 +332,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
         ? current.map(entry => entry.id === nextEntry.id ? nextEntry : entry)
         : [...current, nextEntry])
       setEditor(null)
-      // The file has a new revision now, so the next save must quote that one.
-      const refreshed = await fetchCollection(collection, new AbortController().signal).catch(() => null)
-      if (refreshed) setBaseSha(refreshed.baseSha)
+      await refreshBase()
       toast.success(`Saved. ${pending} file${pending === 1 ? '' : 's'} waiting to publish.`)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Could not save this entry.')
@@ -250,19 +343,22 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
 
   return (
     <>
-      <SectionHeader page={page} section={section} />
+      <SectionHeader
+        page={page}
+        section={section}
+        status={(
+          <SaveStatusHint saveable={Boolean(baseSha)} failure={failure}>
+            Edits wait here until you publish. Publishing writes every change as one commit on <code>{publishingTarget.branch}</code>.
+          </SaveStatusHint>
+        )}
+      />
 
-      <LocalNotice>
-        {baseSha
-          ? <>Edits wait here until you publish. Publishing writes every change as one commit on <code>{publishingTarget.branch}</code>.</>
-          : reason}
-      </LocalNotice>
-
-      <div className="mapped-editor-layout" data-solo={!hasSectionVisibility(page.id, section.id) || undefined}>
-        <section className="form-panel">
+      <div className="mapped-editor-layout">
+        <section className="form-panel collection-panel">
           <div className="panel-heading">
             <div><span>Collection</span><h2>{section.title}</h2></div>
             <div className="panel-heading-actions">
+              <ExpandableSearchField value={query} onChange={setQuery} placeholder={`Search ${section.title.toLowerCase()}`} label={`Search ${section.title}`} />
               {(section.groups ?? (filterOptions.length ? filterOptions : undefined)) && (
                 <SelectField
                   prefix={section.groups ? 'Group' : section.filterBy?.field === 'semester' ? 'Semester' : 'Type'}
@@ -272,21 +368,18 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                   onChange={onGroupChange}
                 />
               )}
-              <Button size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>
+              {newEntryButton}
             </div>
           </div>
-          <div className="source-strip">
-            <FileCode2 aria-hidden="true" />
-            <span><small>Content source</small><strong>{section.sources.join(', ')}</strong></span>
-          </div>
-          <div className="entry-list-toolbar">
-            <SearchField value={query} onChange={setQuery} placeholder={`Search ${section.title.toLowerCase()}`} label={`Search ${section.title}`} />
-            <span>{visibleEntries.length} of {entries.length} entries</span>
-          </div>
           <div className="repository-entry-list">
-            {visibleEntries.map((entry, index) => (
-              <article key={entry.id} className={isEntryEnabled(entry.raw) ? undefined : 'entry-disabled'}>
+            {visibleEntries.map((entry, index) => {
+              const image = previewImage(entry.raw, previewKey)
+              const featured = entry.raw.featured === true
+              const hiddenBy = switchHiding(entry)
+              return (
+              <article key={entry.id} className={isShownOnSite(entry) ? undefined : 'entry-disabled'} data-thumbnail={image !== undefined || undefined}>
                 <span>{String(index + 1).padStart(2, '0')}</span>
+                {image !== undefined && <EntryThumbnail url={image} />}
                 <div>
                   <strong><InlineMarkup text={hasSitePreview(previewKey) ? previewHeading(entry.raw, previewKey) || entry.title : entry.title} /></strong>
                   {!hasSitePreview(previewKey) && entry.subtitle && <small>{entry.subtitle}</small>}
@@ -298,32 +391,56 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
                       })}
                     </span>
                   )}
+                  {hiddenBy && <small>Hidden by the {hiddenBy.label} switch</small>}
                 </div>
                 <span className="mapped-state"><Check aria-hidden="true" /> Mapped</span>
-                <SwitchField
-                  aria-label={`Show ${entry.title} on the site`}
-                  checked={isEntryEnabled(entry.raw)}
-                  onChange={enabled => void toggleEntry(entry, enabled)}
-                />
-                <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
-                <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={!baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
+                <span className="entry-flags">
+                  {hasFeatured && (
+                    <Button
+                      variant="outline"
+                      size="icon-sm"
+                      className={`feature-button${featured ? ' feature-button-active' : ''}`}
+                      title={featured ? 'Featured' : 'Not featured'}
+                      aria-label={`${featured ? 'Unfeature' : 'Feature'} ${entry.title}`}
+                      aria-pressed={featured}
+                      disabled={loading || saving}
+                      onClick={() => void toggleFeatured(entry)}
+                    ><Star aria-hidden="true" /></Button>
+                  )}
+                  {!section.notOnSite && (
+                    <SwitchField
+                      aria-label={`Show ${entry.title} on the site`}
+                      disabled={loading || saving}
+                      checked={isEntryEnabled(entry.raw)}
+                      onChange={enabled => void toggleEntry(entry, enabled)}
+                    />
+                  )}
+                </span>
+                <Button variant="outline" size="icon-sm" title="Edit entry" aria-label={`Edit ${entry.title}`} disabled={loading || saving} onClick={() => setEditor({ mode: 'edit', entry })}><Pencil aria-hidden="true" /></Button>
+                <Button variant="outline" size="icon-sm" title={baseSha ? 'Delete entry' : 'This collection cannot be saved yet'} aria-label={`Delete ${entry.title}`} disabled={loading || saving || !baseSha} onClick={() => void removeEntry(entry)}><Trash2 aria-hidden="true" /></Button>
+                {collection === 'teaching/mentoring' && (
+                  <Button variant="outline" size="sm" className="mentoring-project-info" asChild>
+                    <Link to={`/portfolio/pages/teaching/mentoring/${encodeURIComponent(entry.id)}/projects`} state={{ cohort: entry }} aria-label={`Project info for ${entry.title}`}>
+                      <Table2 aria-hidden="true" /> Project info <span>{Array.isArray(entry.raw.projects) ? entry.raw.projects.length : 0}</span>
+                    </Link>
+                  </Button>
+                )}
               </article>
-            ))}
+              )
+            })}
             {!visibleEntries.length && (
               <div className="collection-empty-state">
                 <strong>{entries.length ? 'No matching entries' : `No ${section.title.toLowerCase()} added yet`}</strong>
                 <span>{entries.length ? 'Try a different search.' : 'Create the first entry for this section.'}</span>
-                {!entries.length && <Button size="sm" onClick={() => setEditor({ mode: 'new' })}><Plus aria-hidden="true" /> New entry</Button>}
+                {!entries.length && newEntryButton}
               </div>
             )}
           </div>
         </section>
 
-        {hasSectionVisibility(page.id, section.id) && (
-          <aside className="mapped-editor-aside">
-            <VisibilityPane pageId={page.id} sectionId={section.id} />
-          </aside>
-        )}
+        <aside className="mapped-editor-aside">
+          <VisibilityPane pageId={page.id} sectionId={section.id} sources={section.sources} entryCount={{ enabled: entries.filter(isShownOnSite).length, total: entries.length }} />
+        </aside>
       </div>
       {editor && (
         <EntryEditorDialog
@@ -333,6 +450,7 @@ function PortfolioSectionEditor({ page, section, group, onGroupChange }: EditorP
           fieldGroups={section.fields}
           tagOptions={section.tagOptions}
           requiredFields={section.requiredFields}
+          groupedBy={section.groupedBy}
           typeOptions={section.typeOptions}
           entryFields={section.entryFields}
           isExperience={page.id === 'home' && section.id === 'experience'}

@@ -12,6 +12,7 @@ import {
   House,
   Lightbulb,
   LibraryBig,
+  Library,
   Network,
   MapPinned,
   Palette,
@@ -50,6 +51,12 @@ export type PortfolioSection = {
    */
   visibilityOnly?: boolean
   /**
+   * The site does not render this collection, so its entries get no on/off
+   * switch: an `enabled` key would mean nothing there, and the CV schema
+   * rejects keys it does not know.
+   */
+  notOnSite?: boolean
+  /**
    * Sub-lists the collection is drawn from, when the file groups its entries.
    * The editor shows one list and asks which group an entry belongs to; each
    * group is its own adapter, so a write reaches the right sequence.
@@ -84,6 +91,13 @@ export type PortfolioSection = {
    * make a field mandatory; leave the list off for sections with none.
    */
   requiredFields?: string[]
+  /**
+   * A list key whose rows can stand in for the entry itself: a volunteering
+   * entry holds either one role or a `roles` list of them. While that list has
+   * rows, a required field the rows carry is required of each row instead of
+   * the entry.
+   */
+  groupedBy?: string
   /**
    * Values offered for the entry's `type` field, which the editor shows as a
    * dropdown instead of a text box. Each list comes from the site, where an
@@ -208,8 +222,8 @@ export const portfolioPages: PortfolioPage[] = [
     id: 'cocurricular', title: 'Volunteering & Co-curricular', publicPath: '/cocurricular', icon: HandHeart,
     description: 'Leadership, organisations, volunteering, and related activities.',
     sections: [
-      { id: 'leadership', title: 'Leadership & Organizations', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description and website'], requiredFields: ['role'], entryFields: entryFields.leadership },
-      { id: 'volunteering', title: 'Volunteering', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description and credential'], requiredFields: ['role', 'organization'], entryFields: entryFields.volunteering },
+      { id: 'leadership', title: 'Leadership & Organizations', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description, website and link'], requiredFields: ['role'], entryFields: entryFields.leadership },
+      { id: 'volunteering', title: 'Volunteering', sources: ['cocurricular.yml'], fields: ['Role and organisation', 'Dates', 'Description, credential and link'], requiredFields: ['role', 'organization'], groupedBy: 'roles', entryFields: entryFields.volunteering },
     ],
   },
   {
@@ -231,6 +245,7 @@ export const portfolioPages: PortfolioPage[] = [
     sections: [
       { id: 'study-material', title: 'Study Material', sources: ['resources.yml'], fields: ['Subjects', 'Materials and descriptions', 'Files and external links'], requiredFields: ['title'], entryFields: entryFields.studyMaterial },
       { id: 'worth-exploring', title: 'Worth Exploring', sources: ['resources.yml'], fields: ['Groups and labels', 'Recommended links', 'People and logos'], requiredFields: ['group'], entryFields: entryFields.worthExploring },
+      { id: 'worth-subscribing', title: 'Worth Subscribing', sources: ['resources.yml'], fields: ['Groups, icons and button labels', 'Newsletters, venues and seminar series', 'Subscribe links and cadence'], requiredFields: ['group'], entryFields: entryFields.worthSubscribing },
     ],
   },
   {
@@ -298,10 +313,33 @@ export const workspacePages: PortfolioPage[] = [
   },
 ]
 
-export const contentPages = [...portfolioPages, ...blogPages, ...workspacePages]
+/**
+ * The CV library, edited like any other collection. Its page id is `cv`, so
+ * each section is the registry collection `cv/<section>`; what each preset
+ * shows is chosen in the CV builder, not here.
+ */
+export const cvLibraryPage: PortfolioPage = {
+  id: 'cv', title: 'CV Library', publicPath: '/', icon: Library,
+  description: 'What the CVs say beyond the portfolio: bullets, summaries, skills, interests, and CV-only facts. A key beside `text` is a wording variant.',
+  sections: [
+    { id: 'bullets', title: 'Bullets', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'ref', 'text'], previewFields: ['ref', 'kind'], entryFields: entryFields.cvBullets },
+    { id: 'entries', title: 'Entries', sources: ['cv/library.yml'], notOnSite: true, fields: ['Facts'], previewFields: ['ref', 'period'], entryFields: entryFields.cvEntries },
+    { id: 'summaries', title: 'Summaries', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'text'], entryFields: entryFields.cvSummaries },
+    { id: 'skills', title: 'Skills', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'label', 'text'], entryFields: entryFields.cvSkills },
+    { id: 'interests', title: 'Interests', sources: ['cv/library.yml'], notOnSite: true, fields: ['Wording'], requiredFields: ['id', 'text'], entryFields: entryFields.cvInterests },
+  ],
+}
 
+export const contentPages = [...portfolioPages, ...blogPages, ...workspacePages, cvLibraryPage]
+
+/**
+ * Where a section is edited. A page with one section is addressed by the page
+ * alone: its section adds nothing to the address, and where the two share an
+ * id it would read `quotes/quotes`.
+ */
 export function portfolioAdminPath(page: PortfolioPage, section: PortfolioSection = page.sections[0]) {
-  return `${page.basePath ?? '/portfolio/pages'}/${page.id}/${section.id}`
+  const base = `${page.basePath ?? '/portfolio/pages'}/${page.id}`
+  return page.sections.length === 1 ? base : `${base}/${section.id}`
 }
 
 export function findPortfolioPage(pageId?: string) {

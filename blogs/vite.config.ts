@@ -4,10 +4,11 @@ import { fileURLToPath } from 'node:url'
 import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
-import yaml from '@modyfi/vite-plugin-yaml'
 import { parse as parseYaml } from 'yaml'
+import { contentYaml } from './scripts/content-yaml'
 import { parseFrontmatter } from './src/lib/frontmatter'
 import { isFeatureEnabled } from './src/config/featureFlags'
+import { withoutDisabledEntries } from '../src/config/entryStatus'
 import { SITE_URL } from './src/lib/seo'
 // Shared with the portfolio build; see ../scripts/seo-build.ts for why the
 // head has to be stamped at build time rather than by the app.
@@ -90,7 +91,7 @@ interface Trip {
 
 function loadTrips(): Trip[] {
   const parsed = readYaml<{ trips?: Trip[] }>('travel/trips.yml')
-  return (parsed.trips ?? []).filter(
+  return withoutDisabledEntries(parsed.trips ?? []).filter(
     (trip) => typeof trip.id === 'string' && trip.id.length > 0,
   )
 }
@@ -201,8 +202,9 @@ const privacyPage: SeoPage = {
   ],
 }
 
-const SECTION_KEYS = ['readings', 'movies', 'travel', 'hobbies', 'gallery'] as const
+const SECTION_KEYS = ['recommended', 'readings', 'movies', 'travel', 'hobbies', 'gallery'] as const
 const SECTION_FLAGS: Record<(typeof SECTION_KEYS)[number], string> = {
+  recommended: 'showRecommended',
   readings: 'showReadings',
   movies: 'showMovies',
   travel: 'showTravel',
@@ -348,6 +350,43 @@ const tripPages: SeoPage[] = trips.map((trip) => {
   }
 })
 
+// Review links need their own Open Graph metadata before JavaScript opens
+// the modal, because social crawlers do not run the app.
+const reviewPages: SeoPage[] = (['movies', 'readings'] as const).flatMap((section) => {
+  if (!isFeatureEnabled(SECTION_FLAGS[section])) return []
+  const { items } = readYaml<{ items: {
+    id: string
+    title: string
+    description: string
+    review?: string
+    note?: string
+    image?: string
+    date?: string
+  }[] }>(`${section}/data.yml`)
+
+  return withoutDisabledEntries(items).map((item): SeoPage => {
+    const title = `${item.title} — Review`
+    const review = (item.review ?? item.note ?? '').trim()
+    const description = (review || item.description).replace(/\s+/g, ' ').slice(0, 240)
+    const image = item.image?.trim()
+    const cover = image
+      ? /^(?:https?:\/\/|\/)/i.test(image)
+        ? absoluteUrl(SITE_URL, image)
+        : `https://media.samyabrata.codeium.xyz/${encodeURIComponent(image)}.jpeg`
+      : OG_IMAGE_PATH
+    return {
+      path: `/${section}/${encodeURIComponent(item.id)}`,
+      title: pageTitle(title),
+      socialTitle: title,
+      description,
+      type: 'article',
+      image: cover,
+      imageAlt: item.title,
+      lastmod: lastmodOf(item.date),
+    }
+  })
+})
+
 // Set-dedupe by path: duplicate URLs are invalid in a sitemap and would make
 // two pages overwrite each other on disk (e.g. two trips sharing an id).
 const pages: SeoPage[] = [
@@ -356,6 +395,7 @@ const pages: SeoPage[] = [
   ...sectionPages,
   ...postPages,
   ...tripPages,
+  ...reviewPages,
 ].filter(
   (page, index, all) => all.findIndex((other) => other.path === page.path) === index,
 )
@@ -442,7 +482,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    yaml(),
+    contentYaml(),
     seoPrerender({
       siteName: BASE_TITLE,
       siteUrl: SITE_URL,

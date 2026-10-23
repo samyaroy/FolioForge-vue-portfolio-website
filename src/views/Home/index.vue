@@ -52,6 +52,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import Skeleton from 'boneyard-js/vue'
+import '@/bones/home'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import config from '@/content/profile_info'
 import HeroSection from './components/HeroSection.vue'

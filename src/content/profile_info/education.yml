@@ -1,7 +1,9 @@
 education:
-  - type: University
+  - id: msc-cu
+    type: University
     degree: Master of Science (MSc)
     field: Statistics
+    current_level: Semester - I
     institution: University of Calcutta
     campus: Taraknath Palit Siksha Prangan (Ballygunge Science College)
     # sub_field:
@@ -52,7 +54,8 @@ education:
           type: SEC/PSE/CLE
           credit: 2
 
-  - type: University
+  - id: bs-iitm
+    type: University
     degree: Bachelor of Science (BS)
     field: Data Science and Applications
     sub_field:
@@ -71,6 +74,9 @@ education:
         url: https://drive.google.com/file/d/1-8UhJE93fBx7gBf1h2AT1-KI16DfLavW/preview
       - label: Foundation Certificate
         url: https://drive.google.com/file/d/1T8tyIiua8CU0Wf6-R0Nbo5k0Cwc12Zba/preview
+    # A site (https:// URL), opened in a new tab. Unlike a co-curricular role,
+    # an education entry shows it beside its credentials, not instead of them.
+    ext_link: https://ds.study.iitm.ac.in/student/22F2001443
 
     category: NEP 2020
     cirriculum:
@@ -221,6 +227,7 @@ education:
         - course_code: BSCS3001
           course_name: Software Engineering
           type: CC
+          credit: 4
           faculty:
             - name: Prof. Sridhar Iyer
               link: https://www.cse.iitb.ac.in/~sri/
@@ -229,20 +236,27 @@ education:
         - course_code: BSCS3002
           course_name: Software Testing
           type: CC
+          credit: 4
           faculty:
             - name: "Prof. Meenakshi D'Souza"
               link: https://www.iiitb.ac.in/faculty/meenakshi-dsouza
         - course_code: BSCS3003
           course_name: "AI: Search Methods for Problem Solving"
           type: CC
+          credit: 4
           faculty:
             - name: Prof. Deepak Khemani
               link: https://plaksha.edu.in/faculty-details/dr-deepak-khemani
         - course_code: BSCS3004
           course_name: Deep Learning
           type: CC
+          credit: 4
           faculty:
             - name: Prof. Mitesh M. Khapra
+        - course_code: BSGN3001
+          course_name: Strategies for Professional Growth
+          type: CC
+          credit: 4
         - course_code: BSMA3014
           course_name: Statistical Computing
           type: EC
@@ -275,19 +289,20 @@ education:
           issuer:
             institution: Indian Institute of Technology Kanpur
             platform: NPTEL
-          duration: 8 weeks
+          duration: 8 weeks - online
 
       link: https://study.iitm.ac.in/ds/academics.html
     campus: ""
 
-  - type: University
+  - id: bsc-snu
+    type: University
     degree: Bachelor of Science (BSc)
     field: Statistics (Honours)
     institution: Sister Nivedita University
     location: Kolkata, WB
     time_period: 2022 - 2025
     gpa: CGPA - 7.01/10
-    cred_link: https://drive.google.com/file/d/1N5jnPq4nCegRzXy_h75CtfA725RJlskM/preview
+    cred_link: https://drive.google.com/file/d/18rKw4m6fxTCy1V4aGg2NBuxgRIV5ne5N/preview
     category: Choice Based Credit System (CBCS)
     cirriculum:
       semester_1:
@@ -484,6 +499,7 @@ education:
           issuer:
             institution: Google
             platform: Coursera
+          duration: 1.5 months - online
           # tag: 'Elite'
           # credit: 1 
 

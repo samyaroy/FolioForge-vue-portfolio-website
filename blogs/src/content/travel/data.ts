@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors and derived values for the travel map. The visit data
 // itself lives in data.yml; edit that file to keep the map up to date.
 import raw from './data.yml'
@@ -40,16 +41,33 @@ export interface TravelLegendLabels {
   homeCityCenter: string
 }
 
+export interface TravelOverviewLabels {
+  states: string
+  statesOf: string
+  cities: string
+  trips: string
+  photos: string
+  gettingAround: string
+  legs: string
+  mostVisited: string
+  visits: string
+  mostExplored: string
+  citiesSuffix: string
+  since: string
+  mapHint: string
+}
+
 interface StateEntry extends StateVisit {
   cities?: Omit<CityVisit, 'state'>[]
 }
 
 interface TravelContent {
   legendLabels: TravelLegendLabels
+  overviewLabels: TravelOverviewLabels
   states: StateEntry[]
 }
 
-const travel = raw as TravelContent
+const travel = withoutDisabledEntries(raw as TravelContent)
 
 export const STATE_VISITS: StateVisit[] = travel.states.map(
   ({ state, purpose, home }) => ({ state, purpose, home }),
@@ -60,6 +78,9 @@ export const CITY_VISITS: CityVisit[] = travel.states.flatMap((entry) =>
 )
 
 export const TRAVEL_LEGEND_LABELS: TravelLegendLabels = travel.legendLabels
+
+export const TRAVEL_OVERVIEW_LABELS: TravelOverviewLabels =
+  travel.overviewLabels
 
 /**
  * Number of distinct cities visited per state. This drives the choropleth

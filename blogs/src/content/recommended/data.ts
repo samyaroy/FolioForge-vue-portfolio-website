@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors over data.yml. Edit the YAML file to add recommendations.
 import raw from './data.yml'
 
@@ -18,7 +19,7 @@ const { items } = raw as { items: RecommendedItem[] }
 
 // Deliberately unsorted: the order in data.yml is a curatorial choice, and
 // FEATURED_RECOMMENDED takes it from the top.
-export const RECOMMENDED: RecommendedItem[] = items
+export const RECOMMENDED: RecommendedItem[] = withoutDisabledEntries(items)
 
 /** How many recommendations the blog home page teases. */
 export const FEATURED_COUNT = 3

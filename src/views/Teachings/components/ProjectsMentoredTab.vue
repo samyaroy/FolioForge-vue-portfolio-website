@@ -1,8 +1,19 @@
 <template>
   <div class="bg-white rounded-lg shadow-sm p-4 sm:p-8 text-sm">
-    <h2 class="text-2xl font-bold text-[#0e141b] mb-6">
-      Projects Mentored
-    </h2>
+    <!-- A student who worked on a project below can ask to have their name
+         linked on it. The heading keeps its line; the link sits at its right
+         and wraps under it on a narrow screen. -->
+    <div class="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+      <h2 class="text-2xl font-bold text-[#0e141b]">
+        Projects Mentored
+      </h2>
+      <button v-if="showCreditRequest && projects.length" type="button"
+        class="credit-link inline-flex items-center gap-1 text-sm font-medium hover:underline focus:outline-none focus-visible:underline"
+        @click="isCreditRequestOpen = true">
+        <v-icon size="16">mdi-account-check-outline</v-icon>
+        Worked on one of these? Get credited
+      </button>
+    </div>
 
     <div v-if="projects && projects.length" class="space-y-10">
       <!-- Semester Loop -->
@@ -175,6 +186,8 @@
       No projects mentored
     </div>
 
+    <CreditRequestModal v-if="showCreditRequest" v-model="isCreditRequestOpen" :projects="projects" />
+
     <ProjectDescriptionModal
       v-model="isDescriptionModalOpen"
       :title="activeProject.title"
@@ -190,6 +203,8 @@ import SmartLink from '@/components/SmartLink.vue'
 import { slugify } from '@/utils/slug'
 import { SEMESTER_ANCHOR_PARAM } from '@/config/teachingAnchors'
 import ProjectDescriptionModal from './ProjectDescriptionModal.vue'
+import CreditRequestModal from './CreditRequestModal.vue'
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 const props = defineProps({
   projects: {
@@ -201,6 +216,8 @@ const props = defineProps({
 const PROJECTS_PER_PAGE = 5
 const visibleProjectCount = ref(PROJECTS_PER_PAGE)
 const isDescriptionModalOpen = ref(false)
+const isCreditRequestOpen = ref(false)
+const showCreditRequest = isFeatureEnabled('showTeachings.showCreditRequest')
 const activeProject = ref({ title: '', description: '' })
 
 const flattenedProjects = computed(() => (
@@ -405,3 +422,18 @@ const getAffiliationLocation = (project) => {
   return NaN
 }
 </script>
+
+<style scoped>
+/* The global reset gives every button `color: inherit`, and style.css gives
+   it padding, a background and a hover border; a utility class cannot
+   outweigh the first. This is a link in a button's clothing, so it sheds
+   all of them here, where a scoped selector wins. The icon follows the
+   colour. */
+.credit-link {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: #1980e6;
+}
+</style>

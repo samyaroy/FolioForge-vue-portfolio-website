@@ -12,7 +12,7 @@
 
         <div v-if="projects && projects.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div v-for="project in projects" :key="project.id" :id="projectSlug(project.title)"
-                class="relative border rounded-lg p-4 sm:p-5 hover:shadow-md transition-shadow duration-200 text-sm"
+                class="border rounded-lg p-4 sm:p-5 hover:shadow-md transition-shadow duration-200 text-sm"
                 :class="isOpen ? '' : 'cursor-pointer'"
                 :role="isOpen ? undefined : 'button'"
                 :tabindex="isOpen ? undefined : 0"
@@ -46,34 +46,35 @@
                     </div>
                     <div v-if="project.affiliation" class="min-w-0 flex-1 text-sm leading-5">{{ project.affiliation }}</div>
                     <div v-if="project.logo" class="flex shrink-0 items-center gap-2">
-                        <img v-for="logo in project.logo" :key="logo" :src="getLogoPath(logo)" :alt="logo" :title="logo"
-                            class="max-h-7">
+                        <LogoImage v-for="logo in project.logo" :key="logo" :logo="logo"
+                            class="max-h-7" />
                     </div>
                 </div>
                 </transition>
-                <div class="flex flex-wrap gap-1.5 mt-3 mb-3">
-                    <span v-for="tag in Array.isArray(project.tech_stack)
-                        ? project.tech_stack
-                        : project.tech_stack.split(',').map(item => item.trim())" :key="tag"
-                        class="px-2.5 py-0.5 bg-gray-100 text-gray-700 text-xs rounded-full">
-                        {{ tag }}
-                    </span>
+                <!-- Tags on the left, credential links on the same line at the right -->
+                <div class="flex items-center justify-between gap-3 mt-3 mb-3">
+                    <div class="flex flex-wrap gap-px">
+                        <span v-for="tag in Array.isArray(project.tech_stack)
+                            ? project.tech_stack
+                            : project.tech_stack.split(',').map(item => item.trim())" :key="tag"
+                            class="px-2.5 py-0.5 bg-gray-100 text-gray-700 text-xs first:rounded-l-md last:rounded-r-md">
+                            {{ tag }}
+                        </span>
+                    </div>
+                    <div v-if="project.cred_link?.github || project.cred_link?.website" class="ml-auto flex shrink-0 gap-2">
+                        <a v-if="project.cred_link?.github" :href="project.cred_link.github"
+                            target="_blank"
+                            class="border border-[#1980e6] text-[#1980e6] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
+                            <v-icon size="16">mdi-github</v-icon>
+                        </a>
+                        <a v-if="project.cred_link?.website" :href="project.cred_link.website"
+                            target="_blank"
+                            class="border border-[#01070d] text-[#000000] w-8 h-8 rounded-full flex items-center justify-center shadow hover:bg-[#000000] hover:text-white transition">
+                            <v-icon size="16">mdi-web</v-icon>
+                        </a>
+                    </div>
                 </div>
-                <p class="content-justify text-gray-600 mb-2 leading-5">{{ project.description }}</p>
-
-                <!-- Bottom-right buttons -->
-                <div class="absolute bottom-3 right-3 flex space-x-2">
-                    <a v-if="project.cred_link && project.cred_link?.github" :href="project.cred_link.github"
-                        target="_blank"
-                        class="border border-[#1980e6] text-[#1980e6] w-9 h-9 rounded-full flex items-center justify-center shadow hover:bg-[#1980e6] hover:text-white transition">
-                        <v-icon>mdi-github</v-icon>
-                    </a>
-                    <a v-if="project.cred_link && project.cred_link?.website" :href="project.cred_link.website"
-                        target="_blank"
-                        class="border border-[#01070d] text-[#000000] w-9 h-9 rounded-full flex items-center justify-center shadow hover:bg-[#000000] hover:text-white transition">
-                        <v-icon>mdi-web</v-icon>
-                    </a>
-                </div>
+                <p class="content-justify text-gray-600 leading-5">{{ project.description }}</p>
                 </div>
                 </v-expand-transition>
             </div>
@@ -92,7 +93,7 @@ import { projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 // Default expanded/collapsed state is controlled by a feature flag
 const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.technicalProjects'))
@@ -111,10 +112,6 @@ defineProps({
         default: () => []
     }
 })
-function getLogoPath(logo) {
-    return logoUrl(logo);
-    // src/metadata/logo/institute
-}
 </script>
 
 <style scoped>

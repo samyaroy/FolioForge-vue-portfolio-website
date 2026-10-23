@@ -28,14 +28,11 @@
             v-if="getLogos(article.logo).length"
             class="flex shrink-0 items-center justify-start gap-3 md:w-36 md:justify-center"
           >
-            <img
+            <LogoImage
               v-for="logo in getLogos(article.logo)"
               :key="logo"
-              :src="getLogoPath(logo)"
-              :alt="logo"
-              :title="logo"
-              class="max-h-12 w-auto object-contain opacity-90 md:max-h-20"
-            >
+              :logo="logo"
+              class="max-h-12 w-auto object-contain opacity-90 md:max-h-20" />
           </div>
           <div class="min-w-0 flex-1">
             <div class="mb-2 flex items-start justify-between gap-4">
@@ -58,7 +55,7 @@
               :class="isSectionCollapsed ? '' : 'mb-3'"
             >
               <p v-if="article.publication?.name || article.publication?.host" class="min-w-0 text-gray-700">
-                <v-icon size="20">mdi-book-open-page-variant</v-icon>
+                <FontAwesomeIcon :icon="faNewspaper" class="text-[18px]" />
                 <span v-if="article.publication?.name" class="pl-3">
                   {{ article.publication.name }}
                 </span>
@@ -142,9 +139,11 @@
 <script setup>
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import SmartLink from '@/components/SmartLink.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
-import { logoUrl } from '@/config/mediaAssets'
+import LogoImage from '@/components/ui/LogoImage.vue'
 
 defineProps({
   articles: {
@@ -167,9 +166,6 @@ function expandSection() {
 
 const getArticleDocumentLink = (article) => article?.link || article?.cred_link || ''
 
-function getLogoPath(logo) {
-  return logoUrl(logo)
-}
 
 function getLogos(logo) {
   if (Array.isArray(logo)) {

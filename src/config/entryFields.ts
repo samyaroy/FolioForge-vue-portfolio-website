@@ -14,18 +14,22 @@
 /**
  * A field is either a plain key, or a key with the shape of what sits inside
  * it: an object edited as named sub-fields, a list edited as rows of columns,
- * or a credential holder. The first sub-field or column is the head — the rest
- * mean nothing without it.
+ * a credential holder, or a list of gallery image keys. The first sub-field or
+ * column is the head — the rest mean nothing without it.
  */
 export type EntryField =
   | string
+  | { key: string; type: 'number' | 'boolean' | 'date' | 'text-or-list' | 'json-array' | 'multiline'; min?: number; max?: number; placeholder?: string }
   | { key: string; object: readonly string[] }
   | { key: string; list: readonly string[] }
   | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' | 'ongoingCategories' }
+  | { key: string; images: 'gallery' }
 
 export const entryFields = {
   experience: ['job_role', 'type', 'company', 'department', 'location', 'time_period', 'supervisor', 'projects', 'description', { key: 'cred_link', credentials: 'documents' }],
-  education: ['type', 'degree', 'field', 'sub_field', 'institution', 'campus', 'location', 'time_period', 'current_level', 'gpa', 'category', { key: 'cred_link', credentials: 'documents' }],
+  // `ext_link` is a site the card links to beside its credentials, not
+  // instead of them, so it stays its own box rather than a role-link choice.
+  education: ['type', 'degree', 'field', 'sub_field', 'institution', 'campus', 'location', 'time_period', 'current_level', 'gpa', 'category', { key: 'cred_link', credentials: 'documents' }, 'ext_link'],
   researchInterests: ['key'],
   announcements: ['message', 'icon'],
   // Achievements carry no `prize`; they share the set and leave it blank, as
@@ -57,27 +61,44 @@ export const entryFields = {
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 
   // One leadership entry can hold several roles, each at its own organisation,
-  // with its own host and period. `cred_link` on an affiliation is a list of
-  // labelled documents and is preserved rather than edited here.
-  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period'] }, 'description', 'cred_link'],
+  // with its own host and period. `cred_link` on an affiliation may be a list
+  // of labelled documents, which is preserved rather than edited here.
+  //
+  // In both co-curricular collections a role carries either `cred_link` (a
+  // document, opened in the viewer) or `ext_link` (a site, opened in a new
+  // tab) -- never both; the card shows the credential if both are set. Where
+  // the two sit side by side, the admin edits them as one choice. `ext_link`
+  // belongs to the role, unlike `organization.web_link`, which is the
+  // organisation's own site.
+  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'cred_link', 'ext_link'] }, 'description', 'cred_link', 'ext_link'],
   // A volunteering entry is either a single role or a `roles` list of them. The
   // per-role `field` list is preserved rather than edited here.
-  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link'],
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],
   // `source` is where the line is from -- a book, a film -- and is optional.
   pageQuotes: ['text', 'author', 'source'],
-  galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', 'images', 'manifestDescription', 'externalUrl'],
-  studyMaterial: ['title', { key: 'materials', list: ['title', 'meta', 'instructor', 'distributor', 'logo', 'link'] }],
+
+  // The CV library (src/content/cv/library.yml). A row's keys beyond these are
+  // wording variants, which the editor shows as columns of their own; `tags`
+  // is left to the YAML.
+  cvEntries: ['ref', 'id', 'title', 'subtitle', 'tech', 'context', 'link', 'link_label', 'location', 'period', 'coursework', 'short_title', 'short_context'],
+  cvBullets: ['id', 'ref', 'kind', 'text'],
+  cvSummaries: ['id', 'text'],
+  cvSkills: ['id', 'label', 'text'],
+  cvInterests: ['id', 'text'],
+  galleryItems: ['id', 'title', 'type', 'event', 'location', 'date', 'caption', 'tags', 'featured', { key: 'images', images: 'gallery' }, 'manifestDescription', 'externalUrl'],
+  studyMaterial: ['title', { key: 'materials', list: ['title', 'meta', 'instructor', 'distributor', 'logo', 'link', 'paid'] }],
   worthExploring: ['group', 'links'],
+  worthSubscribing: ['group', 'id', 'icon', { key: 'links', list: ['label', 'url', 'cadence', 'speciality', 'incharge'] }],
 
   // Blog collections.
-  blogRecommended: ['id', 'title', 'author', 'source', 'year', 'url', 'note'],
-  blogReadings: ['id', 'title', 'author', 'genre', 'description', 'image', 'link'],
-  blogMovies: ['id', 'title', 'director', 'genre', 'year', 'description', 'image', 'link'],
-  blogTravel: ['state', 'purpose', 'cities'],
-  blogHobbies: ['label', 'icon'],
+  blogRecommended: ['id', 'title', 'author', 'source', { key: 'year', type: 'number' }, 'url', { key: 'note', type: 'multiline' }],
+  blogReadings: ['id', 'title', 'author', 'genre', { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
+  blogMovies: ['id', 'title', 'director', 'genre', { key: 'year', type: 'number' }, { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
+  blogTravel: ['state', 'purpose', { key: 'home', type: 'boolean' }, { key: 'cities', type: 'json-array', placeholder: '[{"name":"Chennai","visits":1,"stayed":true,"stayReason":"College","home":false,"lat":13.08,"lng":80.27}]' }],
+  blogHobbies: ['label', 'icon', { key: 'imageId', type: 'text-or-list' }, { key: 'image', type: 'text-or-list' }, { key: 'tint', type: 'boolean' }],
 } as const satisfies Record<string, readonly EntryField[]>
 
 /** Just the keys, in order. */
@@ -93,6 +114,12 @@ export function objectFieldsOf(fields: readonly EntryField[]): Record<string, re
 /** Keys edited as rows, mapped to their columns. */
 export function listFieldsOf(fields: readonly EntryField[]): Record<string, readonly string[]> {
   return Object.fromEntries(fields.flatMap(field => typeof field !== 'string' && 'list' in field ? [[field.key, field.list]] : []))
+}
+
+/** The key that lists gallery image keys, if the collection has one. */
+export function galleryImagesKeyOf(fields: readonly EntryField[]): string | undefined {
+  const field = fields.find(item => typeof item !== 'string' && 'images' in item)
+  return field && typeof field !== 'string' ? field.key : undefined
 }
 
 /** How this collection's `cred_link` is shaped, if it holds credentials. */

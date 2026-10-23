@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors over data.yml. Edit the YAML file to add hobby tiles.
 import raw from './data.yml'
 
@@ -20,7 +21,7 @@ const MEDIA_ORIGIN = 'https://media.samyabrata.codeium.xyz'
 
 const { tiles } = raw as { tiles: HobbyTile[] }
 
-export const HOBBY_TILES: HobbyTile[] = tiles
+export const HOBBY_TILES: HobbyTile[] = withoutDisabledEntries(tiles)
 
 function toList(value?: string | string[]): string[] {
   if (!value) return []

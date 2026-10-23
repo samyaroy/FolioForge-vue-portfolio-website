@@ -13,7 +13,7 @@ For a deeper architecture and maintenance guide, see [CONTEXT.md](CONTEXT.md).
 - Tailwind CSS 3 with custom theme colors
 - Font Awesome Vue support for selected brand icons
 - YAML content imports through `@modyfi/vite-plugin-yaml`
-- `vite-plugin-sitemap` for sitemap generation
+- Shared build-time sitemap generation and page metadata through `scripts/seo-build.ts`
 
 ## Getting Started
 
@@ -65,6 +65,7 @@ npm run lint
 ├── config/                         Build-tool configuration (social card content)
 ├── public/                         Static files copied directly into the build
 ├── scripts/                        Maintenance scripts
+├── services/credly-badges/         Cloudflare Worker serving the Credly badge count
 ├── shared/                         Framework-free modules used by both this app and blogs/
 ├── src/
 │   ├── components/                 Shared layout and reusable UI components
@@ -78,7 +79,7 @@ npm run lint
 │   ├── profile_info.yml            Main portfolio content source
 │   └── style.css                   Global styles and Tailwind directives
 ├── CONTEXT.md                      Detailed project context for maintainers and AI agents
-├── vite.config.js                  Vite, YAML, sitemap, and path alias config
+├── vite.config.ts                  Vite, YAML, sitemap, and path alias config
 ├── tailwind.config.js              Tailwind theme and content scan config
 ├── wrangler.jsonc                  Cloudflare static asset deployment config
 └── package.json                    Dependencies and npm scripts
@@ -166,7 +167,16 @@ The app builds to a static `dist/` directory. Deployment options already represe
 - Cloudflare static assets via [wrangler.jsonc](wrangler.jsonc)
 - Any static host that can serve the Vite output
 
-The current Vite sitemap hostname is configured as `https://samyabrata.codeium.xyz` in [vite.config.js](vite.config.js). Update it if the production domain changes.
+The Credly badge count on the Certifications tab comes from a separate Worker in [services/credly-badges](services/credly-badges/README.md), deployed on its own with `npm run deploy` from that folder. The site works without it; the banner then shows the plain Credly link.
+
+Sitemaps are generated on every production build, rather than edited as XML:
+
+- Portfolio: run `npm run build` to regenerate `dist/sitemap.xml` from the enabled routes in [src/router/routes.ts](src/router/routes.ts). Its canonical origin is defined there.
+- Blog: run `npm --prefix blogs run build` to regenerate `blogs/dist/sitemap.xml` from enabled pages, published posts, and visible travel stories in [blogs/vite.config.ts](blogs/vite.config.ts). Its canonical origin is defined in [blogs/src/lib/seo.ts](blogs/src/lib/seo.ts).
+
+- Beta portfolio: run `npm run build:beta` to generate a separate `dist-beta/sitemap.xml`, including enabled beta-only routes. Its hostname comes from `profile.betaVersionUrl` in `src/content/profile_info/profile.yml`. Deployments already using `VITE_SITE_ENV=beta npm run build` generate the same beta sitemap in `dist/`.
+
+Each site's generated `robots.txt` advertises its own sitemap. Beta pages retain `noindex` metadata; the private admin portal also remains non-indexable.
 
 ## License
 

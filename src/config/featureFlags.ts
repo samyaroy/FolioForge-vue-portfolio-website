@@ -102,6 +102,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showCoursesTaught: true,
     showProjectsMentored: true,
     showOtherTeachings: true,
+    // The "Get credited" link beside the Projects Mentored heading. Off hides
+    // only the link; the page shows while any tab is on, so this cannot hide it.
+    showCreditRequest: true,
   },
 
   showAffiliations: {
@@ -121,6 +124,16 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showResources: {
     main: true,
     showRibbon: true,
+    // The "Worth Subscribing" column on the Worth Exploring tab. `main` off,
+    // the tab shows its cards full width, as it did before the column. The
+    // rest switch one group each, matched by the group's `id` in
+    // resources.yml; with every group off, the column goes too.
+    showWorthSubscribing: {
+      main: true,
+      showNewsletters: false,
+      showResearchVenues: true,
+      showSeminarSeries: true,
+    },
   },
 
   // Controls the "Did you know?" facts page (/facts) and its nav link.

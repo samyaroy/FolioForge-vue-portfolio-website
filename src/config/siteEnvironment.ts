@@ -1,7 +1,7 @@
 // Deployment settings and public hostnames identify published sites. Checkout
 // metadata identifies local/preview builds without a mergeable branch marker.
 
-import config from '@/content/profile_info'
+import config from '@/content/profile_info/site'
 import { SITE_URL } from '@/router/routes'
 
 const BETA_HOST_PREFIX = 'beta.'

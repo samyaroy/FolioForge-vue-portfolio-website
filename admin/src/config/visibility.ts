@@ -1,4 +1,17 @@
-export type VisibilityFlag = { path: string; label: string }
+/**
+ * `entry` ties a switch to one entry of its section's collection, by the
+ * entry's id: while the switch is off, the entry list shows that row as hidden
+ * from the site, whatever the row's own switch says.
+ */
+export type VisibilityFlag = { path: string; label: string; entry?: string }
+
+/**
+ * Marks a path in the blog's flags (blogs/src/config/featureFlags.ts) rather
+ * than the portfolio's. The two files share names -- each has `showGallery`
+ * and `showPageDescriptions` -- so a blog path carries this prefix to stay
+ * unambiguous: `blog:showMovies`.
+ */
+export const BLOG_FLAG_PREFIX = 'blog:'
 
 /**
  * Whether a section's visibility is something you can actually change. Most are;
@@ -36,7 +49,10 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'projects-publications/publications': [{ path: 'showProjectsPublications.showPublications', label: 'Publications' }],
   'projects-publications/posters': [{ path: 'showProjectsPublications.showPosters', label: 'Posters' }],
   'teaching/courses': [{ path: 'showTeachings.showCoursesTaught', label: 'Courses Taught' }],
-  'teaching/projects': [{ path: 'showTeachings.showProjectsMentored', label: 'Projects Mentored' }],
+  'teaching/projects': [
+    { path: 'showTeachings.showProjectsMentored', label: 'Projects Mentored' },
+    { path: 'showTeachings.showCreditRequest', label: 'Get credited link' },
+  ],
   'teaching/others': [{ path: 'showTeachings.showOtherTeachings', label: 'Other Teaching' }],
   'ongoing-projects/projects': [{ path: 'showOngoingProjects', label: 'Ongoing Projects' }],
   'affiliations/affiliations': [{ path: 'showAffiliations.showAffiliations', label: 'Affiliations' }],
@@ -76,7 +92,17 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'gallery/career-unlocks': [{ path: 'showGallery', label: 'Career Unlocks' }],
   'resources/study-material': [{ path: 'showResources.main', label: 'Resources page' }],
   'resources/worth-exploring': [{ path: 'showResources.main', label: 'Resources page' }],
+  'resources/worth-subscribing': [
+    { path: 'showResources.main', label: 'Resources page' },
+    { path: 'showResources.showWorthSubscribing.main', label: 'Worth Subscribing column' },
+    { path: 'showResources.showWorthSubscribing.showNewsletters', label: 'Newsletters', entry: 'newsletters' },
+    { path: 'showResources.showWorthSubscribing.showResearchVenues', label: 'Research paper venues', entry: 'research-venues' },
+    { path: 'showResources.showWorthSubscribing.showSeminarSeries', label: 'Seminar series', entry: 'seminars' },
+  ],
   'facts/facts': [{ path: 'showFacts', label: 'Did You Know?' }],
+
+  // Blog pages. Each flag hides its page's route and its header link.
+  'movies/items': [{ path: `${BLOG_FLAG_PREFIX}showMovies`, label: 'Worth Binge-watching' }],
 }
 
 export const globalVisibility: VisibilityFlag[] = [

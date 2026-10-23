@@ -7,8 +7,9 @@ import { defineConfig } from "eslint/config";
 export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,mts,cts,vue}"], plugins: { js }, extends: ["js/recommended"], languageOptions: { globals: globals.browser } },{
     // blogs/ and admin/ have their own flat configs; .copilot and .codex hold vendored bundles
-    // and session logs that are megabytes of generated JS (they OOM the linter).
-    ignores: ['dist/**', 'node_modules/**', 'blogs/**', 'admin/**', '.copilot/**', '.codex/**'],
+    // and session logs that are megabytes of generated JS (they OOM the linter). .wrangler is
+    // the bundle output `wrangler dev` leaves in services/*.
+    ignores: ['dist/**', 'node_modules/**', 'blogs/**', 'admin/**', '.copilot/**', '.codex/**', '**/.wrangler/**'],
   },
   tseslint.configs.recommended,
   pluginVue.configs["flat/essential"],

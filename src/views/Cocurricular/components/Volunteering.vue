@@ -14,12 +14,16 @@
         </div>
 
         <div class="pb-2 last:pb-0">
-          <!-- Role, its credential, and the period it ran for -->
+          <!-- Role, its credential or link, and the period it ran for. A role
+               carries one or the other; a credential wins if both are set. -->
           <div class="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
             <h3 class="text-lg font-semibold text-[#0e141b]">
               {{ entry.role }}
               <span v-if="entry.cred_link" class="inline-block ml-1.5 align-middle">
                 <DocumentViewer :src="entry.cred_link" />
+              </span>
+              <span v-else-if="entry.ext_link" class="inline-block ml-1.5 align-middle">
+                <ExternalLink :href="entry.ext_link" :label="`Open link for ${entry.role}`" />
               </span>
             </h3>
             <span v-if="entry.time_period" class="text-sm text-gray-500 sm:ml-auto shrink-0">
@@ -69,6 +73,7 @@
 <script setup>
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import ExternalLink from '@/components/ExternalLink.vue'
 import SmartLink from '@/components/SmartLink.vue'
 
 const props = defineProps({
@@ -94,6 +99,7 @@ const readRole = source => {
     organization: source.organization || '',
     time_period: source.time_period || '',
     cred_link: source.cred_link || null,
+    ext_link: source.ext_link || '',
     skills: source.skills || '',
     fields,
     showFieldTimeline: fields.length > 1

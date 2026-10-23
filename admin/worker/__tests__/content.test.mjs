@@ -18,12 +18,13 @@ test('every collection points at a file that really exists', () => {
 
 test('only content files are writable, and nothing outside the allowlist is', () => {
   for (const path of writablePaths) {
-    assert.match(path, /^(src\/content\/profile_info|src\/metadata|blogs\/src\/content)\/.+\.yml$/, `${path} is not a content file`)
+    assert.match(path, /^(src\/content\/profile_info|src\/content\/cv|src\/metadata|blogs\/src\/content)\/.+\.yml$/, `${path} is not a content file`)
   }
   for (const path of [
     '.github/workflows/deploy.yml', 'admin/wrangler.jsonc', 'package.json', 'src/router/routes.ts',
     'src/metadata/../../secrets.yml', 'src/metadata/galleryTags.yml',
     '../../../etc/passwd', 'src/content/profile_info/../../../secret.yml', 'src/content/profile_info/education.yml/../x',
+    'src/content/cv/../../package.json', 'src/content/cv/other.yml',
   ]) {
     assert.equal(isWritablePath(path), false, `${path} must not be writable`)
   }

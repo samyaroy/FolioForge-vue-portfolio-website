@@ -26,6 +26,20 @@ const ROAD_ENDPOINT = 'https://router.project-osrm.org/route/v1/driving'
 const FOOT_ENDPOINT =
   'https://routing.openstreetmap.de/routed-foot/route/v1/foot'
 
+// A walking route this many times longer than the straight line means the
+// trail isn't mapped and the router went the long way round by road (a 2.9 km
+// trek near Rammam came back as 42 km). Such a leg falls back to the styled
+// straight line rather than drawing a detour nobody walked.
+const FOOT_MAX_DETOUR = 3
+
+function straightLineKm(a: LegPoint, b: LegPoint): number {
+  const rad = (deg: number) => (deg * Math.PI) / 180
+  const h =
+    Math.sin(rad(b.lat - a.lat) / 2) ** 2 +
+    Math.cos(rad(a.lat)) * Math.cos(rad(b.lat)) * Math.sin(rad(b.lng - a.lng) / 2) ** 2
+  return 2 * 6371 * Math.asin(Math.sqrt(h))
+}
+
 type CacheEntry = { c: LegCoords; t: number }
 type Cache = Record<string, CacheEntry>
 
@@ -76,13 +90,25 @@ async function osrmGeometry(
   endpoint: string,
   from: LegPoint,
   to: LegPoint,
+  /** Reject a route longer than this multiple of the straight line. */
+  maxDetour?: number,
 ): Promise<LegCoords | null> {
   const data = (await fetchJson(
     `${endpoint}/${from.lng},${from.lat};${to.lng},${to.lat}` +
       '?overview=simplified&geometries=geojson',
-  )) as { code?: string; routes?: { geometry?: { coordinates?: LegCoords } }[] }
-  const coords = data.routes?.[0]?.geometry?.coordinates
-  return data.code === 'Ok' && coords && coords.length >= 2 ? coords : null
+  )) as {
+    code?: string
+    routes?: { distance?: number; geometry?: { coordinates?: LegCoords } }[]
+  }
+  const route = data.routes?.[0]
+  const coords = route?.geometry?.coordinates
+  if (data.code !== 'Ok' || !coords || coords.length < 2) return null
+  // Floor the straight line at 0.5 km so very short hops aren't judged on noise.
+  const limitKm = maxDetour && maxDetour * Math.max(straightLineKm(from, to), 0.5)
+  if (limitKm && route.distance != null && route.distance / 1000 > limitKm) {
+    return null
+  }
+  return coords
 }
 
 /**
@@ -255,8 +281,9 @@ export async function fetchLegGeometry(
       lookup = () => osrmGeometry(ROAD_ENDPOINT, from, to)
       break
     case 'foot':
-      kind = 'foot'
-      lookup = () => osrmGeometry(FOOT_ENDPOINT, from, to)
+      // v2: drops walking routes cached before the detour check existed.
+      kind = 'foot-v2'
+      lookup = () => osrmGeometry(FOOT_ENDPOINT, from, to, FOOT_MAX_DETOUR)
       break
     case 'train': {
       if (to.train == null) return null

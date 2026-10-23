@@ -5,6 +5,7 @@ import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
 import { MarkdownEditor } from '@/components/editor/MarkdownEditor'
 import { Button, FileField, TextareaField, TextField } from '@/components/form'
+import { imagePreviewUrl } from '@/lib/imagePreviewUrl'
 
 export function PostEditorPage() {
   const [title, setTitle] = useState('')
@@ -35,7 +36,7 @@ export function PostEditorPage() {
       return
     }
     if (coverUrl) URL.revokeObjectURL(coverUrl)
-    setCoverUrl(file ? URL.createObjectURL(file) : '')
+    setCoverUrl(file ? imagePreviewUrl(file) : '')
     if (file) toast.success('Cover preview updated locally.')
   }
 

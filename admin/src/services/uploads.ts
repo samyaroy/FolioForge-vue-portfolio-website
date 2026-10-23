@@ -64,6 +64,16 @@ export function draftPreviewUrl(name: string): string {
   return `/api/media/drafts/${encodeURIComponent(name)}`
 }
 
+/** A refused media request, carrying the Worker's code as well as its message. */
+export class MediaRequestError extends Error {
+  readonly code: string
+  constructor(message: string, code: string) {
+    super(message)
+    this.name = 'MediaRequestError'
+    this.code = code
+  }
+}
+
 export async function mutate(url: string, init: RequestInit, failures: Record<string, string>) {
   const response = await fetch(url, {
     ...init,
@@ -74,7 +84,7 @@ export async function mutate(url: string, init: RequestInit, failures: Record<st
     const failure: unknown = await response.json().catch(() => null)
     const code = failure && typeof failure === 'object' ? String((failure as { error?: unknown }).error ?? '') : ''
     if (code === 'invalid_csrf_token') pendingToken = undefined
-    throw new Error(failures[code] ?? MESSAGES[code] ?? `Request failed (${response.status}).`)
+    throw new MediaRequestError(failures[code] ?? MESSAGES[code] ?? `Request failed (${response.status}).`, code)
   }
   return response.json() as Promise<unknown>
 }
@@ -116,6 +126,29 @@ export async function publishDraft(draft: string, name: string, replace: boolean
   const { key, url, replaced } = (body ?? {}) as Record<string, unknown>
   if (typeof key !== 'string' || typeof url !== 'string') throw new Error('Publish response was not usable.')
   return { key, url, ...(typeof replaced === 'string' ? { replaced } : {}) }
+}
+
+/**
+ * Make a staged WebP a trip's cover: the Worker publishes it into blog-travel/
+ * under the trip's id (or the next free -01 style name) and changes the trip's
+ * coverImage in the batch waiting to be published.
+ */
+export async function publishTripCover(draft: string, trip: string, baseSha: string): Promise<PublishedMedia & { pending: number }> {
+  const body = await mutate('/api/media/trip-covers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ draft, trip, baseSha }),
+  }, {
+    unsupported_image: 'Trip covers have to be WebP. Re-encode the photo in Chrome, Edge or Firefox.',
+    image_too_large: 'That cover is over 3840px on its long side or over 10 MB.',
+    content_conflict: 'trips.yml changed since this page loaded. Reload and try again.',
+    entry_not_found: 'That trip is no longer in trips.yml. Reload and try again.',
+    media_exists: 'Every cover name for this trip is taken in blog-travel/ (up to -20).',
+    not_found: 'That upload is no longer staged. Upload it again.',
+  })
+  const { key, url, pending } = (body ?? {}) as Record<string, unknown>
+  if (typeof key !== 'string' || typeof url !== 'string') throw new Error('Publish response was not usable.')
+  return { key, url, pending: typeof pending === 'number' ? pending : 0 }
 }
 
 /** Every upload still sitting in staging, including from earlier sessions. */

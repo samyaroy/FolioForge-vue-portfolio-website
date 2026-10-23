@@ -1,3 +1,4 @@
+import { withoutDisabledEntries } from '../../../../src/config/entryStatus'
 // Typed accessors and derived values for the blog gallery. Edit data.yml
 // and tags.yml to change the gallery content.
 import rawItemsContent from './data.yml'
@@ -80,7 +81,7 @@ export const GALLERY_FILTER_OPTIONS: TagOption[] = [
     })),
 )
 
-export const GALLERY_ITEMS: GalleryItem[] = normalizeGalleryItems(rawItems)
+export const GALLERY_ITEMS: GalleryItem[] = normalizeGalleryItems(withoutDisabledEntries(rawItems))
 
 function normalizeGalleryItems(items: RawGalleryItem[]): GalleryItem[] {
   const categoryCounts = new Map<string, number>()

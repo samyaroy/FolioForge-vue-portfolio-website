@@ -11,8 +11,8 @@ import path from 'node:path'
 // bundle is written it stamps out one HTML file per known route, each a copy of
 // the shell with that route's own <title>, description, canonical, Open Graph,
 // Twitter card, and JSON-LD baked into the head. Static hosts serve
-// dist/<route>/index.html directly for /<route>, and the SPA still boots and
-// takes over navigation exactly as before.
+// dist/<route>.html directly for /<route>, and the SPA still boots and takes
+// over navigation exactly as before.
 
 export interface SeoPage {
   /** Route path, e.g. '/' or '/contact'. */
@@ -66,9 +66,11 @@ export interface SeoPrerenderOptions {
   rssTitle?: string
   /** Emits sitemap.xml alongside the pages. */
   sitemap?: boolean
+  /** Explicitly publish a route inventory even when the deployment is noindex. */
+  sitemapOnNoindex?: boolean
   /**
    * Marks the whole deployment as non-production: every page gets
-   * `noindex`, no sitemap is written, and robots.txt stops advertising one.
+   * `noindex`. A sitemap is omitted unless sitemapOnNoindex is also enabled.
    *
    * The beta site is a byte-identical copy of production on a different host,
    * which is duplicate content. Canonicals alone do not stop it being crawled,
@@ -217,16 +219,14 @@ ${entries.join('\n')}
  * Vite's types across that boundary at all.
  */
 export function writeSeoOutput(outDir: string, rawOptions: SeoPrerenderOptions): void {
-  // A non-production deployment is expressed by flipping every page to
-  // noindex. Everything downstream already honours that flag: headFor emits the
-  // robots meta and drops the canonical, and buildSitemap filters the page out
-  // -- so there is no second code path to keep in step.
+  // Apply deployment-wide noindex to HTML independently of an explicitly
+  // requested sitemap. Individual noindex pages remain excluded from that map.
   const options: SeoPrerenderOptions = rawOptions.noindex
     ? {
         ...rawOptions,
         pages: rawOptions.pages.map((page) => ({ ...page, noindex: true })),
         notFound: rawOptions.notFound && { ...rawOptions.notFound, noindex: true },
-        sitemap: false,
+        sitemap: Boolean(rawOptions.sitemap && rawOptions.sitemapOnNoindex),
       }
     : rawOptions
 
@@ -239,11 +239,17 @@ export function writeSeoOutput(outDir: string, rawOptions: SeoPrerenderOptions):
   const render = (page: SeoPage): string =>
     shell.replace(/\s*<\/head>/, `\n${headFor(page, options)}\n  </head>`)
 
+  // /contact is written as contact.html, not contact/index.html. Cloudflare
+  // Pages answers /contact with a 308 to /contact/ whenever the file is a
+  // directory index, and has no setting to turn that off -- so every page sat
+  // behind a redirect to a URL its own canonical and the sitemap disagreed
+  // with. A flat file is served at /contact itself by Pages, by Workers static
+  // assets, and by `vite preview`, and each of them redirects /contact/ to it.
   for (const page of options.pages) {
     const target =
       page.path === '/'
         ? shellPath
-        : path.join(outDir, page.path.replace(/^\/+/, ''), 'index.html')
+        : path.join(outDir, `${page.path.replace(/^\/+|\/+$/g, '')}.html`)
 
     fs.mkdirSync(path.dirname(target), { recursive: true })
     fs.writeFileSync(target, render(page))
@@ -254,19 +260,20 @@ export function writeSeoOutput(outDir: string, rawOptions: SeoPrerenderOptions):
   }
 
   if (options.sitemap) {
-    fs.writeFileSync(path.join(outDir, 'sitemap.xml'), buildSitemap(options))
+    fs.writeFileSync(path.join(outDir, 'sitemap.xml'), buildSitemap(rawOptions))
+  } else {
+    fs.rmSync(path.join(outDir, 'sitemap.xml'), { force: true })
   }
 
   if (rawOptions.noindex) {
-    // public/robots.txt is copied in verbatim and advertises the production
-    // sitemap, which this build does not publish. Crawling stays allowed on
-    // purpose: a Disallow would stop crawlers fetching the pages, and a page
-    // never fetched is a page whose noindex is never read.
+    // Replace the production sitemap declaration with the deployment's own.
+    // Crawling remains allowed so crawlers can read the noindex page metadata.
     fs.writeFileSync(
       path.join(outDir, 'robots.txt'),
       'User-agent: *\nAllow: /\n\n' +
         '# Non-production deployment. Every page carries\n' +
-        '# <meta name="robots" content="noindex">, and no sitemap is published.\n',
+        '# <meta name="robots" content="noindex">.\n' +
+        (options.sitemap ? `\nSitemap: ${absoluteUrl(options.siteUrl, '/sitemap.xml')}\n` : ''),
     )
   }
 }

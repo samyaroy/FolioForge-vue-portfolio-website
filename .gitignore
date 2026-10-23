@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-beta/
 dist-ssr
 *.local
 
@@ -45,6 +46,9 @@ src/components/Footer/Index.vue
 */.copilot
 # rollup-plugin-visualizer output (npm run analyze)
 bundle-report.html
+
+# wrangler dev / deploy --dry-run output (services/*)
+.wrangler
 
 # Originals replaced by scripts/fit-gallery-images.mjs
 .gallery-image-backups/

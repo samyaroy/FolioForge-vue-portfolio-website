@@ -8,6 +8,11 @@ blogs:
   heroHeading: "Pound your thoughts and walk into the Auraverse..."
   # Heading of the year-grouped post index beside the post list.
   allPostsTitle: All posts
+  # Tag filter above the post list (flag: showPostTagFilter), styled like the
+  # portfolio's Career Unlocks filter.
+  tagFilterTitle: Filter posts
+  tagFilterOpen: Open post filters
+  tagFilterClear: Clear
 
 recommended:
   title: Recommended reads
@@ -30,7 +35,8 @@ readings:
   emptyLabel: No readings here yet.
   reviewLabel: "Read review ->"
   # Labels inside the review modal opened from a reading card.
-  noteLabel: My note
+  noteLabel: My review
+  reviewEmptyLabel: Review coming soon.
   linkLabel: More about this book
 
 movies:
@@ -38,10 +44,15 @@ movies:
   tag: movies
   cardLabel: Movie
   emptyLabel: Nothing worth binge-watching here yet.
+  filteredEmptyLabel: No films match the selected tags.
+  tagFilterTitle: Filter movies
+  tagFilterOpen: Open movie filters
+  tagFilterClear: Clear
   reviewLabel: "Read review ->"
   # Labels inside the review modal opened from a movie card.
   watchedLabel: "watched"
-  noteLabel: My take
+  noteLabel: My review
+  reviewEmptyLabel: Review coming soon.
   linkLabel: More about this film
 
 hobbies:
@@ -60,6 +71,7 @@ travel:
   detailsLabel: "See details ->"
   backToTravel: "← Back to TravelBook"
   routeMapTitle: Travel route
+  placeFactsTitle: About the place
   routeMapAttribution: "* Map boundaries use india-maps-data GeoJSON; coordinates are resolved with the Open-Meteo Geocoding API; road and walking routes use OSRM; rail routes use RailRadar; rendered with ECharts."
 
 post:

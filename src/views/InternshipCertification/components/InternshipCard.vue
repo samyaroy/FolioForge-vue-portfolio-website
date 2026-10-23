@@ -52,13 +52,16 @@
         <span v-if="internship.guide.designation">, {{ internship.guide.designation }}</span>
       </span>
     </div>
-    <div class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
-      <v-icon size="16">mdi-map-marker</v-icon>
-      <span>{{ internship.location }}</span>
-    </div>
-    <div class="flex items-start gap-2 text-[#4e7397] text-sm mb-1">
-      <v-icon size="16">mdi-calendar</v-icon>
-      <span>{{ internship.time_period }}</span>
+    <!-- Location and dates share a line, wrapping only when the card runs out of room. -->
+    <div class="flex flex-wrap items-start gap-x-4 gap-y-1 text-[#4e7397] text-sm mb-1">
+      <div v-if="internship.location" class="flex items-start gap-2">
+        <v-icon size="16">mdi-map-marker</v-icon>
+        <span>{{ internship.location }}</span>
+      </div>
+      <div v-if="internship.time_period" class="flex items-start gap-2">
+        <v-icon size="16">mdi-calendar</v-icon>
+        <span>{{ internship.time_period }}</span>
+      </div>
     </div>
 
     <!-- The nowrap label plus a 1fr list squeezes project titles to a couple of
@@ -83,9 +86,14 @@
       </ul>
     </div>
 
-    <p v-if="internship.description" class="content-justify text-[#0e141b] text-base leading-relaxed mb-4">
-      {{ internship.description }}
-    </p>
+    <!-- One bullet per line, drawn as Home's Experience timeline draws them. -->
+    <div v-if="descriptionLines.length" class="mb-4">
+      <p v-for="(line, index) in descriptionLines" :key="index" class="content-justify text-[#0e141b] text-sm flow-root">
+        <v-icon class="text-[#4e7397]" size="16">mdi-circle-small</v-icon>
+        <SmartLink :text="line.text" />
+        <CrossReferenceLink v-if="line.reference" :reference="line.reference" />
+      </p>
+    </div>
     <div class="flex flex-wrap gap-2">
       <span v-for="skill in internship.skills" :key="skill"
         class="px-3 py-1 text-xs font-medium bg-gray-100 text-[#4e7397] rounded-full">
@@ -106,7 +114,9 @@ import { RouterLink } from 'vue-router'
 import { isKnownProject, projectRoute } from '@/config/projectAnchors'
 import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import CrossReferenceLink from '@/components/CrossReferenceLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import { splitCrossReference } from '@/utils/crossReference'
 import CourseCirriculumModal from '@/views/Home/components/education/components/CourseCirriculumModal.vue'
 
 const props = defineProps({
@@ -128,6 +138,14 @@ const projectList = computed(() => {
   const p = props.internship.project
   if (!p) return []
   return Array.isArray(p) ? p : [p]
+})
+
+// A description is one line or a list of them; each line becomes a bullet.
+const descriptionLines = computed(() => {
+  const description = props.internship.description
+  if (!description) return []
+  const lines = Array.isArray(description) ? description : [description]
+  return lines.filter(Boolean).map(splitCrossReference)
 })
 
 const companyList = computed(() => {

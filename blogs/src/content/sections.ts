@@ -7,6 +7,9 @@ interface SectionsContent {
     title: string
     heroHeading: string
     allPostsTitle: string
+    tagFilterTitle: string
+    tagFilterOpen: string
+    tagFilterClear: string
   }
   recommended: {
     title: string
@@ -24,6 +27,7 @@ interface SectionsContent {
     emptyLabel: string
     reviewLabel: string
     noteLabel: string
+    reviewEmptyLabel: string
     linkLabel: string
   }
   movies: {
@@ -31,9 +35,14 @@ interface SectionsContent {
     tag: string
     cardLabel: string
     emptyLabel: string
+    filteredEmptyLabel: string
+    tagFilterTitle: string
+    tagFilterOpen: string
+    tagFilterClear: string
     reviewLabel: string
     watchedLabel: string
     noteLabel: string
+    reviewEmptyLabel: string
     linkLabel: string
   }
   hobbies: {
@@ -53,6 +62,7 @@ interface SectionsContent {
     backToTravel: string
     routeMapTitle: string
     routeMapAttribution: string
+    placeFactsTitle: string
   }
   post: {
     backToBlogs: string

@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "folioforge-credly-badges",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-16",
+  "workers_dev": false,
+  "preview_urls": false,
+  // Serves GET https://api.samyabrata.codeium.xyz/credly-count. The portfolio
+  // reads that URL from `credlyBadgesApi` in src/content/profile_info/profile.yml,
+  // so moving the Worker is a content edit there.
+  "routes": [{ "pattern": "api.samyabrata.codeium.xyz", "custom_domain": true }],
+  "observability": { "enabled": true },
+  // Runs daily but only re-reads Credly when the stored snapshot is from an
+  // earlier month (UTC). The data changes monthly; the daily check exists so a
+  // run that fails on the 1st is retried on the 2nd rather than next month.
+  "triggers": { "crons": ["0 6 * * *"] },
+  // Created by the first deploy (automatic provisioning) as
+  // "folioforge-credly-badges-credly-kv"; pinned so a redeploy can never
+  // provision a second, empty one.
+  "kv_namespaces": [{ "binding": "CREDLY_KV", "id": "58fabe62efd74c599ed6cd58727c70b7" }],
+  "vars": {
+    // The slug in https://www.credly.com/users/<slug>
+    "CREDLY_USERNAME": "samyabrata-roy"
+  }
+}
