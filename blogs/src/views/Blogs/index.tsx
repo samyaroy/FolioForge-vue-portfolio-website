@@ -5,16 +5,21 @@ import { SectionDivider } from '../../components/SectionDivider'
 import { isFeatureEnabled } from '../../config/featureFlags'
 import { EMPTY_TEXT_CLASS, RAIL_CONTENT_CLASS, RAIL_GRID_CLASS } from '../../lib/ui'
 import { HomeHero } from './components/HomeHero'
+import { HomeLatest } from './components/HomeLatest'
+import { latestItems } from './components/latestItems'
 import { PostCard } from './components/PostCard'
 import { RecommendedTeaser } from './components/RecommendedTeaser'
 
 export function BlogsPage() {
   // null → the base "Samyabrata Roy · Blog" title for the home page.
   usePageTitle(null)
+  const latest = isFeatureEnabled('showHomeLatest') ? latestItems() : []
 
   return (
     <>
-      <HomeHero />
+      <HomeHero
+        aside={latest.length > 0 ? <HomeLatest items={latest} /> : undefined}
+      />
 
       <SectionDivider className="mb-10" />
 

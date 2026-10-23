@@ -15,6 +15,17 @@ hero:
   alt: Featured artwork
   caption: Generated using Gemini 3.1 Pro
 
+# "What's new" panel beside the hero (flag: showHomeLatest). Each row is the
+# newest entry from one section; a row hides when its section is switched off
+# or has nothing in it.
+homeLatest:
+  kicker: Latest
+  title: What's new around here
+  post: New post
+  reading: Reading
+  movie: Watched
+  trip: Latest trip
+
 # Social links rendered vertically on the right edge of the hero.
 # Edit the hrefs to point at your own profiles; remove any you don't use.
 socialLinks:

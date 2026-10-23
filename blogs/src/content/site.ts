@@ -15,6 +15,15 @@ export interface HomeHero {
   caption: string
 }
 
+export interface HomeLatestLabels {
+  kicker: string
+  title: string
+  post: string
+  reading: string
+  movie: string
+  trip: string
+}
+
 export interface LabeledLink {
   label: string
   href: string
@@ -38,6 +47,7 @@ export interface FooterContent {
 interface SiteContent {
   profile: SiteProfile
   hero: HomeHero
+  homeLatest: HomeLatestLabels
   socialLinks: LabeledLink[]
   footer: FooterContent
 }
@@ -46,5 +56,6 @@ const site = raw as SiteContent
 
 export const SITE_PROFILE = site.profile
 export const HOME_HERO = site.hero
+export const HOME_LATEST_LABELS = site.homeLatest
 export const SOCIAL_LINKS = site.socialLinks
 export const FOOTER_CONTENT = site.footer
