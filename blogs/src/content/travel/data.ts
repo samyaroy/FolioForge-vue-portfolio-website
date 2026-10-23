@@ -41,12 +41,29 @@ export interface TravelLegendLabels {
   homeCityCenter: string
 }
 
+export interface TravelOverviewLabels {
+  states: string
+  statesOf: string
+  cities: string
+  trips: string
+  photos: string
+  gettingAround: string
+  legs: string
+  mostVisited: string
+  visits: string
+  mostExplored: string
+  citiesSuffix: string
+  since: string
+  mapHint: string
+}
+
 interface StateEntry extends StateVisit {
   cities?: Omit<CityVisit, 'state'>[]
 }
 
 interface TravelContent {
   legendLabels: TravelLegendLabels
+  overviewLabels: TravelOverviewLabels
   states: StateEntry[]
 }
 
@@ -61,6 +78,9 @@ export const CITY_VISITS: CityVisit[] = travel.states.flatMap((entry) =>
 )
 
 export const TRAVEL_LEGEND_LABELS: TravelLegendLabels = travel.legendLabels
+
+export const TRAVEL_OVERVIEW_LABELS: TravelOverviewLabels =
+  travel.overviewLabels
 
 /**
  * Number of distinct cities visited per state. This drives the choropleth

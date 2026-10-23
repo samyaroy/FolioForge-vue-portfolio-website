@@ -32,6 +32,23 @@ legendLabels:
   homeCity: Home city
   homeCityCenter: Home city center
 
+# Labels for the at-a-glance band above the trip list. Its numbers are
+# derived from the states below and from trips.yml.
+overviewLabels:
+  states: States & UTs
+  statesOf: of
+  cities: Cities
+  trips: Trips logged
+  photos: Photos
+  gettingAround: Getting around
+  legs: legs
+  mostVisited: Most visited
+  visits: visits
+  mostExplored: Most explored
+  citiesSuffix: cities
+  since: On the road since
+  mapHint: Hover a trip to light up where it went
+
 states:
   - state: Delhi
     purpose: both

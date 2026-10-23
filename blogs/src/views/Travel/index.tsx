@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import { PostCard } from '../Blogs/components/PostCard'
 import { posts } from '../../lib/posts'
@@ -11,20 +11,21 @@ import {
   CITY_VISITS,
   STATE_VISITS,
   TRAVEL_LEGEND_LABELS,
+  TRAVEL_OVERVIEW_LABELS,
   type Purpose,
 } from '../../content/travel/data'
 import { TRIPS, type Trip } from '../../content/travel/trips'
 import { TripCard } from './components/TripCard'
+import { TravelOverview } from './components/TravelOverview'
 import {
-  INTRO_SECTION_CLASS,
-  INTRO_TEXT_CLASS,
-  INTRO_TITLE_CLASS,
-  POST_LIST_CLASS,
-} from '../../lib/ui'
+  buildTravelOverview,
+  tripMapTargets,
+} from './components/travelStats'
+import { INTRO_TITLE_CLASS, POST_LIST_CLASS } from '../../lib/ui'
 import { geocodeCities, type GeoCity } from './components/geocode'
 import { INDIA_MAP_NAME, loadIndiaMap } from './components/indiaMap'
 
-const LEGEND_ROW_CLASS = 'inline-flex items-center gap-[0.35rem]'
+const LEGEND_ROW_CLASS = 'inline-flex items-center gap-[0.35rem] whitespace-nowrap'
 const LEGEND_HATCH_CLASS =
   'inline-block size-3 rounded-[3px] border border-border bg-[#f1f5f9]'
 
@@ -104,6 +105,13 @@ const stayedCities = CITY_VISITS.filter((c) => c.stayed).map((c) => c.name)
 // The home city is marked with a pin (vs plain dots for other cities).
 const HOME_CITY_COLOR = '#f59e0b'
 const STAYED_CITY_COLOR = '#2563eb'
+
+// Series names the trip-card hover targets (see highlightTrip).
+const PURPOSE_SERIES = 'Purpose'
+const CITIES_SERIES = 'Cities'
+
+const OVERVIEW = buildTravelOverview(TRIPS)
+const TRIP_TARGETS = new Map(TRIPS.map((trip) => [trip.id, tripMapTargets(trip)]))
 
 function bucketFor(count: number): number {
   const i = COUNT_UPPER.findIndex((u) => count <= u)
@@ -230,7 +238,7 @@ function buildOption(
         // decals). It spans every state so that, as the topmost interactive
         // layer, its tooltip/hover name all regions — including not-visited
         // ones — while the transparent fill keeps the choropleth colour below.
-        name: 'Purpose',
+        name: PURPOSE_SERIES,
         type: 'map',
         geoIndex: 0,
         emphasis: {
@@ -249,7 +257,7 @@ function buildOption(
         }),
       },
       {
-        name: 'Cities',
+        name: CITIES_SERIES,
         type: 'scatter',
         coordinateSystem: 'geo',
         symbolSize: (val: number[]) => 3 + Math.sqrt(val[2] ?? 1) * 2,
@@ -351,7 +359,13 @@ export function TravelPage() {
   usePageTitle(TRAVEL_SECTION.title)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const chartRef = useRef<echarts.ECharts | null>(null)
+  // Names actually plotted by each city series once the map is drawn, so a
+  // highlight never asks a series for a point it doesn't have.
+  const plottedRef = useRef<{ cities: Set<string>; stayed: Set<string> } | null>(
+    null,
+  )
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading')
+  const [totalStates, setTotalStates] = useState<number>()
   const [visibleTrips, setVisibleTrips] = useState(TRIPS_PAGE_SIZE)
   const showPageDescription = isPageDescriptionEnabled('travel')
 
@@ -367,6 +381,30 @@ export function TravelPage() {
       ),
     [],
   )
+
+  // Light up the states and city markers of the trip whose card is hovered
+  // or focused; null clears it.
+  const highlightTrip = useCallback((trip: Trip | null) => {
+    const chart = chartRef.current
+    const plotted = plottedRef.current
+    if (!chart || !plotted) return
+    chart.dispatchAction({ type: 'downplay' })
+    const targets = trip && TRIP_TARGETS.get(trip.id)
+    if (!targets) return
+    const groups: [string, string[]][] = [
+      [PURPOSE_SERIES, targets.states],
+      [CITIES_SERIES, targets.cities.filter((c) => plotted.cities.has(c))],
+      [
+        TRAVEL_LEGEND_LABELS.stayed,
+        targets.cities.filter((c) => plotted.stayed.has(c)),
+      ],
+    ]
+    for (const [seriesName, name] of groups) {
+      if (name.length > 0) {
+        chart.dispatchAction({ type: 'highlight', seriesName, name })
+      }
+    }
+  }, [])
 
   // Register the map + initialise the chart once.
   useEffect(() => {
@@ -391,6 +429,13 @@ export function TravelPage() {
         ])
         if (cancelled) return
         chart.setOption(buildOption(cities, allStates))
+        plottedRef.current = {
+          cities: new Set(
+            cities.filter((c) => !c.home && !c.stayed).map((c) => c.name),
+          ),
+          stayed: new Set(cities.filter((c) => c.stayed).map((c) => c.name)),
+        }
+        setTotalStates(allStates.length)
         setStatus('ready')
       } catch (err) {
         console.error('Failed to load India map', err)
@@ -404,20 +449,25 @@ export function TravelPage() {
       observer.disconnect()
       chart.dispose()
       chartRef.current = null
+      plottedRef.current = null
     }
   }, [])
 
   return (
     <div className="ml-[50%] grid w-[85vw] -translate-x-1/2 grid-cols-1 gap-[clamp(0.75rem,2vw,2.5rem)] min-[900px]:grid-cols-[55fr_45fr] min-[900px]:items-start">
       <div className="min-w-0">
-        <section className={`${INTRO_SECTION_CLASS} mb-4!`}>
+        <section className="mb-6">
           <h1 className={`${INTRO_TITLE_CLASS} [view-transition-name:travel-title]`}>
             {TRAVEL_SECTION.title}
           </h1>
           {showPageDescription && (
-            <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.travel}</p>
+            <p className="text-justify text-base leading-7 text-[#4b5563]">
+              {PAGE_DESCRIPTIONS.travel}
+            </p>
           )}
         </section>
+
+        <TravelOverview overview={OVERVIEW} totalStates={totalStates} />
 
         {travelPosts.length > 0 && (
           <div className={POST_LIST_CLASS}>
@@ -439,7 +489,11 @@ export function TravelPage() {
                 </div>
                 <div className="flex flex-col gap-6">
                   {group.trips.map((trip) => (
-                    <TripCard key={trip.id} trip={trip} />
+                    <TripCard
+                      key={trip.id}
+                      trip={trip}
+                      onActiveChange={highlightTrip}
+                    />
                   ))}
                 </div>
               </div>
@@ -459,86 +513,93 @@ export function TravelPage() {
       </div>
 
       <section
-        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map] min-[900px]:sticky min-[900px]:top-19 min-[900px]:flex min-[900px]:h-[calc(110vh-4.4rem)] min-[900px]:flex-col min-[900px]:overflow-hidden"
+        className="relative rounded-xl border border-border bg-surface p-4 shadow-[0_1px_2px_rgba(15,23,42,0.04)] [view-transition-name:travel-map] min-[900px]:sticky min-[900px]:top-19 min-[900px]:flex min-[900px]:h-[calc(100vh-6rem)] min-[900px]:flex-col min-[900px]:overflow-hidden"
         aria-label="Map of states visited in India"
       >
-        <div className="mb-2">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <h2 className="text-lg font-bold text-ink">{TRAVEL_SECTION.mapTitle}</h2>
+          <p className="inline-flex items-center gap-1 text-xs text-faint max-[899px]:hidden">
+            <span className="mdi mdi-cursor-default-click-outline leading-none" aria-hidden="true" />
+            {TRAVEL_OVERVIEW_LABELS.mapHint}
+          </p>
+        </div>
 
-          <div className="absolute top-[0.85rem] right-4 z-2 flex flex-col items-end gap-[0.3rem] rounded-lg border border-border bg-[rgba(255,255,255,0.85)] px-[0.6rem] py-2 text-right text-[0.72rem] text-muted backdrop-blur-[2px]">
-            <span className={LEGEND_ROW_CLASS}>
-              <span>{COUNT_LABELS[0]}</span>
-              <span className="inline-flex overflow-hidden rounded-[3px] border border-border">
-                {COUNT_PALETTE.map((c) => (
-                  <i
-                    key={c}
-                    className="block h-2.5 w-3.25"
-                    style={{ background: c }}
-                  />
-                ))}
-              </span>
-              <span>
-                {COUNT_LABELS[COUNT_LABELS.length - 1]}{' '}
-                {TRAVEL_LEGEND_LABELS.citiesSuffix}
-              </span>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 border-b border-border pb-3 text-[0.72rem] text-muted">
+          <span className={LEGEND_ROW_CLASS}>
+            <span>{COUNT_LABELS[0]}</span>
+            <span className="inline-flex overflow-hidden rounded-[3px] border border-border">
+              {COUNT_PALETTE.map((c) => (
+                <i
+                  key={c}
+                  className="block h-2.5 w-3.25"
+                  style={{ background: c }}
+                />
+              ))}
             </span>
+            <span>
+              {COUNT_LABELS[COUNT_LABELS.length - 1]}{' '}
+              {TRAVEL_LEGEND_LABELS.citiesSuffix}
+            </span>
+          </span>
 
+          <span className={LEGEND_ROW_CLASS}>
+            <span
+              className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+            />
+            {TRAVEL_LEGEND_LABELS.academic}
+          </span>
+          <span className={LEGEND_ROW_CLASS}>
+            <span
+              className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+            />
+            {TRAVEL_LEGEND_LABELS.travel}
+          </span>
+          <span className={LEGEND_ROW_CLASS}>
+            <span
+              className={`${LEGEND_HATCH_CLASS} bg-[radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] bg-size-[3px_3px]`}
+            />
+            {TRAVEL_LEGEND_LABELS.both}
+          </span>
+
+          {homeState && (
             <span className={LEGEND_ROW_CLASS}>
               <span
-                className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
+                className="inline-block size-3 rounded-[3px] border border-[#4c1d95]"
+                style={{ background: HOME_COLOR }}
               />
-              {TRAVEL_LEGEND_LABELS.academic}
+              {TRAVEL_LEGEND_LABELS.homeState} ({homeState})
             </span>
+          )}
+
+          <span className={LEGEND_ROW_CLASS}>
+            <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#ef4444] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
+            {TRAVEL_LEGEND_LABELS.cityVisited}
+          </span>
+
+          {stayedCities.length > 0 && (
             <span className={LEGEND_ROW_CLASS}>
-              <span
-                className={`${LEGEND_HATCH_CLASS} bg-[repeating-linear-gradient(-45deg,rgba(15,23,42,0.55)_0_1px,transparent_1px_3px)]`}
-              />
-              {TRAVEL_LEGEND_LABELS.travel}
+              <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#2563eb] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
+              {TRAVEL_LEGEND_LABELS.stayed}
             </span>
+          )}
+
+          {homeCity && (
             <span className={LEGEND_ROW_CLASS}>
-              <span
-                className={`${LEGEND_HATCH_CLASS} bg-[radial-gradient(rgba(15,23,42,0.6)_0.5px,transparent_0.6px)] bg-size-[3px_3px]`}
-              />
-              {TRAVEL_LEGEND_LABELS.both}
+              <svg
+                className="inline-block h-3 w-2.25"
+                viewBox="0 0 24 32"
+                aria-hidden="true"
+              >
+                <path
+                  d="M12 0C5.4 0 0 5.4 0 12c0 8 12 20 12 20s12-12 12-20C24 5.4 18.6 0 12 0z"
+                  fill={HOME_CITY_COLOR}
+                  stroke="#7c2d12"
+                />
+                <circle cx="12" cy="12" r="4.5" fill="#fff" />
+              </svg>
+              {TRAVEL_LEGEND_LABELS.homeCity} ({homeCity})
             </span>
-
-            {homeState && (
-              <span className={LEGEND_ROW_CLASS}>
-                <span style={{ background: HOME_COLOR }} />
-                {TRAVEL_LEGEND_LABELS.homeState} ({homeState})
-              </span>
-            )}
-
-            <span className={LEGEND_ROW_CLASS}>
-              <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#ef4444] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
-              {TRAVEL_LEGEND_LABELS.cityVisited}
-            </span>
-
-            {stayedCities.length > 0 && (
-              <span className={LEGEND_ROW_CLASS}>
-                <span className="inline-block size-2.5 rounded-full border-[1.5px] border-white bg-[#2563eb] shadow-[0_0_0_1px_rgba(15,23,42,0.15)]" />
-                {TRAVEL_LEGEND_LABELS.stayed}
-              </span>
-            )}
-
-            {homeCity && (
-              <span className={LEGEND_ROW_CLASS}>
-                <svg
-                  className="inline-block h-3 w-2.25"
-                  viewBox="0 0 24 32"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M12 0C5.4 0 0 5.4 0 12c0 8 12 20 12 20s12-12 12-20C24 5.4 18.6 0 12 0z"
-                    fill={HOME_CITY_COLOR}
-                    stroke="#7c2d12"
-                  />
-                  <circle cx="12" cy="12" r="4.5" fill="#fff" />
-                </svg>
-                {TRAVEL_LEGEND_LABELS.homeCity} ({homeCity})
-              </span>
-            )}
-          </div>
+          )}
         </div>
 
         <div className="h-[calc(92vh-1cm)] min-h-[calc(600px-1cm)] w-full overflow-hidden bg-white min-[900px]:h-auto min-[900px]:min-h-0 min-[900px]:flex-1">
