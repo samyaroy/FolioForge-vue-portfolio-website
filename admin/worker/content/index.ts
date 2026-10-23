@@ -6,6 +6,7 @@ import { isWritablePath } from './registry.ts'
 import { contentSource, type ContentSource } from './registry.ts'
 import { appendLocation, insertEntry, locateEntry, parseContent, readEntry, removeEntry, replaceEntry, resolvePaths } from './entries.ts'
 import { discardPending, listPending, readPending, writePending, type PendingFile } from './pending.ts'
+import { assertTripExists, setTripCover } from './tripCovers.ts'
 import type { DraftBucket } from '../types.ts'
 
 export type EntryWrite = {
@@ -99,6 +100,23 @@ export async function applyEntryChange(
   // The edit waits here. Nothing reaches the branch until it is published.
   await writePending(drafts, { path: source.path, text, baseSha: file.baseSha, summaries: [...file.summaries, summary] })
   return { baseSha: file.baseSha, pending: (await listPending(drafts)).length }
+}
+
+/**
+ * Get ready to point a trip at a new cover. The file is read and checked now,
+ * so a stale editor or a trip that is gone stops the upload before anything
+ * reaches the media host; the returned step then records the change as pending
+ * and answers how many files are waiting.
+ */
+export async function prepareTripCover(config: GithubConfig, drafts: DraftBucket, trip: string, baseSha: string): Promise<(url: string) => Promise<number>> {
+  const source = sourceOf('travel/trips')
+  const file = await currentFile(config, drafts, source.path)
+  if (file.baseSha !== baseSha) throw new HttpError(409, 'content_conflict', 'stale_base')
+  assertTripExists(file.text, trip)
+  return async url => {
+    await writePending(drafts, { path: source.path, text: setTripCover(file.text, trip, url), baseSha: file.baseSha, summaries: [...file.summaries, `set the cover of trip ${trip}`] })
+    return (await listPending(drafts)).length
+  }
 }
 
 /** What is waiting, with the generated files each change will bring with it. */

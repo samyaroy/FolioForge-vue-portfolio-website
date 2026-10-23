@@ -6,6 +6,7 @@ import { PageHeader } from '@/components/admin/PageHeader'
 import { Button, FileField, IconButton, TextField } from '@/components/form'
 import { imagePreviewUrl } from '@/lib/imagePreviewUrl'
 import { LogoLibrary } from '@/components/admin/LogoLibrary'
+import { TripCovers } from '@/components/admin/TripCovers'
 import { useIntegrations } from '@/hooks/useIntegrations'
 import { archiveMedia, discardDraft, draftPreviewUrl, listDrafts, publishDraft, uploadImage, type StoredDraft } from '@/services/uploads'
 
@@ -135,6 +136,7 @@ export function MediaLibraryPage() {
         )}
       />
       <LogoLibrary />
+      <TripCovers connected={integrations.github && integrations.r2 && integrations.uploads} />
       <FileField fieldClassName="media-dropzone" data-page-search multiple accept="image/jpeg,image/png,image/webp" onSelect={addFiles}>
         <ImagePlus aria-hidden="true" />
         <strong>Stage media uploads</strong>

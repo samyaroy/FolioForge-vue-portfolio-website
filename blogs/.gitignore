@@ -13,5 +13,5 @@ dist-ssr
 .dev.vars
 .env
 
-# HD trip cover copies made by scripts/fit-trip-covers.mjs, kept for review
-.trip-cover-cards/
+# WebP trip covers made by scripts/fit-trip-covers.mjs, kept for review
+.trip-covers/

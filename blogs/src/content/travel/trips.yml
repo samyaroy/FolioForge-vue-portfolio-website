@@ -11,7 +11,9 @@
 #                   (e.g. "Hyderabad, Telangana")
 #   places        — stops on the trip, in travel order (see below)
 #   summary       — short description shown on the trip card
-#   coverImage    — full URL (or CDN key) for a cover photo
+#   coverImage    — full URL (or CDN key) for a cover photo; covers in
+#                   blog-travel/ are WebP (see scripts/fit-trip-covers.mjs,
+#                   or upload one from the admin's Media Library)
 #   tags          — free-form labels, e.g. [Mountains, Conference]
 #   narrative     — list of long-form paragraphs for the details page
 #                   (falls back to summary when omitted)
@@ -68,7 +70,7 @@ trips:
       - { name: Rimbik, mode: car, lat: 27.11692, lng: 88.10143 }
       - { name: Darjeeling, mode: car }
     summary: ABC
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026.webp
     tags: [Mountains]
     narrative:
       - ABC
@@ -95,7 +97,7 @@ trips:
       - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
     summary: ABC
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26.webp
     narrative:
       - ABC
       - ABC
@@ -128,7 +130,7 @@ trips:
       - { name: Ranikhet, mode: car }
       - { name: Nainital, mode: car }
     summary: BCD
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttarakhand-devbhumi-2025.webp
     tags: [Mountains, Pilgrimage]
     narrative:
       - BCD
@@ -157,7 +159,7 @@ trips:
       - { name: Visakhapatnam, mode: bike}
       - { name: Araku, mode: train, train: 08551}
     summary: XYZ
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/vizag-01-2025.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/vizag-01-2025.webp
     tags: [Mountains, Pilgrimage]
     narrative:
       - XYZ
@@ -193,7 +195,7 @@ trips:
       - { name: Delhi, mode: train, train: 12056}
       - { name: Kolkata, mode: flight}
     summary: PQR
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/uttrakhand-trip-01.webp
     tags: [Mountains, Pilgrimage]
     narrative:
       - PQR
@@ -215,7 +217,7 @@ trips:
   #     - Kolkata
   #     - { name: Darjeeling, mode: bus}
   #   summary: MNO
-  #   coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
+  #   coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.webp
   #   tags: [Mountains]
   #   narrative:
   #     - MNO
@@ -240,7 +242,7 @@ trips:
     places:
       - Kolkata
       - { name: Digha, mode: bike, lat: 21.6266, lng: 87.5074 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/bike-trip-digha-2024.webp
     tags: [Bike Trip, New Year]
     narrative:
       - SSS
@@ -266,7 +268,7 @@ trips:
       - { name: Chandigarh, mode: flight, via: Delhi }
       - { name: Ropar, mode: car, note: IIT Roper campus}
     summary: QAZ
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.webp
     tags: [Bootcamp]
     narrative:
       - QAZ
@@ -286,7 +288,7 @@ trips:
       - Kolkata
       - { name: Darjeeling, mode: bus}
     summary: UVW
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/derjeeling-2024.webp
     tags: [Mountains]
     narrative:
       - UVW
@@ -310,7 +312,7 @@ trips:
     places:
       - Kolkata
       - { name: Chennai, mode: train, train: 12841 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/chennai-001-iitmadras.webp
     summary: MNO
     tags: [Dummy, Test]
     narrative:
@@ -333,7 +335,7 @@ trips:
     places:
       - Kolkata
       - { name: New Delhi, mode: train, train: 12301 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/delhi-001-iitdelhi.webp
     tags: [Dummy, Test]
     narrative:
       - MNO
@@ -362,7 +364,7 @@ trips:
     places:
       - Kolkata
       - { name: Hyderabad, mode: train, train: 18045 }
-    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.jpeg
+    coverImage: https://media.samyabrata.codeium.xyz/blog-travel/hyderabad-solo-2023-01.webp
     tags: [Dummy, Test]
     narrative:
       - MNO

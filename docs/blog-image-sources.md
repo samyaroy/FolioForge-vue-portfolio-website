@@ -27,9 +27,10 @@ places. Moving the host, or a folder on it, means changing all of them:
 - `blogs/src/content/movies/data.ts:39`
 - `blogs/src/content/readings/data.ts:33`
 - `blogs/src/content/hobbies/data.ts:20`
-- `blogs/src/lib/tripCovers.ts:7`
+- `blogs/src/lib/tripCovers.ts:13`
 - the 64 trip URLs in `blogs/src/content/travel/trips.yml`
-- the admin: `admin/src/lib/galleryImages.ts:5` and `admin/worker/media.ts:18`
+- the admin: `admin/src/lib/galleryImages.ts:5`, `admin/worker/media.ts:19` and
+  `admin/worker/content/tripCovers.ts:6` (the cover URLs it accepts)
 - the gallery photo script: `scripts/fit-gallery-images.mjs:55`
 
 ## Missing on the media host
@@ -37,18 +38,30 @@ places. Moving the host, or a folder on it, means changing all of them:
 These are listed in `trips.yml` but answer 404, so the travel page shows a
 placeholder or a broken image for them:
 
-- Covers: `darjeeling-2026`, `uttarakhand-devbhumi-2025`, `uttrakhand-trip-01`
+- Covers: `uttarakhand-devbhumi-2025`, `uttrakhand-trip-01` (no original
+  either). Every other cover's WebP is missing too until
+  `npm run fit-covers -- --upload` has been run once (see below).
 - Photo belts:
   - every photo for `darjeeling-2026`, `uttarakhand-devbhumi-2025` and `uttrakhand-trip-01`
   - all 3 for `bike-trip-digha-2024`
   - `derjeeling-2024` -03, -04 and -05
   - `hyderabad-solo-2023` -03 and -04
 
-## HD trip cover copies
+## Trip covers are WebP
 
-`npm run fit-covers` (in `blogs/`) writes a lighter copy of each trip cover to
-`blogs/.trip-cover-cards/`, which git ignores. The copies are at most 3840px on
-the long side, JPEG quality 94, and never over 10 MB. A cover that already
-fits is kept as it is. Nothing on the site uses them yet, and nothing is
-uploaded unless the script is run with `--upload`. Settings are in
-`blogs/src/lib/tripCovers.ts`.
+Every trip `coverImage` in `blog-travel/` points at a WebP,
+`blog-travel/<name>.webp`, beside the original photo it was made from. The
+WebP is at most 3840px on the long side, quality 90, and never over 10 MB
+(`shared/travel/tripCoverPolicy.js`). Originals are never changed.
+
+- `npm run fit-covers` (in `blogs/`) converts each original to
+  `blogs/.trip-covers/`, which git ignores, for review. `--upload` puts the
+  WebPs on the bucket and then points trips.yml at them; it never overwrites a
+  WebP already on the host. The original is found from the cover itself, or as
+  the `.jpeg`/`.jpg`/`.png` of the same name beside its WebP.
+- The admin's Media Library has a Trip covers panel. A picked photo is
+  re-encoded to WebP in the browser, and the Worker refuses anything that is
+  not a WebP within the policy. It publishes to `blog-travel/<trip id>.webp`,
+  or `-01`, `-02`... when that name is taken, and changes only that trip's
+  `coverImage` line in the pending batch. Safari cannot encode WebP, so covers
+  are uploaded from Chrome, Edge or Firefox.

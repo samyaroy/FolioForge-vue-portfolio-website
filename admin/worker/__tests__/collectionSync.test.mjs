@@ -16,7 +16,7 @@ test('every writable collection hydrates every current row in write-index order'
     const rows = collectionRows(document, source)
     assert.equal(rows.length, countEntries(document, source), collection)
     // These collections use dedicated editors rather than PortfolioContent.
-    if (['metadata/institutes', 'metadata/people', 'cv/presets'].includes(collection)) continue
+    if (['metadata/institutes', 'metadata/people', 'cv/presets', 'travel/trips'].includes(collection)) continue
     const entries = repositoryEntries(collection, rows)
     assert.equal(entries.length, rows.length, collection)
     entries.forEach((entry, index) => {

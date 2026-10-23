@@ -1,3 +1,4 @@
+import { TRIP_COVER_FOLDER, TRIP_COVER_MAX_BYTES, TRIP_COVER_MAX_EDGE } from '../../shared/travel/tripCoverPolicy.js'
 import { HttpError } from './http.ts'
 import { contentDigest, inspectImage } from './images.ts'
 import type { DraftBucket, MediaBucket, R2Listing, ReadOnlyBucket } from './types.ts'
@@ -237,4 +238,56 @@ export async function publishDraft(
     throw new HttpError(502, 'storage_unavailable', 'publish_failed')
   }
   return { key, url: new URL(key, `${logoPolicy.publicBase}/`).href, ...(replaced ? { replaced } : {}) }
+}
+
+/* ---------------------------- publishing a cover ------------------------- */
+
+/**
+ * Trip covers live in their own folder and are WebP only, re-encoded in the
+ * browser to shared/travel/tripCoverPolicy.js before upload. The browser does
+ * the encoding, so this is what holds it to that: anything else is refused.
+ */
+export const tripCoverPolicy = {
+  prefix: TRIP_COVER_FOLDER,
+  maxEdge: TRIP_COVER_MAX_EDGE,
+  maxBytes: TRIP_COVER_MAX_BYTES,
+} as const
+
+// A trip id: lower-case, no dots, no path.
+export const TRIP_ID = /^[a-z0-9][a-z0-9-]{0,79}$/
+
+// How many -01 style names are tried before a trip is called full.
+const MAX_COVER_SUFFIX = 20
+
+/**
+ * Publish a staged WebP as blog-travel/<trip>.webp. The bytes are inspected
+ * again here rather than trusted from the draft's name. An existing cover is
+ * never replaced: the CDN would keep serving the old one for hours under the
+ * same address, so a taken name moves the cover to <trip>-01, <trip>-02, ...
+ */
+export async function publishTripCover(media: MediaBucket, drafts: DraftBucket, draftName: string, trip: string): Promise<PublishedMedia> {
+  if (!TRIP_ID.test(trip)) throw new HttpError(400, 'invalid_media_name', 'bad_trip_id')
+  if (!/^[a-f0-9]{64}\.(jpg|png|webp)$/.test(draftName)) throw new HttpError(404, 'not_found', 'bad_draft_name')
+  if (!draftName.endsWith('.webp')) throw new HttpError(415, 'unsupported_image', 'trip_cover_not_webp')
+  const staged = await drafts.get(`drafts/${draftName}`)
+  if (!staged?.body) throw new HttpError(404, 'not_found', 'draft_missing')
+
+  const image = inspectImage(await new Response(staged.body).arrayBuffer(), null)
+  if (image.contentType !== 'image/webp') throw new HttpError(415, 'unsupported_image', 'trip_cover_not_webp')
+  const edge = Math.max(image.width, image.height)
+  if (edge > tripCoverPolicy.maxEdge) throw new HttpError(413, 'image_too_large', `edge_${edge}`)
+  if (image.bytes.length > tripCoverPolicy.maxBytes) throw new HttpError(413, 'image_too_large', `bytes_${image.bytes.length}`)
+
+  let key: string | undefined
+  for (let suffix = 0; suffix <= MAX_COVER_SUFFIX && !key; suffix++) {
+    const candidate = `${tripCoverPolicy.prefix}${suffix ? `${trip}-${String(suffix).padStart(2, '0')}` : trip}.webp`
+    if (!await media.get(candidate)) key = candidate
+  }
+  if (!key) throw new HttpError(409, 'media_exists', 'no_free_name')
+  try {
+    await media.put(key, image.bytes as unknown as ArrayBuffer, { httpMetadata: { contentType: 'image/webp' } })
+  } catch {
+    throw new HttpError(502, 'storage_unavailable', 'publish_failed')
+  }
+  return { key, url: new URL(key, `${logoPolicy.publicBase}/`).href }
 }

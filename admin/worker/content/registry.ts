@@ -111,6 +111,9 @@ export const contentSources = {
   'readings/items': { path: `${BLOG}/readings/data.yml`, arrayKeys: ['items'] },
   'movies/items': { path: `${BLOG}/movies/data.yml`, arrayKeys: ['items'] },
   'travel/states': { path: `${BLOG}/travel/data.yml`, arrayKeys: ['states'] },
+  // Written by the Media Library's trip cover uploader, which changes only a
+  // trip's coverImage.
+  'travel/trips': { path: `${BLOG}/travel/trips.yml`, arrayKeys: ['trips'] },
   'hobbies/tiles': { path: `${BLOG}/hobbies/data.yml`, arrayKeys: ['tiles'] },
 } as const satisfies Record<string, ContentSource>
 

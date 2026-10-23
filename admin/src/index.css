@@ -611,6 +611,8 @@ tbody tr:hover { background: #f9fbfd; }
 .logo-upload[data-disabled] { opacity: .5; cursor: not-allowed; }
 .logo-library-item > img { height: 110px; object-fit: contain; padding: 14px; background: #fff; }
 .logo-library-item .logo-upload { margin-top: 8px; }
+.trip-cover-empty { display: grid; width: 100%; aspect-ratio: 4 / 3; place-items: center; background: #f3f6f9; color: #8ca0b0; }
+.trip-cover-empty svg { width: 24px; height: 24px; }
 .experience-section-divider { margin-top: 8px; border-top: 1px solid var(--border); padding-top: 16px; }
 .description-line { display: grid; grid-template-columns: minmax(0, 1fr) 32px; align-items: start; gap: 8px; margin-top: 12px; }
 .description-line > button { margin-top: 20px; }
