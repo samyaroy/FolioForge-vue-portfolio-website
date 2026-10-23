@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import type { MovieItem } from '../../../../content/movies/data'
 import { MOVIES_SECTION } from '../../../../content/sections'
 import { formatDate } from '../../../../lib/format'
@@ -20,7 +21,9 @@ type MovieCardProps = {
 }
 
 export function MovieCard({ movie, illustrationSide = 'left' }: MovieCardProps) {
-  const [isReviewOpen, setIsReviewOpen] = useState(false)
+  const navigate = useNavigate()
+  const { reviewId } = useParams()
+  const isReviewOpen = reviewId === movie.id
   const [posterFailed, setPosterFailed] = useState(false)
   const artRight = illustrationSide === 'right'
   const posterImage = posterFailed ? undefined : movie.image
@@ -98,14 +101,14 @@ export function MovieCard({ movie, illustrationSide = 'left' }: MovieCardProps) 
         <button
           type="button"
           className="mt-auto self-end p-0 pt-4 text-sm leading-[1.3] font-normal text-primary transition-colors hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          onClick={() => setIsReviewOpen(true)}
+          onClick={() => navigate(`/movies/${encodeURIComponent(movie.id)}`)}
         >
           {MOVIES_SECTION.reviewLabel}
         </button>
       </div>
 
       {isReviewOpen && (
-        <MovieModal movie={movie} onClose={() => setIsReviewOpen(false)} />
+        <MovieModal movie={movie} onClose={() => navigate('/movies', { replace: true })} />
       )}
     </article>
   )

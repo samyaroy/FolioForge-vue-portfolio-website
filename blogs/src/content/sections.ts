@@ -27,6 +27,7 @@ interface SectionsContent {
     emptyLabel: string
     reviewLabel: string
     noteLabel: string
+    reviewEmptyLabel: string
     linkLabel: string
   }
   movies: {
@@ -41,6 +42,7 @@ interface SectionsContent {
     reviewLabel: string
     watchedLabel: string
     noteLabel: string
+    reviewEmptyLabel: string
     linkLabel: string
   }
   hobbies: {

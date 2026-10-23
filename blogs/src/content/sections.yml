@@ -35,7 +35,8 @@ readings:
   emptyLabel: No readings here yet.
   reviewLabel: "Read review ->"
   # Labels inside the review modal opened from a reading card.
-  noteLabel: My note
+  noteLabel: My review
+  reviewEmptyLabel: Review coming soon.
   linkLabel: More about this book
 
 movies:
@@ -50,7 +51,8 @@ movies:
   reviewLabel: "Read review ->"
   # Labels inside the review modal opened from a movie card.
   watchedLabel: "watched"
-  noteLabel: My take
+  noteLabel: My review
+  reviewEmptyLabel: Review coming soon.
   linkLabel: More about this film
 
 hobbies:

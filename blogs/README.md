@@ -52,6 +52,32 @@ each paired with a small `.ts` module that applies the TypeScript types
 Keep dates quoted (`"2026-06-20"`) so they stay strings, and quote values
 containing `:` or starting with punctuation.
 
+## Write a movie or book review
+
+Edit the item in `src/content/movies/data.yml` or
+`src/content/readings/data.yml`. Keep `description` as the short card summary
+and replace `review: ""` with your own review:
+
+```yaml
+    description: "A short summary for the listing card."
+    review: |
+      My first paragraph about the film or book.
+
+      My next paragraph, with as much detail as I want.
+```
+
+Indent the review text two spaces further than `review: |`. Separate paragraphs
+with blank lines. The modal displays the full review and scrolls for long text.
+An empty review shows “Review coming soon.” Existing `note` fields still work
+when `review` is omitted; the description is never used as a review.
+
+Every movie and book review modal includes LinkedIn, X, Instagram, Copy link,
+and Copy review actions. Shared URLs (`/movies/:id` and `/readings/:id`) open
+that review directly and have item-specific social previews in production builds.
+X shares an excerpt and a link; LinkedIn shares the link. Instagram saves a
+portrait PNG with a review excerpt and copies the full review and link as a
+caption for manual posting. No account connection is required.
+
 ## Rail-route geometry (train map)
 
 Train legs on the travel map are drawn from real route geometry. To stay within

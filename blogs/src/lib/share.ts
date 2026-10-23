@@ -45,3 +45,8 @@ export function galleryItemShareUrl(itemId: string): string {
 export function postShareUrl(slug: string): string {
   return `${shareOrigin()}/posts/${encodeURIComponent(slug)}`
 }
+
+/** A review has its own path so social previews can describe the exact item. */
+export function reviewShareUrl(section: 'movies' | 'readings', itemId: string): string {
+  return `${shareOrigin()}/${section}/${encodeURIComponent(itemId)}`
+}

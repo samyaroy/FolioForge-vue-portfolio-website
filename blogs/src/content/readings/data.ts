@@ -12,7 +12,9 @@ export type ReadingItem = {
   description: string
   /** Cover image: full URL or bare CDN key (resolved like gallery images). */
   image?: string
-  /** Longer note shown in the review modal; blank lines split paragraphs. */
+  /** Personal review shown only in the modal; blank lines split paragraphs. */
+  review?: string
+  /** Legacy personal review field; used when review is omitted. */
   note?: string
   /** Star rating shown in the review modal, 1-5. */
   rating?: number

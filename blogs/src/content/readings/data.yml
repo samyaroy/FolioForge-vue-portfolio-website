@@ -6,8 +6,14 @@
 #   date:   when you read it, as "YYYY-MM-DD"
 #   image:  cover picture; a full URL, or a bare CDN key resolved to
 #           https://media.samyabrata.codeium.xyz/<key>.jpeg (same as gallery)
-#   note:   longer personal note; use a block scalar (note: |) and blank
-#           lines to split paragraphs. Falls back to `description` if absent.
+#   review: your own long review, shown in the modal (description stays on the card).
+#           Use review: | and indent the text; blank lines split paragraphs:
+#             review: |
+#               Your first paragraph goes here.
+#
+#               Your next paragraph goes here. There is no length limit.
+#           Leave empty to show "Review coming soon." The legacy `note` field
+#           is still supported when `review` is omitted.
 #   rating: 1-5 stars
 #   link:   external page about the book (Wikipedia, Goodreads, ...)
 
@@ -17,6 +23,7 @@ items:
     author: Judea Pearl and Dana Mackenzie
     genre: Causal inference
     description: "An accessible exploration of cause and effect, and how causal reasoning can help machines move beyond finding correlations."
+    review: ""
     image: https://covers.openlibrary.org/b/isbn/9780465097609-L.jpg
     link: https://en.wikipedia.org/wiki/The_Book_of_Why
 
@@ -25,6 +32,7 @@ items:
     author: Paulo Freire
     genre: Education
     description: "A foundational work of critical pedagogy that examines education, dialogue, and the struggle for liberation from oppression."
+    review: ""
     link: https://en.wikipedia.org/wiki/Pedagogy_of_the_Oppressed
   # Dummy entries retained for reference; uncomment only after replacing the
   # scaffold descriptions, dates, ratings, and notes with real reading data.

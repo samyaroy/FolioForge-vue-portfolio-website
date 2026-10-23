@@ -12,8 +12,14 @@
 #   image:  poster picture; a public path, full URL, or bare CDN key resolved to
 #           https://media.samyabrata.codeium.xyz/<key>.jpeg (same as gallery).
 #           When absent, the clapperboard illustration renders instead.
-#   note:   longer personal take; use a block scalar (note: |) and blank
-#           lines to split paragraphs. Falls back to `description` if absent.
+#   review: your own long review, shown in the modal (description stays on the card).
+#           Use review: | and indent the text; blank lines split paragraphs:
+#             review: |
+#               Your first paragraph goes here.
+#
+#               Your next paragraph goes here. There is no length limit.
+#           Leave empty to show "Review coming soon." The legacy `note` field
+#           is still supported when `review` is omitted.
 #   rating: 1-5 stars
 #   link:   external page about the film (Wikipedia, IMDb, Letterboxd, ...)
 
@@ -26,6 +32,7 @@ items:
     tags: [drama, family, black and white]
     year: 2021
     description: "A radio journalist caring for his young nephew discovers how much adults and children can learn from listening to each other."
+    review: ""
     link: https://www.imdb.com/title/tt10986222/
 
   - id: the-cabinet-of-dr-caligari
@@ -36,5 +43,6 @@ items:
     tags: [horror, silent cinema, German expressionism]
     year: 1920
     description: "A landmark of silent cinema, with distorted sets and stark shadows turning a mystery about a hypnotist and a sleepwalker into a fever dream."
+    review: ""
     image: /posters/the-cabinet-of-dr-caligari.jpg
     link: https://youtu.be/zV00ylxcwXw?si=PYNzSWAipulmEI-6

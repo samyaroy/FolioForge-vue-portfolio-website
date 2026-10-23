@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import type { ReadingItem } from '../../../../content/readings/data'
 import { READINGS_SECTION } from '../../../../content/sections'
 import { formatDate } from '../../../../lib/format'
@@ -21,7 +22,9 @@ export function ReadingCard({
   reading,
   illustrationSide = 'left',
 }: ReadingCardProps) {
-  const [isReviewOpen, setIsReviewOpen] = useState(false)
+  const navigate = useNavigate()
+  const { reviewId } = useParams()
+  const isReviewOpen = reviewId === reading.id
   const [coverFailed, setCoverFailed] = useState(false)
   const artRight = illustrationSide === 'right'
   const coverImage = coverFailed ? undefined : reading.image
@@ -82,14 +85,14 @@ export function ReadingCard({
         <button
           type="button"
           className="mt-auto self-end p-0 pt-4 text-sm leading-[1.3] font-normal text-primary transition-colors hover:text-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-          onClick={() => setIsReviewOpen(true)}
+          onClick={() => navigate(`/readings/${encodeURIComponent(reading.id)}`)}
         >
           {READINGS_SECTION.reviewLabel}
         </button>
       </div>
 
       {isReviewOpen && (
-        <ReadingModal reading={reading} onClose={() => setIsReviewOpen(false)} />
+        <ReadingModal reading={reading} onClose={() => navigate('/readings', { replace: true })} />
       )}
     </article>
   )

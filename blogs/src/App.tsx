@@ -87,6 +87,12 @@ export const router = createBrowserRouter([
             ? [{ path: '/', element: <BlogsPage /> }]
             : []),
           ...optionalRoutes,
+          ...(isFeatureEnabled('showMovies')
+            ? [{ path: '/movies/:reviewId', element: <MoviesPage /> }]
+            : []),
+          ...(isFeatureEnabled('showReadings')
+            ? [{ path: '/readings/:reviewId', element: <ReadingsPage /> }]
+            : []),
           {
             path: FOOTER_CONTENT.privacyPath,
             element: <PrivacyPolicyPage />,
