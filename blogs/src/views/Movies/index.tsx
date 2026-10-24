@@ -27,7 +27,7 @@ export function MoviesPage() {
     <>
       <section className={`${INTRO_SECTION_CLASS} mb-5! lg:mb-12!`}>
         <h1 className={INTRO_TITLE_CLASS}>
-          <span className="mdi mdi-popcorn mr-2.5 align-[-0.04em] leading-none text-primary" aria-hidden="true" />
+          <span className="mdi mdi-popcorn mr-2.5 align-[-0.04em] leading-none" aria-hidden="true" />
           {MOVIES_SECTION.title}
         </h1>
         {/* As wide as the card list below and centred like it, so the

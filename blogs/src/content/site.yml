@@ -59,3 +59,6 @@ footer:
   designCreditName: Asib uz zaman Nahid
   designCreditHref: https://dribbble.com/asibuzzaman
   designCreditOutro: "'s work"
+  # Disclosure under the credits, covering /recommended and the movie
+  # creator shoutouts.
+  disclosure: "ⓘ No recommendation or shoutout on this site is paid or affiliated"

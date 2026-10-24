@@ -19,7 +19,7 @@ export function ReadingsPage() {
     <>
       <section className={INTRO_SECTION_CLASS}>
         <h1 className={INTRO_TITLE_CLASS}>
-          <span className="mdi mdi-book-open-page-variant-outline mr-2.5 align-[-0.04em] leading-none text-primary" aria-hidden="true" />
+          <span className="mdi mdi-book-open-page-variant-outline mr-2.5 align-[-0.04em] leading-none" aria-hidden="true" />
           {READINGS_SECTION.title}
         </h1>
         {showPageDescription && (

@@ -73,6 +73,7 @@ export function Footer() {
                 </a>
                 {FOOTER_CONTENT.designCreditOutro}
               </p>
+              <p className={`mt-1 ${CREDIT_TEXT_CLASS}`}>{FOOTER_CONTENT.disclosure}</p>
             </div>
             <div className="flex min-w-0 flex-col items-start gap-4 md:flex-row md:items-start">
               <div className="text-right">

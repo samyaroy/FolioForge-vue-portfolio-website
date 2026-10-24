@@ -43,6 +43,7 @@ export interface FooterContent {
   designCreditName: string
   designCreditHref: string
   designCreditOutro: string
+  disclosure: string
 }
 
 interface SiteContent {

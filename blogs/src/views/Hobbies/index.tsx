@@ -35,7 +35,8 @@ export function HobbiesPage() {
     <>
       <section className={INTRO_SECTION_CLASS}>
         <h1 className={INTRO_TITLE_CLASS}>
-          <span className="mdi mdi-puzzle-outline mr-2.5 align-[-0.04em] leading-none text-primary" aria-hidden="true" />
+          {/* The travel map's deepest brown (COUNT_PALETTE in views/Travel). */}
+          <span className="mdi mdi-puzzle-outline mr-2.5 align-[-0.04em] leading-none text-[#703a00]" aria-hidden="true" />
           {HOBBIES_SECTION.title}
         </h1>
         {showPageDescription && (

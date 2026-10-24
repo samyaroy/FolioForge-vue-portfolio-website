@@ -8,7 +8,7 @@ export function GalleryHero() {
     <section className="flex flex-row items-end gap-4 pb-1">
       <div className="flex min-w-0 w-full flex-col gap-4">
         <h1 className="text-lg leading-tight font-extrabold tracking-tight text-base_black md:text-4xl">
-          <span className="mdi mdi-camera-outline mr-2 align-[-0.04em] leading-none text-primary md:mr-2.5" aria-hidden="true" />
+          <span className="mdi mdi-camera-outline mr-2 align-[-0.04em] leading-none md:mr-2.5" aria-hidden="true" />
           Click Click...
         </h1>
 
