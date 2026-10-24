@@ -94,7 +94,7 @@ export const entryFields = {
   worthSubscribing: ['group', 'id', 'icon', { key: 'links', list: ['label', 'url', 'cadence', 'speciality', 'incharge'] }],
 
   // Blog collections.
-  blogRecommended: ['id', 'title', 'author', 'source', { key: 'year', type: 'number' }, 'url', { key: 'note', type: 'multiline' }],
+  blogRecommended: ['id', 'title', 'author', 'source', 'publisher', 'category', { key: 'year', type: 'number' }, { key: 'published', type: 'date' }, 'url', 'subtitle', { key: 'note', type: 'multiline' }, { key: 'readingMinutes', type: 'number' }, 'level'],
   blogReadings: ['id', 'title', 'author', 'genre', { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
   blogMovies: ['id', 'title', 'director', 'genre', { key: 'year', type: 'number' }, { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
   blogTravel: ['state', 'purpose', { key: 'home', type: 'boolean' }, { key: 'cities', type: 'json-array', placeholder: '[{"name":"Chennai","visits":1,"stayed":true,"stayReason":"College","home":false,"lat":13.08,"lng":80.27}]' }],

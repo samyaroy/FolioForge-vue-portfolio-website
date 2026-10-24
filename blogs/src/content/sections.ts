@@ -13,11 +13,19 @@ interface SectionsContent {
   }
   recommended: {
     title: string
-    kicker: string
     emptyLabel: string
+    homeTitle: string
     allLabel: string
-    readLabel: string
+    carouselPrevious: string
+    carouselNext: string
+    filterLabel: string
+    allCategoriesLabel: string
+    otherCategoryLabel: string
+    countOne: string
+    countMany: string
     readShortLabel: string
+    readingTime: string
+    newTabLabel: string
     disclaimer: string
   }
   readings: {

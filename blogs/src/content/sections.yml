@@ -15,16 +15,28 @@ blogs:
   tagFilterClear: Clear
 
 recommended:
-  title: Recommended reads
-  # Small kicker above the heading, on the home teaser and the page itself.
-  kicker: Not mine
+  title: Recommended articles
   emptyLabel: Nothing recommended here yet.
-  # Home teaser link through to the full page; {count} becomes the number
-  # of recommendations.
-  allLabel: "All {count} recommendations"
-  # Card links. The full page names the destination, the teaser stays short.
-  readLabel: Read on
+  # Home carousel: its heading (the full page keeps `title`), the link through
+  # to the full page, and the arrow buttons' screen-reader labels.
+  homeTitle: Articles that might tattoo your mind
+  allLabel: View all
+  carouselPrevious: Previous recommendations
+  carouselNext: Next recommendations
+  # Category chips above the shelves on /recommended. Entries without a known
+  # category share a last shelf under otherCategoryLabel.
+  filterLabel: Filter by category
+  allCategoriesLabel: All
+  otherCategoryLabel: More
+  # Shelf heading count.
+  countOne: 1 article
+  countMany: "{count} articles"
+  # Cards link out through their title and publication; the carousel's cards
+  # also carry this link beside the reading time.
   readShortLabel: Read it
+  readingTime: min read
+  # Screen-reader suffix on every outbound link.
+  newTabLabel: (opens in a new tab)
   # Closing line under the full list.
   disclaimer: Every link here leaves this site. None of it is my writing.
 

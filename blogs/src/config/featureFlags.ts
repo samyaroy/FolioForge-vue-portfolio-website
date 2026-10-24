@@ -20,6 +20,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   // so the page and the blog home teaser can stay on while the header link is
   // off -- the teaser's "All N recommendations" link is then the way in.
   showRecommendedNavLink: false,
+  // /recommended: the one-line description under each category's heading
+  // (each category's `blurb` in content/recommended/data.yml).
+  showRecommendedCategoryBlurbs: false,
   // "Did you know?" nav link to the main site's /facts route.
   showFactsLink: false,
   showPortfolioLink: true,
