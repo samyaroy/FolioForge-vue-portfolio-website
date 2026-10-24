@@ -7,6 +7,8 @@ import { RECOMMENDED_SECTION } from '../../../content/sections'
 const ARROW_CLASS =
   'inline-flex size-9 items-center justify-center rounded-full border border-border bg-surface text-muted shadow-[0_1px_2px_rgba(15,23,42,0.04)] transition-colors duration-200 hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40'
 
+const AUTOPLAY_DELAY_MS = 5000
+
 // How far the edge fade reaches into the track; matches its side padding so
 // a card at rest is never faded, only one that is partly scrolled off.
 const FADE = '1rem'
@@ -62,6 +64,70 @@ export function RecommendedTeaser() {
       cancelAnimationFrame(frame)
       element.removeEventListener('scroll', measure)
       observer.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    const element = trackRef.current
+    if (
+      !element ||
+      FEATURED_RECOMMENDED.length < 2 ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return
+    }
+
+    let paused = false
+    let timer: number | undefined
+
+    const advance = () => {
+      if (paused || document.hidden || element.scrollWidth <= element.clientWidth) return
+
+      const atEnd = element.scrollLeft + element.clientWidth >= element.scrollWidth - 1
+      element.scrollTo({
+        left: atEnd ? 0 : element.scrollLeft + element.clientWidth,
+        behavior: 'smooth',
+      })
+    }
+
+    const schedule = () => {
+      window.clearTimeout(timer)
+      timer = window.setTimeout(() => {
+        advance()
+        schedule()
+      }, AUTOPLAY_DELAY_MS)
+    }
+
+    const pause = () => {
+      paused = true
+      window.clearTimeout(timer)
+    }
+    const resume = () => {
+      paused = false
+      schedule()
+    }
+    const handleVisibilityChange = () => {
+      if (document.hidden) pause()
+      else resume()
+    }
+    const handleFocusOut = (event: FocusEvent) => {
+      if (!element.contains(event.relatedTarget as Node | null)) resume()
+    }
+
+    element.addEventListener('pointerenter', pause)
+    element.addEventListener('pointerleave', resume)
+    element.addEventListener('focusin', pause)
+    element.addEventListener('focusout', handleFocusOut)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    schedule()
+
+    return () => {
+      window.clearTimeout(timer)
+      element.removeEventListener('pointerenter', pause)
+      element.removeEventListener('pointerleave', resume)
+      element.removeEventListener('focusin', pause)
+      element.removeEventListener('focusout', handleFocusOut)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [])
 
