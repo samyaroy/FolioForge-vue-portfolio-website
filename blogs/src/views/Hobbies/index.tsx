@@ -34,7 +34,10 @@ export function HobbiesPage() {
   return (
     <>
       <section className={INTRO_SECTION_CLASS}>
-        <h1 className={INTRO_TITLE_CLASS}>{HOBBIES_SECTION.title}</h1>
+        <h1 className={INTRO_TITLE_CLASS}>
+          <span className="mdi mdi-puzzle-outline mr-2.5 align-[-0.04em] leading-none text-primary" aria-hidden="true" />
+          {HOBBIES_SECTION.title}
+        </h1>
         {showPageDescription && (
           <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.hobbies}</p>
         )}

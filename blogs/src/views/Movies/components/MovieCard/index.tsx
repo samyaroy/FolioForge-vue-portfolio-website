@@ -72,7 +72,10 @@ export function MovieCard({ movie, illustrationSide = 'left' }: MovieCardProps) 
           )}
         </div>
         <div className={CARD_META_CLASS}>
-          <span>{movie.genre}</span>
+          <span className="inline-flex items-center gap-1">
+            <span className="mdi mdi-filmstrip text-sm leading-none tracking-normal" aria-hidden="true" />
+            {movie.genre}
+          </span>
           <span className="tracking-normal text-primary" aria-hidden="true">
             •
           </span>

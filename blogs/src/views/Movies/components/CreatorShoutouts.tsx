@@ -25,9 +25,22 @@ export function CreatorShoutouts() {
     <>
       <SectionDivider className="mt-16 mb-12" />
       <section aria-labelledby="movie-creators-title">
-        <h2 id="movie-creators-title" className="text-center text-base leading-[1.75] font-normal text-muted">
-          {MOVIE_CREATORS_SECTION.title}
-        </h2>
+        {/* Kicker and line share a row from sm up; a phone is too narrow for
+            both, so there they stack. */}
+        <div className="flex flex-col items-center justify-center gap-x-3 gap-y-2 sm:flex-row">
+          {MOVIE_CREATORS_SECTION.kicker && (
+            <>
+              <p className={`${CARD_META_CLASS} mt-0! gap-1.5! text-primary`}>
+                <span className="mdi mdi-bullhorn-outline text-sm leading-none tracking-normal" aria-hidden="true" />
+                {MOVIE_CREATORS_SECTION.kicker}
+              </p>
+              <span className="hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
+            </>
+          )}
+          <h2 id="movie-creators-title" className="text-center text-base leading-[1.75] font-normal text-muted">
+            {MOVIE_CREATORS_SECTION.title}
+          </h2>
+        </div>
         {MOVIE_CREATORS.length > 0 && (
           <div className="mx-auto mt-5 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
             {MOVIE_CREATORS.map((creator) => (

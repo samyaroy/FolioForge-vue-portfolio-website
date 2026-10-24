@@ -2,8 +2,8 @@ import { READINGS_SECTION } from '../../content/sections'
 import { READINGS } from '../../content/readings/data'
 import { PAGE_DESCRIPTIONS } from '../../content/descriptions'
 import { isPageDescriptionEnabled } from '../../config/featureFlags'
+import { EmptyState } from '../../components/EmptyState'
 import {
-  EMPTY_TEXT_CLASS,
   INTRO_SECTION_CLASS,
   INTRO_TEXT_CLASS,
   INTRO_TITLE_CLASS,
@@ -18,14 +18,19 @@ export function ReadingsPage() {
   return (
     <>
       <section className={INTRO_SECTION_CLASS}>
-        <h1 className={INTRO_TITLE_CLASS}>{READINGS_SECTION.title}</h1>
+        <h1 className={INTRO_TITLE_CLASS}>
+          <span className="mdi mdi-book-open-page-variant-outline mr-2.5 align-[-0.04em] leading-none text-primary" aria-hidden="true" />
+          {READINGS_SECTION.title}
+        </h1>
         {showPageDescription && (
           <p className={INTRO_TEXT_CLASS}>{PAGE_DESCRIPTIONS.readings}</p>
         )}
       </section>
 
       {READINGS.length === 0 ? (
-        <p className={EMPTY_TEXT_CLASS}>{READINGS_SECTION.emptyLabel}</p>
+        <EmptyState icon="mdi-book-open-page-variant-outline">
+          {READINGS_SECTION.emptyLabel}
+        </EmptyState>
       ) : (
         <div className="ml-[50%] grid w-full max-w-none -translate-x-1/2 grid-cols-1 gap-6 md:w-[min(calc(100vw-2rem),78rem)]">
           {READINGS.map((reading, index) => (

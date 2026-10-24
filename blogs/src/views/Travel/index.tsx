@@ -462,6 +462,7 @@ export function TravelPage() {
       <div className="min-w-0">
         <section className="mb-6">
           <h1 className={`${INTRO_TITLE_CLASS} [view-transition-name:travel-title]`}>
+            <span className="mdi mdi-compass-outline mr-2.5 align-[-0.04em] leading-none text-primary" aria-hidden="true" />
             {TRAVEL_SECTION.title}
           </h1>
           {showPageDescription && (

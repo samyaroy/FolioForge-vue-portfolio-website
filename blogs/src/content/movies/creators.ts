@@ -10,6 +10,8 @@ export type MovieCreator = {
 }
 
 type CreatorContent = {
+  /** Small label above the title, e.g. "Shoutout". */
+  kicker?: string
   title: string
   items: MovieCreator[]
 }

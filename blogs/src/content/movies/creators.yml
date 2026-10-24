@@ -4,6 +4,8 @@
 # Leave url empty until you have a link; the tile still shows the creator name.
 # Set status: disabled on an entry to hide it without deleting it.
 
+# Small label above the introductory line; leave empty to hide it.
+kicker: Shoutout
 title: Get best movie recommendations from these creators...
 
 items:
@@ -13,4 +15,4 @@ items:
 
   - id: amrita-mohapatra
     name: Amrita Mohapatra
-    url: "" # Paste Amrita's link here when ready.
+    url: https://www.instagram.com/lilfoxbub/
