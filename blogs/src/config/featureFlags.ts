@@ -26,6 +26,9 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   // "Did you know?" nav link to the main site's /facts route.
   showFactsLink: false,
   showPortfolioLink: true,
+  // /sitemap: a readable index of every page, post, trip and review, linked
+  // from the footer beside the privacy policy.
+  showSitemap: true,
 
   // Post page: the scroll-position bar pinned to the top of the viewport, and
   // the estimated reading time in the byline.
@@ -45,6 +48,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     travel: true,
     hobbies: false,
     gallery: false,
+    sitemap: true,
   },
 }) satisfies FeatureFlagNode
 

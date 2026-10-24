@@ -11,5 +11,6 @@ export type PageKey =
   | 'hobbies'
   | 'gallery'
   | 'privacy'
+  | 'sitemap'
 
 export const PAGE_DESCRIPTIONS = raw as Record<PageKey, string>

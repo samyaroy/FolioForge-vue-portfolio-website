@@ -85,6 +85,18 @@ interface SectionsContent {
     lastUpdatedLabel: string
     lastUpdated: string
   }
+  sitemap: {
+    title: string
+    homeLabel: string
+    pagesTitle: string
+    postsTitle: string
+    tripsTitle: string
+    movieReviewsTitle: string
+    readingReviewsTitle: string
+    feedsTitle: string
+    rssLabel: string
+    xmlSitemapLabel: string
+  }
 }
 
 const sections = raw as SectionsContent
@@ -98,3 +110,4 @@ export const GALLERY_SECTION = sections.gallery
 export const TRAVEL_SECTION = sections.travel
 export const POST_COPY = sections.post
 export const PRIVACY_SECTION = sections.privacy
+export const SITEMAP_SECTION = sections.sitemap

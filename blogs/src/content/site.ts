@@ -33,6 +33,8 @@ export interface LabeledLink {
 export interface FooterContent {
   privacyLabel: string
   privacyPath: string
+  sitemapLabel: string
+  sitemapPath: string
   rightsText: string
   lastUpdatedLabel: string
   lastUpdated: string

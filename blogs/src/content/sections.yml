@@ -102,3 +102,18 @@ privacy:
   title: Privacy Policy
   lastUpdatedLabel: Last updated
   lastUpdated: August 16, 2026
+
+# /sitemap (flag: showSitemap). Each group lists the routes the app serves; a
+# group is left out when its section is switched off or has no entries.
+sitemap:
+  title: Sitemap
+  homeLabel: Home
+  pagesTitle: Pages
+  postsTitle: Posts
+  tripsTitle: Trips
+  movieReviewsTitle: Movie reviews
+  readingReviewsTitle: Reading reviews
+  # Machine-readable files: the RSS feed and the XML sitemap for crawlers.
+  feedsTitle: Feeds
+  rssLabel: RSS feed
+  xmlSitemapLabel: XML sitemap

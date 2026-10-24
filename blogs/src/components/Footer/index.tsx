@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { MAIN_SITE_URL } from '../../content/navigation'
 import { FOOTER_CONTENT, SITE_PROFILE } from '../../content/site'
+import { isFeatureEnabled } from '../../config/featureFlags'
 
 const META_TEXT_CLASS = 'text-sm leading-5 text-[#6b7280]'
 // The icon and design credits under the name sit a step smaller than the
@@ -10,6 +11,8 @@ const CREDIT_TEXT_CLASS = 'text-xs leading-4 text-[#6b7280]'
 // no underline, #535bf2 on hover) used by its attribution lines.
 const META_LINK_CLASS =
   'font-medium text-[#646cff] transition-colors duration-200 hover:text-[#535bf2]'
+
+const showSitemapLink = isFeatureEnabled('showSitemap')
 
 // Row arrangement mirrors the root site's footer bottom section:
 // © + privacy on one row, attributions + last-updated on the next.
@@ -85,13 +88,24 @@ export function Footer() {
                 <p className={`mt-1 ${META_TEXT_CLASS}`}>
                   ✶ {FOOTER_CONTENT.lastUpdatedLabel}: {FOOTER_CONTENT.lastUpdated}
                 </p>
-                <p className="mt-1">
+                <p className={`mt-1 ${META_TEXT_CLASS}`}>
                   <Link
                     className={`text-sm ${META_LINK_CLASS}`}
                     to={FOOTER_CONTENT.privacyPath}
                   >
                     {FOOTER_CONTENT.privacyLabel}
                   </Link>
+                  {showSitemapLink && (
+                    <>
+                      {' · '}
+                      <Link
+                        className={`text-sm ${META_LINK_CLASS}`}
+                        to={FOOTER_CONTENT.sitemapPath}
+                      >
+                        {FOOTER_CONTENT.sitemapLabel}
+                      </Link>
+                    </>
+                  )}
                 </p>
               </div>
               <div className="flex min-w-0 justify-end">

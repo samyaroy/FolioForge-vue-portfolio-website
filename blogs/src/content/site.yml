@@ -43,6 +43,9 @@ socialLinks:
 footer:
   privacyLabel: Privacy Policy
   privacyPath: /privacy-policy
+  # Shown beside the privacy link while the showSitemap flag is on.
+  sitemapLabel: Sitemap
+  sitemapPath: /sitemap
   rightsText: Rights Reserved
   lastUpdatedLabel: Last updated
   lastUpdated: October 2026

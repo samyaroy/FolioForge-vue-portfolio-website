@@ -193,7 +193,7 @@ function stripManagedTags(html: string): string {
  * and `changefreq` are ignored by every major engine, and emitting them
  * uniformly (every URL at priority 1.0) conveys no ordering anyway.
  */
-function buildSitemap(options: SeoPrerenderOptions): string {
+export function buildSitemap(options: SeoPrerenderOptions): string {
   const entries = options.pages
     .filter((page) => !page.noindex)
     .map((page) => {

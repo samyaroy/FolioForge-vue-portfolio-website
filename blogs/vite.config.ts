@@ -14,6 +14,7 @@ import { SITE_URL } from './src/lib/seo'
 // head has to be stamped at build time rather than by the app.
 import {
   absoluteUrl,
+  buildSitemap,
   writeSeoOutput,
   type SeoPage,
   type SeoPrerenderOptions,
@@ -100,13 +101,14 @@ const sections = readYaml<Record<string, { title?: string }>>('sections.yml')
 const descriptions = readYaml<Record<string, string>>('descriptions.yml')
 const site = readYaml<{
   profile?: { name?: string }
-  footer?: { privacyPath?: string }
+  footer?: { privacyPath?: string; sitemapPath?: string }
 }>('site.yml')
 
 const SITE_NAME = site.profile?.name ?? 'Samyabrata Roy'
 const BASE_TITLE = `${SITE_NAME} · Blog`
 const BLOG_DESCRIPTION = descriptions.blogs ?? `Blog by ${SITE_NAME}`
 const PRIVACY_PATH = site.footer?.privacyPath ?? '/privacy-policy'
+const SITEMAP_PATH = site.footer?.sitemapPath ?? '/sitemap'
 
 const posts = loadPosts()
 const trips = isFeatureEnabled('showTravel') ? loadTrips() : []
@@ -197,6 +199,41 @@ const privacyPage: SeoPage = {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Writing', item: `${SITE_URL}/` },
         { '@type': 'ListItem', position: 2, name: privacyTitle, item: privacyUrl },
+      ],
+    },
+  ],
+}
+
+const sitemapTitle = sections.sitemap?.title ?? 'Sitemap'
+const sitemapDescription =
+  descriptions.sitemap ?? `Every page on the ${SITE_NAME} blog.`
+const sitemapUrl = `${SITE_URL}${SITEMAP_PATH}`
+
+// The readable index behind the footer link; sitemap.xml is the crawler copy.
+const sitemapPage: SeoPage = {
+  path: SITEMAP_PATH,
+  title: pageTitle(sitemapTitle),
+  socialTitle: sitemapTitle,
+  description: sitemapDescription,
+  image: OG_IMAGE_PATH,
+  imageSize: OG_IMAGE_SIZE,
+  imageAlt: BASE_TITLE,
+  jsonLd: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      url: sitemapUrl,
+      name: sitemapTitle,
+      description: sitemapDescription,
+      isPartOf: { '@id': BLOG_ID },
+      inLanguage: 'en',
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Writing', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: sitemapTitle, item: sitemapUrl },
       ],
     },
   ],
@@ -392,6 +429,7 @@ const reviewPages: SeoPage[] = (['movies', 'readings'] as const).flatMap((sectio
 const pages: SeoPage[] = [
   ...(isFeatureEnabled('showBlogHome') ? [homePage] : []),
   privacyPage,
+  ...(isFeatureEnabled('showSitemap') ? [sitemapPage] : []),
   ...sectionPages,
   ...postPages,
   ...tripPages,
@@ -476,6 +514,45 @@ function seoPrerender(options: SeoPrerenderOptions): Plugin {
   }
 }
 
+// `vite dev` has no dist/ to serve the feed and sitemap from, so the links to
+// them on /sitemap would fall through to the app's 404. Build both on request
+// instead, from the same pages and posts the production build writes them from.
+function devFeedsPlugin(options: SeoPrerenderOptions): Plugin {
+  return {
+    name: 'blog-feeds-dev',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const pathname = req.url?.split('?')[0]
+        const body =
+          pathname === '/rss.xml'
+            ? buildRss()
+            : pathname === '/sitemap.xml'
+              ? buildSitemap(options)
+              : undefined
+        if (body === undefined) return next()
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+        res.end(body)
+      })
+    },
+  }
+}
+
+const seoOptions: SeoPrerenderOptions = {
+  siteName: BASE_TITLE,
+  siteUrl: SITE_URL,
+  pages,
+  sitemap: true,
+  rssUrl: `${SITE_URL}/rss.xml`,
+  rssTitle: BASE_TITLE,
+  notFound: {
+    path: '/404',
+    title: `Page Not Found · ${BASE_TITLE}`,
+    description: 'This page does not exist.',
+    noindex: true,
+  },
+}
+
 // Blog app for https://blogs.samyabrata.codeium.xyz
 // Served at the subdomain root, so base stays '/'.
 export default defineConfig({
@@ -483,21 +560,9 @@ export default defineConfig({
     react(),
     tailwindcss(),
     contentYaml(),
-    seoPrerender({
-      siteName: BASE_TITLE,
-      siteUrl: SITE_URL,
-      pages,
-      sitemap: true,
-      rssUrl: `${SITE_URL}/rss.xml`,
-      rssTitle: BASE_TITLE,
-      notFound: {
-        path: '/404',
-        title: `Page Not Found · ${BASE_TITLE}`,
-        description: 'This page does not exist.',
-        noindex: true,
-      },
-    }),
+    seoPrerender(seoOptions),
     rssPlugin(),
+    devFeedsPlugin(seoOptions),
   ],
   resolve: {
     alias: {

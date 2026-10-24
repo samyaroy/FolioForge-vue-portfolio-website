@@ -11,6 +11,7 @@ import { MoviesPage } from './views/Movies'
 import { HobbiesPage } from './views/Hobbies'
 import { GalleryPage } from './views/Gallery'
 import { PrivacyPolicyPage } from './views/PrivacyPolicy'
+import { SitemapPage } from './views/Sitemap'
 import { FOOTER_CONTENT } from './content/site'
 import { isFeatureEnabled } from './config/featureFlags'
 import { EMPTY_TEXT_CLASS } from './lib/ui'
@@ -97,6 +98,9 @@ export const router = createBrowserRouter([
             path: FOOTER_CONTENT.privacyPath,
             element: <PrivacyPolicyPage />,
           },
+          ...(isFeatureEnabled('showSitemap')
+            ? [{ path: FOOTER_CONTENT.sitemapPath, element: <SitemapPage /> }]
+            : []),
           { path: '/posts/:slug', element: <PostPage /> },
           { path: '*', element: <NotFoundPage /> },
         ],
