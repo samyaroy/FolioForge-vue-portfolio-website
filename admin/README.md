@@ -134,7 +134,10 @@ npm run cv:build -- --pdf           # and to PDF with pdflatex; any LaTeX error 
 npm run cv:build -- academic --pdf  # only the presets named
 ```
 
-The admin screens, browser compilation, snapshots and Drive publishing are not
+The CV Builder (`/cv/builder`) edits a preset beside its LaTeX and the compiled
+PDF. Under `npm run dev` it compiles with this machine's pdflatex (TeX Live on
+the PATH); the deployed admin cannot compile until the browser engine is
+vendored, and offers the `.tex` instead. Snapshots and Drive publishing are not
 built yet.
 
 ## Planned integration
