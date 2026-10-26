@@ -48,7 +48,7 @@ cards:
     # where it reads best rather than where a measurement happens to fall.
     lines:
       - Statistics, data science, and software.
-      - IDEAS-TIH, ISI Kolkata · IIT Madras
+      - University of Calcutta · IIT Madras
     # Full URL or a path relative to the repo root. Cropped to a circle.
     avatar: https://media.samyabrata.codeium.xyz/SamyabrataRoy2.jpg
 
