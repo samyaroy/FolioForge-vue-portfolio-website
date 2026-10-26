@@ -257,7 +257,8 @@
           </p>
         </div>
 
-        <div class="text-gray-500 text-sm md:col-start-2 md:row-start-1 md:self-start">
+        <!-- The icon credits below span this column too; mb keeps them off the Sitemap link. -->
+        <div class="text-gray-500 text-sm md:mb-2 md:col-start-2 md:row-start-1 md:self-start">
           <router-link :to="{ name: 'PrivacyPolicy' }" class="footer-link text-sm block">
             Privacy Policy
           </router-link>
