@@ -83,6 +83,9 @@
               {{ affiliation.time_period }}
             </span>
           </div>
+          <p v-if="affiliation.description" class="content-justify text-gray-700 mt-2">
+            <SmartLink type="Person" :text="affiliation.description" />
+          </p>
         </div>
       </template>
 
@@ -130,6 +133,7 @@ const affiliations = computed(() =>
     // A per-affiliation role, when the entry names one: a single role held at
     // two organizations reads differently from two distinct roles.
     role: affiliation.role || '',
+    description: affiliation.description || '',
     cred_link: affiliation.cred_link || null,
     ext_link: affiliation.ext_link || '',
     name: affiliation.organization?.name || '',
@@ -146,7 +150,10 @@ const showTimeline = computed(() => affiliations.value.length > 1)
 // When every affiliation names its own role, repeating the entry's role above
 // them would say the same thing twice — and say it wrongly, since the nodes may
 // hold different titles.
-const showEntryRole = computed(() => !affiliations.value.length || affiliations.value.some(affiliation => !affiliation.role))
+const showEntryRole = computed(() =>
+  Boolean(props.leadership.role) &&
+  (!affiliations.value.length || affiliations.value.some(affiliation => !affiliation.role))
+)
 
 const skills = computed(() => {
   if (Array.isArray(props.leadership.skills)) {

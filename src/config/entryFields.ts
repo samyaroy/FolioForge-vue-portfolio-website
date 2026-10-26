@@ -21,7 +21,7 @@ export type EntryField =
   | string
   | { key: string; type: 'number' | 'boolean' | 'date' | 'text-or-list' | 'json-array' | 'multiline'; min?: number; max?: number; placeholder?: string }
   | { key: string; object: readonly string[] }
-  | { key: string; list: readonly string[] }
+  | { key: string; list: readonly string[]; children?: Record<string, readonly string[]> }
   | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' | 'ongoingCategories' }
   | { key: string; images: 'gallery' }
 
@@ -70,10 +70,8 @@ export const entryFields = {
   // the two sit side by side, the admin edits them as one choice. `ext_link`
   // belongs to the role, unlike `organization.web_link`, which is the
   // organisation's own site.
-  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'cred_link', 'ext_link'] }, 'description', 'cred_link', 'ext_link'],
-  // A volunteering entry is either a single role or a `roles` list of them. The
-  // per-role `field` list is preserved rather than edited here.
-  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
+  leadership: [{ key: 'affiliation', list: ['role', 'enabled', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'description', 'cred_link', 'ext_link'] }, 'description'],
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'enabled', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link', 'field'], children: { field: ['sub_field', 'enabled', 'time_period', 'skills'] } }, { key: 'field', list: ['sub_field', 'enabled', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],
@@ -114,6 +112,10 @@ export function objectFieldsOf(fields: readonly EntryField[]): Record<string, re
 /** Keys edited as rows, mapped to their columns. */
 export function listFieldsOf(fields: readonly EntryField[]): Record<string, readonly string[]> {
   return Object.fromEntries(fields.flatMap(field => typeof field !== 'string' && 'list' in field ? [[field.key, field.list]] : []))
+}
+
+export function nestedListFieldsOf(fields: readonly EntryField[]): Record<string, Record<string, readonly string[]>> {
+  return Object.fromEntries(fields.flatMap(field => typeof field !== 'string' && 'list' in field && field.children ? [[field.key, field.children]] : []))
 }
 
 /** The key that lists gallery image keys, if the collection has one. */

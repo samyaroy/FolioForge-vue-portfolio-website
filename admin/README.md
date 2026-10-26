@@ -86,6 +86,14 @@ quotes, and descriptive names. Keep provider credentials and future Worker code
 out of browser imports. Add components as needed rather than preinstalling the
 whole registry.
 
+## Co-curricular editing
+
+Leadership entries group roles under Affiliations without a parent role. Use
+Shared description for text that appears once below the group, and Role
+description within each affiliation for text specific to that role. Each role
+has a Show on site switch; hiding a role keeps it editable and preserves its
+credentials. Volunteering roles and their nested fields have the same switches.
+
 ## Protected Worker foundation
 
 `worker/` is the separate Cloudflare backend. `wrangler.jsonc` targets

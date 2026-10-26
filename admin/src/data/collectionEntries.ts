@@ -1,4 +1,4 @@
-import type { EntryPresentation } from '../lib/entryPresentation.ts'
+import { entryPresentation, type EntryPresentation } from '../lib/entryPresentation.ts'
 
 type UnknownRecord = Record<string, unknown>
 
@@ -15,10 +15,6 @@ export type PortfolioEntry = {
 
 function asRecord(value: unknown): UnknownRecord {
   return value !== null && typeof value === 'object' && !Array.isArray(value) ? value as UnknownRecord : {}
-}
-
-function asRecords(value: unknown): UnknownRecord[] {
-  return Array.isArray(value) ? value.map(asRecord).filter(item => Object.keys(item).length) : []
 }
 
 function readPath(record: UnknownRecord, path: string): unknown {
@@ -61,13 +57,11 @@ export function mentoringCohorts(records: unknown[]): PortfolioEntry[] {
     .map(entry => ({ ...entry, readOnlyFields: ['projects'] }))
 }
 
-function withGroupedRoleTitles(entries: PortfolioEntry[]): PortfolioEntry[] {
+function withGroupedRoleTitles(entries: PortfolioEntry[], groupedBy = 'roles'): PortfolioEntry[] {
   return entries.map(entry => {
-    if (entry.raw.role || !Array.isArray(entry.raw.roles)) return entry
-    const named = asRecords(entry.raw.roles).map(item => displayText(item.role)).filter(Boolean)
-    if (!named.length) return entry
-    const title = named.join(' + ')
-    return { ...entry, title, presentation: entry.presentation && { ...entry.presentation, fallbackTitle: title } }
+    if (!entry.presentation) return entry
+    const presentation = { ...entry.presentation, groupedBy }
+    return { ...entry, ...entryPresentation(entry.raw, presentation), presentation }
   })
 }
 
@@ -117,7 +111,7 @@ const adapters: Record<string, (records: UnknownRecord[]) => PortfolioEntry[]> =
   'workshops/additional': records => toEntries(records, ['title'], ['institution', 'date']),
   'workshops/bootcamps': records => toEntries(records, ['title'], ['institution', 'date']),
   'workshops/other': records => toEntries(records, ['title'], ['type', 'date']),
-  'cocurricular/leadership': records => withGroupedRoleTitles(toEntries(records, ['role', 'title'], ['affiliation', 'time_period'])),
+  'cocurricular/leadership': records => withGroupedRoleTitles(toEntries(records, ['role', 'title'], ['affiliation', 'time_period']), 'affiliation'),
   'cocurricular/volunteering': records => withGroupedRoleTitles(toEntries(records, ['role', 'title'], ['organization', 'time_period'])),
   'professional-activity/invited-talks': records => toEntries(records, ['title'], ['institution', 'date']),
   'professional-activity/hosted-events': records => toEntries(records, ['title'], ['event_type', 'date']),

@@ -1,4 +1,4 @@
-import { driveFieldMode, fromDriveEditorValue, toDriveEditorValue } from '@/lib/driveLinks'
+import { driveFieldMode, fromDriveEditorValue, toDriveEditorValue } from './driveLinks.ts'
 
 // Entry values that are a list of small objects: the students on a mentored
 // project, the roles held at one organisation. Each row is edited as its
@@ -38,7 +38,7 @@ function readPath(source: unknown, path: string): unknown {
   )
 }
 
-function writePath(target: Record<string, unknown>, path: string, value: string) {
+function writePath(target: Record<string, unknown>, path: string, value: unknown) {
   const keys = path.split('.')
   let cursor = target
   for (const key of keys.slice(0, -1)) {
@@ -47,7 +47,7 @@ function writePath(target: Record<string, unknown>, path: string, value: string)
     cursor = cursor[key] as Record<string, unknown>
   }
   const last = keys[keys.length - 1]
-  if (value) cursor[last] = value
+  if (value !== '' && value !== undefined && value !== null) cursor[last] = value
   else delete cursor[last]
 }
 
@@ -74,7 +74,7 @@ function columnsOf(source: Record<string, unknown>, fields: readonly string[]): 
   return [...fields, ...extras]
 }
 
-export function listFieldsDraft(value: unknown, fields: readonly string[]): ListFieldsRow[] {
+export function listFieldsDraft(value: unknown, fields: readonly string[], children: Record<string, readonly string[]> = {}): ListFieldsRow[] {
   // A value can still be the one comma-separated cell this list grew out of —
   // "Ada Lovelace, Alan Turing" — which the site reads as a list too. Split it
   // into rows rather than showing nothing and saving the names away.
@@ -88,6 +88,10 @@ export function listFieldsDraft(value: unknown, fields: readonly string[]): List
     const row: ListFieldsRow = {}
     for (const column of columnsOf(source, fields)) {
       const found = readPath(source, column)
+      if (children[column]) {
+        row[column] = JSON.stringify(listFieldsDraft(found, children[column]))
+        continue
+      }
       // A non-scalar is left to the merge on save; reading it as text would
       // turn a credential list into "[object Object]".
       if (found && typeof found === 'object') row[`${KEPT}${column}`] = String(Array.isArray(found) ? found.length : 1)
@@ -99,7 +103,7 @@ export function listFieldsDraft(value: unknown, fields: readonly string[]): List
   })
 }
 
-export function serializeListFields(rows: ListFieldsRow[], original: unknown, fields: readonly string[], label: string): unknown {
+export function serializeListFields(rows: ListFieldsRow[], original: unknown, fields: readonly string[], label: string, children: Record<string, readonly string[]> = {}): unknown {
   const sources = Array.isArray(original) ? original : []
   const head = fields[0]
 
@@ -113,6 +117,14 @@ export function serializeListFields(rows: ListFieldsRow[], original: unknown, fi
       if (isBookkeeping(column) || row[`${KEPT}${column}`] !== undefined) continue
       const text = value.trim()
       const key = leafKey(column)
+      if (children[column]) {
+        writePath(base, column, serializeListFields(JSON.parse(text || '[]'), readPath(source, column), children[column], column))
+        continue
+      }
+      if (key === 'enabled') {
+        writePath(base, column, text.toLowerCase() !== 'false')
+        continue
+      }
       writePath(base, column, driveFieldMode(key, readPath(source, column)) ? String(fromDriveEditorValue(text, readPath(source, column), key)) : text)
     }
     return prune(base)
