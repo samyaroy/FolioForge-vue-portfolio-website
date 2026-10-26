@@ -36,7 +36,7 @@ export const routeMetadata: RouteMetadata[] = [
     name: 'Home',
     title: null,
     description:
-      'Samyabrata Roy — statistics and data science. Associate Software Developer at IDEAS-TIH, ISI Kolkata, and BS Data Science student at IIT Madras.',
+      'Samyabrata Roy — statistics and data science. MSc Statistics student at the University of Calcutta and BS Data Science student at IIT Madras.',
   },
   {
     path: '/projects-publications',
