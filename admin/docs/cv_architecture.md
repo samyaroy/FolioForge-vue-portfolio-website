@@ -740,8 +740,10 @@ What the engine policy confines:
 -   `MANIFEST.sha256` lists every vendored file, and a test checks it. A
     replaced engine binary therefore shows up in review.
 -   The TeX file set is fixed to what the template needs. It is collected
-    once in phase 0 by compiling the template locally against the
-    engine's public TeX file server and recording every file fetched.
+    once in phase 0 by compiling the template with the engine and
+    recording every file it asks for. SwiftLaTeX's public TeX file servers
+    no longer answer (2026-10-26), so the files come from local TeX Live
+    and the engine builds its own format from them (§14, phase 0).
 
 ### 8.4 Everything else stays under the page policy
 
@@ -1060,9 +1062,10 @@ admin/src/cv/                         pure TypeScript; the Worker imports the sc
   templates/resume-v1/skeleton.ts     the document as a string (done)
   templates/resume-v1/render.ts       one renderer per section kind (done)
   compile/engine.ts                   engine worker lifecycle, timeout, messages
-  compile/parseLog.ts                 log → errors and warnings with line numbers
+  compile/parseLog.ts                 log → errors and warnings with line numbers (done)
+  compile/compiler.ts                 CvCompiler, and the vite dev pdflatex client (done)
   diff.ts                             BuildInput vs BuildInput
-admin/src/components/cv/              ConfigPanel, SourceEditor, PdfPreview, BuildConsole, StatusChips
+admin/src/components/cv/              PresetEditor, TexSource + TexEditor, CompilePanel, PdfPreview, BuildLog (done)
 admin/src/services/cv.ts              /api/cv/* client
 admin/src/views/CvOverview/           presets, their status, Compile all, Download all
 admin/src/views/CvLibrary/            the existing list editor on cv/entries, bullets, summaries, skills, interests
@@ -1077,6 +1080,7 @@ admin/worker/cv/
 admin/worker/http.ts                  engine policy chosen by path
 admin/scripts/cv-build.mjs            npm run cv:build: every preset to .tex, and with --pdf to PDF (done)
 admin/scripts/cvContent.mjs           the committed content, read as the admin reads V1 (done)
+admin/scripts/cvCompileDev.ts         vite dev only: /__cv/compile with local pdflatex (done)
 ```
 
 Navigation gets a **CV** group between Editorial and Workspace in
@@ -1114,6 +1118,25 @@ first.
     If it does, try a build without dynamic execution (Emscripten
     `-sDYNAMIC_EXECUTION=0`) or switch to the Container fallback. Compare
     the files it fetches with the list measured locally (§18.3).
+
+    Findings, 2026-10-26, on SwiftLaTeX v20022022 (its last release;
+    pdfTeX 1.40.21 from TeX Live 2020; AGPL-3.0):
+    -   The worker script has no `eval` and no `new Function`, so the engine
+        policy can hold.
+    -   Its TeX file servers (`texlive*.swiftlatex.com`) time out. The
+        engine has a `compileformat` command, so it can build its own
+        `swiftlatexpdftex.fmt` from files served under `/cv-engine/`.
+    -   On a static host it needs a two-line patch: it names each cached
+        file after a `fileid` response header, which static hosting does
+        not send, and treats only 301 as "not found".
+    -   The worker detects its environment by `importScripts` and loads the
+        `.wasm` through the same XHR it uses for TeX files, so Node can run
+        it with a stand-in XHR over local TeX Live. One script can then
+        record the file set, build the format and compile all seven presets
+        before anything is vendored.
+    -   Still open: whether the 2020 engine accepts TeX Live 2024's LaTeX.
+        Running the downloaded engine on the owner's machine was stopped by
+        the agent's safety check and waits for the owner's go-ahead.
 3.  **Drive.** With the service account, update the site's real CV file
     by hand (curl). Confirm the existing link serves the new PDF and the
     file keeps its owner.
@@ -1152,10 +1175,18 @@ already useful without PDFs.
 
 -   The vendored engine and manifest; the `/cv-engine/` policy, 404 and
     HTML rules.
--   The engine wrapper with timeout; the log parser; the build console with
-    jump-to-line.
+-   The engine wrapper with timeout; the log parser (done); the build
+    console with jump-to-line (done).
 -   PDF.js preview with page navigation and zoom; Download PDF; On Compile
-    and Auto Compile; Compile all and Download all.
+    and Auto Compile (done); Compile all and Download all.
+-   The source in CodeMirror, read-only when generated, with an editable
+    copy as in §7.1 (done).
+
+The builder compiles through `CvCompiler` (`src/cv/compile/compiler.ts`).
+Until the engine is vendored, its only implementation is `vite dev`'s
+`/__cv/compile`, which runs this machine's pdflatex with paranoid file
+access (`scripts/cvCompileDev.ts`); the deployed admin says compiling is
+not available yet and still offers the `.tex`, as §8.5 intends.
 
 Exit: compiling works in the deployed admin in Chrome, Firefox and Safari;
 the page policy header is byte-identical to before; a failed compile shows
@@ -1203,7 +1234,7 @@ CV tests live in `worker/__tests__/` and run with `npm run test:worker`.
 | `worker/__tests__/cvResolve.test.mjs` | A missing ref fails, naming preset and ref; variant fallback order; explicit inclusion and order; compact items gathered under Other Projects; title split at the first `: ` |
 | `worker/__tests__/cvLibrary.test.mjs` | Runs the validator on the committed `library.yml` and `presets.yml`: ids unique, every ref resolves, every variant key appears in some `prefer`. CI fails on a broken preset before the admin ever renders it. |
 | `worker/__tests__/cvHash.test.mjs` | Key order does not change the hash; `source` is excluded |
-| `worker/__tests__/cvLog.test.mjs` | Errors, line numbers and warnings parsed from captured pdfTeX logs |
+| `worker/__tests__/cvLog.test.mjs` (done) | Errors, line numbers and warnings parsed from captured pdfTeX logs |
 | `worker/__tests__/cv.test.mjs` | Snapshot route refuses non-PDFs, oversized parts and `.tex`/`build.json` mismatches; publish refuses unknown presets and application builds; Drive request shape (mocked fetch); an md5 mismatch records nothing |
 | `worker/__tests__/security.test.mjs` | The page policy equals its previous value exactly; `'wasm-unsafe-eval'` appears only on `/cv-engine/` responses; `'unsafe-eval'` appears nowhere; a missing `/cv-engine/` path is 404, not `index.html`; HTML under `/cv-engine/` is refused |
 | `worker/__tests__/cvEngineManifest.test.mjs` | Every vendored engine file matches `MANIFEST.sha256` |
