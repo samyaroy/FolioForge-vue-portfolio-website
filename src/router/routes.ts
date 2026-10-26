@@ -132,6 +132,14 @@ export const routeMetadata: RouteMetadata[] = [
       'How this site handles visitor data, analytics, and third-party content.',
   },
   {
+    path: '/sitemap',
+    name: 'Sitemap',
+    title: 'Sitemap',
+    description:
+      "Every page of Samyabrata Roy's portfolio in one place, plus the blog, its RSS feed, and the XML sitemap for crawlers.",
+    flagPath: 'showSitemap',
+  },
+  {
     path: '/resources',
     name: 'Resources',
     title: 'Resources',

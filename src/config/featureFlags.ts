@@ -139,6 +139,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   // Controls the "Did you know?" facts page (/facts) and its nav link.
   showFacts: false,
 
+  // /sitemap: a readable index of every page, linked from the footer beside
+  // the privacy policy.
+  showSitemap: true,
+
   // Controls the quote pane rendered between page content and the footer.
   showPageQuotePane: true,
 
@@ -159,6 +163,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     teachings: true,
     workshopsAttended: true,
     facts: true,
+    sitemap: true,
   },
 }) satisfies FeatureFlagNode
 

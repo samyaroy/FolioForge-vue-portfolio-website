@@ -18,6 +18,7 @@ import {
 } from './src/router/routes'
 import {
   absoluteUrl,
+  buildSitemap,
   writeSeoOutput,
   type SeoPage,
   type SeoPrerenderOptions,
@@ -154,6 +155,45 @@ function seoPrerender(options: SeoPrerenderOptions): Plugin {
   }
 }
 
+// `vite dev` has no dist/ to serve sitemap.xml from, so the link to it on
+// /sitemap would fall through to the app's 404. Build it on request instead,
+// from the same pages the production build writes it from.
+function devSitemapPlugin(options: SeoPrerenderOptions): Plugin {
+  return {
+    name: 'sitemap-dev',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        if (req.url?.split('?')[0] !== '/sitemap.xml') return next()
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+        res.end(buildSitemap(options))
+      })
+    },
+  }
+}
+
+const seoOptions: SeoPrerenderOptions = {
+  siteName: SITE_NAME,
+  siteUrl: DEPLOYMENT_URL,
+  pages,
+  sitemap: true,
+  sitemapOnNoindex: IS_BETA_BUILD,
+  // The beta site is a byte-identical copy of production on another host,
+  // and the stable footer links to it, so it is both duplicate content and
+  // genuinely reachable. Runtime hostname checks cannot help here: this
+  // <head> is stamped at build time, when there is no hostname.
+  noindex: IS_BETA_BUILD,
+  // The portfolio has no dated content of its own; the feed lives on the blog.
+  rssUrl: `${BLOG_URL}/rss.xml`,
+  rssTitle: `${SITE_NAME} · Blog`,
+  notFound: {
+    path: '/404',
+    title: `Page Not Found · ${SITE_NAME}`,
+    description: 'This page does not exist.',
+    noindex: true,
+  },
+}
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -177,27 +217,8 @@ export default defineConfig({
           }) as Plugin,
         ]
       : []),
-    seoPrerender({
-      siteName: SITE_NAME,
-      siteUrl: DEPLOYMENT_URL,
-      pages,
-      sitemap: true,
-      sitemapOnNoindex: IS_BETA_BUILD,
-      // The beta site is a byte-identical copy of production on another host,
-      // and the stable footer links to it, so it is both duplicate content and
-      // genuinely reachable. Runtime hostname checks cannot help here: this
-      // <head> is stamped at build time, when there is no hostname.
-      noindex: IS_BETA_BUILD,
-      // The portfolio has no dated content of its own; the feed lives on the blog.
-      rssUrl: `${BLOG_URL}/rss.xml`,
-      rssTitle: `${SITE_NAME} · Blog`,
-      notFound: {
-        path: '/404',
-        title: `Page Not Found · ${SITE_NAME}`,
-        description: 'This page does not exist.',
-        noindex: true,
-      },
-    }),
+    seoPrerender(seoOptions),
+    devSitemapPlugin(seoOptions),
   ],
   base: '/',
   resolve: {
