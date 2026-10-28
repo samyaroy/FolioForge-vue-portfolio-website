@@ -23,11 +23,11 @@
         @click="expandSection"
         @keydown.enter="expandSection"
         @keydown.space.prevent="expandSection">
-        <div class="mb-2 flex items-start justify-between gap-4">
-          <h3 class="min-w-0 text-lg font-semibold text-[#0e141b]">
+        <div class="mb-1 flex items-start justify-between gap-4">
+          <h3 class="min-w-0 text-lg leading-snug font-semibold text-[#0e141b]">
             {{ article.title }}
             <span v-if="getArticleLabel(article)"
-              class="inline-block ml-3 px-3 py-1 text-xs font-medium bg-[#1980e6] text-white rounded-full">
+              class="inline-block ml-2 px-2 py-0.5 align-middle text-[11px] leading-[14px] font-medium bg-[#1980e6] text-white rounded-full">
               {{ getArticleLabel(article) }}
             </span>
           </h3>
@@ -40,7 +40,7 @@
         <div
           v-if="article.publication?.name || article.publication?.host || (isSectionCollapsed && getArticleDocumentLink(article))"
           class="flex min-h-7 items-center justify-between gap-4"
-          :class="isSectionCollapsed ? '' : 'mb-3'"
+          :class="isSectionCollapsed ? '' : 'mb-2'"
         >
           <p v-if="article.publication?.name || article.publication?.host" class="min-w-0 text-gray-700">
             <v-icon size="20">mdi-book-open-page-variant</v-icon>
@@ -73,11 +73,11 @@
           </v-tooltip>
         </div>
 
-        <p v-if="!isSectionCollapsed && article.field" class="text-gray-600 mb-4">
+        <p v-if="!isSectionCollapsed && article.field" class="text-gray-600 mb-2">
           <v-icon size="20">mdi-tag-outline</v-icon>
           <span class="px-3">{{ article.field }}</span>
         </p>
-        <div v-if="!isSectionCollapsed && (article.link || article.cred_link)" class="flex items-start gap-4 mb-4">
+        <div v-if="!isSectionCollapsed && (article.link || article.cred_link)" class="flex items-start gap-4 mb-2">
           <p v-if="article.link" class="text-gray-600 flex-1 min-w-0 text-left">
             <v-icon size="20">mdi-web</v-icon>
             <span class="px-3">
