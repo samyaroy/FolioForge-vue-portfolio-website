@@ -12,8 +12,10 @@ export type RawGalleryItem = {
   images?: string[]
   image?: string
   alt?: string
+  caption?: string
   event?: string
   location?: string
+  camera?: string
   externalUrl?: string
   featured?: boolean
 }

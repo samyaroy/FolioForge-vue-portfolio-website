@@ -1,5 +1,6 @@
 import { isPageDescriptionEnabled } from '../../../config/featureFlags'
 import { PAGE_DESCRIPTIONS } from '../../../content/descriptions'
+import { GalleryLoadNotice } from './GalleryLoadNotice'
 
 export function GalleryHero() {
   const showPageDescription = isPageDescriptionEnabled('gallery')
@@ -7,10 +8,13 @@ export function GalleryHero() {
   return (
     <section className="flex flex-row items-end gap-4 pb-1">
       <div className="flex min-w-0 w-full flex-col gap-4">
-        <h1 className="text-lg leading-tight font-extrabold tracking-tight text-base_black md:text-4xl">
-          <span className="mdi mdi-camera-outline mr-2 align-[-0.04em] leading-none md:mr-2.5" aria-hidden="true" />
-          Click Click...
-        </h1>
+        <div className="relative flex items-center justify-between gap-2 md:gap-3">
+          <h1 className="text-lg leading-tight font-extrabold tracking-tight text-base_black md:text-4xl">
+            <span className="mdi mdi-camera-outline mr-2 align-[-0.04em] leading-none md:mr-2.5" aria-hidden="true" />
+            Click Click...
+          </h1>
+          <GalleryLoadNotice />
+        </div>
 
         {showPageDescription && (
           <p className="text-base leading-8 text-slate-500 md:text-lg">
