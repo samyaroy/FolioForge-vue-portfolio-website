@@ -8,6 +8,10 @@ blogs:
   heroHeading: "Pound your thoughts and walk into the Auraverse..."
   # Heading of the year-grouped post index beside the post list.
   allPostsTitle: All posts
+  # Under the post index (flag: showPublishedElsewhere): articles that ran in
+  # magazines and newsletters, read from the portfolio's publications.yml.
+  publishedElsewhereTitle: Published elsewhere
+  newTabLabel: (opens in a new tab)
   # Tag filter above the post list (flag: showPostTagFilter), styled like the
   # portfolio's Career Unlocks filter.
   tagFilterTitle: Filter posts

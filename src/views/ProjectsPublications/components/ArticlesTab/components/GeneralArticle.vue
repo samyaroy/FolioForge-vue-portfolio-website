@@ -7,7 +7,7 @@
       :aria-label="isSectionCollapsed ? 'Expand articles section' : 'Collapse articles section'"
       @click="isSectionCollapsed = !isSectionCollapsed"
     >
-      <h2 class="text-2xl font-bold text-[#0e141b]">Articles & Blog Posts</h2>
+      <h2 class="text-2xl font-bold text-[#0e141b]">Magazine & Newsletter Articles</h2>
       <v-icon class="text-[#0e141b]">
         {{ isSectionCollapsed ? 'mdi-unfold-more-horizontal' : 'mdi-unfold-less-horizontal' }}
       </v-icon>

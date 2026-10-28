@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { posts } from '../lib/posts'
 import { BLOGS_SECTION } from '../content/sections'
+import { isFeatureEnabled } from '../config/featureFlags'
+import { PUBLISHED_ELSEWHERE } from '../content/publishedElsewhere'
 
 // Posts grouped by year, newest year first (posts are already sorted
 // newest-first, so insertion order is the display order).
@@ -61,6 +63,38 @@ export function AllPostsIndex({ activeSlug, className = '' }: AllPostsIndexProps
             </ul>
           </div>
         ))}
+
+        {isFeatureEnabled('showPublishedElsewhere') && PUBLISHED_ELSEWHERE.length > 0 && (
+          <section className="mt-8" aria-labelledby="published-elsewhere-heading">
+            <h2 id="published-elsewhere-heading" className="text-lg font-bold text-ink">
+              {BLOGS_SECTION.publishedElsewhereTitle}
+            </h2>
+            <ul className="mt-2.5 list-disc space-y-2.5 pl-4 marker:text-muted">
+              {PUBLISHED_ELSEWHERE.map((article) => (
+                <li key={article.url}>
+                  <a
+                    className="text-sm leading-snug font-medium text-ink transition-colors duration-200 hover:text-primary"
+                    href={article.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {article.title}
+                    <span
+                      className="mdi mdi-open-in-new ml-1 text-xs leading-none text-faint"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only">{BLOGS_SECTION.newTabLabel}</span>
+                  </a>
+                  {article.publication && (
+                    <p className="mt-0.5 text-xs leading-snug text-muted">
+                      {article.publication}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </aside>
   )

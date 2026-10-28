@@ -7,6 +7,8 @@ interface SectionsContent {
     title: string
     heroHeading: string
     allPostsTitle: string
+    publishedElsewhereTitle: string
+    newTabLabel: string
     tagFilterTitle: string
     tagFilterOpen: string
     tagFilterClear: string
