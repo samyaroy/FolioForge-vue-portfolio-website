@@ -49,6 +49,38 @@ export function bulletsOf(ref: string, library: CvLibrary): CvBullet[] {
   return library.bullets.filter(bullet => bullet.ref === ref)
 }
 
+/** A name without accents, so "Résumé" reads as "Resume" in ids and file names. */
+const plain = (name: string) => name.normalize('NFKD').replace(/[̀-ͯ]/g, '')
+
+/** An id for a new preset, from its name and clear of those taken: "Academic CV (PhD)" → "academic-phd". */
+export function presetIdFor(name: string, taken: ReadonlySet<string>): string {
+  const base = plain(name).toLowerCase().replace(/\bcv\b/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'cv'
+  let id = base
+  for (let suffix = 2; taken.has(id); suffix++) id = `${base}-${suffix}`
+  return id
+}
+
+/** A download name for a new preset in the existing ones' style: their shared prefix, then the name. */
+export function presetFilenameFor(name: string, presets: readonly CvPreset[]): string {
+  const shared = presets.map(preset => preset.filename).reduce<string | undefined>((common, filename) => {
+    if (common === undefined) return filename
+    let length = 0
+    while (length < common.length && common[length] === filename[length]) length++
+    return common.slice(0, length)
+  }, undefined) ?? ''
+  const words = plain(name).replace(/\bCV\b/gi, ' ').replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '')
+  return `${shared.slice(0, shared.lastIndexOf('_') + 1)}${words}`
+}
+
+/**
+ * A new preset: a copy of `from` under its own id, name and download name, or,
+ * with nothing to copy, one with no sections in the given template and header.
+ */
+export function newPreset(fields: Pick<CvPreset, 'id' | 'name' | 'filename'>, from: CvPreset | undefined, blank: Pick<CvPreset, 'template' | 'header'>): CvPreset {
+  if (from) return { ...structuredClone(from), ...fields }
+  return { ...fields, template: blank.template, template_options: {}, prefer: [], header: [...blank.header], sections: [], variants: {} }
+}
+
 /**
  * A preset as its YAML row: defaults left out, so a saved preset reads like
  * the hand-written ones. An item with nothing but its ref is written as the

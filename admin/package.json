@@ -15,7 +15,8 @@
     "worker:check": "wrangler deploy --dry-run --outdir .wrangler/dry-run",
     "lint": "eslint .",
     "preview": "vite preview --host 127.0.0.1",
-    "cv:build": "node scripts/cv-build.mjs"
+    "cv:build": "node scripts/cv-build.mjs",
+    "cv:drive-auth": "node scripts/cv-drive-auth.mjs"
   },
   "dependencies": {
     "@codemirror/commands": "^6.11.1",

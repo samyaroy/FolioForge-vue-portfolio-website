@@ -6,6 +6,8 @@ day after analysing the seven existing CVs in `admin/docs/` (§18). On the
 `resume-v1` template, the imported content for all seven presets, and
 `npm run cv:build`. All seven build with no LaTeX errors on two pages each.
 The admin screens, browser compilation, snapshots and Drive are not built yet.
+Drive publishing (§10) was redesigned on 2026-10-30: it signs in as the owner
+and writes into a folder per CV.
 
 > **Structured content is the source of truth. LaTeX and PDF are build
 > artifacts.**
@@ -27,8 +29,9 @@ A CV module inside the admin that:
 -   compiles in the browser, previews and downloads the PDF, and shows
     the build log with errors and warnings
 -   archives immutable snapshots in Cloudflare R2
--   updates stable Google Drive files in place, so existing CV links
-    keep working
+-   publishes each CV into its folder in Google Drive, updating the file
+    of the same name in place so existing links keep working, or creating
+    it when it is not there yet
 -   tracks version history and whether the published CV is current
 
 and does all of it **without relaxing the Content Security Policy of any
@@ -47,7 +50,8 @@ admin page** (§8).
 | Snapshot storage | R2, bucket unspecified | A new private bucket, `CV_ARCHIVE` | `MEDIA` is public and `DRAFTS` is staging that expires |
 | Template | A fixed placeholder per section | `{{HEADER}}` and `{{BODY}}` only | Presets order sections; fixed placeholders contradict that |
 | Compilation | WebAssembly on the admin page | WebAssembly in a dedicated Web Worker with its own CSP | Keeps `'wasm-unsafe-eval'` off every admin page |
-| Drive credentials | OAuth tokens | A service account shared on each CV file | OAuth apps left in Testing get refresh tokens that expire after seven days; a service account reaches only the files shared with it |
+| Drive credentials | OAuth tokens | OAuth as the owner, with the app published to production (revised 2026-10-30) | A service account cannot create files in a personal Drive, and a Shared Drive needs Google Workspace. The seven-day refresh-token expiry applies only to apps left in Testing (§10.1) |
+| Drive targets | Unspecified | A subfolder and file name per preset, in `presets.yml` | Each CV already lives in a folder in Drive; a new CV's file is created there (§10.2) |
 | Source editor | Monaco | CodeMirror 6 | Lighter, uses no eval, needs no blob workers |
 | Application builds | Unspecified | Private R2 only | The repository is public; where you applied is not |
 | Variant keys | A fixed set: concise, academic, industry, research, internship | Free-form keys; each preset lists the keys it prefers, in order | The existing CVs aim at audiences (statistics research, data analysis, full-stack) that no fixed set names |
@@ -79,7 +83,7 @@ Admin Worker (worker/index.ts)
    └── /api/*
          /api/content/cv/*   ─► pending store (DRAFTS) ─► GitHub, V1
          /api/cv/snapshots   ─► R2 CV_ARCHIVE (private, no delete)
-         /api/cv/publish     ─► Google Drive (service account, files.update)
+         /api/cv/publish     ─► Google Drive (as the owner: update or create)
 ```
 
 Core data flow:
@@ -99,8 +103,8 @@ PORTFOLIO YAML + CV LIBRARY ─► PRESET (+ application patch) ─► BUILD INP
 | CV entries, bullets, variants, summaries, skills, interests | `src/content/cv/library.yml` (Git, V1) | Public: everything here appears on a published CV anyway |
 | Presets | `src/content/cv/presets.yml` (Git, V1) | |
 | Templates | `admin/src/cv/templates/` | Code; changes go through review |
-| Drive targets (preset → file ID) | `CV_DRIVE_TARGETS` in `wrangler.jsonc` vars | File IDs are not secret; the site's CV file ID is already in `profile.yml` |
-| Service-account key | Worker secrets | Never reaches the browser |
+| Drive targets (preset → subfolder and file name) | `drive` on each preset in `presets.yml` | Folder names, not IDs (§10.2) |
+| Google OAuth client, the owner's refresh token, the CVs folder's ID | Worker secrets | Never reach the browser; the folder ID stays out of the public repository (§10.1) |
 | Snapshots and publication records | R2 `CV_ARCHIVE` | Private |
 | Application builds and snapshot reasons | R2 `CV_ARCHIVE` | Private, because the repository is public |
 | Compiled but unsaved builds | Browser memory | Not persisted |
@@ -303,6 +307,9 @@ presets:
 -   Presets are edited in the builder's configuration column, which saves
     the whole row through `PUT /api/content/cv/presets`. They are deeper
     than the generic list editor handles.
+-   `drive` lists where Publish puts the PDF: a subfolder of the CVs
+    folder in Drive, and optionally a file name other than `filename`
+    (§10.2). A preset without it is never published.
 
 The seven existing files become the seven launch presets:
 
@@ -402,6 +409,8 @@ Checks that span rows and files live in
 -   each preset suits its template: section kinds, item styles and option
     values
 -   every variant key is preferred by some preset, which catches typos
+-   no two Drive targets resolve to the same folder and file name
+    (§10.2)
 
 A `ResolvedSection` holds final strings with the variant already chosen:
 titles, subtitles, locations, periods, links and bullets. The renderer
@@ -865,73 +874,194 @@ match; when they don't, the builder says which one changed.
 
 ## 10. Publishing to Google Drive
 
-R2 is the immutable archive. Drive holds the current copy at a stable link.
+R2 is the immutable archive. Drive holds the current copies, at links that
+stay the same.
 
-### 10.1 Credentials
+Revised 2026-10-30. The first version updated one file per preset as a
+service account. Two things changed it: each CV now lives in a folder the
+owner already keeps in Drive, and a new CV needs its file created, which a
+service account cannot do in a personal Drive.
 
--   A Google Cloud service account, whose key is stored as the Worker
-    secrets `GOOGLE_SA_EMAIL` and `GOOGLE_SA_PRIVATE_KEY`.
--   Each target CV file in your Drive is shared with the service account
-    as Editor. The account sees nothing else, so although it requests the
-    `drive` scope, it can reach only the files you shared. (`drive.file`
-    would not cover files you created yourself.)
--   The Worker mints short-lived access tokens. It signs an RS256 JWT with
-    `jose`, already a dependency for Access, and exchanges it at
-    `https://oauth2.googleapis.com/token` (grant
-    `urn:ietf:params:oauth:grant-type:jwt-bearer`). The token is cached in
-    memory until it expires.
--   Why not OAuth for your own account: apps left in Testing get refresh
-    tokens that expire after seven days, and the publish button would
-    stop working weekly.
+### 10.1 Signing in to Drive as the owner
 
-### 10.2 Targets
+The Worker acts as the owner of the CVs folder, through OAuth.
 
-``` json
-"CV_DRIVE_TARGETS": {
-  "consolidated": "1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz",
-  "academic": "...",
-  "research-stats": "..."
-}
+-   **Why not a service account.** Google gives service accounts no
+    storage quota. One can update a file the owner shared with it, but
+    creating a file in a personal Drive fails with `storageQuotaExceeded`.
+    The documented way round it, a Shared Drive, needs Google Workspace.
+    Files the Worker creates as the owner belong to the owner.
+-   **Why the seven-day expiry no longer applies.** Refresh tokens expire
+    after seven days only while the OAuth consent screen's publishing
+    status is *Testing*. This app is published *In production*, for the
+    owner alone, and stays unverified: the owner passes Google's
+    "unverified app" screen once, at consent. Consent must be given after
+    the switch to production; a token from Testing keeps its expiry.
+    Phase 0 confirms Google allows this with the `drive` scope (§14).
+-   **Scope: `https://www.googleapis.com/auth/drive`.** `drive.file`
+    reaches only files the app created or the owner picked with Google
+    Picker, so it could not update the eight PDFs already in the folder.
+    Their links, the site's "My CV" button among them, must survive, so
+    they are updated, never recreated.
+-   **Blast radius.** The token can read and write the owner's whole
+    Drive, which is more than the service account could. Only the Worker
+    holds it: a secret, never sent to the browser or logged.
+    `worker/cv/drive.ts` exposes four operations (list a folder's
+    children, create a PDF, update a file's content, read a file's
+    checksum) and nothing that deletes, moves, renames or shares. Every
+    write lands in a direct subfolder of the CVs folder (§10.3).
+    Removing the app at myaccount.google.com/permissions cuts it off at
+    once.
+
+Setup, once:
+
+``` text
+1. Google Cloud project: enable the Drive API
+2. OAuth consent screen: External, scope .../auth/drive,
+   publishing status In production
+3. Credentials: OAuth client ID, type Desktop app
+4. admin/: npm run cv:drive-auth
+   signs in as the folder's owner in the browser (loopback redirect to
+   127.0.0.1, PKCE) and prints the refresh token
+5. wrangler secret put GOOGLE_OAUTH_CLIENT_ID
+   wrangler secret put GOOGLE_OAUTH_CLIENT_SECRET
+   wrangler secret put GOOGLE_OAUTH_REFRESH_TOKEN
+   wrangler secret put CV_DRIVE_ROOT          the CVs folder's ID
 ```
 
-The browser names a preset and the Worker looks up the file. This is the
-content registry's rule again: no request carries a file ID.
+-   The Worker exchanges the refresh token at
+    `https://oauth2.googleapis.com/token` (`grant_type=refresh_token`)
+    and caches the access token in memory until it expires.
+-   Consent happens on the owner's machine, not through a Worker route,
+    so the Worker has no OAuth callback to defend. Reconnecting after a
+    revocation, a password change or six months unused is step 4 again.
+-   A refused refresh (`invalid_grant`) answers 503 `drive_not_connected`,
+    and `/api/status` reports it, like every other missing integration
+    (§11.2).
+-   `CV_DRIVE_ROOT` is a secret rather than a `wrangler.jsonc` var
+    because the repository is public and the folder is shared with anyone
+    who has its link.
 
-`1qeizy…` is the file `profile.yml`'s `cv` link already points at, so the
-site's "My CV" button serves each new publish with no site change. These
-examples assume that file holds the Consolidated CV; which preset owns it
-is an open question (§17).
+### 10.2 The folder rule
+
+The owner's Drive already holds every CV, one level below a folder named
+`CVs`:
+
+``` text
+CVs/                                      CV_DRIVE_ROOT
+├── 1_Academic/       SamyabrataRoy_Resume_Academic.pdf
+├── 2_Research/       SamyabrataRoy_Resume_Research_ML.pdf
+│                     SamyabrataRoy_Resume_Research_Stats.pdf
+├── 3_Corporate/      SamyabrataRoy_Resume_Corporate_DA.pdf
+│                     SamyabrataRoy_Resume_Corporate_FS.pdf
+│                     SamyabrataRoy_Resume_Corporate_ML.pdf
+└── 4_Consolidated/   SamyabrataRoy_Resume_Consolidated.pdf
+                      SamyabrataRoy - 22F2001443 -  IITM BS.pdf
+```
+
+Every file there is already named after its preset's `filename`, so the
+rule is:
+
+> **A preset publishes `<name>.pdf` into its subfolder. If a file of that
+> name is there, it is updated in place; if not, it is created.**
+
+A preset lists where it publishes in `drive` (§5.3):
+
+``` yaml
+  - id: consolidated
+    filename: SamyabrataRoy_Resume_Consolidated
+    drive:
+      - folder: 4_Consolidated
+      - folder: 4_Consolidated
+        name: "SamyabrataRoy - 22F2001443 -  IITM BS"   # IIT Madras placement's naming
+  - id: research-ml
+    filename: SamyabrataRoy_Resume_Research_ML
+    drive:
+      - folder: 2_Research
+```
+
+-   `folder` is the **name** of a direct subfolder of the CVs folder, not
+    an ID, so `presets.yml` reads plainly in review. The Worker resolves
+    it among the root's subfolders, so a preset can reach those and
+    nothing else. Renaming a subfolder in Drive makes publishing fail with
+    `unknown_folder`, naming the preset and the folder, the way a stale
+    portfolio id fails a build (§5.1).
+-   `name` defaults to `filename`. It exists for names `filename`'s
+    pattern refuses, like the IITM copy's spaces. `.pdf` is added to
+    either.
+-   The IITM placement file is a second target of `consolidated`, not a
+    preset of its own: on 2026-10-30 it was byte-for-byte the
+    Consolidated PDF. One publish updates both, so it cannot fall behind.
+    If it ever needs its own content, a copy of `consolidated` takes over
+    that target.
+-   Only files some preset names are ever written. Anything else in the
+    folders is left alone.
+-   `validateCv` refuses two targets, in one preset or across presets,
+    that resolve to the same folder and name, since they would overwrite
+    each other. A name may not contain `/` and is at most 200 characters.
+-   A preset with no `drive` is built and archived but never published.
+-   **New CV** on the CV Overview gives a copy its source's first folder
+    with the default name. A copy never inherits the source's explicit
+    names, which would collide.
+-   The builder edits `drive` with a folder picker filled from
+    `GET /api/cv/drive/folders`.
+
+No Drive file ID is configured anywhere. `profile.yml`'s `cv` link keeps
+pointing at `1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz`, which the rule finds by
+name and updates in place.
 
 ### 10.3 Flow
 
 ``` text
 POST /api/cv/publish { preset, snapshotId }
-  1. the preset has a Drive target                    else 400 unknown_target
+  1. read the preset from V1 plus pending edits, never from the request;
+     it lists at least one Drive target                else 400 no_drive_target
   2. the snapshot exists, belongs to that preset,
      and is not an application build
-  3. PATCH https://www.googleapis.com/upload/drive/v3/files/{id}?uploadType=media
-       body: document.pdf read from R2
-  4. GET files/{id}?fields=md5Checksum,modifiedTime  → must equal the snapshot's md5
-  5. write publications/<preset>/<ulid>.json and latest.json
+  3. resolve every target before writing any:
+     a. the root's subfolders
+          q = '<root>' in parents and trashed = false
+              and mimeType = 'application/vnd.google-apps.folder'
+        exactly one named <folder>                     else 409 unknown_folder
+     b. that folder's files
+          q = '<folder id>' in parents and trashed = false and name = '<name>.pdf'
+        none → create; one → update                    more: 409 ambiguous_file
+  4. for each target, with document.pdf read from R2:
+       update  PATCH https://www.googleapis.com/upload/drive/v3/files/{id}?uploadType=media
+       create  POST  https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart
+               metadata { name, parents: [folder id], mimeType: application/pdf }
+  5. GET files/{id}?fields=md5Checksum,modifiedTime,webViewLink
+     → md5 equals the snapshot's
+  6. write publications/<preset>/<ulid>.json, one result per target,
+     and latest.json
 ```
 
 -   The browser runs Save Version first (or reuses a matching snapshot),
     then Publish with its id. Drive only ever receives archived bytes, so
     every published PDF has a snapshot.
--   If step 3 or 4 fails, the snapshot stays and no publication is
-    recorded. The UI shows "Saved, not published", and Retry publishes the
-    same snapshot. Uploading identical bytes twice is harmless.
--   Updating the file keeps its ID, owner, sharing and link. Drive keeps
-    its own revision history, but R2 is the record.
+-   Names in `q` are quoted, with `'` and `\` escaped.
+-   Nothing is written until every target resolves, so a typo in
+    `presets.yml` publishes nothing rather than half.
+-   A failure partway leaves some targets current and some not. The record
+    says which; the UI shows "Published 1 of 2", and Retry publishes the
+    same snapshot. Retrying is safe because the rule goes by name: a file
+    created on the first attempt is found and updated on the second, never
+    duplicated.
+-   A preset counts as published (§12) when every target's latest result
+    carries the current `inputHash`.
+-   Updating a file keeps its ID, owner, sharing and link. Drive keeps its
+    own revision history, but R2 is the record.
 
 ``` text
-PUBLISHING · Google Drive
+PUBLISHING · Google Drive                                        Connected ✓
 
-Academic CV                                            Connected ✓
-File            Samyabrata_Roy_Academic_CV.pdf
-Last published  04 Oct 2026, 12:42 AM  (snapshot 01J9XYZ…)
-Status          Current ✓
-                [ Copy Link ]  [ Open ]  [ Publish Current Build ]
+Consolidated CV                 Last published 04 Oct 2026, 12:42 AM (01J9XYZ…)
+  4_Consolidated / SamyabrataRoy_Resume_Consolidated.pdf      Current ✓  [ Open ] [ Copy link ]
+  4_Consolidated / SamyabrataRoy - 22F2001443 -  IITM BS.pdf  Current ✓  [ Open ] [ Copy link ]
+                                                              [ Publish Current Build ]
+Academic CV (PhD)
+  1_Academic / SamyabrataRoy_Resume_Academic_PhD.pdf          Not in Drive yet: publishing creates it
+                                                              [ Publish Current Build ]
 ```
 
 ------------------------------------------------------------------------
@@ -945,7 +1075,7 @@ safely:
 
 | Job | Why it cannot be in the browser | Code |
 |---|---|---|
-| Talk to Google Drive | The service-account key must never reach the browser | `worker/cv/drive.ts` |
+| Talk to Google Drive | The owner's refresh token must never reach the browser | `worker/cv/drive.ts` |
 | Write and read the R2 archive | R2 is reached through the Worker's bucket binding; the browser holds no storage credentials | `worker/cv/snapshots.ts` |
 | Check what the browser sends | Anything from the browser is untrusted: `build.json` goes through `buildInputSchema`, the PDF and `.tex` through size and format checks | `worker/cv/routes.ts` |
 | Read and write CV content | Already done by the existing collection routes and GitHub publish path: **no new code**, six registry entries | `worker/content/registry.ts` |
@@ -968,7 +1098,8 @@ CSRF on mutations, apply without new code.
 | GET | `/api/cv/snapshots?preset=&cursor=` | Lists snapshot metadata |
 | GET | `/api/cv/snapshots/:id/:file` | Streams one file; `:file` comes from a fixed list |
 | POST | `/api/cv/publish` | `{ preset, snapshotId }`, per §10.3 |
-| GET | `/api/cv/targets` | For each preset: whether it has a target, and its latest publication |
+| GET | `/api/cv/targets` | For each preset: its Drive targets, whether each file exists yet, and the latest publication |
+| GET | `/api/cv/drive/folders` | The CVs folder's subfolders, for the builder's folder picker |
 | GET, POST, PUT | `/api/cv/applications[/:id]` | Application builds |
 
 -   `jsonBody`'s 512 KB cap stays for JSON routes. The snapshot route
@@ -988,8 +1119,7 @@ JSON, so it carries no comments):
   { "binding": "CV_ARCHIVE", "bucket_name": "folioforge-cv-archive" }
 ],
 "vars": {
-  "ADMIN_ORIGIN": "https://admin.samyabrata.codeium.xyz",
-  "CV_DRIVE_TARGETS": { "consolidated": "1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz" }
+  "ADMIN_ORIGIN": "https://admin.samyabrata.codeium.xyz"
 }
 ```
 
@@ -1003,7 +1133,7 @@ Each preset shows three chips:
 |---|---|
 | Content | The preset and library edits are saved (to the pending store or V1) |
 | Build | The last compile's `inputHash` equals the current one |
-| Published | `latest.json`'s `inputHash` equals the current one |
+| Published | Every Drive target's latest result in `latest.json` carries the current `inputHash` |
 
 ``` text
 After editing        Content ✓   Build ⚠ outdated   Published ⚠ outdated
@@ -1076,11 +1206,12 @@ admin/public/cv-engine/<engine>/<version>/  vendored engine, TeX files, MANIFEST
 admin/worker/cv/
   routes.ts                           /api/cv/*
   snapshots.ts                        archive bucket, checks
-  drive.ts                            token, update, verify
+  drive.ts                            token, find by name, update or create, verify
 admin/worker/http.ts                  engine policy chosen by path
 admin/scripts/cv-build.mjs            npm run cv:build: every preset to .tex, and with --pdf to PDF (done)
 admin/scripts/cvContent.mjs           the committed content, read as the admin reads V1 (done)
 admin/scripts/cvCompileDev.ts         vite dev only: /__cv/compile with local pdflatex (done)
+admin/scripts/cv-drive-auth.mjs       npm run cv:drive-auth: one-time Drive consent as the owner
 ```
 
 Navigation gets a **CV** group between Editorial and Workspace in
@@ -1137,9 +1268,13 @@ first.
     -   Still open: whether the 2020 engine accepts TeX Live 2024's LaTeX.
         Running the downloaded engine on the owner's machine was stopped by
         the agent's safety check and waits for the owner's go-ahead.
-3.  **Drive.** With the service account, update the site's real CV file
-    by hand (curl). Confirm the existing link serves the new PDF and the
-    file keeps its owner.
+3.  **Drive.** Publish the OAuth app to production, run
+    `cv:drive-auth`, and with that token, by hand (curl), update
+    `4_Consolidated/SamyabrataRoy_Resume_Consolidated.pdf` in place and
+    create a test PDF in `1_Academic`. Confirm that Google let consent
+    through with the `drive` scope on an unverified app, that the site's
+    link serves the new PDF, that both files are owned by the owner, and
+    that the refresh token still works eight days later.
 
 Exit: all three succeed, or this plan is amended before phase 1.
 
@@ -1204,11 +1339,15 @@ its files; a `.tex` that doesn't match its `build.json` is refused.
 
 ### Phase 4: Drive
 
--   Secrets, `CV_DRIVE_TARGETS`, the token client, the publish route, the
-    Publishing page, status chips, and the diff dialog.
+-   The OAuth client and `cv:drive-auth`, the secrets, `drive` on
+    presets with its validation and the builder's folder picker, the token
+    client, the publish route, the Publishing page, status chips, and the
+    diff dialog.
 
-Exit: publishing updates the site's CV file in place, the md5 check passes,
-the site's "My CV" button serves the new PDF, and the chips turn current.
+Exit: publishing Consolidated updates the site's CV file and the IITM copy
+in place, a new preset's file is created in its folder, the md5 checks
+pass, the site's "My CV" button serves the new PDF, and the chips turn
+current.
 
 ### Phase 5: quality of life
 
@@ -1235,7 +1374,7 @@ CV tests live in `worker/__tests__/` and run with `npm run test:worker`.
 | `worker/__tests__/cvLibrary.test.mjs` | Runs the validator on the committed `library.yml` and `presets.yml`: ids unique, every ref resolves, every variant key appears in some `prefer`. CI fails on a broken preset before the admin ever renders it. |
 | `worker/__tests__/cvHash.test.mjs` | Key order does not change the hash; `source` is excluded |
 | `worker/__tests__/cvLog.test.mjs` (done) | Errors, line numbers and warnings parsed from captured pdfTeX logs |
-| `worker/__tests__/cv.test.mjs` | Snapshot route refuses non-PDFs, oversized parts and `.tex`/`build.json` mismatches; publish refuses unknown presets and application builds; Drive request shape (mocked fetch); an md5 mismatch records nothing |
+| `worker/__tests__/cv.test.mjs` | Snapshot route refuses non-PDFs, oversized parts and `.tex`/`build.json` mismatches; publish refuses unknown presets and application builds; Drive (mocked fetch): update when one file has the name, create when none does, refuse when two do, nothing written when any target fails to resolve, names quoted in queries, a retry after a partial publish creates no duplicate; an md5 mismatch records nothing |
 | `worker/__tests__/security.test.mjs` | The page policy equals its previous value exactly; `'wasm-unsafe-eval'` appears only on `/cv-engine/` responses; `'unsafe-eval'` appears nowhere; a missing `/cv-engine/` path is 404, not `index.html`; HTML under `/cv-engine/` is refused |
 | `worker/__tests__/cvEngineManifest.test.mjs` | Every vendored engine file matches `MANIFEST.sha256` |
 
@@ -1248,16 +1387,18 @@ CV tests live in `worker/__tests__/` and run with `npm run test:worker`.
     an id breaks builds (loudly); the engine policy is the one place
     WebAssembly may run; unlike the collection cards, the CV preview is
     the real output, not a replica.
--   `admin/worker/README.md`: the `CV_ARCHIVE` bucket, service-account
-    setup, and `CV_DRIVE_TARGETS`.
+-   `admin/worker/README.md`: the `CV_ARCHIVE` bucket, the Drive OAuth
+    setup (§10.1), and the secrets it needs.
 
 ------------------------------------------------------------------------
 
 ## 17. Open questions
 
--   Which presets besides `consolidated` get a permanent Drive file at
-    launch? (`consolidated` is the file behind `profile.yml`'s `cv` link,
-    settled 2026-10-04.)
+-   Can the Drive scope narrow from `drive` to `drive.file` (§10.1)?
+    Google Picker can grant `drive.file` access to files the owner picks
+    once, which would cover the eight existing PDFs, but it loads Google's
+    script into an admin page under the page policy (§8). Which presets
+    publish was settled on 2026-10-30: all seven, plus the IITM copy.
 -   Should an application build ever be published to Drive, for example as
     a temporary link? This plan says no.
 -   Should the Worker re-render `build.json` to check a snapshot's `.tex`
