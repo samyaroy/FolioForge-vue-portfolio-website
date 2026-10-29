@@ -337,6 +337,24 @@ const templateOptions = keyedMap(/^[a-z][a-z0-9_]*$/, 'not an option name.', tem
 /** Row id to the variant key that row uses, overriding `prefer`. */
 const variantChoices = keyedMap(ID_PATTERN, 'not a row id.', variantKey)
 
+/** Longest Drive file name a target may give, before `.pdf`. */
+export const DRIVE_NAME_MAX = 200
+
+/**
+ * Where Publish puts a preset's PDF (cv_architecture.md §10.2): a direct
+ * subfolder of the CVs folder, by name, and the file's name there without
+ * `.pdf`, which is the preset's `filename` unless given. A name may hold what
+ * `filename` refuses, such as spaces, because Drive is not a download.
+ */
+export const driveTargetSchema = z.preprocess(
+  withoutBlanks,
+  z.strictObject({
+    folder: text.refine(value => !value.includes('/'), 'A folder is one name, without "/".'),
+    name: text.refine(value => !value.includes('/') && value.length <= DRIVE_NAME_MAX, `A Drive name has no "/" and at most ${DRIVE_NAME_MAX} characters.`).optional(),
+  }, notAMap('A Drive target is a map with a folder.')),
+)
+export type DriveTarget = z.output<typeof driveTargetSchema>
+
 export const cvPresetSchema = z.preprocess(
   withoutBlanks,
   z.strictObject({
@@ -344,6 +362,8 @@ export const cvPresetSchema = z.preprocess(
     name: text,
     /** The download name, without `.tex` or `.pdf`. */
     filename: text.refine(value => FILENAME_PATTERN.test(value), 'Use letters, digits, dots, hyphens and underscores.'),
+    /** Where Publish puts the PDF in Drive; none means it is never published. */
+    drive: list(driveTargetSchema),
     template: text,
     template_options: templateOptions,
     /** Variant keys in order of preference; `text` is the last resort. */

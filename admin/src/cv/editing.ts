@@ -75,10 +75,12 @@ export function presetFilenameFor(name: string, presets: readonly CvPreset[]): s
 /**
  * A new preset: a copy of `from` under its own id, name and download name, or,
  * with nothing to copy, one with no sections in the given template and header.
+ * A copy publishes into its source's first Drive folder under its own name;
+ * the source's other targets, and any name it gives, would collide.
  */
 export function newPreset(fields: Pick<CvPreset, 'id' | 'name' | 'filename'>, from: CvPreset | undefined, blank: Pick<CvPreset, 'template' | 'header'>): CvPreset {
-  if (from) return { ...structuredClone(from), ...fields }
-  return { ...fields, template: blank.template, template_options: {}, prefer: [], header: [...blank.header], sections: [], variants: {} }
+  if (from) return { ...structuredClone(from), ...fields, drive: from.drive.slice(0, 1).map(target => ({ folder: target.folder })) }
+  return { ...fields, drive: [], template: blank.template, template_options: {}, prefer: [], header: [...blank.header], sections: [], variants: {} }
 }
 
 /**
@@ -98,6 +100,7 @@ export function presetRow(preset: CvPreset): Record<string, unknown> {
     id: preset.id,
     name: preset.name,
     filename: preset.filename,
+    ...(preset.drive.length ? { drive: preset.drive.map(target => ({ folder: target.folder, ...(target.name ? { name: target.name } : {}) })) } : {}),
     template: preset.template,
     ...(Object.keys(preset.template_options).length ? { template_options: { ...preset.template_options } } : {}),
     ...(preset.prefer.length ? { prefer: [...preset.prefer] } : {}),

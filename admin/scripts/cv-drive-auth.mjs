@@ -5,11 +5,22 @@
  * GOOGLE_OAUTH_REFRESH_TOKEN.
  *
  *   npm run cv:drive-auth -- ~/Downloads/client_secret_….json
+ *   npm run cv:drive-auth -- <file> --check --folder <CVs folder id>
  *
  * The file is the JSON Google offers when a Desktop app client is created.
  * Google redirects back to a port this script listens on at 127.0.0.1, and
- * PKCE ties the code to this run, so nothing else can redeem it. Only Node's
- * own modules are used, so it runs without installing the admin.
+ * PKCE ties the code to this run, so nothing else can redeem it. --check signs
+ * in the same way but prints no credentials: it reports whose Drive the token
+ * reaches, whether Google limits its lifetime, and what the folder holds. Only
+ * Node's own modules are used, so it runs without installing the admin.
+ *
+ * Only the credentials go to stdout; everything meant for a person goes to
+ * stderr. So the refresh token can be piped into wrangler without copying it:
+ *
+ *   TOKEN=$(node scripts/cv-drive-auth.mjs <file> | sed -n 's/^GOOGLE_OAUTH_REFRESH_TOKEN=//p')
+ *   [ -n "$TOKEN" ] && printf %s "$TOKEN" | wrangler secret put GOOGLE_OAUTH_REFRESH_TOKEN
+ *
+ * The test keeps a failed sign-in from uploading an empty secret over the old one.
  */
 import { execFile } from 'node:child_process'
 import { createHash, randomBytes } from 'node:crypto'
@@ -17,10 +28,15 @@ import { readFile } from 'node:fs/promises'
 import { createServer } from 'node:http'
 
 const SCOPE = 'https://www.googleapis.com/auth/drive'
+const FOLDER_MIME = 'application/vnd.google-apps.folder'
 
-const file = process.argv[2]
-if (!file) {
-  console.error('Usage: npm run cv:drive-auth -- <client_secret_….json from Google Cloud>')
+const args = process.argv.slice(2)
+const check = args.includes('--check')
+const folderAt = args.indexOf('--folder')
+const folder = folderAt >= 0 ? args[folderAt + 1] : undefined
+const file = args.find((arg, index) => !arg.startsWith('--') && (folderAt < 0 || index !== folderAt + 1))
+if (!file || (folderAt >= 0 && !/^[A-Za-z0-9_-]+$/.test(folder ?? ''))) {
+  console.error('Usage: npm run cv:drive-auth -- <client_secret_….json from Google Cloud> [--check] [--folder <id>]')
   process.exit(1)
 }
 const { installed } = JSON.parse(await readFile(file, 'utf8'))
@@ -52,9 +68,9 @@ consentUrl.search = new URLSearchParams({
   state,
 }).toString()
 
-console.log('Sign in as the owner of the CVs folder. Google will say it has not verified')
-console.log('this app: choose Advanced, then Go to the app. If no browser opens, visit:\n')
-console.log(`${consentUrl}\n`)
+console.error('Sign in as the owner of the CVs folder. Google will say it has not verified')
+console.error('this app: choose Advanced, then Go to the app. If no browser opens, visit:\n')
+console.error(`${consentUrl}\n`)
 const opener = { darwin: 'open', win32: 'explorer' }[process.platform] ?? 'xdg-open'
 execFile(opener, [consentUrl.href], () => undefined)
 
@@ -94,14 +110,72 @@ if (!tokenResponse.ok || !tokens.refresh_token) {
   process.exit(1)
 }
 
-// Shows whose Drive the token reaches, so a sign-in with the wrong account is
-// caught here rather than at the first publish.
-const about = await fetch('https://www.googleapis.com/drive/v3/about?fields=user(displayName,emailAddress)', {
-  headers: { Authorization: `Bearer ${tokens.access_token}` },
-})
-const { user } = about.ok ? await about.json() : {}
-console.log(`Signed in to the Drive of ${user ? `${user.displayName} <${user.emailAddress}>` : 'an account the Drive API could not name'}.\n`)
-console.log('Store these as secrets of the admin Worker (folioforge-admin-beta); never commit them:\n')
-console.log(`GOOGLE_OAUTH_CLIENT_ID=${installed.client_id}`)
-console.log(`GOOGLE_OAUTH_CLIENT_SECRET=${installed.client_secret}`)
-console.log(`GOOGLE_OAUTH_REFRESH_TOKEN=${tokens.refresh_token}`)
+async function drive(path, params) {
+  const url = new URL(`https://www.googleapis.com/drive/v3/${path}`)
+  url.search = new URLSearchParams(params).toString()
+  const response = await fetch(url, { headers: { Authorization: `Bearer ${tokens.access_token}` } })
+  const body = await response.json()
+  if (!response.ok) throw new Error(body.error?.message ?? `Drive answered ${response.status}`)
+  return body
+}
+
+const children = async id => (await drive('files', {
+  q: `'${id}' in parents and trashed = false`,
+  fields: 'files(id,name,mimeType,capabilities(canEdit,canAddChildren))',
+  orderBy: 'name',
+  pageSize: '200',
+})).files
+
+try {
+  // Shows whose Drive the token reaches, so a sign-in with the wrong account is
+  // caught here rather than at the first publish.
+  const { user } = await drive('about', { fields: 'user(displayName,emailAddress)' })
+  console.error(`Signed in to the Drive of ${user.displayName} <${user.emailAddress}>.`)
+} catch (error) {
+  console.error(`The token works, but Drive refused it: ${error.message}`)
+  process.exit(1)
+}
+
+// Google sets this only on tokens with a limited life, which is what an app
+// still in Testing gets: seven days (cv_architecture.md §10.1).
+if (tokens.refresh_token_expires_in) {
+  const days = Math.round(tokens.refresh_token_expires_in / 86400)
+  console.error(`✗ Google limits this refresh token to ${days} day(s). Publish the app (Audience → Publish app), then sign in again.`)
+} else {
+  console.error('✓ The refresh token has no expiry set by Google, so the app is in production.')
+}
+
+if (folder) {
+  try {
+    // A folder shared by link is readable by any account, so what matters for
+    // publishing is whether this one may update the files and add new ones.
+    const root = await drive(`files/${folder}`, { fields: 'name,owners(emailAddress)' })
+    console.error(`\n${root.name}/ (owner: ${root.owners?.map(owner => owner.emailAddress).join(', ') ?? 'not shown'}), as the token sees it:`)
+    let readOnly = 0
+    for (const entry of await children(folder)) {
+      if (entry.mimeType !== FOLDER_MIME) continue
+      const canAdd = entry.capabilities?.canAddChildren
+      if (!canAdd) readOnly++
+      console.error(`  ${entry.name}/${canAdd ? '' : '   ✗ cannot add files'}`)
+      for (const inner of await children(entry.id)) {
+        if (!inner.capabilities?.canEdit) readOnly++
+        console.error(`      ${inner.name}${inner.capabilities?.canEdit ? '' : '   ✗ read-only'}`)
+      }
+    }
+    console.error(readOnly
+      ? `✗ ${readOnly} of these cannot be written. Sign in as the folder's owner, or share the folder with this account as Editor.`
+      : '✓ This account can update every file and add files to every subfolder.')
+  } catch (error) {
+    console.error(`✗ Could not read the folder: ${error.message}`)
+    process.exit(1)
+  }
+}
+
+if (check) {
+  console.error('\n--check: credentials not printed. Run without --check to print them for the Worker.')
+} else {
+  console.error('\nStore these as secrets of the admin Worker (folioforge-admin-beta); never commit them:\n')
+  console.log(`GOOGLE_OAUTH_CLIENT_ID=${installed.client_id}`)
+  console.log(`GOOGLE_OAUTH_CLIENT_SECRET=${installed.client_secret}`)
+  console.log(`GOOGLE_OAUTH_REFRESH_TOKEN=${tokens.refresh_token}`)
+}

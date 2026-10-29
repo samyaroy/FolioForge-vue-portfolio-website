@@ -788,12 +788,17 @@ downloadable. It fails closed.
 
 ## 9. Snapshots
 
+Revised 2026-10-30: publishing no longer archives every build. A publish
+keeps the version it replaces only when asked, in Drive's own version history
+(§10.3). The snapshots below remain for Save Version, an explicit choice, and
+for application builds, and Phase 3 no longer has to come before Drive.
+
 Not every compile is kept:
 
 ``` text
 Compile       → kept in memory only
 Save Version  → permanent snapshot
-Publish       → permanent snapshot, reusing the latest one if its inputHash matches
+Publish       → nothing archived; with keepPrevious, the replaced version is kept in Drive
 ```
 
 `CV_ARCHIVE` is a private bucket (`folioforge-cv-archive`) with no public
@@ -1013,11 +1018,10 @@ name and updates in place.
 ### 10.3 Flow
 
 ``` text
-POST /api/cv/publish { preset, snapshotId }
+POST /api/cv/publish   multipart: preset, keepPrevious, document.pdf
   1. read the preset from V1 plus pending edits, never from the request;
      it lists at least one Drive target                else 400 no_drive_target
-  2. the snapshot exists, belongs to that preset,
-     and is not an application build
+  2. document.pdf starts with %PDF- and is at most 5 MB
   3. resolve every target before writing any:
      a. the root's subfolders
           q = '<root>' in parents and trashed = false
@@ -1026,19 +1030,28 @@ POST /api/cv/publish { preset, snapshotId }
      b. that folder's files
           q = '<folder id>' in parents and trashed = false and name = '<name>.pdf'
         none → create; one → update                    more: 409 ambiguous_file
-  4. for each target, with document.pdf read from R2:
+  4. for each target:
+       keep    with keepPrevious and a file to update, first mark its
+               current version keepForever (revisions.update)
        update  PATCH https://www.googleapis.com/upload/drive/v3/files/{id}?uploadType=media
        create  POST  https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart
                metadata { name, parents: [folder id], mimeType: application/pdf }
   5. GET files/{id}?fields=md5Checksum,modifiedTime,webViewLink
-     → md5 equals the snapshot's
+     → md5 equals that of the bytes sent
   6. write publications/<preset>/<ulid>.json, one result per target,
      and latest.json
 ```
 
--   The browser runs Save Version first (or reuses a matching snapshot),
-    then Publish with its id. Drive only ever receives archived bytes, so
-    every published PDF has a snapshot.
+-   Publishing archives nothing by default: the content is in Git and the
+    PDF is rebuilt from it. `keepPrevious` keeps, for good, the version a
+    publish replaces, in Drive's own version history (Manage versions), at
+    the same link. Without it Drive drops a replaced version after 30 days.
+    A file being created has no previous version.
+-   `npm run cv:publish` runs this flow from the owner's machine with the
+    same code (`worker/cv/drive.ts`): it finds every target, builds the
+    PDFs with pdflatex, and publishes, with `--keep-previous` and
+    `--dry-run`. Credentials come from `admin/.dev.vars`. It is how CVs are
+    published until the admin compiles in the browser.
 -   Names in `q` are quoted, with `'` and `\` escaped.
 -   Nothing is written until every target resolves, so a typo in
     `presets.yml` publishes nothing rather than half.
@@ -1097,7 +1110,7 @@ CSRF on mutations, apply without new code.
 | POST | `/api/cv/snapshots` | Multipart: `document.pdf`, `document.tex`, `build.json`, optional `generated.tex`, `reason`. Runs the §9 checks and returns the id. |
 | GET | `/api/cv/snapshots?preset=&cursor=` | Lists snapshot metadata |
 | GET | `/api/cv/snapshots/:id/:file` | Streams one file; `:file` comes from a fixed list |
-| POST | `/api/cv/publish` | `{ preset, snapshotId }`, per §10.3 |
+| POST | `/api/cv/publish` | Multipart: `preset`, `keepPrevious`, `document.pdf`, per §10.3 |
 | GET | `/api/cv/targets` | For each preset: its Drive targets, whether each file exists yet, and the latest publication |
 | GET | `/api/cv/drive/folders` | The CVs folder's subfolders, for the builder's folder picker |
 | GET, POST, PUT | `/api/cv/applications[/:id]` | Application builds |
@@ -1206,12 +1219,13 @@ admin/public/cv-engine/<engine>/<version>/  vendored engine, TeX files, MANIFEST
 admin/worker/cv/
   routes.ts                           /api/cv/*
   snapshots.ts                        archive bucket, checks
-  drive.ts                            token, find by name, update or create, verify
+  drive.ts                            token, find by name, keep, update or create, verify (done)
 admin/worker/http.ts                  engine policy chosen by path
 admin/scripts/cv-build.mjs            npm run cv:build: every preset to .tex, and with --pdf to PDF (done)
 admin/scripts/cvContent.mjs           the committed content, read as the admin reads V1 (done)
 admin/scripts/cvCompileDev.ts         vite dev only: /__cv/compile with local pdflatex (done)
-admin/scripts/cv-drive-auth.mjs       npm run cv:drive-auth: one-time Drive consent as the owner
+admin/scripts/cv-drive-auth.mjs       npm run cv:drive-auth: one-time Drive consent as the owner (done)
+admin/scripts/cv-publish.mjs          npm run cv:publish: build and publish from this machine (done)
 ```
 
 Navigation gets a **CV** group between Editorial and Workspace in
@@ -1329,6 +1343,9 @@ the error and still offers the `.tex`.
 
 ### Phase 3: versions
 
+Optional since 2026-10-30, and no longer needed before Phase 4:
+publishing archives nothing unless asked (§9).
+
 -   The `CV_ARCHIVE` bucket and binding; snapshot routes with their checks;
     the Versions page.
 -   Optionally, import the seven legacy PDFs and `.tex` files as snapshots
@@ -1339,10 +1356,12 @@ its files; a `.tex` that doesn't match its `build.json` is refused.
 
 ### Phase 4: Drive
 
--   The OAuth client and `cv:drive-auth`, the secrets, `drive` on
-    presets with its validation and the builder's folder picker, the token
-    client, the publish route, the Publishing page, status chips, and the
-    diff dialog.
+-   Done 2026-10-30: the OAuth client and `cv:drive-auth`, the secrets,
+    `drive` on presets with its validation, `worker/cv/drive.ts`, and
+    `npm run cv:publish` with `--keep-previous`.
+-   Left: the builder's folder picker, the publish route, the Publishing
+    page with a "Keep the version being replaced" checkbox, status chips,
+    and the diff dialog.
 
 Exit: publishing Consolidated updates the site's CV file and the IITM copy
 in place, a new preset's file is created in its folder, the md5 checks
@@ -1374,7 +1393,8 @@ CV tests live in `worker/__tests__/` and run with `npm run test:worker`.
 | `worker/__tests__/cvLibrary.test.mjs` | Runs the validator on the committed `library.yml` and `presets.yml`: ids unique, every ref resolves, every variant key appears in some `prefer`. CI fails on a broken preset before the admin ever renders it. |
 | `worker/__tests__/cvHash.test.mjs` | Key order does not change the hash; `source` is excluded |
 | `worker/__tests__/cvLog.test.mjs` (done) | Errors, line numbers and warnings parsed from captured pdfTeX logs |
-| `worker/__tests__/cv.test.mjs` | Snapshot route refuses non-PDFs, oversized parts and `.tex`/`build.json` mismatches; publish refuses unknown presets and application builds; Drive (mocked fetch): update when one file has the name, create when none does, refuse when two do, nothing written when any target fails to resolve, names quoted in queries, a retry after a partial publish creates no duplicate; an md5 mismatch records nothing |
+| `worker/__tests__/cvDrive.test.mjs` (done) | Update when one file has the name, create when none does; a missing or doubled folder and two files of one name refused while only reading; keep-previous marks the replaced version before the upload; names quoted in queries; a retry creates no duplicate; a checksum mismatch; a refused refresh token |
+| `worker/__tests__/cv.test.mjs` | Snapshot route refuses non-PDFs, oversized parts and `.tex`/`build.json` mismatches; publish refuses unknown presets and application builds; publish refuses a non-PDF or oversized document |
 | `worker/__tests__/security.test.mjs` | The page policy equals its previous value exactly; `'wasm-unsafe-eval'` appears only on `/cv-engine/` responses; `'unsafe-eval'` appears nowhere; a missing `/cv-engine/` path is 404, not `index.html`; HTML under `/cv-engine/` is refused |
 | `worker/__tests__/cvEngineManifest.test.mjs` | Every vendored engine file matches `MANIFEST.sha256` |
 

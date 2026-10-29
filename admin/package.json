@@ -16,7 +16,8 @@
     "lint": "eslint .",
     "preview": "vite preview --host 127.0.0.1",
     "cv:build": "node scripts/cv-build.mjs",
-    "cv:drive-auth": "node scripts/cv-drive-auth.mjs"
+    "cv:drive-auth": "node scripts/cv-drive-auth.mjs",
+    "cv:publish": "node scripts/cv-publish.mjs"
   },
   "dependencies": {
     "@codemirror/commands": "^6.11.1",

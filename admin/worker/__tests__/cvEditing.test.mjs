@@ -2,9 +2,11 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { loadCvContent } from '../../scripts/cvContent.mjs'
 import { collectionEntries, entryIds } from '../../src/cv/collections.ts'
-import { bulletsOf, candidates, move, presetRow, unnamedCount, updateItem } from '../../src/cv/editing.ts'
+import { bulletsOf, candidates, move, newPreset, presetRow, unnamedCount, updateItem } from '../../src/cv/editing.ts'
 import { describeRef } from '../../src/cv/resolve.ts'
 import { cvPresetSchema } from '../../src/cv/schema.ts'
+import { templates } from '../../src/cv/templates/index.ts'
+import { validateCv } from '../../src/cv/validate.ts'
 
 const content = await loadCvContent()
 const { library, portfolio } = content.context
@@ -60,4 +62,23 @@ test('collections are read through registry keys, selectors and all', () => {
   assert.deepEqual(collectionEntries(data, ['groups.*.entries']).length, 3)
   assert.deepEqual([...entryIds(collectionEntries(data, ['groups.*.entries']))], ['x', 'y'])
   assert.deepEqual(collectionEntries(data, ['missing.path']), [])
+})
+
+test('a copied CV publishes into the first folder of its source, under its own name', () => {
+  const consolidated = content.presets.find(preset => preset.id === 'consolidated')
+  const fields = { id: 'iitm-placement', name: 'IITM Placement CV', filename: 'SamyabrataRoy_Resume_IITM' }
+  const copy = newPreset(fields, consolidated, { template: 'resume-v1', header: [] })
+  assert.deepEqual(copy.drive, [{ folder: '4_Consolidated' }], 'not the IITM name, which Consolidated publishes')
+  assert.equal(consolidated.drive.length, 2)
+  assert.deepEqual(newPreset(fields, undefined, { template: 'resume-v1', header: [] }).drive, [])
+  assert.deepEqual(presetRow(consolidated).drive[1], { folder: '4_Consolidated', name: 'SamyabrataRoy - 22F2001443 -  IITM BS' })
+})
+
+test('two targets that would write one Drive file are refused', () => {
+  const consolidated = content.presets.find(preset => preset.id === 'consolidated')
+  const thief = { ...consolidated, id: 'thief', filename: 'Elsewhere', drive: [{ folder: '4_Consolidated', name: 'SamyabrataRoy_Resume_Consolidated' }] }
+  const issues = validateCv({ library, presets: [...content.presets, thief], templates })
+  assert.deepEqual(issues.map(issue => issue.path), ['presets.yml/presets/thief/drive/0'])
+  assert.match(issues[0].message, /already published by consolidated/)
+  assert.deepEqual(validateCv({ library, presets: content.presets, templates }), [], 'the committed presets publish distinct files')
 })
