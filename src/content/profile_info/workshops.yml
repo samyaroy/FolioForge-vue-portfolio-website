@@ -33,6 +33,7 @@ attended_workshops:
     date: "November 2026"
     duration: "3 Days"
     mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1hKT3Z5JOVdhw8OmqHRjIWUPlnOwxugEc/preview"
 
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
     instructor: "Dr. Indu Joshi"

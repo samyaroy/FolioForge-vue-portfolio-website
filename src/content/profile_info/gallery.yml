@@ -320,7 +320,7 @@ items:
     location: Kolkata
     tags: [ Meetup ]
   - id: saids2
-    title: 3 days of Brainstorming at a International workshop @ ISI Kol
+    title: Three Days of Brainstorming at SAIDS 2.0, ISI Kolkata
     type: ""
     event: SAIDS 2.0
     location: PJA Auditorium, ISI Kolkata
@@ -329,7 +329,9 @@ items:
     tags:
       - Workshop
     featured: ""
-    images: null
+    images:
+      - saids2
+      - saids2-01
     manifestDescription: ""
     externalUrl: ""
   # - id: gallery-02
