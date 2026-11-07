@@ -54,10 +54,14 @@ export const entryFields = {
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
   certifications: ['title', { key: 'issuer', object: ['institution', 'platform', 'location'] }, 'instructor', 'date', 'duration', 'tag', 'logo', 'cred_link'],
 
-  conferences: ['title', 'organizer', 'institution', 'location', 'date', 'link', 'cred_link'],
-  fdps: ['title', 'institution', 'date', 'duration', 'mode', 'cred_link'],
-  workshops: ['title', 'instructor', 'institution', 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
-  bootcamps: ['title', 'instructor', 'institution', 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link'],
+  // An event can have several hosts -- a host institute and an industry
+  // partner, say -- so `institution` (and a conference's `organizer`) is a list
+  // of rows, never one text box. Each collection offers the columns its card
+  // renders: a workshop shows a host's role, a conference only its name.
+  conferences: ['title', { key: 'organizer', list: ['name', 'department'] }, { key: 'institution', list: ['name'] }, 'location', 'date', 'link', 'cred_link'],
+  fdps: ['title', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link'],
+  workshops: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
+  bootcamps: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'location'] }, 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link'],
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 
   // One leadership entry can hold several roles, each at its own organisation,

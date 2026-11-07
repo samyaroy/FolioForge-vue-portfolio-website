@@ -24,6 +24,16 @@ attended_fdps:
     cred_link: "https://drive.google.com/file/d/1V9mDic5EwtYRJNOQNbhTxuAstktAuAyN/preview"
 
 attended_workshops:
+  - title: "2nd Indo-French Workshop on Statistics and Artificial Intelligence for Data Science (SAIDS 2.0)"
+    institution:
+      - name: "Indian Statistical Institute, Kolkata"
+        department: "Centre for Artificial Intelligence and Machine Learning (CAIML)"
+        location: "Kolkata, WB"
+      - name: "Centre Franco-Indien pour la Promotion de la Recherche Avancée (IFCPAR/CEFIPRA)"
+    date: "November 2026"
+    duration: "3 Days"
+    mode: "Offline"
+
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
     instructor: "Dr. Indu Joshi"
     institution:
@@ -100,14 +110,6 @@ attended_workshops:
     date: "February 2023"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
-  - title: 2nd Indo-French Workshop on Statistics and Artificial Intelligence for Data Science (SAIDS 2.0)
-    instructor: ""
-    institution: '["Centre for Artificial Intelligence and Machine Learning (CAIML), Indian Statistical Institute, Kolkata","Centre Franco-Indien pour la Promotion de la Recherche Avancée (CEFIPRA)"]'
-    date: November 2026
-    duration: 3 Days
-    mode: Offline
-    cred_link: ""
-    details_cred: ""
 
 attended_webinars_n_others:
   - title: "Learning machines"
