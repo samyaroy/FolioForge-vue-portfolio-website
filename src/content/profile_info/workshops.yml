@@ -79,7 +79,7 @@ attended_workshops:
     mode: "Offline"
     details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/preview"
 
-  - title: "Numerical Algorithms & Computations in Science & Technology with Matlab"
+  - title: "Numerical Algorithms & Computations in Science & Technology with Matlab (NACSTM 2024)"
     special: true
     institution:
       - name: "Indian Institute of Technology Ropar"
@@ -113,6 +113,7 @@ attended_workshops:
     institution:
       - name: "International Institute of Technology (IIIT) Hyderabad"
         location: "Hyderabad, TS"
+      - name: "National Programme on Technology Enhanced Learning (NPTEL)"
     date: "February 2023"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
