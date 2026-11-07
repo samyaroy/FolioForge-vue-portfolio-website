@@ -55,7 +55,44 @@ interface CredentialSlot {
   section?: string
   /** Dashboard group order for page/section clusters. */
   order: number
+  /**
+   * Whether the card renders a viewer for this item at all, where the path
+   * alone cannot say: a co-curricular entry holding a list of roles shows the
+   * credential on each role, not on the entry. Without it, every item at the
+   * path is a slot.
+   */
+  when?: (node: UnknownRecord) => boolean
+  /** Where this slot's organisation lives, in place of DETAIL_PATHS. */
+  detailPaths?: string[]
 }
+
+function hasItems(value: unknown): value is unknown[] {
+  return Array.isArray(value) && value.length > 0
+}
+
+/**
+ * A co-curricular role carries a document or a site, never both; the card
+ * shows the site as a link instead of a viewer only when there is no document.
+ */
+function opensDocument(node: UnknownRecord): boolean {
+  return Boolean(node.cred_link) || !node.ext_link
+}
+
+/**
+ * Leadership.vue heads an entry with its own role, and that role's viewer,
+ * only when some affiliation names no role of its own. Volunteering.vue draws
+ * an entry with a `roles` list as those roles; one without is a single role.
+ */
+function cocurricularEntryHasViewer(node: UnknownRecord): boolean {
+  if (hasItems(node.roles)) return false
+  if (hasItems(node.affiliation)) {
+    const unnamed = node.affiliation.some((role) => !isPlainObject(role) || !role.role)
+    return Boolean(node.role) && unnamed && opensDocument(node)
+  }
+  return opensDocument(node)
+}
+
+const COCURRICULAR_DETAIL = ['organization', 'host', 'institute']
 
 /**
  * Every list on the site whose card renders a DocumentViewer, and the keys that
@@ -94,7 +131,33 @@ const CREDENTIAL_SLOTS: readonly CredentialSlot[] = [
   { file: 'internships.yml', path: 'internships.*', keys: ['cred_link'], order: 30 },
   { file: 'certifications.yml', path: 'certifications.*', keys: ['cred_link'], order: 40 },
   { file: 'certifications.yml', path: 'more_certifications.*', keys: ['cred_link'], order: 41 },
-  { file: 'cocurricular.yml', path: 'co_curriculars.*.entries.*', keys: ['cred_link'], order: 50 },
+  // A leadership or volunteering entry is a list of roles, each with its own
+  // credential; only a single-role entry has one of its own. A leadership
+  // role's viewer sits inside its role heading, so a role with no name has none.
+  {
+    file: 'cocurricular.yml',
+    path: 'co_curriculars.*.entries.*',
+    keys: ['cred_link'],
+    order: 50,
+    when: cocurricularEntryHasViewer,
+    detailPaths: COCURRICULAR_DETAIL,
+  },
+  {
+    file: 'cocurricular.yml',
+    path: 'co_curriculars.*.entries.*.affiliation.*',
+    keys: ['cred_link'],
+    order: 50,
+    when: (node) => Boolean(node.role) && opensDocument(node),
+    detailPaths: COCURRICULAR_DETAIL,
+  },
+  {
+    file: 'cocurricular.yml',
+    path: 'co_curriculars.*.entries.*.roles.*',
+    keys: ['cred_link'],
+    order: 50,
+    when: opensDocument,
+    detailPaths: COCURRICULAR_DETAIL,
+  },
   // WorkshopCard falls back cred_link -> details_cred -> link. ConferenceCard
   // renders `link` as a plain anchor instead, so conferences list cred_link only.
   { file: 'workshops.yml', path: 'attended_conferences.*', keys: ['cred_link'], order: 60 },
@@ -253,8 +316,8 @@ const DETAIL_PATHS = [
  * already shows, so a path that only repeats it is skipped -- an education
  * entry named by its institution falls through to its type instead.
  */
-function displayDetail(node: UnknownRecord, name: string): string {
-  for (const path of DETAIL_PATHS) {
+function displayDetail(node: UnknownRecord, name: string, paths = DETAIL_PATHS): string {
+  for (const path of paths) {
     const text = textAt(node, path.split('.'))
     if (text && text !== name) return text
   }
@@ -295,10 +358,10 @@ function matchesSlotPath(path: string[], pattern: string): boolean {
   return parts.every((part, index) => part === '*' || part === path[index])
 }
 
-function slotFor(source: string, path: string[]): CredentialSlot | undefined {
+function slotFor(source: string, path: string[], node: UnknownRecord): CredentialSlot | undefined {
   const fileName = source.split('/').pop() ?? source
   return CREDENTIAL_SLOTS.find(
-    (slot) => slot.file === fileName && matchesSlotPath(path, slot.path),
+    (slot) => slot.file === fileName && matchesSlotPath(path, slot.path) && (slot.when?.(node) ?? true),
   )
 }
 
@@ -360,7 +423,7 @@ function collectFromNode(
 
   if (!isPlainObject(node)) return
 
-  const slot = slotFor(source, path)
+  const slot = slotFor(source, path, node)
   if (slot) {
     // The card reads its keys in order and shows the first one that resolves,
     // so stop at the first key that yields a link. DocumentViewer renders
@@ -381,7 +444,7 @@ function collectFromNode(
       page,
       section: slot.section ?? sectionFromContext(path, ancestry),
       item,
-      detail: displayDetail(node, item),
+      detail: displayDetail(node, item, slot.detailPaths),
       source,
       configPath: path.join('.'),
       links,
