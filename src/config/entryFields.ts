@@ -60,7 +60,10 @@ export const entryFields = {
   // renders: a workshop shows a host's role, a conference only its name.
   conferences: ['title', { key: 'organizer', list: ['name', 'department'] }, { key: 'institution', list: ['name'] }, 'location', 'date', 'link', 'cred_link'],
   fdps: ['title', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link'],
-  workshops: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
+  // `special` marks a workshop to set apart on the Workshops tab (a navy
+  // border instead of steel). The Other Learning Engagements popup keeps its
+  // own colour either way.
+  workshops: ['title', { key: 'special', type: 'boolean' }, 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
   bootcamps: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'location'] }, 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link'],
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 

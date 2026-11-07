@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l-4 border-[#1d67fd] pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white text-sm">
+  <div :class="borderClass" class="border-l-4 pl-5 py-3 hover:shadow-md transition-shadow duration-200 rounded-lg bg-white text-sm">
     <!-- HEADER. The 85/15 split leaves the meta column ~40px on a phone, so the
          two stack there and only sit side by side from `sm` up. -->
     <div class="flex flex-col sm:flex-row pr-4">
@@ -114,8 +114,19 @@ const props = defineProps({
   compactMetaText: {
     type: Boolean,
     default: false
+  },
+  // The left border's colour, in place of the special/steel choice below.
+  // Written out in full where it is passed, so Tailwind finds the class.
+  accentClass: {
+    type: String,
+    default: ''
   }
 })
+
+// A workshop marked `special: true` gets navy; every other one gets steel.
+const borderClass = computed(() => (
+  props.accentClass || (props.workshop?.special === true ? 'border-blue-900' : 'border-[#4e7397]')
+))
 
 const metaColumnClass = [
   'w-full sm:w-[15%] mt-2 sm:mt-0 shrink-0 text-gray-500 flex flex-col items-start',
