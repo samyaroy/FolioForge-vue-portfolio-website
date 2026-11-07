@@ -100,6 +100,14 @@ attended_workshops:
     date: "February 2023"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
+  - title: 2nd Indo-French Workshop on Statistics and Artificial Intelligence for Data Science (SAIDS 2.0)
+    instructor: ""
+    institution: '["Centre for Artificial Intelligence and Machine Learning (CAIML), Indian Statistical Institute, Kolkata","Centre Franco-Indien pour la Promotion de la Recherche Avancée (CEFIPRA)"]'
+    date: November 2026
+    duration: 3 Days
+    mode: Offline
+    cred_link: ""
+    details_cred: ""
 
 attended_webinars_n_others:
   - title: "Learning machines"

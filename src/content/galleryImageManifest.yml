@@ -94,6 +94,10 @@ categories:
 
   - category: Workshop, Conference and Bootcamp
     images:
+      - id: saids2
+        date: Nov 08, 2026
+        description: 3 days of Brainstorming at a International workshop @ ISI Kol
+
       - id: workshop-07
         date: 2026-06-27
         description: Took the first conventional step towards Theoretical Computer Science
