@@ -19,6 +19,13 @@ profile:
 media:
   logosBaseUrl: https://media.samyabrata.codeium.xyz/logo
   iconsBaseUrl: https://media.samyabrata.codeium.xyz/icons
+  # The GitHub koi below the Contact page's tiles: a pixel-art fish the git-koi
+  # Action redraws every night from the account's public activity, uploaded
+  # to this media host by .github/workflows/koi.yml. `koiGif` swims;
+  # `koiStill` is the still frame shown to visitors who ask for reduced
+  # motion. Clear `koiGif` to drop the section.
+  koiGif: https://media.samyabrata.codeium.xyz/koi/koi.gif
+  koiStill: https://media.samyabrata.codeium.xyz/koi/koi.png
 
 # Live badge count and issuers on the Certifications tab's Credly banner, served
 # by the Worker in services/credly-badges (it re-reads the public Credly profile

@@ -71,6 +71,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showGoogleScholar: true,
     showResearchGate: true,
     showOrcid: true,
+    // Not a tile: the GitHub koi drawn below them (media.koiGif in profile.yml).
+    showGitHubKoi: true,
   },
 
   showBlog: true,

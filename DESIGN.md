@@ -59,7 +59,9 @@ Frequently used stock Tailwind colors (treat these as part of the palette):
 - **Faint/meta text:** `text-slate-400`, `text-gray-500`.
 - **Hairline borders:** header uses `#e7edf3`; elsewhere `border-slate-200` / `border-slate-300`.
 - **Primary blue, raw:** `#1980e6` (and `#1565c0` for a darker hover step).
-- **Footer surface:** `bg-blue-800` with mostly black text on it.
+- **Footer surface:** white, with black text. The footer carries `bg-blue-800`, but Vuetify's
+  `.v-footer { background: surface }` loads later in the bundle at the same specificity and
+  wins, so the blue never shows.
 - **Tag chips:** `bg-blue-100/50` with `text-slate-600`.
 - **Selected option highlight:** `bg-sky-50` + `border-primary` + `text-primary`.
 - **Overlay scrim:** `bg-slate-950/80` (image zoom), `bg-black bg-opacity-50` (mobile drawer).
@@ -380,7 +382,7 @@ on click (`@click="drawer = false"`).
   gap-9`) and a `md:hidden` hamburger. Nav items are conditional on feature flags +
   `router.hasRoute(...)`.
 - **Footer** ([Footer/index.vue](src/components/Footer/index.vue)): a `3px` rounded divider
-  bar, then `v-footer` with `bg-blue-800` on a 20-col grid (`9/7/4`): brand + socials +
+  bar, then `v-footer` (white; its `bg-blue-800` is overridden, see Color Tokens) on a 20-col grid (`9/7/4`): brand + socials +
   institution logos, "Other Links" + "Social Links", and "Contact Info". A bottom strip
   shows copyright, source-code attribution, and `Last updated: {{ last_updated_on }}`.
   Footer links are also feature-flagged.
