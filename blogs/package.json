@@ -16,6 +16,7 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "echarts": "^6.1.0",
+    "falling-snow": "^1.0.0",
     "motion": "^12.43.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

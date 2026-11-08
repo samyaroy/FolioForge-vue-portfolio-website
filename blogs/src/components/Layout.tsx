@@ -1,10 +1,15 @@
+import { isWinter } from 'falling-snow'
 import { Outlet, ScrollRestoration } from 'react-router-dom'
+import { isFeatureEnabled } from '../config/featureFlags'
 import { Footer } from './Footer'
 import { Header } from './Header'
+import { Snowfall } from './Snowfall'
 
 export function Layout() {
   return (
     <div className="flex min-h-screen flex-col overflow-x-clip bg-page">
+      {isFeatureEnabled('showSnowfall') && isWinter() && <Snowfall />}
+
       <Header />
 
       {/* Container matches the root site's page shell

@@ -32,6 +32,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   // /sitemap: a readable index of every page, post, trip and review, linked
   // from the footer beside the privacy policy.
   showSitemap: true,
+  // Decorative falling snow over every page, behind the header and any modal.
+  // Even when on, it only falls December-February, by the reader's local date
+  // (the isWinter() check in components/Layout.tsx).
+  showSnowfall: true,
 
   // Post page: the scroll-position bar pinned to the top of the viewport, and
   // the estimated reading time in the byline.

@@ -137,6 +137,14 @@ a:hover .arrow-jiggle-back,
   }
 }
 
+/* The falling-snow package creates its canvas outside React, so it can't take a
+   print:hidden utility. A fixed element repeats on every printed sheet. */
+@media print {
+  canvas[data-falling-snow] {
+    display: none;
+  }
+}
+
 /* Caret blink for the Typewriter component. */
 @keyframes caret-blink {
   50% {
