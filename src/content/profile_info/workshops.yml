@@ -37,7 +37,10 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1hKT3Z5JOVdhw8OmqHRjIWUPlnOwxugEc/preview"
 
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
-    instructor: "Dr. Indu Joshi"
+    instructor:
+      name: "Prof. Indu Joshi"
+      department: "Dept. of CSE"
+      institution: "IIT Mandi"
     institution:
       - name: "National Programme on Technology Enhanced Learning (NPTEL)"
     date: "June-July 2026"

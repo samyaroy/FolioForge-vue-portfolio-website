@@ -52,6 +52,8 @@ export function TripCard({ trip, onActiveChange }: TripCardProps) {
   const [coverFailed, setCoverFailed] = useState(false)
   const route = routePreview(trip)
   const photos = trip.gallery?.length ?? 0
+  const summary = trip.summary?.trim()
+  const narrativeLead = trip.narrative?.[0]?.trim()
   const activate = () => onActiveChange?.(trip)
   const deactivate = () => onActiveChange?.(null)
 
@@ -143,11 +145,13 @@ export function TripCard({ trip, onActiveChange }: TripCardProps) {
           </ul>
         )}
 
-        {trip.summary && (
+        {summary ? (
           <p className="mt-3 overflow-hidden text-justify text-sm leading-[1.7] text-muted [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2]">
-            {trip.summary}
+            {summary}
           </p>
-        )}
+        ) : narrativeLead ? (
+          <p className="mt-3 truncate text-sm leading-[1.7] text-muted">{narrativeLead}</p>
+        ) : null}
 
         <div className="mt-auto flex items-end gap-3 pt-3">
           {trip.tags && trip.tags.length > 0 && (

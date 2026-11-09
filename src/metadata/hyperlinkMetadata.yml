@@ -306,6 +306,10 @@ Person:
     Link: https://www.linkedin.com/in/muralidharan-kunnummal/
 
   - Name: Dr. Indu Joshi
+    Aliases:
+      - Indu Joshi
+      - Prof. Indu Joshi
+      - Prof. Indu Joshi, IIT Mandi
     Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
 
   - Name: Prof. Balaraman Ravindran
@@ -344,7 +348,7 @@ Person:
   - Name: Prof. C. V. Jawahar
     Aliases:
       - C. V. Jawahar
-    Link: https://www.iith.ac.in/~jawahar/
+    Link: https://www.iiit.ac.in/faculty/jawahar-c-v/
 
   - Name: Prof. Chiranjib Bhattacharyya
     Aliases:

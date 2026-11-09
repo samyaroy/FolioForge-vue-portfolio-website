@@ -10,7 +10,8 @@
 #   location      — where the trip went, shown as a chip next to the date
 #                   (e.g. "Hyderabad, Telangana")
 #   places        — stops on the trip, in travel order (see below)
-#   summary       — short description shown on the trip card
+#   summary       — short description shown on the trip card; leave blank to
+#                   show the first narrative paragraph, cut to one line
 #   coverImage    — full URL (or CDN key) for a cover photo; covers in
 #                   blog-travel/ are WebP (see scripts/fit-trip-covers.mjs,
 #                   or upload one from the admin's Media Library)
@@ -96,11 +97,13 @@ trips:
     places:
       - Chennai
       - { name: Mamallapuram, mode: bus, note: Shore temples }
-    summary: ABC
+    summary: ""
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/mahabalipuram26.webp
     narrative:
-      - ABC
-      - ABC
+      - "In June '26 I went to IMSc for some lectures. Lectures, workshops, conferences, they are all meant for networking, but I am very bad at randomly talking to people, so making two new friends was definitely not on the syllabus. And yet..."
+      - "Two PhD scholars, one from IIT Madras and one from IIT Hyderabad, somehow survived my small talk between lectures. Soon we were friends, and soon after that we had a plan for the weekend: Mahabalipuram."
+      - "But the scorching summer of Chennai had other plans, and my body took it personally. By the weekend I had sordi and a fever to go with it. Any sensible person would have stayed in bed. I woke up in the morning and got on the bus anyway."
+      - "57 km feels a lot longer with sordi and a fever. Then came the shore temples, three more monuments and one very eventful day, and then the food. It was so good that I felt fit again by the end of it. Turns out no doctor in Chennai beats a great meal with new friends and hydration (ofc). Although I did have to visit one the next day. I would do it again, fever included."
     stats:
       - { label: Distance (One Way), value: '57 KM' }
       - { label: Monuments, value: '4' }
