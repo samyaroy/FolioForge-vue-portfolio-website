@@ -4,7 +4,7 @@
   <section v-if="!failed" class="flex flex-col gap-3" aria-labelledby="github-koi-heading">
     <div class="h-px bg-slate-200" aria-hidden="true"></div>
 
-    <div class="flex flex-wrap items-center justify-center gap-x-32 gap-y-4">
+    <div class="flex flex-wrap items-start justify-center gap-x-32 gap-y-4">
       <!-- 256px is half the GIF's 512px, so every art pixel lands on exactly
            two CSS pixels and `pixelated` keeps the edges crisp. -->
       <picture class="block size-64 max-w-full shrink-0">
@@ -21,7 +21,7 @@
         />
       </picture>
 
-      <div class="flex min-w-0 max-w-[640px] flex-[0_1_640px] flex-col items-start gap-4 text-left">
+      <div class="flex min-w-0 max-w-[640px] flex-[0_1_640px] flex-col items-start gap-4 pt-4 sm:pt-6 text-left">
         <div class="flex flex-col items-start gap-2">
           <!-- The asterisk points to the source note at the bottom of the section. -->
           <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#1565c0]">
