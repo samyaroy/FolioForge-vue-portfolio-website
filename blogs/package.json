@@ -42,5 +42,11 @@
     "vite": "^7.3.8",
     "wrangler": "^4.158.0",
     "yaml": "^2.9.0"
+  },
+  "overrides": {
+    "js-yaml": "^4.3.2",
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.1"
+    }
   }
 }
