@@ -123,7 +123,7 @@ function bareUrl(value: unknown): string {
 
 /** The names the site puts on social links, for keys that are not the label. */
 const socialNames: Record<string, string> = {
-  github: 'GitHub', github2: 'GitHub (second)', kaggle: 'Kaggle', linkedin: 'LinkedIn', twitter: 'Twitter',
+  github: 'GitHub', github2: 'GitHub (second)', gitlab: 'GitLab', kaggle: 'Kaggle', linkedin: 'LinkedIn', twitter: 'Twitter',
   google_scholar: 'Google Scholar', researchgate: 'ResearchGate', orcid_id: 'ORCID iD', credly: 'Credly', blog: 'Blog',
 }
 

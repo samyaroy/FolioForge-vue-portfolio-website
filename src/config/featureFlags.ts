@@ -67,6 +67,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showLinkedIn: true,
     showGitHub: true,
     showStudentGitHub: true,
+    showGitLab: true,
     showKaggle: true,
     showGoogleScholar: true,
     showResearchGate: true,

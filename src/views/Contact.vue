@@ -100,6 +100,19 @@
             </div>
 
             <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2"
+              v-if="showGitLab">
+              <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                  <path d="M230.15,117.1,210.25,41a11.94,11.94,0,0,0-22.79-1.11L169.78,88H86.22L68.54,39.87A11.94,11.94,0,0,0,45.75,41L25.85,117.1a57.19,57.19,0,0,0,22,61l73.27,51.76a11.91,11.91,0,0,0,13.74,0l73.27-51.76A57.19,57.19,0,0,0,230.15,117.1ZM58,57.5,73.13,98.76A8,8,0,0,0,80.64,104h94.72a8,8,0,0,0,7.51-5.24L198,57.5l13.07,50L128,166.21,44.9,107.5ZM40.68,124.11,114.13,176,93.41,190.65,57.09,165A41.06,41.06,0,0,1,40.68,124.11Zm87.32,91-20.73-14.65L128,185.8l20.73,14.64ZM198.91,165l-36.32,25.66L141.87,176l73.45-51.9A41.06,41.06,0,0,1,198.91,165Z"></path>
+                </svg>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#0e141b] text-base font-medium leading-normal line-clamp-1">GitLab</p>
+                <a :href="gitlab" target="_blank" class="text-[#4e7397] text-sm font-normal leading-normal line-clamp-2 hover:text-[#1980e6] transition-colors duration-200">GitLab Profile <span v-if="gitlabUsername" class="text-[#646cff]">({{ gitlabUsername }})</span></a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2"
               v-if="showKaggle">
               <div class="text-[#0e141b] flex items-center justify-center rounded-lg bg-[#e7edf3] shrink-0 size-12">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 556 556">
@@ -190,6 +203,8 @@ const github = socials.github
 const github2 = socials.github2
 const githubUsername = github ? github.split('/').filter(Boolean).pop() : null
 const github2Username = github2 ? github2.split('/').filter(Boolean).pop() : null
+const gitlab = socials.gitlab
+const gitlabUsername = gitlab ? gitlab.split('/').filter(Boolean).pop() : null
 const linkedIn = socials.linkedin
 const orcid_id = socials.orcid_id
 const researchgate = socials.researchgate
@@ -207,6 +222,7 @@ const showStudentEmail = isFeatureEnabled('showContact.showStudentEmail') && fil
 const showLinkedIn = isFeatureEnabled('showContact.showLinkedIn') && filled(linkedIn)
 const showGitHub = isFeatureEnabled('showContact.showGitHub') && filled(github)
 const showStudentGitHub = isFeatureEnabled('showContact.showStudentGitHub') && filled(github2)
+const showGitLab = isFeatureEnabled('showContact.showGitLab') && filled(gitlab)
 const showKaggle = isFeatureEnabled('showContact.showKaggle') && filled(kaggle)
 const showGoogleScholar = isFeatureEnabled('showContact.showGoogleScholar') && filled(google_scholar)
 const showResearchGate = isFeatureEnabled('showContact.showResearchGate') && filled(researchgate)

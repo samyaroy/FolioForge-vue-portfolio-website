@@ -84,6 +84,7 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
     { path: 'showContact.showLinkedIn', label: 'LinkedIn' },
     { path: 'showContact.showGitHub', label: 'GitHub' },
     { path: 'showContact.showStudentGitHub', label: 'Student GitHub' },
+    { path: 'showContact.showGitLab', label: 'GitLab' },
     { path: 'showContact.showKaggle', label: 'Kaggle' },
     { path: 'showContact.showGoogleScholar', label: 'Google Scholar' },
     { path: 'showContact.showResearchGate', label: 'ResearchGate' },
