@@ -202,7 +202,7 @@ test('audience must be an Access AUD tag, not an account ID or a label', () => {
 test('the session response hands out no long-lived secret', async () => {
   const body = await (await worker.fetch(request('/api/session', await accessToken()), env)).text()
   assert.equal(body.includes(env.CSRF_SECRET), false)
-  assert.equal(body.includes('cloudflareaccess.com'), false)
+  assert.doesNotMatch(body, /cloudflareaccess\.com/)
 })
 
 test('a denial is logged without the token that was presented', async () => {
