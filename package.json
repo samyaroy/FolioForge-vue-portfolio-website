@@ -13,6 +13,7 @@
     "prebuild": "npm run sync:gallery-manifest",
     "build": "vite build",
     "build:beta": "VITE_SITE_ENV=beta npm run build -- --outDir dist-beta",
+    "deploy:beta": "node scripts/require-deploy-branch.mjs V1 && VITE_SITE_ENV=beta npm run build && npx wrangler deploy",
     "preview": "vite preview",
     "analyze": "ANALYZE=1 vite build",
     "boneyard:build": "node scripts/build-boneyard.mjs",

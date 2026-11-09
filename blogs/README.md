@@ -120,7 +120,7 @@ straight line.
 
 ```bash
 npm run build      # → dist/
-npm run deploy     # build + wrangler deploy (Workers Static Assets)
+npm run deploy     # V1 only: build + wrangler deploy (Workers Static Assets)
 ```
 
 The Worker is named `folioforge-blog` (see `wrangler.jsonc`). After the first

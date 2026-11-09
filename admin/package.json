@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
-    "deploy": "node scripts/require-deploy-branch.mjs && npm run build && wrangler deploy",
+    "deploy": "node ../scripts/require-deploy-branch.mjs V1 && npm run build && wrangler deploy",
     "typecheck": "tsc -b && tsc -p tsconfig.worker.json",
     "test:worker": "node --test worker/__tests__/*.test.mjs",
     "worker:dev": "wrangler dev --ip 127.0.0.1 --port 8788",

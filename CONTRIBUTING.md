@@ -87,6 +87,6 @@ Before submitting, confirm:
 
 ## Deployment
 
-The app builds to `dist/`. The live sites are served from Cloudflare, and the repository root has no deploy script. See [Deployment in the README](README.md#deployment) for the manual steps.
+The app builds to `dist/`. The live sites are served from Cloudflare, each from a single branch. See [Deployment in the README](README.md#deployment) for which branch and the manual steps.
 
 Deployment should usually be handled by maintainers.

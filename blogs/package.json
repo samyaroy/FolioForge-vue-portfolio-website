@@ -11,7 +11,7 @@
     "sync-rail": "node scripts/sync-rail.mjs",
     "fit-covers": "node scripts/fit-trip-covers.mjs",
     "hooks:install": "git config core.hooksPath blogs/scripts/hooks",
-    "deploy": "npm run build && rm -f dist/_redirects && wrangler deploy"
+    "deploy": "node ../scripts/require-deploy-branch.mjs V1 && npm run build && rm -f dist/_redirects && wrangler deploy"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
