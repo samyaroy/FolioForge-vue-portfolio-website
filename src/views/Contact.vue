@@ -4,7 +4,7 @@
       <div class="px-4 sm:px-6 lg:px-8 flex flex-1 justify-center py-8">
         <div class="layout-content-container flex flex-col w-full max-w-[1280px] flex-1">
           <!-- Page Header -->
-          <div class="text-center mb-12">
+          <div class="text-center mb-10">
             <h1 class="text-3xl sm:text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
               :class="{ 'mb-4': showPageDescription }">
               Get in Touch
@@ -15,7 +15,7 @@
           </div>
 
           <!-- Contact Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-5">
             <!-- First Row: Phone, Email, Student Email -->
             <div class="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2"
               v-if="showPhone">
@@ -150,6 +150,8 @@
               </div>
             </div>
           </div>
+
+          <GitHubKoi v-if="showGitHubKoi" class="mt-6" :gif="koiGif" :still="koiStill" />
         </div>
       </div>
     </div>
@@ -162,6 +164,7 @@ import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import GitHubKoi from '@/components/GitHubKoi.vue'
 import { iconUrl } from '@/config/mediaAssets'
 
 const orcidIcon = iconUrl('Orchid')
@@ -208,6 +211,12 @@ const showKaggle = isFeatureEnabled('showContact.showKaggle') && filled(kaggle)
 const showGoogleScholar = isFeatureEnabled('showContact.showGoogleScholar') && filled(google_scholar)
 const showResearchGate = isFeatureEnabled('showContact.showResearchGate') && filled(researchgate)
 const showOrcid = isFeatureEnabled('showContact.showOrcid') && filled(orcid_id)
+
+// The koi below the tiles. .github/workflows/koi.yml redraws its images nightly
+// onto the media host; the URLs live with the other media settings in profile.yml.
+const koiGif = config.media?.koiGif
+const koiStill = filled(config.media?.koiStill) ? config.media.koiStill : undefined
+const showGitHubKoi = isFeatureEnabled('showContact.showGitHubKoi') && filled(koiGif)
 </script>
 
 <style scoped>

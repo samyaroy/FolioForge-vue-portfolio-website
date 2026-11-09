@@ -417,10 +417,11 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
   if (collection === 'recommended/items') {
     return [
       ...fact(UserRound, raw.author),
-      ...fact(BookOpen, raw.source),
-      ...fact(CalendarDays, raw.year),
+      ...fact(BookOpen, raw.publisher || raw.source),
+      ...fact(Tag, raw.category),
+      ...fact(CalendarDays, raw.year || raw.published),
       ...fact(Globe, host(raw.url)),
-      ...fact(Quote, raw.note),
+      ...fact(Quote, raw.subtitle || raw.note),
     ]
   }
   if (collection === 'readings/items') {

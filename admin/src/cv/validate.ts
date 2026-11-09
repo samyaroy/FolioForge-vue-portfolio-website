@@ -74,6 +74,9 @@ export function validateCv({ library, presets, templates, portfolio }: CvContent
   const bullets = new Map(library.bullets.map(bullet => [bullet.id, bullet]))
   const presetIds = new Set<string>()
   const filenames = new Set<string>()
+  // Drive file → the preset that publishes it. Two writers of one file would
+  // overwrite each other on every publish.
+  const driveFiles = new Map<string, string>()
 
   for (const preset of presets) {
     const path = `presets.yml/presets/${preset.id}`
@@ -81,6 +84,13 @@ export function validateCv({ library, presets, templates, portfolio }: CvContent
     presetIds.add(preset.id)
     if (filenames.has(preset.filename)) report(`${path}/filename`, `Another preset already downloads as "${preset.filename}".`)
     filenames.add(preset.filename)
+
+    preset.drive.forEach((target, index) => {
+      const file = `${target.folder}/${target.name ?? preset.filename}.pdf`
+      const owner = driveFiles.get(file)
+      if (owner) report(`${path}/drive/${index}`, owner === preset.id ? `${file} is listed twice.` : `${file} is already published by ${owner}.`)
+      else driveFiles.set(file, preset.id)
+    })
 
     const template = Object.hasOwn(templates, preset.template) ? templates[preset.template] : undefined
     if (!template) report(`${path}/template`, `No template "${preset.template}". Templates: ${Object.keys(templates).join(', ')}.`)

@@ -27,15 +27,11 @@ function Item({ item, project }: { item: ResolvedItem; project: boolean }) {
 /**
  * What the preset will print, section by section, with every variant chosen.
  * It is a content check, not a preview: the layout is the template's, and the
- * PDF arrives with browser compilation.
+ * PDF tab beside it shows the compiled CV.
  */
 export function BuildOutline({ input, hash }: { input: BuildInput; hash: string }) {
   return (
-    <section className="cv-panel cv-outline" aria-label="What this CV prints">
-      <div className="cv-panel-heading">
-        <div><span>Content check</span><h2>What this CV prints</h2></div>
-        <span className="cv-hash" title={hash}>{hash.slice(7, 19)}</span>
-      </div>
+    <div className="cv-outline" aria-label="What this CV prints">
       <div className="cv-outline-body">
         <header>
           <h3>{input.header.name}</h3>
@@ -53,7 +49,7 @@ export function BuildOutline({ input, hash }: { input: BuildInput; hash: string 
           </section>
         ))}
       </div>
-      <p className="cv-panel-foot"><FileText aria-hidden="true" />The PDF preview comes with browser compilation. Until then, <code>npm run cv:build -- --pdf</code> builds it.</p>
-    </section>
+      <p className="cv-panel-foot"><FileText aria-hidden="true" />Build input <span className="cv-hash" title={hash}>{hash.slice(7, 19)}</span> · the words and order, not the layout</p>
+    </div>
   )
 }

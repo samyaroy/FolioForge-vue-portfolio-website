@@ -16,13 +16,26 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showHomeLatest: true,
   // Blog home: tag filter above the post list that narrows that list only.
   showPostTagFilter: true,
+  // "All posts" rail: a "Published elsewhere" list under the posts, linking
+  // out to the portfolio's magazine and newsletter articles.
+  showPublishedElsewhere: false,
   // "Worth Your Time" nav link to /recommended. Separate from showRecommended
   // so the page and the blog home teaser can stay on while the header link is
   // off -- the teaser's "All N recommendations" link is then the way in.
   showRecommendedNavLink: false,
+  // /recommended: the one-line description under each category's heading
+  // (each category's `blurb` in content/recommended/data.yml).
+  showRecommendedCategoryBlurbs: false,
   // "Did you know?" nav link to the main site's /facts route.
   showFactsLink: false,
   showPortfolioLink: true,
+  // /sitemap: a readable index of every page, post, trip and review, linked
+  // from the footer beside the privacy policy.
+  showSitemap: true,
+  // Decorative falling snow over every page, behind the header and any modal.
+  // Even when on, it only falls December-February, by the reader's local date
+  // (the isWinter() check in components/Layout.tsx).
+  showSnowfall: true,
 
   // Post page: the scroll-position bar pinned to the top of the viewport, and
   // the estimated reading time in the byline.
@@ -42,6 +55,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     travel: true,
     hobbies: false,
     gallery: false,
+    sitemap: true,
   },
 }) satisfies FeatureFlagNode
 

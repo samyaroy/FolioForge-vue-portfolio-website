@@ -1,29 +1,134 @@
-# Blog posts by OTHER PEOPLE, recommended here. Loaded through data.ts, which
-# keeps this file's order: the first three entries are the ones shown on the
-# blog home page, the whole list appears on /recommended. Reorder here to
-# change what gets featured.
+# Writing by OTHER PEOPLE, recommended here. Loaded through data.ts, which
+# keeps this file's order: the first eight entries ride the carousel on the
+# blog home page, and /recommended shows every entry, shelved by category in
+# the order the categories are listed below. Reorder here to change both.
+# Every card links straight to the original; nothing of the piece itself is
+# reproduced on this site.
 #
-# Fields:
-#   id:     unique slug, used as the React key
-#   title:  the post's own title, as its author wrote it
-#   author: who wrote it — always shown, so nobody mistakes it for yours
-#   source: the domain it lives on, shown as the card kicker
-#   url:    the full external URL
-#   year:   optional, the year it was published
-#   note:   optional, one or two sentences in your own voice on why it is
-#           here. Shown after a ✳ on the full page; hidden on the home
-#           teaser. This is the part that makes it a recommendation rather
-#           than a bookmark, so it is worth writing.
+# Category fields:
+#   id:     unique slug; an entry's `category` names one of these
+#   label:  the shelf heading and filter chip
+#   blurb:  optional, one line under the shelf heading; shown only while
+#           the showRecommendedCategoryBlurbs feature flag is on
+#   icon:   optional, a Material Design Icons class, e.g. mdi-brain
 #
-# NOTE: the six entries below are placeholders — real, well-known posts put
-# here so the page renders with something in it. Check every `url` and
-# rewrite every `note` in your own words before publishing.
+# Entry fields:
+#   id:        unique slug, used as the React key
+#   title:     the piece's own title, as its author or publisher wrote it
+#   author:    who wrote it — always shown, so nobody mistakes it for yours
+#   source:    the domain it lives on
+#   publisher: optional, the publication's name ("Aeon"); shown in place of
+#              `source` on the card
+#   category:  the id of one of the categories above; entries without one
+#              land on a final "More" shelf
+#   url:       the full external URL
+#   year:      optional, the year it was published; read from `published`
+#              when that is set
+#   published: optional, the original's publication date, as "YYYY-MM-DD"
+#   subtitle:  optional, a one-line hook shown on the card
+#   note:      optional, one or two sentences in your own voice on why it is
+#              here. Shown after a ✳ on cards without a subtitle.
+#   readingMinutes: optional, time to read the original at ~200 words/min
+#   level:     optional, how demanding it is ("Intermediate"); full page only
+#
+# NOTE: the six entries from "unreasonable-effectiveness-rnn" down are
+# placeholders — real, well-known posts put here so the page renders with
+# something in it. Check every `url` and rewrite every `note` in your own
+# words before publishing. The five above them were checked against their
+# publishers on 2026-10-24.
+
+categories:
+  - id: society
+    label: Society & Culture
+    blurb: How people live together — belonging, exclusion, and the stories societies tell about who counts.
+    icon: mdi-account-group-outline
+
+  - id: mind
+    label: Mind & Brain
+    blurb: How a brain builds a world out of guesses, and a map of the people in it.
+    icon: mdi-brain
+
+  - id: complexity
+    label: Mathematics & Complexity
+    blurb: What it means to understand something — proofs, intuition, and wholes that outrun their parts.
+    icon: mdi-graph-outline
+
+  - id: machine-learning
+    label: Machine Learning
+    blurb: The ideas behind modern models, explained by the people who worked them out.
+    icon: mdi-robot-outline
+
+  - id: craft
+    label: Work & Craft
+    blurb: On choosing problems, and on doing the work well.
+    icon: mdi-pencil-ruler
 
 items:
+  - id: the-future-of-loneliness
+    title: The future of loneliness
+    author: Olivia Laing
+    source: theguardian.com
+    publisher: The Guardian
+    category: society
+    published: "2015-04-01"
+    url: https://www.theguardian.com/society/2015/apr/01/future-of-loneliness-internet-isolation
+    readingMinutes: 19
+    level: Accessible–Intermediate
+    subtitle: We have never been more connected. Why, then, does loneliness remain so difficult to escape?
+
+  - id: the-mathematics-of-mind-time
+    title: The mathematics of mind-time
+    author: Karl Friston
+    source: aeon.co
+    publisher: Aeon
+    category: mind
+    published: "2017-05-18"
+    url: https://aeon.co/essays/consciousness-is-not-a-thing-but-a-process-of-inference
+    readingMinutes: 19
+    level: Advanced
+    subtitle: What if consciousness is not something we possess, but a continuous process of predicting what comes next?
+
+  - id: reality-more-than-sum-of-parts
+    title: A Theory of Reality as More Than the Sum of Its Parts
+    author: Natalie Wolchover
+    source: quantamagazine.org
+    publisher: Quanta Magazine
+    category: complexity
+    published: "2017-06-01"
+    url: https://www.quantamagazine.org/a-theory-of-reality-as-more-than-the-sum-of-its-parts-20170601/
+    readingMinutes: 15
+    level: Intermediate–Advanced
+    subtitle: If we understand every individual component of a system, have we necessarily understood the system itself?
+
+  - id: monstrification
+    title: Monstrification
+    author: Surekha Davies
+    source: aeon.co
+    publisher: Aeon
+    category: society
+    published: "2025-10-24"
+    url: https://aeon.co/essays/those-declared-monsters-are-ejected-from-the-human-family
+    readingMinutes: 18
+    level: Intermediate
+    subtitle: What if monsters are not simply discovered, but created by the societies that define them?
+
+  - id: the-geometry-of-other-people
+    title: The geometry of other people
+    author: David Borkenhagen
+    source: aeon.co
+    publisher: Aeon
+    category: mind
+    published: "2024-01-11"
+    url: https://aeon.co/essays/why-do-other-people-form-imaginary-shapes-in-our-minds
+    readingMinutes: 19
+    level: Intermediate
+    subtitle: Why do we describe people as close, distant, above us, or outside our circle?
+
   - id: unreasonable-effectiveness-rnn
     title: The Unreasonable Effectiveness of Recurrent Neural Networks
     author: Andrej Karpathy
     source: karpathy.github.io
+    category: machine-learning
     year: 2015
     url: https://karpathy.github.io/2015/05/21/rnn-effectiveness/
     note: >
@@ -33,6 +138,7 @@ items:
     title: The Bitter Lesson
     author: Rich Sutton
     source: incompleteideas.net
+    category: machine-learning
     year: 2019
     url: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
     note: >
@@ -42,6 +148,7 @@ items:
     title: Understanding LSTM Networks
     author: Christopher Olah
     source: colah.github.io
+    category: machine-learning
     year: 2015
     url: https://colah.github.io/posts/2015-08-Understanding-LSTMs/
     note: >
@@ -51,6 +158,7 @@ items:
     title: There's More to Mathematics than Rigour and Proofs
     author: Terence Tao
     source: terrytao.wordpress.com
+    category: complexity
     year: 2009
     url: https://terrytao.wordpress.com/career-advice/theres-more-to-mathematics-than-rigour-and-proofs/
     note: >
@@ -60,6 +168,7 @@ items:
     title: Attention? Attention!
     author: Lilian Weng
     source: lilianweng.github.io
+    category: machine-learning
     year: 2018
     url: https://lilianweng.github.io/posts/2018-06-24-attention/
     note: >
@@ -69,6 +178,7 @@ items:
     title: How to Do Great Work
     author: Paul Graham
     source: paulgraham.com
+    category: craft
     year: 2023
     url: https://paulgraham.com/greatwork.html
     note: >

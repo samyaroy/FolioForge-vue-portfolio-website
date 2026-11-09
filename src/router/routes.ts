@@ -36,7 +36,7 @@ export const routeMetadata: RouteMetadata[] = [
     name: 'Home',
     title: null,
     description:
-      'Samyabrata Roy — statistics and data science. Associate Software Developer at IDEAS-TIH, ISI Kolkata, and BS Data Science student at IIT Madras.',
+      'Samyabrata Roy — statistics and data science. MSc Statistics student at the University of Calcutta and BS Data Science student at IIT Madras.',
   },
   {
     path: '/projects-publications',
@@ -130,6 +130,14 @@ export const routeMetadata: RouteMetadata[] = [
     title: 'Privacy Policy',
     description:
       'How this site handles visitor data, analytics, and third-party content.',
+  },
+  {
+    path: '/sitemap',
+    name: 'Sitemap',
+    title: 'Sitemap',
+    description:
+      "Every page of Samyabrata Roy's portfolio in one place, plus the blog, its RSS feed, and the XML sitemap for crawlers.",
+    flagPath: 'showSitemap',
   },
   {
     path: '/resources',

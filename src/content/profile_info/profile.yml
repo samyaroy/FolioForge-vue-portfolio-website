@@ -1,7 +1,7 @@
 profile:
   name: Samyabrata Roy
-  # about: "I am a statistics student currently pursing my masters in statistics from `University of Calcutta`, prior this I was working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata`. I'm also currently pursuing my second bachelor's degree in Data Science from `IIT Madras`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
-  about: "I am a statistics student currently pursing my masters in statistics from `University of Calcutta`, prior this I was working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata`. I'm also currently pursuing my second bachelor's degree in Data Science from `IIT Madras` and serving as the Website Officer for the `RoSE Network`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
+  # about: "I am a statistics student currently pursuing my masters in statistics from `University of Calcutta`. Before this, I was working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata`. I'm also currently pursuing my second bachelor's degree in Data Science from `IIT Madras`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
+  about: "I am a statistics student currently pursuing my masters in statistics from `University of Calcutta`. Before this, I was working as an Associate Software Developer at `IDEAS-TIH, ISI Kolkata`. I'm also currently pursuing my second bachelor's degree in Data Science from `IIT Madras` and serving as the Website Officer for the `RoSE Network`. My interests include data science, machine learning, and statistical modeling. I am passionate about applying statistical techniques to solve real-world problems and contribute to the field of data science."
   heading: Statistics and Data Science Student,<br>Techno-optimist #will be used in home page hero section
   footer: Rookie Statistician | Data Science Student | Full-Stack Developer
   cv: https://drive.google.com/uc?export=download&id=1qeizy-UFYi6mzu9Y4grn801xs0RpLjoz # google drive link for direct download  #environment: development   # or staging / production
@@ -19,6 +19,13 @@ profile:
 media:
   logosBaseUrl: https://media.samyabrata.codeium.xyz/logo
   iconsBaseUrl: https://media.samyabrata.codeium.xyz/icons
+  # The GitHub koi below the Contact page's tiles: a pixel-art fish the git-koi
+  # Action redraws every night from the account's public activity, uploaded
+  # to this media host by .github/workflows/koi.yml. `koiGif` swims;
+  # `koiStill` is the still frame shown to visitors who ask for reduced
+  # motion. Clear `koiGif` to drop the section.
+  koiGif: https://media.samyabrata.codeium.xyz/koi/koi.gif
+  koiStill: https://media.samyabrata.codeium.xyz/koi/koi.png
 
 # Live badge count and issuers on the Certifications tab's Credly banner, served
 # by the Worker in services/credly-badges (it re-reads the public Credly profile

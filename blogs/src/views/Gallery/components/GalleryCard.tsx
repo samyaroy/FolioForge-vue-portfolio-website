@@ -41,7 +41,7 @@ export function GalleryCard({ item }: GalleryCardProps) {
   // assembled from the fields they do have.
   const shareContent = {
     url: galleryItemShareUrl(item.id),
-    title: item.event || item.alt || 'Gallery moment',
+    title: item.caption || item.event || item.alt || 'Gallery moment',
     text: [item.location, formattedDate].filter(Boolean).join(' · '),
     hashtags: item.tags,
     imageUrl: shareImageUrl || undefined,
@@ -102,7 +102,7 @@ export function GalleryCard({ item }: GalleryCardProps) {
   return (
     <>
       <article
-        className={`group relative overflow-hidden rounded-b-[6px] rounded-t-none bg-white shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)] ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-10px_rgba(14,20,27,0.14)] ${
+        className={`group relative flex h-full flex-col overflow-hidden rounded-b-[6px] rounded-t-none bg-white shadow-[0_12px_32px_-4px_rgba(14,20,27,0.08)] ring-1 ring-slate-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_-10px_rgba(14,20,27,0.14)] ${
           item.featured
             ? 'shadow-[0_18px_42px_-12px_rgba(24,128,230,0.2)] ring-primary/20'
             : ''
@@ -117,17 +117,6 @@ export function GalleryCard({ item }: GalleryCardProps) {
               />
             </span>
           )}
-          <button
-            type="button"
-            className="absolute right-3 bottom-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-[6px] border border-white/70 bg-white/90 p-0 text-slate-700 shadow-[0_12px_24px_-14px_rgba(14,20,27,0.65)] backdrop-blur-sm transition-colors hover:border-white hover:bg-white hover:text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none"
-            aria-label={`Zoom image: ${item.id || 'gallery item'}`}
-            onClick={() => setIsZoomOpen(true)}
-          >
-            <span
-              className="mdi mdi-magnify-plus-outline text-base leading-none"
-              aria-hidden="true"
-            />
-          </button>
           <img
             src={currentImage}
             alt={resolvedAlt}
@@ -180,9 +169,16 @@ export function GalleryCard({ item }: GalleryCardProps) {
           )}
         </div>
 
-        <div className="flex h-14 items-center border-t border-slate-100 px-3 py-2">
-          <div className="flex w-full items-center justify-between gap-3">
+        {/* Grows to the row's tallest card, so a captioned card and one without
+            still end level. */}
+        <div className="flex min-h-14 flex-1 items-center border-t border-slate-100 px-3 py-2">
+          <div className="flex w-full items-end justify-between gap-3">
             <div className="flex min-w-0 flex-col gap-0.5">
+              {item.caption && (
+                <p className="line-clamp-2 pt-1 text-xs leading-5 font-semibold text-base_black">
+                  {item.caption}
+                </p>
+              )}
               {formattedDate && (
                 <span className="inline-flex max-w-full items-center rounded-[6px] text-[10px] font-medium leading-tight text-slate-600/80">
                   <span
@@ -201,13 +197,33 @@ export function GalleryCard({ item }: GalleryCardProps) {
                   <span className="truncate">{item.location}</span>
                 </span>
               )}
+              {item.camera && (
+                <span className="inline-flex max-w-full items-center rounded-[6px] text-[10px] leading-tight text-slate-600/80">
+                  <span
+                    className="mdi mdi-camera-outline mr-1 shrink-0 text-xs leading-none text-slate-500"
+                    aria-hidden="true"
+                  />
+                  <span className="truncate">{item.camera}</span>
+                </span>
+              )}
             </div>
 
             <div className="flex shrink-0 items-center gap-1">
+              <button
+                type="button"
+                className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] bg-transparent p-0 text-slate-500 transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none"
+                aria-label={`Zoom image: ${item.caption || item.id || 'gallery item'}`}
+                onClick={() => setIsZoomOpen(true)}
+              >
+                <span
+                  className="mdi mdi-magnify-plus-outline text-lg leading-none"
+                  aria-hidden="true"
+                />
+              </button>
               <ShareMenu
                 content={shareContent}
                 triggerClass="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[6px] bg-transparent p-0 text-slate-500 transition-colors hover:text-primary focus:ring-2 focus:ring-primary focus:outline-none"
-                triggerLabel={`Share: ${item.event || item.id || 'gallery item'}`}
+                triggerLabel={`Share: ${item.caption || item.event || item.id || 'gallery item'}`}
                 triggerIconClass="text-lg"
                 heading="Share this moment"
               />
@@ -261,7 +277,7 @@ export function GalleryCard({ item }: GalleryCardProps) {
                   id={zoomTitleId}
                   className="truncate text-base font-semibold text-white"
                 >
-                  {item.id || 'Gallery image'}
+                  {item.caption || item.id || 'Gallery image'}
                 </h2>
 
                 <button

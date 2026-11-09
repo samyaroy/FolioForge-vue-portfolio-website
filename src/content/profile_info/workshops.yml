@@ -24,6 +24,18 @@ attended_fdps:
     cred_link: "https://drive.google.com/file/d/1V9mDic5EwtYRJNOQNbhTxuAstktAuAyN/preview"
 
 attended_workshops:
+  - title: "2nd Indo-French Workshop on Statistics and Artificial Intelligence for Data Science (SAIDS 2.0)"
+    special: true
+    institution:
+      - name: "Indian Statistical Institute, Kolkata"
+        department: "Centre for Artificial Intelligence and Machine Learning (CAIML)"
+        location: "Kolkata, WB"
+      - name: "Centre Franco-Indien pour la Promotion de la Recherche Avancée (IFCPAR/CEFIPRA)"
+    date: "November 2026"
+    duration: "3 Days"
+    mode: "Offline"
+    cred_link: "https://drive.google.com/file/d/1hKT3Z5JOVdhw8OmqHRjIWUPlnOwxugEc/preview"
+
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
     instructor: "Dr. Indu Joshi"
     institution:
@@ -58,6 +70,7 @@ attended_workshops:
     mode: "Offline"
 
   - title: "National Workshop and Bootcamp on Cyber Security and Blockchain (NWBCSB 2025)"
+    special: true
     institution:
       - name: "International Institute of Technology (IIIT) Hyderabad"
         location: "Hyderabad, TS"
@@ -66,7 +79,8 @@ attended_workshops:
     mode: "Offline"
     details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/preview"
 
-  - title: "Numerical Algorithms & Computations in Science & Technology with Matlab"
+  - title: "Numerical Algorithms & Computations in Science & Technology with Matlab (NACSTM 2024)"
+    special: true
     institution:
       - name: "Indian Institute of Technology Ropar"
         department: "Dept. of Mathematics"
@@ -85,6 +99,7 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1IhcaaqJCiHGJ3NXp4lsD8c0zHK1CO4up/preview"
 
   - title: "Research Opportunities in Computer Science (ROCS) - ACM"
+    special: true
     institution:
       - name: "Indian Institute of Technology Madras"
         location: "Chennai, TN"
@@ -93,10 +108,12 @@ attended_workshops:
     cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/preview"
 
   - title: "Social Computing (One day workshop) - NPTEL"
+    special: true
     instructor: "Prof. Ponnurangam Kumaraguru"
     institution:
       - name: "International Institute of Technology (IIIT) Hyderabad"
         location: "Hyderabad, TS"
+      - name: "National Programme on Technology Enhanced Learning (NPTEL)"
     date: "February 2023"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"

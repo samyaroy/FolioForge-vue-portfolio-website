@@ -71,6 +71,8 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     showGoogleScholar: true,
     showResearchGate: true,
     showOrcid: true,
+    // Not a tile: the GitHub koi drawn below them (media.koiGif in profile.yml).
+    showGitHubKoi: true,
   },
 
   showBlog: true,
@@ -139,6 +141,10 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   // Controls the "Did you know?" facts page (/facts) and its nav link.
   showFacts: false,
 
+  // /sitemap: a readable index of every page, linked from the footer beside
+  // the privacy policy.
+  showSitemap: true,
+
   // Controls the quote pane rendered between page content and the footer.
   showPageQuotePane: true,
 
@@ -159,6 +165,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     teachings: true,
     workshopsAttended: true,
     facts: true,
+    sitemap: true,
   },
 }) satisfies FeatureFlagNode
 

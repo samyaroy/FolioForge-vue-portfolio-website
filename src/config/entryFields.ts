@@ -21,7 +21,7 @@ export type EntryField =
   | string
   | { key: string; type: 'number' | 'boolean' | 'date' | 'text-or-list' | 'json-array' | 'multiline'; min?: number; max?: number; placeholder?: string }
   | { key: string; object: readonly string[] }
-  | { key: string; list: readonly string[] }
+  | { key: string; list: readonly string[]; children?: Record<string, readonly string[]> }
   | { key: string; credentials: 'documents' | 'categories' | 'mentoredCategories' | 'ongoingCategories' }
   | { key: string; images: 'gallery' }
 
@@ -54,10 +54,17 @@ export const entryFields = {
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
   certifications: ['title', { key: 'issuer', object: ['institution', 'platform', 'location'] }, 'instructor', 'date', 'duration', 'tag', 'logo', 'cred_link'],
 
-  conferences: ['title', 'organizer', 'institution', 'location', 'date', 'link', 'cred_link'],
-  fdps: ['title', 'institution', 'date', 'duration', 'mode', 'cred_link'],
-  workshops: ['title', 'instructor', 'institution', 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
-  bootcamps: ['title', 'instructor', 'institution', 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link'],
+  // An event can have several hosts -- a host institute and an industry
+  // partner, say -- so `institution` (and a conference's `organizer`) is a list
+  // of rows, never one text box. Each collection offers the columns its card
+  // renders: a workshop shows a host's role, a conference only its name.
+  conferences: ['title', { key: 'organizer', list: ['name', 'department'] }, { key: 'institution', list: ['name'] }, 'location', 'date', 'link', 'cred_link'],
+  fdps: ['title', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link'],
+  // `special` marks a workshop to set apart on the Workshops tab (a navy
+  // border instead of steel). The Other Learning Engagements popup keeps its
+  // own colour either way.
+  workshops: ['title', { key: 'special', type: 'boolean' }, 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
+  bootcamps: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'location'] }, 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link'],
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 
   // One leadership entry can hold several roles, each at its own organisation,
@@ -70,10 +77,8 @@ export const entryFields = {
   // the two sit side by side, the admin edits them as one choice. `ext_link`
   // belongs to the role, unlike `organization.web_link`, which is the
   // organisation's own site.
-  leadership: ['role', { key: 'affiliation', list: ['role', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'cred_link', 'ext_link'] }, 'description', 'cred_link', 'ext_link'],
-  // A volunteering entry is either a single role or a `roles` list of them. The
-  // per-role `field` list is preserved rather than edited here.
-  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link'] }, { key: 'field', list: ['sub_field', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
+  leadership: [{ key: 'affiliation', list: ['role', 'enabled', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'description', 'cred_link', 'ext_link'] }, 'description'],
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'enabled', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link', 'field'], children: { field: ['sub_field', 'enabled', 'time_period', 'skills'] } }, { key: 'field', list: ['sub_field', 'enabled', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],
@@ -94,7 +99,7 @@ export const entryFields = {
   worthSubscribing: ['group', 'id', 'icon', { key: 'links', list: ['label', 'url', 'cadence', 'speciality', 'incharge'] }],
 
   // Blog collections.
-  blogRecommended: ['id', 'title', 'author', 'source', { key: 'year', type: 'number' }, 'url', { key: 'note', type: 'multiline' }],
+  blogRecommended: ['id', 'title', 'author', 'source', 'publisher', 'category', { key: 'year', type: 'number' }, { key: 'published', type: 'date' }, 'url', 'subtitle', { key: 'note', type: 'multiline' }, { key: 'readingMinutes', type: 'number' }, 'level'],
   blogReadings: ['id', 'title', 'author', 'genre', { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
   blogMovies: ['id', 'title', 'director', 'genre', { key: 'year', type: 'number' }, { key: 'date', type: 'date' }, 'description', { key: 'note', type: 'multiline' }, { key: 'rating', type: 'number', min: 1, max: 5 }, 'image', 'link'],
   blogTravel: ['state', 'purpose', { key: 'home', type: 'boolean' }, { key: 'cities', type: 'json-array', placeholder: '[{"name":"Chennai","visits":1,"stayed":true,"stayReason":"College","home":false,"lat":13.08,"lng":80.27}]' }],
@@ -114,6 +119,10 @@ export function objectFieldsOf(fields: readonly EntryField[]): Record<string, re
 /** Keys edited as rows, mapped to their columns. */
 export function listFieldsOf(fields: readonly EntryField[]): Record<string, readonly string[]> {
   return Object.fromEntries(fields.flatMap(field => typeof field !== 'string' && 'list' in field ? [[field.key, field.list]] : []))
+}
+
+export function nestedListFieldsOf(fields: readonly EntryField[]): Record<string, Record<string, readonly string[]>> {
+  return Object.fromEntries(fields.flatMap(field => typeof field !== 'string' && 'list' in field && field.children ? [[field.key, field.children]] : []))
 }
 
 /** The key that lists gallery image keys, if the collection has one. */

@@ -7,24 +7,24 @@
 co_curriculars:
   - title: leadership_roles
     entries:
-      - role: Founder, Club Administrator
-        affiliation:
+      - affiliation:
           - role: Deputy Secretary
             enabled: false
             organization:
               name:  'Chi-Square: Statistics Interest Group'
-              web_link: https://www.rasor.in/
+              web_link: https://chi-square.vercl.app/
             institute: Indian Institute of Technology Madras BS Degree
             time_period: 2026 - Present
           - role: Founder, Club Administrator
+            enabled: true
             organization:
               name:  'Chi-Square: Statistics Club'
-              web_link: https://22f2001443.github.io/chi-square/
+              web_link: https://chi-square.vercl.app/
             host:
               name: Nilgiri House
               web_link:
             institute: Indian Institute of Technology Madras BS Degree
-            time_period: 2023 - 2026
+            time_period: 2023 - 2025
             # Both certificates are dated inside this role's period, so they sit
             # with it rather than with the entry as a whole.
             cred_link:
@@ -35,23 +35,35 @@ co_curriculars:
         description: Created and led the statistics community of 850+ members over 3 years. Organized 25+ workshops, academic sessions, guest lectures and industry talks in partnerships with other societies, including the Ramanujan Society for Research (RASoR).
        # skills: Leadership, Event Management, Team Building
 
-      - role: Event Head
-        affiliation:
-          - organization:
+      - affiliation:
+          - role: Event Head
+            enabled: false
+            organization:
               name: Probably Paradoxical
             host:
               name: Paradox 2026
             institute: Indian Institute of Technology Madras BS Degree
             time_period: June 2026
-        description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe`.
-        #  and `Dr. Naveen Sivadasan`.
+            cred_link: https://drive.google.com/file/d/1sJ9ULNFWPlJUhdwTTsYMHC4tB10oopUO/preview
+            description: Probably Paradoxical 
+          - role: Event Head
+            enabled: true
+            organization:
+              name: Probably Paradoxical
+            host:
+              name: Paradox 2026
+            institute: Indian Institute of Technology Madras BS Degree
+            time_period: June 2026
+            cred_link: https://drive.google.com/file/d/1sJ9ULNFWPlJUhdwTTsYMHC4tB10oopUO/preview
+            description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe`.
+            #  and `Dr. Naveen Sivadasan`.
         # skills: Event Management, Team Coordination, Sponsor Management
-        cred_link: https://drive.google.com/file/d/1sJ9ULNFWPlJUhdwTTsYMHC4tB10oopUO/preview      
       #Add more entries as needed
 
   - title: volunteering_roles
     entries:
     - role: Website Officer (Communications Team)
+      enabled: true
       organization: Researchers of Statistics Education (RoSE) Network
       time_period: 2026 - Present
       ext_link: https://www.rose-network.org/about-us/meet-the-team/comms#h.2dd5tg2qv8nr
@@ -67,8 +79,10 @@ co_curriculars:
       organization: Institute of Data Engineering, Analytics and Science Foundation - Technology Innovation Hub, Indian Statistical Institute
       field:
         - sub_field: 'Summer Internship Program on Data Science 2026'
+          enabled: true
           time_period: June 2026 - July 2026
         - sub_field: 'Spring Internship Program on Data Science 2026'
+          enabled: true
           time_period: February 2026 - March 2026
       #   skills: Mentored 7 Interns working on 3 mini projects in Data Ingestion vertical under NPCYF project
       #   details_cred:  https://drive.google.com/drive/folders/1oEITzN-I_Eo6OA19T8TZBuFPFNwzFAT9?usp=drive_link
@@ -78,13 +92,16 @@ co_curriculars:
     # as a single role.
     - roles:
         - role: Web Admin
+          enabled: true
           organization: "Nilgiri House, `Indian Institute of Technology Madras BS Degree`"
           time_period: Sept Term 2026 (T3 2026) - Present
 
         - role: Teaching Assistant (Revision Sessions)
+          enabled: true
           organization: "Chi-Square: Statistics Club X Nilgiri House, `Indian Institute of Technology Madras BS Degree`"
           field:
             - sub_field: 'Course: Statistics for Data Science I'
+              enabled: true
               time_period: Jan Term 2025 (T1 2025) ; May Term 2025 (T2 2025)
               skills: Taught 25+ Students
           cred_link: https://drive.google.com/file/d/16DqCyHQyJamxuLyNknZc4DtOvQD_QPDv/preview

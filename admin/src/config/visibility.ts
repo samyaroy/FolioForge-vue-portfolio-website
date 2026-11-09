@@ -88,6 +88,7 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
     { path: 'showContact.showGoogleScholar', label: 'Google Scholar' },
     { path: 'showContact.showResearchGate', label: 'ResearchGate' },
     { path: 'showContact.showOrcid', label: 'ORCID iD' },
+    { path: 'showContact.showGitHubKoi', label: 'GitHub koi' },
   ],
   'gallery/career-unlocks': [{ path: 'showGallery', label: 'Career Unlocks' }],
   'resources/study-material': [{ path: 'showResources.main', label: 'Resources page' }],

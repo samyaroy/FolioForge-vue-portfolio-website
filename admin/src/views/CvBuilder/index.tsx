@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { RotateCcw, Save } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { LocalNotice } from '@/components/admin/LocalNotice'
 import { PageHeader } from '@/components/admin/PageHeader'
-import { BuildOutline } from '@/components/cv/BuildOutline'
+import { CompilePanel } from '@/components/cv/CompilePanel'
 import { CvIssues } from '@/components/cv/CvIssues'
 import { PresetEditor } from '@/components/cv/PresetEditor'
-import { TexSource } from '@/components/cv/TexSource'
+import type { TexEditorHandle } from '@/components/cv/TexEditor'
+import { TexSource, type TexOverride } from '@/components/cv/TexSource'
 import { Button, SelectField } from '@/components/form'
 import { entryIds } from '@/cv/collections'
 import { presetRow } from '@/cv/editing'
@@ -17,14 +18,15 @@ import { resolvePreset, type ResolveContext } from '@/cv/resolve'
 import type { BuildInput, CvIssue, CvPreset } from '@/cv/schema'
 import { templates } from '@/cv/templates'
 import { validateCv } from '@/cv/validate'
+import { useCvCompile, type CompileMode } from '@/hooks/useCvCompile'
 import { useCvContent, type CvContent } from '@/hooks/useCvContent'
 import { saveEntry } from '@/services/content'
 
 type Build = { input: BuildInput; tex: string } | { issues: CvIssue[] }
 
 /**
- * The CV builder: configuration, the LaTeX it generates, and what it prints,
- * side by side. The page reads the content; the workspace below holds the
+ * The CV builder: configuration, the LaTeX it generates, and the compiled PDF,
+ * side by side, after Overleaf. The page reads the content; the workspace below holds the
  * draft, and is remounted whenever the preset it was opened on changes, so a
  * reload after saving starts it again from what was saved.
  */
@@ -52,6 +54,9 @@ function BuilderWorkspace({ content, context, original, reload }: WorkspaceProps
   const [draft, setDraft] = useState<CvPreset>(() => structuredClone(original))
   const [hash, setHash] = useState('')
   const [saving, setSaving] = useState(false)
+  const [override, setOverride] = useState<TexOverride | null>(null)
+  const [mode, setMode] = useState<CompileMode>('manual')
+  const editor = useRef<TexEditorHandle>(null)
 
   const build = useMemo((): Build => {
     const portfolio = new Map([...context.portfolio].map(([collection, entries]) => [collection, entryIds(entries)]))
@@ -70,6 +75,15 @@ function BuilderWorkspace({ content, context, original, reload }: WorkspaceProps
   useEffect(() => {
     if ('input' in build) void inputHash(build.input).then(setHash)
   }, [build])
+
+  const generated = 'tex' in build ? build.tex : null
+  const source = override?.text ?? generated
+  const compile = useCvCompile(source, mode)
+  // Marked only while they still describe the source on screen.
+  const errorLines = useMemo(
+    () => (compile.result && compile.compiledTex === source ? compile.result.parsed.errors.flatMap(error => (error.line === null ? [] : [error.line])) : []),
+    [compile.result, compile.compiledTex, source],
+  )
 
   const dirty = canonicalJson(presetRow(draft)) !== canonicalJson(presetRow(original))
   const canSave = content.mode === 'live' && Boolean(content.presetsBaseSha)
@@ -95,7 +109,7 @@ function BuilderWorkspace({ content, context, original, reload }: WorkspaceProps
     <>
       <PageHeader
         title="CV Builder"
-        description="Choose what a CV shows. The LaTeX and the content check follow every change; Save queues the preset to publish to V1."
+        description="Choose what a CV shows. The LaTeX follows every change and compiles beside it; Save queues the preset to publish to V1."
         actions={(
           <>
             <SelectField prefix="Preset" value={original.id} onChange={id => navigate(`/cv/builder/${id}`)} options={content.presets.map(preset => ({ value: preset.id, label: preset.name }))} />
@@ -107,6 +121,11 @@ function BuilderWorkspace({ content, context, original, reload }: WorkspaceProps
           <span className="cv-status">
             <span className={dirty ? 'cv-chip cv-chip-warn' : 'cv-chip cv-chip-ok'}>{dirty ? 'Unsaved changes' : 'Saved'}</span>
             <span className={'tex' in build ? 'cv-chip cv-chip-ok' : 'cv-chip cv-chip-warn'}>{'tex' in build ? 'Generates' : 'Has problems'}</span>
+            {compile.result && (
+              <span className={compile.result.outcome === 'ok' && !compile.outdated ? 'cv-chip cv-chip-ok' : 'cv-chip cv-chip-warn'}>
+                {compile.outdated ? 'Preview outdated' : compile.result.outcome === 'ok' ? 'Compiles' : compile.result.outcome === 'errors' ? 'Built with errors' : 'Build failed'}
+              </span>
+            )}
           </span>
         )}
       />
@@ -114,12 +133,17 @@ function BuilderWorkspace({ content, context, original, reload }: WorkspaceProps
       {'issues' in build && <CvIssues issues={build.issues} />}
       <div className="cv-builder">
         <PresetEditor preset={draft} onChange={setDraft} context={context} />
-        {'tex' in build
-          ? <TexSource tex={build.tex} filename={draft.filename} />
-          : <section className="cv-panel cv-placeholder"><p>The LaTeX appears once the problems above are fixed.</p></section>}
-        {'input' in build
-          ? <BuildOutline input={build.input} hash={hash} />
-          : <section className="cv-panel cv-placeholder"><p>Nothing to check yet.</p></section>}
+        <TexSource generated={generated} override={override} onOverride={setOverride} filename={draft.filename} errorLines={errorLines} onCompile={compile.compile} editorRef={editor} />
+        <CompilePanel
+          compile={compile}
+          mode={mode}
+          onModeChange={setMode}
+          canCompile={source !== null}
+          filename={draft.filename}
+          budget={draft.pages}
+          outline={'input' in build ? { input: build.input, hash } : null}
+          onGoToLine={line => editor.current?.goToLine(line)}
+        />
       </div>
     </>
   )

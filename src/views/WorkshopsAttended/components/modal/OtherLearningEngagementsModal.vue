@@ -44,6 +44,7 @@
                     :key="`${yearGroup.year}-${index}`"
                     :workshop="item"
                     compact-meta-text
+                    accent-class="border-sky-500"
                   />
                 </div>
               </section>

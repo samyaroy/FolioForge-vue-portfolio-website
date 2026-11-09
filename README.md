@@ -161,11 +161,14 @@ Use feature flags when temporarily hiding content or when a section should not a
 
 ## Deployment
 
-The app builds to a static `dist/` directory. Deployment options already represented in the repository include:
+The app builds to a static `dist/` directory. The live sites are served from Cloudflare, with production from `main` and beta from `V1`. The output also works on any static host.
 
-- GitHub Pages via `npm run deploy`
-- Cloudflare static assets via [wrangler.jsonc](wrangler.jsonc)
-- Any static host that can serve the Vite output
+The repository root has no deploy script, and `wrangler` is not one of its dependencies. For a manual upload using [wrangler.jsonc](wrangler.jsonc), build first with the right environment, because `wrangler deploy` uploads `dist/` as it stands:
+
+```sh
+VITE_SITE_ENV=beta npm run build  # omit the variable for a production build
+npx wrangler deploy
+```
 
 The Credly badge count on the Certifications tab comes from a separate Worker in [services/credly-badges](services/credly-badges/README.md), deployed on its own with `npm run deploy` from that folder. The site works without it; the banner then shows the plain Credly link.
 

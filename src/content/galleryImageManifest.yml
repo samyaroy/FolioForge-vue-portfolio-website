@@ -94,6 +94,10 @@ categories:
 
   - category: Workshop, Conference and Bootcamp
     images:
+      - id: saids2
+        date: Nov 08, 2026
+        description: Three Days of Brainstorming at SAIDS 2.0, ISI Kolkata
+
       - id: workshop-07
         date: 2026-06-27
         description: Took the first conventional step towards Theoretical Computer Science

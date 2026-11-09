@@ -7,17 +7,27 @@ interface SectionsContent {
     title: string
     heroHeading: string
     allPostsTitle: string
+    publishedElsewhereTitle: string
+    newTabLabel: string
     tagFilterTitle: string
     tagFilterOpen: string
     tagFilterClear: string
   }
   recommended: {
     title: string
-    kicker: string
     emptyLabel: string
+    homeTitle: string
     allLabel: string
-    readLabel: string
+    carouselPrevious: string
+    carouselNext: string
+    filterLabel: string
+    allCategoriesLabel: string
+    otherCategoryLabel: string
+    countOne: string
+    countMany: string
     readShortLabel: string
+    readingTime: string
+    newTabLabel: string
     disclaimer: string
   }
   readings: {
@@ -77,6 +87,18 @@ interface SectionsContent {
     lastUpdatedLabel: string
     lastUpdated: string
   }
+  sitemap: {
+    title: string
+    homeLabel: string
+    pagesTitle: string
+    postsTitle: string
+    tripsTitle: string
+    movieReviewsTitle: string
+    readingReviewsTitle: string
+    feedsTitle: string
+    rssLabel: string
+    xmlSitemapLabel: string
+  }
 }
 
 const sections = raw as SectionsContent
@@ -90,3 +112,4 @@ export const GALLERY_SECTION = sections.gallery
 export const TRAVEL_SECTION = sections.travel
 export const POST_COPY = sections.post
 export const PRIVACY_SECTION = sections.privacy
+export const SITEMAP_SECTION = sections.sitemap

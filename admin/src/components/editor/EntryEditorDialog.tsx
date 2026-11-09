@@ -21,7 +21,7 @@ import { ProjectLinksEditor } from '@/components/editor/ProjectLinksEditor'
 import { ObjectFieldsEditor } from '@/components/editor/ObjectFieldsEditor'
 import { ListFieldsEditor } from '@/components/editor/ListFieldsEditor'
 import { fieldCaption } from '@/lib/fieldNames'
-import { credentialStyleOf, fieldKeys, galleryImagesKeyOf, listFieldsOf, objectFieldsOf, type EntryField } from '../../../../src/config/entryFields.ts'
+import { credentialStyleOf, fieldKeys, galleryImagesKeyOf, listFieldsOf, nestedListFieldsOf, objectFieldsOf, type EntryField } from '../../../../src/config/entryFields.ts'
 import { mentoredProjectLinkCategories, ongoingProjectLinkCategories, projectLinkCategories } from '../../../../src/config/projectLinkCategories.ts'
 import { ENTRY_ENABLED_KEY } from '../../../../src/config/entryStatus.ts'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -124,6 +124,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
   const entryFields = useMemo(() => fieldKeys(schema), [schema])
   const objectFields = useMemo(() => objectFieldsOf(schema), [schema])
   const listFields = useMemo(() => listFieldsOf(schema), [schema])
+  const nestedListFields = useMemo(() => nestedListFieldsOf(schema), [schema])
   const credentialStyle = useMemo(() => credentialStyleOf(schema), [schema])
   const imagesKey = useMemo(() => galleryImagesKeyOf(schema), [schema])
   // A role's credential and website are one choice, never two filled boxes.
@@ -157,7 +158,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
         // Declared object keys are drafted even when the entry lacks them, so
         // one can be filled in; an untouched blank group writes no key.
         ...Object.fromEntries(Object.entries(objectFields).map(([key, fields]) => [key, objectFieldsDraft(base[key], fields)])),
-        ...Object.fromEntries(Object.entries(listFields).map(([key, fields]) => [key, listFieldsDraft(base[key], fields)])),
+        ...Object.fromEntries(Object.entries(listFields).map(([key, fields]) => [key, listFieldsDraft(base[key], fields, nestedListFields[key])])),
       }
       const raw = { ...base, ...drafts }
       // Values drafted above already hold what their editor should show, so the
@@ -169,7 +170,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
     if (isExperience) return { job_role: '', type: '', company: '', location: '', time_period: '', description: '[]', cred_link: '[]', projects: '[]' }
     if (isEducation) return { type: '', degree: '', field: '', institution: '', location: '', time_period: '', gpa: '', cred_link: '[]', category: '', sub_field: '[]' }
     return Object.fromEntries(fieldGroups.map(label => [fieldKey(label), '']))
-  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, isCategoryStyle, imagesKey, objectFields, listFields, entryFields, blankValue])
+  }, [entry, fieldGroups, isExperience, isEducation, credentialStyle, isCategoryStyle, imagesKey, objectFields, listFields, nestedListFields, entryFields, blankValue])
   const [fields, setFields] = useState<Record<string, string>>(initialFields)
   // Photos uploaded for a gallery entry, published to the media host on save.
   const photos = useGalleryUploads({
@@ -206,7 +207,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       toast.error('Enter content before saving.')
       return
     }
-    const blank = Object.keys(fields).find(key => isRequired(key) && !fields[key].trim())
+    const blank = Object.keys(fields).find(key => isRequired(key) && (listFields[key] ? !JSON.parse(fields[key] || '[]').length : !fields[key].trim()))
     if (blank) {
       toast.error(`Enter ${blank.replaceAll('_', ' ')} before saving.`)
       return
@@ -248,7 +249,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
         if (isCategoryStyle && key === 'cred_link') return [key, serializeProjectLinks(JSON.parse(value), original)]
         if (key === imagesKey) return [key, serializeGalleryImages(JSON.parse(value), original)]
         if (objectFields[key]) return [key, serializeObjectFields(JSON.parse(value), original, objectFields[key], key)]
-        if (listFields[key]) return [key, serializeListFields(JSON.parse(value), original, listFields[key], fieldCaption(key).toLowerCase())]
+        if (listFields[key]) return [key, serializeListFields(JSON.parse(value), original, listFields[key], fieldCaption(key).toLowerCase(), nestedListFields[key])]
         const structured = (original !== null && typeof original === 'object') || (isExperience && (key === 'projects' || key === 'description')) || (isEducation && key === 'sub_field') || (key === 'logo' && value.startsWith('[')) || (tagOptions.length > 0 && key === 'tags')
         const parsed: unknown = structured ? JSON.parse(value) : value
         if (isEducation && key === 'sub_field' && Array.isArray(parsed) && parsed.some(item => !item || typeof item !== 'object' || typeof item.label !== 'string' || !item.label.trim() || !hasSubFieldNames(item.name))) throw new Error('Enter a label and every name for each sub-field before saving.')
@@ -266,7 +267,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
       }
       for (const key of entryFields) if (!(key in raw) && !scalarFields[key]) raw[key] = ''
       if (isEducation && (entry?.raw.cirriculum !== undefined || Object.keys(curriculum).length)) raw.cirriculum = serializeCurriculum(curriculum, entry?.raw.cirriculum)
-      const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', Object.keys(values)[0]], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry' }
+      const presentation = entry?.presentation ?? { titlePaths: ['title', 'name', 'organization', 'role', 'degree', ...(groupedBy ? [] : [Object.keys(values)[0]])], subtitlePaths: ['institution', 'date', 'location'], fallbackTitle: entry?.title ?? 'New entry', groupedBy }
       onSave({
         ...entry,
         id: entry?.id ?? `local-${Date.now()}`,
@@ -336,7 +337,7 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
             if (credentialStyle === 'documents' && key === 'cred_link') return <CredentialLinksEditor key={key} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
             if (isCategoryStyle && key === 'cred_link') return <ProjectLinksEditor key={key} categories={linkCategories} links={JSON.parse(value)} onChange={links => setFields(current => ({ ...current, cred_link: JSON.stringify(links) }))} />
             if (objectFields[key]) return <ObjectFieldsEditor key={key} name={key} draft={JSON.parse(value)} onChange={draft => setFields(current => ({ ...current, [key]: JSON.stringify(draft) }))} />
-            if (listFields[key]) return <ListFieldsEditor key={key} name={key} fields={listFields[key]} rows={JSON.parse(value)} onChange={rows => setFields(current => ({ ...current, [key]: JSON.stringify(rows) }))} />
+            if (listFields[key]) return <ListFieldsEditor key={key} name={key} fields={listFields[key]} children={nestedListFields[key]} rows={JSON.parse(value)} onChange={rows => setFields(current => ({ ...current, [key]: JSON.stringify(rows) }))} />
             if (key === 'type' && typeOptions.length) {
               // Only types the site recognises; an unrecognised value from the
               // YAML stays listed so opening the entry does not drop it.
@@ -347,8 +348,8 @@ export function EntryEditorDialog({ entry, context = [], fieldGroups, requiredFi
             const isStructured = value.includes('\n') || value.startsWith('{') || value.startsWith('[')
             // Prose the site renders through SmartLink, so it can carry the
             // same marks wherever it is written rather than only on experience.
-            if (key === 'description' && !isStructured) {
-              return <RichTextField key={key} label={fieldCaption(key)} required={isRequired(key)} value={value} onChange={next => setFields(current => ({ ...current, description: next }))} />
+            if (key === 'description' && (!isStructured || groupedBy === 'affiliation')) {
+              return <RichTextField key={key} label={groupedBy === 'affiliation' ? 'Shared description' : fieldCaption(key)} required={isRequired(key)} value={value} onChange={next => setFields(current => ({ ...current, description: next }))} />
             }
             // Outside a role-link choice the website has a box of its own,
             // which "Ext link" would not explain.

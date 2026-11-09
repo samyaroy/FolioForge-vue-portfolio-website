@@ -40,6 +40,7 @@ const views: Record<string, () => Promise<{ default: RouteComponent }>> = {
   Gallery: () => import('@/views/Gallery/index.vue'),
   Contact: () => import('@/views/Contact.vue'),
   PrivacyPolicy: () => import('@/views/PrivacyPolicy.vue'),
+  Sitemap: () => import('@/views/Sitemap/index.vue'),
   Resources: () => import('@/views/Resources/index.vue'),
   Facts: () => import('@/views/Facts/index.vue'),
   // Vite removes this import from builds that cannot expose beta routes.

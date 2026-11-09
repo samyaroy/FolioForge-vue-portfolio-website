@@ -87,10 +87,6 @@ Before submitting, confirm:
 
 ## Deployment
 
-The app builds to `dist/`. Existing deployment paths include GitHub Pages through:
-
-```sh
-npm run deploy
-```
+The app builds to `dist/`. The live sites are served from Cloudflare, and the repository root has no deploy script. See [Deployment in the README](README.md#deployment) for the manual steps.
 
 Deployment should usually be handled by maintainers.

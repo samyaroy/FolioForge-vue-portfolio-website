@@ -29,9 +29,9 @@ items:
     caption: Symmetry 2026 at **Dept. of Mathematics,** [[**Presidency University, Kolkata**|Presidency University, Kolkata|Institute]] was a bit of a mixed bag. The paper presentation didn’t quite go my way, but I ended up securing 2nd place in OverFlow, a solo competitive coding competition, and 2nd place in Predicta, a team ML competition hosted on Kaggle. Shoutout to [[Tamaghano Saha|Person]] for being a great teammate through the Predicta grind.
     date: 2026-09-25
     images:
-    - competition-01
-    - competition-01-01
-    - competition-01-02
+      - competition-01
+      - competition-01-01
+      - competition-01-02
     tags: [ Competition, Achievement ]
     featured: false
 
@@ -319,6 +319,21 @@ items:
     date: 2023-01-14
     location: Kolkata
     tags: [ Meetup ]
+  - id: saids2
+    title: Three Days of Brainstorming at SAIDS 2.0, ISI Kolkata
+    type: ""
+    event: SAIDS 2.0
+    location: PJA Auditorium, ISI Kolkata
+    date: Nov 08, 2026
+    caption: ""
+    tags:
+      - Workshop
+    featured: ""
+    images:
+      - saids2
+      - saids2-01
+    manifestDescription: ""
+    externalUrl: ""
   # - id: gallery-02
   #   title: Making mentoring repeatable
   #   caption: Notes, demos, and reviews have become the quiet system that keeps project work moving from rough idea to reliable delivery.

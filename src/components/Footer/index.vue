@@ -253,12 +253,15 @@
           </p>
         </div>
 
-        <router-link
-          :to="{ name: 'PrivacyPolicy' }"
-          class="footer-link text-sm md:col-start-2 md:row-start-1 md:self-start"
-        >
-          Privacy Policy
-        </router-link>
+        <!-- The icon credits below span this column too; mb keeps them off the Sitemap link. -->
+        <div class="text-gray-500 text-sm md:mb-2 md:col-start-2 md:row-start-1 md:self-start">
+          <router-link :to="{ name: 'PrivacyPolicy' }" class="footer-link text-sm block">
+            Privacy Policy
+          </router-link>
+          <router-link v-if="showSitemapLink" :to="{ name: 'Sitemap' }" class="footer-link text-sm block">
+            Sitemap
+          </router-link>
+        </div>
 
         <p class="text-gray-500 text-sm shrink-0 md:justify-self-end md:col-start-3 md:row-start-1 md:row-span-2">
           &#10038; Last updated: {{ last_updated_on }}
@@ -287,6 +290,7 @@ export default {
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
     const showResourcesLink = isFeatureEnabled('showResources.main')
+    const showSitemapLink = isFeatureEnabled('showSitemap')
     const showAffiliationsLink = (
       isFeatureEnabled('showAffiliations.showAffiliations')
       || isFeatureEnabled('showAffiliations')
@@ -325,6 +329,7 @@ export default {
       showWorkshopsAttendedLink,
       showAffiliationsLink,
       showResourcesLink,
+      showSitemapLink,
     };
   }
 }

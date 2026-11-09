@@ -10,4 +10,13 @@
 #     - guest_event-01-01-2      # second photo
 #     - https://example.com/extra.jpg  # or a full URL
 
-items: []
+items:
+  - id: kanchanjungha-01
+    type: gallery
+    images:
+      - https://media.samyabrata.codeium.xyz/clickclick/Kanchanjungha_1.jpg
+    alt: Snow-capped Kanchanjungha range under a wide blue sky, framed by a pagoda roof edge
+    caption: Kanchanjungha in the early morning from Darjeeling
+    location: Darjeeling, West Bengal
+    date: 2026-08-30
+    camera: iQOO Z10 5G

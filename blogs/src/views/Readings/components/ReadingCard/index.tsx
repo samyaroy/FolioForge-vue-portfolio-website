@@ -73,7 +73,7 @@ export function ReadingCard({
           )}
         </div>
         <div className={CARD_META_CLASS}>
-          <span>{reading.genre}</span>
+          <span className="text-[0.625rem]">{reading.genre}</span>
           <span className="tracking-normal text-primary" aria-hidden="true">
             •
           </span>

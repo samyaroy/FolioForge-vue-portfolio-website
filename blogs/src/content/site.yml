@@ -43,9 +43,12 @@ socialLinks:
 footer:
   privacyLabel: Privacy Policy
   privacyPath: /privacy-policy
+  # Shown beside the privacy link while the showSitemap flag is on.
+  sitemapLabel: Sitemap
+  sitemapPath: /sitemap
   rightsText: Rights Reserved
   lastUpdatedLabel: Last updated
-  lastUpdated: October 2026
+  lastUpdated: November 2026
   iconAttributionIntro: "ⓘ Some icons used are made by"
   iconAttributionSource: from
   iconAttributionLinks:
@@ -59,3 +62,6 @@ footer:
   designCreditName: Asib uz zaman Nahid
   designCreditHref: https://dribbble.com/asibuzzaman
   designCreditOutro: "'s work"
+  # Disclosure under the credits, covering /recommended and the movie
+  # creator shoutouts.
+  disclosure: "ⓘ No recommendation or shoutout on this site is paid or affiliated"

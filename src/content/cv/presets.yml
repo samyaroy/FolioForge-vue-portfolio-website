@@ -2,13 +2,19 @@
 #
 # A preset lists what it shows, in order: nothing joins it until it is added
 # here or ticked in the builder. `prefer` names the variant keys whose wording
-# it prints; `template_options` are the template's own settings. See
-# admin/docs/cv_architecture.md §5.3.
+# it prints; `template_options` are the template's own settings. `drive` names
+# where Publish puts the PDF: a subfolder of the CVs folder in Google Drive, and
+# the file's name there when it is not `filename`. See
+# admin/docs/cv_architecture.md §5.3 and §10.2.
 
 presets:
   - id: consolidated
     name: Consolidated CV
     filename: SamyabrataRoy_Resume_Consolidated
+    drive:
+      - folder: 4_Consolidated
+      - folder: 4_Consolidated
+        name: "SamyabrataRoy - 22F2001443 -  IITM BS"   # IIT Madras placement's naming
     template: resume-v1
     pages: 2
     header: [ phone, gmail, website, linkedin, github ]
@@ -50,6 +56,8 @@ presets:
   - id: academic
     name: Academic CV
     filename: SamyabrataRoy_Resume_Academic
+    drive:
+      - folder: 1_Academic
     template: resume-v1
     template_options: { bullet_size: small, body_size: normalsize }
     prefer: [ academic ]
@@ -92,6 +100,8 @@ presets:
   - id: corporate-da
     name: Corporate CV (Data Analysis)
     filename: SamyabrataRoy_Resume_Corporate_DA
+    drive:
+      - folder: 3_Corporate
     template: resume-v1
     template_options: { bullet_size: small, body_size: normalsize }
     prefer: [ data ]
@@ -126,6 +136,8 @@ presets:
   - id: corporate-fs
     name: Corporate CV (Full Stack)
     filename: SamyabrataRoy_Resume_Corporate_FS
+    drive:
+      - folder: 3_Corporate
     template: resume-v1
     template_options: { bullet_size: small, body_size: normalsize }
     prefer: [ fullstack ]
@@ -158,6 +170,8 @@ presets:
   - id: corporate-ml
     name: Corporate CV (Machine Learning)
     filename: SamyabrataRoy_Resume_Corporate_ML
+    drive:
+      - folder: 3_Corporate
     template: resume-v1
     template_options: { bullet_size: small, body_size: normalsize }
     prefer: [ ml ]
@@ -192,6 +206,8 @@ presets:
   - id: research-ml
     name: Research CV (Machine Learning)
     filename: SamyabrataRoy_Resume_Research_ML
+    drive:
+      - folder: 2_Research
     template: resume-v1
     template_options: { bullet_size: small, body_size: normalsize }
     prefer: [ research-ml ]
@@ -228,6 +244,8 @@ presets:
   - id: research-stats
     name: Research CV (Statistics)
     filename: SamyabrataRoy_Resume_Research_Stats
+    drive:
+      - folder: 2_Research
     template: resume-v1
     template_options: { bullet_size: small, body_size: normalsize }
     prefer: [ stats ]

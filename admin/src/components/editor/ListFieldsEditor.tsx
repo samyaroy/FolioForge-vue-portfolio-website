@@ -1,30 +1,39 @@
 import { Plus, Trash2 } from 'lucide-react'
-import { Button, IconButton, TextField } from '@/components/form'
+import { Button, IconButton, SwitchField, TextField } from '@/components/form'
 import { RoleLinkField } from '@/components/editor/RoleLinkField'
+import { RichTextField } from '@/components/editor/RichTextField'
 import { fieldCaption } from '@/lib/fieldNames'
 import { blankRow, keptCount, rowKey, visibleColumns, type ListFieldsRow } from '@/lib/listFields'
 import { CREDENTIAL_KEY, hasRoleLink, WEBSITE_KEY } from '@/lib/roleLinks'
+import { isEntryEnabled } from '../../../../src/config/entryStatus.ts'
 
 type ListFieldsEditorProps = {
   /** The entry key being edited, e.g. `students`. */
   name: string
   fields: readonly string[]
+  children?: Record<string, readonly string[]>
   rows: ListFieldsRow[]
   onChange: (rows: ListFieldsRow[]) => void
 }
 
-export function ListFieldsEditor({ name, fields, rows, onChange }: ListFieldsEditorProps) {
+export function ListFieldsEditor({ name, fields, children = {}, rows, onChange }: ListFieldsEditorProps) {
   const label = fieldCaption(name)
   const columns = visibleColumns(rows[0], fields)
   const singular = fieldCaption(name.replace(/s$/, ''))
   // A role's credential and website are one choice, which needs a card's width.
   const linked = hasRoleLink(columns)
-  const stacked = columns.length > 3 || linked
+  const stacked = columns.length > 3 || linked || columns.some(key => key === 'enabled' || key === 'description' || children[key])
   const update = (index: number, change: ListFieldsRow) => {
     onChange(rows.map((row, position) => position === index ? { ...row, ...change } : row))
   }
   /** One column of a card: the link choice, a kept value, or a text box. */
   const cardField = (row: ListFieldsRow, index: number, key: string) => {
+    if (key === 'enabled') {
+      return <SwitchField key={key} label="Show on site" aria-label={`Show ${singular.toLowerCase()} ${index + 1} on site`} checked={isEntryEnabled(row)} onChange={enabled => update(index, { enabled: String(enabled) })} />
+    }
+    if (children[key]) {
+      return <ListFieldsEditor key={key} name={key} fields={children[key]} rows={JSON.parse(row[key] || '[]')} onChange={nested => update(index, { [key]: JSON.stringify(nested) })} />
+    }
     if (linked && key === WEBSITE_KEY) return null
     if (linked && key === CREDENTIAL_KEY) {
       return (
@@ -40,6 +49,9 @@ export function ListFieldsEditor({ name, fields, rows, onChange }: ListFieldsEdi
     const kept = keptCount(row, key)
     if (kept !== undefined) {
       return <TextField key={key} label={fieldCaption(key)} value={`${kept} item${kept === 1 ? '' : 's'}, kept as is (edit in the YAML)`} readOnly disabled onChange={() => undefined} />
+    }
+    if (key === 'description') {
+      return <RichTextField key={key} label="Role description" value={row[key] ?? ''} onChange={value => update(index, { [key]: value })} />
     }
     return <TextField key={key} label={fieldCaption(key)} value={row[key] ?? ''} onChange={value => update(index, { [key]: value })} />
   }

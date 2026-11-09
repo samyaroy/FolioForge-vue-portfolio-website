@@ -11,7 +11,7 @@ factsNavLabel: "Did you know?"
 # navigation.ts warns in dev when a flag name doesn't exist.
 navItems:
   - to: /
-    label: Blog
+    label: Home
     flag: showBlogHome
   - to: /recommended
     label: Worth Your Time

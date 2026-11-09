@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 // The admin's own copy. Loading the root project's instead failed wherever only
 // this app's dependencies are installed, as in the Cloudflare build.
 import { parse } from 'yaml'
+import { cvCompileDev } from './scripts/cvCompileDev.ts'
 
 export default defineConfig({
   plugins: [
@@ -17,6 +18,8 @@ export default defineConfig({
         return { code: `export default ${JSON.stringify(parse(source))}`, map: null }
       },
     },
+    // CV builder preview under `vite dev`, with this machine's pdflatex.
+    cvCompileDev(),
   ],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
