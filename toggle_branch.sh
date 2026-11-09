@@ -6,7 +6,8 @@
 #   ./toggle_branch.sh switch V1     -> switch to V1 locally
 #   ./toggle_branch.sh switch V2     -> switch to V2 locally
 #   ./toggle_branch.sh build         -> build from main
-#   ./toggle_branch.sh deploy        -> deploy from main
+#
+# Deployment is not handled here: see the Deployment section of README.md.
 
 set -e
 
@@ -41,13 +42,6 @@ function build_project() {
     npm run build || echo "⚠️ Replace with correct build command"
 }
 
-function deploy_project() {
-    echo "Deploying from main..."
-    git checkout main
-    # Replace with your actual deploy command
-    npm run deploy || echo "⚠️ Replace with correct deploy command"
-}
-
 case "$1" in
     switch)
         switch_branch $2
@@ -58,14 +52,10 @@ case "$1" in
     build)
         build_project
         ;;
-    deploy)
-        deploy_project
-        ;;
     *)
         echo "Usage:"
         echo "  $0 switch V1|V2        -> switch branch"
         echo "  $0 set-main V1|V2      -> set main branch"
         echo "  $0 build               -> build from main"
-        echo "  $0 deploy              -> deploy from main"
         ;;
 esac
