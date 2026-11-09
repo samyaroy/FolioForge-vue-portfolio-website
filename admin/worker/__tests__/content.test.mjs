@@ -242,16 +242,23 @@ test('deleting takes exactly one entry out of every real collection', () => {
 })
 
 test('deleting an entry does not take the comments around it', () => {
+  const commentLines = text => text.split('\n').map(line => line.trim()).filter(line => line.startsWith('#'))
   for (const [id, source] of Object.entries(contentSources)) {
     const original = readFileSync(REPO + source.path, 'utf8')
     const document = parseContent(original)
     if (!countEntries(document, source)) continue
-    const text = removeEntry(document, locateEntry(document, source, 0))
-    const before = (original.match(/#/g) ?? []).length
-    const after = (text.match(/#/g) ?? []).length
+    const location = locateEntry(document, source, 0)
     // The deleted entry may legitimately carry its own comments; the rest of
-    // the file must not lose any.
-    assert.ok(after >= before - 6, `${id}: ${before} comments became ${after}`)
+    // the file must not lose any. Whole comment lines are compared, trimmed,
+    // because a render can re-indent them and `#` also appears in URLs and refs.
+    const [start, , end] = document.getIn([...location.path, location.index], true).range
+    const outside = commentLines(original.slice(0, start) + original.slice(end))
+    const remaining = commentLines(removeEntry(document, location))
+    for (const line of outside) {
+      const at = remaining.indexOf(line)
+      assert.ok(at >= 0, `${id}: deleting the first entry lost the comment "${line}"`)
+      remaining.splice(at, 1)
+    }
   }
 })
 

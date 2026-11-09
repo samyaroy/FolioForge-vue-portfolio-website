@@ -33,8 +33,8 @@ function fakeDrive() {
     calls.push(`${method} ${url.pathname}`)
     if (url.pathname === '/drive/v3/files' && method === 'GET') {
       const q = url.searchParams.get('q')
-      const parent = unquote(/^'((?:\\.|[^'])*)' in parents/.exec(q)[1])
-      const name = /name = '((?:\\.|[^'])*)'/.exec(q)
+      const parent = unquote(/^'((?:\\.|[^'\\])*)' in parents/.exec(q)[1])
+      const name = /name = '((?:\\.|[^'\\])*)'/.exec(q)
       const found = [...files.values()].filter(file => file.parent === parent
         && (q.includes(`mimeType = '${FOLDER_MIME}'`) ? file.folder : !file.folder)
         && (!name || file.name === unquote(name[1])))

@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "node ../scripts/require-deploy-branch.mjs V1 && npm run build && wrangler deploy",
     "typecheck": "tsc -b && tsc -p tsconfig.worker.json",
     "test:worker": "node --test worker/__tests__/*.test.mjs",
     "worker:dev": "wrangler dev --ip 127.0.0.1 --port 8788",
@@ -41,7 +41,7 @@
     "react-toastify": "^11.1.0",
     "tailwind-merge": "^3.3.0",
     "yaml": "^2.9.1",
-    "zod": "^4.6.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260916.1",
@@ -59,7 +59,12 @@
     "tw-animate-css": "^1.3.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.65.0",
-    "vite": "^7.1.2",
-    "wrangler": "^4.132.0"
+    "vite": "^7.3.8",
+    "wrangler": "^4.158.0"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.1"
+    }
   }
 }

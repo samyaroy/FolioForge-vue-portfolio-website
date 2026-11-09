@@ -32,7 +32,9 @@ test('editing the gallery produces both files, and only those', () => {
   const document = parseContent(galleryText())
   const location = locateEntry(document, source, 0)
   const entry = JSON.parse(JSON.stringify(document.getIn([...location.path, location.index])))
-  const text = replaceEntry(document, location, { ...entry, title: 'A different title' })
+  // The manifest prefers an entry's own manifestDescription, so clear it to test
+  // the title, whichever entry happens to come first in the file.
+  const text = replaceEntry(document, location, { ...entry, title: 'A different title', manifestDescription: '' })
 
   const derived = derivedFiles(source.path, parseContent(text).toJS())
   assert.equal(derived.length, 1)
@@ -40,6 +42,12 @@ test('editing the gallery produces both files, and only those', () => {
   assert.ok(generatedPaths.includes(MANIFEST))
   // The title feeds the manifest description, so the generated file moves with it.
   assert.ok(derived[0].text.includes('A different title'), 'the manifest must reflect the edit')
+
+  // When an entry has its own description, that is what the manifest shows.
+  const described = replaceEntry(parseContent(galleryText()), location, { ...entry, title: 'Another title', manifestDescription: 'Its own description' })
+  const manifest = derivedFiles(source.path, parseContent(described).toJS())[0].text
+  assert.ok(manifest.includes('Its own description'), 'the manifest must prefer manifestDescription')
+  assert.ok(!manifest.includes('Another title'), 'the title must not override manifestDescription')
 })
 
 test('a file with no generated output commits alone', () => {

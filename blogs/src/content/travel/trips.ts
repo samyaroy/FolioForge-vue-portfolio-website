@@ -50,6 +50,7 @@ export type Trip = {
   location?: string
   /** Stops on the trip, in travel order. */
   places?: TripPlace[]
+  /** Card text; when blank, the card shows the first narrative paragraph on one line. */
   summary?: string
   /** Full URL or CDN key for a cover photo. */
   coverImage?: string

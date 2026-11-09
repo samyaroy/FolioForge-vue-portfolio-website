@@ -306,6 +306,10 @@ Person:
     Link: https://www.linkedin.com/in/muralidharan-kunnummal/
 
   - Name: Dr. Indu Joshi
+    Aliases:
+      - Indu Joshi
+      - Prof. Indu Joshi
+      - Prof. Indu Joshi, IIT Mandi
     Link: https://www.linkedin.com/in/indu-joshi-83b9172a6/
 
   - Name: Prof. Balaraman Ravindran
@@ -335,3 +339,29 @@ Person:
     Aliases:
       - Galin Jones
     Link: https://cla.umn.edu/about/directory/profile/galin
+
+  - Name: Prof. Parthanil Roy
+    Aliases:
+      - Dr. Parthanil Roy
+    Link: https://sites.google.com/view/parthanilroy/
+
+  - Name: Prof. C. V. Jawahar
+    Aliases:
+      - C. V. Jawahar
+    Link: https://www.iiit.ac.in/faculty/jawahar-c-v/
+
+  - Name: Prof. Chiranjib Bhattacharyya
+    Aliases:
+      - Chiranjeeb Bhattacharyya
+      - Chiranjeeb Bhattacharyya, IISc
+    Link: https://eecs.iisc.ac.in/people/chiranjib-bhattacharyya/
+
+  - Name: Prof. Bernard Bercu
+    Aliases:
+      - Bernard Bercu, IMB
+    Link: https://bernardbercu.wordpress.com/liste-des-publications/
+
+  - Name: Prof. Sayan Ranu
+    Aliases:
+      - Sayan Ranu, IIT Delhi
+    Link: https://www.cse.iitd.ac.in/~sayan/

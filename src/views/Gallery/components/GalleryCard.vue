@@ -155,8 +155,10 @@
         {{ item.title }}
       </h2>
 
+      <!-- Justified on phones too, unlike the content-justify helper: a phone card
+           is about as wide as a tablet card, so it holds up just as well. -->
       <div
-        class="text-left text-slate-500 sm:text-justify"
+        class="text-justify text-slate-500"
         :class="compactLayout ? 'min-h-[7.5rem] text-[0.82rem] leading-6' : 'min-h-[8.75rem] text-[0.90rem] leading-7'"
       >
         <CaptionContent v-if="hasCaption" :text="item.caption" />

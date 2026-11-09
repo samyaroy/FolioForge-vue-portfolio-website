@@ -87,6 +87,7 @@ interface Trip {
   date?: unknown
   location?: unknown
   summary?: unknown
+  narrative?: unknown
   coverImage?: unknown
 }
 
@@ -339,14 +340,20 @@ const tripPages: SeoPage[] = trips.map((trip) => {
   const title = typeof trip.title === 'string' ? trip.title : id
   const location = typeof trip.location === 'string' ? trip.location : undefined
   const summary = typeof trip.summary === 'string' ? trip.summary.trim() : ''
+  // A blank summary falls back to the story's opening paragraph, as the card does.
+  const narrativeLead =
+    Array.isArray(trip.narrative) && typeof trip.narrative[0] === 'string'
+      ? trip.narrative[0].trim()
+      : ''
+  const snippet = summary || narrativeLead
   const url = `${SITE_URL}/travel/${id}`
 
   // Several trips still carry placeholder summaries from the template, which
   // would make useless snippets; anything that short is treated as absent and
   // a description is composed from the fields that are real.
   const description =
-    summary.length >= 40
-      ? summary
+    snippet.length >= 40
+      ? snippet
       : [title, location, `Travel notes by ${SITE_NAME}.`]
           .filter(Boolean)
           .join(' · ')
