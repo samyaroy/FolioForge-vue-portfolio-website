@@ -61,10 +61,10 @@ the live verification below passes.
 The Worker is closed at every stage of this sequence, so no step opens the
 hostname before the one that protects it.
 
-1. `npm run build` then `npx wrangler deploy`. This creates the Worker and the
-   `admin.samyabrata.codeium.xyz` custom domain, which is what puts the hostname
-   into DNS. No secret is installed yet, so every request — the owner's
-   included — is answered with `503 security_not_configured` and nothing is
+1. `npm run deploy` from the `V1` branch; the script refuses to run from any other
+   branch. This creates the Worker and the `admin.samyabrata.codeium.xyz` custom
+   domain, which is what puts the hostname into DNS. No secret is installed yet,
+   so every request — the owner's included — is answered with `503 security_not_configured` and nothing is
    served from `dist/`.
 2. Create the Access application for that hostname now that it resolves. Cover
    the whole host, including `/api/*`, with no bypass policy.
