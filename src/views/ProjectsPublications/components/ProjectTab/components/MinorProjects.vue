@@ -56,23 +56,7 @@
                             </div>
                         </div>
 
-                        <div v-if="getCollaborators(project.collaborators).length" class="flex items-start gap-2 mb-2">
-                            <div class="text-gray-600 flex items-start shrink-0">
-                                <v-icon class="mr-1">mdi-account-supervisor</v-icon>
-                                Collaborators:
-                            </div>
-                            <div class="text-gray-600">
-                                <template v-for="(collaborator, collaboratorIndex) in getCollaborators(project.collaborators)"
-                                    :key="collaborator.key">
-                                    <SmartLink
-                                        :type="'Person'"
-                                        :text="collaborator.name"
-                                        :href="collaborator.link"
-                                    />
-                                    <span class="mr-2" v-if="collaboratorIndex < getCollaborators(project.collaborators).length - 1">,</span>
-                                </template>
-                            </div>
-                        </div>
+                        <CollaboratorList :collaborators="project.collaborators" :icon-size="24" class="mb-2" />
 
                         <p class="content-justify text-gray-700 mb-3">
                             {{ project.description }}
@@ -148,6 +132,7 @@ import { projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import CollaboratorList from '@/components/CollaboratorList.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import LogoImage from '@/components/ui/LogoImage.vue'
 
@@ -196,42 +181,6 @@ function getLogos(logo) {
     return []
 }
 
-function getCollaborators(collaborators) {
-    if (Array.isArray(collaborators)) {
-        return collaborators
-            .map((collaborator, index) => {
-                if (typeof collaborator === 'string') {
-                    return createCollaborator(collaborator, null, index)
-                }
-
-                return createCollaborator(
-                    collaborator?.name,
-                    collaborator?.link || collaborator?.website || collaborator?.url || null,
-                    index
-                )
-            })
-            .filter(collaborator => collaborator.name)
-    }
-
-    if (typeof collaborators === 'string') {
-        return collaborators
-            .split(',')
-            .map((name, index) => createCollaborator(name, null, index))
-            .filter(collaborator => collaborator.name)
-    }
-
-    return []
-}
-
-function createCollaborator(name, link, index) {
-    const trimmedName = typeof name === 'string' ? name.trim() : ''
-
-    return {
-        name: trimmedName,
-        link,
-        key: `${trimmedName}-${index}`,
-    }
-}
 
 function hasActionLinks(project) {
     return Boolean(

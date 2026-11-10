@@ -51,6 +51,7 @@
                     </div>
                 </div>
                 </transition>
+                <CollaboratorList :collaborators="project.collaborators" :icon-size="16" class="mt-2 text-sm" />
                 <!-- Tags on the left, credential links on the same line at the right -->
                 <div class="flex items-center justify-between gap-3 mt-3 mb-3">
                     <div class="flex flex-wrap gap-px">
@@ -94,6 +95,7 @@ import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import LogoImage from '@/components/ui/LogoImage.vue'
+import CollaboratorList from '@/components/CollaboratorList.vue'
 
 // Default expanded/collapsed state is controlled by a feature flag
 const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.technicalProjects'))

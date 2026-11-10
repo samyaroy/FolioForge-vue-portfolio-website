@@ -36,13 +36,13 @@ export const entryFields = {
   // an education entry without a GPA does.
   awards: ['title', 'id', 'year', 'organization', 'category', 'prize', 'description', 'cred_link'],
 
-  projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
-  articles: ['title', { key: 'publication', object: ['name', 'host'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
+  projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'orcid', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
+  articles: ['title', { key: 'publication', object: ['name', 'host'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'orcid', 'link'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
 
   // The card renders `instructor`, `institution` and `duration` although no
   // entry fills them in yet; they are declared so one can be, without hand
   // editing the YAML. `guide` is the same role under the older name.
-  ongoingProjects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', 'instructor', 'institution', 'duration', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'link'] }, { key: 'cred_link', credentials: 'ongoingCategories' }],
+  ongoingProjects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', 'instructor', 'institution', 'duration', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'orcid', 'link'] }, { key: 'cred_link', credentials: 'ongoingCategories' }],
 
   // A mentoring engagement: one internship programme, mentored once. The
   // projects it produced are their own collection.

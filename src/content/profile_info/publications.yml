@@ -1,8 +1,26 @@
 articles:
+  # - title: 'A Point of No Probability: The Savage–Dickey Paradox'
+  #   publication:
+  #     name: Gradient (Vol II) 2027, pp. 59-64
+  #     host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
+  #   collaborators:
+  #   - name: Tamoghno Saha
+  #     link: mailto:tomshane25@gmail.com
+  #   - name: Priyam Ghosh
+  #     link: mailto:priyam.ghose.stats@gmail.com
+  #   field: Bayesian Inference, Probability Theory, Statistical Paradoxes
+  #   #    categories: [Uncertainty Quantification, Statistical Inference, Machine Learning]
+  #   date: Feb 2026
+  #   link: https://sxccal.edu/magazines
+  #   type: general
+  #   article_type: E-magazine Article
+  #   cred_link: https://drive.google.com/file/d/1OZ3R8fMiUPXyaSi2AQX-VoEPGC5cMPci/preview
+
   - title: 'Precision Without Understanding Uncertainty Is an Illusion of Control'
     publication:
       name: Gradient (Vol I) 2026, pp. 59-64
       host: Postgraduate Department of Data Science, St. Xavier’s College (Autonomous), Kolkata
+    collaborators:
     field: Statistical Inference, Machine Learning, Uncertainty Quantification
     #    categories: [Uncertainty Quantification, Statistical Inference, Machine Learning]
     date: Feb 2026
@@ -15,6 +33,7 @@ articles:
     publication:
       name: EPOCHS 2025 (2nd Edition)
       host: Wayanad Houses ML Group under ML Series initiative, `Indian Institute of Technology Madras BS Degree`
+    collaborators:
     field: Statistical Modeling, Outliers Detection, Robust modeling
     #    categories: [Robust Regression, Outlier Analysis, Statistical Modeling]
     date: Dec 2025

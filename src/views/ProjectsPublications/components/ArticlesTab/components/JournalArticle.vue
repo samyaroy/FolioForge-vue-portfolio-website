@@ -85,6 +85,7 @@
               </v-tooltip>
             </div>
 
+            <CollaboratorList v-if="!isSectionCollapsed" :collaborators="article.collaborators" class="mb-4" />
             <p v-if="!isSectionCollapsed && article.field" class="text-gray-600 mb-4">
               <v-icon size="20">mdi-tag-outline</v-icon>
               <span class="px-3">{{ article.field }}</span>
@@ -142,6 +143,7 @@ import { ref } from 'vue'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import SmartLink from '@/components/SmartLink.vue'
+import CollaboratorList from '@/components/CollaboratorList.vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import LogoImage from '@/components/ui/LogoImage.vue'
 

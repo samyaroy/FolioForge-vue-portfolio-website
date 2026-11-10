@@ -57,7 +57,10 @@ projects:
         name: Mr. Debashis Ghosh
         title: Head, Technology Business Development & Incubation
         institution: IDEAS - TIH
-      collaborators: Rishav Kumar banerjee, Saunak Datta
+      collaborators:
+        - name: Rishav Kumar banerjee
+          link: https://www.linkedin.com/in/rishav-kumar-banerjee-001121285/
+        - name: Saunak Datta
       time_period: Jul 2024 - Dec 2024
       cred_link:
         report: https://drive.google.com/file/d/1pRxfzda-l3rIbrJZztygDYiXcSL4L3Zc/view?usp=drive_link

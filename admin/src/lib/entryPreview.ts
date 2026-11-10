@@ -245,6 +245,7 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       // The venue: the publication's name, and who hosts it.
       ...fact(BookOpen, text(publication.name) || raw.publication),
       ...fact(Building, publication.host),
+      ...fact(Users, names(raw.collaborators)),
       // `field` is a long tag list, and `type` is the dropdown above the list,
       // so neither earns a place on the row.
     ]
