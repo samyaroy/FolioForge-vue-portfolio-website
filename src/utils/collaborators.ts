@@ -44,6 +44,10 @@ function hostOf(url: string): string {
   }
 }
 
+function isLinkedInHost(host: string): boolean {
+  return host === 'linkedin.com' || host.endsWith('.linkedin.com')
+}
+
 function emailContact(value: unknown, name: string): CollaboratorContact | null {
   const address = text(value).replace(/^mailto:/i, '')
   return EMAIL.test(address) ? { kind: 'email', href: `mailto:${address}`, label: `Email ${name}` } : null
@@ -53,7 +57,7 @@ function linkedinContact(value: unknown, name: string): CollaboratorContact | nu
   const raw = text(value)
   if (!raw) return null
   const href = WEB_URL.test(raw) ? raw : `https://www.linkedin.com/in/${raw.replace(/^@/, '').replace(/^\/+|\/+$/g, '')}`
-  return hostOf(href).endsWith('linkedin.com') ? { kind: 'linkedin', href, label: `${name} on LinkedIn` } : null
+  return isLinkedInHost(hostOf(href)) ? { kind: 'linkedin', href, label: `${name} on LinkedIn` } : null
 }
 
 function orcidContact(value: unknown, name: string): CollaboratorContact | null {
@@ -69,7 +73,7 @@ function linkContact(value: unknown, name: string): CollaboratorContact | null {
   if (/^mailto:/i.test(raw)) return emailContact(raw, name)
   if (!WEB_URL.test(raw)) return null
   const host = hostOf(raw)
-  if (host.endsWith('linkedin.com')) return linkedinContact(raw, name)
+  if (isLinkedInHost(host)) return linkedinContact(raw, name)
   if (host === 'orcid.org') return orcidContact(raw, name)
   return host ? { kind: 'website', href: raw, label: `${name}'s website` } : null
 }
