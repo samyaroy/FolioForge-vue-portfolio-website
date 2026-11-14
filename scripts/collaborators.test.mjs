@@ -32,6 +32,20 @@ test('an older `link` is sorted by where it points', () => {
   assert.deepEqual(people.map(person => person.contacts[0].kind), ['linkedin', 'orcid', 'email', 'website'])
 })
 
+test('a GitHub username or URL gets the GitHub icon, from `github` or an older `link`', () => {
+  const people = collaboratorList([
+    { name: 'A', github: 'anubrata-de', linkedin: 'a' },
+    { name: 'B', github: 'https://github.com/mazumdarsoumya' },
+    { name: 'C', link: 'https://github.com/22f3002449' },
+    { name: 'D', github: 'https://gitlab.com/d' },
+  ])
+  assert.deepEqual(kinds(people[0]), ['linkedin https://www.linkedin.com/in/a', 'github https://github.com/anubrata-de'])
+  assert.deepEqual(kinds(people[1]), ['github https://github.com/mazumdarsoumya'])
+  assert.deepEqual(kinds(people[2]), ['github https://github.com/22f3002449'])
+  assert.deepEqual(people[3].contacts, [])
+  assert.equal(people[0].contacts[1].label, 'A on GitHub')
+})
+
 test('a link that repeats a dedicated key shows once', () => {
   const [person] = collaboratorList([
     { name: 'A', linkedin: 'https://www.linkedin.com/in/a', link: 'https://www.linkedin.com/in/a' },
