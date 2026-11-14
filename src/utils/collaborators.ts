@@ -9,13 +9,14 @@
 //     - name: Jane Doe
 //       email: jane@example.com
 //       linkedin: https://www.linkedin.com/in/jane    or just the handle, `jane`
+//       github: https://github.com/jane               or just the username, `jane`
 //       orcid: 0000-0002-1825-0097                    the iD, or its orcid.org URL
 //       link: https://example.com                     any other page
 //
-// `link` predates the dedicated keys, so a LinkedIn, ORCID or mailto URL there
-// gets the matching icon rather than the generic one.
+// `link` predates the dedicated keys, so a LinkedIn, GitHub, ORCID or mailto URL
+// there gets the matching icon rather than the generic one.
 
-export type ContactKind = 'email' | 'linkedin' | 'orcid' | 'website'
+export type ContactKind = 'email' | 'linkedin' | 'github' | 'orcid' | 'website'
 
 export interface CollaboratorContact {
   kind: ContactKind
@@ -48,6 +49,10 @@ function isLinkedInHost(host: string): boolean {
   return host === 'linkedin.com' || host.endsWith('.linkedin.com')
 }
 
+function isGitHubHost(host: string): boolean {
+  return host === 'github.com'
+}
+
 function emailContact(value: unknown, name: string): CollaboratorContact | null {
   const address = text(value).replace(/^mailto:/i, '')
   return EMAIL.test(address) ? { kind: 'email', href: `mailto:${address}`, label: `Email ${name}` } : null
@@ -58,6 +63,13 @@ function linkedinContact(value: unknown, name: string): CollaboratorContact | nu
   if (!raw) return null
   const href = WEB_URL.test(raw) ? raw : `https://www.linkedin.com/in/${raw.replace(/^@/, '').replace(/^\/+|\/+$/g, '')}`
   return isLinkedInHost(hostOf(href)) ? { kind: 'linkedin', href, label: `${name} on LinkedIn` } : null
+}
+
+function githubContact(value: unknown, name: string): CollaboratorContact | null {
+  const raw = text(value)
+  if (!raw) return null
+  const href = WEB_URL.test(raw) ? raw : `https://github.com/${raw.replace(/^@/, '').replace(/^\/+|\/+$/g, '')}`
+  return isGitHubHost(hostOf(href)) ? { kind: 'github', href, label: `${name} on GitHub` } : null
 }
 
 function orcidContact(value: unknown, name: string): CollaboratorContact | null {
@@ -74,6 +86,7 @@ function linkContact(value: unknown, name: string): CollaboratorContact | null {
   if (!WEB_URL.test(raw)) return null
   const host = hostOf(raw)
   if (isLinkedInHost(host)) return linkedinContact(raw, name)
+  if (isGitHubHost(host)) return githubContact(raw, name)
   if (host === 'orcid.org') return orcidContact(raw, name)
   return host ? { kind: 'website', href: raw, label: `${name}'s website` } : null
 }
@@ -87,6 +100,7 @@ function toCollaborator(entry: unknown, index: number): Collaborator | null {
     ? [
         emailContact(row.email, name),
         linkedinContact(row.linkedin, name),
+        githubContact(row.github, name),
         orcidContact(row.orcid, name),
         linkContact(row.link ?? row.website ?? row.url, name),
       ]

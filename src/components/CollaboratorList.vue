@@ -50,6 +50,7 @@ const orcidIcon = iconUrl('Orchid')
 const contactIcons: Record<Exclude<ContactKind, 'orcid'>, string> = {
   email: 'mdi-email-outline',
   linkedin: 'mdi-linkedin',
+  github: 'mdi-github',
   website: 'mdi-web',
 }
 </script>
