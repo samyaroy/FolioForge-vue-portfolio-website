@@ -141,6 +141,12 @@
           <span>{{ bootcamp.location }}</span>
         </div>
 
+        <!-- The bootcamp's gallery post, if it has one; only this icon is
+             pushed to the right. -->
+        <div v-if="bootcamp.gallery" class="flex justify-end pt-1">
+          <GalleryLink :item-id="bootcamp.gallery" />
+        </div>
+
       </div>
 
     </div>
@@ -158,6 +164,7 @@ import { computed, ref } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import GalleryLink from '@/components/GalleryLink.vue'
 import CourseCirriculumModal from '@/views/Home/components/education/components/CourseCirriculumModal.vue'
 
 const props = defineProps({

@@ -81,6 +81,12 @@
           <span>{{ conference.location }}</span>
         </div>
 
+        <!-- The conference's gallery post, if it has one; only this icon is
+             pushed to the right. -->
+        <div v-if="conference.gallery" class="flex justify-end pt-1">
+          <GalleryLink :item-id="conference.gallery" />
+        </div>
+
       </div>
 
     </div>
@@ -92,6 +98,7 @@ import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import GalleryLink from '@/components/GalleryLink.vue'
 
 
 const props = defineProps({
