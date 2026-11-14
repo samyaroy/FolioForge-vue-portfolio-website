@@ -52,6 +52,9 @@ export const entryFields = {
 
   memberships: ['organization', 'chapter', 'role', 'membership_id', 'period', 'location', 'cred_link'],
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
+  // Teammates are `collaborators`, the same list projects use, so a teammate
+  // gets the same columns and contact icons as a project collaborator.
+  competitions: ['title', 'type', 'event', 'host', 'location', 'date', 'result', 'prize', 'category', 'team_name', { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, 'description', 'link', 'gallery', 'cred_link'],
   certifications: ['title', { key: 'issuer', object: ['institution', 'platform', 'location'] }, 'instructor', 'date', 'duration', 'tag', 'logo', 'cred_link'],
 
   // An event can have several hosts -- a host institute and an industry

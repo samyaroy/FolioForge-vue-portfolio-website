@@ -54,6 +54,20 @@
             </span>
           </div>
         </div>
+
+        <!-- Competitions Section -->
+        <div v-if="showCompetitionsTab && activeTab === 'competitions'" class="mb-16">
+          <div v-if="competitions.length" class="space-y-6 max-w-4xl mx-auto">
+            <CompetitionCard v-for="(competition, index) in competitions" :key="`${competition.title}-${index}`"
+              :competition="competition" />
+          </div>
+          <div v-else class="text-center text-gray-500 italic py-8">
+            <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
+              <AnimatedIcon name="dino" :size="28" class="-mb-0.5 shrink-0" />
+              <span>No competitions listed yet</span>
+            </span>
+          </div>
+        </div>
       </TabPanels>
 
       <MoreCertificatesModal v-model="showMoreCertificates" :certifications="moreCertifications" />
@@ -71,23 +85,27 @@ import InternshipCard from './components/InternshipCard.vue'
 import CertificationCard from './components/CertificationCard.vue'
 import CredlyBanner from './components/CredlyBanner.vue'
 import MoreCertificatesModal from './components/MoreCertificatesModal.vue'
+import CompetitionCard from './components/CompetitionCard.vue'
 import config from "@/content/profile_info"
 import descriptions from '@/content/profile_info/description.yml'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
 
 const { certifications, internships } = config
 const moreCertifications = config.more_certifications || []
+const competitions = Array.isArray(config.competitions) ? config.competitions : []
 const credly = config.socials.credly
 const credlyBadgesApi = config.credlyBadgesApi
 const pageDescription = descriptions.internshipCertifications
 
 const showInternshipsTab = isFeatureEnabled('showInternshipCertifications.showInternships')
 const showCertificationsTab = isFeatureEnabled('showInternshipCertifications.showCertifications')
+const showCompetitionsTab = isFeatureEnabled('showInternshipCertifications.showCompetitions')
 const showPageDescription = isPageDescriptionEnabled('internshipCertifications')
 
 const tabDefinitions = [
   { id: 'internships', name: 'Training Internships', enabled: showInternshipsTab },
   { id: 'certifications', name: 'Certifications', enabled: showCertificationsTab },
+  { id: 'competitions', name: 'Competitions', enabled: showCompetitionsTab },
 ]
 
 const tabs = computed(() => tabDefinitions.filter(tab => tab.enabled))

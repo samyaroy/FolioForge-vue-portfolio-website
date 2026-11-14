@@ -201,10 +201,11 @@ export const portfolioPages: PortfolioPage[] = [
   },
   {
     id: 'internships-certifications', title: 'Internships & Certifications', publicPath: '/internships-certifications', icon: BadgeCheck,
-    description: 'Training internships and professional certification records.',
+    description: 'Training internships, professional certification records and competitions.',
     sections: [
       { id: 'internships', title: 'Training Internships', sources: ['internships.yml'], fields: ['Role and organisation', 'Dates and location', 'Description and credential', 'Links and logos'], requiredFields: ['role'], entryFields: entryFields.internships },
       { id: 'certifications', title: 'Certifications', sources: ['certifications.yml'], fields: ['Credential and issuer', 'Date and credential ID', 'Verification link and logo'], requiredFields: ['title'], entryFields: entryFields.certifications },
+      { id: 'competitions', title: 'Competitions', sources: ['competitions.yml'], fields: ['Competition and event', 'Result and date', 'Team and description', 'Certificate'], requiredFields: ['title'], entryFields: entryFields.competitions },
     ],
   },
   {

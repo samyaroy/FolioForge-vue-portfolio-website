@@ -13,6 +13,7 @@ import education from './education.yml'
 import experience from './experience.yml'
 import internships from './internships.yml'
 import certifications from './certifications.yml'
+import competitions from './competitions.yml'
 import projects from './projects.yml'
 import publications from './publications.yml'
 import ongoingProjects from './ongoing_projects.yml'
@@ -37,6 +38,7 @@ export const profileInfoSources = ([
   { source: 'src/content/profile_info/experience.yml', data: experience },
   { source: 'src/content/profile_info/internships.yml', data: internships },
   { source: 'src/content/profile_info/certifications.yml', data: certifications },
+  { source: 'src/content/profile_info/competitions.yml', data: competitions },
   { source: 'src/content/profile_info/projects.yml', data: projects },
   { source: 'src/content/profile_info/publications.yml', data: publications },
   { source: 'src/content/profile_info/ongoing_projects.yml', data: ongoingProjects },
@@ -61,6 +63,7 @@ const config: Record<string, any> = withoutDisabledEntries({
   ...experience,
   ...internships,
   ...certifications,
+  ...competitions,
   ...projects,
   ...publications,
   ...ongoingProjects,
