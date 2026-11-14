@@ -3,6 +3,7 @@ import type { RouteComponent, RouteRecordRaw } from 'vue-router'
 import { isFeatureEnabled } from '@/config/featureFlags'
 import { isBetaSite } from '@/config/siteEnvironment'
 import { BASE_TITLE, pageTitle, routeMetadata } from './routes'
+import { GALLERY_ITEM_PARAM } from '@/utils/shareLinks'
 
 // Path, title, description, and feature flag for every page live in
 // ./routes.ts, which the build also reads to emit the sitemap and to prerender
@@ -79,6 +80,13 @@ const router = createRouter({
     }
     if (to.hash) {
       return { el: to.hash, behavior: 'smooth' }
+    }
+    // A gallery link to one card (`/gallery?item=…`) scrolls the page itself,
+    // once the card is rendered. The router resolves its own scroll a tick
+    // later, so jumping to the top here would cancel that scroll and leave
+    // the visitor at the top of the gallery.
+    if (to.name === 'Gallery' && to.query[GALLERY_ITEM_PARAM]) {
+      return false
     }
     return { top: 0 }
   }
