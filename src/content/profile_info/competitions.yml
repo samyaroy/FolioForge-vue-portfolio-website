@@ -43,3 +43,31 @@ competitions:
     link: https://www.kaggle.com/competitions/example
     gallery: example-gallery-post
     cred_link:
+
+  - title: Predicta
+    type: Team
+    event: Symmetry 2026
+    host: Department of Mathematics, `Presidency University, Kolkata`
+    location: Kolkata, WB
+    date: Sep 2026
+    result: 2nd Place
+    prize: ₹1,500
+    category: Machine Learning
+    team_name: "Breznev's Brows"
+    collaborators:
+      - name: Tamoghno Saha
+    link: https://www.kaggle.com/competitions/predicta/overview
+    gallery: competition-01
+    cred_link:
+
+  - title: OverFlow
+    type: Solo
+    event: Symmetry 2026
+    host: Department of Mathematics, `Presidency University, Kolkata`
+    location: Kolkata, WB
+    date: Sep 2026
+    result: 2nd Place
+    prize: ₹1,500
+    category: Competitive Coding (live)
+    gallery: competition-01
+    cred_link:
