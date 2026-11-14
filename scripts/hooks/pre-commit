@@ -4,8 +4,9 @@
 #
 #   src/content/galleryImageManifest.yml  <-  gallery.yml
 #   public/og-image.jpg + blogs/public/og-image.jpg  <-  config/og-card.yml
+#   src/content/linkPreviews.json  <-  ongoing_projects.yml links
 #
-# Both outputs are generated and committed, and neither is rebuilt by a normal
+# All outputs are generated and committed, and none is rebuilt by a normal
 # `npm run build`. When a commit touches one of the sources, this hook
 # regenerates the output and stages it so the pair never drifts.
 #
@@ -25,6 +26,10 @@ MANIFEST="src/content/galleryImageManifest.yml"
 OG_CONFIG="config/og-card.yml"
 OG_SCRIPT="scripts/build-og-image.mjs"
 OG_CARDS="public/og-image.jpg blogs/public/og-image.jpg"
+
+ONGOING="src/content/profile_info/ongoing_projects.yml"
+PREVIEW_SCRIPT="scripts/build-link-previews.mjs"
+PREVIEWS="src/content/linkPreviews.json"
 
 warn_if_unstaged() {
   git diff --quiet -- "$1" && return 0
@@ -91,6 +96,29 @@ build_og_cards() {
   echo "pre-commit: social cards regenerated and staged."
 }
 
+build_link_previews() {
+  git diff --cached --quiet -- "$ONGOING" "$PREVIEW_SCRIPT" && return 0
+
+  if [ ! -d node_modules/yaml ]; then
+    echo "pre-commit: dependencies missing (run 'npm install'); skipping link previews." >&2
+    return 0
+  fi
+
+  warn_if_unstaged "$ONGOING"
+  echo "pre-commit: fetching link previews..."
+
+  # Needs the network. A link that cannot be read only warns and keeps its
+  # previous preview, so this fails only on an unreadable content file.
+  if ! node "$PREVIEW_SCRIPT"; then
+    echo "pre-commit: link preview build FAILED; commit aborted." >&2
+    echo "            fix $ONGOING (likely invalid YAML) and commit again." >&2
+    return 1
+  fi
+
+  git add -- "$PREVIEWS"
+  echo "pre-commit: $PREVIEWS regenerated and staged."
+}
+
 if ! command -v node >/dev/null 2>&1; then
   echo "pre-commit: node not found; skipping generated-file sync." >&2
   exit 0
@@ -98,5 +126,6 @@ fi
 
 sync_gallery_manifest || exit 1
 build_og_cards || exit 1
+build_link_previews || exit 1
 
 exit 0
