@@ -61,14 +61,14 @@ export const entryFields = {
   // partner, say -- so `institution` (and a conference's `organizer`) is a list
   // of rows, never one text box. Each collection offers the columns its card
   // renders: a workshop shows a host's role, a conference only its name.
-  // `gallery` is a gallery.yml post id; conference and bootcamp cards link to
-  // that post.
+  // `gallery` is a gallery.yml post id; conference, bootcamp and workshop
+  // cards link to that post.
   conferences: ['title', { key: 'organizer', list: ['name', 'department'] }, { key: 'institution', list: ['name'] }, 'location', 'date', 'link', 'cred_link', 'gallery'],
   fdps: ['title', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link'],
   // `special` marks a workshop to set apart on the Workshops tab (a navy
   // border instead of steel). The Other Learning Engagements popup keeps its
   // own colour either way.
-  workshops: ['title', { key: 'special', type: 'boolean' }, 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
+  workshops: ['title', { key: 'special', type: 'boolean' }, 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred', 'gallery'],
   bootcamps: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'location'] }, 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link', 'gallery'],
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 

@@ -35,6 +35,7 @@ attended_workshops:
     duration: "3 Days"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1hKT3Z5JOVdhw8OmqHRjIWUPlnOwxugEc/preview"
+    gallery: saids2
 
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
     instructor:
@@ -81,6 +82,7 @@ attended_workshops:
     duration: "7 Days"
     mode: "Offline"
     details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/preview"
+    gallery: workshop-03
 
   - title: "Numerical Algorithms & Computations in Science & Technology with Matlab (NACSTM 2024)"
     special: true
@@ -109,6 +111,7 @@ attended_workshops:
     date: "January 2024"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/preview"
+    gallery: workshop-09
 
   - title: "Social Computing (One day workshop) - NPTEL"
     special: true
@@ -120,6 +123,7 @@ attended_workshops:
     date: "February 2023"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
+    gallery: workshop-01
 
 attended_webinars_n_others:
   - title: "Learning machines"
