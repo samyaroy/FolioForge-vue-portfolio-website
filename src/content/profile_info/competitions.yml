@@ -20,30 +20,6 @@
 #                 that post in the gallery
 #   cred_link:    the certificate, opened in the document viewer
 competitions:
-  # Placeholder with every field filled in, switched off so the site never
-  # renders it; it shows the shape of an entry. Copy it, or delete it once it
-  # is no longer useful.
-  - title: A Dummy Data Science Challenge
-    enabled: false
-    type: Team
-    event: Example Fest 2026
-    host: Department of Statistics, Example University
-    location: Kolkata, WB
-    date: Jan 2026
-    result: 1st Place
-    prize: ₹5,000
-    category: Data Analysis
-    team_name: Example Team
-    collaborators:
-      - name: Example Teammate
-        email: teammate@example.com
-        github: example-teammate
-        linkedin: example-teammate
-    description: Placeholder competition, kept switched off so the list has a shape.
-    link: https://www.kaggle.com/competitions/example
-    gallery: example-gallery-post
-    cred_link:
-
   - title: Predicta
     type: Team
     event: Symmetry 2026
