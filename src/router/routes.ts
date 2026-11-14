@@ -96,7 +96,7 @@ export const routeMetadata: RouteMetadata[] = [
     name: 'InternshipCertification',
     title: 'Internships & Certifications',
     description:
-      'Internships and professional certifications completed by Samyabrata Roy in data science, statistics, and software development.',
+      'Internships, professional certifications and competitions of Samyabrata Roy in data science, statistics, and software development.',
     flagPath: 'showInternshipCertifications',
     flagMode: 'any',
   },

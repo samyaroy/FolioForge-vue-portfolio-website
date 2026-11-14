@@ -1,6 +1,7 @@
 import affiliationsYaml from '../../../src/content/profile_info/affiliations.yml'
 import awardsYaml from '../../../src/content/profile_info/awards.yml'
 import certificationsYaml from '../../../src/content/profile_info/certifications.yml'
+import competitionsYaml from '../../../src/content/profile_info/competitions.yml'
 import cocurricularYaml from '../../../src/content/profile_info/cocurricular.yml'
 import educationYaml from '../../../src/content/profile_info/education.yml'
 import experienceYaml from '../../../src/content/profile_info/experience.yml'
@@ -38,6 +39,7 @@ const documents = {
   cvLibrary: cvLibraryYaml as UnknownRecord,
   certifications: certificationsYaml as UnknownRecord,
   cocurricular: cocurricularYaml as UnknownRecord,
+  competitions: competitionsYaml as UnknownRecord,
   education: educationYaml as UnknownRecord,
   experience: experienceYaml as UnknownRecord,
   facts: factsYaml as UnknownRecord,
@@ -182,6 +184,7 @@ const entryRegistry: Record<string, () => PortfolioEntry[]> = {
     ...arrayAt(documents.certifications, 'certifications'),
     ...arrayAt(documents.certifications, 'more_certifications'),
   ]),
+  'internships-certifications/competitions': () => repositoryEntries('internships-certifications/competitions', arrayAt(documents.competitions, 'competitions')),
   'workshops/conferences': () => repositoryEntries('workshops/conferences', arrayAt(documents.workshops, 'attended_conferences')),
   'workshops/fdps': () => repositoryEntries('workshops/fdps', arrayAt(documents.workshops, 'attended_fdps')),
   'workshops/main': () => repositoryEntries('workshops/main', arrayAt(documents.workshops, 'attended_workshops')),

@@ -88,6 +88,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
   showInternshipCertifications: {
     showInternships: true,
     showCertifications: true,
+    showCompetitions: true,
   },
 
   showWorkshopsAttended: {
