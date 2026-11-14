@@ -58,8 +58,10 @@
         <!-- Competitions Section -->
         <div v-if="showCompetitionsTab && activeTab === 'competitions'" class="mb-16">
           <div v-if="competitions.length" class="space-y-6 max-w-4xl mx-auto">
-            <CompetitionCard v-for="(competition, index) in competitions" :key="`${competition.title}-${index}`"
+            <CompetitionCard v-for="(competition, index) in visibleCompetitions" :key="`${competition.title}-${index}`"
               :competition="competition" />
+            <SeeMoreButton :remaining="competitions.length - visibleCompetitions.length"
+              @more="visibleCompetitionCount += COMPETITIONS_PAGE_SIZE" />
           </div>
           <div v-else class="text-center text-gray-500 italic py-8">
             <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
@@ -86,6 +88,7 @@ import CertificationCard from './components/CertificationCard.vue'
 import CredlyBanner from './components/CredlyBanner.vue'
 import MoreCertificatesModal from './components/MoreCertificatesModal.vue'
 import CompetitionCard from './components/CompetitionCard.vue'
+import SeeMoreButton from '@/components/ui/SeeMoreButton.vue'
 import config from "@/content/profile_info"
 import descriptions from '@/content/profile_info/description.yml'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
@@ -93,6 +96,11 @@ import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlag
 const { certifications, internships } = config
 const moreCertifications = config.more_certifications || []
 const competitions = Array.isArray(config.competitions) ? config.competitions : []
+
+// Five competitions at first; "See more" adds five at a time.
+const COMPETITIONS_PAGE_SIZE = 5
+const visibleCompetitionCount = ref(COMPETITIONS_PAGE_SIZE)
+const visibleCompetitions = computed(() => competitions.slice(0, visibleCompetitionCount.value))
 const credly = config.socials.credly
 const credlyBadgesApi = config.credlyBadgesApi
 const pageDescription = descriptions.internshipCertifications
