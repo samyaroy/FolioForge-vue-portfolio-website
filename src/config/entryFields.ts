@@ -82,8 +82,8 @@ export const entryFields = {
   // the two sit side by side, the admin edits them as one choice. `ext_link`
   // belongs to the role, unlike `organization.web_link`, which is the
   // organisation's own site.
-  leadership: [{ key: 'affiliation', list: ['role', 'enabled', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'description', 'cred_link', 'ext_link'] }, 'description'],
-  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'enabled', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link', 'field'], children: { field: ['sub_field', 'enabled', 'time_period', 'skills'] } }, { key: 'field', list: ['sub_field', 'enabled', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
+  leadership: [{ key: 'affiliation', list: ['role', 'enabled', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'description', 'cred_link', 'ext_link', 'gallery'] }, 'description', 'gallery'],
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'enabled', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link', 'gallery', 'field'], children: { field: ['sub_field', 'enabled', 'time_period', 'skills'] } }, { key: 'field', list: ['sub_field', 'enabled', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link', 'gallery'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],

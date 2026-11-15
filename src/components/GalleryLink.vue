@@ -8,7 +8,8 @@
     :to="{ path: '/gallery', query: { [GALLERY_ITEM_PARAM]: item.id } }"
     :aria-label="`See ${label} in the gallery`"
     :title="`In the gallery: ${label}`"
-    class="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-[#1980e6] text-[#1980e6] shadow transition hover:bg-[#1980e6] hover:text-white"
+    :class="{ shadow: !shadowless }"
+    class="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-[#1980e6] text-[#1980e6] transition hover:bg-[#1980e6] hover:text-white"
   >
     <v-icon size="16">mdi-image-outline</v-icon>
   </RouterLink>
@@ -30,6 +31,8 @@ interface GalleryItem {
 const props = defineProps<{
   /** The gallery post's `id` in gallery.yml, such as `competition-01`. */
   itemId?: string | null
+  /** Omit the shadow when used as a floating card action. */
+  shadowless?: boolean
 }>()
 
 const galleryItems: GalleryItem[] = Array.isArray(galleryContent?.items)

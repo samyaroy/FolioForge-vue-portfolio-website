@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l-4 border-green-500 pl-4 sm:pl-5 py-2.5 pr-4 rounded-md bg-slate-50 text-sm">
+  <div :class="galleryIds.length ? 'pr-16' : 'pr-4'" class="relative border-l-4 border-green-500 pl-4 sm:pl-5 py-2.5 rounded-md bg-slate-50 text-sm">
     <!-- Roles as a timeline, the same rail the leadership card uses. One role
          renders as a single node without a dot; several read as a sequence. -->
     <div class="grid grid-cols-[18px_minmax(0,1fr)] gap-x-2">
@@ -67,6 +67,9 @@
         </div>
       </template>
     </div>
+    <div v-if="galleryIds.length" class="absolute bottom-2 right-3 flex items-center gap-2">
+      <GalleryLink v-for="id in galleryIds" :key="id" :item-id="id" shadowless />
+    </div>
   </div>
 </template>
 
@@ -74,6 +77,7 @@
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import ExternalLink from '@/components/ExternalLink.vue'
+import GalleryLink from '@/components/GalleryLink.vue'
 import SmartLink from '@/components/SmartLink.vue'
 
 const props = defineProps({
@@ -100,6 +104,7 @@ const readRole = source => {
     time_period: source.time_period || '',
     cred_link: source.cred_link || null,
     ext_link: source.ext_link || '',
+    gallery: source.gallery || '',
     skills: source.skills || '',
     fields,
     showFieldTimeline: fields.length > 1
@@ -116,4 +121,9 @@ const roles = computed(() =>
 )
 
 const showTimeline = computed(() => roles.value.length > 1)
+// Keep each role's gallery destination, with one action per distinct post.
+const galleryIds = computed(() => [...new Set([
+  props.volunteering.gallery,
+  ...roles.value.map(role => role.gallery)
+].map(id => String(id ?? '').trim()).filter(Boolean))])
 </script>
