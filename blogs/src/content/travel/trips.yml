@@ -183,7 +183,7 @@ trips:
       - name: Saunak Datta
         url: https://www.instagram.com/_whos.ronny_/
 
-  - id: uttrakhand-trip-01
+  - id: uttarakhand-trip-01
     title: Took my parents with me this time
     date: 2024-11
     location: Delhi, Uttar Pradesh, Uttarakhand
@@ -283,7 +283,7 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr-03.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr-04.jpeg
 
-  - id: derjeeling-2024
+  - id: darjeeling-2024
     title: Another long weekend in the hills
     date: 2024-05-15
     location: Darjeeling, West Bengal
