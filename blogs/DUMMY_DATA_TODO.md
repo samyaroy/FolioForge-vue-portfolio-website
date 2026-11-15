@@ -9,7 +9,7 @@ The file marks itself: `# Dummy entries below — replace with real trips.` (lin
 
 ### Placeholder `summary` + `narrative` text (renders on trip cards and details pages)
 
-- [ ] `mahababipuram26` — `ABC` (lines 60, 62–64)
+- [x] `mahabalipuram-2026` (was `mahababipuram26`) — story written
 - [ ] `uttarakhand-devbhumi-2025` — `BCD` (lines 93, 96–98)
 - [ ] `vizag-01-2025` — `XYZ` (lines 122, 125–127)
 - [ ] `uttrakhand-trip-01` — `PQR` (lines 158, 161–163)
