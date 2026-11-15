@@ -35,6 +35,7 @@ attended_workshops:
     duration: "3 Days"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1hKT3Z5JOVdhw8OmqHRjIWUPlnOwxugEc/preview"
+    gallery: saids2
 
   - title: "Context-Aware Large Language Models in Practice: Prompting and Retrieval-Augmentation Generation"
     instructor:
@@ -81,6 +82,7 @@ attended_workshops:
     duration: "7 Days"
     mode: "Offline"
     details_cred: "https://drive.google.com/file/d/1cxYxw-DLf0xvDexuYaJAxFi9bFkHyxl1/preview"
+    gallery: workshop-03
 
   - title: "Numerical Algorithms & Computations in Science & Technology with Matlab (NACSTM 2024)"
     special: true
@@ -109,6 +111,7 @@ attended_workshops:
     date: "January 2024"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1LW4FIhcqHvX1c7WbFTL8wKpK7g8QVLlQ/preview"
+    gallery: workshop-09
 
   - title: "Social Computing (One day workshop) - NPTEL"
     special: true
@@ -120,6 +123,7 @@ attended_workshops:
     date: "February 2023"
     mode: "Offline"
     cred_link: "https://drive.google.com/file/d/1mIj9ejicUSzz7fDkzKzwagxNFBqbAGrn/preview"
+    gallery: workshop-01
 
 attended_webinars_n_others:
   - title: "Learning machines"
@@ -317,9 +321,10 @@ attended_bootcamps:
     duration: "1 Month"
     location: "Rupnagar, PB"
     cred_link: "https://drive.google.com/file/d/1oW0q7ovLy3TEUhVsn41FfT50InlQPk8O/preview"
+    gallery: workshop-02
 
   - title: Foundational Lecture Series on Theoretical Computer Science 2026
-    link: "https://www.imsc.res.in/outreach/fstcs2026/"
+    # link: "https://www.imsc.res.in/outreach/fstcs2026/"
     instructor:
     institution:
       - name: The Institute of Mathematical Sciences
@@ -328,6 +333,7 @@ attended_bootcamps:
     duration: "2 Weeks"
     location: "Chennai, TN"
     cred_link: https://drive.google.com/file/d/1R_NPR4NufUw6oxVlV6v-e0lWsd1mhcod/preview
+    gallery: workshop-07
     cirriculum:
       link: "https://www.imsc.res.in/outreach/fstcs2026/"
       week_1:
@@ -383,6 +389,7 @@ attended_conferences:
       - name: "Indian Institute of Technology Madras"
     date: "January 16-18, 2026"
     cred_link: "https://drive.google.com/file/d/11f1dKYe_2jSlnKWkZRHlzh90j9r6GJHb/preview"
+    gallery: workshop-05
 
   - title: "Cryptology Conclave 2026"
     link: https://ccs.iith.ac.in/crypto_conclave_26/index_1.html
@@ -394,3 +401,4 @@ attended_conferences:
       - name: "Indian Institute of Technology Hyderabad"
     date: "January 22-23, 2026"
     cred_link: "https://drive.google.com/file/d/1isDRmQ-mfOcA4cfqrMMcZagw6KgDLKvp/preview"
+    gallery: workshop-06

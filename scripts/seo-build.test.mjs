@@ -18,7 +18,7 @@ const pages = [
   { path: '/excluded', title: 'Excluded', description: 'Excluded', noindex: true },
 ]
 
-test('beta sitemap uses its origin and includes beta routes while HTML stays noindex', t => {
+test('beta sitemap uses its origin and includes beta routes while HTML stays noindex and robots.txt does not advertise it', t => {
   const dir = fixture(t)
   writeSeoOutput(dir, {
     siteName: 'Portfolio', siteUrl: 'https://beta.example.com', pages,
@@ -32,7 +32,7 @@ test('beta sitemap uses its origin and includes beta routes while HTML stays noi
   for (const file of ['index.html', 'credentials-dashboard.html', '404.html']) {
     assert.match(fs.readFileSync(path.join(dir, file), 'utf8'), /name="robots" content="noindex, follow"/)
   }
-  assert.match(fs.readFileSync(path.join(dir, 'robots.txt'), 'utf8'), /Sitemap: https:\/\/beta\.example\.com\/sitemap\.xml/)
+  assert.doesNotMatch(fs.readFileSync(path.join(dir, 'robots.txt'), 'utf8'), /Sitemap:/)
 })
 
 test('other noindex deployments still omit sitemaps without explicit opt-in', t => {

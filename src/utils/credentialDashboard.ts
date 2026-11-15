@@ -21,6 +21,7 @@ const PAGE_NAMES: Record<string, string> = {
   'teaching.yml': 'Teaching',
   'internships.yml': 'Internships & Certifications',
   'certifications.yml': 'Internships & Certifications',
+  'competitions.yml': 'Internships & Certifications',
   'affiliations.yml': 'Affiliations & Memberships',
   'professional_activity.yml': 'Professional Activity',
 }
@@ -131,6 +132,7 @@ const CREDENTIAL_SLOTS: readonly CredentialSlot[] = [
   { file: 'internships.yml', path: 'internships.*', keys: ['cred_link'], order: 30 },
   { file: 'certifications.yml', path: 'certifications.*', keys: ['cred_link'], order: 40 },
   { file: 'certifications.yml', path: 'more_certifications.*', keys: ['cred_link'], order: 41 },
+  { file: 'competitions.yml', path: 'competitions.*', keys: ['cred_link'], order: 42 },
   // A leadership or volunteering entry is a list of roles, each with its own
   // credential; only a single-role entry has one of its own. A leadership
   // role's viewer sits inside its role heading, so a role with no name has none.

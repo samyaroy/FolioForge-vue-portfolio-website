@@ -16,7 +16,8 @@
         <!-- <p class="text-gray-600">Academic and professional workshops I've participated in</p> -->
 
         <div v-if="ongoingProjects.length" class="space-y-6">
-          <ProjectCard v-for="(project, index) in ongoingProjects" :key="index" :project="project" />
+          <ProjectCard v-for="(project, index) in visibleProjects" :key="index" :project="project" />
+          <SeeMoreButton :remaining="ongoingProjects.length - visibleProjects.length" @more="visibleCount += PAGE_SIZE" />
         </div>
         <div v-else class="text-gray-600">
           <span class="inline-flex items-end gap-2 border-b-2 border-slate-300 pb-0.5">
@@ -32,7 +33,9 @@
 </template>
 
 <script setup>
+import { computed, ref } from 'vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import SeeMoreButton from '@/components/ui/SeeMoreButton.vue'
 import ProjectCard from './components/ProjectCard.vue'
 
 import config from '@/content/profile_info'
@@ -43,6 +46,11 @@ const { ongoing_projects } = config
 // so a file whose every project is off leaves an empty list here -- which is
 // truthy, and would render an empty section rather than the empty state.
 const ongoingProjects = Array.isArray(ongoing_projects) ? ongoing_projects : []
+
+// Five projects at first; "See more" adds five at a time.
+const PAGE_SIZE = 5
+const visibleCount = ref(PAGE_SIZE)
+const visibleProjects = computed(() => ongoingProjects.slice(0, visibleCount.value))
 const pageDescription = descriptions.ongoingProjects
 const showPageDescription = isPageDescriptionEnabled('ongoingProjects')
 </script>

@@ -60,6 +60,7 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'affiliations/memberships': [{ path: 'showAffiliations.showMemberships', label: 'Memberships' }],
   'internships-certifications/internships': [{ path: 'showInternshipCertifications.showInternships', label: 'Internships' }],
   'internships-certifications/certifications': [{ path: 'showInternshipCertifications.showCertifications', label: 'Certifications' }],
+  'internships-certifications/competitions': [{ path: 'showInternshipCertifications.showCompetitions', label: 'Competitions' }],
   'workshops/conferences': [{ path: 'showWorkshopsAttended.showConferences', label: 'Conferences' }],
   'workshops/fdps': [{ path: 'showWorkshopsAttended.showFDPs', label: 'FDPs' }],
   'workshops/workshops': [
@@ -84,6 +85,7 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
     { path: 'showContact.showLinkedIn', label: 'LinkedIn' },
     { path: 'showContact.showGitHub', label: 'GitHub' },
     { path: 'showContact.showStudentGitHub', label: 'Student GitHub' },
+    { path: 'showContact.showGitLab', label: 'GitLab' },
     { path: 'showContact.showKaggle', label: 'Kaggle' },
     { path: 'showContact.showGoogleScholar', label: 'Google Scholar' },
     { path: 'showContact.showResearchGate', label: 'ResearchGate' },

@@ -55,17 +55,7 @@
                             </a>
                         </p>
 
-                        <p v-if="collaboratorNames(project).length"
-                            class="text-sm text-gray-600 mb-3 flex items-center gap-1">
-                            <v-icon size="16">mdi-account-supervisor</v-icon>
-                            Collaborators:
-                            <template v-for="(colab, i) in collaboratorNames(project)" :key="colab">
-                                <SmartLink :type="'Person'" :text="colab" />
-                                <span v-if="i < collaboratorNames(project).length - 1">
-                                    ,
-                                </span>
-                            </template>
-                        </p>
+                        <CollaboratorList :collaborators="project.collaborators" :icon-size="16" class="mb-3 text-sm" />
 
                         <p class="content-justify text-gray-700 mb-3">
                             {{ project.description }}
@@ -162,6 +152,7 @@ import { PROJECT_ANCHOR_PARAM, projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed, ref, watch } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
+import CollaboratorList from '@/components/CollaboratorList.vue'
 import LogoImage from '@/components/ui/LogoImage.vue'
 
 const props = defineProps({
@@ -193,23 +184,6 @@ const visibleProjects = computed(() => {
 })
 
 
-// Collaborators are written either as one comma-separated line or as a list of
-// people, each with an optional link of their own. Only the names are wanted
-// here: SmartLink already resolves a person to their page.
-function collaboratorNames(project) {
-    const collaborators = project?.collaborators
-
-    if (Array.isArray(collaborators)) {
-        return collaborators
-            .map(collaborator => typeof collaborator === 'string' ? collaborator : collaborator?.name)
-            .map(name => typeof name === 'string' ? name.trim() : '')
-            .filter(Boolean)
-    }
-
-    return typeof collaborators === 'string'
-        ? collaborators.split(',').map(name => name.trim()).filter(Boolean)
-        : []
-}
 </script>
 
 <style scoped>

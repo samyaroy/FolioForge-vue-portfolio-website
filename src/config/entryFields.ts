@@ -36,13 +36,13 @@ export const entryFields = {
   // an education entry without a GPA does.
   awards: ['title', 'id', 'year', 'organization', 'category', 'prize', 'description', 'cred_link'],
 
-  projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
-  articles: ['title', { key: 'publication', object: ['name', 'host'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
+  projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
+  articles: ['title', { key: 'publication', object: ['name', 'host'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
 
   // The card renders `instructor`, `institution` and `duration` although no
   // entry fills them in yet; they are declared so one can be, without hand
   // editing the YAML. `guide` is the same role under the older name.
-  ongoingProjects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', 'instructor', 'institution', 'duration', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'link'] }, { key: 'cred_link', credentials: 'ongoingCategories' }],
+  ongoingProjects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', 'instructor', 'institution', 'duration', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, { key: 'cred_link', credentials: 'ongoingCategories' }],
 
   // A mentoring engagement: one internship programme, mentored once. The
   // projects it produced are their own collection.
@@ -52,19 +52,24 @@ export const entryFields = {
 
   memberships: ['organization', 'chapter', 'role', 'membership_id', 'period', 'location', 'cred_link'],
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
+  // Teammates are `collaborators`, the same list projects use, so a teammate
+  // gets the same columns and contact icons as a project collaborator.
+  competitions: ['title', 'type', 'event', 'host', 'location', 'date', 'result', 'prize', 'category', 'team_name', { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, 'description', 'link', 'gallery', 'cred_link'],
   certifications: ['title', { key: 'issuer', object: ['institution', 'platform', 'location'] }, 'instructor', 'date', 'duration', 'tag', 'logo', 'cred_link'],
 
   // An event can have several hosts -- a host institute and an industry
   // partner, say -- so `institution` (and a conference's `organizer`) is a list
   // of rows, never one text box. Each collection offers the columns its card
   // renders: a workshop shows a host's role, a conference only its name.
-  conferences: ['title', { key: 'organizer', list: ['name', 'department'] }, { key: 'institution', list: ['name'] }, 'location', 'date', 'link', 'cred_link'],
+  // `gallery` is a gallery.yml post id; conference, bootcamp and workshop
+  // cards link to that post.
+  conferences: ['title', { key: 'organizer', list: ['name', 'department'] }, { key: 'institution', list: ['name'] }, 'location', 'date', 'link', 'cred_link', 'gallery'],
   fdps: ['title', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link'],
   // `special` marks a workshop to set apart on the Workshops tab (a navy
   // border instead of steel). The Other Learning Engagements popup keeps its
   // own colour either way.
-  workshops: ['title', { key: 'special', type: 'boolean' }, 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred'],
-  bootcamps: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'location'] }, 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link'],
+  workshops: ['title', { key: 'special', type: 'boolean' }, 'instructor', { key: 'institution', list: ['name', 'department', 'role', 'location'] }, 'date', 'duration', 'mode', 'cred_link', 'details_cred', 'gallery'],
+  bootcamps: ['title', 'instructor', { key: 'institution', list: ['name', 'department', 'location'] }, 'location', 'date', 'duration', 'cirriculum', 'link', 'cred_link', 'gallery'],
   otherLearning: ['title', 'type', 'speaker', 'host', 'date', 'mode', 'link', 'cred_link'],
 
   // One leadership entry can hold several roles, each at its own organisation,

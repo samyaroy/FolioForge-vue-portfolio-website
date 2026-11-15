@@ -1,0 +1,49 @@
+# Competitions, shown as their own tab on the Internships & Certifications page
+# behind the `showInternshipCertifications.showCompetitions` flag in
+# src/config/featureFlags.ts.
+#
+#   title:        the competition itself
+#   type:         Solo or Team
+#   event:        the fest or programme it was part of
+#   host:         who ran it; wrap a name from hyperlinkMetadata.yml in backticks
+#                 to link it
+#   result:       placing or outcome, shown as the trophy badge
+#   prize:        prize money or award, shown as the green badge
+#   category:     what kind of competition, shown under the title
+#   team_name:    the team's name, shown as "Team:"
+#   collaborators: teammates, shown as "Team members:", in the same shape as
+#                 every other collaborator list (name, email, linkedin,
+#                 github, orcid, link)
+#   description:  optional; one line or a list of lines, drawn as bullets
+#   link:         the competition's page; a Kaggle link gets the Kaggle icon
+#   gallery:      id of a post in gallery.yml; adds an image icon that opens
+#                 that post in the gallery
+#   cred_link:    the certificate, opened in the document viewer
+competitions:
+  - title: Predicta
+    type: Team
+    event: Symmetry 2026
+    host: Department of Mathematics, `Presidency University, Kolkata`
+    location: Kolkata, WB
+    date: Sep 2026
+    result: 2nd Place
+    prize: ₹1,500
+    category: Machine Learning
+    team_name: "Breznev's Brows"
+    collaborators:
+      - name: Tamoghno Saha
+    link: https://www.kaggle.com/competitions/predicta/overview
+    gallery: competition-01
+    cred_link:
+
+  - title: OverFlow
+    type: Solo
+    event: Symmetry 2026
+    host: Department of Mathematics, `Presidency University, Kolkata`
+    location: Kolkata, WB
+    date: Sep 2026
+    result: 2nd Place
+    prize: ₹1,500
+    category: Competitive Coding (live)
+    gallery: competition-01
+    cred_link:

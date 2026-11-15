@@ -16,13 +16,13 @@ Source: `blogs/src/content/travel/trips.yml`. Replace each `summary` and both pl
 
 | Entry id | Current placeholder | Additional updates or review |
 | --- | --- | --- |
-| `mahababipuram26` | ABC | Correct title spelling (`specialy`); review slug spelling before changing a public URL; photo credit has an empty `url` (optional: fill or remove). |
+| `mahabalipuram-2026` | — (story written) | Renamed from `mahababipuram26`; `blogs/public/_redirects` sends the old URL here with a 301. Photo credit has an empty `url` (optional: fill or remove). |
 | `uttarakhand-devbhumi-2025` | BCD | Confirm `stats` values against the actual trip. |
 | `vizag-01-2025` | XYZ | Review copied-looking `Pilgrimage` tag; verify image keys (`vizag-01` cover versus `vizag-001` gallery, uppercase `.JPG`). These differences are review items, not confirmed broken URLs. |
-| `uttrakhand-trip-01` | PQR | `date: 2024-11` lacks the day required by the documented schema; correct location spelling (`Uttarpradesh`) and review city names for geocoding. |
+| `uttarakhand-trip-01` | PQR | `date: 2024-11` lacks the day required by the documented schema; review city names for geocoding. Renamed from `uttrakhand-trip-01` (301 in `blogs/public/_redirects`); its image files keep the old spelling. |
 | `bike-trip-digha-2024` | SSS | Review title grammar and actual statistics. |
-| `ropar-aivs-iitrpr` | QAZ | Review `IIT Roper` / `Panjab` spelling. `places[].via: Delhi` is not part of `TripStop` and is not consumed by `tripStops`; model Delhi as a route stop if intended. |
-| `derjeeling-2024` | UVW | Confirm `stats` values (14 villages / 501 km), repeated from scaffold examples. Review slug spelling before changing it. |
+| `ropar-aivs-iitrpr` | QAZ | `places[].via: Delhi` is not part of `TripStop` and is not consumed by `tripStops`; model Delhi as a route stop if intended. |
+| `darjeeling-2024` | UVW | Confirm `stats` values (14 villages / 501 km), repeated from scaffold examples. Renamed from `derjeeling-2024` (301 in `blogs/public/_redirects`); its image files keep the old spelling. |
 | `chennai-001-iitmadras` | MNO | Replace `tags: [Dummy, Test]`; confirm campus/city stay statistics. |
 | `delhi-001-iitdelhi` | MNO | Replace `tags: [Dummy, Test]`; `date: 2023-03` lacks a day; confirm statistics. |
 | `hyderabad-solo-2023` | MNO | Replace `tags: [Dummy, Test]`; `date: 2023-03` lacks a day; confirm statistics. |

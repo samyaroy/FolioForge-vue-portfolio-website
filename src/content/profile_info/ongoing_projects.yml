@@ -1,5 +1,48 @@
 ongoing_projects:
 
+  - title: Student Mentoring and Career Support Platform
+    description: A platform where IITM BS students can find alumni mentors, book sessions and get career advice. I'm building the backend.
+    type: Course Project
+    affiliation: Course Project, Software Engineering (BSCS3001), BS in Data Science and Applications, `Indian Institute of Technology Madras`
+    tech_stack: FastAPI, Python, SQLite, React.js, TypeScript, shadcn/ui
+    collaborators:
+      - name: Anubrata De
+        github: https://github.com/anubrata-de
+      - name: Soumya Mazumdar
+        github: https://github.com/mazumdarsoumya
+      - name: Sayantan Dey
+        github: https://github.com/22f3002449
+    time_period: Sep 2026 - Dec 2026
+    cred_link:
+      github: https://github.com/anubratade2109/SE-SEP2026-Team-090/
+
+  - title: 'A Point of No Probability: The Savage–Dickey Paradox'
+    description: Looking at the Savage–Dickey ratio, a handy shortcut for Bayes factors, and why its answer can change depending on how you condition on an event of probability zero.
+    type: Literature Review Article
+    tech_stack: Bayesian Inference, Bayes Factors, Probability Theory, Statistical Paradoxes
+    collaborators:
+      - name: Tamoghno Saha
+        email: tomshane25@gmail.com
+      - name: Priyam Ghosh
+        email: priyam.ghose.stats@gmail.com
+    time_period: Nov 2026
+
+  - title: 'Likert and Thurstone Scales: Psychometric Methods of Attitude Measurement'
+    description: A seminar on two classic ways of measuring attitudes, Likert's summated ratings and Thurstone's equal-appearing intervals, and how they compare.
+    type: Course Seminar
+    affiliation: Student Seminar I (STS415), MSc in Statistics, `University of Calcutta`
+    tech_stack: Psychometrics, Attitude Measurement, Likert Scale, Thurstone Scale
+    time_period: Sep 2026 - Jan 2027
+
+  - title: 'Homingo Hack Days: AI Automation Hackathon'
+    description: Building an AI automation for Homingo's online hackathon, in the Automation track. The build runs from 21 Nov to 6 Dec.
+    type: Hackathon
+    affiliation: Hackathon (Edition 01, Automation Track), `Homingo`
+    tech_stack: AI Agents, Automation, LLM Apps
+    time_period: Nov 2026 - Dec 2026
+    cred_link:
+      website: https://hackathon.homingo.co.in/
+
   - title: 'Comparative Evaluation of Robust Statistical Regression and Machine Learning Approaches to Regression on Noisy dataset'
     enabled: false
     description: Investigating the performance of robust statistical regression techniques versus machine learning regression algorithms on datasets with significant noise and outliers to determine the most effective approach for accurate predictions.

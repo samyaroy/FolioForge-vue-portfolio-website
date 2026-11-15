@@ -99,7 +99,7 @@
             <li v-if="showInternshipCertificationsLink">
               <router-link to="/internships-certifications"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Internships & Certifications
+                {{ internshipCertificationsLabel }}
               </router-link>
             </li>
             <li v-if="showWorkshopsAttendedLink">
@@ -288,6 +288,16 @@ export default {
     const showCocurricularLink = isFeatureEnabled('showCocurricular', { mode: 'any' })
     const showOngoingProjectsLink = isFeatureEnabled('showOngoingProjects')
     const showInternshipCertificationsLink = isFeatureEnabled('showInternshipCertifications', { mode: 'any' })
+    // The link names only the tabs the page actually shows, so switching
+    // Competitions off turns it back into "Internships & Certifications".
+    const internshipCertificationsSections = [
+      ['showInternshipCertifications.showInternships', 'Internships'],
+      ['showInternshipCertifications.showCertifications', 'Certifications'],
+      ['showInternshipCertifications.showCompetitions', 'Competitions'],
+    ].filter(([flag]) => isFeatureEnabled(flag)).map(([, name]) => name)
+    const internshipCertificationsLabel = internshipCertificationsSections.length > 1
+      ? `${internshipCertificationsSections.slice(0, -1).join(', ')} & ${internshipCertificationsSections.at(-1)}`
+      : internshipCertificationsSections[0] ?? 'Internships & Certifications'
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
     const showResourcesLink = isFeatureEnabled('showResources.main')
     const showSitemapLink = isFeatureEnabled('showSitemap')
@@ -326,6 +336,7 @@ export default {
       showCocurricularLink,
       showOngoingProjectsLink,
       showInternshipCertificationsLink,
+      internshipCertificationsLabel,
       showWorkshopsAttendedLink,
       showAffiliationsLink,
       showResourcesLink,

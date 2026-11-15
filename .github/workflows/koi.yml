@@ -7,8 +7,12 @@
 #   CLOUDFLARE_API_TOKEN   a Cloudflare API token with Workers R2 Storage: Edit
 #   CLOUDFLARE_ACCOUNT_ID  the account that owns the bucket
 #
-# The schedule only runs from the default branch (main). Pushing a change to
+# The schedule only runs from the default branch (V1). Pushing a change to
 # this file runs it once from whichever branch it lands on.
+#
+# git-koi is built from the folio-forge-connector branch of the fork at
+# samyaroy/git-koi, so a change pushed there shows in the next koi without
+# touching this repo. The fork's main stays free to track the original.
 
 name: Koi
 
@@ -31,13 +35,24 @@ jobs:
     if: github.repository == 'samyaroy/FolioForge-vue-portfolio-website'
     runs-on: ubuntu-latest
     steps:
-      # No checkout: the Action brings its own binary and writes into the
-      # empty workspace. Pinned to the v1.0.2 commit, since it downloads and
-      # runs a binary and a tag can be moved.
-      - uses: yalongwastaken/git-koi@7305e9b1fadee6f43d3b4fa543a25d4cde79856e # v1.0.2
-        with:
-          body: white
-          output-dir: koi
+      # Built from source rather than through the git-koi Action: the Action
+      # downloads the release binary named in its Cargo.toml, so pointing it at
+      # the fork would still run the original code. No checkout is needed;
+      # cargo fetches the fork and writes git-koi onto the PATH.
+      - name: Build git-koi from the fork
+        run: |
+          rustup toolchain install stable --profile minimal
+          cargo +stable install --locked --git https://github.com/samyaroy/git-koi --branch folio-forge-connector git-koi
+
+      # The same two commands the Action runs. `collect` reads public activity
+      # through `gh`, which the built-in token is enough for.
+      - name: Collect the account snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: git-koi collect samyaroy --output "$RUNNER_TEMP/koi-snapshot.json"
+
+      - name: Render the koi
+        run: git-koi render "$RUNNER_TEMP/koi-snapshot.json" --output-dir koi --body white
 
       # The GIF swims; the PNG is the still frame shown to visitors who ask
       # for reduced motion. An hour of caching is plenty for a daily image.

@@ -66,7 +66,12 @@ export interface SeoPrerenderOptions {
   rssTitle?: string
   /** Emits sitemap.xml alongside the pages. */
   sitemap?: boolean
-  /** Explicitly publish a route inventory even when the deployment is noindex. */
+  /**
+   * Still write sitemap.xml when the deployment is noindex, so the endpoint
+   * and the /sitemap page's link to it keep working. robots.txt does not
+   * advertise it: every URL it lists is noindex, so submitting it to
+   * crawlers would contradict the noindex and only produce warnings.
+   */
   sitemapOnNoindex?: boolean
   /**
    * Marks the whole deployment as non-production: every page gets
@@ -266,14 +271,15 @@ export function writeSeoOutput(outDir: string, rawOptions: SeoPrerenderOptions):
   }
 
   if (rawOptions.noindex) {
-    // Replace the production sitemap declaration with the deployment's own.
-    // Crawling remains allowed so crawlers can read the noindex page metadata.
+    // Drop the production sitemap declaration and name no other: this
+    // deployment's own sitemap.xml (when sitemapOnNoindex writes one) lists
+    // only noindex pages. Crawling remains allowed so crawlers can read the
+    // noindex page metadata.
     fs.writeFileSync(
       path.join(outDir, 'robots.txt'),
       'User-agent: *\nAllow: /\n\n' +
         '# Non-production deployment. Every page carries\n' +
-        '# <meta name="robots" content="noindex">.\n' +
-        (options.sitemap ? `\nSitemap: ${absoluteUrl(options.siteUrl, '/sitemap.xml')}\n` : ''),
+        '# <meta name="robots" content="noindex">.\n',
     )
   }
 }

@@ -49,6 +49,7 @@
 
                 <v-expand-transition>
                     <div v-show="isOpen">
+                        <CollaboratorList :collaborators="project.collaborators" :icon-size="16" class="mb-2 text-sm" />
                         <!-- Tags on the left, credential links on the same line at the right -->
                         <div v-if="getTechStack(project.tech_stack).length || hasActionLinks(project)"
                             class="flex items-center justify-between gap-3 mb-2">
@@ -95,6 +96,7 @@ import { projectSlug } from '@/config/projectAnchors'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { ref } from 'vue'
 import { isFeatureEnabled } from '@/config/featureFlags'
+import CollaboratorList from '@/components/CollaboratorList.vue'
 
 const isOpen = ref(isFeatureEnabled('showProjectsPublications.expandProjectSectionsByDefault.otherProjects'))
 

@@ -92,6 +92,12 @@
             <v-icon size="14">mdi-map-marker</v-icon> {{ displayLocation }}
           </span>
         </div>
+
+        <!-- The workshop's gallery post, if it has one; only this icon is
+             pushed to the right, as on the conference and bootcamp cards. -->
+        <div v-if="workshop.gallery" class="flex w-full justify-end pt-1 pr-4">
+          <GalleryLink :item-id="workshop.gallery" />
+        </div>
       </div>
     </div>
 
@@ -103,6 +109,7 @@
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
+import GalleryLink from '@/components/GalleryLink.vue'
 
 import inPersonIcon from '@/assets/icons/persons-in-a-class-by-flaticon.png'
 

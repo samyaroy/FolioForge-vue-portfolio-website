@@ -105,6 +105,7 @@ const adapters: Record<string, (records: UnknownRecord[]) => PortfolioEntry[]> =
   'affiliations/memberships': records => toEntries(records, ['organization'], ['role', 'period']),
   'internships-certifications/internships': records => toEntries(records, ['role', 'title'], ['company', 'time_period']),
   'internships-certifications/certifications': records => toEntries(records, ['title'], ['issuer', 'date']),
+  'internships-certifications/competitions': records => toEntries(records, ['title'], ['event', 'result']),
   'workshops/conferences': records => toEntries(records, ['title'], ['location', 'date']),
   'workshops/fdps': records => toEntries(records, ['title'], ['institution', 'date']),
   'workshops/main': records => toEntries(records, ['title'], ['institution', 'date']),

@@ -123,7 +123,7 @@ function bareUrl(value: unknown): string {
 
 /** The names the site puts on social links, for keys that are not the label. */
 const socialNames: Record<string, string> = {
-  github: 'GitHub', github2: 'GitHub (second)', kaggle: 'Kaggle', linkedin: 'LinkedIn', twitter: 'Twitter',
+  github: 'GitHub', github2: 'GitHub (second)', gitlab: 'GitLab', kaggle: 'Kaggle', linkedin: 'LinkedIn', twitter: 'Twitter',
   google_scholar: 'Google Scholar', researchgate: 'ResearchGate', orcid_id: 'ORCID iD', credly: 'Credly', blog: 'Blog',
 }
 
@@ -245,6 +245,7 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
       // The venue: the publication's name, and who hosts it.
       ...fact(BookOpen, text(publication.name) || raw.publication),
       ...fact(Building, publication.host),
+      ...fact(Users, names(raw.collaborators)),
       // `field` is a long tag list, and `type` is the dropdown above the list,
       // so neither earns a place on the row.
     ]

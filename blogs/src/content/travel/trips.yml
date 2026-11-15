@@ -90,8 +90,8 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-04.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/darjeeling-2026-05.jpeg
 
-  - id: mahababipuram26
-    title: Never miss a trip to Mamallapuram specialy if you made new friends in Chennai
+  - id: mahabalipuram-2026
+    title: Never miss a trip to Mamallapuram specially if you made new friends in Chennai
     date: 2026-06-28
     location: Mamallapuram, Tamil Nadu
     places:
@@ -183,10 +183,10 @@ trips:
       - name: Saunak Datta
         url: https://www.instagram.com/_whos.ronny_/
 
-  - id: uttrakhand-trip-01
-    title: Took my parent with me this time
+  - id: uttarakhand-trip-01
+    title: Took my parents with me this time
     date: 2024-11
-    location: Delhi, Uttarpradesh, Uttarakhand
+    location: Delhi, Uttar Pradesh, Uttarakhand
     places:
       - Kolkata
       - { name: Delhi, mode: flight }
@@ -263,13 +263,13 @@ trips:
       - name: Aditya Ghosh
 
   - id: ropar-aivs-iitrpr
-    title: One month at IIT Roper turned my life upside down
+    title: One month at IIT Ropar turned my life upside down
     date: 2024-07-15
-    location: Ropar, Panjab
+    location: Ropar, Punjab
     places:
       - Kolkata
       - { name: Chandigarh, mode: flight, via: Delhi }
-      - { name: Ropar, mode: car, note: IIT Roper campus}
+      - { name: Ropar, mode: car, note: IIT Ropar campus }
     summary: QAZ
     coverImage: https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr.webp
     tags: [Bootcamp]
@@ -283,7 +283,7 @@ trips:
       - https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr-03.jpeg
       - https://media.samyabrata.codeium.xyz/blog-travel/ropar-aivs-iitrpr-04.jpeg
 
-  - id: derjeeling-2024
+  - id: darjeeling-2024
     title: Another long weekend in the hills
     date: 2024-05-15
     location: Darjeeling, West Bengal

@@ -51,6 +51,7 @@ export const contentSources = {
 
   'internships-certifications/internships': { path: `${PORTFOLIO}/internships.yml`, arrayKeys: ['internships'] },
   'internships-certifications/certifications': { path: `${PORTFOLIO}/certifications.yml`, arrayKeys: ['certifications', 'more_certifications'] },
+  'internships-certifications/competitions': { path: `${PORTFOLIO}/competitions.yml`, arrayKeys: ['competitions'] },
 
   'workshops/conferences': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_conferences'] },
   'workshops/fdps': { path: `${PORTFOLIO}/workshops.yml`, arrayKeys: ['attended_fdps'] },

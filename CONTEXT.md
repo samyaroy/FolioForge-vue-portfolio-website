@@ -215,8 +215,6 @@ The sitemap hostname is currently `https://samyabrata.codeium.xyz`.
 
 [wrangler.jsonc](wrangler.jsonc) configures Cloudflare static asset deployment from `./dist` with the project name `folioforge-vue-portfolio-website`.
 
-The root [CNAME](CNAME) and [public/CNAME](public/CNAME) are present for custom domain hosting workflows.
-
 ### Services
 
 [services/credly-badges](services/credly-badges/README.md) is a standalone Cloudflare Worker, deployed separately from the site, that serves `GET https://api.samyabrata.codeium.xyz/credly-count` → `{ count, issuers, updatedAt }`. A cron job re-reads the public Credly profile's undocumented `badges.json` endpoint once a month into KV (Credly has no official earner API). The Certifications tab's `CredlyBanner.vue` reads the URL from `credlyBadgesApi` in `profile.yml` and falls back to the plain Credly link on any failure.
