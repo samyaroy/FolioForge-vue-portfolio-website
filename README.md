@@ -179,7 +179,7 @@ Sitemaps are generated on every production build, rather than edited as XML:
 
 - Beta portfolio: run `npm run build:beta` to generate a separate `dist-beta/sitemap.xml`, including enabled beta-only routes. Its hostname comes from `profile.betaVersionUrl` in `src/content/profile_info/profile.yml`. Deployments already using `VITE_SITE_ENV=beta npm run build` generate the same beta sitemap in `dist/`.
 
-Each site's generated `robots.txt` advertises its own sitemap. Beta pages retain `noindex` metadata; the private admin portal also remains non-indexable.
+The production portfolio's and the blog's generated `robots.txt` each advertise their own sitemap. Beta's does not: the beta sitemap stays reachable at `/sitemap.xml`, but every page in it carries `noindex`, so it is not offered to crawlers. The private admin portal also remains non-indexable.
 
 ## License
 
