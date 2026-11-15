@@ -9,13 +9,13 @@ The file marks itself: `# Dummy entries below — replace with real trips.` (lin
 
 ### Placeholder `summary` + `narrative` text (renders on trip cards and details pages)
 
-- [ ] `mahababipuram26` — `ABC` (lines 60, 62–64)
+- [x] `mahabalipuram-2026` (was `mahababipuram26`) — story written
 - [ ] `uttarakhand-devbhumi-2025` — `BCD` (lines 93, 96–98)
 - [ ] `vizag-01-2025` — `XYZ` (lines 122, 125–127)
-- [ ] `uttrakhand-trip-01` — `PQR` (lines 158, 161–163)
+- [ ] `uttarakhand-trip-01` — `PQR` (lines 158, 161–163)
 - [ ] `bike-trip-digha-2024` — `SSS` (lines 202, 208–210)
 - [ ] `ropar-aivs-iitrpr` — `QAZ` (lines 231, 234–236)
-- [ ] `derjeeling-2024` — `UVW` (lines 251, 254–256)
+- [ ] `darjeeling-2024` — `UVW` (lines 251, 254–256)
 - [ ] `chennai-001-iitmadras` — `MNO` (lines 277, 279–281)
 - [ ] `delhi-001-iitdelhi` — `MNO` (lines 295, 301–303)
 - [ ] `hyderabad-solo-2023` — `MNO` (lines 324, 330–332)
@@ -28,7 +28,7 @@ The file marks itself: `# Dummy entries below — replace with real trips.` (lin
   - `hyderabad-solo-2023` (line 329)
 - [ ] Stats copied from the example block — `uttarakhand-devbhumi-2025` has the exact
   `Places stayed: 14 villages / Distance: 320 km` from the file's example (lines 100–101)
-- [ ] `derjeeling-2024` claims `Places stayed: 14 villages` for a weekend trip (line 258)
+- [ ] `darjeeling-2024` claims `Places stayed: 14 villages` for a weekend trip (line 258)
 - [ ] `vizag-01-2025` tagged `[Mountains, Pilgrimage]` — pasted from the Uttarakhand trip (line 124)
 - [ ] Empty photo-credit URL for Shuvadeep Mitra — blank `url:` (line 75)
 - [ ] Delete commented-out duplicate `derjeeling-2024` block with `MNO` placeholders (lines 173–196)
