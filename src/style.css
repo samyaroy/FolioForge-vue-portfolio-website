@@ -252,3 +252,11 @@ button:focus-visible {
     --chart-5: 340 75% 55%;
   }
 }
+
+/* A brief ring on the card a deep link asked for, so it is obvious which one
+   the page scrolled to. Added and removed by src/utils/focusLinkedCard.ts. */
+.card-linked {
+  outline: 2px solid #1980e6;
+  outline-offset: 3px;
+  transition: outline-color 400ms ease;
+}

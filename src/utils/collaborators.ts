@@ -49,6 +49,11 @@ function isLinkedInHost(host: string): boolean {
   return host === 'linkedin.com' || host.endsWith('.linkedin.com')
 }
 
+/** Whether a url is a LinkedIn page, so it can wear the LinkedIn icon. */
+export function isLinkedInUrl(url: unknown): boolean {
+  return typeof url === 'string' && isLinkedInHost(hostOf(url.trim()))
+}
+
 function isGitHubHost(host: string): boolean {
   return host === 'github.com'
 }

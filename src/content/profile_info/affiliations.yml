@@ -13,27 +13,117 @@ affiliations:
   #   location: Chennai, IN
 
 collaborators:
+  # The tab lists people whose `period` says "Present" first, and everyone
+  # else under Past Collaborators. Within each, `type: mentor` or
+  # `type: guide` go under "Mentors & guides", ahead of `type: peer`; a
+  # missing type counts as a peer. `role` is optional and shows on the card
+  # in your words ("Thesis supervisor", "Co-author", "Teammate").
+  #
+  # `affiliation` is one organisation or a list of them. Each of `projects`
+  # links to its card when the title matches a project on the Projects or
+  # Ongoing Projects page word for word; any other title shows as text.
+  #
   # Placeholder, switched off: it settles the shape of this list so the
   # admin can draw and edit it. Delete it once a real entry lands here.
   - name: Dr. Example Collaborator
     enabled: false
+    type: peer
+    role: Co-author
     affiliation: Example Institute of Research
     location: Kolkata, IN
     projects: [Placeholder Study]
     period: 2026 - Present
 
+  # Guides, from the internship and project entries that name them.
+  - name: Prof. Sudarshan Iyengar
+    enabled: false
+    type: guide
+    role: Internship guide
+    affiliation:
+      - Vicharanashala Lab for Education Design (VLED), IIT Ropar
+      - Annam.ai
+    location: Ropar, IN
+    projects: [MERN Stack Developer Internship, Vicharanashala Summership 2026]
+    period: Feb 2026 – Present
+
+  - name: Mr. Debashis Ghosh
+    enabled: false
+    type: guide
+    role: Internship and project guide
+    affiliation: IDEAS – TIH, Indian Statistical Institute
+    location: Kolkata, IN
+    projects: ["Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"]
+    period: Jun 2024 – Dec 2024
+
+  # From the experience entries: supervisor of the Student Internship, then
+  # principal investigator on Upatto during the Associate Software Developer role.
+  - name: Mr. Diptendu Dutta
+    type: mentor
+    role: Supervisor
+    affiliation: IDEAS – TIH, Indian Statistical Institute
+    location: Kolkata, IN
+    projects: [FASAL 2.0 (NPCYF)]
+    period: Feb 2025 – Aug 2026
+
+  - name: Prof. Aniruddha Choudhuri
+    type: guide
+    role: Degree project guide
+    affiliation: Department of Statistics, Sister Nivedita University
+    location: Kolkata, IN
+    projects: ["Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset"]
+    period: Jan 2025 – May 2025
+
+  # Peers, from the projects and competitions that list them as teammates.
+  - name: Tamoghno Saha
+    type: peer
+    role: Co-author
+    affiliation: Department of Statistics, University of Calcutta
+    projects: ["A Point of No Probability: The Savage–Dickey Paradox"]
+    period: Nov 2026 – Present
+
+  - name: Priyam Ghosh
+    type: peer
+    role: Co-author
+    affiliation: Department of Statistics, University of Calcutta
+    projects: ["A Point of No Probability: The Savage–Dickey Paradox"]
+    period: Nov 2026 – Present
+
+  - name: Anubrata De
+    type: peer
+    role: Teammate
+    affiliation: BS in Data Science and Applications, IIT Madras
+    projects: [Student Mentoring and Career Support Platform]
+    period: Sep 2026 – Present
+
+  - name: Rishav Kumar Banerjee
+    type: peer
+    role: Teammate
+    affiliation: Sister Nivedita University
+    projects: ["Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"]
+    period: Jul 2024 – Dec 2024
+
+  - name: Saunak Datta
+    type: peer
+    role: Teammate
+    affiliation: Department of Statistics, Sister Nivedita University
+    projects: ["Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"]
+    period: Jul 2024 – Dec 2024
+
   # - name: Dr. Jane Doe
+  #   type: mentor
+  #   role: Research mentor
   #   affiliation: Institute of AI Research
   #   location: Kolkata, IN
   #   projects: [Robust Regression Study, Customer Churn Analysis]
   #   period: 2024 – Present
 
   # - name: Prof. John Smith
+  #   type: guide
+  #   role: Project guide
   #   affiliation: Previous Research Institute
   #   location: Mumbai, IN
   #   projects: [Early Research Project]
   #   period: 2022 – 2023
-  #   notes: Collaborated on initial research phase
 
 memberships:
   - organization: Royal Statistics Society

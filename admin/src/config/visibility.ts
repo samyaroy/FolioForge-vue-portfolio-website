@@ -56,7 +56,12 @@ export const sectionVisibility: Record<string, VisibilityFlag[]> = {
   'teaching/others': [{ path: 'showTeachings.showOtherTeachings', label: 'Other Teaching' }],
   'ongoing-projects/projects': [{ path: 'showOngoingProjects', label: 'Ongoing Projects' }],
   'affiliations/affiliations': [{ path: 'showAffiliations.showAffiliations', label: 'Affiliations' }],
-  'affiliations/collaborators': [{ path: 'showAffiliations.showCollaborators', label: 'Collaborators' }],
+  'affiliations/collaborators': [
+    { path: 'showAffiliations.showCollaborators.main', label: 'Collaborators' },
+    { path: 'showAffiliations.showCollaborators.showMentors', label: 'Mentors & guides' },
+    { path: 'showAffiliations.showCollaborators.showPeers', label: 'Peers' },
+    { path: 'showAffiliations.showCollaborators.showGroupColors', label: 'Group colour bars' },
+  ],
   'affiliations/memberships': [{ path: 'showAffiliations.showMemberships', label: 'Memberships' }],
   'internships-certifications/internships': [{ path: 'showInternshipCertifications.showInternships', label: 'Internships' }],
   'internships-certifications/certifications': [{ path: 'showInternshipCertifications.showCertifications', label: 'Certifications' }],

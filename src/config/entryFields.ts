@@ -51,6 +51,10 @@ export const entryFields = {
   mentoredProjects: ['title', 'course', { key: 'students', list: ['name', 'email', 'Linkedin'] }, 'registration_number', { key: 'affiliation', object: ['name', 'location'] }, 'description', { key: 'cred_link', credentials: 'mentoredCategories' }],
 
   memberships: ['organization', 'chapter', 'role', 'membership_id', 'period', 'location', 'cred_link'],
+  // People on the Collaborators tab. `type` is mentor, guide or peer. A person
+  // can have several affiliations, and `projects` are titles that link to
+  // their cards, so both take one value or a list.
+  collaborators: ['name', 'type', 'role', { key: 'affiliation', type: 'text-or-list' }, 'location', 'period', { key: 'projects', type: 'text-or-list' }],
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
   // Teammates are `collaborators`, the same list projects use, so a teammate
   // gets the same columns and contact icons as a project collaborator.
