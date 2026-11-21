@@ -64,6 +64,7 @@ import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 import { computed } from 'vue'
 import CollaboratorCard from '../cards/CollaboratorCard.vue'
 import { groupCollaborators } from '@/utils/collaboratorGroups'
+import { isFeatureEnabled } from '@/config/featureFlags'
 
 const props = defineProps({
   collaborators: {
@@ -72,8 +73,18 @@ const props = defineProps({
   }
 })
 
+// Each group can be switched off in featureFlags.ts on its own.
+const shownKinds = new Set([
+  ...(isFeatureEnabled('showAffiliations.showCollaborators.showMentors') ? ['mentor'] : []),
+  ...(isFeatureEnabled('showAffiliations.showCollaborators.showPeers') ? ['peer'] : []),
+])
+
 // Current and past, each split into mentors & guides and peers. A section
-// labels its groups only when it has both; one with just peers (or just
+// labels its groups only when it shows both; one with just peers (or just
 // mentors) shows its cards with no label over them.
-const sections = computed(() => groupCollaborators(props.collaborators))
+const sections = computed(() => {
+  const { current, past } = groupCollaborators(props.collaborators)
+  const shown = groups => groups.filter(group => shownKinds.has(group.kind))
+  return { current: shown(current), past: shown(past) }
+})
 </script>

@@ -56,7 +56,11 @@ const { affiliations = [], collaborators = [], past_collaborators = [], membersh
 const allCollaborators = [...(collaborators || []), ...(past_collaborators || [])]
 
 const showAffiliationsTab = isFeatureEnabled('showAffiliations.showAffiliations')
-const showCollaboratorsTab = isFeatureEnabled('showAffiliations.showCollaborators')
+// The tab needs its own switch and at least one of its two groups switched on;
+// with neither group showing it would only ever say it was empty.
+const showCollaboratorsTab = isFeatureEnabled('showAffiliations.showCollaborators.main')
+  && (isFeatureEnabled('showAffiliations.showCollaborators.showMentors')
+    || isFeatureEnabled('showAffiliations.showCollaborators.showPeers'))
 const showMembershipsTab = isFeatureEnabled('showAffiliations.showMemberships')
 
 const tabDefinitions = [

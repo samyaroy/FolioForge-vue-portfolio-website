@@ -1,4 +1,5 @@
 import config from '@/content/profile_info'
+import { isFeatureEnabled } from '@/config/featureFlags'
 import { slugify } from '@/utils/slug'
 
 /**
@@ -42,4 +43,33 @@ export function projectRoute(title: unknown) {
     path: '/projects-publications',
     query: { tab: PROJECT_TAB, [PROJECT_ANCHOR_PARAM]: projectSlug(title) },
   }
+}
+
+/**
+ * Ongoing Projects answers the same `?project=<slug>` link: the page opens its
+ * list far enough to include that project and brings the card into view.
+ */
+export const ONGOING_PROJECTS_PATH = '/ongoing-projects'
+
+function ongoingSlugs(): Set<string> {
+  const items = (config as Record<string, unknown>).ongoing_projects
+  if (!Array.isArray(items)) return new Set()
+  return new Set(items.map(item => projectSlug((item as { title?: unknown })?.title)).filter(Boolean))
+}
+
+/**
+ * The card a project title named elsewhere (on a collaborator's card, say)
+ * should open: the Projects tab first, then Ongoing Projects. A page or tab
+ * that is switched off is never linked to, and a title neither shows gets no
+ * link at all rather than one to a page that does not hold it.
+ */
+export function projectCardRoute(title: unknown) {
+  if (isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' }) && isKnownProject(title)) {
+    return projectRoute(title)
+  }
+  const slug = projectSlug(title)
+  if (slug && isFeatureEnabled('showOngoingProjects') && ongoingSlugs().has(slug)) {
+    return { path: ONGOING_PROJECTS_PATH, query: { [PROJECT_ANCHOR_PARAM]: slug } }
+  }
+  return null
 }

@@ -113,7 +113,17 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showAffiliations: {
     showAffiliations: true,
-    showCollaborators: true,
+    // The Collaborators tab. `main` is the tab itself. `showMentors` and
+    // `showPeers` each drop one group (mentors & guides, or peers) from it; with
+    // both off the tab goes too. `showGroupColors` is the bar down each card's
+    // left edge: light blue for mentors and guides, light green for peers.
+    // Off, every card gets the same plain grey bar.
+    showCollaborators: {
+      main: true,
+      showMentors: true,
+      showPeers: true,
+      showGroupColors: true,
+    },
     showMemberships: true,
   },
 
