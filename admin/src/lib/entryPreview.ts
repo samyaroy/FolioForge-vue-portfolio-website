@@ -306,6 +306,8 @@ export function previewFacts(raw: Record<string, unknown>, collection: string, r
   }
   if (collection === 'affiliations/collaborators') {
     return [
+      // The role in the person's own words, else just mentor, guide or peer.
+      ...fact(UserRound, text(raw.role) || raw.type),
       ...fact(Building, raw.affiliation),
       ...fact(MapPin, raw.location),
       ...fact(CalendarDays, raw.period),

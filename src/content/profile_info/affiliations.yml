@@ -13,27 +13,38 @@ affiliations:
   #   location: Chennai, IN
 
 collaborators:
+  # The tab lists people whose `period` says "Present" first, and everyone
+  # else under Past Collaborators. Within each, `type: mentor` or
+  # `type: guide` go under "Mentors & guides", ahead of `type: peer`; a
+  # missing type counts as a peer. `role` is optional and shows on the card
+  # in your words ("Thesis supervisor", "Co-author", "Teammate").
+  #
   # Placeholder, switched off: it settles the shape of this list so the
   # admin can draw and edit it. Delete it once a real entry lands here.
   - name: Dr. Example Collaborator
     enabled: false
+    type: peer
+    role: Co-author
     affiliation: Example Institute of Research
     location: Kolkata, IN
     projects: [Placeholder Study]
     period: 2026 - Present
 
   # - name: Dr. Jane Doe
+  #   type: mentor
+  #   role: Research mentor
   #   affiliation: Institute of AI Research
   #   location: Kolkata, IN
   #   projects: [Robust Regression Study, Customer Churn Analysis]
   #   period: 2024 – Present
 
   # - name: Prof. John Smith
+  #   type: guide
+  #   role: Project guide
   #   affiliation: Previous Research Institute
   #   location: Mumbai, IN
   #   projects: [Early Research Project]
   #   period: 2022 – 2023
-  #   notes: Collaborated on initial research phase
 
 memberships:
   - organization: Royal Statistics Society

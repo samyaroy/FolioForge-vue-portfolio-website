@@ -1,101 +1,61 @@
 <template>
-    <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
-        <div class="flex gap-4">
-            <!-- Left: avatar/logo, sized absolutely so it stays legible on a
-                 phone instead of shrinking to 15% of a narrow card. -->
-            <div class="w-14 sm:w-[15%] shrink-0 flex items-start">
-                <div
-                    class="w-full h-full aspect-square rounded-lg overflow-hidden bg-gray-100 border border-slate-200 flex items-center justify-center">
-                    <img :src="avatarSrc" :alt="`${collaborator?.name || 'Collaborator'} avatar`"
-                        class="w-full h-full object-contain" />
-                </div>
-            </div>
-
-            <!-- Right: content (80%) -->
-            <div class="flex-1 space-y-2">
-                <div class="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
-                    <div>
-                        <h3 class="text-lg font-semibold text-slate-900">
-                            <SmartLink :text="collaborator.name || 'Collaborator'" :type="'Person'" /><AnimatedIcon name="external-link" :size="14" class="text-[#4e7397] ml-2 inline-block align-middle" />
-                        </h3>
-
-                        <p v-if="collaborator.affiliation" class="text-sm text-gray-600">
-                            <v-icon size="16" class="text-[#4e7397]">mdi-domain</v-icon>
-                            {{ collaborator.affiliation }}
-                        </p>
-
-                        <p v-if="collaborator.location" class="text-sm text-gray-500">
-                            <v-icon size="16" class="text-[#4e7397]">mdi-map-marker</v-icon>
-                            {{ collaborator.location }}
-                        </p>
-                    </div>
-
-                    <span v-if="collaborator.period" class="text-sm text-gray-500">
-                        {{ collaborator.period }}
-                    </span>
-                </div>
-                <div v-if="collaborator.projects && collaborator.projects.length" class="flex items-start gap-2">
-                    <div class="items-left text-md shrink-0">Projects:</div>
-                    <div class="flex min-w-0 flex-col text-md">
-                    <p v-for="project in collaborator.projects" :key="project" class="text-gray-700 pl-0 sm:pl-7">
-                        {{ project }}
-                    </p>
-                </div>
-            </div>
-        </div>
+  <!-- Three short lines: name and dates; role, organisation and place; the
+       projects as tags. No photo, so each card stays about as tall as its text. -->
+  <article class="bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow space-y-1">
+    <div class="flex flex-wrap items-center justify-between gap-x-4">
+      <h3 class="text-lg font-semibold text-slate-900">
+        <SmartLink :text="collaborator.name || 'Collaborator'" :type="'Person'" /><AnimatedIcon name="external-link" :size="14" class="text-[#4e7397] ml-2 inline-block align-middle" />
+      </h3>
+      <span v-if="collaborator.period" class="text-sm text-gray-500 whitespace-nowrap">
+        {{ collaborator.period }}
+      </span>
     </div>
+
+    <div v-if="role || collaborator.affiliation || collaborator.location" class="flex flex-wrap items-center gap-x-4 gap-y-0.5 text-sm">
+      <span v-if="role" class="font-medium text-slate-700">{{ role }}</span>
+      <span v-if="collaborator.affiliation" class="inline-flex items-center gap-1 text-gray-600">
+        <v-icon size="16" class="text-[#4e7397]">mdi-domain</v-icon>
+        {{ collaborator.affiliation }}
+      </span>
+      <span v-if="collaborator.location" class="inline-flex items-center gap-1 text-gray-500">
+        <v-icon size="16" class="text-[#4e7397]">mdi-map-marker</v-icon>
+        {{ collaborator.location }}
+      </span>
     </div>
+
+    <div v-if="projects.length" class="flex flex-wrap items-center gap-1.5 pt-1">
+      <span class="mr-0.5 text-sm text-[#0e141b]">Projects:</span>
+      <span
+        v-for="(project, index) in projects"
+        :key="`${index}-${project}`"
+        class="rounded-full bg-blue-100/50 px-2.5 py-0.5 text-[13px] text-slate-600"
+      >
+        {{ project }}
+      </span>
+    </div>
+  </article>
 </template>
 
 <script setup>
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
-import profileIcon from '@/metadata/people/profile-icon.png'
-
-// Eager-load all collaborator photos in src/metadata/people
-// Vite will turn these into resolved URLs at build time.
-const peoplePhotos = import.meta.glob('@/metadata/people/*.{png,jpg,jpeg,webp}', {
-    eager: true,
-    import: 'default',
-})
-
-function normalizeToFileBase(name) {
-    return String(name || '')
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-_]/g, '')
-}
 
 const props = defineProps({
-    collaborator: {
-        type: Object,
-        required: true,
-    },
+  collaborator: {
+    type: Object,
+    required: true,
+  },
 })
 
-const avatarSrc = computed(() => {
-    // Allow explicit per-collaborator image path in config
-    if (props.collaborator?.logo) return props.collaborator.logo
-    if (props.collaborator?.photo) return props.collaborator.photo
+const text = value => (typeof value === 'string' ? value.trim() : '')
 
-    const base = normalizeToFileBase(props.collaborator?.name)
-    if (base) {
-        // Try to find matching photo by checking if any key ends with the normalized name
-        const extensions = ['.jpg', '.jpeg', '.png', '.webp']
-        for (const ext of extensions) {
-            const filename = `${base}${ext}`
-            // Check if any key in peoplePhotos matches the filename
-            for (const key in peoplePhotos) {
-                if (key.includes(filename) || key.endsWith(filename)) {
-                    return peoplePhotos[key]
-                }
-            }
-        }
-    }
+// What the person was to you, in your words: "Thesis supervisor", "Co-author".
+const role = computed(() => text(props.collaborator?.role))
 
-    // Fallback to profile-icon.png
-    return profileIcon
+// A list of titles; a single title written as plain text is one project.
+const projects = computed(() => {
+  const value = props.collaborator?.projects
+  return (Array.isArray(value) ? value : [value]).map(text).filter(Boolean)
 })
 </script>
