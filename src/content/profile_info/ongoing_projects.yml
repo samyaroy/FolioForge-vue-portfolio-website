@@ -35,6 +35,7 @@ ongoing_projects:
     time_period: Sep 2026 - Jan 2027
 
   - title: 'Homingo Hack Days: AI Automation Hackathon'
+    enabled: false
     description: Building an AI automation for Homingo's online hackathon, in the Automation track. The build runs from 21 Nov to 6 Dec.
     type: Hackathon
     affiliation: Hackathon (Edition 01, Automation Track), `Homingo`
