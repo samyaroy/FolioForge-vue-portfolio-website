@@ -1,5 +1,5 @@
 import config from '@/content/profile_info'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import { isFeatureEnabled, isPageEnabled } from '@/config/featureFlags'
 import { slugify } from '@/utils/slug'
 
 /**
@@ -16,16 +16,25 @@ import { slugify } from '@/utils/slug'
 export const PROJECT_TAB = 'projects'
 export const PROJECT_ANCHOR_PARAM = 'project'
 
-const GROUPS = ['research_projects', 'technical_projects', 'minor_projects', 'other_projects'] as const
+// Each group of the Projects tab, with the flag that shows it there
+// (src/views/ProjectsPublications/components/ProjectTab/index.vue).
+const GROUPS = [
+  ['research_projects', 'showProjectsPublications.showProjects.showResearchProjects'],
+  ['technical_projects', 'showProjectsPublications.showProjects.showTechnicalProjects'],
+  ['minor_projects', 'showProjectsPublications.showProjects.showMinorProjects'],
+  ['other_projects', 'showProjectsPublications.showProjects.showOtherProjects'],
+] as const
 
 export function projectSlug(title: unknown): string {
   return slugify(title)
 }
 
+// Titles of the projects the tab shows. A group switched off is left out, so a
+// link never promises a card the tab does not draw.
 function titles(): string[] {
   const projects = (config as Record<string, unknown>).projects as Record<string, unknown> | undefined
   if (!projects) return []
-  return GROUPS.flatMap(group => {
+  return GROUPS.filter(([, flag]) => isFeatureEnabled(flag)).flatMap(([group]) => {
     const items = projects[group]
     return Array.isArray(items) ? items.map(item => String((item as { title?: unknown })?.title ?? '')) : []
   }).filter(Boolean)
@@ -59,16 +68,14 @@ function ongoingSlugs(): Set<string> {
 
 /**
  * The card a project title named elsewhere (on a collaborator's card, say)
- * should open: the Projects tab first, then Ongoing Projects. A page or tab
- * that is switched off is never linked to, and a title neither shows gets no
- * link at all rather than one to a page that does not hold it.
+ * should open: the Projects tab first, then Ongoing Projects. A page, tab or
+ * project group that is switched off is never linked to, and a title neither
+ * shows gets no link at all rather than one to a page that does not hold it.
  */
 export function projectCardRoute(title: unknown) {
-  if (isFeatureEnabled('showProjectsPublications.showProjects', { mode: 'any' }) && isKnownProject(title)) {
-    return projectRoute(title)
-  }
+  if (isKnownProject(title)) return projectRoute(title)
   const slug = projectSlug(title)
-  if (slug && isFeatureEnabled('showOngoingProjects') && ongoingSlugs().has(slug)) {
+  if (slug && isPageEnabled('showOngoingProjects') && ongoingSlugs().has(slug)) {
     return { path: ONGOING_PROJECTS_PATH, query: { [PROJECT_ANCHOR_PARAM]: slug } }
   }
   return null

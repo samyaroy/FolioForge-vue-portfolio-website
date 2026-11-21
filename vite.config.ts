@@ -7,7 +7,7 @@ import yaml from '@modyfi/vite-plugin-yaml'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { parse as parseYaml } from 'yaml'
 import { fileURLToPath, URL } from 'url'
-import { isFeatureEnabled } from './src/config/featureFlags'
+import { isPageEnabled } from './src/config/featureFlags'
 import {
   BLOG_URL,
   OG_IMAGE_PATH,
@@ -38,8 +38,7 @@ const IS_BETA_BUILD = (process.env.VITE_SITE_ENV ?? '').trim().toLowerCase() ===
 const publicRoutes = routeMetadata.filter(
   (route) =>
     (!route.betaOnly || IS_BETA_BUILD) &&
-    (!route.flagPath ||
-      isFeatureEnabled(route.flagPath, { mode: route.flagMode })),
+    isPageEnabled(route.flagPath, route.flagMode),
 )
 
 interface Profile {

@@ -53,7 +53,7 @@
 <script setup>
 import config from '@/content/profile_info/site'
 import descriptions from '@/content/profile_info/description.yml'
-import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+import { isFeatureEnabled, isPageDescriptionEnabled, isPageEnabled } from '@/config/featureFlags'
 import { isBetaSite } from '@/config/siteEnvironment'
 import { BLOG_URL, routeMetadata } from '@/router/routes'
 
@@ -76,7 +76,7 @@ const showBlog = isFeatureEnabled('showBlog') && Boolean(blogLink)
 const pageEntries = routeMetadata
   .filter(route => route.name !== 'Sitemap')
   .filter(route => !route.betaOnly || isBetaSite())
-  .filter(route => !route.flagPath || isFeatureEnabled(route.flagPath, { mode: route.flagMode }))
+  .filter(route => isPageEnabled(route.flagPath, route.flagMode))
   .map(route => ({ label: route.title ?? 'Home', href: route.path, route: true }))
 
 // `route` entries go through the router; the rest are static files on this

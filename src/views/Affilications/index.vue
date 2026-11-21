@@ -46,8 +46,8 @@ import CollaboratorsTab from './components/tabs/CollaboratorsTab.vue'
 import MembershipsTab from './components/tabs/MembershipsTab.vue'
 import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
-import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
-import { affiliationsPageTitle, isCollaboratorsTabEnabled } from '@/config/affiliationTabs'
+import { isCollaboratorsTabEnabled, isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+import { affiliationsPageTitle } from '@/config/affiliationTabs'
 
 // Names only the tabs the page shows, as the footer link does.
 const pageTitle = affiliationsPageTitle()

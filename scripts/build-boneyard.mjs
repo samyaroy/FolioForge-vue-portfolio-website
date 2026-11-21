@@ -19,7 +19,7 @@ import { spawnSync } from 'node:child_process'
 import process from 'node:process'
 
 import { routeMetadata } from '../src/router/routes.ts'
-import { isFeatureEnabled } from '../src/config/featureFlags.ts'
+import { isPageEnabled } from '../src/config/featureFlags.ts'
 
 const outputDir = './src/bones'
 const cliPath = './node_modules/boneyard-js/bin/cli.js'
@@ -54,7 +54,7 @@ const tabVariants = {
 // them from the sitemap and prerender for the same reason.
 function enabledRoutes() {
   return routeMetadata.filter(
-    route => !route.flagPath || isFeatureEnabled(route.flagPath, { mode: route.flagMode }),
+    route => isPageEnabled(route.flagPath, route.flagMode),
   )
 }
 

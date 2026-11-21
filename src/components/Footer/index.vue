@@ -279,7 +279,7 @@
 import config from "@/content/profile_info/site"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
-import { isFeatureEnabled } from '@/config/featureFlags'
+import { isFeatureEnabled, isPageEnabled } from '@/config/featureFlags'
 import { affiliationsPageTitle } from '@/config/affiliationTabs'
 import { isBetaSite, isStableSite } from '@/config/siteEnvironment'
 
@@ -306,10 +306,8 @@ export default {
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
     const showResourcesLink = isFeatureEnabled('showResources.main')
     const showSitemapLink = isFeatureEnabled('showSitemap')
-    const showAffiliationsLink = (
-      isFeatureEnabled('showAffiliations.showAffiliations')
-      || isFeatureEnabled('showAffiliations')
-    )
+    // The router's own check, so the link shows exactly when the page exists.
+    const showAffiliationsLink = isPageEnabled('showAffiliations', 'any')
 
     return {
       profile,
