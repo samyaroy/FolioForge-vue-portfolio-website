@@ -1,10 +1,22 @@
 <template>
   <!-- Three short lines: name and dates; role, organisation and place; the
-       projects as tags. No photo, so each card stays about as tall as its text. -->
+       projects. No photo, so each card stays about as tall as its text. -->
   <article class="bg-white border border-slate-200 rounded-lg px-4 py-3 shadow-sm hover:shadow-md transition-shadow space-y-1">
     <div class="flex flex-wrap items-center justify-between gap-x-4">
-      <h3 class="text-lg font-semibold text-slate-900">
-        <SmartLink :text="collaborator.name || 'Collaborator'" :type="'Person'" /><AnimatedIcon name="external-link" :size="14" class="text-[#4e7397] ml-2 inline-block align-middle" />
+      <!-- The name links to the person's page when hyperlinkMetadata.yml has
+           one, and only then gets the external-link icon. The icon opens the
+           same page; it is hidden from screen readers and skipped by Tab, so
+           the link is announced and focused once, on the name. -->
+      <h3 class="text-base font-semibold text-slate-900">
+        <SmartLink :text="name" :type="'Person'" /><a
+          v-if="profileUrl"
+          :href="profileUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          tabindex="-1"
+          aria-hidden="true"
+          class="ml-1.5 inline-block align-middle text-[#4e7397] transition-colors duration-200 hover:text-[#1980e6]"
+        ><AnimatedIcon name="external-link" :size="13" /></a>
       </h3>
       <span v-if="collaborator.period" class="text-sm text-gray-500 whitespace-nowrap">
         {{ collaborator.period }}
@@ -23,16 +35,11 @@
       </span>
     </div>
 
-    <div v-if="projects.length" class="flex flex-wrap items-center gap-1.5 pt-1">
-      <span class="mr-0.5 text-sm text-[#0e141b]">Projects:</span>
-      <span
-        v-for="(project, index) in projects"
-        :key="`${index}-${project}`"
-        class="rounded-full bg-blue-100/50 px-2.5 py-0.5 text-[13px] text-slate-600"
-      >
-        {{ project }}
-      </span>
-    </div>
+    <!-- Plain text, a dot between titles: some titles carry their own commas. -->
+    <p v-if="projects.length" class="text-sm text-gray-600">
+      <span class="text-[#0e141b]">Projects:</span>
+      {{ projects.join(' · ') }}
+    </p>
   </article>
 </template>
 
@@ -40,6 +47,8 @@
 import { computed } from 'vue'
 import SmartLink from '@/components/SmartLink.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
+import { resolveHyperlink } from '@/utils/resolveHyperlink'
+import { stripEmphasis } from '@/utils/inlineMarkup'
 
 const props = defineProps({
   collaborator: {
@@ -49,6 +58,12 @@ const props = defineProps({
 })
 
 const text = value => (typeof value === 'string' ? value.trim() : '')
+
+const name = computed(() => text(props.collaborator?.name) || 'Collaborator')
+
+// The same lookup SmartLink makes for the name, so the icon appears exactly
+// when the name is a link.
+const profileUrl = computed(() => resolveHyperlink(stripEmphasis(name.value), 'Person'))
 
 // What the person was to you, in your words: "Thesis supervisor", "Co-author".
 const role = computed(() => text(props.collaborator?.role))
