@@ -93,7 +93,7 @@
             <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Affiliations, Collaborators & Memberships
+                {{ affiliationsLabel }}
               </router-link>
             </li>
             <li v-if="showInternshipCertificationsLink">
@@ -280,6 +280,7 @@ import config from "@/content/profile_info/site"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
 import { isFeatureEnabled } from '@/config/featureFlags'
+import { affiliationsPageTitle } from '@/config/affiliationTabs'
 import { isBetaSite, isStableSite } from '@/config/siteEnvironment'
 
 export default {
@@ -344,6 +345,8 @@ export default {
       internshipCertificationsLabel,
       showWorkshopsAttendedLink,
       showAffiliationsLink,
+      // Names only the tabs the page shows, as its heading does.
+      affiliationsLabel: affiliationsPageTitle(),
       showResourcesLink,
       showSitemapLink,
     };

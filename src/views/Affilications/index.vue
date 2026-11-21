@@ -4,7 +4,7 @@
       <div class="text-center mb-8">
         <h1 class="text-3xl sm:text-4xl font-black text-[#0e141b] tracking-[-0.033em]"
           :class="{ 'mb-4': showPageDescription }">
-          Affiliations, Collaborators & Memberships
+          {{ pageTitle }}
         </h1>
         <p v-if="showPageDescription" class="content-justify text-base sm:text-lg text-gray-600 max-w-4xl mx-auto">
           {{ pageDescription }}
@@ -47,7 +47,10 @@ import MembershipsTab from './components/tabs/MembershipsTab.vue'
 import config from '@/content/profile_info'
 import descriptions from '@/content/profile_info/description.yml'
 import { isFeatureEnabled, isPageDescriptionEnabled } from '@/config/featureFlags'
+import { affiliationsPageTitle, isCollaboratorsTabEnabled } from '@/config/affiliationTabs'
 
+// Names only the tabs the page shows, as the footer link does.
+const pageTitle = affiliationsPageTitle()
 const pageDescription = descriptions.affiliations
 const showPageDescription = isPageDescriptionEnabled('affiliations')
 
@@ -56,11 +59,7 @@ const { affiliations = [], collaborators = [], past_collaborators = [], membersh
 const allCollaborators = [...(collaborators || []), ...(past_collaborators || [])]
 
 const showAffiliationsTab = isFeatureEnabled('showAffiliations.showAffiliations')
-// The tab needs its own switch and at least one of its two groups switched on;
-// with neither group showing it would only ever say it was empty.
-const showCollaboratorsTab = isFeatureEnabled('showAffiliations.showCollaborators.main')
-  && (isFeatureEnabled('showAffiliations.showCollaborators.showMentors')
-    || isFeatureEnabled('showAffiliations.showCollaborators.showPeers'))
+const showCollaboratorsTab = isCollaboratorsTabEnabled()
 const showMembershipsTab = isFeatureEnabled('showAffiliations.showMemberships')
 
 const tabDefinitions = [
