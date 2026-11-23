@@ -119,7 +119,7 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
     // left edge: light blue for mentors and guides, light green for peers.
     // Off, every card gets the same plain grey bar.
     showCollaborators: {
-      main: false,
+      main: true,
       showMentors: true,
       showPeers: true,
       showGroupColors: true,
