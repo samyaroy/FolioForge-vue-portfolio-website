@@ -75,6 +75,7 @@ collaborators:
 
   # Peers, from the projects and competitions that list them as teammates.
   - name: Tamoghno Saha
+    enabled: false
     type: peer
     role: Co-author
     affiliation: Department of Statistics, University of Calcutta
@@ -82,6 +83,7 @@ collaborators:
     period: Nov 2026 – Present
 
   - name: Priyam Ghosh
+    enabled: false
     type: peer
     role: Co-author
     affiliation: Department of Statistics, University of Calcutta
@@ -89,6 +91,7 @@ collaborators:
     period: Nov 2026 – Present
 
   - name: Anubrata De
+    enabled: false
     type: peer
     role: Teammate
     affiliation: BS in Data Science and Applications, IIT Madras
@@ -96,6 +99,7 @@ collaborators:
     period: Sep 2026 – Present
 
   - name: Rishav Kumar Banerjee
+    enabled: false
     type: peer
     role: Teammate
     affiliation: Sister Nivedita University
@@ -103,6 +107,7 @@ collaborators:
     period: Jul 2024 – Dec 2024
 
   - name: Saunak Datta
+    enabled: false
     type: peer
     role: Teammate
     affiliation: Department of Statistics, Sister Nivedita University
