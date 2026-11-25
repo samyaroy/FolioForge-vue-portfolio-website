@@ -1,21 +1,5 @@
 ongoing_projects:
 
-  - title: Student Mentoring and Career Support Platform
-    description: A platform where IITM BS students can find alumni mentors, book sessions and get career advice. I'm building the backend.
-    type: Course Project
-    affiliation: Course Project, Software Engineering (BSCS3001), BS in Data Science and Applications, `Indian Institute of Technology Madras`
-    tech_stack: FastAPI, Python, SQLite, React.js, TypeScript, shadcn/ui
-    collaborators:
-      - name: Anubrata De
-        github: https://github.com/anubrata-de
-      - name: Soumya Mazumdar
-        github: https://github.com/mazumdarsoumya
-      - name: Sayantan Dey
-        github: https://github.com/22f3002449
-    time_period: Sep 2026 - Dec 2026
-    cred_link:
-      github: https://github.com/anubratade2109/SE-SEP2026-Team-090/
-
   - title: 'A Point of No Probability: The Savage–Dickey Paradox'
     description: Looking at the Savage–Dickey ratio, a handy shortcut for Bayes factors, and why its answer can change depending on how you condition on an event of probability zero.
     type: Literature Review Article
