@@ -27,6 +27,7 @@ import { projectTypes } from '../../../src/config/projectTypes.ts'
 import { entryFields } from '../../../src/config/entryFields.ts'
 import type { EntryField } from '../../../src/config/entryFields.ts'
 import { articleTypeLabels, articleTypes } from '../../../src/config/articleTypes.ts'
+import { COLLABORATOR_TYPES } from '../../../src/utils/collaboratorGroups.ts'
 import { galleryTags, type GalleryTag } from '@/lib/galleryTags'
 import { pageQuoteGroups } from '../../../src/config/pageQuotes.ts'
 
@@ -195,7 +196,7 @@ export const portfolioPages: PortfolioPage[] = [
     description: 'Professional affiliations, collaborators, and society memberships.',
     sections: [
       { id: 'affiliations', title: 'Affiliations', sources: ['affiliations.yml'], fields: ['Organisation and role', 'Dates', 'Description and logo', 'Website'], requiredFields: ['organization'] },
-      { id: 'collaborators', title: 'Collaborators', sources: ['affiliations.yml'], fields: ['Person and affiliation', 'Collaboration period', 'Profile and image'], requiredFields: ['name'] },
+      { id: 'collaborators', title: 'Collaborators', sources: ['affiliations.yml'], fields: ['Person and affiliation', 'Mentor, guide or peer, and role', 'Collaboration period', 'Projects'], requiredFields: ['name'], typeOptions: COLLABORATOR_TYPES, entryFields: entryFields.collaborators },
       { id: 'memberships', title: 'Memberships', sources: ['affiliations.yml'], fields: ['Society', 'Membership type and ID', 'Dates and credential'], requiredFields: ['organization'], entryFields: entryFields.memberships },
     ],
   },

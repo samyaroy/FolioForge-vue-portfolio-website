@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteComponent, RouteRecordRaw } from 'vue-router'
-import { isFeatureEnabled } from '@/config/featureFlags'
+import { isPageEnabled } from '@/config/featureFlags'
 import { areBetaRoutesEnabled } from '@/config/siteEnvironment'
 import { BASE_TITLE, pageTitle, routeMetadata } from './routes'
 import { GALLERY_ITEM_PARAM } from '@/utils/shareLinks'
@@ -98,11 +98,7 @@ const router = createRouter({
 router.beforeEach((to) => {
   if (to.meta?.betaOnly && !areBetaRoutesEnabled()) return { name: 'Home' }
 
-  const flagPath = to.meta?.flagPath
-  if (!flagPath) return true
-
-  const mode = to.meta?.flagMode === 'any' ? 'any' : 'all'
-  if (isFeatureEnabled(flagPath, { mode })) return true
+  if (isPageEnabled(to.meta?.flagPath, to.meta?.flagMode)) return true
 
   if (to.name === 'Home') return true
   return { name: 'Home' }

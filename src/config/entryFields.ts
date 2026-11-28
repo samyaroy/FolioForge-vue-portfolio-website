@@ -36,7 +36,7 @@ export const entryFields = {
   // an education entry without a GPA does.
   awards: ['title', 'id', 'year', 'organization', 'category', 'prize', 'description', 'cred_link'],
 
-  projects: ['title', 'type', 'description', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
+  projects: ['title', 'type', 'description', 'role', 'affiliation', 'tech_stack', 'time_period', { key: 'guide', object: ['name', 'title', 'department', 'institution'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, 'doi', 'logo', { key: 'cred_link', credentials: 'categories' }],
   articles: ['title', { key: 'publication', object: ['name', 'host'] }, { key: 'collaborators', list: ['name', 'email', 'linkedin', 'github', 'orcid', 'link'] }, 'field', 'article_type', 'type', 'date', 'link', 'cred_link'],
 
   // The card renders `instructor`, `institution` and `duration` although no
@@ -51,6 +51,10 @@ export const entryFields = {
   mentoredProjects: ['title', 'course', { key: 'students', list: ['name', 'email', 'Linkedin'] }, 'registration_number', { key: 'affiliation', object: ['name', 'location'] }, 'description', { key: 'cred_link', credentials: 'mentoredCategories' }],
 
   memberships: ['organization', 'chapter', 'role', 'membership_id', 'period', 'location', 'cred_link'],
+  // People on the Collaborators tab. `type` is mentor, guide or peer. A person
+  // can have several affiliations, and `projects` are titles that link to
+  // their cards, so both take one value or a list.
+  collaborators: ['name', 'type', 'role', { key: 'affiliation', type: 'text-or-list' }, 'location', 'period', { key: 'projects', type: 'text-or-list' }],
   internships: ['role', 'type', 'company', 'department', 'location', 'time_period', { key: 'guide', object: ['name', 'title', 'institution'] }, 'project', 'description', 'cred_link'],
   // Teammates are `collaborators`, the same list projects use, so a teammate
   // gets the same columns and contact icons as a project collaborator.
@@ -82,8 +86,8 @@ export const entryFields = {
   // the two sit side by side, the admin edits them as one choice. `ext_link`
   // belongs to the role, unlike `organization.web_link`, which is the
   // organisation's own site.
-  leadership: [{ key: 'affiliation', list: ['role', 'enabled', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'description', 'cred_link', 'ext_link'] }, 'description'],
-  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'enabled', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link', 'field'], children: { field: ['sub_field', 'enabled', 'time_period', 'skills'] } }, { key: 'field', list: ['sub_field', 'enabled', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link'],
+  leadership: [{ key: 'affiliation', list: ['role', 'enabled', 'organization.name', 'organization.web_link', 'host.name', 'host.web_link', 'institute', 'time_period', 'description', 'cred_link', 'ext_link', 'gallery'] }, 'description', 'gallery'],
+  volunteering: ['role', 'organization', { key: 'roles', list: ['role', 'enabled', 'organization', 'time_period', 'skills', 'cred_link', 'ext_link', 'gallery', 'field'], children: { field: ['sub_field', 'enabled', 'time_period', 'skills'] } }, { key: 'field', list: ['sub_field', 'enabled', 'time_period', 'skills'] }, 'time_period', 'cred_link', 'ext_link', 'gallery'],
   hostedEvents: ['title', 'event_type', 'guest_speakers', 'institution', 'date', 'mode'],
 
   facts: ['title', 'description', 'icon'],

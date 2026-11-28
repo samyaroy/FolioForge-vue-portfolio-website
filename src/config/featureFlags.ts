@@ -113,7 +113,17 @@ const DEFAULT_FEATURE_FLAGS = Object.freeze({
 
   showAffiliations: {
     showAffiliations: true,
-    showCollaborators: true,
+    // The Collaborators tab. `main` is the tab itself. `showMentors` and
+    // `showPeers` each drop one group (mentors & guides, or peers) from it; with
+    // both off the tab goes too. `showGroupColors` is the bar down each card's
+    // left edge: light blue for mentors and guides, light green for peers.
+    // Off, every card gets the same plain grey bar.
+    showCollaborators: {
+      main: true,
+      showMentors: true,
+      showPeers: true,
+      showGroupColors: true,
+    },
     showMemberships: true,
   },
 
@@ -253,6 +263,37 @@ export function isPageDescriptionEnabled(page: string): boolean {
     isFeatureEnabled('showPageDescriptions.enabled') &&
     isFeatureEnabled(`showPageDescriptions.${page}`)
   )
+}
+
+// The Collaborators tab on the Affiliations page. It needs its own switch and
+// at least one of its two groups on; with neither group showing it would only
+// ever say it was empty. Its other options (the colour bars) never count.
+export function isCollaboratorsTabEnabled(): boolean {
+  return isFeatureEnabled('showAffiliations.showCollaborators.main')
+    && (isFeatureEnabled('showAffiliations.showCollaborators.showMentors')
+      || isFeatureEnabled('showAffiliations.showCollaborators.showPeers'))
+}
+
+// Pages that a plain read of their branch in `flagMode` gets wrong, because a
+// tab there carries options that are not tabs: read in `any` mode, the
+// Affiliations branch counted the Collaborators colour bars as a reason to keep
+// the page. Keyed by the route's flagPath in src/router/routes.ts.
+const PAGE_CHECKS: Record<string, () => boolean> = {
+  showAffiliations: () =>
+    isFeatureEnabled('showAffiliations.showAffiliations')
+    || isCollaboratorsTabEnabled()
+    || isFeatureEnabled('showAffiliations.showMemberships'),
+}
+
+/**
+ * Whether a page is switched on, from its route's `flagPath` and `flagMode`.
+ * The router guard, the Sitemap page, the build's sitemap and prerender, and
+ * the skeleton capture all ask this, so a page is offered everywhere or nowhere.
+ */
+export function isPageEnabled(flagPath?: string | string[], flagMode?: 'all' | 'any'): boolean {
+  if (!flagPath) return true
+  const check = PAGE_CHECKS[Array.isArray(flagPath) ? flagPath.join('.') : flagPath]
+  return check ? check() : isFeatureEnabled(flagPath, { mode: flagMode })
 }
 
 function normalizeCardCount(value: unknown): number {

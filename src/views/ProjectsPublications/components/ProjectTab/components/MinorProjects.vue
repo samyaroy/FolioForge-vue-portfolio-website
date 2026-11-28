@@ -40,6 +40,11 @@
                             </p>
                         </div>
 
+                        <div v-if="project.role" class="flex items-start gap-1 mb-2 text-gray-600">
+                            <v-icon>mdi-account-tie</v-icon>
+                            <p><span class="font-medium">Role:</span> {{ project.role }}</p>
+                        </div>
+
                         <div v-if="project.guide?.name" class="flex items-start gap-2 mb-2">
                             <div class="text-gray-600 flex items-start">
                                 <v-icon class="mr-1">mdi-account-tie</v-icon>

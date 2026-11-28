@@ -4,6 +4,7 @@
 #   ext_link:  a site (https:// URL), opened in a new tab
 # never both; the card shows the credential if both are set. A `cred_link: '#'`
 # placeholder still counts as a credential, so remove it when adding ext_link.
+# Optional gallery: a published post id from gallery.yml, shown at the card’s bottom right.
 co_curriculars:
   - title: leadership_roles
     entries:
@@ -55,7 +56,8 @@ co_curriculars:
             institute: Indian Institute of Technology Madras BS Degree
             time_period: June 2026
             cred_link: https://drive.google.com/file/d/1sJ9ULNFWPlJUhdwTTsYMHC4tB10oopUO/preview
-            description: Probably Paradoxical was a multi-stage technical competition hosted at Paradox’26, IIT Madras, where participants explored statistical paradoxes through real-world survey design, data collection, cleaning, analysis, and final presentation. As Event Head, I led the planning and coordination of the event workflow, team responsibilities, budget structure, judge coordination, and execution strategy, with inviting judges including `Prof. Rahul R Marathe`.
+            gallery: guest_event-10
+            description: Led Probably Paradoxical at Paradox’26, IIT Madras, where teams explored statistical paradoxes through surveys and data analysis. Managed event planning, team coordination and the budget, and invited judges including `Prof. Rahul R Marathe`.
             #  and `Dr. Naveen Sivadasan`.
         # skills: Event Management, Team Coordination, Sponsor Management
       #Add more entries as needed

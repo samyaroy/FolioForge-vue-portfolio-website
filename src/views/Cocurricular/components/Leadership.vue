@@ -1,5 +1,5 @@
 <template>
-  <div class="border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4 pr-4 rounded-md bg-slate-50">
+  <div :class="galleryIds.length ? 'pr-16' : 'pr-4'" class="relative border-l-4 border-[#1980e6] pl-4 sm:pl-6 py-4 rounded-md bg-slate-50">
     <div v-if="showEntryRole" class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between mb-2">
       <h3 class="text-lg font-semibold text-[#0e141b]">
         {{ leadership.role }}
@@ -105,6 +105,9 @@
       </div>
     </div>
 
+    <div v-if="galleryIds.length" class="absolute bottom-2 right-3 flex items-center gap-2">
+      <GalleryLink v-for="id in galleryIds" :key="id" :item-id="id" shadowless />
+    </div>
   </div>
 </template>
 
@@ -112,6 +115,7 @@
 import { computed } from 'vue'
 import DocumentViewer from '@/components/DocumentViewer.vue'
 import ExternalLink from '@/components/ExternalLink.vue'
+import GalleryLink from '@/components/GalleryLink.vue'
 import SmartLink from '@/components/SmartLink.vue'
 import AnimatedIcon from '@/components/ui/AnimatedIcon.vue'
 
@@ -136,6 +140,7 @@ const affiliations = computed(() =>
     description: affiliation.description || '',
     cred_link: affiliation.cred_link || null,
     ext_link: affiliation.ext_link || '',
+    gallery: affiliation.gallery || '',
     name: affiliation.organization?.name || '',
     link: affiliation.organization?.web_link || '',
     host: affiliation.host || null,
@@ -165,4 +170,9 @@ const skills = computed(() => {
     .map(skill => skill.trim())
     .filter(Boolean)
 })
+// Keep each role's gallery destination, with one action per distinct post.
+const galleryIds = computed(() => [...new Set([
+  props.leadership.gallery,
+  ...affiliations.value.map(role => role.gallery)
+].map(id => String(id ?? '').trim()).filter(Boolean))])
 </script>

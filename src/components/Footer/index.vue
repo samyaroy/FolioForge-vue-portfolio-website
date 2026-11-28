@@ -93,7 +93,7 @@
             <li v-if="showAffiliationsLink">
               <router-link to="/affiliation-memberships"
                 class="text-black-300 hover:text-black transition-colors duration-200">
-                Affiliations, Collaborators & Memberships
+                {{ affiliationsLabel }}
               </router-link>
             </li>
             <li v-if="showInternshipCertificationsLink">
@@ -275,7 +275,8 @@
 import config from "@/content/profile_info/site"
 import Logos from "./Logos.vue";
 import AnimatedIcon from "@/components/ui/AnimatedIcon.vue";
-import { isFeatureEnabled } from '@/config/featureFlags'
+import { isFeatureEnabled, isPageEnabled } from '@/config/featureFlags'
+import { affiliationsPageTitle } from '@/config/affiliationTabs'
 import { areBetaRoutesEnabled, isStableSite } from '@/config/siteEnvironment'
 
 export default {
@@ -301,10 +302,8 @@ export default {
     const showWorkshopsAttendedLink = isFeatureEnabled('showWorkshopsAttended', { mode: 'any' })
     const showResourcesLink = isFeatureEnabled('showResources.main')
     const showSitemapLink = isFeatureEnabled('showSitemap')
-    const showAffiliationsLink = (
-      isFeatureEnabled('showAffiliations.showAffiliations')
-      || isFeatureEnabled('showAffiliations')
-    )
+    // The router's own check, so the link shows exactly when the page exists.
+    const showAffiliationsLink = isPageEnabled('showAffiliations', 'any')
 
     return {
       profile,
@@ -339,6 +338,8 @@ export default {
       internshipCertificationsLabel,
       showWorkshopsAttendedLink,
       showAffiliationsLink,
+      // Names only the tabs the page shows, as its heading does.
+      affiliationsLabel: affiliationsPageTitle(),
       showResourcesLink,
       showSitemapLink,
     };
