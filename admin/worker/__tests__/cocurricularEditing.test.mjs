@@ -32,7 +32,7 @@ test('leadership edits preserve shared descriptions, sibling roles and credentia
 })
 
 test('new leadership roles have independent descriptions and boolean visibility without a parent role', () => {
-  assert.deepEqual(fieldKeys(entryFields.leadership), ['affiliation', 'description'])
+  assert.deepEqual(fieldKeys(entryFields.leadership), ['affiliation', 'description', 'gallery'])
   const first = { ...blankRow(affiliationFields), role: 'Organizer', description: 'First description', enabled: 'false' }
   const second = { ...blankRow(affiliationFields), role: 'Speaker', description: 'Second description' }
   const affiliation = serializeListFields([first, second], undefined, affiliationFields, 'affiliation')

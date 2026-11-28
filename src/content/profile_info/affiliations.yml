@@ -31,7 +31,7 @@ collaborators:
     role: Co-author
     affiliation: Example Institute of Research
     location: Kolkata, IN
-    projects: [Placeholder Study]
+    projects: [ Placeholder Study ]
     period: 2026 - Present
 
   # Guides, from the internship and project entries that name them.
@@ -43,7 +43,7 @@ collaborators:
       - Vicharanashala Lab for Education Design (VLED), IIT Ropar
       - Annam.ai
     location: Ropar, IN
-    projects: [MERN Stack Developer Internship, Vicharanashala Summership 2026]
+    projects: [ MERN Stack Developer Internship, Vicharanashala Summership 2026 ]
     period: Feb 2026 – Present
 
   - name: Mr. Debashis Ghosh
@@ -52,7 +52,7 @@ collaborators:
     role: Internship and project guide
     affiliation: IDEAS – TIH, Indian Statistical Institute
     location: Kolkata, IN
-    projects: ["Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"]
+    projects: [ "Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students" ]
     period: Jun 2024 – Dec 2024
 
   # From the experience entries: supervisor of the Student Internship, then
@@ -62,7 +62,7 @@ collaborators:
     role: Supervisor
     affiliation: IDEAS – TIH, Indian Statistical Institute
     location: Kolkata, IN
-    projects: [FASAL 2.0 (NPCYF)]
+    projects: [ FASAL 2.0 (NPCYF) ]
     period: Feb 2025 – Aug 2026
 
   - name: Prof. Aniruddha Choudhuri
@@ -70,7 +70,7 @@ collaborators:
     role: Degree project guide
     affiliation: Department of Statistics, Sister Nivedita University
     location: Kolkata, IN
-    projects: ["Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset"]
+    projects: [ "Predicting Wine Quality: A Comparison of Linear Regression Techniques on a Multicollinear and Outlier-Affected Dataset" ]
     period: Jan 2025 – May 2025
 
   # Peers, from the projects and competitions that list them as teammates.
@@ -79,7 +79,7 @@ collaborators:
     type: peer
     role: Co-author
     affiliation: Department of Statistics, University of Calcutta
-    projects: ["A Point of No Probability: The Savage–Dickey Paradox"]
+    projects: [ "A Point of No Probability: The Savage–Dickey Paradox" ]
     period: Nov 2026 – Present
 
   - name: Priyam Ghosh
@@ -87,7 +87,7 @@ collaborators:
     type: peer
     role: Co-author
     affiliation: Department of Statistics, University of Calcutta
-    projects: ["A Point of No Probability: The Savage–Dickey Paradox"]
+    projects: [ "A Point of No Probability: The Savage–Dickey Paradox" ]
     period: Nov 2026 – Present
 
   - name: Anubrata De
@@ -95,7 +95,7 @@ collaborators:
     type: peer
     role: Teammate
     affiliation: BS in Data Science and Applications, IIT Madras
-    projects: [Student Mentoring and Career Support Platform]
+    projects: [ Student Mentoring and Career Support Platform ]
     period: Sep 2026 – Present
 
   - name: Rishav Kumar Banerjee
@@ -103,7 +103,7 @@ collaborators:
     type: peer
     role: Teammate
     affiliation: Sister Nivedita University
-    projects: ["Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"]
+    projects: [ "Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students" ]
     period: Jul 2024 – Dec 2024
 
   - name: Saunak Datta
@@ -111,7 +111,7 @@ collaborators:
     type: peer
     role: Teammate
     affiliation: Department of Statistics, Sister Nivedita University
-    projects: ["Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students"]
+    projects: [ "Multivariate Analysis of Career Preferences: Insights from Kolkata’s College Students" ]
     period: Jul 2024 – Dec 2024
 
   # - name: Dr. Jane Doe
